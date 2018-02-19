@@ -31,11 +31,11 @@ footer .sitemap .nav-home {
 }
 
 .fixedHeaderContainer header h2 {
-    color:#f93;
+    color:#084766;
 }
 
 .fixedHeaderContainer {
-    background: #f93;
+    background:#084766;
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.25);
     transition: background-color 0.3s ease-in-out;
 }
@@ -52,7 +52,7 @@ footer .sitemap .nav-home {
 .navigationSlider .slidingNav ul li a:focus,
 .navigationSlider .slidingNav ul li a:hover {
     text-decoration: underline;
-    background: #f93;
+    background: #084766;
 }
 
 /* Side bar*/
@@ -62,7 +62,7 @@ nav.toc .toggleNav {
 }
 
 nav.toc .toggleNav .navGroup.navGroupActive h3 {
-    background:#f93;
+    background:#084766;
 }
 
 nav.toc .toggleNav .navGroup.navGroupActive {
@@ -133,7 +133,7 @@ pre code{
 }
 /* css for tables */
 table tr th {
-    background: #f93;
+    background: #084766;
     color: #f3efef;
     font-weight: bold;
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
