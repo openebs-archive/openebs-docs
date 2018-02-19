@@ -16,7 +16,7 @@ const users = [
 ];
 
 const siteConfig = {
-  title: 'OpenEBS Doc' /* title for your website */,
+  title: '' /* title for your website */,
   tagline: 'A website for OpenEBS Documentation',
   url: 'https://docs.openebs.io' /* your website url */,
   baseUrl: '/' /* base url for your project */,
@@ -62,8 +62,6 @@ const siteConfig = {
     theme: 'default',
   },
   scripts: ['https://buttons.github.io/buttons.js'],
-  // You may provide arbitrary config keys to be used as needed by your template.
-  repoUrl: 'https://github.com/facebook/test-site',
 };
 
 module.exports = siteConfig;
