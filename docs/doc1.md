@@ -1,29 +1,96 @@
 ---
 id: doc1
-title: Latin-ish
-sidebar_label: Example Page
+title: OpenEBS Introduction
+sidebar_label: Introduction
 ---
 
-Check the [documentation](https://docusaurus.io) for how to use Docusaurus.
+OpenEBS is a cloud native storage solution built with the goal of
+providing containerized storage for containers. Using OpenEBS, a
+developer can seamlessly get the persistent storage for stateful
+applications with ease, much of which is automated, while using the
+popular orchestration platforms such as Kubernetes.
 
-## Lorem
+Persistent storage presents significant challenges to the developer
+interfacing with stateful applications such as databases. While a
+developer can get the initial needs of persistent storage using Docker
+volume plug-in, Kubernetes stateful sets and so on, there is lots more
+to the storage needs of an application than just the connectivity.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum massa eget nulla aliquet sagittis. Proin odio tortor, vulputate ut odio in, ultrices ultricies augue. Cras ornare ultrices lorem malesuada iaculis. Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.
+**Note:**
 
-## Mauris In Code
+OpenEBS integration support is provided only for Kubernetes.
 
-```
-Mauris vestibulum ullamcorper nibh, ut semper purus pulvinar ut. Donec volutpat orci sit amet mauris malesuada, non pulvinar augue aliquam. Vestibulum ultricies at urna ut suscipit. Morbi iaculis, erat at imperdiet semper, ipsum nulla sodales erat, eget tincidunt justo dui quis justo. Pellentesque dictum bibendum diam at aliquet. Sed pulvinar, dolor quis finibus ornare, eros odio facilisis erat, eu rhoncus nunc dui sed ex. Nunc gravida dui massa, sed ornare arcu tincidunt sit amet. Maecenas efficitur sapien neque, a laoreet libero feugiat ut.
-```
+A DevOps developer gets the following from the OpenEBS solution.
 
-## Nulla
+-   OpenEBS operator yaml file that installs the OpenEBS components onto
+    a k8s cluster
+-   A set of yaml files containing configuration examples of how to use
+    OpenEBS storage classes
+-   A CLI for monitoring the persistent volume and its replicas
 
-Nulla facilisi. Maecenas sodales nec purus eget posuere. Sed sapien quam, pretium a risus in, porttitor dapibus erat. Sed sit amet fringilla ipsum, eget iaculis augue. Integer sollicitudin tortor quis ultricies aliquam. Suspendisse fringilla nunc in tellus cursus, at placerat tellus scelerisque. Sed tempus elit a sollicitudin rhoncus. Nulla facilisi. Morbi nec dolor dolor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras et aliquet lectus. Pellentesque sit amet eros nisi. Quisque ac sapien in sapien congue accumsan. Nullam in posuere ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin lacinia leo a nibh fringilla pharetra.
+Using the above tools, a developer can easily provision the persistent
+storage from the hostdir of the minion node. Much of the tasks for the
+developer are automated by the OpenEBS storage class, including,
+scheduling the volume and replicas on k8s minions, connectivity to the
+container via a mount point.
 
-## Orci
+Components
+----------
 
-Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin venenatis lectus dui, vel ultrices ante bibendum hendrerit. Aenean egestas feugiat dui id hendrerit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur in tellus laoreet, eleifend nunc id, viverra leo. Proin vulputate non dolor vel vulputate. Curabitur pretium lobortis felis, sit amet finibus lorem suscipit ut. Sed non mollis risus. Duis sagittis, mi in euismod tincidunt, nunc mauris vestibulum urna, at euismod est elit quis erat. Phasellus accumsan vitae neque eu placerat. In elementum arcu nec tellus imperdiet, eget maximus nulla sodales. Curabitur eu sapien eget nisl sodales fermentum.
+This section includes OpenEBS components.
 
-## Phasellus
+OpenEBS platform contains the following main components:
 
-Phasellus pulvinar ex id commodo imperdiet. Praesent odio nibh, sollicitudin sit amet faucibus id, placerat at metus. Donec vitae eros vitae tortor hendrerit finibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque vitae purus dolor. Duis suscipit ac nulla et finibus. Phasellus ac sem sed dui dictum gravida. Phasellus eleifend vestibulum facilisis. Integer pharetra nec enim vitae mattis. Duis auctor, lectus quis condimentum bibendum, nunc dolor aliquam massa, id bibendum orci velit quis magna. Ut volutpat nulla nunc, sed interdum magna condimentum non. Sed urna metus, scelerisque vitae consectetur a, feugiat quis magna. Donec dignissim ornare nisl, eget tempor risus malesuada quis.
+> -   Maya - The helper storage orchestration engine that aids the
+>     kubernetes orchestration of storage volumes
+> -   Jiva - A docker image that is used to spin the storage volume
+>     containers on Kubernetes nodes
+
+### Maya
+
+OpenEBS orchestration does not pre-empt or overwrite the Kubernetes
+orchestration system. It rather fills the storage orchestration gaps
+left behind by Kubernetes. For example, in OpenEBS, storage volume
+provisioning workflow is handled by Kubernetes. Just like other
+Kubernetes storage incubators, OpenEBS provides a new storage incubator
+called "OpenEBS". This incubator will have a storage class called
+"OpenEBS-storageclass". Internally, openebs-storageclass interacts with
+Maya to decide on which node a given volume must be provisioned, when it
+must be augmented automatically in capacity and so on. Maya also helps
+in data protection operations such as taking snapshots, restoring from
+snapshots and so on.
+
+### Jiva
+
+Jiva is the docker container image for storage volume containers. In
+OpenEBS, the storage volumes are containerized. Each volume will have
+atleast one storage controller and a storage replica, each of which will
+be a Jiva container. The functionality embedded into the Jiva image
+includes the following:
+
+-   iSCSI target
+-   Block replication controller (if the container is a controller)
+-   Block storage handler (if the container is a replica)
+
+Storage Policies
+----------------
+
+On their own, StorageClass lets you store and retrieve storage policies.
+It is only when combined with OpenEBS components namely openebs
+provisioner and maya api service that storage policies are applied
+against a PersistentVolume (a Kubernetes kind). The OpenEBS volume
+controller interprets the StorageClass' structured data as a record of
+the user’s desired state, and continually takes action to achieve and
+maintain that state.
+
+Users can deploy and update OpenEBS volume controller (otherwise known
+as Maya api service) on a running OpenEBS cluster, independently of the
+cluster’s own lifecycle. OpenEBS volume controller hooks up to the
+lifecycle of PersistentVolume (that is marked for OpenEBS via OpenEBS
+provisioner) to apply these storage policies.
+
+**See Also:**
+
+Changelog\_
+:   
+
