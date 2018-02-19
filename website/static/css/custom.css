@@ -14,3 +14,169 @@
 
 @media only screen and (min-width: 1500px) {
 }
+
+
+/*Root*/
+body {
+    background: #fff;
+}
+
+/* Css for image size */
+img {
+  max-width: max-content;
+  height: auto;
+}
+
+
+footer.nav-footer {
+    background: #1b1b1b;
+}
+
+footer .sitemap .nav-home {
+  display: table;
+  margin: -12px 20px 0 0;
+  padding: 10px;
+  width: 50px;
+  height: 50px;
+  opacity: initial;
+  transition: initial;
+}
+/* NAV bar */
+.fixedHeaderContainer header img {
+    width: 220px;
+    height: auto;
+}
+
+.fixedHeaderContainer header h2 {
+    color:#f93;
+}
+
+.fixedHeaderContainer {
+    background: #f93;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.headerTitle {
+    color: #f3f3f3;
+    font-weight: 200;
+}
+
+.navigationSlider .slidingNav ul li a {
+    color: #fff;
+}
+
+.navigationSlider .slidingNav ul li a:focus,
+.navigationSlider .slidingNav ul li a:hover {
+    text-decoration: underline;
+    background: #f93;
+}
+
+/* Side bar*/
+nav.toc .toggleNav {
+    background: #fff;
+    padding: 3%;
+}
+
+nav.toc .toggleNav .navGroup.navGroupActive h3 {
+    background:#f93;
+}
+
+nav.toc .toggleNav .navGroup.navGroupActive {
+    background: #fff;
+}
+
+/*Doc body*/
+.mainContainer {
+    background: #fff;
+}
+
+
+/*Layouts*/
+.row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-md-3 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+
+.mb-2,
+.my-2 {
+    margin-bottom: 0.5rem !important;
+}
+
+/* CSS for aligning images in markdown */
+
+img[alt$=">"] {
+  float:right;
+}
+
+img[alt$="<"] {
+  float:left;
+}
+
+img[alt$="<>"] {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: auto;
+    float: none!important;
+}
+
+pre code{
+    border-color: #f2a850;
+}
+
+@media (max-width: 576px) {
+
+    .fixedHeaderContainer header img {
+        width: 141px;
+        height: auto;
+    }
+    .fixedHeaderContainer header h2{
+        color: #fff;
+    }
+
+}
+/* css for tables */
+table tr th {
+    background: #f93;
+    color: #f3efef;
+    font-weight: bold;
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
+    text-transform: uppercase;
+}
+
+/* css for code snippets */
+.hljs, .hljs-subst {
+    color: #000;
+}
+.hljs-built_in, .hljs-bullet, .hljs-code, .hljs-addition {
+    color: #000;
+}
+.hljs-type, .hljs-meta, .hljs-string, .hljs-number, .hljs-selector-id, .hljs-selector-class, .hljs-quote, .hljs-template-tag, .hljs-deletion {
+    color: #000;
+}
+.hljs-regexp, .hljs-symbol, .hljs-variable, .hljs-template-variable, .hljs-link, .hljs-selector-attr, .hljs-selector-pseudo {
+    color: #000;
+}
+
+
+
+
+
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+}
