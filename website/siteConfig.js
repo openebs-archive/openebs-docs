@@ -19,8 +19,8 @@ const siteConfig = {
   title: 'Test Site' /* title for your website */,
   tagline: 'A website for testing',
   url: 'https://facebook.github.io' /* your website url */,
-  baseUrl: '/test-site/' /* base url for your project */,
-  projectName: 'test-site',
+  baseUrl: '/' /* base url for your project */,
+  projectName: 'OpenEBS',
   headerLinks: [
     {doc: 'doc1', label: 'Docs'},
     {doc: 'doc4', label: 'API'},
