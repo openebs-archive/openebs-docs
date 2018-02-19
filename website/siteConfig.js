@@ -37,7 +37,7 @@ const siteConfig = {
   ],
   users,
   /* path to images for header/footer */
-  headerIcon: 'img/mayaonline.png',
+  headerIcon: 'img/openebs-logo.svg',
   favicon: 'img/favicon.png',
   /* colors for website */
   colors: {

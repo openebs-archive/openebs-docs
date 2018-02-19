@@ -25,8 +25,9 @@ footer .sitemap .nav-home {
 }
 /* NAV bar */
 .fixedHeaderContainer header img {
-    width: 220px;
+    width: 150px;
     height: auto;
+    background-color: white;
 }
 
 .fixedHeaderContainer header h2 {
