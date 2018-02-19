@@ -1,4 +1,4 @@
-# openEBS-docs
+# OpenEBS-docs
 
 OpenEBS docs is the documentation repository for OpenEBS documentation. This is using Docusaurus as a documentation framework. It's easy to use and Madhuri (our Information Architect) would love to write documentation using Docusaurus, which uses markdown. 
 More on the Docusaurus can be found here: https://docusaurus.io/docs/en/installation.html
