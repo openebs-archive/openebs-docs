@@ -46,6 +46,3 @@ openebs-docs/website$ npm install docusaurus
 openebs-docs/website$ npm start
 ```
 Above step will start server on the localhost:3000
-
-
-
