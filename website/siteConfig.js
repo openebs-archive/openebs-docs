@@ -30,11 +30,11 @@ const siteConfig = {
   ],
   users,
   /* path to images for header/footer */
-  headerIcon: 'img/openebs-logo.svg',
+  headerIcon: 'img/OpenEBSLogo.png',
   favicon: 'img/favicon.png',
   /* colors for website */
   colors: {
-    primaryColor: '#084766',
+    primaryColor: '#f15a29',
     secondaryColor: '#205C3B',
   },
   // organizationName: 'deltice', // or set an env variable ORGANIZATION_NAME
