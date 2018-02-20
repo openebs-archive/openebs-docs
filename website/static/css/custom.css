@@ -27,15 +27,14 @@ footer .sitemap .nav-home {
 .fixedHeaderContainer header img {
     width: 150px;
     height: auto;
-    background-color: white;
 }
 
 .fixedHeaderContainer header h2 {
-    color:#084766;
+    color:#f15a29;
 }
 
 .fixedHeaderContainer {
-    background:#084766;
+    background:#f15a29;
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.25);
     transition: background-color 0.3s ease-in-out;
 }
@@ -52,7 +51,7 @@ footer .sitemap .nav-home {
 .navigationSlider .slidingNav ul li a:focus,
 .navigationSlider .slidingNav ul li a:hover {
     text-decoration: underline;
-    background: #084766;
+    background: #f2f2f2;
 }
 
 /* Side bar*/
@@ -62,7 +61,8 @@ nav.toc .toggleNav {
 }
 
 nav.toc .toggleNav .navGroup.navGroupActive h3 {
-    background:#084766;
+    background:#f2f2f2;
+    color:#4a4848;
 }
 
 nav.toc .toggleNav .navGroup.navGroupActive {
@@ -133,7 +133,7 @@ pre code{
 }
 /* css for tables */
 table tr th {
-    background: #084766;
+    background: #f2f2f2;
     color: #f3efef;
     font-weight: bold;
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
@@ -154,12 +154,17 @@ table tr th {
     color: #000;
 }
 
-
-
-
-
 .hljs {
     display: block;
     overflow-x: auto;
     padding: 0.5em;
+}
+
+input#search_input_react 
+{
+  background-color: #ffffff;
+  font-weight:400;
+}
+input#search_input_react:focus, input#search_input_react:active {
+    color: #555;
 }
