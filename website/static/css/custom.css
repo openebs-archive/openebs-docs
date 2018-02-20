@@ -164,6 +164,7 @@ input#search_input_react
 {
   background-color: #ffffff;
   font-weight:400;
+  height:35;
 }
 input#search_input_react:focus, input#search_input_react:active {
     color: #555;
