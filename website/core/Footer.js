@@ -68,10 +68,10 @@ class Footer extends React.Component {
             <a href="https://www.youtube.com/channel/UC3ywadaAUQ1FI4YsHZ8wa0g" target="_blank">
               Videos
             </a>
-            <a href="" target="_blank">
+            <a href="#" target="_blank">
              Docs
             </a>
-            <a href="" target="_blank">
+            <a>
               Releases
             </a>
           </div>
@@ -89,7 +89,7 @@ class Footer extends React.Component {
             <a href="https://blog.openebs.io" target="_blank">
               Blogs
             </a>
-            <a href="" target="_blank">
+            <a>
               Email
             </a>
             <a href="https://facebook.com/openebs" target="_blank">
