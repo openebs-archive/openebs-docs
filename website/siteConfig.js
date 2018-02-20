@@ -31,7 +31,7 @@ const siteConfig = {
   users,
   /* path to images for header/footer */
   headerIcon: 'img/OpenEBSLogo.png',
-  favicon: 'img/favicon.png',
+  favicon: '',
   /* colors for website */
   colors: {
     primaryColor: '#f15a29',
