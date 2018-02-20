@@ -21,7 +21,7 @@ after_success:
      docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$COMMIT . && docker push $REPO; 
     fi
   
-  - if [ "$TRAVIS_BRANCH" = "staging" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/openebs-docs;
+  - if [ "$TRAVIS_BRANCH" = "staging" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/stage-openebs-docs;
        docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$COMMIT . && docker push $REPO; 
     fi
 
