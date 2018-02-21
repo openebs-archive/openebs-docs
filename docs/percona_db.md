@@ -1,5 +1,8 @@
-Percona DB
-==========
+---
+id: PerconaDB
+title: PerconaDB
+sidebar_label: PerconaDB
+---
 
 Running Percona Pod on OpenEBS
 ------------------------------

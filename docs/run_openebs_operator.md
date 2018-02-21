@@ -1,5 +1,8 @@
-Running OpenEBS Operator
-========================
+---
+id: runOpenEBSoperator
+title: Running OpenEBS Operator
+sidebar_label: Running OpenEBS Operator
+---
 
 Prerequisites
 -------------
