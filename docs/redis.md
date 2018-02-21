@@ -1,5 +1,8 @@
-Redis StatefulSet
-=================
+---
+id: Redis
+title: Redis StatefulSet
+sidebar_label: Redis StatefulSet
+---
 
 This section demonstrates the deployment of Redis as a StatefulSet in a
 Kubernetes cluster. You can spawn a Redis StatefulSet that will use

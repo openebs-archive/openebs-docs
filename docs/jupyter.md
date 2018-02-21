@@ -1,5 +1,8 @@
-Jupyter
-=======
+---
+id: Jupyter
+title: Jupyter
+sidebar_label: Jupyter
+---
 
 Running Jupyter on OpenEBS
 --------------------------

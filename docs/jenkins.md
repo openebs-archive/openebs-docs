@@ -1,5 +1,8 @@
-Jenkins
-=======
+---
+id: Jenkins
+title: Jenkins
+sidebar_label: Jenkins
+---
 
 This section demonstrates the deployment of Jenkins as a pod in a
 Kubernetes cluster. You can spawn a Jenkins deployment which will use

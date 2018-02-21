@@ -1,5 +1,8 @@
-Percona Galera Cluster
-======================
+---
+id: PerconaGalera
+title: Percona Galera Cluster
+sidebar_label: Percona Galera Cluster
+---
 
 Running Percona Galera Cluster with OpenEBS
 -------------------------------------------

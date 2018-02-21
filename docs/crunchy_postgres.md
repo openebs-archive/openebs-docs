@@ -1,5 +1,8 @@
-Crunchy Postgres
-================
+---
+id: CrunchyPostgres
+title: Crunchy Postgres
+sidebar_label: Crunchy Postgres
+---
 
 Running Crunchy Postgres on OpenEBS
 -----------------------------------

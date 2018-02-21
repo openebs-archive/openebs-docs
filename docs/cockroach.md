@@ -1,5 +1,8 @@
-CockroachDB
-===========
+---
+id: CockroachDB
+title: CockroachDB
+sidebar_label: CockroachDB
+---
 
 CockroachDB is a distributed SQL database built on a transactional and
 strongly-consistent key-value store. It scales horizontally; survives

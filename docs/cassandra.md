@@ -1,5 +1,8 @@
-Cassandra
-=========
+---
+id: Cassandra
+title: Cassandra
+sidebar_label: Cassandra
+---
 
 Running Cassandra with OpenEBS
 ------------------------------

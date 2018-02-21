@@ -1,5 +1,8 @@
-Couchbase Server
-================
+---
+id: Couchbase
+title: Couchbase Server
+sidebar_label: Couchbase Server
+---
 
 This section demonstrates the Couchbase deployment as a StatefulSet in a
 Kubernetes cluster. You can spawn a Couchbase StatefulSet that will use

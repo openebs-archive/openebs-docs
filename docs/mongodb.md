@@ -1,5 +1,8 @@
-MongoDB
-=======
+---
+id: MongoDB
+title: MongoDB
+sidebar_label: MongoDB
+---
 
 Running MongoDB on OpenEBS
 --------------------------
