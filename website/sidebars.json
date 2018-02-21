@@ -2,7 +2,7 @@
   "docs": {
     "Getting Started": ["doc1"],
     "Setup": ["doc2"],
-    "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "MongoDB", "PerconaDB", "PerconaGalera", "Redis"],
+    "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "MongoDB", "PerconaDB", "PerconaGalera", "runOpenEBSoperator", "Redis"],
     "Policies": ["doc4"],
     "Troubleshooting": ["doc5"],
     "Release Notes": ["doc6"],
