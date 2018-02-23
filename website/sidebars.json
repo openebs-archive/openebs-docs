@@ -1,7 +1,7 @@
 {
   "docs": {
-    "Getting Started": ["doc1"],
-    "Setup": ["doc2"],
+    "Introduction": ["faq"],
+    "Setup": ["overview", "prerequisites", "openshift",],
     "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "MongoDB", "PerconaDB", "PerconaGalera", "runOpenEBSoperator", "Redis"],
     "Policies": ["doc4"],
     "Troubleshooting": ["doc5"],
