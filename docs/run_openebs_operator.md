@@ -4,11 +4,6 @@ title: Running OpenEBS Operator
 sidebar_label: Running OpenEBS Operator
 ---
 
-
-
-Running OpenEBS Operator
-========================
-
 Prerequisites
 -------------
 
