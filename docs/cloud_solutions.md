@@ -1,16 +1,18 @@
-Cloud Solutions
-===============
+---
+id: cloudsolutions
+title: Cloud Solutions
+sidebar_label: Cloud Solutions
+---
 
 Amazon Cloud
-------------
+============
 
-### Setting up OpenEBS with Kubernetes on Amazon Web Services
+## Setting up OpenEBS with Kubernetes on Amazon Web Services
 
-This section provides instructions to set up a Kubernetes cluster on
-Amazon Web Services (AWS) and to have OpenEBS running in hyper converged
+This section provides instructions to set up a Kubernetes cluster on Amazon Web Services (AWS) and to have OpenEBS running in hyper converged
 mode.
 
-#### Prerequisites
+### Prerequisites
 
 Perform the following procedure to setup the prerequisites for AWS.
 
@@ -43,7 +45,7 @@ access key will be assigned as in the following example. :
 > Note down the *Access key ID* and the *Secret access key* as AWS will
 > not display it again.
 
-### kops, terraform and awscli
+## kops, terraform and awscli
 
 OpenEBS has created a script that does most of the work for you.
 Download the *oebs-cloud.sh* script file using the following commands. :
@@ -85,7 +87,7 @@ The following tools are installed.
 -   kops \>= 1.6.2
 -   terraform \>= 0.9.11
 
-#### Updating the .profile File
+### Updating the .profile File
 
 The tools **awscli** and **kops** require the AWS credentials to access
 AWS services.
@@ -107,7 +109,7 @@ AWS services.
     
     $ source ~/.profile
 
-#### Creating the Cluster Configuration
+### Creating the Cluster Configuration
 
 -   You must generate a terraform file (.tf) that will later spawn -
 
@@ -135,7 +137,7 @@ occurs.
     -   For process intensive containers you may have to modify the
         script to use *m3.large* instances, which could be charged.
 
-#### Creating a Cluster on AWS using Terraform
+### Creating a Cluster on AWS using Terraform
 
 -   Run the following command to verify successful installation of
     terraform.
@@ -168,7 +170,7 @@ occurs.
 -   Run the command *terraform apply* to initiate infrastructure
     creation.
 
-#### List AWS EC2 Instances
+## List AWS EC2 Instances
 
 From your workstation, run the following command to list the AWS EC2
 instances created. :
@@ -180,18 +182,18 @@ instances created. :
     nodes.openebs.k8s.local          172.20.37.115        34.24.169.116       
     masters.openebs.k8s.local        172.20.53.140        34.202.205.27 
 
-#### SSH to the Kubernetes Node
+### SSH to the Kubernetes Node
 
 From your workstation, run the following commands to connect to the EC2
 instance running the Kubernetes Master.
 
-**For Ubuntu** :
+#### **For Ubuntu** :
 
     $ ./oebs-cloud.sh --ssh-aws-ec2
     Welcome to Ubuntu 16.04 LTS (GNU/Linux 4.4.0-93-generic x86_64)
     ubuntu@ip-172-20-53-140 ~ $
 
-**For CoreOS** :
+#### **For CoreOS** :
 
     $ ./oebs-cloud.sh --ssh-aws-ec2
     Container Linux by CoreOS stable (1465.6.0)
@@ -209,12 +211,12 @@ the AWS EC2 instance.
 
 You should now be running inside the AWS EC2 instance.
 
-#### Deploying OpenEBS on AWS
+### Deploying OpenEBS on AWS
 
 Kubernetes must be running on the EC2 instances while deploying OpenEBS.
 Verify if a Kubernetes cluster is created.
 
-**For Ubuntu** :
+#### **For Ubuntu** :
 
     ubuntu@ip-172-20-53-140:~$ kubectl get nodes 
     NAME                            STATUS    AGE       VERSION 
@@ -223,14 +225,13 @@ Verify if a Kubernetes cluster is created.
     ip-172-20-53-140.ec2.internal   Ready     3m        v1.7.2 
 
 OpenEBS is deployed by the time you log in to Amazon Web Services (AWS).
-:
 
     ubuntu@ip-172-20-53-140:~$ kubectl get pods
     NAME                      READY     STATUS    RESTARTS   AGE
     maya-apiserver-h714w      1/1       Running   0          12m
     openebs-provisioner-5e6ij 1/1       Running   0          9m
 
-**For CoreOS** :
+#### **For CoreOS** :
 
     core@ip-172-20-53-140:~$ kubectl get nodes 
     NAME                            STATUS    AGE       VERSION 
@@ -239,7 +240,6 @@ OpenEBS is deployed by the time you log in to Amazon Web Services (AWS).
     ip-172-20-53-140.ec2.internal   Ready     3m        v1.7.2
 
 OpenEBS is deployed by the time you log in to Amazon Web Services (AWS).
-:
 
     core@ip-172-20-53-140:~$ kubectl get pods
     NAME                      READY     STATUS    RESTARTS   AGE
@@ -247,19 +247,19 @@ OpenEBS is deployed by the time you log in to Amazon Web Services (AWS).
     openebs-provisioner-5e6ij 1/1       Running   0          9m
 
 Google Cloud
-------------
+============
 
-### Setting up OpenEBS with Kubernetes on Google Kubernetes Engine
+## Setting up OpenEBS with Kubernetes on Google Kubernetes Engine
 
 This section, provides detailed instructions on how to setup and use
 OpenEBS in Google Kubernetes Engine (GKE). This section uses a three
 node Kubernetes cluster.
 
-#### Prerequisite:
+### Prerequisite:
 
 A GKE account
 
-#### 1. Preparing your Kubernetes Cluster
+### 1. Preparing your Kubernetes Cluster
 
 You can either use an existing Kubernetes cluster or create a new one.
 To create a new cluster, perform the following procedure.
@@ -300,7 +300,7 @@ in zone *us-central1-a* with project unique ID *maya-chatops*. When you
 copy paste the command, ensure that you use the details from your
 project.
 
-#### iSCSI Configuration
+### iSCSI Configuration
 
 Go to **Google Cloud Platform** -\> **Compute Engine** -\> **VM
 instances**. The nodes displayed by default in this console are Compute
@@ -343,7 +343,7 @@ Select the nodes and click SSH to see the iSCSI configuration.
 
 c.  Repeat steps a and b for the remaining nodes.
 
-#### 2. Run OpenEBS Operator (using Google Cloud Shell)
+### 2. Run OpenEBS Operator (using Google Cloud Shell)
 
 Before applying OpenEBS Operator, ensure that the administrator context
 for the cluster is set. The following procedure helps you setup the
@@ -399,7 +399,7 @@ with additional options of consuming the storage (as outlined in
 Kubernetes local storage manager once OpenEBS integrates them in future
 releases.
 
-#### 3. Running Stateful Workloads with OpenEBS Storage
+### 3. Running Stateful Workloads with OpenEBS Storage
 
 To use OpenEBS as persistent storage for your stateful workloads, set
 the storage class in the Persistent Volume Claim (PVC) to the OpenEBS

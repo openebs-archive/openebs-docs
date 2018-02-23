@@ -1,11 +1,13 @@
-orphan
-:   
+---
+id: virtualmachines
+title: Virtual Machines
+sidebar_label: Virtual Machines
+---
 
-Virtual Machines
-================
+
 
 Setting up OpenEBS On Premise
------------------------------
+=============================
 
 This section provides detailed instructions on how to perform the
 OpenEBS on-premise deployment. The end goal of this precedure is to have

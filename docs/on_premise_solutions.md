@@ -1,22 +1,19 @@
-On-Premise Solutions
-====================
-
 Using Vagrant
--------------
+=============
 
-### Setting Up OpenEBS with Kubernetes on a Local Machine
+## Setting Up OpenEBS with Kubernetes on a Local Machine
 
 The following procedure helps you setup and use OpenEBS on a local
 machine:
 
-#### Prerequisites:
+### Prerequisites:
 
 -   Vagrant (\>=1.9.1)
 -   VirtualBox (\>=5.1)
 -   curl / wget / git and so on, to download the Vagrant file
 -   Ensure virtualization is enabled at the BIOS level
 
-**Minimum System Requirements**
+### **Minimum System Requirements**
 
 -   40GB hard disk space
 -   8GB RAM
@@ -32,7 +29,7 @@ Install and download Virtualbox using the procedure available at
 Install a Vagrant Box either by downloading the vagrant file or by
 cloning the repository.
 
-#### Installing a Vagrant Box by Downloading the Vagrantfile
+### Installing a Vagrant Box by Downloading the Vagrantfile
 
 1.  Create a demo directory for example, k8s-demo using the following
     command. :: mkdir k8s-demo
@@ -69,7 +66,7 @@ Get the list of storage classes using the following command. Choose the
 storage class that best suits your application. ::
 <ubuntu@kubemaster-01>:\~\$ kubectl get sc
 
-#### Installing a Vagrant Box by Cloning the Repository
+### Installing a Vagrant Box by Cloning the Repository
 
 1.  Clone the OpenEBS repository using the following command. :: git
     clone <http://github.com/openebs/openebs.git>
@@ -92,21 +89,21 @@ which you can verify using the corresponding kubectl commands.
     <http://NodeIP:8888> (NodeIP is any of the nodes' external IP)
     (kubectl get pods)
 
-### Installing Kubernetes on CentOS in Vagrant VMs
+## Installing Kubernetes on CentOS in Vagrant VMs
 
 The following procedure helps you install Kubernetes on CentOS version
 7.4 and use OpenEBS on that cluster. You will be setting up a 3 node
 cluster comprising of 1 Master and 2 Worker Nodes running Kubernetes
 1.8.5.
 
-#### Prerequisites:
+### Prerequisites:
 
 Verify that you have the following software installed on your machine.
 
 -   Vagrant (\>=1.9.1)
 -   VirtualBox 5.1
 
-#### Creating and Editing a Vagrantfile for CentOS
+### Creating and Editing a Vagrantfile for CentOS
 
 Run the following commands to create a Vagrantfile for CentOS. ::
 host-machine:\~/mkdir k8s-demo host-machine:\~/cd k8s-demo
@@ -153,7 +150,7 @@ ruby -*- \# vi: set ft=ruby :
 >
 > end
 
-#### Verifying the Vagrant VMs State
+### Verifying the Vagrant VMs State
 
 Verify the state of Vagrant VMs. The output displayed is similar to the
 following: :: host-machine:\~/k8s-demo\$ vagrant status Current machine
@@ -166,7 +163,7 @@ states:
 > with their current state. For more information about a specific VM,
 > run vagrant status NAME.
 
-#### Bringing up Vagrant VMs
+## Bringing up Vagrant VMs
 
 Use *vagrant up* command to bring up the VMs. ::
 host-machine:\~/k8s-demo\$ vagrant up
@@ -182,7 +179,7 @@ vagrant status Current machine states:
 > with their current state. For more information about a specific VM,
 > run vagrant status NAME.
 
-#### Before you Begin
+### Before you Begin
 
 -   SSH into each Vagrant VM and perform the following steps:
     -   Update the /etc/hosts file. Your hosts file will be similar to
@@ -247,7 +244,7 @@ vagrant status Current machine states:
     -   Execute the below step to enable and start the kubelet service.
         :: sudo systemctl enable kubelet && sudo systemctl start kubelet
 
-#### Create Cluster using kubeadm
+### Create Cluster using kubeadm
 
 -   Perform the following operations on the **Master Node**.
     -   Install wget. :: sudo yum install -y wget
@@ -280,7 +277,7 @@ vagrant status Current machine states:
 **Note:** OpenEBS uses iSCSI to connect to the block volumes. Steps 2
 and 3 are required to configure an initiator on the worker nodes.
 
-#### Setting Up OpenEBS Volume Provisioner
+### Setting Up OpenEBS Volume Provisioner
 
 -   Download the *openebs-operator.yaml* and
     *openebs-storageclasses.yaml* on the Kubernetes Master. :: wget
@@ -314,14 +311,14 @@ and 3 are required to configure an initiator on the worker nodes.
     openebs.io/provisioner-iscsi openebs-standard
     openebs.io/provisioner-iscsi openebs-zk openebs.io/provisioner-iscsi
 
-#### Running Stateful Workloads using OpenEBS
+### Running Stateful Workloads using OpenEBS
 
 \* Some sample YAML files for stateful workloads using OpenEBS are
 provided here\_. .. \_here:
 <https://github.com/openebs/openebs/tree/master/k8s/demo> \* For more
 information visit <http://openebs.readthedocs.io/en/latest/>
 
-### Troubleshooting
+## Troubleshooting
 
 **Issue:** Error while vagrant up.
 
@@ -329,9 +326,9 @@ information visit <http://openebs.readthedocs.io/en/latest/>
 version.
 
 Using Ansible
--------------
+=============
 
-### Setting Up OpenEBS on Ubuntu Hosts or Virtual Machines
+## Setting Up OpenEBS on Ubuntu Hosts or Virtual Machines
 
 This section provides detailed instructions on how to perform the
 OpenEBS on-premise deployment. The objective of this procedure is to
@@ -348,7 +345,7 @@ configurable.
 
 The Kubernetes cluster is setup, in this framework using *kubeadm*.
 
-### Running the Setup on Ubuntu 16.04
+## Running the Setup on Ubuntu 16.04
 
 The following instructions have been verified on -
 
@@ -357,7 +354,7 @@ The following instructions have been verified on -
 -   Ubuntu 16.04 64 bit Vagrant VMs running on Windows 10 (Vagrant
     (\>=1.9.1), VirtualBox 5.1)
 
-### Prerequisites:
+## Prerequisites:
 
 -   At least three Linux machines of either VMs or bare-metal, if
     deploying the setup in a hyperconverged mode (with K8s as well as
@@ -391,7 +388,7 @@ The recommended configuration for the VM host is as follows:
 -   4GB RAM
 -   Minimum of 2 CPU cores / vCPUs (if host is a VMware/other guest box)
 
-### Download
+## Download
 
 Setup the local working directory where the ansible code will be
 downloaded. Perform a git clone of the OpenEBS repository, and navigate
@@ -416,7 +413,7 @@ to e2e/ansible. :
     -rw-rw-r--  1 testuser testuser   379 Jun  5 09:29 setup-openebs.yml
     -rw-rw-r--  1 testuser testuser  4221 Jun  5 09:29 Vagrantfile
 
-### Setup Environment for OpenEBS Installation
+## Setup Environment for OpenEBS Installation
 
 -   Setup environment variables for the usernames and passwords of all
     the machines which have been brought up in the previous steps on the
@@ -478,7 +475,7 @@ more details on editing *machines.in*, see the Inventory README\_. ..
 The subsequent section explains the installation procedure for
 hyperconverged mode.
 
-### OpenEBS Installation - Hyperconverged Mode
+## OpenEBS Installation - Hyperconverged Mode
 
 -   Update the *inventory/group\_vars/all.yml* with the appropriate
     value *hyperconverged* for the key *deployment\_mode*.
@@ -539,7 +536,7 @@ hyperconverged mode.
         openebs-jupyter   openebs.io/provisioner-iscsi
         openebs-percona   openebs.io/provisioner-iscsi
 
-### Run Sample Applications on the OpenEBS Setup
+## Run Sample Applications on the OpenEBS Setup
 
 -   Test the OpenEBS setup installed using the above procedure by
     deploying a sample application pod.
@@ -596,7 +593,7 @@ hyperconverged mode.
     > r(MB/s)| w(MB/s)| rLat(ms)| wLat(ms)| rBlk(KB)| wBlk(KB)| 0| 3|
     > 0.000| 1.109| 0.000| 10.602| 0| 378| <name@MayaMaster>:\~\$
 
-### Tips and Gotchas
+# Tips and Gotchas
 
 -   Use the -v flag while running the playbooks to enable verbose output
     and logging. Increase the number of 'v's to increase the verbosity.

@@ -1,61 +1,43 @@
-orphan
-:   
+---
+id: prerequisites
+title: Prerequisites
+sidebar_label: Prerequisites
+---
 
-Prerequisites
-=============
+Setting up OpenEBS Cluster
+==========================
 
-Setting up OpenEBS cluster
---------------------------
+This section helps you to setup a simple OpenEBS Cluster with three machines, VMs or Servers. OpenEBS is both a scale-out and scale-up solution. The OpenEBS cluster created using this section can be taken into production and scaled up later to meet changing storage demands, by adding additional machines to the cluster.
 
-This section helps you to setup a simple OpenEBS Cluster with three
-machines, VMs or Servers. OpenEBS is both a scale-out and scale-up
-solution. The OpenEBS cluster created using this section can be taken
-into production and scaled up later to meet changing storage demands, by
-adding additional machines to the cluster.
+The clients (docker-hosts) can be configured to consume the OpenEBS storage either via Network (iSCSI) or using TCMU. This section helps you connect to the storage using iSCSI.
 
-The clients (docker-hosts) can be configured to consume the OpenEBS
-storage either via Network(iSCSI) or using TCMU. This section helps you
-connect to the storage using iSCSI.
+In this section, you will setup a simple OpenEBS cluster with three machines as follows:
 
-In this section, you will setup a simple OpenEBS cluster with three
-machines:
+**master-0** used as OpenEBS Maya Master (omm) and **host-01** and **host-02** used as OpenEBS Storage Host (osh).
 
-master-01 used as OpenEBS Maya Master (omm) and host-01 and host-02 used
-as OpenEBS Storage Host (osh).
-
-If you plan to setup using VMs on Virtual Box, you can skip down to the
-section of Preparing machines using Vagrant below.
+If you plan to setup using VMs on a Virtual Box, you can go to the preparing machines using Vagrant section below.
 
 ![](/_static/gettingstarted.png%0A%20:align:%20center)
 
-Prepare your machines for OpenEBS installation
-----------------------------------------------
+Preparing for OpenEBS Installation
+==============================================
 
-Since OpenEBS is delivered through containers, the OpenEBS hosts can be
-run on any operating system with container engine. This guide will use
-Ubuntu 16.04 and docker.
+Since OpenEBS is delivered through containers, OpenEBS hosts can be run on any operating system with container engine. This section will use Ubuntu 16.04 and docker.
 
-### Prepare Software
+## Preparing Software
 
-OpenEBS is a software-only solution that can be installed using the
-released binaries or built and installed directly from source. In this
-guide we will Ubuntu 16.04 as the underlying operating system.
+OpenEBS is a software-only solution that can be installed using the released binaries or built and installed directly from source. In this section you will use Ubuntu 16.04 as the underlying operating system.
 
-To download and install, you will require wget and unzip to be present
-on the operating system.:
+To download and install, you will require wget and unzip.
 
     sudo apt-get update
     sudo apt-get install -y wget unzip
 
-### Prepare Network
+## Preparing Network
 
-Typically, the storage is accessed via a different network (with high
-bandwidth 10G or 40G et.,) than management on 1G. You will need to
-identify the IP address on which the management traffic flows and the
-interface that is used for data.
+Typically, the storage is accessed through a different network (with high bandwidth 10G or 40G etc.,) rather than management on 1G. You will need to identify the IP address on which the management traffic flows and the interface that is used for data.
 
-It is possible that same interface can be used for both management and
-data.:
+It is possible that the same interface can be used for both management and data.
 
     ubuntu@host-01:~$ ip addr show
     1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
@@ -78,31 +60,23 @@ data.:
            valid_lft forever preferred_lft forever
     ubuntu@host-01:~$ 
 
-For example, we will be using the interface enp0s8 and subnet
-172.28.128.0/24 for both management and data in this guide.
+For example, you will be using the interface enp0s8 and subnet 172.28.128.0/24 for both management and data in this section.
 
-### Prepare Disk Storage
+## Preparing Disk Storage
 
-You can use maya to manage the local and remote disks. Optionally create
-RAID and filesystem layer ontop of the raw disks, etc.,
+You can use maya to manage the local and remote disks. Optionally create RAID and file system layer on top of the raw disks, and so on.
 
-In this guide for sake of simplicity, we will use the following
-directory /opt/openebs/. Ensure that the directory is writeable. Note
-that you add new replication stores at runtime and attach to VSMs. So
-when you move this node into production, you can move the content from
-local directories to local/remote disk based storage.:
+In this section for the sake of simplicity, you will use the following directory */opt/openebs/*. Ensure that the directory is writeable. Note that you add new replication stores at runtime and attach to VSMs. So when you move this node into production, you can move the content from local directories to local/remote disk based storage.
 
     sudo mkdir -p /opt/openebs
     sudo chown -R <docker-user> /opt/openebs
 
-Setup Vagrant VMs for OpenEBS installation.
--------------------------------------------
+Setup Vagrant VMs for OpenEBS Installation
+===========================================
 
-The Vagrantfile is available from github reporsitory. You can either
-copy/download the Vagrantfile or clone the code to your box. Ensure that
-you have VirtualBox 5.0.24 and above, Vagrant 1.9.0 and above.
+The Vagrantfile is available from GitHub repository. You can either copy or download the Vagrant file or clone the code to your box. Ensure that you have VirtualBox 5.0.24 and above and Vagrant 1.9.0 and above.
 
-The instructions for setting up using cloned code are as follows:
+The commands for setting up using cloned code is as follows:
 
     git clone https://github.com/openebs/maya.git
     cd maya/demo
