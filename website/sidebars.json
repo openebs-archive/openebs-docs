@@ -2,7 +2,7 @@
   "docs": {
     "Getting Started": ["doc1"],
     "Setup": ["overview", "prerequisites", "openshift", "cloudsolutions", "onpremise", "devsolutions", "runOpenEBSoperator"],
-    "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "MongoDB", "PerconaDB", "PerconaGalera", "runOpenEBSoperator", "Redis"],
+    "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "MongoDB", "PerconaDB", "PerconaGalera", "Redis"],
     "Policies": ["doc4"],
     "Troubleshooting": ["doc5"],
     "Contributing to OpenEBS documents": ["doc7"]
