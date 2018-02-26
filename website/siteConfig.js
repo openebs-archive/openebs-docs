@@ -15,9 +15,9 @@ const siteConfig = {
   projectName: 'OpenEBS',
 
   algolia: {
-    apiKey: "",
-    indexName: "",
-    inputSelector: "",
+    apiKey: "dc657dfe30f42f228671f557f49ced7a",
+    indexName: "openebs",
+    inputSelector: "### REPLACE ME ####",
     debug: true
     },
 
@@ -31,7 +31,7 @@ const siteConfig = {
   users,
   /* path to images for header/footer */
   headerIcon: 'img/OpenEBSLogo.png',
-  favicon: 'img/favicon.png',
+  favicon: 'img/favicon.ico',
   /* colors for website */
   colors: {
     primaryColor: '#f15a29',
