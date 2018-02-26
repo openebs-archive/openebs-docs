@@ -5,6 +5,5 @@
     "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
     "Policies": ["doc4"],
     "Troubleshooting": ["doc5"],
-    "Contributing to OpenEBS documents": ["doc7"]
   }
 }
