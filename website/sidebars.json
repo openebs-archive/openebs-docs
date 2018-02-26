@@ -4,6 +4,6 @@
     "Setup": ["overview", "prerequisites", "openshift", "cloudsolutions", "onpremise", "devsolutions", "runOpenEBSoperator"],
     "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
     "Policies": ["doc4"],
-    "Troubleshooting": ["doc5"],
+    "Troubleshooting": ["doc5"]
   }
 }
