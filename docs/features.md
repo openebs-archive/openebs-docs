@@ -1,3 +1,11 @@
+---
+id: features
+title: Features
+sidebar_label: Features
+---
+
+
+
 # Features
 
 OpenEBS offers persistent block storage with the following features.
