@@ -13,7 +13,7 @@ OpenEBS is a cloud native storage solution built with the goal of providing cont
 
 OpenEBS is a Container Attached Storage (CAS) - which combines the best of DAS and NAS Storage Solutions.
 
-![image](/assets/das-nas-cas.png)
+![image](/docs/assets/das-nas-cas.png)
 
 At the outset, OpenEBS provides you with:
 
@@ -29,7 +29,7 @@ OpenEBS is a Containerized Storage Solution that can be orchestrated by any Cont
 
 A typical stateful application using OpenEBS is as follows:
 
-![image](/assets/openebs-pv-2replica.png)
+![image](/docs/assets/openebs-pv-2replica.png)
 
 OpenEBS Volume comprises of Pods that are managed by Kubernetes itself, and each application gets its own storage controller which provides you with benefits like:
 
@@ -41,11 +41,11 @@ You can try out OpenEBS on your Kubernetes cluster using the [Quick Start Guide]
 
 If you are new to Kubernetes, here are some guides that can help you setup Kubernetes and install OpenEBS:
 
-> [Minikube](devsolutions.html#minikube)
-> [Baremetal\_](/docs/onpremise.html#running-the-setup-on-ubuntu-1604)
-> [Amazon EC2\_](/docs/cloudsolutions.html#amazon-cloud)
-> [GKE\_](/docs/cloudsolutions.html#google-cloud)
-> [OpenShift\_](/docs/openshift.html)
+> - [Minikube](devsolutions.html#minikube)
+> - [Baremetal](/docs/onpremise.html#running-the-setup-on-ubuntu-1604)
+> - [Amazon EC2](/docs/cloudsolutions.html#amazon-cloud)
+> - [GKE](/docs/cloudsolutions.html#google-cloud)
+> - [OpenShift](/docs/openshift.html)
 
 Once OpenEBS is installed on your Kubernetes cluster, you can start using it by specifying OpenEBS Storage Classes in your PVCs. Example: 
 
@@ -70,8 +70,8 @@ depending the application/namespace. This flexibility is provided via Custom Res
 
 Ready to try some stateful applications with OpenEBS? Here are some examples to start:
 
-> [MySQL\_](/docs/PerconaDB.html)
-> [Jenkins\_](/docs/Jenkins.html)
+> - [MySQL](/docs/PerconaDB.html)
+> - [Jenkins](/docs/Jenkins.html)
 
 Learn more by joining us on [Slack](http://slack.openebs.io). Feel free to come and ask any questions. Go to [Slack OpenEBS Community](https://openebs-community.slack.com/messages/C3NPGQ6G3/).
 
