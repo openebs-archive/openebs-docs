@@ -13,7 +13,7 @@ OpenEBS is a cloud native storage solution built with the goal of providing cont
 
 OpenEBS is a Container Attached Storage (CAS) - which combines the best of DAS and NAS Storage Solutions.
 
-![image](../_static/das-nas-cas.png%0A%20:align:%20center)
+![image](../assets/das-nas-cas.png%0A%20:align:%20center)
 
 At the outset, OpenEBS provides you with:
 
@@ -29,7 +29,7 @@ OpenEBS is a Containerized Storage Solution that can be orchestrated by any Cont
 
 A typical stateful application using OpenEBS is as follows:
 
-![image](../_static/openebs-pv-2replica.png%0A%20:align:%20center)
+![image](../assets/openebs-pv-2replica.png%0A%20:align:%20center)
 
 OpenEBS Volume comprises of Pods that are managed by Kubernetes itself, and each application gets its own storage controller which provides you with benefits like:
 
@@ -37,11 +37,11 @@ OpenEBS Volume comprises of Pods that are managed by Kubernetes itself, and each
 -   scaling up/down replicas as they are deployments with node/pod affinity constraints
 -   extending the manageability via namespaces/RBAC to storage
 
-You can try out OpenEBS on your Kubernetes cluster using the [Quick Start Guide](./quick_install.html).
+You can try out OpenEBS on your Kubernetes cluster using the [Quick Start Guide](prerequisites.html).
 
 If you are new to Kubernetes, here are some guides that can help you setup Kubernetes and install OpenEBS:
 
-> [Minikube\_](https://raw.githubusercontent.com/openebs/openebs/master/documentation/source/intro/overview.rst)
+> [Minikube](devsolutions.html#minikube)
 > :   
 > [Baremetal\_](https://raw.githubusercontent.com/openebs/openebs/master/documentation/source/intro/overview.rst)
 > :   
