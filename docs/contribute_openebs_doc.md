@@ -4,11 +4,7 @@ title: OpenEBS Contribution Guide
 sidebar_label: OpenEBS Contribution Guide
 ---
 
-You can access the latest documents at <http://openebs.readthedocs.io/en/latest/>.
-
-Automated builds are setup for OpenEBS documentation at <https://readthedocs.org/projects/openebs/>
-
-Sphinx is used for building the OpenEBS documentation - <http://www.sphinx-doc.org/en/stable/tutorial.html>
+You can access the latest documents at https://docs.openebs.io.
 
 1.  If you would like to give feedback on existing content, create an issue on documentation see, [Creating an Issue](http://openebs.readthedocs.io/en/latest/contribute/contribute_openebs_doc.html#creating-an-issue).
 2.  If you would like to contribute to new content,
