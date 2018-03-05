@@ -41,3 +41,5 @@ OpenEBS Jiva Volume with two or more replicas and a single controller
 -   There is no storage downtime as the other available replica displays inputs/outputs.
 -   Policies are in place that does not allow re-scheduling of crashed replica (as replica is tied to a node's resources) to any other node.
 
+
+<script> (function(h,o,t,j,a,r){ h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}; h._hjSettings={hjid:785693,hjsv:6}; a=o.getElementsByTagName('head')[0]; r=o.createElement('script');r.async=1; r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv; a.appendChild(r); })(window,document,'[https://static.hotjar.com/c/hotjar-','.js?sv='](https://static.hotjar.com/c/hotjar-','.js?sv=%27)); </script>
