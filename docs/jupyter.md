@@ -7,22 +7,30 @@ sidebar_label: Jupyter
 Running Jupyter on OpenEBS
 --------------------------
 
-This section provides detailed instructions on how to run a jupyter pod
-on OpenEBS storage in a Kubernetes cluster and uses a *jupyter ui
-editor* to generate load in order to illustrate input/output traffic on
+This section provides detailed instructions on how to run a jupyter pod on OpenEBS storage in a Kubernetes cluster and uses a *jupyter ui editor* to generate load in order to illustrate input/output traffic on
 the storage.
 
 Run Jupyter Pod with OpenEBS Storage
 ------------------------------------
 
-Use OpenEBS as persistent storage for the jupyter pod by selecting an
-OpenEBS storage class in the persistent volume claim. A sample jupyter
-pod yaml (with container attributes and pvc details) is available in the
-OpenEBS git repository (which was cloned in the previous steps). ::
-<name@Master>:\~\$ cat demo-jupyter-openebs.yaml .. kind:
-PersistentVolumeClaim apiVersion: v1 metadata: name:
-jupyter-data-vol-claim spec: storageClassName: openebs-jupyter
-accessModes: - ReadWriteOnce resources: requests: storage: 5G ..
+Use OpenEBS as persistent storage for the jupyter pod by selecting an OpenEBS storage class in the persistent volume claim. A sample jupyter pod yaml (with container attributes and pvc details) is available in the OpenEBS git repository (which was cloned in the previous steps).
+
+```
+name@Master:~$ cat demo-jupyter-openebs.yaml 
+.. 
+kind: PersistentVolumeClaim 
+apiVersion: v1 
+metadata: 
+  name: jupyter-data-vol-claim 
+spec: 
+  storageClassName: openebs-jupyter
+  accessModes: 
+    - ReadWriteOnce 
+  resources: 
+    requests: 
+      storage: 5G 
+..
+```
 
 Apply the jupyter pod yaml using the following command.
 
@@ -31,20 +39,13 @@ Apply the jupyter pod yaml using the following command.
     persistentvolumeclaim "jupyter-data-vol-claim" created
     service "jupyter-service" created
 
-The above command creates the following, which can be verified using the
-corresponding kubectl commands.
+The above command creates the following, which can be verified using the corresponding kubectl commands.
 
--   Launches a Jupyter Server, with the specified notebook file from
-    github (kubectl get deployments)
--   Creates an OpenEBS Volume and mounts to the Jupyter Server Pod
-    (/mnt/data) (kubectl get pvc) (kubectl get pv) (kubectl get pods)
--   Exposes the Jupyter Server to external world via the
-    <http://>\<NodeIP\>:32424 (NodeIP is any of the nodes external IP)
-    (kubectl get pods)
+-   Launches a Jupyter Server, with the specified notebook file from github (kubectl get deployments)
+-   Creates an OpenEBS Volume and mounts to the Jupyter Server Pod (/mnt/data) (kubectl get pvc) (kubectl get pv) (kubectl get pods)
+-   Exposes the Jupyter Server to external world via the <http://>\<NodeIP\>:32424 (NodeIP is any of the nodes external IP) (kubectl get pods)
 
-Verify that the OpenEBS storage pods, that is, the jiva controller and
-jiva replicas are created and the jupyter pod is running successfully
-using the following commands.
+Verify that the OpenEBS storage pods, that is, the jiva controller and jiva replicas are created and the jupyter pod is running successfully using the following commands.
 
     name@Master:~$ kubectl get pods
     NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -57,10 +58,10 @@ using the following commands.
 
 **Note:**
 
-It may take some time for the pods to start as the images must be pulled
-and instantiated. This is also dependent on the network speed.
+It may take some time for the pods to start as the images must be pulled and instantiated. This is also dependent on the network speed.
 
-The jupyter server dashboard can be accessed on the Kubernetes node port
-as in the following screen.
+The jupyter server dashboard can be accessed on the Kubernetes node port as in the following screen.
 
 ![image](https://raw.githubusercontent.com/openebs/openebs/master/documentation/source/_static/Jupyter.png)
+
+<script> (function(h,o,t,j,a,r){ h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}; h.hjSettings={hjid:785693,hjsv:6}; a=o.getElementsByTagName('head')[0]; r=o.createElement('script');r.async=1; r.src=t+h.hjSettings.hjid+j+h._hjSettings.hjsv; a.appendChild(r); })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv='); </script>

@@ -8,8 +8,6 @@ sidebar_label: FAQ
 
 # OpenEBS FAQs
 
-
-
 ## What is most distinctive about the OpenEBS architecture?
 
 The OpenEBS architecture is an example of Container Attached Storage. These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, as well, allowing an orchestrator such as Kubernetes to automate the management of the storage. The benefits include the automation of the management, the delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.
@@ -119,3 +117,5 @@ There are at least four common reasons given for running OpenEBS on Amazon EBS:
 - No volume management needed:  OpenEBS removes the need for volume management, enabling the combination of multiple underlying EBS volumes without the user needing to run LVM or other volume manager.  This saves time and reduces operational complexity.
 - Expansion and inclusion of NVMe:  OpenEBS allows users to add additional capacity without experiencing downtime.  This online addition of capacity can include NVMe and SSD instances from cloud providers or deployed in physical servers.  This means that as performance requirements increase, or decrease, Kubernetes can be used via storage policies to instruct OpenEBS to change capacity accordingly. 
 - Other enterprise capabilities:  OpenEBS adds other capabilities such as extremely efficient snapshots and clones as well as forthcoming capabilities such as encryption.  Snapshots and clones facilitate much more efficient CI/CD workflows because zero space copies of databases and other stateful workloads can be used in these and other workflows, improving these workflows without incurring additional storage space or administrative effort.  The snapshot capabilities can also be used for replication.  As of February 2018 these replication capabilities are under development.
+
+<script> (function(h,o,t,j,a,r){ h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}; h._hjSettings={hjid:785693,hjsv:6}; a=o.getElementsByTagName('head')[0]; r=o.createElement('script');r.async=1; r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv; a.appendChild(r); })(window,document,'[https://static.hotjar.com/c/hotjar-','.js?sv='](https://static.hotjar.com/c/hotjar-','.js?sv=%27)); </script>
