@@ -4,16 +4,10 @@ title: CockroachDB
 sidebar_label: CockroachDB
 ---
 
-CockroachDB is a distributed SQL database built on a transactional and
-strongly-consistent key-value store. It scales horizontally; survives
-disk, machine, rack, and even datacenter failures with minimal latency
-disruption and no manual intervention; supports strongly-consistent ACID
-transactions; and provides a familiar SQL API for structuring,
-manipulating, and querying data.
+CockroachDB is a distributed SQL database built on a transactional and strongly-consistent key-value store. It scales horizontally; survives disk, machine, rack, and even datacenter failures with minimal latency
+disruption and no manual intervention; supports strongly-consistent ACID transactions; and provides a familiar SQL API for structuring, manipulating, and querying data.
 
-This section demonstrates the deployment of CockroachDB as a StatefulSet
-in a Kubernetes cluster. You will be able to spawn a CockroachDB
-StatefulSet that will use OpenEBS as its persistent storage.
+This section demonstrates the deployment of CockroachDB as a StatefulSet in a Kubernetes cluster. You will be able to spawn a CockroachDB StatefulSet that will use OpenEBS as its persistent storage.
 
 Benefits of Deploying CockroachDB as a StatefulSet
 --------------------------------------------------
@@ -28,8 +22,7 @@ Deploying CockroachDB as a StatefulSet provides the following benefits.
 Deploying CockroachDB with Persistent Storage
 ---------------------------------------------
 
-Before starting, check the status of the cluster using the following
-command. :
+Before starting, check the status of the cluster using the following command. 
 
     ubuntu@kubemaster:~kubectl get nodes
     NAME            STATUS    AGE       VERSION
