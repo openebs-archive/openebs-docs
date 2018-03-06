@@ -29,6 +29,7 @@ const siteConfig = {
     //{page: 'help', label: 'Help'},
   ],
   users,
+  editUrl: 'https://github.com/openebs/openebs-docs/edit/staging/docs/',
   /* path to images for header/footer */
   headerIcon: 'img/OpenEBSLogo.png',
   favicon: 'img/favicon.ico',
