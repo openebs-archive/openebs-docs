@@ -116,10 +116,20 @@ There are at least four common reasons given for running OpenEBS on Amazon EBS:
 - Expansion and inclusion of NVMe:  OpenEBS allows users to add additional capacity without experiencing downtime.  This online addition of capacity can include NVMe and SSD instances from cloud providers or deployed in physical servers.  This means that as performance requirements increase, or decrease, Kubernetes can be used via storage policies to instruct OpenEBS to change capacity accordingly. 
 - Other enterprise capabilities:  OpenEBS adds other capabilities such as extremely efficient snapshots and clones as well as forthcoming capabilities such as encryption.  Snapshots and clones facilitate much more efficient CI/CD workflows because zero space copies of databases and other stateful workloads can be used in these and other workflows, improving these workflows without incurring additional storage space or administrative effort.  The snapshot capabilities can also be used for replication.  As of February 2018 these replication capabilities are under development.
 
-<script> 
+<!-- Hotjar Tracking Code for https://docs.openebs.io -->
+<script>
+  
 
 ```
-(function(h,o,t,j,a,r){ h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}; h.hjSettings={hjid:785693,hjsv:6}; a=o.getElementsByTagName('head')[0]; r=o.createElement('script');r.async=1; r.src=t+h.hjSettings.hjid+j+h._hjSettings.hjsv; a.appendChild(r); })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv='); 
+   (function(h,o,t,j,a,r){
+   h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+   h._hjSettings={hjid:785693,hjsv:6};
+   a=o.getElementsByTagName('head')[0];
+   r=o.createElement('script');r.async=1;
+   r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+   a.appendChild(r);
+   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 ```
 
+ 
 </script>
