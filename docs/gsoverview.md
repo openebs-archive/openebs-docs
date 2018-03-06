@@ -1,13 +1,8 @@
 ---
 id: gsoverview
-title: Introduction
-sidebar_label: Introduction
+title: OpenEBS Introduction
+sidebar_label: OpenEBS Introduction
 ---
-
-
-
-OpenEBS Introduction
-====================
 
 OpenEBS is a cloud native storage solution built with the goal of providing containerized storage for containers. Using OpenEBS, a developer can seamlessly get the persistent storage for stateful applications with ease, much of which is automated, while using the popular orchestration platforms such as Kubernetes.
 
@@ -41,11 +36,11 @@ You can try out OpenEBS on your Kubernetes cluster using the [Quick Start Guide]
 
 If you are new to Kubernetes, here are some guides that can help you setup Kubernetes and install OpenEBS:
 
-> - [Minikube](devsolutions.html#minikube)
-> - [Baremetal](/docs/onpremise.html#running-the-setup-on-ubuntu-1604)
-> - [Amazon EC2](/docs/cloudsolutions.html#amazon-cloud)
-> - [GKE](/docs/cloudsolutions.html#google-cloud)
-> - [OpenShift](/docs/openshift.html)
+- [Minikube](devsolutions.html#minikube)
+- [Baremetal](/docs/onpremise.html#running-the-setup-on-ubuntu-1604)
+- [Amazon EC2](/docs/cloudsolutions.html#amazon-cloud)
+- [GKE](/docs/cloudsolutions.html#google-cloud)
+- [OpenShift](/docs/openshift.html)
 
 Once OpenEBS is installed on your Kubernetes cluster, you can start using it by specifying OpenEBS Storage Classes in your PVCs. Example: 
 
@@ -70,8 +65,8 @@ depending the application/namespace. This flexibility is provided via Custom Res
 
 Ready to try some stateful applications with OpenEBS? Here are some examples to start:
 
-> - [MySQL](/docs/PerconaDB.html)
-> - [Jenkins](/docs/Jenkins.html)
+- [MySQL](/docs/PerconaDB.html)
+- [Jenkins](/docs/Jenkins.html)
 
 Learn more by joining us on [Slack](http://slack.openebs.io). Feel free to come and ask any questions. Go to [Slack OpenEBS Community](https://openebs-community.slack.com/messages/C3NPGQ6G3/).
 
@@ -79,4 +74,10 @@ Learn more by joining us on [Slack](http://slack.openebs.io). Feel free to come 
 
 [Changelog](/docs/releasenotes.html)
 
-<script> (function(h,o,t,j,a,r){ h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}; h._hjSettings={hjid:785693,hjsv:6}; a=o.getElementsByTagName('head')[0]; r=o.createElement('script');r.async=1; r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv; a.appendChild(r); })(window,document,'[https://static.hotjar.com/c/hotjar-','.js?sv='](https://static.hotjar.com/c/hotjar-','.js?sv=%27)); </script>
+<script> 
+
+```
+(function(h,o,t,j,a,r){ h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}; h.hjSettings={hjid:785693,hjsv:6}; a=o.getElementsByTagName('head')[0]; r=o.createElement('script');r.async=1; r.src=t+h.hjSettings.hjid+j+h._hjSettings.hjsv; a.appendChild(r); })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv='); 
+```
+
+</script>

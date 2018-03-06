@@ -31,47 +31,47 @@ Prerequisites
 Installing OpenShift
 --------------------
 
-1.  Download the OpenShift Ansible Playbooks.
+1. Download the OpenShift Ansible Playbooks.
 
-> Clone the OpenShift Ansible repository of any stable release branch to your Ansible machine and go to the directory. Use the same version of openshift-ansible and openshift-origin release for installation.
->
-> In this example, you will install Openshift Origin release v3.7 using the following commands. :: git clone
-> <https://github.com/openshift/openshift-ansible.git> cd openshift-ansible
+Clone the OpenShift Ansible repository of any stable release branch to your Ansible machine and go to the directory. Use the same version of openshift-ansible and openshift-origin release for installation.
+
+In this example, you will install Openshift Origin release v3.7 using the following commands. 
+
+```
+git clone
+https://github.com/openshift/openshift-ansible.git cd openshift-ansible
+```
 
 2.  Prepare the OpenShift Inventory file.
 
-> Create the ansible inventory file to install a simple OpenShift cluster with only master and nodes setup. You can use the following inventory template. 
->
-> `cat openshift\_inventory`
->
-> > `[OSEv3:children] masters nodes etcd`
-> >
-> > `[OSEv3:vars] \# SSH user, this user should allow ssh based auth`
-> > `without requiring a password ansible\_ssh\_user=root`
-> > `ansible\_ssh\_port=22 openshift\_deployment\_type=origin`
-> > `deployment\_type=origin openshift\_release=v3.7`
-> > `openshift\_pkg\_version=-3.7.0 debug\_level=2`
-> > `openshift\_disable\_check=disk\_availability,memory\_availability,docker\_storage,docker\_image\_availability`
-> > `openshift\_master\_default\_subdomain=apps.cbqa.in`
-> > `osm\_default\_node\_selector='region=lab'`
-> >
-> > `openshift\_master\_identity\_providers=[{'name': 'htpasswd\_auth',`
-> > `'login': 'true', 'challenge': 'true', 'kind':`
-> > `'HTPasswdPasswordIdentityProvider', 'filename':`
-> > `'/etc/origin/htpasswd'}]`
-> >
-> > `[masters] CentOS1.cbqa.in`
-> >
-> > `[etcd] CentOS1.cbqa.in`
-> >
-> > `[nodes] CentOS1.cbqa.in openshift\_node\_labels="{'region': 'infra',`
-> > `'zone': 'baremetal'}" openshift\_schedulable=true CentOS2.cbqa.in`
-> > `openshift\_node\_labels="{'region': 'lab', 'zone': 'baremetal'}"`
-> > `openshift\_schedulable=true CentOS3.cbqa.in`
-> > `openshift\_node\_labels="{'region': 'lab', 'zone': 'baremetal'}"`
-> > `openshift\_schedulable=true CentOS4.cbqa.in`
-> > `openshift\_node\_labels="{'region': 'lab', 'zone': 'baremetal'}"`
-> > `openshift\_schedulable=true`
+Create the ansible inventory file to install a simple OpenShift cluster with only master and nodes setup. You can use the following inventory template. 
+
+```
+cat openshift\_inventory
+[OSEv3:children] masters nodes etcd
+[OSEv3:vars] \# SSH user, this user should allow ssh based auth
+without requiring a password ansible_ssh_user=root
+ansible\_ssh\_port=22 openshift\_deployment\_type=origin
+deployment\_type=origin openshift\_release=v3.7
+openshift_pkg_version=-3.7.0 debug_level=2openshift_disable_check=disk_availability,memory_availability,docker_storage,docker_image_availability
+openshift_master_default_subdomain=apps.cbqa.in
+osm_default_node_selector='region=lab'
+
+openshift_master_identity_providers=[{'name': 'htpasswd_auth','login': 'true','challenge':'true', 'kind':'HTPasswdPasswordIdentityProvider', 'filename':
+'/etc/origin/htpasswd'}]
+
+[masters] CentOS1.cbqa.in
+[etcd] CentOS1.cbqa.in
+
+[nodes] 
+CentOS1.cbqa.in openshift_node_labels="{'region': 'infra','zone': 'baremetal'}" openshift_schedulable=true 
+CentOS2.cbqa.in openshift_node_labels="{'region': 'lab', 'zone': 'baremetal'}"
+openshift_schedulable=true 
+CentOS3.cbqa.in openshift_node_labels="{'region': 'lab', 'zone': 'baremetal'}"
+openshift_schedulable=true 
+CentOS4.cbqa.in openshift_node_labels="{'region': 'lab', 'zone': 'baremetal'}"
+openshift_schedulable=true
+```
 
 **Note:** The OpenShift deploy cluster playbook performs a health-check prior to execution of the install roles to verify system readiness.
 
@@ -99,46 +99,53 @@ Typically, the following pitfalls can be observed:
 
         Following additions can be made to the existing CentOS repositories (/etc/yum.repos.d/CentOS-Base.repo): 
 
-        `#openshift`
-        `[openshift] name=CentOS-OpenShift`
-        `baseurl=http://mirror.centos.org/centos/7/paas/x86\_64/openshift-origin/`
-        `gpgcheck=1 enabled=1`
-        `gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-PaaS`
+        ```
+        #Openshift
+        [openshift] name=CentOS-OpenShift
+        baseurl=http://mirror.centos.org/centos/7/paas/x86\_64/openshift-origin/
+        gpgcheck=1 enabled=1
+        gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-PaaS
+        ```
 
 3.  Run the Ansible Playbook job to setup OpenShift cluster.
 
-> Once the inventory file is ready, run the deploy\_cluster playbook to setup the OpenShift cluster. The setup can take around 15-20 minutes depending on network speed and resources available.
->
-> **Note:** The deploy\_cluster playbook also includes playbooks to setup Glusterfs, monitoring, logging and so on which are optional. In this example, only the etcd, master, node, and management setup
-> playbooks were executed, with other playbook imports commented. 
->
-> `ansible-playbook -i openshift-ansible/openshift\_inventory`
-> `openshift-ansible/playbooks/deploy\_cluster.yml`
->
-> The playbook should complete without errors. The trailing output of
-> the playbook run should look similar to the following: :: 
->
-> `PLAY RECAP`
-> `*********************************************\********************************************\****\******\*\*`
-> `CentOS1.cbqa.in : ok=404 changed=124 unreachable=0 failed=0`
-> `CentOS2.cbqa.in : ok=144 changed=46 unreachable=0 failed=0`
-> `CentOS3.cbqa.in : ok=144 changed=46 unreachable=0 failed=0`
-> `CentOS4.cbqa.in : ok=144 changed=46 unreachable=0 failed=0 localhost :`
-> `ok=12 changed=0 unreachable=0 failed=0`
->
-> > `INSTALLER STATUS`
-> > `***************************************\********************************************\********\****`
-> > `Initialization : Complete (0:00:43) Health Check : Complete`
-> > `(0:00:11) etcd Install : Complete (0:01:20) Master Install :`
-> > `Complete (0:09:44) Master Additional Install : Complete (0:00:48)`
-> > `Node Install : Complete (0:06:28)`
->
-> Execute the following commands to verify successful installation. 
-> `oc get nodes`
->
-> > `NAME STATUS AGE VERSION centos1.cbqa.in Ready 16h v1.7.6+a08f5eeb62`
-> > `centos2.cbqa.in Ready 16h v1.7.6+a08f5eeb62 centos3.cbqa.in Ready`
-> > `16h v1.7.6+a08f5eeb62 centos4.cbqa.in Ready 16h v1.7.6+a08f5eeb62`
+Once the inventory file is ready, run the deploy\_cluster playbook to setup the OpenShift cluster. The setup can take around 15-20 minutes depending on network speed and resources available.
+
+**Note:** The deploy\_cluster playbook also includes playbooks to setup Glusterfs, monitoring, logging and so on which are optional. In this example, only the etcd, master, node, and management setup
+playbooks were executed, with other playbook imports commented. 
+
+```
+ansible-playbook -i openshift-ansible/openshift\_inventory openshift-ansible/playbooks/deploy\_cluster.yml
+```
+
+The playbook should complete without errors. The trailing output of the playbook run should look similar to the following: 
+
+```
+PLAY RECAP*********************************
+CentOS1.cbqa.in : ok=404 changed=124 unreachable=0 failed=0
+CentOS2.cbqa.in : ok=144 changed=46 unreachable=0 failed=0
+CentOS3.cbqa.in : ok=144 changed=46 unreachable=0 failed=0
+CentOS4.cbqa.in : ok=144 changed=46 unreachable=0 failed=0 localhost :
+ok=12 changed=0 unreachable=0 failed=0
+INSTALLER STATUS*********************************
+Initialization : Complete (0:00:43) 
+Health Check : Complete (0:00:11) 
+etcd Install : Complete (0:01:20) 
+Master Install :Complete (0:09:44) 
+Master Additional Install : Complete (0:00:48)
+Node Install : Complete (0:06:28)
+```
+
+Execute the following commands to verify successful installation. 
+
+```
+oc get nodes
+NAME STATUS AGE VERSION centos1.cbqa.in Ready 16h v1.7.6+a08f5eeb62
+centos2.cbqa.in Ready 16h v1.7.6+a08f5eeb62 centos3.cbqa.in Ready
+16h v1.7.6+a08f5eeb62 centos4.cbqa.in Ready 16h v1.7.6+a08f5eeb62
+```
+
+
 
 4.  Initial setup
 
@@ -251,3 +258,10 @@ Login to the OpenShift management console at <https://:8443> as "admin" user. Na
 > > :   center
 > >
 
+<script> 
+
+```
+(function(h,o,t,j,a,r){ h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}; h.hjSettings={hjid:785693,hjsv:6}; a=o.getElementsByTagName('head')[0]; r=o.createElement('script');r.async=1; r.src=t+h.hjSettings.hjid+j+h._hjSettings.hjsv; a.appendChild(r); })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv='); 
+```
+
+</script>
