@@ -24,7 +24,7 @@ This section provides detailed instructions which allow you to perform the follo
 
    The number of replicas in the StatefulSet can be modified as required. The following example uses three replicas. The replica count can be edited in the StatefulSet specification. 
 
-    ---
+   ---
     apiVersion: apps/v1beta1
     kind: StatefulSet
     metadata:
@@ -335,4 +335,14 @@ By default, the databases cannot be viewed on the secondary instance through the
          syncedTo: Mon Oct 23 2017 07:28:27 GMT+0000 (UTC)
          0 secs (0 hrs) behind the primary
 
-<script> (function(h,o,t,j,a,r){ h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}; h._hjSettings={hjid:785693,hjsv:6}; a=o.getElementsByTagName('head')[0]; r=o.createElement('script');r.async=1; r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv; a.appendChild(r); })(window,document,'[https://static.hotjar.com/c/hotjar-','.js?sv='](https://static.hotjar.com/c/hotjar-','.js?sv=%27)); </script>
+<!-- Hotjar Tracking Code for https://docs.openebs.io -->
+<script>
+   (function(h,o,t,j,a,r){
+       h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+       h._hjSettings={hjid:785693,hjsv:6};
+       a=o.getElementsByTagName('head')[0];
+       r=o.createElement('script');r.async=1;
+       r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+       a.appendChild(r);
+   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
