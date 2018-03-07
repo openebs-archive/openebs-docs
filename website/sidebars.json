@@ -4,7 +4,7 @@
     "Setup": ["overview", "prerequisites", "openshift", "cloudsolutions", "onpremise", "devsolutions", "runOpenEBSoperator"],
     "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
     "Policies": ["storagepolicies"],
-    "Troubleshooting": ["troubleshooting"],
+    "Troubleshooting": ["troubleshooting", "tsgpvs"],
     "Contributing to OpenEBS documents": ["contribute"]
   }
 }

@@ -11,7 +11,9 @@ The list of OpenEBS issues and their workarounds are available either at the Ope
 - [OpenEBS issues on Slack](https://openebs-community.slack.com/messages/C4VAJUVPG/)
 - [OpenEBS issues on GitHub](https://github.com/openebs/openebs/issues)
 
-If your problem is not answered in any of the above URLs, you can refer to the documentation where the Components and Architecture section explains the OpenEBS architecture and how each component works, while the [Setup](overview.html) section provides practical instructions for setting up OpenEBS.
+If your problem is not answered in any of the above URLs, you can refer to the documentation where the Components and Architecture section explains the OpenEBS architecture and how each component works, while the [Setup](overview.html) section provides practical instructions for setting up OpenEBS. The sections under Troubleshooting covers troubleshooting the issues and workarounds. If the procedures provided are not helpful in resolving the problem, please raise an issue and/or join the #openebs-users slack channel. The team at OpenEBS will be happy to help !!
+
+Contributions are welcome to add procedures for scenarios/environments not covered !!
 
 ## Slack
 
