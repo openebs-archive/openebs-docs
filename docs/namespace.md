@@ -4,7 +4,7 @@ title: Customizing Namespace
 sidebar_label: Customizing Namespace
 ---
 
-OpenEBS is usually deployed with the *default* namespce. You can customize the namespace and specify a name other than *default*.  To customize namespace to *openebs* instead of *default*,  you must change all the namespaces in the *openebs-operator.yaml* file to *openebs*. 
+OpenEBS is usually deployed in the *default* namespace. You can deploy OpenEBS in another namespace  other than the *default* namespace.  To customize namespace to *openebs* instead of *default*,  you must change all the namespaces in the *openebs-operator.yaml* file to *openebs*. 
 
 1. Create a namespace as in the following example i.e., modify *name:* to *openebs*.
 
@@ -24,21 +24,29 @@ OpenEBS is usually deployed with the *default* namespce. You can customize the n
                 fieldRef:
                   fieldPath: metadata.namespace
 
-You can also use the following commands and retain the *openebs-operator.yaml* file as is. In the following example you are creating a percona namespace.
+### Namespace in Application Files
+
+You can also use the following commands to make changes in the application files. In the following example you are creating a percona namespace.
 
 ```
 kubectl create ns percona
-kubectl apply -f openebs-operator.yaml -ns percona 
+kubectl apply -f openebs-operator.yaml -n percona 
 ```
 
-You can view the changes by giving the `kubectl get pods --all-namespaces` command which will display output similar to following.
+You can view the changes by giving the `kubectl get pods --all-namespaces` command which will display output similar to following. You can see that the default namespace is replaced with percona.
 
 ```
 vagrant@minikube-dev:~$ kubectl get pods --all-namespaces
-NAMESPACE     NAME                              READY     STATUS    RESTARTS   AGE
-percona   kube-addon-manager-minikube-dev   	1/1       Running   1          8m
-percona   kube-dns-910330662-4q4bm          	3/3       Running   3          8m
-percona   kubernetes-dashboard-txn8f        	1/1       Running   1          8m
+NAMESPACE     NAME                                                             READY     STATUS   RESTARTS   AGE
+percona       maya-apiserver-7cd7478c74-xrxnl                                  1/1       Running   4          8d
+percona       openebs-provisioner-fc5cb748b-kqgvt                              1/1       Running   8          8d
+percona       percona                                                          1/1		 Running   1          8d
+percona       pvc-17e21bd3-c948-11e7-a157-000c298ff5fc-ctrl-3572426415-n8ctb   1/1       Running   0          8d
+percona       pvc-17e21bd3-c948-11e7-a157-000c298ff5fc-rep-3113668378-9437w    1/1       Running   0          8d
+percona       pvc-17e21bd3-c948-11e7-a157-000c298ff5fc-rep-3113668378-xnt12    1/1       Running   0          8d
+kube-system   kube-addon-manager-minikube                                      1/1       Running   13         8d
+kube-system   kube-dns-86f6f55dd5-8fxkr                                        3/3       Running   40         8d
+kube-system   kubernetes-dashboard-vsdmh                                       1/1       Running   13         8d
 vagrant@minikube-dev:~$ 
 ```
 
