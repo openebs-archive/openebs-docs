@@ -6,11 +6,23 @@ sidebar_label: Persistent Volumes
 
 This section captures steps to troubleshoot and resolve some errors faced while using OpenEBS Persistent Volumes (PVs). The procedures and commands used in this document are mostly generic and are applicable on any common Linux platform/Kubernetes environment. 
 
-#### Issue: 
+The following issues are covered in this section.
 
-##### Application pod is stuck in ContainerCreating state after deployment
+[Application pod is stuck in ContainerCreating state after deployment](#Application pod is stuck in ContainerCreating state after deployment)
 
-#### Troubleshooting the issue and Workaround:
+[Application pod enters CrashLoopBackOff state](#Application pod enters CrashLoopBackOff state)
+
+[Stale data seen post application pod reschedule on other nodes](#Stale data seen post application pod reschedule on other nodes)
+
+[Application and OpenEBS pods terminate/restart under heavy I/O load](#Application and OpenEBS pods terminate/restart under heavy I/O load)
+
+
+
+### Issue: 
+
+#### Application pod is stuck in ContainerCreating state after deployment
+
+### Troubleshooting the issue and Workaround:
 
 - Obtain the output of the `kubectl describe pod <application_pod>` and check the events.
 
@@ -40,13 +52,13 @@ This section captures steps to troubleshoot and resolve some errors faced while 
   - *allowHostDirVolumePlugin: true*
   - *runAsUser: runAsAny*
 
-#### Issue: 
+### Issue: 
 
-##### Application pod enters CrashLoopBackOff state
+#### Application pod enters CrashLoopBackOff state
 
 This issue is due to failed application operations in the container. Typically this is caused due to failed writes on the mounted PV. To confirm this, check the status of the PV mount inside the application pod.
 
-#### Troubleshooting the issue:
+### Troubleshooting the issue:
 
 - Perform a `kubectl exec -it <app>` bash (or any available shell) on the application pod and attempt writes on the volume mount. The volume mount can be obtained either from the application specification ("volumeMounts" in container spec) or by performing a `df -h` command in the controller shell (the OpenEBS iSCSI device will be mapped to the volume mount).
 - The writes can be a attempted using a simple command like `echo abc > t.out` on the mount. If the writes fail with *Read-only file system errors*, it means the iSCSI connections to the OpenEBS volumes are lost. You can confirm by checking the node's system logs including iscsid, kernel (syslog) and the kubectl logs (`journalctl -xe, kubelet.log`).
@@ -62,7 +74,7 @@ This issue is due to failed application operations in the container. Typically t
 
 - In certain cases, the node/replica loss can lead to the replica quorum not being met (i.e., less than 51% of replicas available) for an extended period of time, causing the OpenEBS volume to be presented as a RO device.
 
-  #### Workaround/Recovery:
+  ### Workaround/Recovery:
 
   The procedure to ensure application recovery in the above cases is as follows:
 
@@ -74,47 +86,58 @@ This issue is due to failed application operations in the container. Typically t
 
   4. Unmount the stale iscsi device mounts on the application node. Typically, these devices are mounted in the `/var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/<target-portal:iqn>-lun-0`  path.
 
-  5. Identify whether the iSCSI session is re-established after failure. This can be verified using `iscsiadm -m session`, with the device mapping established using `iscsiadm -m session -P 3` and `fdisk -l`. **Note:** Sometimes, it has been observed that there are stale device nodes (scsi device names) present on the Kubernetes node. Unless the logs confirm that a re-login has occurred once the system issues were resolved, it is advisable to perform the following step after doing a purge/logout of the existing session using `iscsiadm -m node -T <iqn> -u`.
+  5. Identify whether the iSCSI session is re-established after failure. This can be verified using `iscsiadm -m session`, with the device mapping established using `iscsiadm -m session -P 3` and `fdisk -l`. **Note:**  Perform the following steps as part of the recovery procedure for a Volume-Read only issue.
 
-  6. If the device is not logged in again, ensure that the network issues/failed nodes/failed replicas are resolved and device is discovered and session is re-established. This can be achieved using the commands `iscsiadm -m discovery -t st -p <ctrl svc IP>:3260` and `iscsiadm -m node -T <iqn> -l` respectively
+     - Confirm that the OpenEBS target does not exist as a Read Only device by the OpenEBS controller and that all replicas are in Read/Write mode.
+     - Unmount the iSCSI volume from the node in which the application pod is scheduled.
+     - Perform the following iSCSI operations from inside the kubelet container.
+       - Logout
+       - Rediscover
+       - Login
+     - Remount the iSCSI device (may appear with a new SCSI device name) on the node.
+     - Verify if the application pod is able to start using/writing into the newly mounted device.
 
-  7. Identify the new SCSI device name corresponding to the iSCSI session (the device name may or may not be the same as before)
+  6. If the device is not logged in again, ensure that the network issues/failed nodes/failed replicas are resolved, device is discovered, and session is re-established. This can be achieved using the commands `iscsiadm -m discovery -t st -p <ctrl svc IP>:3260` and `iscsiadm -m node -T <iqn> -l` respectively.
 
-  8. Re-mount the new disk into the mountpoint mentioned earlier using the  `mount -o rw,relatime,data=ordered /dev/sd<> <mountpoint>` command. If the remount fails due to inconsistencies on the device (unclean filesystem), perform a filesyscheck `fsck -y /dev/sd<>`.
+  7. Identify the new SCSI device name corresponding to the iSCSI session (the device name may or may not be the same as before).
 
-  9. Ensure that the application uses the new mount by forcing it to restart on the same node. This can be done using `docker stop <id>` of the application container on the node. Kubernetes will automatically restart the pod to ensure the "desirable" state.
+  8. Re-mount the new disk into the mountpoint mentioned earlier using the  `mount -o rw,relatime,data=ordered /dev/sd<> <mountpoint>` command. If the re-mount fails due to inconsistencies on the device (unclean filesystem), perform a filesyscheck `fsck -y /dev/sd<>`.
+
+  9. Ensure that the application uses the newly mounted disk by forcing it to restart on the same node. Use the command  `docker stop <id>`  of the application container on the node. Kubernetes will automatically restart the pod to ensure the "desirable" state.
 
      While this step may not be necessary most times (as the application is already undergoing periodic restarts as part of the CrashLoop cycle), it can be performed if the application pod's next restart is scheduled with an exponential back-off delay.
 
-**Note:** In environments where the kubelet runs in a container (RancherOS, CoreOS, Containerized OpenShift deployment), you may not need perform the iSCSI re-login and remount steps explicitly. Instead, it is replaced by the kubelet container restart on the node.
+**Note:** In environments where the kubelet runs in a container (RancherOS, CoreOS, Containerized OpenShift deployment), you may not need perform the iSCSI re-login and re-mount steps explicitly. Instead, it is replaced by the kubelet container restart on the node.
 
-#### Issue:
+### Issue:
 
-##### Stale data seen post application pod reschedule on other nodes
+#### Stale data seen post application pod reschedule on other nodes
 
 - Sometimes, stale application data is seen on the OpenEBS volume mounts after application pod reschedule. Typically, these applications are Kubernetes deployments, with the reschedule to other nodes occurring due to rolling updates.
 - This occurs due to the iSCSI volume mounts and sessions staying alive/persisting on the nodes even after the pod terminates. This behavior is observed on some versions of GKE clusters (1.7.x).
 - Ideally, the kubelet (iSCSI volume plugin) should bring down mounts and iscsi sessions once the application has been deleted on the node. If not, it can result in data being read off the node's page (mount) cache whenever the application is re-scheduled onto it, even though the volume is being updated while on a different node.
 
-#### Workaround:
+### Workaround:
 
 1. Unmount the device and logout from the existing iSCSI session on stale (non-owning) node.
 2. Re-login and remount the volume on the current/scheduled (owning) node.
 3. Ensure application pod uses the new mount by restarting it using docker stop.
 
-#### Issue:
+### Issue:
 
-##### Application and OpenEBS pods terminate/restart under heavy I/O load
+#### Application and OpenEBS pods terminate/restart under heavy I/O load
 
 This is caused due to lack of resources on the Kubernetes nodes, which causes the pods to evict under loaded conditions as the node becomes *unresponsive*. The pods transition from *Running* state to *unknown* state followed by *Terminating* before restarting again.
 
-#### Troubleshooting the issue:
+### Troubleshooting the issue:
 
 The above cause can be confirmed from the `kubectl describe pod` which displays the termination reason as *NodeControllerEviction*. You can get more information from the kube-controller-manager.log on the Kubernetes master.
 
-#### Workaround:
+### Workaround:
 
-This can be resolved by upgrading the Kubernetes cluster infrastructure resources (Memory, CPU)
+You can resolve this issue by upgrading the Kubernetes cluster infrastructure resources (Memory, CPU).
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
