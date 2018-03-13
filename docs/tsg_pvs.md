@@ -70,7 +70,7 @@ This issue is due to failed application operations in the container. Typically t
   - OpenEBS volume replica crashes or restarts due to software bugs
 
 
-- In all the above cases, loss of the device for a period greater than the node iSCSI initiator timeout causes the volumes to be remounted as RO.
+- In all the above cases, loss of the device for a period greater than the node iSCSI initiator timeout causes the volumes to be re-mounted as RO.
 
 - In certain cases, the node/replica loss can lead to the replica quorum not being met (i.e., less than 51% of replicas available) for an extended period of time, causing the OpenEBS volume to be presented as a RO device.
 
@@ -84,17 +84,17 @@ This issue is due to failed application operations in the container. Typically t
 
   3. If any one of the replicas are still in RO mode, wait for the synchronization to complete. If all the replicas are in RO mode (this may occur when all replicas re-register into the controller within short intervals), you must restart the OpenEBS volume controller using the `kubectl delete pod <pvc-ctrl>`  command . Since it is a Kubernetes deployment, the controller pod is restarted successfully. Once done, verify that all replicas transition into *RW mode*.
 
-  4. Unmount the stale iscsi device mounts on the application node. Typically, these devices are mounted in the `/var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/<target-portal:iqn>-lun-0`  path.
+  4. Un-mount the stale iscsi device mounts on the application node. Typically, these devices are mounted in the `/var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/<target-portal:iqn>-lun-0`  path.
 
   5. Identify whether the iSCSI session is re-established after failure. This can be verified using `iscsiadm -m session`, with the device mapping established using `iscsiadm -m session -P 3` and `fdisk -l`. **Note:**  Perform the following steps as part of the recovery procedure for a Volume-Read only issue.
 
      - Confirm that the OpenEBS target does not exist as a Read Only device by the OpenEBS controller and that all replicas are in Read/Write mode.
-     - Unmount the iSCSI volume from the node in which the application pod is scheduled.
+     - Un-mount the iSCSI volume from the node in which the application pod is scheduled.
      - Perform the following iSCSI operations from inside the kubelet container.
        - Logout
        - Rediscover
        - Login
-     - Remount the iSCSI device (may appear with a new SCSI device name) on the node.
+     - Re-mount the iSCSI device (may appear with a new SCSI device name) on the node.
      - Verify if the application pod is able to start using/writing into the newly mounted device.
 
   6. If the device is not logged in again, ensure that the network issues/failed nodes/failed replicas are resolved, device is discovered, and session is re-established. This can be achieved using the commands `iscsiadm -m discovery -t st -p <ctrl svc IP>:3260` and `iscsiadm -m node -T <iqn> -l` respectively.
@@ -119,8 +119,8 @@ This issue is due to failed application operations in the container. Typically t
 
 ### Workaround:
 
-1. Unmount the device and logout from the existing iSCSI session on stale (non-owning) node.
-2. Re-login and remount the volume on the current/scheduled (owning) node.
+1. Un-mount the device and logout from the existing iSCSI session on stale (non-owning) node.
+2. Re-login and re-mount the volume on the current/scheduled (owning) node.
 3. Ensure application pod uses the new mount by restarting it using docker stop.
 
 ### Issue:

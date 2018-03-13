@@ -19,7 +19,7 @@ Following are the benefits of using Logger.
 
 Logger uses the following tool/command to work.
 
-- Logger uses a tool called "stern" to collect the pod logs.
+- Logger uses a **stern** tool to collect the pod logs.
 - It uses kubectl commands to extract cluster information.
 
 ### Prerequisite
