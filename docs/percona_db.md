@@ -7,27 +7,20 @@ sidebar_label: PerconaDB
 Running Percona Pod on OpenEBS
 ------------------------------
 
-This section provides detailed instructions on how to run a
-*percona-mysql* application pod on OpenEBS storage in a Kubernetes
-cluster and uses a *mysql-client* container to generate load (in the
-form of insert and select DB queries) in order to illustrate
-input/output traffic on the storage.
+This section provides detailed instructions on how to run a *percona-mysql* application pod on OpenEBS storage in a Kubernetes cluster and uses a *mysql-client* container to generate load (in the
+form of insert and select DB queries) in order to illustrate input/output traffic on the storage.
 
-Running percona-mysql Pod with OpenEBS Storage
---------------------------------------------Use OpenEBS as persistent
-storage for the percona pod by selecting an OpenEBS storage class in the
-persistent volume claim. A sample percona pod yaml (with container
-attributes and pvc details) is available in the OpenEBS git repository
-(which was cloned in the previous steps).
+### Running percona-mysql Pod with OpenEBS Storage
+
+Use OpenEBS as persistent storage for the percona pod by selecting an OpenEBS storage class in the
+persistent volume claim. A sample percona pod yaml (with container attributes and pvc details) is available in the OpenEBS git repository (which was cloned in the previous steps).
 
 Apply the percona pod yaml using the following commands.
 
     cd demo/percona
     kubectl apply -f demo-percona-mysql-pvc.yaml
 
-Verify that the OpenEBS storage pods, that is, the jiva controller and
-jiva replicas are created and the percona pod is running successfully
-using the following commands.
+Verify that the OpenEBS storage pods, that is, the jiva controller and jiva replicas are created and the percona pod is running successfully using the following commands.
 
     name@Master:~$ kubectl get pods
     NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -40,26 +33,19 @@ using the following commands.
 
 **Note:**
 
-It may take some time for the pods to start as the images must be pulled
-and instantiated. This is also dependent on the network speed.
+It may take some time for the pods to start as the images must be pulled and instantiated. This is also dependent on the network speed.
 
 Running a Database Client Container to Generate SQL Load
 ------------------------------------------------------
 
-To test the pod, you can run a Kubernetes job, in which a mysql client
-container runs a load generation script (which in turn performs simple
-sql queries) to simulate storage traffic. Run the following procedure on
-any node in the Kubernetes cluster.
+To test the pod, you can run a Kubernetes job, in which a mysql client container runs a load generation script (which in turn performs simple sql queries) to simulate storage traffic. Run the following procedure on any node in the Kubernetes cluster.
 
-Get the IP address of the percona application pod. You can obtain this
-by executing kubectl describe on the percona pod.
+Get the IP address of the percona application pod. You can obtain this by executing kubectl describe on the percona pod.
 
     name@Master:~$ kubectl describe pod percona | grep IP
     IP:             10.44.0.3
 
-Edit the following line in sql-loadgen job yaml to pass the desired load
-duration and percona pod IP as arguments. In this example, the job
-performs sql queries on pod with IP address 10.44.0.3 for 300s.
+Edit the following line in sql-loadgen job yaml to pass the desired load duration and percona pod IP as arguments. In this example, the job performs sql queries on pod with IP address 10.44.0.3 for 300s.
 
     args: ["-c", "timelimit -t 300 sh MySQLLoadGenerate.sh 10.44.0.3 > /dev/null 2>&1; exit 0"]
 
@@ -70,12 +56,9 @@ Run the load generation job using the following command.
 Viewing Performance and Storage Consumption Statistics Using mayactl
 --------------------------------------------------------------------
 
-Performance and capacity usage statistics on the OpenEBS storage volume
-can be viewed by executing the following *mayactl* command inside the
-maya-apiserver pod.
+Performance and capacity usage statistics on the OpenEBS storage volume can be viewed by executing the following *mayactl* command inside the maya-apiserver pod. 
 
-Start an interactive bash console for the maya-apiserver container using
-the following command.
+Start an interactive bash console for the maya-apiserver container using the following command.
 
     kubectl exec -it maya-apiserver-1633167387-5ss2w /bin/bash
 
@@ -87,8 +70,7 @@ Lookup the storage volume name using the *volume list* command
     Name                                      Status
     pvc-016e9a68-71c1-11e7-9fea-000c298ff5fc  Running
 
-Get the performance and capacity usage statistics using the *volume
-stats* command.
+Get the performance and capacity usage statistics using the *volume stats* command.
 
     root@maya-apiserver-1633167387-5ss2w:/# maya volume stats pvc-016e9a68-71c1-11e7-9fea-000c298ff5fc
     ------------------------------------
@@ -111,8 +93,7 @@ stats* command.
        Logical(GB)|   Used(GB)| 
           0.074219|   0.000000|
 
-The above command can be invoked using the *watch* command by providing
-a desired interval to continuously monitor statistics.
+The above command can be invoked using the *watch* command by providing a desired interval to continuously monitor statistics.
 
     watch -n 1 maya volume stats pvc-016e9a68-71c1-11e7-9fea-000c298ff5fc
 

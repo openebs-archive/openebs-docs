@@ -7,50 +7,35 @@ sidebar_label: Percona Galera Cluster
 Running Percona Galera Cluster with OpenEBS
 -------------------------------------------
 
-This section provides detailed instructions on how to perform the
-following tasks.
+This section provides detailed instructions on how to perform the following tasks.
 
--   Run a 3-node Percona Galera cluster with OpenEBS storage in a
-    Kubernetes environment
+-   Run a 3-node Percona Galera cluster with OpenEBS storage in a Kubernetes environment
 -   Test data replication across the Percona Xtradb mysql instances.
 
 Galera Cluster
 --------------
 
-Percona XtraDB Cluster is an active/active highly available and scalable
-open source solution for MySQL clustering. It integrates Percona server
-and Percona XtraBackup with the Codership Galera library of MySQL high
-availability solutions in a single package. This folder contains the
-Kubernetes deployment specification YAMLs to setup the Galera cluster
-which includes the following.
+Percona XtraDB Cluster is an active/active highly available and scalable open source solution for MySQL clustering. It integrates Percona server and Percona XtraBackup with the Codership Galera library of MySQL high availability solutions in a single package. This folder contains the Kubernetes deployment specification YAMLs to setup the Galera cluster which includes the following.
 
--   A cluster service YAML which can be used for client connections
-    (pxc-cluster)
--   The node deployment and service specification YAMLs to setup a
-    3-node replication cluster (pxc-node)
+-   A cluster service YAML which can be used for client connections (pxc-cluster)
+-   The node deployment and service specification YAMLs to setup a 3-node replication cluster (pxc-node)
 
-The image used in these pods is
-*capttofu/percona\_xtradb\_cluster\_5\_6:beta*. When deployment is
+The image used in these pods is *capttofu/percona\_xtradb\_cluster\_5\_6:beta*. When deployment is 
 created, following activities occur in the given order.
 
 -   The Percona Xtradb containers start
 -   Runs an entrypoint script which does the following.
     -   Installs the MySQL system tables
     -   Sets up users
-    -   Builds a list of servers that is used with the galera parameter
-        *wsrep\_cluster\_address*. This is a list of running nodes that
-        Galera uses for electing a node to obtain Single State Transfer
+    -   Builds a list of servers that is used with the galera parameter *wsrep\_cluster\_address*. This is a list of running nodes that Galera uses for electing a node to obtain Single State Transfer
         (SST).
 
-For the prerequisites and running OpenEBS Operator, see
-Running OpenEBS Operator\_.
+For the prerequisites and running OpenEBS Operator, see Running OpenEBS Operator\_.
 
 Deploying the Percona Galera Cluster with OpenEBS Storage
 ---------------------------------------------------------
 
-The deployment specification YAMLs are available at
-*OpenEBS/k8s/demo/galera-xtradb-cluster/deployments*. Run the following
-commands in the given order. :
+The deployment specification YAMLs are available at *OpenEBS/k8s/demo/galera-xtradb-cluster/deployments*. Run the following commands in the given order. 
 
     test@Master:~/openebs$ cd k8s/demo/galera-xtradb-cluster/
     test@Master:~/openebs/k8s/demo/galera-xtradb-cluster$ ls -ltr
@@ -69,11 +54,9 @@ commands in the given order. :
     deployment "pxc-node1" created
     persistentvolumeclaim "datadir-claim-1" created
 
-Wait until the pxc-node1 YAML is processed and repeat the step with
-pxc-node2 and pxc-node3 YAMLs.
+Wait until the pxc-node1 YAML is processed and repeat the step with pxc-node2 and pxc-node3 YAMLs.
 
-Verify that all the replicas are up and running using the following
-command. :
+Verify that all the replicas are up and running using the following command. :
 
     test@Master:~/galera-deployment$ kubectl get pods
     NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -95,24 +78,15 @@ command. :
 Deployment Guidelines
 ---------------------
 
-\* OpenEBS recommends creating the Galera cluster with at least 3
-nodes/replicas. Go to the following URL\_ for details. .. \_URL:
-<https://www.percona.com/blog/2015/06/23/percona-xtradb-cluster-pxc-how-many-nodes-do-you-need/>.
+- OpenEBS recommends creating the Galera cluster with at least 3 nodes/replicas. Go to the following URL for details <https://www.percona.com/blog/2015/06/23/percona-xtradb-cluster-pxc-how-many-nodes-do-you-need/>.
 
--   You must deploy the service/pod for the primary node first, wait for
-    it to be processed before starting the secondary/other nodes.
-    Deploying all YAMLs together can cause the pods to restart
-    repeatedly. The reason as stated in the Kubernetes documentation is
-    "If there is a node in wsrep\_cluster\_address without a backing
-    galera node there will be nothing to obtain SST from which will
-    cause the node to shut itself down and the container in question to
-    exit and relaunch".
+
+-   You must deploy the service/pod for the primary node first, wait for it to be processed before starting the secondary/other nodes. Deploying all YAMLs together can cause the pods to restart repeatedly. The reason as stated in the Kubernetes documentation is "If there is a node in wsrep\_cluster\_address without a backing galera node there will be nothing to obtain SST from which will cause the node to shut itself down and the container in question to exit and relaunch".
 
 Test Replication in the Galera Cluster
 --------------------------------------
 
-\* Check the replication cluster size on any of the nodes using the
-following command. :
+* Check the replication cluster size on any of the nodes using the following command. 
 
     mysql> show status like 'wsrep_cluster_size';
     +--------------------+-------+
@@ -122,8 +96,7 @@ following command. :
     +--------------------+-------+
     1 row in set (0.01 sec)
 
-\* On the pxc-node1, create a test database with some content using the
-following commands. :
+* On the pxc-node1, create a test database with some content using the following commands. 
 
     test@Master:~/galera-deployment$ kubectl exec -it pxc-node1-2984138107-zjf22 /bin/bash
     root@pxc-node1-2984138107-zjf22:/# mysql -uroot -p -h pxc-cluster
@@ -163,8 +136,7 @@ following commands. :
     mysql> exit
     Bye
 
-\* Verify that this data is synchronized on the other nodes, for
-example, node2, using the following command. :
+* Verify that this data is synchronized on the other nodes, for example, node2, using the following command. 
 
     test@Master:~/galera-deployment$ kubectl exec -it pxc-node2-1007987438-q831l /bin/bash
     root@pxc-node2-1007987438-q831l:/#
@@ -215,9 +187,7 @@ example, node2, using the following command. :
     mysql> exit
     Bye
 
-\* Verify the multi-master capability of the cluster, by writing
-additional tables into the database using the following command. Use a
-node other than node1, for example node3. :
+* Verify the multi-master capability of the cluster, by writing additional tables into the database using the following command. Use a node other than node1, for example node3. 
 
     test@Master:~/galera-deployment$ kubectl exec -it pxc-node3-82203929-mh5p9 /bin/bash
     root@pxc-node3-82203929-mh5p9:/#

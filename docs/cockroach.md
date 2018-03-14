@@ -31,7 +31,7 @@ Before starting, check the status of the cluster using the following command.
     kubeminion-02   Ready     3d        v1.8.2
 
 Download and apply the CockroachDB YAMLs from the OpenEBS repository
-using the following commands. :
+using the following commands. 
 
     ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cockroachDB/cockroachdb-sc.yaml
     ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cockroachDB/cockroachdb-sts.yaml
@@ -41,7 +41,7 @@ using the following commands. :
     ubuntu@kubemaster:~kubectl apply -f cockroachdb-sts.yml
     ubuntu@kubemaster:~kubectl apply -f cockroachdb-svc.yml
 
-Get the status of running pods using the following command. :
+Get the status of running pods using the following command. 
 
     ubuntu@kubemaster:~$ kubectl get pods
     NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -60,14 +60,14 @@ Get the status of running pods using the following command. :
     pvc-ef78ba18-d4d6-11e7-8d7b-000c29119159-rep-649d9fd578-rxthz    1/1       Running   0          22h
     pvc-ef78ba18-d4d6-11e7-8d7b-000c29119159-rep-649d9fd578-wp6xc    1/1       Running   0          22h
 
-Get the status of running StatefulSet using the following command. :
+Get the status of running StatefulSet using the following command. 
 
     ubuntu@kubemaster:~$ kubectl get statefulset
     NAME          DESIRED   CURRENT   AGE
     cockroachdb   3         3         22h
 
 Get the status of underlying persistent volume used by CockroachDB
-StatefulSet using the following command. :
+StatefulSet using the following command. 
 
     ubuntu@kubemaster:~$ kubectl get pvc
     NAME                    STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS          AGE
@@ -75,7 +75,7 @@ StatefulSet using the following command. :
     datadir-cockroachdb-1   Bound     pvc-42e9cafc-d4d7-11e7-8d7b-000c29119159   10Gi       RWO            openebs-cockroachdb   22h
     datadir-cockroachdb-2   Bound     pvc-7005a715-d4d7-11e7-8d7b-000c29119159   10Gi       RWO            openebs-cockroachdb   22h
 
-Get the status of the services using the following command. :
+Get the status of the services using the following command. 
 
     ubuntu@kubemaster:~kubectl get svc
     NAME                                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)              AGE
@@ -93,11 +93,10 @@ Testing your Database
 ### Using the built-in SQL Client
 
 ​1. Launch a temporary interactive pod and start the built-in SQL client
-inside it using the following command. :
+inside it using the following command. 
 
     ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --rm --restart=Never -- sql --insecure --host=cockroachdb-public
-
-​2. Run some basic CockroachDB SQL statements as follows: :
+2. Run some basic CockroachDB SQL statements as follows: 
 
     > CREATE DATABASE bank;
 
@@ -121,28 +120,30 @@ inside it using the following command. :
 Using a Load Generator
 ----------------------
 
-​1. Download and apply the CockroachDB load generator from the OpenEBS
-repository using the following commands. :: <ubuntu@kubemaster>:\~wget
-<https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cockroachDB/cockroachdb-lg.yaml>
+1. Download and apply the CockroachDB load generator from the OpenEBS
 
-> <ubuntu@kubemaster>:\~kubectl apply -f cockroachdb-lg.yaml
+repository using the following commands.
 
-​2. Get the status of the job using the following command. ::
-<ubuntu@kubemaster>:\~kubectl get jobs NAME DESIRED SUCCESSFUL AGE
+```
+ubuntu@kubemaster:~wget
+https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cockroachDB/cockroachdb-lg.yaml
+ubuntu@kubemaster:~kubectl apply -f cockroachdb-lg.yaml
+```
+
+2. Get the status of the job using the following command. 
+
+```
+ubuntu@kubemaster:~kubectl get jobs NAME DESIRED SUCCESSFUL AGE
 cockroachdb-lg 1 0 2m
+```
 
-3.  This is a Kubernetes Job YAML. It creates a database named test with
-    a table named kv containing random k:v pairs.
-4.  The Kubernetes Job will run for a duration of 5 minutes, which is a
-    configurable value in the YAML.
+3.  This is a Kubernetes Job YAML. It creates a database named test with a table named kv containing random k:v pairs.
+4.  The Kubernetes Job will run for a duration of 5 minutes, which is a configurable value in the YAML.
 
-​5. Launch a temporary interactive pod and start the built-in SQL client
-inside it using the following command. :
+5. Launch a temporary interactive pod and start the built-in SQL client inside it using the following command. 
 
     ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --rm --restart=Never -- sql --insecure --host=cockroachdb-public
-
-​6. Set the default database as test and display the contents of the kv
-table as follows: :
+6. Set the default database as test and display the contents of the kv table as follows: 
 
     > SHOW DATABASES;
     +--------------------+
@@ -192,7 +193,7 @@ table as follows: :
     
     Time: 438.68592ms
 
-​7. Exit the SQL shell using the following command. :
+​7. Exit the SQL shell using the following command. 
 
     >\q
 

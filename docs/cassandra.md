@@ -66,7 +66,7 @@ test@Master:~/openebs/k8s/demo/cassandra$ kubectl apply -f cassandra-statefulset
 statefulset "cassandra" created
 ```
 
-Verify that all the OpenEBS persistent volumes are created and the Cassandra headless service and replicas are running. :
+Verify that all the OpenEBS persistent volumes are created and the Cassandra headless service and replicas are running. 
 
     test@Master:~/openebs/k8s/demo/cassandra$ kubectl get pods
     NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -93,7 +93,7 @@ pvc-e7d18817-c6bb-11e7-a0eb-000c298ff5fc-ctrl-svc   10.108.47.234    <none>     
 
 
 
-Note:**
+**Note:**
 
 It may take some time for the pods to start as the images must be pulled and instantiated. This is also dependent on the network speed.
 
@@ -138,21 +138,25 @@ A status of "UN" implies Up and Normal. The "Owns" column suggests the data dist
 
 -   Login to the CQL shell using the Cqlsh utility using the following command.
 
+    ```
     test@Master:~$ cqlsh 10.44.0.3 9042 --cqlversion="3.4.2"
     Connected to K8Demo at 10.44.0.3:9042.
     [cqlsh 5.0.1 | Cassandra 3.9 | CQL spec 3.4.2 | Native protocol v4]
     Use HELP for help.
-    
     cqlsh>
+    ```
 
 -   Create a keyspace with replication factor 2 using the following commands.
 
+    ```
     cqlsh> create keyspace hardware with replication = { 'class' : 'SimpleStrategy' , 'replication_factor' : 2 };
     cqlsh> describe keyspaces;
     system_schema  system_auth  system  hardware  system_distributed  system_traces
+    ```
 
 -   Create a table with test content and view the data using the following commands.
 
+    ```
     cqlsh> use hardware;
     cqlsh:hardware> create table inventory (id uuid,Name text,HWtype text,Model text,PRIMARY KEY ((id), Name));
     cqlsh:hardware> insert into inventory (id, Name, HWType, Model) values (5132b130-ae79-11e4-ab27-0800200c9a66, 'TestBox', 'Server', 'DellR820');
@@ -160,11 +164,14 @@ A status of "UN" implies Up and Normal. The "Owns" column suggests the data dist
     id                                   | name    | hwtype | model
     ---------------------------------------+---------+--------+----------
     5132b130-ae79-11e4-ab27-0800200c9a66 | TestBox | Server | DellR820
-    
     (1 rows) 
+    ```
+
 -   Flush the data to ensure it is written to a disk from the memtable (memory) using the following command.
 
+    ```
     test@Master:$ kubectl exec cassandra-0 -- nodetool flush hardware
+    ```
 
 4. Delete the Test Keyspace
 - Verify the masterless nature of Cassandra StatefulSet by deleting the keyspace from another replica, in this example, Cassandra-1. 
