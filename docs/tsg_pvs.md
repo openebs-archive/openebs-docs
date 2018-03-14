@@ -96,7 +96,7 @@ This issue is due to failed application operations in the container. Typically t
 
      While this step may not be necessary most times (as the application is already undergoing periodic restarts as part of the CrashLoop cycle), it can be performed if the application pod's next restart is scheduled with an exponential back-off delay.
 
-**Note:**  Perform the following steps as part of the recovery procedure for a Volume-Read only issue.
+**Note:**  In environments where the kubelet runs in a container, perform the following steps as part of the recovery procedure for a Volume-Read only issue.
 
 - Confirm that the OpenEBS target does not exist as a Read Only device by the OpenEBS controller and that all replicas are in Read/Write mode.
 - Un-mount the iSCSI volume from the node in which the application pod is scheduled.
