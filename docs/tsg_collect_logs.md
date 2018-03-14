@@ -15,6 +15,10 @@ Following are the benefits of using Logger.
 - The purpose of Logger is to obtain debug-information/quick logs in clusters where more standard logging frameworks like EFK are not already configured. Logger creates a simple support bundle which can be provided to debug teams.
 - This may be the case with most "non-production/development" infrastructures.
 
+### Where is the Logger found?
+
+You can find the Logger file at [https://github.com/openebs/test-storage/blob/master/logger/debugjob.yaml](https://github.com/openebs/test-storage/blob/master/logger/debugjob.yaml).
+
 ### How does Logger work?
 
 Logger uses the following tool/command to work.
