@@ -4,9 +4,7 @@ title: Redis StatefulSet
 sidebar_label: Redis StatefulSet
 ---
 
-This section demonstrates the deployment of Redis as a StatefulSet in a
-Kubernetes cluster. You can spawn a Redis StatefulSet that will use
-OpenEBS as its persistent storage.
+This section demonstrates the deployment of Redis as a StatefulSet in a Kubernetes cluster. You can spawn a Redis StatefulSet that will use OpenEBS as its persistent storage.
 
 Deploying Redis as a StatefulSet
 --------------------------------
@@ -21,8 +19,7 @@ Deploying Redis as a StatefulSet provides the following benefits.
 Deploying Redis with Persistent Storage
 ---------------------------------------
 
-Before getting started, check the status of the cluster using the
-following command. :
+Before getting started, check the status of the cluster using the following command. 
 
     ubuntu@kubemaster:~kubectl get nodes
     NAME            STATUS    AGE       VERSION
@@ -30,13 +27,12 @@ following command. :
     kubeminion-01   Ready     3d        v1.8.2
     kubeminion-02   Ready     3d        v1.8.2
 
-Download and apply the Redis YAML file from the OpenEBS repository using
-the following command. :
+Download and apply the Redis YAML file from the OpenEBS repository using the following command. 
 
     ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/redis/redis-statefulset.yml
     ubuntu@kubemaster:~kubectl apply -f redis-statefulset.yml
 
-Get the status of running pods using the following command. :
+Get the status of running pods using the following command. 
 
     ubuntu@kubemaster:~$ kubectl get pods --all-namespaces
     NAMESPACE     NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -66,14 +62,13 @@ Get the status of running pods using the following command. :
     kube-system   weave-net-dwszp                                                  2/2       Running   0          6d
     kube-system   weave-net-pzbb7                                                  2/2       Running   0          6d
 
-Get the status of running StatefulSets using the following command. :
+Get the status of running StatefulSets using the following command. 
 
     ubuntu@kubemaster:~$ kubectl get statefulset
     NAME      DESIRED   CURRENT   AGE
     rd        3         3         19h
 
-Get the status of underlying persistent volumes used by Redis
-StatefulSet using the following command. :
+Get the status of underlying persistent volumes used by Redis StatefulSet using the following command. 
 
     ubuntu@kubemaster:~$ kubectl get pvc
     NAME           STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS    AGE
@@ -81,7 +76,7 @@ StatefulSet using the following command. :
     datadir-rd-1   Bound     pvc-1f305192-ca11-11e7-892e-000c29119159   1G         RWO            openebs-redis   19h
     datadir-rd-2   Bound     pvc-59eea5e9-ca11-11e7-892e-000c29119159   1G         RWO            openebs-redis   19h
 
-Get the status of services using the following command. :
+Get the status of services using the following command. 
 
     ubuntu@kubemaster:~kubectl get svc
     NAME                                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
@@ -95,13 +90,12 @@ Get the status of services using the following command. :
 Checking Redis Replication
 --------------------------
 
-Set a key:value pair in the Redis master using the following command. :
+Set a key:value pair in the Redis master using the following command. 
 
     ubuntu@kubemaster:~kubectl exec rd-0 -- /opt/redis/redis-cli -h rd-0.redis SET replicated:test true
     OK
 
-Retrieve value of the key from a Redis slave using the following
-command. :
+Retrieve value of the key from a Redis slave using the following command. 
 
     ubuntu@kubemaster:~kubectl exec rd-2 -- /opt/redis/redis-cli -h rd-0.redis GET replicated:test
     true
