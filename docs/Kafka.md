@@ -50,7 +50,7 @@ sidebar_label: Kafka
 
 ### Deploying Kafka as a StatefulSet
 
-This section provides detailed instructions on how to run a Kafka application with OpenEBS as apersistent storage in a Kubernetes cluster. A sample Kafka pod yaml (with container attributes and pvc details) is available in the OpenEBS git repository (which was cloned in the previous steps). To deploy Kafka run the following commands.
+This section provides detailed instructions on how to run a Kafka application with OpenEBS as a persistent storage in a Kubernetes cluster. A sample Kafka pod yaml (with container attributes and pvc details) is available in the OpenEBS git repository (which was cloned in the previous steps). To deploy Kafka run the following commands.
 
 ```
 devops@ubuntu:~$ cd /openebs/k8s/demo/kafka/

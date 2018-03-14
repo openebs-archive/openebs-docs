@@ -27,7 +27,7 @@ Before getting started, check the status of the cluster using the following comm
     kubeminion-01   Ready     3d        v1.7.5
     kubeminion-02   Ready     3d        v1.7.5
 
-Download and apply the Jenkins YAML file from the OpenEBS repository using the following commands. :
+Download and apply the Jenkins YAML file from the OpenEBS repository using the following commands. 
 
     ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/jenkins/jenkins.yml
     ubuntu@kubemaster:~kubectl apply -f jenkins.yml
@@ -82,8 +82,7 @@ Once you access the URL the Getting Started page is displayed. The following pro
 
 1.  Provide the **initialAdminPassword** in the *Unlock Jenkins* screen and copy the password in the **Administrator password** field.
 2.  Click **Continue**.
-
-​3. Get the password using the following command: :
+3.  Get the password using the following command: :
 
     ubuntu@kubemaster:~kubectl exec -it jenkins-2748455067-85jv2 cat /var/jenkins_home/secrets/initialAdminPassword
     7d7aaedb5a2a441b99117b3bb55c1eff

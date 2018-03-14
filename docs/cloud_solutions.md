@@ -86,15 +86,19 @@ The tools **awscli** and **kops** require the AWS credentials to access AWS serv
 -   Use the credentials that were generated earlier for the user *openebsuser*.
 
 -   Add path */usr/local/bin* to the PATH environment variable.
-
-    $ vim ~/.profile
-    ## Add the AWS credentials as environment variables in .profile
+```
+$ vim ~/.profile
+```   
+-   Add the AWS credentials as environment variables in .profile
+    ```
     export AWS_ACCESS_KEY_ID=<access key>
     export AWS_SECRET_ACCESS_KEY=<secret key>
-
-    ## Add /usr/local/bin to PATH
-    PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
-
+    ```
+- Add /usr/local/bin to PATH
+ 
+  ```
+  PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
+  ```
     $ source ~/.profile
 ### Creating the Cluster Configuration
 
@@ -104,7 +108,6 @@ You must generate a terraform file (.tf) that will later spawn -
 - Two Nodes
 
 Run the following command in a terminal.
-
 ```
 $ ./oebs-cloud.sh --create-cluster-config
 ```
@@ -220,7 +223,7 @@ Google Cloud
 
 This section, provides detailed instructions on how to setup and use OpenEBS in Google Kubernetes Engine (GKE). This section uses a three node Kubernetes cluster.
 
-### Prerequisite:
+### Prerequisite
 
 A GKE account
 
@@ -259,7 +262,7 @@ project.
 
 Go to **Google Cloud Platform** -\> **Compute Engine** -\> **VM instances**. The nodes displayed by default in this console are Compute Engine VMs, and you can see them in the console. The display is similar to the following screen.
 
-> ![image](../assets/compute_engine_vms.png)
+> ![image](docs/assets/compute_engine_vms.png)
 
 Select the nodes and click SSH to see the iSCSI configuration.
 
@@ -274,7 +277,7 @@ a. Check that initiator name is configured.
     ## may reject this initiator.  The InitiatorName must be unique
     ## for each iSCSI initiator.  Do NOT duplicate iSCSI InitiatorNames.
     InitiatorName=iqn.1993-08.org.debian:01:6277ea61267f
-​b. Check if iSCSI service is running using the following commands. :
+b. Check if iSCSI service is running using the following commands. 
 
     ~$sudo service open-iscsi status
     open-iscsi.service - Login to default iSCSI targets
@@ -301,14 +304,14 @@ Before applying OpenEBS Operator, ensure that the administrator context for the 
 
 To create or modify service accounts and grant previleges, kubectl must be run with administrator previleges. The following commands help you set up and use the administrator context for Google Kubernetes Engine using the Google Cloud Shell.
 
-a. Initialize credentials to allow kubectl to execute commands on the Kubernetes cluster. :
+a. Initialize credentials to allow kubectl to execute commands on the Kubernetes cluster. 
 
     gcloud container clusters list
     gcloud container clusters get-credentials doc-test --zone us-central1-a
 
 b.  Setup the administrator context.
 
-Create an administrator configuration context from the configuration shell using the following commands. :
+Create an administrator configuration context from the configuration shell using the following commands. 
 
     gcloud container clusters list
     kubectl config set-context doc-test --cluster=gke_maya-chatops_us-central1-a_doc-test --user=cluster-admin
@@ -368,8 +371,7 @@ Get the list of storage classes using the following command. Choose the storage 
     openebs-standalone   openebs.io/provisioner-iscsi
     openebs-standard     openebs.io/provisioner-iscsi
     openebs-zk           openebs.io/provisioner-iscsi
-Some sample YAML files for stateful workloads using OpenEBS are provided
-in the [openebs/k8s/demo](https://github.com/openebs/openebs/tree/master/k8s/demo)
+Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://github.com/openebs/openebs/tree/master/k8s/demo)
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
