@@ -183,7 +183,10 @@ oc adm policy add-scc-to-user hostaccess admin --as:system:admin
     oc adm policy add-scc-to-user anyuid -z default --as=system:admin
     ```
 
-**Note:** While the above procedures may be sufficient to enable host access to the containers, it may also be needed to disable selinux (using setenforce 0) to ensure the same.
+**Note:** While the above procedures may be sufficient to enable host access to the containers, you may also need to do the following.
+
+- Disable selinux (via `setenforce 0`) to ensure the same.
+- Edit the restricted scc to use `runAsUser: type: RunAsAny` (the replica pod runs with root user)
 
 5.  Setup OpenEBS Control Plane
 
