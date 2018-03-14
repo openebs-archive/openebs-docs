@@ -86,19 +86,19 @@ The tools **awscli** and **kops** require the AWS credentials to access AWS serv
 -   Use the credentials that were generated earlier for the user *openebsuser*.
 
 -   Add path */usr/local/bin* to the PATH environment variable.
-
-    $ vim ~/.profile
-
-    ​
-
-    ### Add the AWS credentials as environment variables in .profile
-
+```
+$ vim ~/.profile
+```   
+-   Add the AWS credentials as environment variables in .profile
+    ```
     export AWS_ACCESS_KEY_ID=<access key>
     export AWS_SECRET_ACCESS_KEY=<secret key>
-
-    ### Add /usr/local/bin to PATH
-    PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
-
+    ```
+- Add /usr/local/bin to PATH
+ 
+  ```
+  PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
+  ```
     $ source ~/.profile
 ### Creating the Cluster Configuration
 
@@ -108,8 +108,9 @@ You must generate a terraform file (.tf) that will later spawn -
 - Two Nodes
 
 Run the following command in a terminal.
-
+```
 $ ./oebs-cloud.sh --create-cluster-config
+```
 
 Running *--create-cluster-config* command without any arguments defaults to **Ubuntu**. You can also run *--create-cluster-config* command with *--ami-vm-os=ubuntu* or *--ami-vm-os=coreos* commands and the following occurs.
 
@@ -314,6 +315,22 @@ Create an administrator configuration context from the configuration shell using
 
     gcloud container clusters list
     kubectl config set-context doc-test --cluster=gke_maya-chatops_us-central1-a_doc-test --user=cluster-admin
+
+To set the administrator privilege to your cluster (cluster-role admin) get the current google identity by using the following command.
+
+```
+$ gcloud info | grep Account
+```
+
+Account: [[myname@example.org](mailto:myname@example.org)]
+
+Grant cluster-admin to your current identity using the following command.
+
+```
+$ kubectl create clusterrolebinding myname-cluster-admin-binding --clusterrole=cluster-admin --user=myname@example.org
+```
+
+The clusterrolebinding *myname-cluster-admin-binding* is created.
 
 c. Download the latest OpenEBS files using the following commands. 
 
