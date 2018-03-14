@@ -26,7 +26,7 @@ OpenEBS is usually deployed in the *default* namespace. You can deploy OpenEBS i
 
 ### Namespace in Application Files
 
-You can also use the following commands to make changes in the application files. In the following example you are creating a percona namespace.
+You can also use the following commands to create a percona namespace and deploy the percona application in the new percona namespace that you have created.
 
 ```
 kubectl create ns percona
