@@ -24,23 +24,21 @@ This section provides detailed instructions which allow you to perform the follo
 
    The number of replicas in the StatefulSet can be modified as required. The following example uses three replicas. The replica count can be edited in the StatefulSet specification. 
 
-   ---
-    apiVersion: apps/v1beta1
-    kind: StatefulSet
-    metadata:
-     name: mongo
-    spec:
-     serviceName: "mongo"
-     replicas: 3
-     template:
+       apiVersion: apps/v1beta1
+        kind: StatefulSet
+        metadata:
+         name: mongo
+        spec:
+         serviceName: "mongo"
+         replicas: 3
+         template:
        metadata:
          labels:
            role: mongo
            environment: test
-      .
-      .
-
-Apply the mongo-statefulset.yml using the following commands.
+          .
+          .
+      Apply the mongo-statefulset.yml using the following commands.
 
     test@Master:~$ kubectl apply -f mongo-statefulset.yml
     service "mongo" created
@@ -86,12 +84,10 @@ It may take some time for the pods to start as the images must be pulled and ins
 
 The following procedure helps you install Sysbench.
 
-\* Download the appropriate branch of Percona-Lab's Sysbench fork with support for MongoDB integration on Kubernetes nodes. The Sysbench dependencies are installed in these Kubernetes nodes. (see,
-[Prerequisites](/docs/prerequisites.html)).
+* Download the appropriate branch of Percona-Lab's Sysbench fork with support for MongoDB integration on Kubernetes nodes. The Sysbench dependencies are installed in these Kubernetes nodes. (see, [Prerequisites](/docs/prerequisites.html)).
 
     git clone -b dev-mongodb-support-1.0 https://github.com/Percona-Lab/sysbench.git
-
-\* Enter the Sysbench local repository and perform the following commands in the given order.
+* Enter the Sysbench local repository and perform the following commands in the given order.
 
     cd sysbench
     ./autogen.sh
@@ -164,8 +160,8 @@ Threads fairness:
 	execution time (avg/stddev): 600.0185/0.02
 ```
 
->
-> While the benchmark is in progress, performance and capacity usage statistics on the OpenEBS storage volume can be viewed using the mayactl commands that must be executed on the maya-apiserver pod.
+
+While the benchmark is in progress, performance and capacity usage statistics on the OpenEBS storage volume can be viewed using the mayactl commands that must be executed on the maya-apiserver pod.
 
 Run an interactive bash session for the maya-apiserver pod container. 
 
@@ -207,7 +203,8 @@ View usage and input/output metrics for the required volume through the stats co
 
 ### Verifying MongoDB Replication
 
-\* Log in to the primary instance of the MongoDB S through the in-built Mongo shell and verify that the **sbtest** test database is created by Sysbench in the previous procedure. 
+- Log in to the primary instance of the MongoDB S through the in-built Mongo shell and verify that the **sbtest** test database is created by Sysbench in the previous procedure. 
+
 
     test@Master:~$ kubectl exec -it mongo-0 /bin/bash
     root@mongo-0:/# mongo
@@ -221,100 +218,108 @@ View usage and input/output metrics for the required volume through the stats co
     local   0.006GB
     sbtest  0.001GB
 
-\* Run the replication status command on the master/primary instance of  the S. In the output, verify that the values (timestamps) for **optimeDate** on both members are similar. 
+* Run the replication status command on the master/primary instance of  the S. In the output, verify that the values (timestamps) for **optimeDate** on both members are similar. 
 
+  ```
+  rs0:PRIMARY> rs.status()
 
->     rs0:PRIMARY> rs.status()
->     {
->     "set" : "rs0", 
->     "date" : ISODate("2017-10-23T07:26:36.679Z"),
->     "myState" : 1, 
->     "term" : NumberLong(1), 
->     "heartbeatIntervalMillis" : NumberLong(2000), 
->     "optimes" : { 
->     	"lastCommittedOpTime" : { 
->     			"ts" : Timestamp(1508743595, 51), 
->     			"t" : NumberLong(1) 
->     	}, 
->     	"appliedOpTime": { 
->     		"ts" : Timestamp(1508743596, 40), 
->     		"t" : NumberLong(1) 
->     	},
->     	"durableOpTime" : { 
->     		"ts" : Timestamp(1508743595, 71), 
->     		"t" : NumberLong(1) 
->     	} 
->     }, 
->     "members" : [ 
->     	{ 
->     		"_id" : 0, 
->     		"name" : "10.44.0.3:27017", 
->     		"health" : 1, 
->     		"state" : 1, 
->     		"stateStr" : "PRIMARY", 
->     		"uptime" : 243903, 
->     		"optime" : { 
->     			"ts" : Timestamp(1508743596, 40), 
->     			 "t" : NumberLong(1) 
->     		}, 
->     		"optimeDate" : ISODate("2017-10-23T07:26:36Z"), 
->     		"electionTime" : Timestamp(1508499738, 2), 
->     		"electionDate" : ISODate("2017-10-20T11:42:18Z"), 
->     		"configVersion" : 5, 
->     		"self" : true 
->     	}, 
->     	{ 
->     		"_id" : 1, 
->     		"name" : "10.36.0.6:27017", 
->     		"health" : 1,
->     		"state" : 2, 
->     		"stateStr" : "SECONDARY", 
->     		"uptime" : 243756, 
->     		"optime" : { 
->     			"ts" : Timestamp(1508743595, 51), 
->     			"t" : NumberLong(1) 
->     	},
->     	"optimeDurable" : { 
->     		"ts" : Timestamp(1508743595, 34), 
->     		"t" : NumberLong(1) 
->     	}, 
->     	"optimeDate" : ISODate("2017-10-23T07:26:35Z"),
->     	"optimeDurableDate" : ISODate("2017-10-23T07:26:35Z"),
->     	"lastHeartbeat" : ISODate("2017-10-23T07:26:35.534Z"),
->     	"lastHeartbeatRecv" : ISODate("2017-10-23T07:26:34.894Z"),
->     	"pingMs" : NumberLong(6), 
->     	"syncingTo" : "10.44.0.3:27017",
->     	"configVersion" : 5 
->     	}, 
->     	{ 
->     		"_id" : 2, 
->     		"name" : "10.44.0.7:27017",
->     		"health" : 1, 
->     		"state" : 2, 
->     		"stateStr" : "SECONDARY", 
->     		"uptime" : 243700, 
->     		"optime" : { 
->     			"ts" : Timestamp(1508743595, 104), 
->     			"t" : NumberLong(1) 
->     		}, 
->     		"optimeDurable" : { 
->     			"ts" : Timestamp(1508743595, 34), 
->     			"t" : NumberLong(1) 
->     		}, 
->     		"optimeDate" : ISODate("2017-10-23T07:26:35Z"), 
->     		"optimeDurableDate" : ISODate("2017-10-23T07:26:35Z"), 
->     		"lastHeartbeat" : ISODate("2017-10-23T07:26:35.949Z"), 
->     		"lastHeartbeatRecv" : ISODate("2017-10-23T07:26:35.949Z"), 
->     		"pingMs" : NumberLong(0),
->     		"syncingTo" : "10.44.0.3:27017", 
->     		"configVersion" : 5 
->     		} 
->     	], 
->     	"ok" : 1
->     }
->
+  {
 
--   You could further confirm the presence of the database with the same size on secondary instances (for example, mongo-1).
+  "set" : "rs0", 
+
+  "date" : ISODate("2017-10-23T07:26:36.679Z"),
+
+  "myState" : 1, 
+
+  "term" : NumberLong(1), 
+
+  "heartbeatIntervalMillis" : NumberLong(2000), 
+
+  "optimes" : { 
+  "lastCommittedOpTime" : { 
+  		"ts" : Timestamp(1508743595, 51), 
+  		"t" : NumberLong(1) 
+  }, 
+  "appliedOpTime": { 
+  	"ts" : Timestamp(1508743596, 40), 
+  	"t" : NumberLong(1) 
+  },
+  "durableOpTime" : { 
+  	"ts" : Timestamp(1508743595, 71), 
+  	"t" : NumberLong(1) 
+  } 
+  }, 
+
+  "members" : [ 
+  { 
+  	"_id" : 0, 
+  	"name" : "10.44.0.3:27017", 
+  	"health" : 1, 
+  	"state" : 1, 
+  	"stateStr" : "PRIMARY", 
+  	"uptime" : 243903, 
+  	"optime" : { 
+  		"ts" : Timestamp(1508743596, 40), 
+  		 "t" : NumberLong(1) 
+  	}, 
+  	"optimeDate" : ISODate("2017-10-23T07:26:36Z"), 
+  	"electionTime" : Timestamp(1508499738, 2), 
+  	"electionDate" : ISODate("2017-10-20T11:42:18Z"), 
+  	"configVersion" : 5, 
+  	"self" : true 
+  }, 
+  { 
+  	"_id" : 1, 
+  	"name" : "10.36.0.6:27017", 
+  	"health" : 1,
+  	"state" : 2, 
+  	"stateStr" : "SECONDARY", 
+  	"uptime" : 243756, 
+  	"optime" : { 
+  		"ts" : Timestamp(1508743595, 51), 
+  		"t" : NumberLong(1) 
+  },
+  "optimeDurable" : { 
+  	"ts" : Timestamp(1508743595, 34), 
+  	"t" : NumberLong(1) 
+  }, 
+  "optimeDate" : ISODate("2017-10-23T07:26:35Z"),
+  "optimeDurableDate" : ISODate("2017-10-23T07:26:35Z"),
+  "lastHeartbeat" : ISODate("2017-10-23T07:26:35.534Z"),
+  "lastHeartbeatRecv" : ISODate("2017-10-23T07:26:34.894Z"),
+  "pingMs" : NumberLong(6), 
+  "syncingTo" : "10.44.0.3:27017",
+  "configVersion" : 5 
+  }, 
+  { 
+  	"_id" : 2, 
+  	"name" : "10.44.0.7:27017",
+  	"health" : 1, 
+  	"state" : 2, 
+  	"stateStr" : "SECONDARY", 
+  	"uptime" : 243700, 
+  	"optime" : { 
+  		"ts" : Timestamp(1508743595, 104), 
+  		"t" : NumberLong(1) 
+  	}, 
+  	"optimeDurable" : { 
+  		"ts" : Timestamp(1508743595, 34), 
+  		"t" : NumberLong(1) 
+  	}, 
+  	"optimeDate" : ISODate("2017-10-23T07:26:35Z"), 
+  	"optimeDurableDate" : ISODate("2017-10-23T07:26:35Z"), 
+  	"lastHeartbeat" : ISODate("2017-10-23T07:26:35.949Z"), 
+  	"lastHeartbeatRecv" : ISODate("2017-10-23T07:26:35.949Z"), 
+  	"pingMs" : NumberLong(0),
+  	"syncingTo" : "10.44.0.3:27017", 
+  	"configVersion" : 5 
+  	} 
+  ], 
+  "ok" : 1
+  }
+  ```
+
+* You could further confirm the presence of the database with the same size on secondary instances (for example, mongo-1).
 
 **Note:**
 
@@ -325,7 +330,7 @@ By default, the databases cannot be viewed on the secondary instance through the
     admin   0.000GB
     local   0.005GB
     sbtest  0.001GB
-\* The time lag between the MongoDB instances can be found using the following command, which can be executed on either instance. 
+* The time lag between the MongoDB instances can be found using the following command, which can be executed on either instance. 
 
     rs0:SECONDARY> rs.printSlaveReplicationInfo()
     source: 10.36.0.6:27017

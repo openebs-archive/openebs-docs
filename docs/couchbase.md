@@ -22,7 +22,7 @@ Deploying Couchbase with Persistent Storage
 -------------------------------------------
 
 Before getting started, check the status of the cluster using the
-following command. :
+following command. 
 
     ubuntu@kubemaster:~kubectl get nodes
     NAME            STATUS    AGE       VERSION
@@ -31,7 +31,7 @@ following command. :
     kubeminion-02   Ready     3d        v1.8.2
 
 Download and apply the Couchbase YAML from OpenEBS repository using the
-following command. :
+following command. 
 
     ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/couchbase/couchbase-statefulset.yml
     ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/couchbase/couchbase-service.yml
@@ -40,7 +40,7 @@ following command. :
     ubuntu@kubemaster:~kubectl apply -f couchbase-statefulset.yml
     ubuntu@kubemaster:~kubectl apply -f couchbase-service.yml
 
-Get the status of running pods using the following command. :
+Get the status of running pods using the following command. 
 
     ubuntu@kubemaster:~$ kubectl get pods --all-namespaces
     NAMESPACE     NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -66,21 +66,20 @@ Get the status of running pods using the following command. :
     kube-system   weave-net-dwszp                                                  2/2       Running   0          3d
     kube-system   weave-net-pzbb7          
 
-Get the status of running StatefulSets using the following command. :
+Get the status of running StatefulSets using the following command. 
 
     ubuntu@kubemaster:~$ kubectl get statefulset
     NAME        DESIRED   CURRENT   AGE
     couchbase   2         2         11h
 
-Get the status of underlying persistent volume used by Couchbase
-StatefulSet using the following command. :
+Get the status of underlying persistent volume used by Couchbase StatefulSet using the following command. 
 
     ubuntu@kubemaster:~$ kubectl get pvc
     NAME                         STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
     couchbase-data-couchbase-0   Bound     pvc-16210b06-c7ba-11e7-892e-000c29119159   5G         RWO            openebs-standard   11h
     couchbase-data-couchbase-1   Bound     pvc-40e1b64f-c7ba-11e7-892e-000c29119159   5G         RWO            openebs-standard   11h
 
-Get the status of the services using the following command. :
+Get the status of the services using the following command. 
 
     ubuntu@kubemaster:~kubectl get svc
     ME                                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
@@ -92,39 +91,28 @@ Get the status of the services using the following command. :
 Launching Couchbase as a Server
 -------------------------------
 
-The Couchbase service YAML, creates a NodePort service type for making
-the Couchbase server available outside the cluster.
+The Couchbase service YAML, creates a NodePort service type for making the Couchbase server available outside the cluster.
 
-Get the node's IP Address which is running the Couchbase server using
-the following command. :
+Get the node's IP Address which is running the Couchbase server using the following command. 
 
     ubuntu@kubemaster:~kubectl describe pod couchbase-0 | grep Node:
     Node:       kubeminion-02/20.10.29.203
 
-Get the port number from the Couchbase UI service using the following
-command. :
+Get the port number from the Couchbase UI service using the following command. :
 
     ubuntu@kubemaster:~ kubectl describe svc couchbase-ui | grep NodePort:
     NodePort:       couchbase  30438/TCP
 
-Go to the <https://20.10.29.203:30438> URL from your browser and perform
-the following procedure from the UI.
+Go to the <https://20.10.29.203:30438> URL from your browser and perform the following procedure from the UI.
 
 **Note:**
 
--   For Google Cloud Users, create Firewall Rules to perform tasks using
-    Couchbase UI.
--   The NodePort is dynamically allocated and may vary in a different
-    deployment.
+-   For Google Cloud Users, create Firewall Rules to perform tasks using Couchbase UI.
+-   The NodePort is dynamically allocated and may vary in a different deployment.
 
-1.  In the Couchbase Console, enter your credentials in the **Username**
-    and **Password** fields and click **Sign In**. You can now see the
-    console.[The default Username is Administrator and Password is
-    password. Enter the credentials to see the console.]
-2.  Click **Server Nodes** to see the number of Couchbase nodes that are
-    part of the cluster. As expected, it displays only one node.
-3.  Click **Data Buckets** to see a sample bucket that was created as
-    part of the image.
+1.  In the Couchbase Console, enter your credentials in the **Username** and **Password** fields and click **Sign In**. You can now see the console.[The default Username is Administrator and Password is password. Enter the credentials to see the console.]
+2.  Click **Server Nodes** to see the number of Couchbase nodes that are part of the cluster. As expected, it displays only one node.
+3.  Click **Data Buckets** to see a sample bucket that was created as part of the image.
 
 You can now start using Couchbase.
 
