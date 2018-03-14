@@ -33,7 +33,7 @@ kubectl create ns percona
 kubectl apply -f percona.yaml -n percona 
 ```
 
-You can view the changes by giving the `kubectl get pods --all-namespaces` command which will display output similar to following. You can see that the default namespace is replaced with percona.
+You can view the changes by running the `kubectl get pods --all-namespaces` command which will display output similar to following. You can see that the percona application is created with the percona namespace.
 
 ```
 vagrant@minikube-dev:~$ kubectl get pods --all-namespaces
