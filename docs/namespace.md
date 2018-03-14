@@ -4,7 +4,7 @@ title: Customizing Namespace
 sidebar_label: Customizing Namespace
 ---
 
-OpenEBS is usually deployed in the *default* namespace. You can deploy OpenEBS in another namespace  other than the *default* namespace.  To customize namespace to *openebs* instead of *default*,  you must change all the namespaces in the *openebs-operator.yaml* file to *openebs*. 
+OpenEBS is usually deployed in the *default* namespace. You can deploy OpenEBS in another namespace  other than the *default* namespace.  For example, you can customize namespace to *openebs* instead of *default*, in the *openebs-operator.yaml* file. 
 
 1. Create a namespace as in the following example i.e., modify *name:* to *openebs*.
 
@@ -30,7 +30,7 @@ You can also use the following commands to make changes in the application files
 
 ```
 kubectl create ns percona
-kubectl apply -f openebs-operator.yaml -n percona 
+kubectl apply -f percona.yaml -n percona 
 ```
 
 You can view the changes by giving the `kubectl get pods --all-namespaces` command which will display output similar to following. You can see that the default namespace is replaced with percona.
@@ -38,8 +38,8 @@ You can view the changes by giving the `kubectl get pods --all-namespaces` comma
 ```
 vagrant@minikube-dev:~$ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                                             READY     STATUS   RESTARTS   AGE
-percona       maya-apiserver-7cd7478c74-xrxnl                                  1/1       Running   4          8d
-percona       openebs-provisioner-fc5cb748b-kqgvt                              1/1       Running   8          8d
+openebs       maya-apiserver-7cd7478c74-xrxnl                                  1/1       Running   4          8d
+openebs       openebs-provisioner-fc5cb748b-kqgvt                              1/1       Running   8          8d
 percona       percona                                                          1/1		 Running   1          8d
 percona       pvc-17e21bd3-c948-11e7-a157-000c298ff5fc-ctrl-3572426415-n8ctb   1/1       Running   0          8d
 percona       pvc-17e21bd3-c948-11e7-a157-000c298ff5fc-rep-3113668378-9437w    1/1       Running   0          8d
