@@ -15,16 +15,20 @@ Following are the benefits of using Logger.
 - The purpose of Logger is to obtain debug-information/quick logs in clusters where more standard logging frameworks like EFK are not already configured. Logger creates a simple support bundle which can be provided to debug teams.
 - This may be the case with most "non-production/development" infrastructures.
 
+### Where is the Logger found?
+
+You can find the Logger file at [https://github.com/openebs/test-storage/blob/master/logger/debugjob.yaml](https://github.com/openebs/test-storage/blob/master/logger/debugjob.yaml).
+
 ### How does Logger work?
 
 Logger uses the following tool/command to work.
 
-- Logger uses a tool called "stern" to collect the pod logs.
+- Logger uses a **stern** tool to collect the pod logs.
 - It uses kubectl commands to extract cluster information.
 
 ### Prerequisite
 
-Logger needs the *kubeconfig* file mounted as a configmap (passed to stern binary). *kubeconfig* file is generally found under */etc/kubernetes/admin.conf* or *~/.kube/config* path.
+Logger requires the *kubeconfig* file mounted as a configmap (passed to stern binary). *kubeconfig* file is generally found under */etc/kubernetes/admin.conf* or *~/.kube/config* path.
 
 ## Running Logger
 

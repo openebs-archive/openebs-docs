@@ -1,9 +1,9 @@
 {
   "docs": {
     "Getting Started": ["gsoverview", "features", "ha", "releasenotes", "faq"],
-    "Setup": ["overview", "prerequisites", "openshift", "cloudsolutions", "onpremise", "devsolutions", "runOpenEBSoperator"],
+    "Setup": ["overview", "prerequisites", "openshift", "cloudsolutions", "onpremise", "devsolutions", "runOpenEBSoperator", "namespace"],
     "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "Kafka", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
-    "Policies": ["storagepolicies"],
+    "Policies": ["storagepolicies"], 
     "Troubleshooting": ["troubleshooting", "tsgcollectlogs", "tsgpvs"],
     "Contributing to OpenEBS documents": ["contribute"]
   }
