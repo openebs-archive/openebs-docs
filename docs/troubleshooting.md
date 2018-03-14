@@ -4,7 +4,7 @@ title: Troubleshooting Overview
 sidebar_label: Troubleshooting
 ---
 
-his section provides information to help you troubleshoot common problems.
+This section provides information to help you troubleshoot common problems.
 
 The list of OpenEBS issues and their workarounds are available either at the OpenEBS Slack channel or at the OpenEBS GitHub repository. Go to the following links to view the list of OpenEBS issues.
 
