@@ -135,8 +135,6 @@ The above cause can be confirmed from the `kubectl describe pod` which displays 
 
 You can resolve this issue by upgrading the Kubernetes cluster infrastructure resources (Memory, CPU).
 
-
-
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
 

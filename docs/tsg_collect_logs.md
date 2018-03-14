@@ -28,7 +28,7 @@ Logger uses the following tool/command to work.
 
 ### Prerequisite
 
-Logger needs the *kubeconfig* file mounted as a configmap (passed to stern binary). *kubeconfig* file is generally found under */etc/kubernetes/admin.conf* or *~/.kube/config* path.
+Logger requires the *kubeconfig* file mounted as a configmap (passed to stern binary). *kubeconfig* file is generally found under */etc/kubernetes/admin.conf* or *~/.kube/config* path.
 
 ## Running Logger
 
