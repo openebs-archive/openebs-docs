@@ -145,8 +145,10 @@ Install the PostgreSQL CLient Utility (psql) on any of the Kubernetes machines t
 Identify the IP Address of the primary (pgset-0) pod or the service (pgset-primary) and execute the following query: 
 
 ```
-test@Master:~$
-psql -h 10.47.0.3 -U testuser postgres -c 'select * from pg_stat_replication'
+test@Master:~$ kubectl describe pod pgset-0 | grep IP
+IP:             10.47.0.3
+
+test@Master:~$ psql -h 10.47.0.3 -U testuser postgres -c 'select * from pg_stat_replication'
 pid | usesysid | usename | application_name | client_addr | client_hostname | client_port | backend_start | backend_xmin | state | sent_lsn | write_lsn | flush_lsn | replay_lsn | write_lag
 | flush_lag | replay_lag | sync_priority | sync_state
 -----+----------+-------------+------------------+-------------+-----------------+------------+-------------------------------+--------------+-----------+-----------+-----------+-----------+------------+-----------+-----------+------------+---------------+------------
@@ -173,6 +175,9 @@ The following queries should be executed on the primary pod.
 
 Identify the IP Address of the replica (pgset-1) pod or the service (pgset-replica) and execute the following command.
 
+    test@Master:~$ kubectl describe pod pgset-1 | grep IP
+    IP:             10.44.0.6
+    
     test@Master:~$ psql -h 10.44.0.6 -U testuser postgres -c 'table foo'
     Password for user testuser:
     id
