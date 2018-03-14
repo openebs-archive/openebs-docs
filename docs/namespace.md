@@ -15,7 +15,7 @@ OpenEBS is usually deployed in the *default* namespace. You can deploy OpenEBS i
      name: openebs
    ```
 
-2. Change all occurrences of *namespace: default* to *namespace: openebs* in the *openebs-operator.yaml* file.
+2. Change all occurrences of *namespace: default* to *namespace: openebs*.
 
 3. In the openebs-provisioner deployment, add the following ENV.
 
