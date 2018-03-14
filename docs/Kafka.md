@@ -4,50 +4,6 @@ title: Kafka
 sidebar_label: Kafka
 ---
 
-## ![kafka](assets/kafka.png)Running Kafka with OpenEBS
-
-<table>
-<tr>
- <th>KAFKA VERSION</th>
- <th>Google Cloud</th>
- <th>AWS</th>
- <th>Minikube</th>
- <th>OpenShift</th>
-</tr>
-<tr>
- <td> </td>
- <td> </td>
- <td> </td>
- <td>v0.24.1</td>
- <td>v3.7</td>
-</tr>
-<tr>
- <td>v0.11.0.0</td>
- <td><img src="/docs/assets/tickmark.png" alt="tick image" ></td>
- <td></td>
- <td><img src="/docs/assets/tickmark.png" alt="tick image" ></td>
- <td><img src="/docs/assets/tickmark.png" alt="tick image" ></td>
-</tr>
-
-</table>
-
-**STEP 1 : Setup K8s on various platforms** <br />
-
-- [Google Cloud](/docs/setupk8sgke.html)<br />
-- [Minikube](/docs/setupk8sminikube.html)<br />
-- [OpenShift](/docs/setupk8sopenshift.html)<br />
-- [AWS](/docs/AWS_Setup.html)<br />
-
-**STEP 2 : Setup OpenEBS** <br />
-
-- [Procedure for setting up OpenEBS](/docs/setupopenebs.html) <br />
-
-**STEP 3 : Import K8s cluster into MayaOnline** <br />
-
-- [Procedure for Importing K8s cluster into MayaOnline](/docs/importk8smo.html) <br />
-
-**STEP 4 : Setup Kafka with OpenEBS**
-
 ### Deploying Kafka as a StatefulSet
 
 This section provides detailed instructions on how to run a Kafka application with OpenEBS as a persistent storage in a Kubernetes cluster. A sample Kafka pod yaml (with container attributes and pvc details) is available in the OpenEBS git repository (which was cloned in the previous steps). To deploy Kafka run the following commands.
@@ -241,20 +197,14 @@ Hello OpenEBS!
 Hello MayaData!
 ```
 
-
-
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
    (function(h,o,t,j,a,r){
-
-```
-   h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-   h._hjSettings={hjid:785693,hjsv:6};
-   a=o.getElementsByTagName('head')[0];
-   r=o.createElement('script');r.async=1;
-   r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-   a.appendChild(r);
-```
-
+       h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+       h._hjSettings={hjid:785693,hjsv:6};
+       a=o.getElementsByTagName('head')[0];
+       r=o.createElement('script');r.async=1;
+       r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+       a.appendChild(r);
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
