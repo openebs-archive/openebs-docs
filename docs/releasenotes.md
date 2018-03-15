@@ -4,6 +4,36 @@ title: Changelog
 sidebar_label: Changelog
 ---
 
+## OpenEBS Release Version 0.5.3
+
+### Issues Fixed in v0.5.3
+
+- Fixed usage of StoragePool issue when rbac settings are applied [1189](https://github.com/openebs/openebs/issues/1189).
+- Fixed hardcoded maya-apiserver-service name to a configurable value as it resulted in conflict with other services running on the same cluster [1227](https://github.com/openebs/openebs/issues/1227).
+- Fixed issue where the volume status was displaying only one replica even though there were three replicas configured in mayactl version 0.5.1. [1275](https://github.com/openebs/openebs/issues/1275).
+- Fixed an issue where the OpenEBS iSCSI volume showed progressive increase in the memory consumed by the controller pod [1298](https://github.com/openebs/openebs/issues/1298).
+
+### Known Issues in v0.5.3
+
+For a list of known issues, go to [v0.5.3 known issues](https://github.com/openebs/openebs/issues?q=is%3Aopen+is%3Aissue+label%3Arelease-note%2Fopen). 
+
+### Enhancement to Documentation
+
+The OpenEBS documentation is now available at https://docs.openebs.io/. You can provide your feedback comments by clicking the **Feedback** button provided on every page.
+
+## OpenEBS Release Version 0.5.2
+
+This release fixes an issue to allow maya-apiserver and openebs-provisioner to work with Kubernetes non-SSL configuration.
+
+### Issue Fixed in v0.5.2
+
+You can now set the non-SSL Kubernetes endpoints to use by specifying the ENV variables OPENEBS_IO_KUBE_CONFIG and OPENEBS_IO_K8S_MASTER on maya-apiserver and openebs-provisioner [1184](https://github.com/openebs/openebs/issues/1184).
+
+To use the above ENV variables, the following image versions must be used:
+
+- *openebs/m-apiserver:0.5.2*: OpenEBS Maya API Server along with the latest maya cli.
+- *openebs/openebs-k8s-provisioner:0.5.2*: Dynamic OpenEBS Volume Provisioner for Kubernetes.
+
 OpenEBS Release Version 0.5.1
 -----------------------------
 
@@ -23,7 +53,7 @@ OpenEBS Release Version 0.5.1
 -   Not recommended for mission critical workloads
 -   Not recommended for performance sensitive workloads. Efforts are ongoing to improve performance.
 
-### Installation
+### Enhancements to Installation
 
 Execute the following command to install OpenEBS using kubectl.
 
@@ -41,6 +71,8 @@ helm install openebs-charts/openebs
 
 ### Images
 
+The following images are installed when you install OpenEBS.
+
 -   *openebs/jiva:0.5.1* : Containerized Storage Controller
 -   *openebs/m-apiserver:0.5.1* : OpenEBS Maya API Server along with the latest maya cli.
 -   *openebs/openebs-k8s-provisioner:0.5.1* : Dynamic OpenEBS Volume Provisioner for Kubernetes.
@@ -48,8 +80,7 @@ helm install openebs-charts/openebs
 
 ### Setup OpenEBS Volume Monitoring
 
-If you are running your own Prometheus, please update it with the
-following job configuration: 
+If you are running your own Prometheus, please update it with the following job configuration: 
 
 ```
 - job_name: 'openebs-volumes' 
@@ -185,9 +216,9 @@ For a list of known issues, go to [v0.5.0 known issues](https://github.com/opene
 -   openebs/maya/cmd/maya-agent was introduced to manage and automate the local storage functionality. This component is being renamed to openebs/maya/cmd/maya-nodebot and is primarily intended to augment the functionality already provided by k8s local storage manager and
     node-exporter (openebs/openebs \#194)
 
-### Limitations
+### Limitation
 
--   Running in Azure K8s Clusters (not verified)
+Running in Azure K8s Clusters (not verified)
 
 OpenEBS Release Version 0.4.0
 -----------------------------
