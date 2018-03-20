@@ -1,7 +1,7 @@
 ---
-id: Cassandra
-title: Cassandra
-sidebar_label: Cassandra
+id: installation
+title: Installation
+sidebar_label: Installation
 ---
 Content to be added
 
