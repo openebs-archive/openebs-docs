@@ -1,6 +1,7 @@
 {
   "docs": {
-    "Getting Started": ["gsoverview", "features", "ha", "releasenotes", "faq"],
+    "Getting Started": ["quickstartguide", "gsoverview", "gethelp", "changelog", "faq"],
+    "Concepts": ["conceptsoverview_cas", "architecture", "maya", "storageengine", "jiva", "cStor", "volume", "storagepool", "diskobject", "features"],
     "Setup": ["overview", "prerequisites", "openshift", "cloudsolutions", "onpremise", "devsolutions", "runOpenEBSoperator", "namespace"],
     "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "Kafka", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
     "Policies": ["storagepolicies"], 
