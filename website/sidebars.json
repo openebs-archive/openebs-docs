@@ -2,10 +2,14 @@
   "docs": {
     "Getting Started": ["quickstartguide", "gsoverview", "gethelp", "changelog", "faq"],
     "Concepts": ["conceptsoverview_cas", "architecture", "maya", "storageengine", "jiva", "cStor", "volume", "storagepool", "diskobject", "features"],
-    "Setup": ["overview", "prerequisites", "openshift", "cloudsolutions", "onpremise", "devsolutions", "runOpenEBSoperator", "namespace"],
+    "Setup": ["install-overview", "prerequisites", "installation", "setupstoragepools", "setupstorageclasses", "runOpenEBSoperator", "namespace"],
     "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "Kafka", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
     "Policies": ["storagepolicies"], 
-    "Troubleshooting": ["troubleshooting", "tsgcollectlogs", "tsgpvs"],
-    "Contributing to OpenEBS documents": ["contribute"]
+    "Platforms": ["nativekubernetes", "openshift", "googlecloud", "aws", "azure", "devsolutions",
+    "CLI": ["kubectl", "mayactl"],
+    "API": ["api"],
+    "Troubleshooting": ["troubleshooting", "tsginstallation", "tsgstorageclasses", "tsgstoragepools", "tsgaccessinglogs", "tsghardwarefail", "tsgnodefail", "tsgmaintclean", "tsgcollectlogs", "tsgpvs", "tsgmiscellaneous"],
+    "Contributor Resources": ["weeklycontribute", "contribute"]
+    "General": ["knownissues", "whatworksdoesnotwork", "blogsrefmatl"]
   }
 }
