@@ -1,6 +1,6 @@
 ---
-id: releasenotes
-title: Changelog
+id: changelog
+title: Change Log
 sidebar_label: Changelog
 ---
 
