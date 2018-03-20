@@ -1,7 +1,7 @@
 ---
-id: onpremise
-title: On-Premise Solutions
-sidebar_label: On-Premise Solutions
+id: nativekubernetes
+title: Native Kubernetes
+sidebar_label: Native Kubernetes
 ---
 
 
