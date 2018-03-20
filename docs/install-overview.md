@@ -1,5 +1,5 @@
 ---
-id: overview
+id: install-overview
 title: Overview
 sidebar_label: Overview
 ---
