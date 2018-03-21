@@ -1,6 +1,6 @@
 ---
 id: increasecapacity
-title: Increasing Capacity
+title: Increasing Capacity of OpenEBS Volumes
 sidebar_label: Increasing Capacity
 ---
 
