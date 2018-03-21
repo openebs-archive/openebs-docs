@@ -1,6 +1,6 @@
 ---
 id: openshift
-title: Installing OpenEBS on OpenShift
+title: Running OpenEBS on OpenShift
 sidebar_label: OpenShift
 ---
 
