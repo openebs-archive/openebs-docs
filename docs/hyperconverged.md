@@ -1,6 +1,6 @@
 ---
 id: hyperconverged
-title: Usecase for Hyperconverged
+title: OpenEBS Usecases - Hyperconverged
 sidebar_label: Hyperconverged
 ---
 
