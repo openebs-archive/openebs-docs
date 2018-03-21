@@ -1,7 +1,7 @@
 ---
-id: volume
-title: Volume
-sidebar_label: Volume
+id: changelog
+title: Change Log
+sidebar_label: Change Log
 ---
 
 Content to be added
