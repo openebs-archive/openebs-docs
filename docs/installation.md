@@ -1,11 +1,21 @@
 ---
-id: volume
-title: Volume
-sidebar_label: Volume
+id: installation
+title: OpenEBS Installation
+sidebar_label: Installation
 ---
 
 Content to be added
 
+Install
+=========
+
+
+Upgrade
+=========
+
+
+Location of Binaries
+======================
 
 
 
