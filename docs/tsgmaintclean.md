@@ -1,7 +1,7 @@
 ---
-id: volume
-title: OpeEBS Volume
-sidebar_label: OpenEBS Volumes
+id: tsgmaintclean
+title: Troubleshooting Maintenance and Cleanup issues 
+sidebar_label: Maintenance and Cleanup
 ---
 
 Content to be added
