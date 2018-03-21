@@ -1,5 +1,6 @@
 {
   "docs": {
+<<<<<<< HEAD
     "Getting Started": ["quickstartguide", "introduction", "gethelp", "faq"],
     "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "volume", "storagepool", "diskobject"],
     "Setup": ["prerequisites", "installation", "setupstorageclasses", "setupstoragepools"],
@@ -7,10 +8,18 @@
     "Usecases": ["k8sstorage", "cicd", "bigdata", "datascience", "hyperconverged", "hyperscale", "hybridcloud", "backup", "databases"],
     "Tasks": ["installopenebs", "createstoragepool", "createstorageclass", "monitorstoragevolumes", "snapshotclone", "increasecapacity", "workloadmigration", "faulthandling", "maintenance", "upgrade"],
     "Platforms": ["nativekubernetes", "openshift", "googlecloud", "aws", "azure", "devsolutions",
+=======
+    "Getting Started": ["quickstartguide", "gsoverview", "gethelp", "changelog", "faq"],
+    "Concepts": ["conceptsoverview_cas", "architecture", "maya", "storageengine", "jiva", "cStor", "volume", "storagepool", "diskobject", "features"],
+    "Setup": ["install-overview", "prerequisites", "installation", "setupstoragepools", "setupstorageclasses", "runOpenEBSoperator", "namespace"],
+    "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "Kafka", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
+    "Policies": ["storagepolicies"], 
+    "Platforms": ["nativekubernetes", "openshift", "googlecloud", "aws", "azure", "devsolutions"],
+>>>>>>> f024ff0c38b02c1126f8fc39479368f841c2e405
     "CLI": ["kubectl", "mayactl"],
     "API": ["api"],
     "Troubleshooting": ["troubleshooting", "tsginstallation", "tsgstorageclasses", "tsgstoragepools", "tsgaccessinglogs", "tsghardwarefail", "tsgnodefail", "tsgmaintclean", "tsgcollectlogs", "tsgpvs", "tsgmiscellaneous"],
-    "Contributor Resources": ["weeklycontribute", "contribute"]
+    "Contributor Resources": ["weeklycontribute", "contribute"],
     "General": ["knownissues", "whatworksdoesnotwork", "blogsrefmatl"]
   }
 }
