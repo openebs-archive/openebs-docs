@@ -6,10 +6,10 @@
     "Releases": ["changelog", "devrelease", "stablerelease"],
     "Usecases": ["k8sstorage", "cicd", "bigdata", "datascience", "hyperconverged", "hyperscale", "hybridcloud", "backup", "databases"],
     "Tasks": ["installopenebs", "createstoragepool", "createstorageclass", "monitorstoragevolumes", "snapshotclone", "increasecapacity", "workloadmigration", "faulthandling", "maintenance", "upgrade"],
-    "Platforms": ["nativekubernetes", "openshift", "googlecloud", "aws", "azure", "devsolutions"],
+    "Platforms": ["nativekubernetes", "openshift", "googlecloud", "aws", "azure"],
     "CLI": ["kubectl", "mayactl"],
     "API": ["api"],
-    "Troubleshooting": ["troubleshooting", "tsginstallation", "tsgstorageclasses", "tsgstoragepools", "tsgaccessinglogs", "tsghardwarefail", "tsgnodefail", "tsgmaintclean", "tsgcollectlogs", "tsgpvs", "tsgmiscellaneous"],
+    "Troubleshooting": ["tsginstallation", "tsgstorageclasses", "tsgstoragepools", "tsgaccessinglogs", "tsghardwarefail", "tsgnodefail", "tsgmaintclean", "tsgcollectlogs", "tsgpvs", "tsgmiscellaneous"],
     "Contributor Resources": ["weeklycontribute", "contribute"],
     "General": ["knownissues", "whatworksdoesnotwork", "blogsrefmatl"]
   }
