@@ -1,8 +1,13 @@
 ---
-id: setupstoragepools
-title: Setup Storage Pools
-sidebar_label: Setup Storage Pools
+id: storagepool
+title: OpenEBS Storage Pools
+sidebar_label: Storage Pools
 ---
+
+Content to be added
+
+
+
 
 
 

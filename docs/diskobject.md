@@ -1,10 +1,13 @@
 ---
 id: diskobject
-title: Disk Object
-sidebar_label: Disk Object
+title: OpenEBS Disk Objects
+sidebar_label: Disk Objects
 ---
 
 Content to be added
+
+
+
 
 
 

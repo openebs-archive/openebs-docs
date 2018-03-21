@@ -1,12 +1,10 @@
 ---
-id: gethelp
-title: Getting help on OpenEBS
-sidebar_label: Getting help
+id: maya
+title: Maya
+sidebar_label: Maya
 ---
 
 Content to be added
-
-
 
 
 

@@ -1,14 +1,10 @@
 ---
-id: gethelp
-title: Getting help on OpenEBS
-sidebar_label: Getting help
+id: quickstartguide
+title: Quick Start Guide
+sidebar_label: Quick Start Guide
 ---
 
-Content to be added
-
-
-
-
+content to be added.
 
 
 

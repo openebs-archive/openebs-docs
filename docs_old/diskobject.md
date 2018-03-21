@@ -1,13 +1,10 @@
 ---
-id: gethelp
-title: Getting help on OpenEBS
-sidebar_label: Getting help
+id: diskobject
+title: Disk Object
+sidebar_label: Disk Object
 ---
 
 Content to be added
-
-
-
 
 
 

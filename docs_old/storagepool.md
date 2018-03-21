@@ -1,10 +1,12 @@
 ---
-id: gethelp
-title: Getting help on OpenEBS
-sidebar_label: Getting help
+id: storagepool
+title: Storage Pool
+sidebar_label: Storage Pool
 ---
 
 Content to be added
+
+
 
 
 

@@ -1,10 +1,8 @@
 ---
-id: gethelp
-title: Getting help on OpenEBS
-sidebar_label: Getting help
+id: setupstorageclasses
+title: Setup Storage Classes
+sidebar_label: Setup Storage Classes
 ---
-
-Content to be added
 
 
 

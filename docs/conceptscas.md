@@ -1,7 +1,7 @@
 ---
-id: gethelp
-title: Getting help on OpenEBS
-sidebar_label: Getting help
+id: conceptscas
+title: Container Attached Storage (CAS)
+sidebar_label: CAS
 ---
 
 Content to be added

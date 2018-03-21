@@ -1,7 +1,7 @@
 ---
-id: gethelp
-title: Getting help on OpenEBS
-sidebar_label: Getting help
+id: introduction
+title: Introduction to OpenEBS
+sidebar_label: Introduction
 ---
 
 Content to be added

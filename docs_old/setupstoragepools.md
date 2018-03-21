@@ -1,13 +1,8 @@
 ---
-id: gethelp
-title: Getting help on OpenEBS
-sidebar_label: Getting help
+id: setupstoragepools
+title: Setup Storage Pools
+sidebar_label: Setup Storage Pools
 ---
-
-Content to be added
-
-
-
 
 
 

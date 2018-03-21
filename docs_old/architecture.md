@@ -1,15 +1,10 @@
 ---
-id: gethelp
-title: Getting help on OpenEBS
-sidebar_label: Getting help
+id: architecture
+title: Architecture
+sidebar_label: Architecture
 ---
 
 Content to be added
-
-
-
-
-
 
 
 

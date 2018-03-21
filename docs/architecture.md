@@ -1,10 +1,15 @@
 ---
 id: architecture
-title: Architecture
+title: OpenEBS Architecture
 sidebar_label: Architecture
 ---
 
 Content to be added
+
+
+
+
+
 
 
 

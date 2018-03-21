@@ -1,13 +1,9 @@
 ---
-id: gethelp
-title: Getting help on OpenEBS
-sidebar_label: Getting help
+id: installation
+title: Installation
+sidebar_label: Installation
 ---
-
 Content to be added
-
-
-
 
 
 

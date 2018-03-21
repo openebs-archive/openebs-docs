@@ -1,7 +1,7 @@
 ---
 id: volume
-title: Volume
-sidebar_label: Volume
+title: OpeEBS Volume
+sidebar_label: OpenEBS Volumes
 ---
 
 Content to be added

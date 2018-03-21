@@ -1,10 +1,14 @@
 ---
 id: quickstartguide
 title: Quick Start Guide
-sidebar_label: Quick Start Guide
+sidebar_label: quickstartguide
 ---
 
-content to be added.
+Content to be added
+
+
+
+
 
 
 

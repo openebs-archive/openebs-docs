@@ -1,10 +1,11 @@
 {
   "docs": {
-    "Getting Started": ["quickstartguide", "gsoverview", "gethelp", "changelog", "faq"],
-    "Concepts": ["conceptsoverview_cas", "architecture", "maya", "storageengine", "jiva", "cStor", "volume", "storagepool", "diskobject", "features"],
-    "Setup": ["install-overview", "prerequisites", "installation", "setupstoragepools", "setupstorageclasses", "runOpenEBSoperator", "namespace"],
-    "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "Kafka", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
-    "Policies": ["storagepolicies"], 
+    "Getting Started": ["quickstartguide", "introduction", "gethelp", "faq"],
+    "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "volume", "storagepool", "diskobject"],
+    "Setup": ["prerequisites", "installation", "setupstorageclasses", "setupstoragepools"],
+    "Releases": ["changelog", "devrelease", "stablerelease"],
+    "Usecases": ["k8sstorage", "cicd", "bigdata", "datascience", "hyperconverged", "hyperscale", "hybridcloud", "backup", "databases"],
+    "Tasks": ["installopenebs", "createstoragepool", "createstorageclass", "monitorstoragevolumes", "snapshotclone", "increasecapacity", "workloadmigration", "faulthandling", "maintenance", "upgrade"],
     "Platforms": ["nativekubernetes", "openshift", "googlecloud", "aws", "azure", "devsolutions",
     "CLI": ["kubectl", "mayactl"],
     "API": ["api"],
