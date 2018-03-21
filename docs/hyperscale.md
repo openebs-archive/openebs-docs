@@ -1,7 +1,6 @@
-
 ---
 id: hyperscale
-title: Usecase for Hyperscale
+title: OpenEBS Usecases - Hyperscale
 sidebar_label: Hyperscale
 ---
 
