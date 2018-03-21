@@ -11,5 +11,5 @@
     "Troubleshooting": ["troubleshooting", "tsginstallation", "tsgstorageclasses", "tsgstoragepools", "tsgaccessinglogs", "tsghardwarefail", "tsgnodefail", "tsgmaintclean", "tsgcollectlogs", "tsgpvs", "tsgmiscellaneous"],
     "Contributor Resources": ["weeklycontribute", "contribute"]
     "General": ["knownissues", "whatworksdoesnotwork", "blogsrefmatl"]
-  }
+           }
 }
