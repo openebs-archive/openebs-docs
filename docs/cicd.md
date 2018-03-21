@@ -1,7 +1,7 @@
 ---
-id: volume
-title: Volume
-sidebar_label: Volume
+id: cicd
+title: Usecase for CI/CD
+sidebar_label: CI/CD
 ---
 
 Content to be added
