@@ -1,6 +1,6 @@
 ---
 id: datascience
-title: Usecase for Machine Learning and Data Science
+title: OpenEBS Usecases - Machine Learning and Data Science
 sidebar_label: ML and Data Science
 ---
 
