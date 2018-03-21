@@ -1,7 +1,7 @@
 ---
-id: volume
-title: Volume
-sidebar_label: Volume
+id: prerequisites
+title: Prerequisites for Installation
+sidebar_label: Prerequisites
 ---
 
 Content to be added
