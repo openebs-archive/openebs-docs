@@ -1,6 +1,6 @@
 ---
 id: cicd
-title: Usecase for CI/CD
+title: OpenEBS Usecases - CI/CD
 sidebar_label: CI/CD
 ---
 
