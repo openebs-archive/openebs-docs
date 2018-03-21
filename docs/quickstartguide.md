@@ -1,7 +1,7 @@
 ---
 id: quickstartguide
 title: Quick Start Guide for OpenEBS
-sidebar_label: quickstartguide
+sidebar_label: Quick Start Guide
 ---
 
 Following are the steps to get started with OpenEBS on a Kubernetes cluster.
