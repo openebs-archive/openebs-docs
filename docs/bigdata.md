@@ -1,7 +1,7 @@
 ---
-id: volume
-title: Volume
-sidebar_label: Volume
+id: bigdata
+title: Usecase for Big Data
+sidebar_label: Big Data
 ---
 
 Content to be added
