@@ -1,6 +1,6 @@
 ---
 id: nativekubernetes
-title: Installing OpenEBS on Native Kubernetes
+title: Running OpenEBS on Native Kubernetes
 sidebar_label: nativekubernetes
 ---
 
