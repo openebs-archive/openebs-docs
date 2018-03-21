@@ -1,6 +1,6 @@
 ---
 id: hybridcloud
-title: Usecase for Hybrid Cloud
+title: OpenEBS Usecases - Hybrid Cloud
 sidebar_label: Hybrid Cloud
 ---
 
