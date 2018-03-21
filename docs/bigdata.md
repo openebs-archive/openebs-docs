@@ -1,6 +1,6 @@
 ---
 id: bigdata
-title: Usecase for Big Data
+title: OpenEBS Usecases - Big Data
 sidebar_label: Big Data
 ---
 
