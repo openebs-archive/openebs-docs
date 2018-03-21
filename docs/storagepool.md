@@ -1,7 +1,7 @@
 ---
-id: volume
-title: Volume
-sidebar_label: Volume
+id: setupstoragepools
+title: Setting up Storage Pools
+sidebar_label: Storage Pools
 ---
 
 Content to be added
