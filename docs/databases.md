@@ -1,6 +1,6 @@
 ---
 id: databases
-title: Usecase for Databases
+title: OpenEBS Usecases - Databases
 sidebar_label: Databases
 ---
 
