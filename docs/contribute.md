@@ -1,5 +1,5 @@
 ---
-id: contriubte
+id: contribute
 title: Contributing to OpenEBS
 sidebar_label: Contribution Guide
 ---
