@@ -1,7 +1,7 @@
 ---
-id: volume
-title: Volume
-sidebar_label: Volume
+id: stablerelease
+title: Stable Release
+sidebar_label: Stable
 ---
 
 Content to be added
