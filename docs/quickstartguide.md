@@ -22,7 +22,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 1. Create a PVC spec with the right storage class and use it in the application yaml file
 
-2. Apply the yaml file using kubectl apply -f command and observe that an OpenEBS volume is provisioned and bound to the application pod
+2. Apply the yaml file using `kubectl apply -f` command and observe that an OpenEBS volume is provisioned and bound to the application pod
 
    ​
 
