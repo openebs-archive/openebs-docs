@@ -1,6 +1,6 @@
 ---
 id: k8sstorage
-title: Usecase for Kubernetes Storage
+title: OpenEBS Usecases - Kubernetes Storage
 sidebar_label: Kubernetes Storage
 ---
 
