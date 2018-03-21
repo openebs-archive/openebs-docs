@@ -1,7 +1,7 @@
 ---
 id: nativekubernetes
 title: Running OpenEBS on Native Kubernetes
-sidebar_label: nativekubernetes
+sidebar_label: Native Kubernetes
 ---
 
 Content to be developed.
