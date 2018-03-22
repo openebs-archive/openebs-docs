@@ -9,8 +9,7 @@
     "Platforms": ["nativekubernetes", "openshift", "googlecloud", "aws", "azure"],
     "CLI": ["kubectl", "mayactl"],
     "API": ["api"],
-    "Troubleshooting": ["tsginstallation", "tsgstorageclasses", "tsgstoragepools", "tsgaccessinglogs", "tsghardwarefail", "tsgnodefail", "tsgmaintclean", "tsgmiscellaneous"],
     "Contributor Resources": ["weeklycontribute", "contribute"],
-    "General": ["knownissues", "whatworksdoesnotwork", "blogsrefmatl"]
+    "General": ["troubleshooting", "knownissues", "whatworksdoesnotwork", "blogsrefmatl"]
   }
 }
