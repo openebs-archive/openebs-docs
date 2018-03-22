@@ -8,7 +8,7 @@ sidebar_label: CAS
 
 CAS is software that includes a micro services based storage controller and a multiples of micro services based storage replicas which can be orchestrated  by Kubernetes like any other micro service or container. 
 
-![CAS](assets/cas.png)
+![CAS](/docs/assets/cas.png)
 
 CAS is truly cloud native. The control plane of storage software (called storage controller) and the data plane of storage software (called storage replica) are micro services based or containerized and hence truly cloud native. One can apply all the advantages of being cloud native to CAS, primarily.
 
@@ -26,7 +26,9 @@ Cloud native
 
 ## Architecture of CAS on Kubernetes
 
-![CAS](assets/cas-arch.png)
+![CAS](/docs/assets/cas-arch.png)
+
+
 
 
 
