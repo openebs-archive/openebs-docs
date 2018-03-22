@@ -5,7 +5,7 @@
     "Setup": ["prerequisites", "installation", "setupstorageclasses", "setupstoragepools"],
     "Releases": ["changelog", "devrelease", "stablerelease"],
     "Usecases": ["k8sstorage", "cicd", "bigdata", "datascience", "hyperconverged", "hyperscale", "hybridcloud", "backup", "databases"],
-    "Tasks": ["installopenebs", "createstoragepool", "createstorageclass", "monitorstoragevolumes", "snapshotclone", "increasecapacity", "workloadmigration", "faulthandling", "maintenance", "upgrade"],
+    "Tasks": ["developertasks", "operatortasks"],
     "Platforms": ["nativekubernetes", "openshift", "googlecloud", "aws", "azure"],
     "CLI": ["kubectl", "mayactl"],
     "API": ["api"],
