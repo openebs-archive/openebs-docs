@@ -48,6 +48,21 @@ CAS containerizes storage software and also uses Kubernetes Custom Resource Defi
 
 
 
+As shown in the above diagram, in CAS architecture, the software of storage controller and replicas are completely micro services based and hence no kernel components are involved.  Typically, the storage controller POD is scheduled on the same node as the persistent volume to increase the efficiency and the  replica pods can be scheduled anywhere on the cluster nodes. Each replica is configured completely independently from the others using any combination of  local disks, SAN disks  and cloud disks. This allows huge flexibility in managing the storage allocation for workloads at scale. 
+
+#### HyperConverged and not Distributed:
+
+CAS architecture does not follow a typical distributed storage architecture with blast radius limitations. With synchronous replication happening from storage controller onto the storage replicas, the storage becomes highly available.  The metadata of replicas of a volumes are not shared among the nodes and is independently managed on each local node. If a node fails, the storage controller, which is a stateless container in this case, is spun on a node where second or third replica is running and data continues to be available.  Hence, with CAS there is no blast radius effect that is typically seen distributed storage systems such as Ceph, Glusterfs etc in the event of node failures. 
+
+Similar to hyperconverged systems, storage and performance of a volume in CAS is scalable. As each volume is having it's own storage controller, the storage can scale up within the permissible limits of a storage capacity of a node. As the number of container applications increase in a given Kubernetes cluster, more nodes are added, which increases the overall availability of storage capacity and performance, thereby making the storage available to the new application containers. This process is exactly similar to the successful HyperConverged systems like Nutanix. 
+
+
+
+See Also:
+
+- Link to OpenEBS architecture
+- Link to a video or article on how scalability is achieved in hyperconverged systems
+
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
