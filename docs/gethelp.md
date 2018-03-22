@@ -3,8 +3,29 @@ id: gethelp
 title: Getting help on OpenEBS
 sidebar_label: Getting help
 ---
+You can use the various following methods to get answers to your queries and any information you need on OpenEBS.
 
-Content to be added
+* **OpenEBS Users Channel**
+
+  Go to https://slack.openebs.io/ and join the OpenEBS users channel. You can chat with the OpenEBS users and get answers to your queries. 
+
+* **Email**
+
+  Email your queries to the following email id. OpenEBS experts will help resolving your queries.
+<email id>
+   
+* **Documentation**
+
+  Access the latest documents at https://docs.openebs.io. Enter the search string in the **Search** box provided to know more.
+
+* **Blogs**
+
+  You can also go through the various blogs available at https://blog.openebs.io/ for more information.
+
+
+
+
+
 
 
 
