@@ -12,11 +12,10 @@ Weekly webinar notes is managed using a Google document](https://docs.google.com
 
 ## Slides and  recordings of the past contributor meetings
 
-| Date | Topics covered | Resources |
-| ---- | -------------- | --------- |
-|      |                |           |
-|      |                |           |
-|      |                |           |
+| Date          | Topics covered                                     | Resources                                                    |
+| ------------- | -------------------------------------------------- | ------------------------------------------------------------ |
+| 23 March 2018 | Architecture discussion on OpenEBS volume policies | [Slides](https://docs.google.com/presentation/d/12xfUKxjKpC-Vm6hSuJ7IFUNAQ3ZCVKJkPqoorDLBzQE/edit#slide=id.g357b4d5d33_0_0) [Session](https://youtu.be/Bp9Z1LmP8Io) |
+|               |                                                    |                                                              |
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
