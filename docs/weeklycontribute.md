@@ -12,7 +12,7 @@ Weekly webinar notes is managed using a [Google document](https://docs.google.co
 
 ## Slides and  recordings of the past contributor meetings
 
-| Date          | Topics covered                                               | Resources                                                    |
+| Date          | Topics Discussed                                             | Resources                                                    |
 | ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 23 March 2018 | Architecture discussion on OpenEBS volume policies           | [Slides](https://docs.google.com/presentation/d/12xfUKxjKpC-Vm6hSuJ7IFUNAQ3ZCVKJkPqoorDLBzQE/edit#slide=id.g357b4d5d33_0_0) [Session](https://youtu.be/Bp9Z1LmP8Io) |
 | 16 March 2018 | - Review design for orchestrating cStor by OpenEBS        <br />-  Bringing up a K8s 1.9 cluster on Vagrant VMs | [Slides 1](https://docs.google.com/presentation/d/1GsI0Sw9sekOkeOhq25rtMFMQdXJ6fIuhMhNKLBUCHEY/edit#slide=id.g34dba79a54_0_0) [Slides 2](https://docs.google.com/presentation/d/1L25J1nJEzacq8tGwOe3PsWUpzJFoLcTy3oabaXz5pmc/edit#slide=id.g314f501798_0_0) [Session](https://www.youtube.com/watch?v=y-7mwbdVgwk) |
