@@ -4,10 +4,19 @@ title: Contributing to OpenEBS - Weekly
 sidebar_label: Contributor Meetings - Weekly
 ---
 
+## Webinar details
 
-Content to be developed
+Weekly contributor webinars are held at 11AM IST. Contributors and users can join this webinar using the zoom link [Join OpenEBS contributors weekly webinar](https://zoom.us/j/438333946)
 
+Weekly webinar notes is managed using a Google document](https://docs.google.com/document/d/1mHL1ypds4Hf6OnOGz2dOufamu4LiSt4Sgnl9QFrxDls/edit?usp=sharing) 
 
+## Slides and  recordings of the past contributor meetings
+
+| Date | Topics covered | Resources |
+| ---- | -------------- | --------- |
+|      |                |           |
+|      |                |           |
+|      |                |           |
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
