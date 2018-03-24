@@ -6,7 +6,7 @@ sidebar_label: Contributor Meetings - Weekly
 
 ## Webinar details
 
-Weekly contributor webinars are held at 11AM IST. Contributors and users can join this webinar using the zoom link [Join OpenEBS contributors weekly webinar](https://zoom.us/j/438333946)
+Weekly contributor webinars are held on every Friday at 10:00 AM IST (9:30 PM Thursday- PST). Contributors and users can join this webinar using the zoom link [Join OpenEBS contributors weekly webinar](https://zoom.us/j/438333946)
 
 Weekly webinar notes is managed using a [Google document](https://docs.google.com/presentation/d/12xfUKxjKpC-Vm6hSuJ7IFUNAQ3ZCVKJkPqoorDLBzQE/edit#slide=id.g357b4d5d33_0_0)
 
@@ -19,9 +19,9 @@ Weekly webinar notes is managed using a [Google document](https://docs.google.co
 | 09 March 2018    | - Dedicating Kubernetes Nodes for OpenEBS Volume PODs <br /> - Using stern in Kubernetes/OpenEBS deployment <br/> - EFK stack for collecting logs  <br/> - Storage extensions to Kubernetes | [Slides 1](https://docs.google.com/presentation/d/15qZqd0AMvtsaQWxXKDRXvYdoEleRhVA7c7LFJLEFIKQ/edit#slide=id.p) [Slides 2](https://docs.google.com/presentation/d/1y8eUa5QwzH9YJpzwS5N4ftIAScYNyUglXjVgTf5tMOA/edit#slide=id.p) [Slides 3](https://docs.google.com/presentation/d/11GLg21x7G-nMTNw8aNIOhhjW_-eK19zSI9Xm-0jYHKs/edit#slide=id.g34dba79a54_0_0) [Session](https://www.youtube.com/watch?v=pLou2IqPQW0&t=287s) |
 | 02 March 2018    | - Build OpenEBS operator from source <br/> - OpenEBS Debug session | [Slides](https://docs.google.com/presentation/d/17GPYhpDYA6w8zg96pWrQkPyt3FBfyAdysTXzQ-dziBI/edit#slide=id.p)  [Session](https://www.youtube.com/watch?v=9AaT-tOqCPQ&t=999s) |
 | 23 February 2018 | -Walk through of OpenEBS volume provisioning and debugging the common failures | [Session](https://www.youtube.com/watch?v=dUKe2Squ13M&feature=youtu.be) |
-|                  |                                                              |                                                              |
-|                  |                                                              |                                                              |
-|                  |                                                              |                                                              |
+| 16 February 2018 | - Contributors help wanted w.r.t OpenEBS helm charts - issue [#1171](https://github.com/openebs/openebs/issues/1171)  <br/>- Configuring storage pool , volume monitoring and volume replica count via Volume Policy | [Session](https://www.youtube.com/watch?v=mFdnHjb0A9M&feature=youtu.be) |
+| 9 February 2018  | - OpenEBS Upgrade High Level Design <br/>-  Recent user discussions - Storage Pool | [Slides](https://docs.google.com/presentation/d/11TWcD51I4yj5f4GRi0AXpTKBetxEq8Imnm-B0Myx4dk/edit?usp=sharing)  [Session](https://www.youtube.com/watch?v=3I3ahS4pIX8&feature=youtu.be) |
+| 2 February 2018  | - Discuss the issue [#1184](https://github.com/openebs/openebs/issues/1184) <br/>- Proposed architecture and design for storage management | [Slides](https://docs.google.com/presentation/d/1mjOkAQppyd23sw7PIryxu5kSrex352bT6bINzw6mUFY/edit#slide=id.g34883d674a_0_601)  [Session](https://www.youtube.com/watch?v=0igQwB3xF0o&t=1s) |
 |                  |                                                              |                                                              |
 
 
