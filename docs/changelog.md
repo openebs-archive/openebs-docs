@@ -7,6 +7,7 @@ sidebar_label: Change Log
 ## Development Release
 
 * Version 0.6.0 
+
 This version is currently under development.
 
 ## Stable/Current Release
