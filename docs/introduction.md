@@ -4,11 +4,15 @@ title: Introduction to OpenEBS
 sidebar_label: Introduction
 ---
 
-OpenEBS is a cloud native storage solution built with the goal of providing containerized storage for containers. Using OpenEBS, a developer can seamlessly get the persistent storage for stateful applications with ease, much of which is automated, while using the popular orchestration platforms such as Kubernetes.
+OpenEBS solution is a new approach to solving persistent storage issues for Kubernetes stateful applications. It provides a true cloud native storage solution to the containerized applications, in that the storage software itself is containerized. In other words, with OpenEBS each stateful workload is allocated a dedicated storage controller, which increases the agility and flexibility of data protection operations and granularity of storage policies of the given stateful workload. 
 
-OpenEBS is a Container Attached Storage (CAS) - which combines the best of DAS and NAS Storage Solutions.
+Containerized storage, which is more broadly called as Container Attached Storage, provides the best of NAS/SAN (Enterprise features) and DAS(lower latency). 
 
 ![image](/docs/assets/das-nas-cas.png)
+
+As shown above, in CAS approach, the local disks are given the capabilities of enterprise storage such as replication, data protection, disaster recovery etc. 
+
+Using OpenEBS, a developer can seamlessly get the persistent storage for stateful applications with ease, much of which is automated, while using the popular orchestration platforms such as Kubernetes.   
 
 At the outset, OpenEBS provides you with:
 
@@ -36,7 +40,13 @@ You can try out OpenEBS on your Kubernetes cluster using the [Quick Start Guide]
 
 
 
-See also:
+### See also:
+
+- Container Attached Storage (CAS)
+- OpenEBS architecture
+- Usecases of OpenEBS
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
