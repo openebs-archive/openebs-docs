@@ -36,7 +36,7 @@ The following commands help you install Docker on Ubuntu version 16.04 (64 bit).
 
 ## Add iSCSI Support
 
-On your Ubuntu host, install open-iscsi package. OpenEBS create iSCSI based block volumes that offers the persistant storage. 
+On your Ubuntu host, install open-iscsi package. OpenEBS creates iSCSI based block volumes that offers the persistant storage. 
 
     sudo apt-get update
     sudo apt-get install open-iscsi
@@ -161,7 +161,7 @@ The following snippet of the openebs-operator.yaml -\> maya-apiserver section sh
               value: "1"
     ---
 
-Add OpenEBS related storage classes, that can then be used by developers and applications by running following command.
+Add OpenEBS related storage classes, that can then be used by developers and applications by running the following command.
 
     kubectl apply -f openebs-storageclasses.yaml
 
