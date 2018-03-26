@@ -11,7 +11,7 @@ This version is currently under development.
 
 ## Stable/Current Release
 
-* [Version 0.5.3](https://github.com/openebs/openebs/releases/tag/v0.5.3
+* [Version 0.5.3](https://github.com/openebs/openebs/releases/tag/v0.5.3)
 
 ## Older Releases
 
