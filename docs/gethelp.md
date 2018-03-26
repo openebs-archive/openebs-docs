@@ -5,35 +5,24 @@ sidebar_label: Getting help
 ---
 You can use the various following methods to get answers to your queries and any information you need on OpenEBS.
 
-* **OpenEBS Users Channel**
+## Slack
 
-  Go to https://slack.openebs.io/ and join the OpenEBS users channel. You can chat with the OpenEBS users and get answers to your queries. 
+The OpenEBS team hangs out on Slack in the #openebs-users channel. To participate in discussions with the OpenEBS team go to [Slack OpenEBS Community](https://openebs-community.slack.com/messages/C3NPGQ6G3/).
 
-* **Email**
+Slack requires registration, but the OpenEBS team welcomes anyone to register at <http://slack.openebs.io/>. Feel free to chat with the OpenEBS team/users and get answers to your queries. 
+
+## Email
 
   Email your queries to the following email id. OpenEBS experts will help resolving your queries.
 <email id>
    
-* **Documentation**
+## Documentation
 
   Access the latest documents at https://docs.openebs.io. Enter the search string in the **Search** box provided to know more.
 
-* **Blogs**
+## Blogs
 
   You can also go through the various blogs available at https://blog.openebs.io/ for more information.
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

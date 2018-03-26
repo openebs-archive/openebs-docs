@@ -4,12 +4,24 @@ title: Change Log
 sidebar_label: Change Log
 ---
 
-Content to be added
+## Development Release
 
+* Version 0.6.0 
 
+This version is currently under development.
 
+## Stable/Current Release
 
+* [Version 0.5.3](https://github.com/openebs/openebs/releases/tag/v0.5.3)
 
+## Older Releases
+
+* [Version 0.5.2](https://github.com/openebs/openebs/releases/tag/v0.5.2)
+* [Version 0.5.1](https://github.com/openebs/openebs/releases/tag/v0.5.1)
+* [Version 0.5.0](https://github.com/openebs/openebs/releases/tag/v0.5.0)
+* [Version 0.4.0](https://github.com/openebs/openebs/releases/tag/v0.4.0)
+* [Version 0.3](https://github.com/openebs/openebs/releases/tag/v0.3)
+* [Version 0.2](https://github.com/openebs/openebs/releases/tag/v0.2)
 
 
 
