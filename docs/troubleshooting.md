@@ -28,12 +28,6 @@ If your problem is not answered in any of the above URLs, you can refer to the d
 
 Contributions are welcome to add procedures for scenarios/environments not covered !!
 
-## Slack
-
-The OpenEBS team hangs out on Slack in the #openebs-users channel. To participate in discussions with the OpenEBS team go to [Slack OpenEBS Community](https://openebs-community.slack.com/messages/C3NPGQ6G3/).
-
-Slack requires registration, but the OpenEBS team welcomes anyone to register at <http://slack.openebs.io/>. Feel free to come and ask any questions.
-
 ## Bugs and Feature Requests
 
 If you have what looks like a bug, or you would like to make a feature request, please use the [GitHub Issue Tracking System](https://github.com/openebs/openebs/issues).
