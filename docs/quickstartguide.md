@@ -1,12 +1,12 @@
 ---
 id: quickstartguide
-title: Quick Start Guide for OpenEBS
+title: Getting started with OpenEBS
 sidebar_label: Quick Start Guide
 ---
 
 Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
-### As Kubernetes admin:
+### As Kubernetes operator / admin:
 
 1. Check if open-iscsi is installed and running on kubelet. Know more <<TBD: Provide a link here >>
 

@@ -4,39 +4,88 @@ title: Introduction to OpenEBS
 sidebar_label: Introduction
 ---
 
-OpenEBS is a cloud native storage solution built with the goal of providing containerized storage for containers. Using OpenEBS, a developer can seamlessly get the persistent storage for stateful applications with ease, much of which is automated, while using the popular orchestration platforms such as Kubernetes.
+------
 
-OpenEBS is a Container Attached Storage (CAS) - which combines the best of DAS and NAS Storage Solutions.
+OpenEBS solution is a new approach to solving persistent storage issues for Kubernetes stateful applications. It provides a true cloud native storage solution to the containerized applications, in that the storage software itself is containerized. In other words, with OpenEBS each stateful workload is allocated a dedicated storage controller, which increases the agility and flexibility of data protection operations and granularity of storage policies of the given stateful workload. 
+
+Containerized storage, which is more broadly called as Container Attached Storage, provides the best of NAS/SAN (Enterprise features) and DAS(lower latency). 
+
+
 
 ![image](/docs/assets/das-nas-cas.png)
 
-At the outset, OpenEBS provides you with:
 
--   A *simple to use* storage solution (simpler than using local storage volumes) for your persistent applications
--   Includes benefits of external storage like snapshots, backup, compression etc.
--   Allows you to run Stateful Applications in Kubernetes on any node (any cloud or any on-premise server), any storage (disks attached to servers). Avoid Storage Vendor lock-in!
 
-OpenEBS is a Containerized Storage Solution that can be orchestrated by any Container Orchestrators. However, the current release supports orchestration using Kubernetes. To understand how to use OpenEBS with Kubernetes, you must familiarize yourself with [Kubernetes Storage Concepts](https://kubernetes.io/docs/concepts/storage/persistent-volumes/), specifically:
+Container Attached Storage in comparison with NAS/SAN and DAS
 
--   Persistent Volumes and Persistent Volume Claims
--   Dynamic Volume Provisioner
--   Storage Classes
 
-A typical stateful application using OpenEBS is as follows:
+
+As shown above, in CAS approach, the local disks are given the capabilities of enterprise storage such as replication, data protection, disaster recovery etc. and the storage software is containerized. For more details on CAS, read [Architectural advantages of CAS](/docs/conceptcas.html)
+
+
+
+## Usecases of OpenEBS
+
+- Save states of stateful applications in each of the CI/CD pipelines and restore the application to a desired state . See [CI/CD](/docs/cicd.html)
+- As a general storage solution for any stateful application through the external storage plugin a.k.a dynamic provisioner. Apart from being able to natively support granular policies such as capacity, # of replicas, configuration of storage pools, OpenEBS has native integration into cloud native tools such as Prometheus, Grafana, Jaeger and Fluentd. See [Kubernetes storage](/docs/k8sstorage.html)
+- HyperConverged usecases. With native hyperconvergence enabled, OpenEBS opens up many usecases of hyper converged Infrastructure on Kubernetes. These cases include VDI, on-demand scaling of infrastructure for businesses, integrating automation-orchestration-analytics etc.  See [HCI](/docs/hyperconverged.html)
+- Supporting high availability and easy connectivity to Databases on Kubernetes. Stateful workloads requiring replication support such as MySQL, PostGres, CockroachDB etc can easily be integrated with OpenEBS to provision, monitor and manage the required data persistence on Kubernetes. See [Databases on Kubernetes](/docs/databases.html)
+
+
+
+## Usage of OpenEBS
+
+In the most simplified form, using OpenEBS involves running OpenEBS operator to install OpenEBS components on Kubernetes cluster and using the default storage classes to provision the storage for stateful applications. 
+
+After the installation of OpenEBS onto the Kubernetes cluster, the operator/administrator builds yaml specifications using  OpenEBS pool CRDs to group the local disks on Kubernetes nodes into pools, then creates storage class catalogues for use by the application developers. 
+
+
+
+For detailed instructions on -How to use OpenEBS, see
+
+[Prerequisites](/docs/prerequisites.html) - For pre requisites on Kubernetes
+
+[Creating Storage Pools](/docs/setupstoragepools.html) - For learning how to create storage pools
+
+
+
+## OpenEBS volume components
+
+When a PV (Persistent Volume) is requested by a PVC (Persistent Volume Claim), OpenEBS provides though a set of Controller and Replica PODs.  A typical stateful application that is using OpenEBS volume can be described as below :
 
 ![image](/docs/assets/openebs-pv-2replica.png)
 
-OpenEBS Volume comprises of Pods that are managed by Kubernetes itself, and each application gets its own storage controller which provides you with benefits like:
+OpenEBS Volume Pods  are managed by Kubernetes for most part, and specific scheduling preferences for these parts can be specified using  [OpenEBS scheduler parameters](/docs/openebsscheduler.html).  The volume pods are of two types. 
 
--   managing the storage with the same tools that you use to manage Kuberentes objects (like *kubectl*)
--   scaling up/down replicas as they are deployments with node/pod affinity constraints
--   extending the manageability via namespaces/RBAC to storage
+1. **A volume controller POD**
 
-You can try out OpenEBS on your Kubernetes cluster using the [Quick Start Guide](/docs/quickstartguide.html) 
+   Each volume will have its own storage controller a.k.a volume controller POD. Some benefits of having a dedicated storage controller per volume are:
+
+   - managing the storage with the same tools that you use to manage Kuberentes objects (like *kubectl*)
+   - scaling up/down replicas as they are deployments with node/pod affinity constraints
+   - extending the manageability via namespaces/RBAC to storage
+
+2. **A volume replica POD**
+
+   A replica POD will have software that manages a pool of disks, provides enterprise features such as data integrity, data resiliency, compression, encryption etc. When replication is needed, it is recommended to have a minimum of three replicas for each volume in order to maintain quorum among the replicas when a replica becomes unavailable and data has to be served without interruption
+
+For more details on how OpenEBS internals work, see [OpenEBS Architecture](/docs/architecture.html) 
 
 
 
-See also:
+## Getting started with OpenEBS
+
+Deploying OpenEBS on Kubernetes clusters is easy. [Get Started now](/docs/quickstartguide.html)
+
+
+
+### See also:
+
+- [Container Attached Storage (CAS)](/docs/conceptcas.html)
+- [OpenEBS architecture](/docs/architecture.html)
+- [Most common OpenEBS Operator tasks](/docs/operatortasks.html)
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

@@ -1,20 +1,98 @@
 ---
 id: prerequisites
-title: Prerequisites for Installation
+title: Pre-requisites for Installation
 sidebar_label: Prerequisites
 ---
 
-Content to be added
+This section will help you to understand the pre-requisites for the OpenEBS installation in a kubernetes installed environment. 
+
+The minimum requirements for the OpenEBS installation are
+
+1. k8s cluster
+
+2. Each k8s Node should have open-iscsi package installed on it.
+
+   ​
+
+
+
+#### **Preparing Software**
+
+OpenEBS is a software-only solution that can be installed using the released binaries or built and installed directly from source.
+
+Currently supported cloud platforms are AWS,Azure,GKE,OpenShift and BareMetals. Once you create k8s cluster on any of these supported platform, you are ready to install OpenEBS on it.
 
 
 
 
 
+#### **Consuming OpenEBS** 
+
+To consume OpenEBS volume on k8s hosts, install open-iscsi initiator packages depends on your host OS. You can get the minimum requirement needed on the various host system for the OpenEBS installation from here
+
+ 
+
+*System Configuration*
+
+Centos7, Ubuntu 16.04 and above with with minimum 4vCPUs, 4G RAM and 16GB hard disk. 
+
+ 
+
+*Add iSCSI Support*
+
+###### On Ubuntu
+
+On your Ubuntu host, install open-iscsi package if it is not done. OpenEBS uses iSCSI to connect to the block volumes.
+
+```
+sudo apt-get update
+```
+
+```
+sudo apt-get install open-iscsi
+```
+
+```
+sudo service open-iscsi restart
+```
 
 
 
+###### Verify that iSCSI is configured
+
+Check that initiator name is configured and iSCSI service is running using the following commands.
+
+```
+sudo cat /etc/iscsi/initiatorname.iscsi
+```
+
+```
+sudo service open-iscsi status
+```
 
 
+
+###### On Centos
+
+On your centos host, install iscsi-initiator-utilsRPM package if it is not done. OpenEBS uses iSCSI to connect to the block volumes.
+
+```
+yum install iscsi-initiator-utils -y
+```
+
+ 
+
+###### Verify that iSCSI is configured
+
+Check that initiator name is configured and iSCSI service isrunning using the following commands
+
+```
+vi/etc/iscsi/initiatorname.iscsi
+```
+
+```
+systemctl status iscsi.service
+```
 
 
 
