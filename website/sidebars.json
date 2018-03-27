@@ -3,7 +3,7 @@
     "Getting Started": ["quickstartguide", "introduction", "gethelp", "faq"],
     "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "volume", "storagepool", "diskobject"],
     "Setup": ["prerequisites", "installation", "setupstorageclasses", "setupstoragepools"],
-    "Releases": ["changelog", "devrelease", "stablerelease"],
+    "Releases": ["changelog"],
     "Usecases": ["k8sstorage", "cicd", "bigdata", "datascience", "hyperconverged", "hyperscale", "hybridcloud", "backup", "databases"],
     "Tasks": ["developertasks", "operatortasks"],
     "Platforms": ["nativekubernetes", "openshift", "googlecloud", "aws", "azure"],
