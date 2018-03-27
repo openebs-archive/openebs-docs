@@ -4,7 +4,23 @@ title: OpenEBS Architecture
 sidebar_label: Architecture
 ---
 
-Content to be added
+# Architecture Overview
+
+OpenEBS follows CAS model where each volume has a dedicated controller POD and set of replica PODs. The advantages of CAS architecture can be read here.  To simplify the deployment by Operators/Admins and usage by application developers, OpenEBS is integrated nicely into the Kubernetes concepts and recommended patterns.  
+
+![OpenEBS-Architecture-Overview](/docs/assets/openebs-arch.png)
+
+
+
+OpenEBS solution/project has many components , which can be grouped into three categories
+
+1. Control plane components, the names of which start with Maya-*
+2. Data plane components - Jiva and cStor
+3. Configuration and monitoring components - Node disk manager and integrations with Prometheus, Grafana, Fluentd and Jaeger
+
+
+
+For volume provisioning to application PODs, OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs). For provisioning and managing the controller PODs and replica PODs, OpenEBS provides additional tunable parameters to Kubernetes scheduler. 
 
 
 
