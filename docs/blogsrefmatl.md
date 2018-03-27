@@ -4,11 +4,19 @@ title: OpenEBS Resources
 sidebar_label: Resources
 ---
 
-Content to be developed
+Blogs :
 
+[Pinning the OpenEBS Replica Pod(s) to the Kubernetes Nodes where they were scheduled](https://blog.openebs.io/how-do-i-pin-the-openebs-replica-pod-s-to-the-kubernetes-nodes-where-they-were-scheduled-2ba42e3015df)
 
+ [Configuring OpenEBS to use storage on specific Kubernetes nodes](https://blog.openebs.io/how-do-i-configure-openebs-to-use-storage-on-specific-kubernetes-nodes-361e3e842a78) 
 
+[Achieving native hyper convergence in Kubernetes](https://blog.openebs.io/achieving-native-hyper-convergence-in-kubernetes-cb93e0bcf5d3)
 
+[The Mule and (the) Flash — going for a run](https://blog.openebs.io/the-mule-and-the-flash-going-for-a-run-b104acbc74a2)
+
+[OpenEBS plus Red Hat OpenShift and StackPointCloud and IBM Cloud Private](https://blog.openebs.io/openebs-plus-red-hat-openshift-and-stackpointcloud-and-ibm-cloud-private-and-6695aeee2545)
+
+[How to install OpenEBS on OpenShift](https://blog.openebs.io/how-to-install-openebs-on-openshift-2e1e15828953)
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
