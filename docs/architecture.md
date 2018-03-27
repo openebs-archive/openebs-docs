@@ -20,7 +20,45 @@ OpenEBS solution/project has many components , which can be grouped into three c
 
 
 
-For volume provisioning to application PODs, OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs). For provisioning and managing the controller PODs and replica PODs, OpenEBS provides additional tunable parameters to Kubernetes scheduler. 
+# Components overview
+
+## Control Plane
+
+### Maya-ApiServer
+
+### Maya-Provisioner
+
+## Data Plane
+
+### Jiva
+
+### cStor
+
+## Node Disk Manager
+
+## Tools integrations
+
+### Prometheus (maya-volexporter)
+
+### Grafana
+
+### Jaeger-Maya
+
+### Kube Dashboard
+
+## OpenEBS Scheduler
+
+For volume provisioning to application PODs, OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs). For provisioning and managing the controller PODs and replica PODs, OpenEBS provides additional tunable parameters to Kubernetes scheduler.
+
+
+
+## Volume provisioning 
+
+## Volume pod scheduling  
+
+## Volume policies 
+
+
 
 
 
