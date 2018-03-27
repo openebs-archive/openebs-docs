@@ -51,13 +51,13 @@ Check that initiator name is configured and iSCSI service is running using the f
 
 ## Download and setup Minikube and kubectl
 
-On your Ubuntu host, install minikube.
+On your Ubuntu host, install minikube by running the following commands.
 
     curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
     chmod +x minikube 
     sudo mv minikube /usr/local/bin/
 
-On your Ubuntu host, install kubectl.
+On your Ubuntu host, install kubectl by running the following commands.
 
     curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
     chmod +x kubectl 
@@ -68,7 +68,7 @@ On your Ubuntu host, setup directories for storing minkube and kubectl configura
     mkdir $HOME/.kube || true
     touch $HOME/.kube/config
 
-On your Ubuntu host, setup the environment for minikube. Copy the following to \~/.profile. 
+On your Ubuntu host, setup the environment for minikube. Copy the following content to \~/.profile file. 
 
     export MINIKUBE_WANTUPDATENOTIFICATION=false
     export MINIKUBE_WANTREPORTERRORPROMPT=false
@@ -76,13 +76,13 @@ On your Ubuntu host, setup the environment for minikube. Copy the following to \
     export CHANGE_MINIKUBE_NONE_USER=true
     export KUBECONFIG=$HOME/.kube/config
 
-On your Ubuntu host, start minikube. 
+On your Ubuntu host, start minikube by running the following command. 
 
     sudo -E minikube start --vm-driver=none
 
 ### Verify that minikube is configured
 
-Check that minikube is configured and it has started using the following commands. :
+Check that minikube is configured and it has started by running the following command.
 
     minikube status
 
