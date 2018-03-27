@@ -4,23 +4,32 @@ title: Prerequisites for Installation
 sidebar_label: Prerequisites
 ---
 
-The basic requirement for installing OpenEBS is a k8s installedenvironment. This section will help you to understand the pre-requisites forthe OpenEBS installation in a k8s environment. 
+This section will help you to understand the pre-requisites for the OpenEBS installation in a kubernetes installed environment. 
 
-Since OpenEBS is delivered through containers, OpenEBS hosts can be run on any operating system with container engine. The clients can be configured to consume the OpenEBS storage via Network(iSCSI). 
+The minimum requirements for the OpenEBS installation are
 
- 
+1. k8s cluster
+2. Each k8s Node should have open-iscsi package installed on it.
+
+
 
 #### **Preparing Software**
 
- OpenEBS is a software-only solution that can be installed using the released binaries or built and installed directly from source.
+OpenEBS is a software-only solution that can be installed using the released binaries or built and installed directly from source.
 
-You can get the minimum requirement needed on the various host system for the OpenEBS installation from here
+Currently supported cloud platforms are AWS,Azure,GKE,OpenShift and BareMetals. Once you create k8s cluster on any of these supported platform, you are ready to install OpenEBS on it.
+
+
+
+#### **Consuming OpenEBS** 
+
+To consume OpenEBS volume on k8s hosts, install open-iscsi initiator packages depends on your host OS. You can get the minimum requirement needed on the various host system for the OpenEBS installation from here
 
  
 
 *System Configuration*
 
-You can install on any of virtual-machines/baremetal/cloudinstances with hosts like Centos7, Ubuntu 16.04 and above with with minimum4 vCPUs, 4G RAM and 16GB hard disk. 
+Centos7, Ubuntu 16.04 and above with with minimum 4vCPUs, 4G RAM and 16GB hard disk. 
 
  
 
@@ -28,7 +37,7 @@ You can install on any of virtual-machines/baremetal/cloudinstances with hosts l
 
 ###### On Ubuntu
 
-On your Ubuntu host, install open-iscsi package. OpenEBS uses iSCSI to connect to the block volumes.
+On your Ubuntu host, install open-iscsi package if is is not done. OpenEBS uses iSCSI to connect to the block volumes.
 
 ```
 sudo apt-get update
@@ -60,7 +69,7 @@ sudo service open-iscsi status
 
 ###### On Centos
 
-On your centos host, install **iscsi-initiator-utilsRPM** package . . OpenEBS uses iSCSI to connect to the block volumes.
+On your centos host, install iscsi-initiator-utilsRPM package if is is not done. OpenEBS uses iSCSI to connect to the block volumes.
 
 ```
 yum install iscsi-initiator-utils -y
