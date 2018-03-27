@@ -1,26 +1,11 @@
 /*Root*/
 
-
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300ita‌​lic,400italic,500,500italic,700,700italic,900italic,900);
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  font-family: "Roboto", sans-serif;
-  text-decoration: none solid rgb(0,0,0);
-}
-
 body{
   font-size: 16px;
+}
+
+.mainContainer {
+  font-size: 15px;
 }
 
 /* Navigation header bg color */
@@ -31,8 +16,6 @@ body{
 /* Content headers */
 .container .wrapper h1 {
     color: #282828;
-    text-decoration: underline;
-    text-decoration-color: #282828;
 }
 .container .wrapper h2 {
     color: #282828;
@@ -45,6 +28,7 @@ body{
 }
 .mainContainer .wrapper .post .postHeader h1 {
     font-size: 220%;
+    padding: 0 0 30;
 }
 .mainContainer .wrapper .post h3 {
     font-weight: 400;
@@ -101,7 +85,6 @@ footer .sitemap .nav-home {
 
 .navigationSlider .slidingNav ul li a:focus,
 .navigationSlider .slidingNav ul li a:hover {
-    text-decoration: underline;
     background: #f1584d;
 }
 
