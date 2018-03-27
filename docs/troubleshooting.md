@@ -7,14 +7,14 @@ The following topics are covered in this chapter.
 
 * [Overview](#Overview)
 * [Installation](#Installation)
-* [Storage Classes](StroageClasses)
-* [Storage Pools](StoragePools)
-* [Accessing Logs](AccessingLogs)
-* [Persistent Volumes](PersistentVolumes)
-* [Recover from hardware failures](RecoverHardwareFailures)
-* [Recover from node failures](RecoverNodeFailures)
-* [Maintenance and cleanup](MaintClean)
-* [Miscellaneous](Miscellaneous)
+* [Storage Classes](#StroageClasses)
+* [Storage Pools](#StoragePools)
+* [Accessing Logs](#AccessingLogs)
+* [Persistent Volumes](#PersistentVolumes)
+* [Recover from hardware failures](#RecoverHardwareFailures)
+* [Recover from node failures](#RecoverNodeFailures)
+* [Maintenance and cleanup](#MaintClean)
+* [Miscellaneous](#Miscellaneous)
 
 # Overview  <a name="Overview"></a>
 This section provides information to help you troubleshoot common problems.
@@ -36,11 +36,20 @@ Before you file an issue, please search existing issues to see if your issue is 
 
 # Installation <a name="Installation"></a>
 
+Content to be added
+
 # Storage Classes <a name="StorageClasses"></a>
+
+Content to be added
+
 
 # Storage Pools <a name="StoragePools"></a>
 
+Content to be added
+
 # Accessing Logs <a name="AccessingLogs"></a>
+
+Content to be added
 
 ## Overview of OpenEBS Logger 
 
