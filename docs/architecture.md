@@ -14,14 +14,14 @@ OpenEBS follows CAS model where each volume has a dedicated controller POD and s
 
 OpenEBS solution/project has many components , which can be grouped into the following categories
 
-- Control plane components - Provisioner, API Server, volume exports, volume side-cars
-- Data plane components - Jiva and cStor
-- Node disk manager - Discover, monitor and manage the disks attached to Kubernetes node
-- Integrations with cloud native tools  - For more productivity on storage front, integrations are done with Prometheus, Grafana, Fluentd and Jaeger
+- [Control plane components](#Control Plane) - Provisioner, API Server, volume exports, volume side-cars
+- [Data plane components](#Data Plane) - Jiva and cStor
+- [Node disk manager](#Node Disk Manager) - Discover, monitor and manage the disks attached to Kubernetes node
+- [Integrations with cloud native tools](#CN Tools)  - For more productivity on storage front, integrations are done with Prometheus, Grafana, Fluentd and Jaeger
 
 
 
-## Control Plane
+## Control Plane<a name="Control Plane"></a>
 
 OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies, exporting the volume metrics for consumption by prometheus/grafana,  etc.
 
@@ -92,7 +92,7 @@ For passing controller configuration parameters and volume policies to the volum
 
 
 
-## Data Plane
+## Data Plane <a name="Data Plane"></a>
 
 ### Jiva
 
@@ -100,11 +100,11 @@ For passing controller configuration parameters and volume policies to the volum
 
 
 
-## Node Disk Manager
+## Node Disk Manager<a name="Node Disk Manager"></a>
 
 
 
-## Integrations with cloud native tools
+## Integrations with cloud native tools <a name="CN Tools"></a>
 
 ### Prometheus 
 
