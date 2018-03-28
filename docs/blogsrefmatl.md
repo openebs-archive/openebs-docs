@@ -7,11 +7,6 @@ sidebar_label: Resources
 <<<<<<< HEAD
 **Blogs :**
 =======
-------
-
-Blogs :
->>>>>>> 1df5294ed174258bdac7f43e8b03a89818d5f60f
-
 [Pinning the OpenEBS Replica Pod(s) to the Kubernetes Nodes where they were scheduled](https://blog.openebs.io/how-do-i-pin-the-openebs-replica-pod-s-to-the-kubernetes-nodes-where-they-were-scheduled-2ba42e3015df)
 
  [Configuring OpenEBS to use storage on specific Kubernetes nodes](https://blog.openebs.io/how-do-i-configure-openebs-to-use-storage-on-specific-kubernetes-nodes-361e3e842a78) 
@@ -34,7 +29,13 @@ Blogs :
 
 
 
+
+
+
+
 **Press Releases**
+
+
 
 
 
