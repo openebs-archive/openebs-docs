@@ -4,6 +4,8 @@ title: Pre-requisites for Installation
 sidebar_label: Prerequisites
 ---
 
+------
+
 This section will help you to understand the pre-requisites for the OpenEBS installation in a kubernetes installed environment. 
 
 The minimum requirements for the OpenEBS installation are

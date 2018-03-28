@@ -4,7 +4,7 @@ title: OpenEBS Architecture
 sidebar_label: Architecture
 ---
 
-# Architecture Overview
+------
 
 OpenEBS follows CAS model where each volume has a dedicated controller POD and set of replica PODs. The advantages of CAS architecture can be read here.  To simplify the deployment by Operators/Admins and usage by application developers, OpenEBS is integrated nicely into the Kubernetes concepts and recommended patterns.  
 
@@ -12,15 +12,14 @@ OpenEBS follows CAS model where each volume has a dedicated controller POD and s
 
 
 
-OpenEBS solution/project has many components , which can be grouped into three categories
+OpenEBS solution/project has many components , which can be grouped into the following categories
 
-1. Control plane components, the names of which start with Maya-*
-2. Data plane components - Jiva and cStor
-3. Configuration and monitoring components - Node disk manager and integrations with Prometheus, Grafana, Fluentd and Jaeger
+- Control plane components, the names of which start with Maya-*
+- Data plane components - Jiva and cStor
+- Node disk manager
+- Integrations with cloud native tools  - Integrations with Prometheus, Grafana, Fluentd and Jaeger
 
 
-
-# Components overview
 
 ## Control Plane
 
@@ -28,15 +27,19 @@ OpenEBS solution/project has many components , which can be grouped into three c
 
 ### Maya-Provisioner
 
+
+
 ## Data Plane
 
 ### Jiva
 
 ### cStor
 
+
+
 ## Node Disk Manager
 
-## Tools integrations
+## Integrations with cloud native tools
 
 ### Prometheus (maya-volexporter)
 
@@ -46,6 +49,8 @@ OpenEBS solution/project has many components , which can be grouped into three c
 
 ### Kube Dashboard
 
+
+
 ## OpenEBS Scheduler
 
 For volume provisioning to application PODs, OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs). For provisioning and managing the controller PODs and replica PODs, OpenEBS provides additional tunable parameters to Kubernetes scheduler.
@@ -54,7 +59,15 @@ For volume provisioning to application PODs, OpenEBS provides a [dynamic provisi
 
 ## Volume provisioning 
 
+
+
+
+
 ## Volume pod scheduling  
+
+
+
+
 
 ## Volume policies 
 

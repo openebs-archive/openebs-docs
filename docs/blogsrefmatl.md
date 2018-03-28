@@ -4,6 +4,8 @@ title: OpenEBS Resources
 sidebar_label: Resources
 ---
 
+------
+
 Blogs :
 
 [Pinning the OpenEBS Replica Pod(s) to the Kubernetes Nodes where they were scheduled](https://blog.openebs.io/how-do-i-pin-the-openebs-replica-pod-s-to-the-kubernetes-nodes-where-they-were-scheduled-2ba42e3015df)

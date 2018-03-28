@@ -4,6 +4,8 @@ title: Setting up Storage Classes
 sidebar_label: Storage Classes
 ---
 
+------
+
 Content to be added
 
 
