@@ -109,9 +109,11 @@ OpenEBS data plane is responsible for the actual volume IO path. A storage engin
 
 ### Jiva
 
+Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs entirely in user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation for building the storage features such as thin provisioning, snapshotting, rebuilding etc. More details on Jiva architecture are [written here](/docs/storageengine.html).   
+
 ### cStor
 
-
+cStor is a high performing storage engine built with proven building blocks of storage components such as "BSD based Multi-threaded iSCSI protocol stack that is still serving hundreds of installations" and DMU layer of user space ZFS taken from the proven OpenSolaris stack. cStor gives unparalled data integrity, CoW based snapshots. Roadmap of cStor includes SPDK and DPDK integrations to achieve multi-fold increase in performance. More details on cStor architecture are [written here](/data/storageengine.html).
 
 ## Node Disk Manager<a name="NDM"></a>
 
