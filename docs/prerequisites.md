@@ -10,7 +10,7 @@ This section will help you to understand the pre-requisites for the OpenEBS inst
 
 The minimum requirements for the OpenEBS installation are
 
-1. k8s cluster
+1. Kubernetes version >=1.7.5 (CRD feature is required) 
 
 2. Each k8s Node should have open-iscsi package installed on it.
 
@@ -23,8 +23,6 @@ The minimum requirements for the OpenEBS installation are
 OpenEBS is a software-only solution that can be installed using the released binaries or built and installed directly from source.
 
 Currently supported cloud platforms are AWS,Azure,GKE,OpenShift and BareMetals. Once you create k8s cluster on any of these supported platform, you are ready to install OpenEBS on it.
-
-
 
 
 

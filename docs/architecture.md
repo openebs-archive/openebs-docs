@@ -14,10 +14,10 @@ OpenEBS follows CAS model where each volume has a dedicated controller POD and s
 
 OpenEBS solution/project has many components , which can be grouped into the following categories
 
-- Control plane components, the names of which start with Maya-*
+- Control plane components - Provisioner, API Server, volume exports, volume side-cars
 - Data plane components - Jiva and cStor
-- Node disk manager
-- Integrations with cloud native tools  - Integrations with Prometheus, Grafana, Fluentd and Jaeger
+- Node disk manager - Discover, monitor and manage the disks attached to Kubernetes node
+- Integrations with cloud native tools  - For more productivity on storage front, integrations are done with Prometheus, Grafana, Fluentd and Jaeger
 
 
 
@@ -42,9 +42,11 @@ The above control plane components are explained in detail below.
 
 ### OpenEBS PV Provisioner
 
-This component runs as a POD and is core to the provisioning decisions. Developer constructs a claim with the required volume parameters, chooses the appropriate storage class and invokes kubelet on the yaml spec. The OpenEBS PV dynamic provisioner interacts with the maya-apiserver to create the deployment specifications for volume controller pod and volume replica pod(s) on appropriate nodes. The scheduling of the volume pods (controller/replica) can be controlled using annotations in PVC spec, details of which are discussed in a separate section.
-
 ![OpenEBS volume pods provisioning-overview](/docs/assets/volume-provisioning.png)
+
+This component runs as a POD and is core to the provisioning decisions. 
+
+Developer constructs a claim with the required volume parameters, chooses the appropriate storage class and invokes kubelet on the yaml spec. The OpenEBS PV dynamic provisioner interacts with the maya-apiserver to create the deployment specifications for volume controller pod and volume replica pod(s) on appropriate nodes. The scheduling of the volume pods (controller/replica) can be controlled using annotations in PVC spec, details of which are discussed in a separate section.
 
 Currently OpenEBS provisioner supports only one type of binding - iSCSI. 
 
@@ -54,13 +56,21 @@ Currently OpenEBS provisioner supports only one type of binding - iSCSI.
 
 ![OpenEBS m-apiserver Internals](/docs/assets/m-apiserver.png)
 
-As shown above, m-apiserver responsible for creating deployment spec files required for creating the volume pods and invokes kube-apiserver which will schedule the pods accordingly. At the end of volume provisioning by the OpenEBS PV provisioner, a Kubernetes object PV is created and is mounted on the application pod and PV is hosted by the controller pod which are supported by a set of replica pods in different nodes. Controller pod and replica pods are part of the data plane and are described in more detail in the [Storage Engines section](/docs/storageengine.html) 
+m-apiserver runs as a POD.
+
+As the name suggest, m-apiserver exposes the OpenEBS REST APIs. For details on API documentation refer to [OpenEBS APIs](/docs/apis.html)
+
+m-apiserver is also responsible for creating deployment spec files required for creating the volume pods. After generating these spec files, it invokes kube-apiserver for scheduling the pods accordingly. At the end of volume provisioning by the OpenEBS PV provisioner, a Kubernetes object PV is created and is mounted on the application pod . The PV is hosted by the controller pod which is supported by a set of replica pods in different nodes. Controller pod and replica pods are part of the data plane and are described in more detail in the [Storage Engines section](/docs/storageengine.html) 
 
 Another important task of m-apiserver is volume policy management. OpenEBS provides very granular specification for expressing policies. m-apiserver interprets these yaml specifications, converts them into enforceable components and enforces them through volume-management side-cars.
 
 
 
 ### Maya volume exporter
+
+Maya volume export is a side-car to each of the storage controller pods (cStor/Jiva). 
+
+![OpenEBS volume exporter data flow](/docs/assets/vol-exporter.png)
 
 
 
@@ -78,15 +88,19 @@ Another important task of m-apiserver is volume policy management. OpenEBS provi
 
 ## Node Disk Manager
 
+
+
 ## Integrations with cloud native tools
 
-### Prometheus (maya-volexporter)
+### Prometheus 
 
 ### Grafana
 
-### Jaeger-Maya
+### Jaeger
 
-### Kube Dashboard
+### WeaveScope
+
+### Kubernetes Dashboard
 
 
 
