@@ -4,6 +4,10 @@ title: Change Log
 sidebar_label: Change Log
 ---
 
+------
+
+
+
 ## Development Release
 
 * Version 0.6.0 

@@ -4,6 +4,8 @@ title: Creating a Storage Pool
 sidebar_label: Creating a Storage Pool
 ---
 
+------
+
 Content to be developed
 
 

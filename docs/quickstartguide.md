@@ -4,6 +4,8 @@ title: Getting started with OpenEBS
 sidebar_label: Quick Start Guide
 ---
 
+------
+
 Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 ### As Kubernetes operator / admin:

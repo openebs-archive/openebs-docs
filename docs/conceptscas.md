@@ -4,7 +4,9 @@ title: Container Attached Storage (CAS)
 sidebar_label: CAS
 ---
 
-## What is CAS ?
+------
+
+
 
 CAS is software that includes a micro services based storage controller and a multiples of micro services based storage replicas which can be orchestrated  by Kubernetes like any other micro service or container.  CAS gives benefits of both DAS and NAS. In the non-CAS models, all the persistent volumes of Kubernetes are still tightly coupled to the Kernel modules, making the storage software on Kubernetes node a monolithic in nature.  
 

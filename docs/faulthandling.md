@@ -4,6 +4,8 @@ title: Handling Faults
 sidebar_label: Handling Faults
 ---
 
+------
+
 Content to be developed
 
 

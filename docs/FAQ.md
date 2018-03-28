@@ -4,6 +4,10 @@ title: OpenEBS FAQ
 sidebar_label: FAQ
 ---
 
+------
+
+
+
 ## What is most distinctive about the OpenEBS architecture?
 
 The OpenEBS architecture is an example of Container Attached Storage. These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.
