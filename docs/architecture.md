@@ -22,9 +22,13 @@ OpenEBS solution/project has many components , which can be grouped into the fol
 
 <a name="ControlPlane"></a>
 
+------
+
+
+
 ## Control Plane
 
-------
+
 
 OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies, exporting the volume metrics for consumption by prometheus/grafana,  etc.
 
@@ -95,11 +99,13 @@ For passing controller configuration parameters and volume policies to the volum
 
 <a name="DataPlane"></a>
 
-## Data Plane 
-
 ------
 
 
+
+## Data Plane 
+
+OpenEBS data plane is responsible for the actual volume IO path. A storage engine implements the actual IO path in the data plane. Currently, OpenEBS provides two storage engines that can be plugged in easily. These are Jiva and cStor. Both these storage engines run completely in Linux user space and are completely based on micro services. 
 
 ### Jiva
 
