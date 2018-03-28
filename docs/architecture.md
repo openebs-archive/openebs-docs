@@ -68,13 +68,27 @@ Another important task of m-apiserver is volume policy management. OpenEBS provi
 
 ### Maya volume exporter
 
-Maya volume export is a side-car to each of the storage controller pods (cStor/Jiva). 
+Maya volume export is a side-car to each of the storage controller pods (cStor/Jiva). These side cars connect the control plane to the data plane for fetching statistics. The granularity of statistics is at volume level. Some of the example stats are: 
+
+- volume read latency
+- volume write latency
+- read IOPS
+- write IOPS
+- read block size
+- write block size
+- capacity stats
 
 ![OpenEBS volume exporter data flow](/docs/assets/vol-exporter.png)
 
-
+These stats are typically pulled  either by prometheus client that is installed and configured during OpenEBS installation or by weave cortex agent that is installed and configured during the connectivity to [MayaOnline](https://mayaonline.io).
 
 ### Volume management side-cars
+
+For passing controller configuration parameters and volume policies to the volume controller pod which is data plane and for passing replica configuration parameters and replica data protection parameters to the volume replica pod, side-cars are used. 
+
+![volume management side-cars for cStor](/docs/assets/vol-mgmt-sidecars.png)
+
+
 
 
 

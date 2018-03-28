@@ -12,7 +12,7 @@ The minimum requirements for the OpenEBS installation are
 
  
 
-1. k8s cluster
+1. Kubernetes cluster version >= 1.7.5 (CRD feature is needed for OpenEBS)
 2. Each k8s Node should have an open-iscsi package installed on it.
 
 
