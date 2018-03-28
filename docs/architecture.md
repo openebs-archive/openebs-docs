@@ -23,9 +23,23 @@ OpenEBS solution/project has many components , which can be grouped into the fol
 
 ## Control Plane
 
+OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies etc. 
+
+For volume provisioning to application PODs, OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs), which is the standard Kubernetes external storage plugin.
+
+### OpenEBS PV Provisioner
+
+This component runs as a POD and is core to the provisioning decisions. Developer constructs a claim with the required volume parameters, chooses the appropriate storage class and invokes kubelet on the yaml spec. The OpenEBS PV dynamic provisioner interacts with the maya-apiserver to create the deployment specifications for volume controller pod and volume replica pod(s) on appropriate nodes. The scheduling of the volume pods (controller/replica) can be controlled using annotatations in PVC spec, details of which are discussed in a separate section.
+
+![OpenEBS volume pods provisioning-overview](/docs/assets/volume-provisioning.png)
+
+As shown above, m-apiserver creates deployment spec files required for creating the volume pods and invokes kube-apiserver which will schedule the pods accordingly. At the end of volume provisioning by the OpenEBS PV provisioner, a Kubernetes object PV is created and is mounted on the application pod and PV is hosted by the controller pod which are supported by a set of replica pods in different nodes. Controller pod and replica pods are part of the data plane and are described in more detail in the [Storage Engines section](/docs/storageengine.html) 
+
+
+
 ### Maya-ApiServer
 
-### Maya-Provisioner
+### 
 
 
 
@@ -53,7 +67,7 @@ OpenEBS solution/project has many components , which can be grouped into the fol
 
 ## OpenEBS Scheduler
 
-For volume provisioning to application PODs, OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs). For provisioning and managing the controller PODs and replica PODs, OpenEBS provides additional tunable parameters to Kubernetes scheduler.
+
 
 
 
