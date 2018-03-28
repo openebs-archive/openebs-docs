@@ -20,9 +20,9 @@ OpenEBS solution/project has many components , which can be grouped into the fol
 - [Integrations with cloud native tools](#CNTools)  - For more productivity on storage front, integrations are done with Prometheus, Grafana, Fluentd and Jaeger
 
 
+<a name="ControlPlane"></a>
 
-
-## Control Plane<a name="ControlPlane"></a>
+## Control Plane
 
 ------
 
@@ -93,9 +93,9 @@ For passing controller configuration parameters and volume policies to the volum
 
 
 
+<a name="DataPlane"></a>
 
-
-## Data Plane <a name="DataPlane"></a>
+## Data Plane 
 
 ------
 
