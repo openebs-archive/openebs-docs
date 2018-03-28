@@ -6,43 +6,70 @@ sidebar_label: Prerequisites
 
 ------
 
-This section will help you to understand the pre-requisites for the OpenEBS installation in a kubernetes installed environment. 
+This section will help you to understand the pre-requisites forthe OpenEBS installation in a kubernetes installed environment.
 
 The minimum requirements for the OpenEBS installation are
 
-1. Kubernetes version >=1.7.5 (CRD feature is required) 
+ 
 
-2. Each k8s Node should have open-iscsi package installed on it.
+1. k8s cluster
+2. Each k8s Node should have     open-iscsi package installed on it.
 
-   ​
+####  
 
+**k8scluster configuration**
 
+OpenEBS is a Containerized Storage Solution that can beorchestrated by  Kubernetes. To understand how to use OpenEBS with Kubernetes, you must familiarizeyourself with [Kubernetes StorageConcepts](https://kubernetes.io/docs/concepts/storage/persistent-volumes/), specifically:
 
-#### **Preparing Software**
-
-OpenEBS is a software-only solution that can be installed using the released binaries or built and installed directly from source.
-
-Currently supported cloud platforms are AWS,Azure,GKE,OpenShift and BareMetals. Once you create k8s cluster on any of these supported platform, you are ready to install OpenEBS on it.
-
-
-
-#### **Consuming OpenEBS** 
-
-To consume OpenEBS volume on k8s hosts, install open-iscsi initiator packages depends on your host OS. You can get the minimum requirement needed on the various host system for the OpenEBS installation from here
+- Persistent Volumes and Persistent Volume Claims
+- Dynamic Volume Provisioner
+- Storage Classes
 
  
 
-*System Configuration*
+If you are new to Kubernetes, here are some guides that can helpyou setup Kubernetes on supported paltforms and install OpenEBS:
 
-Centos7, Ubuntu 16.04 and above with with minimum 4vCPUs, 4G RAM and 16GB hard disk. 
+- ​        [Baremetal](https://docs.openebs.io/docs/onpremise.html#running-the-setup-on-ubuntu-1604)
+
+- ​        [Amazon EC2](https://docs.openebs.io/docs/cloudsolutions.html#amazon-cloud)
+
+- ​        [GKE](https://docs.openebs.io/docs/cloudsolutions.html#google-cloud)
+
+- ​        [OpenShift](https://docs.openebs.io/docs/openshift.html)
+
+  ​
+
+**\*SystemConfiguration***
+
+Centos7, Ubuntu 16.04 and above with with minimum 4vCPUs, 4G RAMand 16GB hard disk. 
 
  
 
-*Add iSCSI Support*
+ 
 
-###### On Ubuntu
+#### **Verify open-iscsistatus on host**
 
-On your Ubuntu host, install open-iscsi package if it is not done. OpenEBS uses iSCSI to connect to the block volumes.
+To consume OpenEBS volume on k8s hosts, install open-iscsiinitiator packages depends on your host OS. You can get the minimum requirementneeded on the various host system for the OpenEBS installation from here
+
+ 
+
+**\*On Ubuntu***
+
+###### Verify that iSCSI is configured 
+
+OpenEBS uses iSCSI to connect to the block volumes. If iSCSI isalready installed on your host,check that initiator name is configured andiSCSI service is running using the following commands.
+
+```
+sudo cat /etc/iscsi/initiatorname.iscsi
+```
+
+```
+sudo service open-iscsi status
+```
+
+ 
+
+If iSCSI is not installed on your host, install open-iscsi packageby follow below commands and verify that iSCSI is configured properly on it.
 
 ```
 sudo apt-get update
@@ -56,35 +83,13 @@ sudo apt-get install open-iscsi
 sudo service open-iscsi restart
 ```
 
-
-
-###### Verify that iSCSI is configured
-
-Check that initiator name is configured and iSCSI service is running using the following commands.
-
-```
-sudo cat /etc/iscsi/initiatorname.iscsi
-```
-
-```
-sudo service open-iscsi status
-```
-
-
-
-###### On Centos
-
-On your centos host, install iscsi-initiator-utilsRPM package if it is not done. OpenEBS uses iSCSI to connect to the block volumes.
-
-```
-yum install iscsi-initiator-utils -y
-```
-
  
 
+**\*On Centos***
+
 ###### Verify that iSCSI is configured
 
-Check that initiator name is configured and iSCSI service isrunning using the following commands
+OpenEBS uses iSCSI to connect to the block volumes. If iSCSI isalready installed on your host, check that initiator name is configured andiSCSI service is running using the following commands.
 
 ```
 vi/etc/iscsi/initiatorname.iscsi
@@ -94,7 +99,19 @@ vi/etc/iscsi/initiatorname.iscsi
 systemctl status iscsi.service
 ```
 
+ 
 
+If iSCSI is not installed on your host, install open iscsi-initiator-utilsRPM package by follow the below commands and verify that iscsi is configuredproperly on it.
+
+ 
+
+```
+yum install iscsi-initiator-utils -y
+```
+
+ 
+
+ 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
