@@ -4,9 +4,13 @@ title: OpenEBS Resources
 sidebar_label: Resources
 ---
 
+<<<<<<< HEAD
+**Blogs :**
+=======
 ------
 
 Blogs :
+>>>>>>> 1df5294ed174258bdac7f43e8b03a89818d5f60f
 
 [Pinning the OpenEBS Replica Pod(s) to the Kubernetes Nodes where they were scheduled](https://blog.openebs.io/how-do-i-pin-the-openebs-replica-pod-s-to-the-kubernetes-nodes-where-they-were-scheduled-2ba42e3015df)
 
@@ -19,6 +23,20 @@ Blogs :
 [OpenEBS plus Red Hat OpenShift and StackPointCloud and IBM Cloud Private](https://blog.openebs.io/openebs-plus-red-hat-openshift-and-stackpointcloud-and-ibm-cloud-private-and-6695aeee2545)
 
 [How to install OpenEBS on OpenShift](https://blog.openebs.io/how-to-install-openebs-on-openshift-2e1e15828953)
+
+[Using OpenEBS as a Kubernetes persistent volume](https://blog.openebs.io/using-openebs-as-kubernetes-persistent-volume-daccae4bdce2)
+
+[In 2018: IT dreams deferred finally achieved?](https://blog.openebs.io/in-2018-it-dreams-deferred-finally-achieved-d061d9352e2c)
+
+[Austin KubeCon — Persistent Storage Round-up and Looking beyond!](https://blog.openebs.io/austin-kubecon-persistent-storage-round-up-and-looking-beyond-d6a29b581f17)
+
+
+
+
+
+**Press Releases**
+
+
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
