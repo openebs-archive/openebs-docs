@@ -23,23 +23,48 @@ OpenEBS solution/project has many components , which can be grouped into the fol
 
 ## Control Plane
 
-OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies etc. 
+OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies, exporting the volume metrics for consumption by prometheus/grafana,  etc.
 
-For volume provisioning to application PODs, OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs), which is the standard Kubernetes external storage plugin.
+ 
+
+![Maya is the control plane of OpenEBS](https://raw.githubusercontent.com/openebs/maya/master/docs/openebs-maya-architecture.png)
+
+OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs), which is the standard Kubernetes external storage plugin. Primary task of OpenEBS PV provisioner is to initiate the volume provisioning to application PODS, and to implement the Kubernetes specification for PVs.
+
+m-apiserver exposes storage REST API and takes the bulk of volume policy processing and management. 
+
+The connectivity between control plane data plane is achieved through Kubernetes side-car pattern. There are couple of scenarios in which the control plane needs to communicate with data plane. 
+
+- For volume statistics such as IOPS, throughput, latency etc. This is achieved through volume-exporter side-car
+- For volume policy enforcement with volume controller pod and disk/pool management with the volume replica pod. This is achieved through volume-management side-car(s)
+
+The above control plane components are explained in detail below.
 
 ### OpenEBS PV Provisioner
 
-This component runs as a POD and is core to the provisioning decisions. Developer constructs a claim with the required volume parameters, chooses the appropriate storage class and invokes kubelet on the yaml spec. The OpenEBS PV dynamic provisioner interacts with the maya-apiserver to create the deployment specifications for volume controller pod and volume replica pod(s) on appropriate nodes. The scheduling of the volume pods (controller/replica) can be controlled using annotatations in PVC spec, details of which are discussed in a separate section.
+This component runs as a POD and is core to the provisioning decisions. Developer constructs a claim with the required volume parameters, chooses the appropriate storage class and invokes kubelet on the yaml spec. The OpenEBS PV dynamic provisioner interacts with the maya-apiserver to create the deployment specifications for volume controller pod and volume replica pod(s) on appropriate nodes. The scheduling of the volume pods (controller/replica) can be controlled using annotations in PVC spec, details of which are discussed in a separate section.
 
 ![OpenEBS volume pods provisioning-overview](/docs/assets/volume-provisioning.png)
 
-As shown above, m-apiserver creates deployment spec files required for creating the volume pods and invokes kube-apiserver which will schedule the pods accordingly. At the end of volume provisioning by the OpenEBS PV provisioner, a Kubernetes object PV is created and is mounted on the application pod and PV is hosted by the controller pod which are supported by a set of replica pods in different nodes. Controller pod and replica pods are part of the data plane and are described in more detail in the [Storage Engines section](/docs/storageengine.html) 
+Currently OpenEBS provisioner supports only one type of binding - iSCSI. 
 
 
 
 ### Maya-ApiServer
 
+![OpenEBS m-apiserver Internals](/docs/assets/m-apiserver.png)
 
+As shown above, m-apiserver responsible for creating deployment spec files required for creating the volume pods and invokes kube-apiserver which will schedule the pods accordingly. At the end of volume provisioning by the OpenEBS PV provisioner, a Kubernetes object PV is created and is mounted on the application pod and PV is hosted by the controller pod which are supported by a set of replica pods in different nodes. Controller pod and replica pods are part of the data plane and are described in more detail in the [Storage Engines section](/docs/storageengine.html) 
+
+Another important task of m-apiserver is volume policy management. OpenEBS provides very granular specification for expressing policies. m-apiserver interprets these yaml specifications, converts them into enforceable components and enforces them through volume-management side-cars.
+
+
+
+### Maya volume exporter
+
+
+
+### Volume management side-cars
 
 
 
@@ -62,40 +87,6 @@ As shown above, m-apiserver creates deployment spec files required for creating 
 ### Jaeger-Maya
 
 ### Kube Dashboard
-
-
-
-## OpenEBS Scheduler
-
-
-
-
-
-## Volume provisioning 
-
-
-
-
-
-## Volume pod scheduling  
-
-
-
-
-
-## Volume policies 
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
