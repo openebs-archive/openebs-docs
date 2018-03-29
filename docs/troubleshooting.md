@@ -10,7 +10,28 @@ The following topics are covered in this chapter.
 * [Storage Classes](#StroageClasses)
 * [Storage Pools](#StoragePools)
 * [Accessing Logs](#AccessingLogs)
-* [Persistent Volumes](#PersistentVolumes)
+* <a class="flip" onclick=myshowfunction()>Persistent Volumes</a>
+<script>
+	function myshowfunction()
+	{
+		var element = document.getElementById("panel");
+		if (element.style.display != "none")
+		{
+			element.style.display="none";
+		}
+		else
+		{
+			element.style.display="block";
+		}
+	}
+</script>
+<ul id="panel" style="display: none; margin-left: 20px">
+	<li style="color: #f1584d"><a href="#ContainerCreating">Application pod is stuck in ContainerCreating state after deployment</a></li>
+	<li style="color: #f1584d"><a href="#CrashLoopBackOff">Application pod enters CrashLoopBackOff state</li>
+	<li style="color: #f1584d"><a href="#StaleData">Stale data seen post application pod reschedule on other nodes</li>
+	<li style="color: #f1584d"><a href="TerminateRestart">Application and OpenEBS pods terminate/restart under heavy I/O load</li>
+</ul>
+
 * [Recover from hardware failures](#RecoverHardwareFailures)
 * [Recover from node failures](#RecoverNodeFailures)
 * [Maintenance and cleanup](#MaintClean)
