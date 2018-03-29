@@ -31,16 +31,16 @@ If you are new to Kubernetes, here are some guides that can help you setup Kuber
 - [Amazon EC2](https://docs.openebs.io/docs/cloudsolutions.html#amazon-cloud)
 - [GKE](https://docs.openebs.io/docs/cloudsolutions.html#google-cloud)
 - [OpenShift](https://docs.openebs.io/docs/openshift.html)
-- Azure
+- [Azure](https://newstaging-docs.openebs.io/docs/prerequisites.html)
 
 
-##### **Recommended Configuration**
+**Recommended Configuration**
 
 Kubernetes cluster with at least 3 nodes and each node having below configuration.
 
 Centos7, Ubuntu 16.04 and above with with minimum 4vCPUs, 8G RAM and 16GB hard disk. 
 
-##### **Minimum Configuration**
+**Minimum Configuration**
 
 Kubernetes cluster with at least 1 nodes and node having below configuration or a Minikube cluster.
 
