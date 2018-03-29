@@ -4,9 +4,17 @@ title: OpenEBS Usecases - CI/CD
 sidebar_label: CI/CD
 ---
 
-Content to be added
+Description <TBD>
 
+## Problems
 
+Scaling up Jenkins slaves
+
+Keeping the configuration 
+
+## OpenEBS solution
+
+TBD
 
 
 

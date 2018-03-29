@@ -4,7 +4,7 @@
     "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "volume", "storagepool", "diskobject"],
     "Setup": ["prerequisites", "installation", "setupstorageclasses", "setupstoragepools"],
     "Releases": ["changelog"],
-    "Usecases": ["k8sstorage", "cicd", "bigdata", "datascience", "hyperconverged", "hyperscale", "hybridcloud", "backup", "databases"],
+    "Usecases": ["cicd", "k8sstorage", "bigdata", "hyperconverged", "hyperscale", "hybridcloud", "databases"],
     "Tasks": ["developertasks", "operatortasks"],
     "Platforms": ["nativekubernetes", "openshift", "googlecloud", "aws", "azure"],
     "CLI": ["kubectl", "mayactl"],
