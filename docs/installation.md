@@ -34,12 +34,23 @@ cd openebs/k8s
 
 
 
-Apply the  openebs-operator.yaml to deploy OpenEBS on your k8 cluster. Once you apply, you are installed OpenEBS.
+Apply the  openebs-operator.yaml to deploy OpenEBS on your k8 cluster.
 
 
 
 ```
 kubectl apply -f openebs-operator.yaml
+```
+
+
+
+ Once you apply the same, two Kubernetes Pods will be created along with *maya-apiserver*  and *openebs-provisioner* . *openebs-provisioner* will communicate with kubernetes controllers and  *maya-apiserver* will provision the OpenEBS volume.
+
+```
+name@MayaMaster:~$ kubectl get pods
+NAME                                   READY     STATUS    RESTARTS   AGE
+maya-apiserver-1633167387-v4sf1        1/1       Running   0          4h
+openebs-provisioner-1174174075-n989p   1/1       Running   0          4h
 ```
 
 
