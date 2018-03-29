@@ -10,12 +10,12 @@ This section will help you to understand the pre-requisites for the OpenEBS inst
 
 The minimum requirements for the OpenEBS installation are
 
-1.  k8s cluster
+1.  Kubernetes cluster version >= 1.7.5
 
-2. Each k8s Node should have an open-iscsi package installed on it
+2. Each Kubernetes node should have open-iscsi package installed
 
 
-### **k8s cluster configuration**
+### Kubernetes cluster configuration
 
 OpenEBS is a Containerized Storage solution that can be orchestrated by  Kubernetes. To understand how to use OpenEBS with Kubernetes, you must familiarize yourself with [Kubernetes Storage Concepts](https://kubernetes.io/docs/concepts/storage/persistent-volumes/), specifically:
 
