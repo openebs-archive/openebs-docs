@@ -6,11 +6,41 @@ sidebar_label: Features
 
 ------
 
-Content to be added
+## Containerized Storage
 
+## Avoid cloud lock-in
 
+## Free tier access to MayaOnline
 
+## Simplified installation
 
+## Enterprise grade data protection 
+
+## Granular volume policies
+
+## Enables hyperconvergence on Kubernetes
+
+## Kubernestes integrated Snapshots and Clones
+
+## Integration with Prometheus and Grafana
+
+## Integration with WeaveScope
+
+## Configurable storage engines
+
+## Feature matrix
+
+| Feature | OpenEBS with Jiva | OpenEBS with cStor |
+| ------- | ----------------- | ------------------ |
+|         |                   |                    |
+|         |                   |                    |
+|         |                   |                    |
+|         |                   |                    |
+|         |                   |                    |
+|         |                   |                    |
+|         |                   |                    |
+|         |                   |                    |
+|         |                   |                    |
 
 
 
