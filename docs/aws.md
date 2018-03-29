@@ -1,7 +1,7 @@
 ---
 id: aws
 title: Running OpenEBS on AWS
-sidebar_label: Running OpeneEBS on AWS
+sidebar_label: AWS
 ---
 
 ------
