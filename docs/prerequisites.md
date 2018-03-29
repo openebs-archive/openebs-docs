@@ -6,16 +6,16 @@ sidebar_label: Prerequisites
 
 ------
 
-This section will help you to understand the pre-requisites forthe OpenEBS installation in a kubernetes installed environment.
+This section will help you to understand the pre-requisites for the OpenEBS installation in a kubernetes installed environment.
 
 The minimum requirements for the OpenEBS installation are
 
 1.  k8s cluster
 
-2. Each k8s Node should have an open-iscsi package installed on it.
+2. Each k8s Node should have an open-iscsi package installed on it
 
 
-**k8s cluster configuration**
+### **k8s cluster configuration**
 
 OpenEBS is a Containerized Storage solution that can be orchestrated by  Kubernetes. To understand how to use OpenEBS with Kubernetes, you must familiarize yourself with [Kubernetes Storage Concepts](https://kubernetes.io/docs/concepts/storage/persistent-volumes/), specifically:
 
@@ -28,33 +28,33 @@ OpenEBS is a Containerized Storage solution that can be orchestrated by  Kuberne
 If you are new to Kubernetes, here are some guides that can help you setup Kubernetes on supported platforms and install OpenEBS:
 
 - [Baremetal](https://docs.openebs.io/docs/onpremise.html#running-the-setup-on-ubuntu-1604)
-
 - [Amazon EC2](https://docs.openebs.io/docs/cloudsolutions.html#amazon-cloud)
-
 - [GKE](https://docs.openebs.io/docs/cloudsolutions.html#google-cloud)
-
 - [OpenShift](https://docs.openebs.io/docs/openshift.html)
+- Azure
 
 
-**Recommended Configuration**
-Kubernetes cluster with atleast 3 nodes and each node having below configuration.
+##### **Recommended Configuration**
+
+Kubernetes cluster with at least 3 nodes and each node having below configuration.
 
 Centos7, Ubuntu 16.04 and above with with minimum 4vCPUs, 8G RAM and 16GB hard disk. 
 
-**Minimum Configuration**
-Kubernetes cluster with atleast 1 nodes and node having below configuration or a Minikube cluster.
+##### **Minimum Configuration**
+
+Kubernetes cluster with at least 1 nodes and node having below configuration or a Minikube cluster.
 
 Centos7, Ubuntu 16.04 and above with with minimum 2vCPUs, 4G RAM and 16GB hard disk. 
 
 
 
-#### **Verify open-iscsi status on host**
+### **Verify open-iscsi status on host**
 
 To consume OpenEBS volume on k8s hosts, install open-iscsi initiator packages depends on your host OS. You can get the minimum requirement needed on the various host system for the OpenEBS installation from here.
 
-**On Ubuntu**
+##### **On Ubuntu**
 
-###### Verify that iSCSI is configured
+*Verify that iSCSI is configured*
 
 OpenEBS uses iSCSI to connect to the block volumes. If iSCSI is already installed on your host,check that initiator name is configured and iSCSI service is running using the following commands.
 
@@ -84,9 +84,9 @@ sudo service open-iscsi restart
 
 
 
-**On Centos**
+##### **On Centos**
 
-###### Verify that iSCSI is configured
+*Verify that iSCSI is configured*
 
 OpenEBS uses iSCSI to connect to the block volumes. If iSCSI is already installed on your host, check that initiator name is configured and iSCSI service is running using the following commands.
 
@@ -110,7 +110,7 @@ yum install iscsi-initiator-utils -y
 
  
 
-**On Azure**
+##### **On Azure**
 
 You can connect to the nodes through SSH using their public IP addresses by running the following command.
 
@@ -142,7 +142,7 @@ azureuser@aks-nodepool1-46849391-1:~$ sudo docker exec -it 3aab0f9a48e2 bash
 # exit
 ```
 
-###### Verify that iSCSI is configured
+*Verify that iSCSI is configured*
 
  Check the status of iSCSI service by running the following command.
 
@@ -150,28 +150,19 @@ azureuser@aks-nodepool1-46849391-1:~$ sudo docker exec -it 3aab0f9a48e2 bash
 azureuser@aks-nodepool1-46849391-1:~$ service open-iscsi status
 
 ● open-iscsi.service - Login to default iSCSI targets
-
    Loaded: loaded (/lib/systemd/system/open-iscsi.service; enabled; vendor preset: enabled)
-
    Active: active (exited) since Mon 2018-03-19 11:27:01 UTC; 21h ago
-
      Docs: man:iscsiadm(8) 
            man:iscsid(8)
-
  Main PID: 1497 (code=exited, status=0/SUCCESS)
-
     Tasks: 0
-
    Memory: 0B
-
       CPU: 0
-
    CGroup: /system.slice/open-iscsi.service
 
 Mar 19 11:27:03 aks-nodepool1-46849391-1 iscsiadm[1474]: iscsiadm: No records found
 Mar 19 11:27:01 aks-nodepool1-46849391-1 systemd[1]: Starting Login to default iSCSI targets...
 Mar 19 11:27:01 aks-nodepool1-46849391-1 systemd[1]: Started Login to default iSCSI targets.
-
 azureuser@aks-nodepool1-46849391-1:~$ exit
 devops@Azure:~$
 ```
