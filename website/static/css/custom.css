@@ -31,8 +31,10 @@ body{
     padding: 0 0 30;
 }
 .mainContainer .wrapper .post h3 {
+    font-size: 21px;
     font-weight: 400;
 }
+
 /* Body */	
 body {
     color : #282828;
