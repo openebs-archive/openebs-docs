@@ -6,7 +6,7 @@
     "Releases": ["changelog"],
     "Usecases": ["cicd", "k8sstorage", "bigdata", "hyperconverged", "hyperscale", "hybridcloud", "databases"],
     "Tasks": ["developertasks", "operatortasks"],
-    "Platforms": ["nativekubernetes", "openshift", "googlecloud", "aws", "azure"],
+    "Platforms": ["nativekubernetes", "aws", "googlecloud", "ibmcloud", "azure", "openshift"],
     "CLI": ["kubectl", "mayactl"],
     "API": ["api"],
     "Contributor Resources": ["weeklycontribute", "contribute"],
