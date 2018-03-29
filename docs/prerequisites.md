@@ -37,11 +37,13 @@ If you are new to Kubernetes, here are some guides that can help you setup Kuber
 
 
 **Recommended Configuration**
-Kubernetes cluster with atleast 3 nodes and each node having below configuration
+Kubernetes cluster with atleast 3 nodes and each node having below configuration.
+
 Centos7, Ubuntu 16.04 and above with with minimum 4vCPUs, 8G RAM and 16GB hard disk. 
 
 **Minimum Configuration**
-Kubernetes cluster with atleast 1 nodes and each node having below configuration
+Kubernetes cluster with atleast 1 nodes and node having below configuration or a Minikube cluster.
+
 Centos7, Ubuntu 16.04 and above with with minimum 2vCPUs, 4G RAM and 16GB hard disk. 
 
 
