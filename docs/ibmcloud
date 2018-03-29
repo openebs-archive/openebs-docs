@@ -1,7 +1,7 @@
 ---
-id: aws
-title: Running OpenEBS on AWS
-sidebar_label: AWS
+id: ibmcloud
+title: Running OpenEBS on IBM Cloud Private
+sidebar_label: IBM Cloud Private
 ---
 
 ------
