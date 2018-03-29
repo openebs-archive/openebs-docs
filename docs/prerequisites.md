@@ -104,7 +104,73 @@ yum install iscsi-initiator-utils -y
 
  
 
- 
+**On Azure**
+
+You can connect to the nodes through SSH using their public IP addresses by running the following command.
+
+
+
+```
+devops@Azure:~$ ssh azureuser@40.71.213.221
+
+azureuser@aks-nodepool1-46849391-1:~$
+```
+
+ **Note**: azureuser is a default username.
+
+
+
+Obtain the container ID of the hyperkube kubelet on each node by running the following command.
+
+```
+azureuser@aks-nodepool1-46849391-1:~$ sudo docker ps | grep "hyperkube kubele" 
+3aab0f9a48e2    k8s-gcrio.azureedge.net/hyperkube-amd64:v1.8.7   "/hyperkube kubele..."   48 minutes ago      Up 48 minutes                           eager_einstein
+```
+
+Run the following commands to install and configure iSCSI in each node.
+
+```
+azureuser@aks-nodepool1-46849391-1:~$ sudo docker exec -it 3aab0f9a48e2 bash
+# apt-get update
+# apt install -y open-iscsi
+# exit
+```
+
+###### Verify that iSCSI is configured
+
+ Check the status of iSCSI service by running the following command.
+
+```
+azureuser@aks-nodepool1-46849391-1:~$ service open-iscsi status
+
+● open-iscsi.service - Login to default iSCSI targets
+
+   Loaded: loaded (/lib/systemd/system/open-iscsi.service; enabled; vendor preset: enabled)
+
+   Active: active (exited) since Mon 2018-03-19 11:27:01 UTC; 21h ago
+
+     Docs: man:iscsiadm(8) 
+           man:iscsid(8)
+
+ Main PID: 1497 (code=exited, status=0/SUCCESS)
+
+    Tasks: 0
+
+   Memory: 0B
+
+      CPU: 0
+
+   CGroup: /system.slice/open-iscsi.service
+
+Mar 19 11:27:03 aks-nodepool1-46849391-1 iscsiadm[1474]: iscsiadm: No records found
+Mar 19 11:27:01 aks-nodepool1-46849391-1 systemd[1]: Starting Login to default iSCSI targets...
+Mar 19 11:27:01 aks-nodepool1-46849391-1 systemd[1]: Started Login to default iSCSI targets.
+
+azureuser@aks-nodepool1-46849391-1:~$ exit
+devops@Azure:~$
+```
+
+**Note:** Install and configure iSCSI in all the Kubernetes cluster nodes by following the above procedure.
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
