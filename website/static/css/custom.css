@@ -44,9 +44,11 @@ body{
     font-size: 220%;
     padding: 0 0 30;
 }
-.mainContainer .wrapper .post h3 {
-    font-size: 21px;
+.mainContainer .wrapper .post h1, .mainContainer .wrapper .post h2 {
     font-weight: 400;
+}
+.mainContainer .wrapper .post h3 {
+    font-weight: 450;
 }
 
 /* Body */	
