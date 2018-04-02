@@ -1,5 +1,19 @@
 /*Root*/
 
+@media (max-width: 375px) {
+  .logo {
+    display: flex;
+  }
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 375px) {
+    .reactNavSearchWrapper input#search_input_react {
+        width:181px;
+   }
+}
+
 body{
   font-size: 16px;
 }
@@ -30,9 +44,13 @@ body{
     font-size: 220%;
     padding: 0 0 30;
 }
-.mainContainer .wrapper .post h3 {
+.mainContainer .wrapper .post h1, .mainContainer .wrapper .post h2 {
     font-weight: 400;
 }
+.mainContainer .wrapper .post h3 {
+    font-weight: 450;
+}
+
 /* Body */	
 body {
     color : #282828;
@@ -66,8 +84,8 @@ footer .sitemap .nav-home {
 /* NAV bar */
 
 .fixedHeaderContainer header img {
-    width: 150px;
-    height: auto;
+    height: 60%;
+    margin-right: 10px;
 }
 
 .fixedHeaderContainer header h2 {
@@ -168,7 +186,19 @@ pre code{
     border-color: #f2a850;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 375px) {
+
+    .fixedHeaderContainer header img {
+        width: 108px;
+        height: auto;
+    }
+    .fixedHeaderContainer header h2{
+        color: #fff;
+    }
+
+}
+
+@media (max-width: 376px) and (min-width: 576px) {
 
     .fixedHeaderContainer header img {
         width: 141px;
@@ -179,6 +209,7 @@ pre code{
     }
 
 }
+
 /* css for tables */
 table tr th {
     background: #f2f2f2;

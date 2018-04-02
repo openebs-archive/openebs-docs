@@ -22,11 +22,15 @@ OpenEBS solution/project has many components , which can be grouped into the fol
 
 <a name="ControlPlane"></a>
 
-## Control Plane
-
 ------
 
-OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies, exporting the volume metrics for consumption by prometheus/grafana,  etc.
+
+
+## Control Plane
+
+
+
+The control plane of an OpenEBS cluster is often referred to as Maya. OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies, exporting the volume metrics for consumption by prometheus/grafana,  etc.
 
  
 
@@ -95,21 +99,31 @@ For passing controller configuration parameters and volume policies to the volum
 
 <a name="DataPlane"></a>
 
-## Data Plane 
-
 ------
 
 
 
+## Data Plane 
+
+OpenEBS data plane is responsible for the actual volume IO path. A storage engine implements the actual IO path in the data plane. Currently, OpenEBS provides two storage engines that can be plugged in easily. These are Jiva and cStor. Both these storage engines run completely in Linux user space and are completely based on micro services. 
+
 ### Jiva
 
+Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs entirely in user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation for building the storage features such as thin provisioning, snapshotting, rebuilding etc. More details on Jiva architecture are [written here](/docs/storageengine.html).   
+
 ### cStor
+
+cStor is a high performing storage engine built with proven building blocks of storage components such as "BSD based Multi-threaded iSCSI protocol stack that is still serving hundreds of installations" and DMU layer of user space ZFS taken from the proven OpenSolaris stack. cStor gives unparalled data integrity, CoW based snapshots. Roadmap of cStor includes SPDK and DPDK integrations to achieve multi-fold increase in performance. More details on cStor architecture are [written here](/data/storageengine.html).
 
 
 
 ## Node Disk Manager<a name="NDM"></a>
 
 ------
+
+Node Disk Manager fills the gap in the chain of tools required for managing persistent storage for stateful applications using Kubernetes. Adminstrators in the container era are increasing tasked with the goal of automating the infrastructure needs of an application or application developer. The complex work flow automations in the storage provisioning needs flexible structures in the storage stack so that Cloud Native tools in Kubernetes ecosystem can easily use them. Node Disk Manager or NDM unifies disparate disks to a common Kubernetes object and provides the capability to pool them. NDM discovers, provisions, monitors and manages the underlying disks in such a way that Kubernetes PV provisioners and Prometheus can easily integrate into the disk subsystem. 
+
+![Node Disk Manager](/docs/assets/ndm.png)
 
 
 
@@ -119,15 +133,21 @@ For passing controller configuration parameters and volume policies to the volum
 
 
 
-### Prometheus 
+### Prometheus and Grafana 
 
-### Grafana
+Prometheus is installed as a microservice by the OpenEBS operator during the initial setup. Prometheus monitoring for a given volume is controlled by a volume policy.  With granular volume stats, disk-pool stats and disk stats, the prometheus and grafana tool combination will empower the OpenEBS user community immensely in persistent data monitoring. 
 
 ### Jaeger
 
+This is a roadmap feature.Jaeger tracing is being enabled for OpenEBS control plane components. Contributions to stabilize this integration are welcome.
+
 ### WeaveScope
 
+Node Disk Manager components, volume pods, and other persistent storage structures of Kubernetes are being enabled for WeaveScope integration. With these enhancements, exploration and traversal of these components will become significantly easier
+
 ### Kubernetes Dashboard
+
+Kubernetes Dashboard is extended to include the PV and PVC traversals from the application PODs and vice versa. 
 
 
 
