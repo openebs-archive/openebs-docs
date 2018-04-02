@@ -219,11 +219,6 @@ input#search_input_react:focus, input#search_input_react:active {
     color: #555;
 }
 
-#panel
-{
-	cursor:auto;
-}
-
 #panel, .flip {
     cursor: pointer;
 }
