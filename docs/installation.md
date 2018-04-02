@@ -6,15 +6,35 @@ sidebar_label: Installation
 
 ------
 
+This section describes about the OpenEBS installation and its up-gradation to its latest version.
+
+Install section deals with different ways of OpenEBS installation and Upgrade section deals with upgrading OpenEBS to it latest available version from its previous version. 
+
+
+
 Install
 =========
 
 It is very simple to install OpenEBS on your existing k8s cluster. OpenEBS installation can be done by 2 ways
 
-1. kubectl  
+1. Helm charts
+2. kubectl  
 
 
-2. Helm charts 
+
+
+## Setup OpenEBS using helm charts
+
+With simple and easy steps, you can install OpenEBS on your existing k8s cluster using helm chart
+
+Download and Install the latest OpenEBS Operator files using the following commands.
+
+```
+helm repo add openebs-charts https://openebs.github.io/charts/
+helm repo update
+helm install openebs-charts/openebs --name openebs --namespace openebs
+```
+
 
 
 
@@ -99,18 +119,6 @@ Capacity: 5G
 ```
 
  
-
-## Setup OpenEBS using helm charts
-
-With simple and easy steps, you can install OpenEBS on your existing k8s cluster using helm chart
-
-Download and Install the latest OpenEBS Operator files using the following commands.
-
-```
-helm repo add openebs-charts https://openebs.github.io/charts/
-helm repo update
-helm install openebs-charts/openebs --name openebs --namespace openebs
-```
 
 
 Upgrade
