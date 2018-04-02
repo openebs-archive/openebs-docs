@@ -28,8 +28,6 @@ Download the latest OpenEBS Operator files using the following commands.
 
 ```
 git clone <https://github.com/openebs/openebs.git>
-
-cd openebs/k8s
 ```
 
 
@@ -39,6 +37,7 @@ Apply the  openebs-operator.yaml to deploy OpenEBS on your k8 cluster.
 
 
 ```
+cd openebs/k8s
 kubectl apply -f openebs-operator.yaml
 ```
 
@@ -81,7 +80,11 @@ Use corresponding storage class name in your PVC yaml file to set run the statef
 
 Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo)
 
+
+
 **Configurations**
+
+
 
  The following are some of the parameters of the OpenEBS volume and their default values.  
 
