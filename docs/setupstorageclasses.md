@@ -30,15 +30,15 @@ OpenEBS Storage provides several features that can be customized for each volume
 - Volume expansion policy
 - Replication policy
 
-OpenEBS comes with a set of storage classes that can be readily used.
+OpenEBS comes with some pre-defined set of storage classes that can be readily used.
 
 Please visit the below link for the pre-defined storage classes.
 https://github.com/openebs/openebs/blob/master/k8s/openebs-storageclasses.yaml
 
 
-It is also possible that user can create a new custom storage classes.
+It is also possible that user can create a new custom storage class.
 
-Defining a storage classes supported by OpenEBS	
+Defining a storage class supported by OpenEBS:
 
 ```
 apiVersion: storage.k8s.io/v1
