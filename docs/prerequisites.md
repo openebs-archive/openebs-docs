@@ -56,7 +56,7 @@ Centos7, Ubuntu 16.04 and above with with minimum 2vCPUs, 4G RAM and 16GB hard d
 
 
 
-## **Verify open-iscsi status on host**
+## Verify open-iscsi status on host
 
 To consume OpenEBS volume on k8s hosts, install open-iscsi initiator packages depends on your host OS. You can get the minimum requirement needed on the various host system for the OpenEBS installation from here.
 
