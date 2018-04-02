@@ -15,7 +15,7 @@ The minimum requirements for the OpenEBS installation are
 2. Each Kubernetes node should have open-iscsi package installed
 
 
-### Kubernetes cluster configuration
+## Kubernetes cluster configuration
 
 OpenEBS is a Containerized Storage solution that can be orchestrated by  Kubernetes. To understand how to use OpenEBS with Kubernetes, you must familiarize yourself with [Kubernetes Storage Concepts](https://kubernetes.io/docs/concepts/storage/persistent-volumes/), specifically:
 
@@ -36,7 +36,7 @@ If you are new to Kubernetes, here are some guides that can help you setup Kuber
 
 
 
-###### **Recommended Configuration**
+**Recommended Configuration**
 
 
 
@@ -46,7 +46,7 @@ Centos7, Ubuntu 16.04 and above with with minimum 4vCPUs, 8G RAM and 16GB hard d
 
 
 
-###### **Minimum Configuration**
+**Minimum Configuration**
 
 
 
@@ -56,11 +56,11 @@ Centos7, Ubuntu 16.04 and above with with minimum 2vCPUs, 4G RAM and 16GB hard d
 
 
 
-### **Verify open-iscsi status on host**
+## **Verify open-iscsi status on host**
 
 To consume OpenEBS volume on k8s hosts, install open-iscsi initiator packages depends on your host OS. You can get the minimum requirement needed on the various host system for the OpenEBS installation from here.
 
-##### **On Ubuntu**
+**On Ubuntu**
 
 *Verify that iSCSI is configured*
 
@@ -92,7 +92,7 @@ sudo service open-iscsi restart
 
 
 
-##### **On Centos**
+**On Centos**
 
 *Verify that iSCSI is configured*
 
@@ -118,7 +118,7 @@ yum install iscsi-initiator-utils -y
 
  
 
-##### **On Azure**
+**On Azure**
 
 You can connect to the nodes through SSH using their public IP addresses by running the following command.
 
@@ -175,7 +175,7 @@ azureuser@aks-nodepool1-46849391-1:~$ exit
 devops@Azure:~$
 ```
 
-**Note:** Install and configure iSCSI in all the Kubernetes cluster nodes by following the above procedure.
+**Note**: Install and configure iSCSI in all the Kubernetes cluster nodes by following the above procedure.
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
