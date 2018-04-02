@@ -23,11 +23,12 @@ Add the OpenEBS storage classes using the following command. This can be used by
 		kubectl apply -f openebs-storageclasses.yaml
 
 OpenEBS Storage provides several features that can be customized for each volume. Some of features that could be customized per application are:
-		Number of replications
-		Zone or node affinity
-		Snapshot scheduling
-		Volume expansion policy
-		Replication policy
+
+- Number of replications
+- Zone or node affinity
+- Snapshot scheduling
+- Volume expansion policy
+- Replication policy
 
 OpenEBS comes with a set of storage classes that can be readily used.
 
