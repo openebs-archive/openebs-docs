@@ -18,7 +18,7 @@ It is very simple to install OpenEBS on your existing k8s cluster. OpenEBS insta
 
 
 
-### Setup OpenEBS using kubectl
+## Setup OpenEBS using kubectl
 
 You can easily setup OpenEBS on your existing Kubernetes cluster with a few simple kubectl commands.
 
@@ -65,7 +65,7 @@ kubectl apply -f openebs-storageclasses.yaml
 
 
 
-There is some common workload related storage classes are installed by default on your kubernetes cluster once OpenEBS is installed. You can customize or use the default storageclasses to run your application of OpenEBS volume. To know the installed default storage class details, use following command.
+There is some common workload related storage classes are installed by default on your kubernetes cluster once OpenEBS is installed. You can customize or use the default storage classes to run your application of OpenEBS volume. To know the installed default storage class details, use following command.
 
 
 
@@ -81,14 +81,14 @@ Use corresponding storage class name in your PVC yaml file to set run the statef
 
 Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo)
 
-#### **Configurations**
+**Configurations**
 
  The following are some of the parameters of the OpenEBS volume and their default values.  
 
 ```
 Namespace= default
 
-OPENEBS_IO_JIVA_REPLICA_COUNT=2
+OPENEBS_IO_JIVA_REPLICA_COUNT=3
 
 Image: 0.5.3
 
@@ -97,7 +97,7 @@ Capacity: 5G
 
  
 
-### Setup OpenEBS using helm charts
+## Setup OpenEBS using helm charts
 
 With simple and easy steps, you can install OpenEBS on your existing k8s cluster using helm chart
 
