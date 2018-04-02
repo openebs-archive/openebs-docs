@@ -30,7 +30,7 @@ OpenEBS solution/project has many components , which can be grouped into the fol
 
 
 
-OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies, exporting the volume metrics for consumption by prometheus/grafana,  etc.
+The control plane of an OpenEBS cluster is often referred to as Maya. OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies, exporting the volume metrics for consumption by prometheus/grafana,  etc.
 
  
 
