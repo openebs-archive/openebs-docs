@@ -55,23 +55,6 @@ If you have what looks like a bug, or you would like to make a feature request, 
 
 Before you file an issue, please search existing issues to see if your issue is already covered.
 
-# Installation <a name="Installation"></a>
-
-Content to be added
-
-# Storage Classes <a name="StorageClasses"></a>
-
-Content to be added
-
-
-# Storage Pools <a name="StoragePools"></a>
-
-Content to be added
-
-# Accessing Logs <a name="AccessingLogs"></a>
-
-Content to be added
-
 ## Overview of OpenEBS Logger 
 
 Logger is a Kubernetes job which can be run on a cluster to extract pod logs and cluster information. It helps in troubleshoot/debugging activities. Logger runs the logger container *openebs/logger* and it is recommended to run for a specific duration to capture logs while attempting to reproduce issues.
@@ -108,13 +91,19 @@ The following procedure helps you run Logger.
 
    **Note:** The duration is arrived depending on the average time taken for the bug to manifest from the time a pod starts.
 
-2. Create a Kubernetes job to run logger using the `kubectl apply -f debugjob.yaml` command.
+2. Create a Kubernetes job to run logger using the below command.
+
+    `kubectl apply -f debugjob.yaml`
 
 3. This job will run for the duration specified in the previous steps.
 
 4. The logs thus collected are placed in a logbundle (tarball) in */mnt* directory of the node in which the debug pod was scheduled.
 
-5. Logs will be available in the node in which the debug pod/logger is scheduled when you run  a `kubectl get pod -o wide` command.
+5. Logs will be available in the node in which the debug pod/logger is scheduled when you run below
+
+   command.
+
+    `kubectl get pod -o wide` 
 
 6. Attach this log support bundle while raising issues on the OpenEBS repository.
 
@@ -158,7 +147,9 @@ Ensure that the above conditions are met and the replica rollout is successful. 
 
   4. If the PV is created and OpenEBS pods are running, use the iscsiadm -m session command on the node (where the pod is scheduled) to identify whether the OpenEBS iSCSI volume has been attached/logged-into. If not, verify network connectivity between the nodes.
 
-  5. If the session is present, identify the SCSI device associated with the session using the command `iscsiadm -m session -P 3`. Once it is confirmed that the iSCSI device is available (check the output of fdisk -l for the mapped SCSI device), check the kubelet and system logs including the iscsid and kernel (syslog) for information on the state of this iSCSI device. If inconsistencies are observed, execute the filesyscheck on the device fsck -y /dev/sd<>. This will mount the volume to the node.
+  5. If the session is present, identify the SCSI device associated with the session using the below command `iscsiadm -m session -P 3`
+
+     Once it is confirmed that the iSCSI device is available (check the output of fdisk -l for the mapped SCSI device), check the kubelet and system logs including the iscsid and kernel (syslog) for information on the state of this iSCSI device. If inconsistencies are observed, execute the filesyscheck on the device `fsck -y /dev/sd<>`. This will mount the volume to the node.
 
 * In OpenShift deployments, you can face this issue with the OpenEBS replica pods continuously restarting, that is, they are in crashLoopBackOff state. This is due to the default "restricted" security context settings. Edit the following settings using oc edit scc restricted to get the application pod running.
 
@@ -192,7 +183,9 @@ The procedure to ensure application recovery in the above cases is as follows:
 
 1. Resolve the system issues which caused the iSCSI disruption/RO device condition. Depending on the cause, the resolution steps may include recovering the failed nodes, ensuring replicas are brought back on the same nodes as earlier, fixing the network problems and so on.
 
-2. Ensure that the OpenEBS volume controller and replica pods are running successfully with all replicas in RW mode. Use the command `curl GET http://<ctrl ip>:9501/v1/replicas | grep createTypes` to confirm.
+2. Ensure that the OpenEBS volume controller and replica pods are running successfully with all replicas in RW mode. Use the command  to confirm.
+
+   `		curl GET http://<ctrl ip>:9501/v1/replicas | grep createTypes`
 
 3. If any one of the replicas are still in RO mode, wait for the synchronization to complete. If all the replicas are in RO mode (this may occur when all replicas re-register into the controller within short intervals), you must restart the OpenEBS volume controller using the `kubectl delete pod <pvc-ctrl>` command . Since it is a Kubernetes deployment, the controller pod is restarted successfully. Once done, verify that all replicas transition into RW mode.
 
