@@ -1,5 +1,5 @@
 ---
-id: storagepool
+id: setupstoragepools
 title: OpenEBS Storage Pools
 sidebar_label: Storage Pools
 ---
