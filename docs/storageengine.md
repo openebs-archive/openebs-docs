@@ -8,7 +8,7 @@ sidebar_label: Storage Engines
 
 OpenEBS supports two pluggable storage engines - Jiva and cStor
 
-The type of storage engine is specified in the volume policies of OpenEBS. A storage class is chosen by the application developer.  A storage class contains the provisioner details and a reference to the volume policies group (VPG). There are two parameters of a volume policy group that decide if the storage engine is Jiva or cStor. Thsoe are ControllerImage and ReplicaImage
+The type of storage engine is specified in the volume policies of OpenEBS. A storage class is chosen by the application developer.  A storage class contains the provisioner details and a reference to the volume parameter group (VPG). There are two parameters of a volume policy group that decide if the storage engine is Jiva or cStor. Thsoe are ControllerImage and ReplicaImage
 
 
 
