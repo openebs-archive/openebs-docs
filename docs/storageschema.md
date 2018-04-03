@@ -4,9 +4,13 @@ title: OpenEBS storage schema
 sidebar_label: Storage Schema
 ---
 
+------
+
+OpenEBS introduces more elements into the storage configuration to give the administrator an end-to-end control and experience while managing the storage on the Kubernetes cluster. Apart from the standard Kubernetes constructs of PVC, SC and PV, OpenEBS introduces Volume Pods, Storage Pools Claims and Storage Pools. The stack of these constructs is shown below.
 
 
 
+![OpenEBS storage schema](/docs/assets/storage-schema.png)
 
 
 
