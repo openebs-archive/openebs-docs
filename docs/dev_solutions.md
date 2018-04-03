@@ -36,7 +36,7 @@ The following commands help you install Docker on Ubuntu version 16.04 (64 bit).
 
 ## Add iSCSI Support
 
-On your Ubuntu host, install open-iscsi package. OpenEBS uses iSCSI to connect to the block volumes. 
+On your Ubuntu host, install open-iscsi package. OpenEBS creates iSCSI based block volumes that offers the persistant storage. 
 
     sudo apt-get update
     sudo apt-get install open-iscsi
@@ -51,13 +51,13 @@ Check that initiator name is configured and iSCSI service is running using the f
 
 ## Download and setup Minikube and kubectl
 
-On your Ubuntu host, install minikube.
+On your Ubuntu host, install minikube by running the following commands.
 
     curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
     chmod +x minikube 
     sudo mv minikube /usr/local/bin/
 
-On your Ubuntu host, install kubectl.
+On your Ubuntu host, install kubectl by running the following commands.
 
     curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
     chmod +x kubectl 
@@ -68,7 +68,7 @@ On your Ubuntu host, setup directories for storing minkube and kubectl configura
     mkdir $HOME/.kube || true
     touch $HOME/.kube/config
 
-On your Ubuntu host, setup the environment for minikube. Copy the following to \~/.profile. 
+On your Ubuntu host, setup the environment for minikube. Copy the following content to \~/.profile file. 
 
     export MINIKUBE_WANTUPDATENOTIFICATION=false
     export MINIKUBE_WANTREPORTERRORPROMPT=false
@@ -76,13 +76,13 @@ On your Ubuntu host, setup the environment for minikube. Copy the following to \
     export CHANGE_MINIKUBE_NONE_USER=true
     export KUBECONFIG=$HOME/.kube/config
 
-On your Ubuntu host, start minikube. 
+On your Ubuntu host, start minikube by running the following command. 
 
     sudo -E minikube start --vm-driver=none
 
 ### Verify that minikube is configured
 
-Check that minikube is configured and it has started using the following commands. :
+Check that minikube is configured and it has started by running the following command.
 
     minikube status
 
@@ -97,12 +97,13 @@ When minikube is configured properly, *minikube status* will display the followi
 - If minikube status displays *Stopped*, add sudo minikube start command.
 - If minikube displays errors indicating permission denied to configuration files, fix the permissions by running the following commands.
 
+```
     sudo chown -R $USER $HOME/.kube
     sudo chgrp -R $USER $HOME/.kube
     sudo chown -R $USER $HOME/.minikube
     sudo chgrp -R $USER $HOME/.minikube
-
-### Verify that Kubernetes is configured
+```
+### Verify that Kubernetes is Configured
 
 Check that kubectl is configured and services are running using the following commands. 
 
@@ -114,6 +115,7 @@ When configured properly, the above kubectl commands will display output similar
     vagrant@minikube-dev:~$ kubectl get nodes
     NAME           STATUS    AGE       VERSION
     minikube-dev   Ready     8m        v1.7.5
+    
     vagrant@minikube-dev:~$ kubectl get pods --all-namespaces
     NAMESPACE     NAME                              READY     STATUS    RESTARTS   AGE
     kube-system   kube-addon-manager-minikube-dev   1/1       Running   1          8m
@@ -159,19 +161,19 @@ The following snippet of the openebs-operator.yaml -\> maya-apiserver section sh
               value: "1"
     ---
 
-Add OpenEBS related storage classes, that can then be used by developers and applications using the following command.
+Add OpenEBS related storage classes, that can then be used by developers and applications by running the following command.
 
     kubectl apply -f openebs-storageclasses.yaml
 
 ### Running Stateful Applications with OpenEBS Storage
 
-To use OpenEBS as persistent storage for your stateful workloads, set the storage class in the Persistent Volume Claim (PVC) of your application to one of the OpenEBS storage class.
+To use OpenEBS as persistent storage for your stateful workloads, set the storage class in the Persistent Volume Claim (PVC) of your application to one of the OpenEBS storage classes.
 
-Get the list of storage classes using the following command. Choose the storage class that best suits your application.
+Get the list of storage classes by running the following command. Choose the storage class that best suits your application.
 
     kubectl get sc
 
-Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](openebs/k8s/demo).
+Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://github.com/openebs/openebs/tree/master/k8s/demo).
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
