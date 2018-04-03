@@ -1,16 +1,12 @@
 ---
-id: setupstoragepools
-title: Setting up Storage Pools
-sidebar_label: Storage Pools
+id: supportedplatforms
+title: OpenEBS supported platforms
+sidebar_label: Platforms
 ---
 
-Content to be added
+------
 
-
-
-
-
-
+Content to be developed.
 
 
 

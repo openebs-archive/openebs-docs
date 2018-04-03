@@ -1,12 +1,11 @@
 {
   "docs": {
     "Getting Started": ["quickstartguide", "introduction", "gethelp", "faq"],
-    "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "volume", "storagepool", "diskobject"],
-    "Setup": ["prerequisites", "installation", "setupstorageclasses", "setupstoragepools"],
+    "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "storageschema"],
+    "Setup": ["prerequisites", "installation", "supportedplatforms", "setupstorageclasses", "setupstoragepools"],
     "Releases": ["changelog"],
     "Usecases": ["cicd", "k8sstorage", "bigdata", "hyperconverged", "hyperscale", "hybridcloud", "databases"],
     "Tasks": ["developertasks", "operatortasks"],
-    "Platforms": ["nativekubernetes", "openshift", "googlecloud", "aws", "azure"],
     "CLI": ["kubectl", "mayactl"],
     "API": ["api"],
     "Contributor Resources": ["weeklycontribute", "contribute"],

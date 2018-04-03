@@ -1,10 +1,16 @@
 ---
-id: nativekubernetes
-title: Running OpenEBS on Native Kubernetes
-sidebar_label: Native Kubernetes
+id: storageschema
+title: OpenEBS storage schema
+sidebar_label: Storage Schema
 ---
 
-Content to be developed.
+
+
+
+
+
+
+
 
 
 
