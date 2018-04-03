@@ -26,19 +26,19 @@ Kubernetes, of course, gives a lot of ways to enable resilience. We leverage the
 
 ## How does OpenEBS provide higher availability for stateful workloads?
 
-An OpenEBS Jiva Volume is a controller deployed during the OpenEBS installation. Volume replicas are defined by the parameter we set above. The controller is an iSCSI target while the replicas play the role of a disk. The controller exposes the iSCSI target while the actual data is written. The controller and each replica run inside a dedicated container.An OpenEBS Jiva Volume controller exists as a single instance, but there can be multiple instances of OpenEBS Jiva volume replicas. Persistent data is synchronized between replicas. OpenEBS Jiva Volume HA is based on various scenarios as explained in the following sections. NOTE: Each replica is scheduled in a unique K8s node, and a K8s node never has two replicas of one OpenEBS volume.
+An OpenEBS Jiva Volume is a controller deployed during the OpenEBS installation. Volume replicas are defined by the parameter we set in the PVC specification. The controller is an iSCSI target while the replicas play the role of a disk. The controller exposes the iSCSI target while the actual data is written through the replicas. The controller and each replica run inside a dedicated container. An OpenEBS Jiva Volume controller exists as a single instance, but there can be multiple instances of OpenEBS Jiva volume replicas. Persistent data is replicated synchronously to all the replicas. OpenEBS Jiva Volume HA is based on various scenarios as explained in the following sections. NOTE: Each replica is scheduled in a unique K8s node, and a K8s node never has two replicas of one OpenEBS volume.
 
 ### What happens when an OpenEBS volume controller pod crashes?
 
-Kubernetes automatically re-schedules the controller as a new Kubernetes pod.Policies are in place that ensures faster rescheduling.
+Kubernetes automatically re-schedules the controller as a new Kubernetes pod. Policies are in place that ensures faster rescheduling.
 
 ### What happens when a K8s node that hosts OpenEBS volume controller goes offline?
 
-The controller is automatically re-scheduled as a new Kubernetes pod.Policies are in place that ensures faster rescheduling.If Kubernetes node is unavailable, the controller gets scheduled on one of the available nodes.
+The controller is automatically re-scheduled as a new Kubernetes pod. Policies are in place that ensures faster rescheduling. If Kubernetes node is unavailable, the controller gets scheduled on one of the available nodes.
 
 ### What happens when an OpenEBS volume replica pod crashes for reasons other than node not-ready and node unreachable?
 
-The replica is automatically rescheduled as a new Kubernetes pod.The replica may or may not be rescheduled on the same K8s node.There is data loss with this newly scheduled replica if it gets rescheduled on a different K8s node.
+The number of replicas are expected to be a minimum of 3 to make sure data is continuously available and resiliency achieved. If one replica completely becomes unavailable, a new replica is generated and is rebuilt with the data from the existing replicas. However, if there are only two replicas, a replica loss will result in the other replicas turning into Read-Only, and hence the entire persistent volume turning into Read-Only.
 
 ### What happens when a K8s node that hosts OpenEBS volume replica goes offline?
 
