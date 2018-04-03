@@ -6,15 +6,15 @@ sidebar_label: Prerequisites
 
 ------
 
-This section will help you to understand the pre-requisites for the OpenEBS installation in a kubernetes installed environment.
+This section will help you to understand the pre-requisites for the OpenEBS installation in a Kubernetes installed environment.
 
-The minimum requirements for the OpenEBS installation are
+The minimum requirements for the OpenEBS installation are;
 
 1.  Kubernetes cluster version >= 1.7.5 (OpenEBS needs CRD feature of Kubernetes)
 2.  Each Kubernetes node should have open-iscsi package installed. 
 
 
-Installing and configuring open-iscsi on kubernetes will vary slightly depending on the platform and you can [find those instructions here](#iSCSIConfig). 
+Installing and configuring open-iscsi on Kubernetes will vary slightly depending on the platform and you can [find those instructions here](#iSCSIConfig). 
 
 
 
@@ -29,17 +29,17 @@ To understand how to use OpenEBS with Kubernetes, familiarize yourself with [Kub
 
 
 
-If you have verified open-iScsi is configured on your Kubernetes cluster, you can proceed to [installation of OpenEBS](/docs/installation.html) 
+If you have verified open-iscsi is configured on your Kubernetes cluster, you can proceed to [installation of OpenEBS](/docs/installation.html). 
 
 <a name="iSCSIConfig"></a>
 
 ## Steps for configuring and verifying open-iscsi 
 
-The open-iscsi initiator packages depends on your host OS or in kubelet container. You can follow the following steps for installation / verification of open-iscsi package.  In case you are using GKE, use the host machine as ubuntu. 
+The open-iscsi initiator packages depends on your host OS or in kubelet container. You can follow the following steps for installation / verification of open-iscsi package. In case you are using GKE, use the host machine as Ubuntu. 
 
 ### On Ubuntu host
 
-If iSCSI is already installed on your host,check that initiator name is configured and iSCSI service is running using the following commands.
+If iSCSI is already installed on your host, check that initiator name is configured and iSCSI service is running using the following commands.
 
 ```
 sudo cat /etc/iscsi/initiatorname.iscsi
