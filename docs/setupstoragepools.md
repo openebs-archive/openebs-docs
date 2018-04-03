@@ -20,19 +20,27 @@ In order to utilize a external disk user should create a storage pool.
 
 To create a storage pool user should first mount the external disk to the cluster.
 
-`sudo mkdir /mnt/openebs_disk`
+```
+sudo mkdir /mnt/openebs_disk
+```
 
 Verify the name and the size of the disk using the below command.
 
-`lsblk`
+```
+lsblk
+```
 
 Once you have verified the same do a format on the disk. Use the below command to format the disk.
 
-`sudo mkfs.ext4 -L datapartition /dev/sdb`
+```
+sudo mkfs.ext4 -L datapartition /dev/sdb
+```
 
 Now mount the disk on your OpenEBS cluster.
 
-`sudo mount  /dev/sdb /mnt/openebs_disk`
+```
+sudo mount  /dev/sdb /mnt/openebs_disk
+```
 
 Once it is done make the below entries on openebs-operator.yaml
 
