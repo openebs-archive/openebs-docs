@@ -1,10 +1,17 @@
 ---
-id: openshift
-title: OpenEBS is certified on OpenShift
-sidebar_label: OpenShift
+id: stackpointcloud
+title: Using OpenEBS on StackPoint Cloud
+sidebar_label: StackPointCloud
 ---
 
 ------
+
+Content to be developed
+
+
+
+
+
 
 
 
