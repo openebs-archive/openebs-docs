@@ -1,7 +1,7 @@
 ---
 id: gethelp
 title: Getting help on OpenEBS
-sidebar_label: Getting help
+sidebar_label: Getting Help
 ---
 ------
 
@@ -15,16 +15,16 @@ Slack requires registration, but the OpenEBS team welcomes anyone to register at
 
 ## Email
 
-  Email your queries to the following email id. OpenEBS experts will help resolving your queries.
-<email id>
+  Email your queries to the following email adress. OpenEBS experts will help resolving your queries.
+<support at openebs dot io>
 
 ## Documentation
 
-  Access the latest documents at https://docs.openebs.io. Enter the search string in the **Search** box provided to know more.
+  Access the latest documentation at https://docs.openebs.io. Enter the search string in the **Search** box provided to know more.
 
 ## Blogs
 
-  You can also go through the various blogs available at https://blog.openebs.io/ for more information.
+  You can also go through the various blogs from our team members available at https://blog.openebs.io/ for more information.
 
 
 
