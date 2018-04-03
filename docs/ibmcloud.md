@@ -1,15 +1,12 @@
 ---
-id: setupstoragepools
-title: Setting up Storage Pools
-sidebar_label: Storage Pools
+id: ibmcloud
+title: Using OpenEBS on IBM Cloud
+sidebar_label: IBMCloud
 ---
 
-Content to be added
+------
 
-
-
-
-
+Content to be developed
 
 
 

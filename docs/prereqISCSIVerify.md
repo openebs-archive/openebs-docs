@@ -1,7 +1,7 @@
 ---
 id: open-iSCSI
 title: Verify open-iscsi status
-sidebar_label: 
+sidebar_label: prereqISCSIVerify 
 ---
 
 ------
@@ -87,23 +87,6 @@ azureuser@aks-nodepool1-46849391-1:~$ sudo docker ps | grep "hyperkube kubele"
 
 ```
 azureuser@aks-nodepool1-46849391-1:~$ service open-iscsi status
-
-● open-iscsi.service - Login to default iSCSI targets
-   Loaded: loaded (/lib/systemd/system/open-iscsi.service; enabled; vendor preset: enabled)
-   Active: active (exited) since Mon 2018-03-19 11:27:01 UTC; 21h ago
-     Docs: man:iscsiadm(8) 
-           man:iscsid(8)
- Main PID: 1497 (code=exited, status=0/SUCCESS)
-    Tasks: 0
-   Memory: 0B
-      CPU: 0
-   CGroup: /system.slice/open-iscsi.service
-
-Mar 19 11:27:03 aks-nodepool1-46849391-1 iscsiadm[1474]: iscsiadm: No records found
-Mar 19 11:27:01 aks-nodepool1-46849391-1 systemd[1]: Starting Login to default iSCSI targets...
-Mar 19 11:27:01 aks-nodepool1-46849391-1 systemd[1]: Started Login to default iSCSI targets.
-azureuser@aks-nodepool1-46849391-1:~$ exit
-devops@Azure:~$
 ```
 
 Run the following commands to install and configure iSCSI in each node.

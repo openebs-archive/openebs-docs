@@ -1,10 +1,13 @@
 ---
-id: nativekubernetes
-title: Running OpenEBS on Native Kubernetes
-sidebar_label: Native Kubernetes
+id: stackpointcloud
+title: Using OpenEBS on StackPoint Cloud
+sidebar_label: StackPointCloud
 ---
 
-Content to be developed.
+------
+
+Content to be developed
+
 
 
 

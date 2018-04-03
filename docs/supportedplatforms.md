@@ -1,10 +1,16 @@
 ---
-id: openshift
-title: OpenEBS is certified on OpenShift
-sidebar_label: OpenShift
+id: supportedplatforms
+title: OpenEBS supported platforms
+sidebar_label: Platforms
 ---
 
 ------
+
+Content to be developed.
+
+
+
+
 
 
 
