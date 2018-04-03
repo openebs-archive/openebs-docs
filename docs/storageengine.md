@@ -8,11 +8,13 @@ sidebar_label: Storage Engines
 
 OpenEBS supports two pluggable storage engines - Jiva and cStor
 
-The type of storage engine is specified in the volume policies of OpenEBS. A storage class is chosen by the application developer.  A storage class contains the provisioner details and a reference to the volume policies group (VPG). There are two parameters of a volume policy group that decide if the storage engine is Jiva or cStor. Thsoe are ControllerImage and ReplicaImage
+The type of storage engine is specified in the volume policies of OpenEBS. A storage class is chosen by the application developer. 
 
+### Choosing a storage engine
 
+A storage class contains the provisioner details and a reference to the volume policies group (VPG). Create a storage class that refers to a VPG.  
 
-**The storage class example:**
+Example of a storage class with a VPG reference is shown below.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -28,63 +30,68 @@ parameters:
 
 
 
-For Jiva engine, the VPG looks as follows
-
-  - ```
-    apiVersion: openebs.io/v1alpha1
-    kind: VolumeParameterGroup
-    metadata:
-      name: openebs-policy-repaffinity-0.6.0
-    spec:
-      policies:
-
-    - name: VolumeMonitor
-      enabled: "true"
-    - name: ControllerImage
-      value: openebs/jiva:0.5.0
-    - name: ReplicaImage
-      value: openebs/jiva:0.5.0
-    - name: ReplicaCount
-      value: "1"
-    - name: StoragePool
-      value: ssd
-    ```
-
-For cStor engine, the VPG looks as follows
+There are two parameters in a VPG that decide if the storage engine is Jiva or cStor. Those are ControllerImage and ReplicaImage. Set these two parameters either to Jiva or cStor. 
 
 
 
-  - ```
-    apiVersion: openebs.io/v1alpha1
-    kind: VolumeParameterGroup
-    metadata:
-      name: openebs-policy-repaffinity-0.6.0
-    spec:
-      policies:
+#### For Jiva engine, the VPG looks as follows
 
-    - name: VolumeMonitor
-      enabled: "true"
-    - name: ControllerImage
-      value: openebs/cstor:0.5.0
-    - name: ReplicaImage
-      value: openebs/cstor:0.5.0
-    - name: ReplicaCount
-      value: "1"
-    - name: StoragePool
-      value: ssd
-    ```
+```
+apiVersion: openebs.io/v1alpha1
+kind: VolumeParameterGroup
+metadata:
+  name: openebs-policy-repaffinity-0.6.0
+spec:
+  policies:
 
-    ​
+- name: VolumeMonitor
+  enabled: "true"
+- name: ControllerImage
+  value: openebs/jiva:0.5.0
+- name: ReplicaImage
+  value: openebs/jiva:0.5.0
+- name: ReplicaCount
+  value: "1"
+- name: StoragePool
+  value: ssd
+```
 
 
 
-## Overview of Jiva storage engine
+#### For cStor engine, the VPG looks as follows
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: VolumeParameterGroup
+metadata:
+  name: openebs-policy-repaffinity-0.6.0
+spec:
+  policies:
+  - name: VolumeMonitor
+    enabled: "true"
+  - name: ControllerImage
+    value: openebs/cstor:0.5.0
+  - name: ReplicaImage
+    value: openebs/cstor:0.5.0
+  - name: ReplicaCount
+    value: "1"
+  - name: StoragePool
+    value: ssd
+```
+
+
+
+------
+
+### Overview of Jiva storage engine
 
 ![Jiva storage engine of OpenEBS](/docs/assets/jiva.png)
 
 
 
-## Overview of cStor storage engine
+------
+
+### Overview of cStor storage engine
 
 ![cStor storage engine of OpenEBS](/docs/assets/cStor.png)
 
