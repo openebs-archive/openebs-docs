@@ -12,7 +12,7 @@ The type of storage engine is specified in the volume policies of OpenEBS. A sto
 
 ### Choosing a storage engine
 
-A storage class contains the provisioner details and a reference to the volume policies group (VPG). Create a storage class that refers to a VPG.  
+A storage class contains the provisioner details and a reference to the Volume Parameter Group (VPG). Create a storage class that refers to a VPG.  
 
 Example of a storage class with a VPG reference is shown below.
 
