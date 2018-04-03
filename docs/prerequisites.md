@@ -87,7 +87,7 @@ yum install iscsi-initiator-utils -y
 
  You can verify the installation as mentioned in the section verify that iSCSI is configured. 
 
-
+<a name="Azure"></a>
 
 ### Configuring open-iscsi on Azure cloud
 
