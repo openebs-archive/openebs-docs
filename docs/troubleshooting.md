@@ -158,7 +158,7 @@ Ensure that the above conditions are met and the replica rollout is successful. 
 
   4. If the PV is created and OpenEBS pods are running, use the iscsiadm -m session command on the node (where the pod is scheduled) to identify whether the OpenEBS iSCSI volume has been attached/logged-into. If not, verify network connectivity between the nodes.
 
-  5. If the session is present, identify the SCSI device associated with the session using the command iscsiadm -m session -P 3. Once it is confirmed that the iSCSI device is available (check the output of fdisk -l for the mapped SCSI device), check the kubelet and system logs including the iscsid and kernel (syslog) for information on the state of this iSCSI device. If inconsistencies are observed, execute the filesyscheck on the device fsck -y /dev/sd<>. This will mount the volume to the node.
+  5. If the session is present, identify the SCSI device associated with the session using the command `iscsiadm -m session -P 3`. Once it is confirmed that the iSCSI device is available (check the output of fdisk -l for the mapped SCSI device), check the kubelet and system logs including the iscsid and kernel (syslog) for information on the state of this iSCSI device. If inconsistencies are observed, execute the filesyscheck on the device fsck -y /dev/sd<>. This will mount the volume to the node.
 
 * In OpenShift deployments, you can face this issue with the OpenEBS replica pods continuously restarting, that is, they are in crashLoopBackOff state. This is due to the default "restricted" security context settings. Edit the following settings using oc edit scc restricted to get the application pod running.
 
