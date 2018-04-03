@@ -18,6 +18,8 @@ Azure (Kubernetes versions)
 
 AWS (Kubernetes built using EC2)
 
+IBM Cloud Private (Versions 1.2.0, 2.1.0, 2.1.0.1, 2.1.0.2) 
+
 RedHat OpenShift (Versions 3.5, 3.6, 3.8)
 
 RedHat MiniShift (Versions )
@@ -32,11 +34,11 @@ RedHat MiniShift (Versions )
 
 As a prerequisite, OpenEBS requires CRD capabilities of Kubernetes and hence Kubernetes versions 1.7.5+ are suitable. 
 
-OpenEBS is tested on versions 1.7.5+, 1.8, 1.9, 1.10 and 1.11
+OpenEBS is tested on versions 1.7.5+, 1.8, 1.9, 1.10 and 1.11.
 
 Similarly, MiniKube versions that are tested for OpenEBS are x.y, x.y
 
-Another prerequisite is open-iSCSI packages should be installed and configured. For installing open-iscsi on Ubuntu, CentOs and CoreOS, refer to the [prerequisites section](/docs/prerequisites.html#iSCSIConfig) 
+Another prerequisite is open-iSCSI packages should be installed and configured. For installing open-iscsi on Ubuntu, CentOS and CoreOS, refer to the [prerequisites section](/docs/prerequisites.html#iSCSIConfig) 
 
 
 
@@ -48,7 +50,7 @@ GKE with Kubernetes versions 1.8 onwards are supported. While creating the clust
 
 <<TODO: Add a screenshot of the cluster config where the linux image is chosen on GKE>>
 
-Note:  image COS does not come with open-iscsi package and also installing new packages on cos based hosts is not allowed on GKE. Hence, OpenEBS will not work on GKE with hosts based on COS image.
+Note: COS image does not come with the open-iscsi package and also installing new packages on cos based hosts is not allowed on GKE. Hence, OpenEBS will not work on GKE with hosts based on COS image.
 
 <a name="Azure"></a>
 
@@ -57,6 +59,10 @@ Note:  image COS does not come with open-iscsi package and also installing new p
 On Azure, kubelet runs inside a container and open-iscsi packages are not available by default on Azure. Refer to the instructions to install and configure [open-iscsi on Azure](/docs/prerequisites.html#Azure)
 
 <a name="OpenShift"></a>
+
+## IBM Cloud Private
+
+<<Write the IBM Cloud Private specs, add a screenshot>>
 
 ## RedHat OpenShift and RedHat MiniShift
 
