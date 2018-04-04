@@ -328,6 +328,10 @@ Perform the following actions if Step-4 was executed.
 
 
 
+The detailed steps for the supported upgrade path are mentioned in below sections.
+
+
+
 ### **Upgrade from 0.4.0 to 0.5.0**
 
 It is possible to upgrade your OpenEBS volume from 0.4.0 to 0.5.0 by following the steps mentioned above. The detailed steps are mentioned here (<https://github.com/openebs/openebs/releases/tag/v0.5.0>) and README will give better understanding of the change log and limitations of latest version (https://github.com/openebs/openebs/blob/master/k8s/upgrades/0.4.0-0.5.0/README.md)
