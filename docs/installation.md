@@ -169,6 +169,8 @@ These are the general steps to upgrade your current OpenEBS volume from above me
 
 ### **STEP-1: CORDON ALL NODES WHICH DO NOT HOST OPENEBS VOLUME REPLICAS**
 
+
+
 Perform kubectl cordon <node> on all nodes that don't have the openebs volume replicas.
 
 This is to ensure that the replicas are not rescheduled elsewhere (other nodes) upon upgrade and "stick" to the same nodes.
@@ -177,6 +179,8 @@ This is to ensure that the replicas are not rescheduled elsewhere (other nodes) 
 
 ### **STEP-2 : OBTAIN YAMLSPECIFICATIONS FROM OPENEBS LATEST RELEASE**
 
+
+
 Create a directory and obtain specification from [https://github.com/openebs/openebs/releases/tag/<version>>  into the new directory folder files. 
 
 Note: Replace version name with [v0.5.0](https://github.com/openebs/openebs/releases/tag/v0.5.0), [v0.5.1](https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1) or v0.5.3
@@ -184,6 +188,8 @@ Note: Replace version name with [v0.5.0](https://github.com/openebs/openebs/rele
 
 
 ### **STEP-3:UPGRADE TO THE LATEST OPENEBS OPERATOR**
+
+
 
 ```
 test@Master:~$ kubectl apply -f k8s/openebs-operator.yaml
@@ -257,6 +263,8 @@ pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep-6b9f46bc6b-hvc8b    1/1       Runni
 
 ### **STEP-6:VERIFY THAT ALL THE REPLICAS ARE REGISTERED AND ARE IN RW MODE**
 
+
+
 ```
 test@Master:~$ curl GET http://10.47.0.5:9501/v1/replicas | grep createTypes | jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -305,7 +313,7 @@ test@Master:~$ curl GET http://10.47.0.5:9501/v1/replicas | grep createTypes | j
 
 
 
-### STEP-7: CONFIGURE GRAFANA TO MONITOR VOLUME METRICS
+### **STEP-7: CONFIGURE GRAFANA TO MONITOR VOLUME METRICS**
 
 
 
@@ -322,7 +330,7 @@ Perform the following actions if Step-4 was executed.
 
 ### **Upgrade from 0.4.0 to 0.5.0**
 
-It is possible to upgrade your OpenEBS volume from 0.4.0 to 0.5.0 by following the steps mentioned above. The detailed steps are mentioned here(<https://github.com/openebs/openebs/releases/tag/v0.5.0> and README will give better understanding of the change log and limitations of latest version )https://github.com/openebs/openebs/blob/master/k8s/upgrades/0.4.0-0.5.0/README.md)
+It is possible to upgrade your OpenEBS volume from 0.4.0 to 0.5.0 by following the steps mentioned above. The detailed steps are mentioned here (<https://github.com/openebs/openebs/releases/tag/v0.5.0>) and README will give better understanding of the change log and limitations of latest version (https://github.com/openebs/openebs/blob/master/k8s/upgrades/0.4.0-0.5.0/README.md)
 
  
 
