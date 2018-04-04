@@ -59,7 +59,7 @@ Next the user has to add the below entries to the corresponding storage class.
 
 Here it is openebs-storageclasses.yaml .
 
-Here for example here we have taken the Percona application.
+For example here we have taken the Percona application.
 
 ```
 vi openebs-storageclasses.yaml
