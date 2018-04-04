@@ -207,13 +207,13 @@ Note: Replace version name with [v0.5.0](https://github.com/openebs/openebs/rele
 
 The above storage-class template can be used to create new ones with desired properties.
 
-### STEP-4: CREATE THE OPENEBSMONITORING DEPLOYMENTS (Prometheus & Grafana)
+### **STEP-4: CREATE THE OPENEBSMONITORING DEPLOYMENTS (Prometheus & Grafana)**
 
 This is an optional step and which will be useful if you need to track storage metrics on your OpenEBS volume. We 
 
 recommended using the monitoring framework to track your OpenEBS volume metrics
 
-### STEP-5: UPDATE OPENEBS VOLUME (CONTROLLER AND REPLICA)DEPLOYMENTS
+### **STEP-5: UPDATE OPENEBS VOLUME (CONTROLLER AND REPLICA)DEPLOYMENTS**
 
 Obtain the name of the OpenEBS Persistent Volume (PV) that has to be updated
 
