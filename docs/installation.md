@@ -155,11 +155,11 @@ Upgrade
 
 There are 3 main upgrade paths we are supporting. Each upgrade has its own significant changes to support and ease use of OpenEBS volume in your k8s cluster.
 
-From 0.4.0to 0.5.0
+From 0.4.0 to 0.5.0
 
-From 0.5.0to 0.5.1
+From 0.5.0 to 0.5.1
 
-From 0.5.1to 0.5.3
+From 0.5.1 to 0.5.3
 
 
 
@@ -185,18 +185,18 @@ Note: Replace version name with [v0.5.0](https://github.com/openebs/openebs/rele
 
 ### **STEP-3:UPGRADE TO THE LATEST OPENEBS OPERATOR**
 
-
-
-`test@Master:~$ kubectl apply -f k8s/openebs-operator.yaml`
-`serviceaccount "openebs-maya-operator" configured`
-`clusterrole "openebs-maya-operator" configured`
-`clusterrolebinding "openebs-maya-operator" configured`
-`deployment "maya-apiserver" configured`
-`service "maya-apiserver-service" configured`
-`deployment "openebs-provisioner" configured`
-`customresourcedefinition "storagepoolclaims.openebs.io" created`
-`customresourcedefinition "storagepools.openebs.io" created`
-`storageclass "openebs-standard" created`
+```
+test@Master:~$ kubectl apply -f k8s/openebs-operator.yaml
+serviceaccount "openebs-maya-operator" configured
+clusterrole "openebs-maya-operator" configured
+clusterrolebinding "openebs-maya-operator" configured
+deployment "maya-apiserver" configured
+service "maya-apiserver-service" configured
+deployment "openebs-provisioner" configured
+customresourcedefinition "storagepoolclaims.openebs.io" created
+customresourcedefinition "storagepools.openebs.io" created
+storageclass "openebs-standard" created
+```
 
 
 
@@ -207,13 +207,15 @@ Note: Replace version name with [v0.5.0](https://github.com/openebs/openebs/rele
 
 The above storage-class template can be used to create new ones with desired properties.
 
+
+
 ### **STEP-4: CREATE THE OPENEBSMONITORING DEPLOYMENTS (Prometheus & Grafana)**
 
 
 
-This is an optional step and which will be useful if you need to track storage metrics on your OpenEBS volume. We 
+This is an optional step and which will be useful if you need to track storage metrics on your OpenEBS volume. We recommended using the monitoring framework to track your OpenEBS volume metrics.
 
-recommended using the monitoring framework to track your OpenEBS volume metrics
+
 
 ### **STEP-5: UPDATE OPENEBS VOLUME (CONTROLLER AND REPLICA)DEPLOYMENTS**
 
@@ -253,14 +255,15 @@ pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep-6b9f46bc6b-hvc8b    1/1       Runni
 
 
 
-### **STEP-6:VERIFY THAT ALL THE REPLICAS ARE REGISTERED AND ARE IN RW MODE** 
+### **STEP-6:VERIFY THAT ALL THE REPLICAS ARE REGISTERED AND ARE IN RW MODE**
 
-`test@Master:~$ curl GET http://10.47.0.5:9501/v1/replicas | grep createTypes | jq`
+```
+test@Master:~$ curl GET http://10.47.0.5:9501/v1/replicas | grep createTypes | jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-`100   162  100   162    0     0     27      0  0:00:06  0:00:05  0:00:01    37`
-`100   971  100   971    0     0   419k      0 --:--:-- --:--:-- --:--:--  419k`
-`{`
+100   162  100   162    0     0     27      0  0:00:06  0:00:05  0:00:01    37
+100   971  100   971    0     0   419k      0 --:--:-- --:--:-- --:--:--  419k
+{
   "createTypes": {
     "replica": "http://10.47.0.5:9501/v1/replicas"
   },
@@ -297,9 +300,14 @@ pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep-6b9f46bc6b-hvc8b    1/1       Runni
   },
   "resourceType": "replica",
   "type": "collection"
-`}`
+}
+```
+
+
 
 ### STEP-7: CONFIGURE GRAFANA TO MONITOR VOLUME METRICS
+
+
 
 Perform the following actions if Step-4 was executed.
 
@@ -311,6 +319,16 @@ Perform the following actions if Step-4 was executed.
 **Note** : For new applications select a newly created storage-class that has monitoring enabled to automatically start viewing metrics
 
 
+
+### **Upgrade from 0.4.0 to 0.5.0**
+
+It is possible to upgrade your OpenEBS volume from 0.4.0 to 0.5.0 by following the steps mentioned above. The detailed steps are mentioned here(<https://github.com/openebs/openebs/releases/tag/v0.5.0> and README will give better understanding of the change log and limitations of latest version )https://github.com/openebs/openebs/blob/master/k8s/upgrades/0.4.0-0.5.0/README.md)
+
+ 
+
+### **Upgrade from 0.5.0 to 0.5.1**
+
+It is possible to upgrade your OpenEBS volume from 0.5.0 to 0.5.1 by following the steps mentioned above. The detailed steps are mentioned here (<https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1>)
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
