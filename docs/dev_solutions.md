@@ -36,13 +36,13 @@ The following commands help you install Docker on Ubuntu version 16.04 (64 bit).
 
 ## Add iSCSI Support
 
-On your Ubuntu host, install open-iscsi package. OpenEBS uses iSCSI to connect to the block volumes. 
+On your Ubuntu host, install open-iscsi package by running the following commands. OpenEBS creates iSCSI based block volumes that offers persistent storage.  
 
     sudo apt-get update
     sudo apt-get install open-iscsi
     sudo service open-iscsi restart
 
-### Verify that iSCSI is configured
+### Verify that iSCSI is Configured
 
 Check that initiator name is configured and iSCSI service is running using the following commands.
 
@@ -51,24 +51,24 @@ Check that initiator name is configured and iSCSI service is running using the f
 
 ## Download and setup Minikube and kubectl
 
-On your Ubuntu host, install minikube.
+On your Ubuntu host, install Minikube by running the following commands.
 
     curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
     chmod +x minikube 
     sudo mv minikube /usr/local/bin/
 
-On your Ubuntu host, install kubectl.
+On your Ubuntu host, install kubectl by running the following commands.
 
     curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
     chmod +x kubectl 
     sudo mv kubectl /usr/local/bin/
 
-On your Ubuntu host, setup directories for storing minkube and kubectl configuration. 
+On your Ubuntu host, setup directories for storing minikube and kubectl configuration. 
 
     mkdir $HOME/.kube || true
     touch $HOME/.kube/config
 
-On your Ubuntu host, setup the environment for minikube. Copy the following to \~/.profile. 
+On your Ubuntu host, setup the environment for minikube. Copy the following content to \~/.profile file. 
 
     export MINIKUBE_WANTUPDATENOTIFICATION=false
     export MINIKUBE_WANTREPORTERRORPROMPT=false
@@ -76,17 +76,17 @@ On your Ubuntu host, setup the environment for minikube. Copy the following to \
     export CHANGE_MINIKUBE_NONE_USER=true
     export KUBECONFIG=$HOME/.kube/config
 
-On your Ubuntu host, start minikube. 
+On your Ubuntu host, start Minikube by running the following command. 
 
     sudo -E minikube start --vm-driver=none
 
-### Verify that minikube is configured
+### Verify that Minikube is Configured
 
-Check that minikube is configured and it has started using the following commands. :
+Check that Minikube is configured and it has started using the following command.
 
     minikube status
 
-When minikube is configured properly, *minikube status* will display the following output.
+When minikube is configured successfully, *minikube status* will display the following output.
 
     minikube: Running
     cluster: Running
@@ -94,22 +94,25 @@ When minikube is configured properly, *minikube status* will display the followi
 
 **Note:**
 
-- If minikube status displays *Stopped*, add sudo minikube start command.
-- If minikube displays errors indicating permission denied to configuration files, fix the permissions by running the following commands.
+- If minikube status displays *Stopped*, run sudo minikube start command.
 
-    sudo chown -R $USER $HOME/.kube
-    sudo chgrp -R $USER $HOME/.kube
-    sudo chown -R $USER $HOME/.minikube
-    sudo chgrp -R $USER $HOME/.minikube
+- If minikube displays errors indicating permission denied to configuration files, grant the permissions by running the following commands.
 
-### Verify that Kubernetes is configured
+    ```
+    sudo chown -R USER HOME/.kube
+    sudo chgrp -R USER HOME/.kube
+    sudo chown -R USER HOME/.minikube
+    sudo chgrp -R USER HOME/.minikube
+    ```
+
+### Verify that Kubernetes is Configured
 
 Check that kubectl is configured and services are running using the following commands. 
 
     kubectl get pods
     kubectl get nodes
 
-When configured properly, the above kubectl commands will display output similar to following.
+When configured successfully, the above kubectl commands will display output similar to following.
 
     vagrant@minikube-dev:~$ kubectl get nodes
     NAME           STATUS    AGE       VERSION
@@ -159,13 +162,13 @@ The following snippet of the openebs-operator.yaml -\> maya-apiserver section sh
               value: "1"
     ---
 
-Add OpenEBS related storage classes, that can then be used by developers and applications using the following command.
+Add OpenEBS related storage classes, that can then be used by developers and applications by running the following command.
 
     kubectl apply -f openebs-storageclasses.yaml
 
 ### Running Stateful Applications with OpenEBS Storage
 
-To use OpenEBS as persistent storage for your stateful workloads, set the storage class in the Persistent Volume Claim (PVC) of your application to one of the OpenEBS storage class.
+To use OpenEBS as persistent storage for your stateful workloads, set the storage class in the Persistent Volume Claim (PVC) of your application to one of the OpenEBS storage classes.
 
 Get the list of storage classes using the following command. Choose the storage class that best suits your application.
 
