@@ -10,19 +10,19 @@ OpenEBS is tested on the following platforms
 
 [Native Kubernetes](#NativeK8s) (Versions 1.7.5+, 1.8, 1.9, 1.10, 1.11)
 
-MiniKube (Versions )
+[MiniKube](#MiniKube) (Versions )
 
-GKE (Kubernetes versions 1.7.x , 1.8.x,)
+[GKE](#GKE) (Kubernetes versions 1.7.x , 1.8.x,)
 
-Azure (Kubernetes versions)
+[Azure](#Azure) (Kubernetes versions)
 
-AWS (Kubernetes built using EC2)
+[AWS](#AWS) (Kubernetes built using EC2)
 
-IBM Cloud Private (Versions 1.2.0, 2.1.0, 2.1.0.1, 2.1.0.2) 
+[IBM Cloud Private](#IBM) (Versions 1.2.0, 2.1.0, 2.1.0.1, 2.1.0.2) 
 
-RedHat OpenShift (Versions 3.5, 3.6, 3.8)
+[RedHat OpenShift](#OpenShift) (Versions 3.5, 3.6, 3.8)
 
-RedHat MiniShift (Versions )
+[RedHat MiniShift](#OpenShift) (Versions )
 
 
 
@@ -56,11 +56,13 @@ Note: COS image does not come with the open-iscsi package and also installing ne
 
 On Azure, kubelet runs inside a container and open-iscsi packages are not available by default on Azure. Refer to the instructions to install and configure [open-iscsi on Azure](/docs/prerequisites.html#Azure)
 
-<a name="OpenShift"></a>
+<a name="IBM"></a>
 
 ## IBM Cloud Private
 
 <<Write the IBM Cloud Private specs, add a screenshot>>
+
+<a name="OpenShift"></a>
 
 ## RedHat OpenShift and RedHat MiniShift
 
