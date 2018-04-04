@@ -4,7 +4,11 @@ title: OpenEBS Usecases - CI/CD
 sidebar_label: CI/CD
 ---
 
-## Problem
+------
+
+
+
+## Problem Statement
 
 Application developers of containerized applications rely on the development ecosystem for agility. CI/CD is part of the eco-system that enables applications to be tested through various pipelines (CI) and deployed into production automatically (CD) at the end of successful CI. Many of these containerized applications are stateful in nature, databases in most cases, go through state changes while being tested in the CI pipeline stages. When one of the stages of pipeline fails, developers would like to reproduce the state of the stateful application for further debugging. DevOps admins need a solution where preserving the state of the application at each stage of the pipeline is very easy and seamlessly integrated into the CI/CD platforms such as Jenkins using the API. 
 
