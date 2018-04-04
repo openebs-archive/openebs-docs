@@ -56,6 +56,14 @@ Note: COS image does not come with the open-iscsi package and also installing ne
 
 On Azure, kubelet runs inside a container and open-iscsi packages are not available by default on Azure. Refer to the instructions to install and configure [open-iscsi on Azure](/docs/prerequisites.html#Azure)
 
+Once the prerequisites are met you can follow the steps as mentioned in [installation](/docs/installation.html#Install) section. 
+
+<a name="AWS"></a>
+
+## AWS
+
+On AWS, you can setup Kubernetes cluster using ubuntu machines using EC2. Once the prerequisites are met you can follow the steps as mentioned in [installation](/docs/installation.html#Install) section. 
+
 <a name="IBM"></a>
 
 ## IBM Cloud Private
@@ -66,96 +74,7 @@ On Azure, kubelet runs inside a container and open-iscsi packages are not availa
 
 ## RedHat OpenShift and RedHat MiniShift
 
-Installation of OpenEBS packages would be slightly different from other platforms as OpenShift uses different commands than regular Kubernetes commands. 
-
-To install OpenEBS in OpenShift environment you need to set role/permission and few change in the commands as mentioned in Install section. You can follow the below procedure to setup OpenEBS.
-
-- Execute the following command to create a new administrator user with cluster-admin role/permissions which can be used to run the OpenEBS operator and deploy applications.
-
-```
-oc adm policy add-cluster-role-to-user cluster-admin admin --as=system:admin
-```
-
-- Assign password to the administrator user using the following command.
-
-```
-htpasswd /etc/origin/htpasswd admin
-```
-
-- Login as administrator user and use the "default" project (administrator is logged into this project by default).
-
-```
-oc login -u admin
-```
-
-- Provide access to the host-volumes (which are needed by the OpenEBS volume replicas) by updating the default security context (scc) using the following command.
-
-```
-oc edit scc restricted
-```
-
-Add **allowHostDirVolumePlugin: true** and save changes.
-
-Alternatively, you can use the following command.
-
-```
-oc adm policy add-scc-to-user hostaccess admin --as:system:admin
-```
-
-- Allow the containers in the project to run as root using the following command.
-
-  ```
-  oc adm policy add-scc-to-user anyuid -z default --as=system:admin
-  ```
-
-**Note:** While the above procedures may be sufficient to enable host access to the containers, you may also need to do the following.
-
-- Disable selinux (via `setenforce 0`) to ensure the same.
-- Edit the restricted scc to use `runAsUser: type: RunAsAny` (the replica pod runs with root user)
-
-### Install OpenEBS
-
-Download the latest OpenEBS operator files and sample application specifications on the OpenShift-Master machine using the following commands.
-
-```
-git clone <https://github.com/openebs/openebs.git> 
-cd openebs/k8s
-```
-
-Apply the openebs-operator on the OpenShift cluster using the following commands.
-
-```
-oc apply -f openebs-operator 
-oc apply -f openebs-storageclasses.yaml
-```
-
-Verify that the OpenEBS operator services are created successfully and deployments are running using the following commands. Also, check whether the storage classes are created successfully.
-
-```
-oc get deployments
-oc get sa
-oc get clusterrole openebs-maya-operator
-oc get sc
-```
-
-### Deploy a sample application with OpenEBS storage.
-
-- Use OpenEBS as persistent storage for a percona deployment by selecting the openebs-percona storageclass in the persistent volume claim. A sample is available in the openebs git repo (which was cloned in the previous steps).
-
-Apply the following percona deployment yaml using the following commands.
-
-```
-cd demo/percona 
-oc apply -f demo-percona-mysql-pvc.yaml
-```
-
-Verify that the deployment runs successfully using the following commands.
-
-```
-oc get pods
-```
-
-
+OpenShift installation would require certain changes in installation procedure.  You need to use *oc* instead of *kubecltl*.  Detailed explanation available at [Integration of OpenEBS with OpenShift](/docs/openshift.html) 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
