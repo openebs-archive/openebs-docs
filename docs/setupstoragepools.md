@@ -10,9 +10,9 @@ sidebar_label: Storage Pools
 
 Storage pools are capacity aggregated from disparate physical storage resources in a shared storage environment. Storage pools can be configured in varying sizes and provide a number of benefits, including performance, management and data protection improvements.
 
- Pools can be provisioned to include any amount of capacity and use any combination of physical storage space in a storage area network (SAN).
+Pools can be provisioned to include any amount of capacity and use any combination of physical storage space in a storage area network (SAN).
 
-
+Using the custom resource feature of Kubernetes a user can mount a external disk from any SAN or GPT or DAS and create a volume on top of the external disk.
 
 **Configuring A Storage Pool On OpenEBS:**
 
@@ -30,7 +30,7 @@ Verify the name and the size of the disk using the below command.
 lsblk
 ```
 
-Once you have verified the same do a format on the disk. Use the below command to format the disk.
+Once user has verified the same do a format on the disk. Use the below command to format the disk.
 
 ```
 sudo mkfs.ext4 -L datapartition /dev/sdb
@@ -42,22 +42,24 @@ Now mount the disk on your OpenEBS cluster.
 sudo mount  /dev/sdb /mnt/openebs_disk
 ```
 
-Once it is done make the below entries on openebs-operator.yaml
+Once it is done make the below entries on openebs-operator.yaml .
 
 ```
 vi openebs-operator.yaml
 apiVersion: openebs.io/v1alpha1
 kind: StoragePool
 metadata:
-	name: test-mntdir {Name of the storage pool}
+	name: test-mntdir 			  #--Name of the storage pool
 	type: hostdir
 spec:
-	path: "/mnt/openebs_disk"     {Change the path with mounted path}
+	path: "/mnt/openebs_disk"      #--Change the path with mounted path
 ```
 
-Next the user has to add the below entries to the corresponding application. 
+Next the user has to add the below entries to the corresponding storage class. 
 
-For example here we have taken the Percona application here.
+Here it is openebs-storageclasses.yaml .
+
+Here for example here we have taken the Percona application.
 
 ```
 vi openebs-storageclasses.yaml
@@ -70,15 +72,16 @@ parameters:
     openebs.io/jiva-replica-count: "2"
     openebs.io/capacity: "2G"
     openebs.io/jiva-replica-image: "openebs/jiva:0.5.0"
-    openebs.io/storage-pool: "test-mntdir" {Name of the storage pool}
+    openebs.io/storage-pool: "test-mntdir"  	#--Name of the storage pool
 ```
+
+User should mention the storage class name in the application.yaml . E.g. demo-percona-mysql-pvc.yaml for the percona application. 
 
 Now run the below commands 
 
 ```
 kubectl apply -f openebs-operator.yaml
 kubectl apply -f openebs-storageclasses.yaml
-kubectl apply -f demo-percona-mysql-pvc.yaml
 ```
 
 Running the application
@@ -88,7 +91,9 @@ cd demo/percona
 kubectl apply -f demo-percona-mysql-pvc.yaml
 ```
 
-Now the Percona application run inside the `test-mntdir` storage pool
+Now the Percona application runs inside the `test-mntdir` storage pool.
+
+Similarly user can create storage pool for different application as per requirement.
 
 
 
