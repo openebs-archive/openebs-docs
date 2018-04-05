@@ -6,17 +6,18 @@ sidebar_label: Hyperconverged
 
 ------
 
-Description
+## Problem Statement
 
-TDB
+Hyper Converged Infrastructure has many benefits such as horizontally scaling the infrastructure on the need basis, better RoI / lower TCO of the overall infrastructure. Kubernetes does not have all the tools required to manage the storage needs of applications in such a way that native hyper-convergence is achieved. Some of the problem that pop up with Kubernetes in the context of HCI are
 
-## Problems
+- Management of underlying disks (local disks or cloud disks) are not managed by Kubernetes. The management includes, taking corrective action when a disk goes bad or becomes unavailable, or a new disk becomes available, when a new node is introduced into the Kubernetes cluster etc
+- Scheduling of volumes in a way that storage distribution always stays efficient across all the nodes of the Kubernetes cluster. Kubernetes scheduling of the pods is not considering optimal storage choices.
 
-TBD
+
 
 ## OpenEBS solution
 
-TBD
+OpenEBS enables native hyper convergence capability on Kubernetes with it's Node Disk Manager and being able to  provide granular volume policies that take node affinity into consideration for volume scheduling. 
 
 
 

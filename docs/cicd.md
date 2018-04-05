@@ -22,7 +22,7 @@ OpenEBS provides a perfect solution for this problem. OpenEBS has integrated the
 
 
 
-DevOps admin integrates Jenkins/Travis/other CI-CD system to provision and take snapshot as shown above. At the end of CI pipeline, the OpenEBS volume and all the snapshots are deleted/destroyed. Once CD is done, DevOps admin configures the OpenEBS volume such that periodic snapshots are taken and preserved.
+DevOps admin integrates Jenkins/Travis/other CI-CD systems to provision and take snapshot as shown above. At the end of CI pipeline, the OpenEBS volume and all the snapshots are deleted/destroyed. Once CD is done, DevOps admin configures the OpenEBS volume such that periodic snapshots are taken and preserved.
 
 << Spec file for taking a snapshot>>
 
@@ -34,7 +34,7 @@ DevOps admin integrates Jenkins/Travis/other CI-CD system to provision and take 
 
 How to take periodic snapshots of a given OpenEBS volume
 
-When a stage of CI pipeline fails, the DevOps admin can easily restore the state of the stateful application and provide access to the application developer, most like in an automated way. 
+When a stage of CI pipeline fails, the DevOps admin can easily restore the state of the stateful application and provide access to the application developer, most likely in an automated way. 
 
 
 
