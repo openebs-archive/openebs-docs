@@ -4,7 +4,7 @@
     "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "storageschema"],
     "Setup": ["prerequisites", "installation", "supportedplatforms", "setupstorageclasses", "setupstoragepools"],
     "Usecases": ["cicd", "k8sstorage", "bigdata", "hyperconverged", "hyperscale", "hybridcloud", "databases"],
-    "Tasks": ["developertasks", "operatortasks", mayactl],
+    "Tasks": ["developertasks", "operatortasks", "mayactl"],
     "API": ["api"],
     "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "mayaonline"],
     "Releases": ["changelog"],
