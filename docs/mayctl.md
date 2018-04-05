@@ -44,40 +44,40 @@ For getting access to mayactl command line tool, you will have to login / exec i
 4. Volume related mayactl commands are
 
    ```
-   bash-4.3# maya --help volume
-   Usage: maya volume <subcommand> [options] [args]
+   bash-4.3# mayactl --help volume
+   Usage: mayactl volume <subcommand> [options] [args]
 
            This command provides operations related to a Volume.
 
            Create a Volume:
-           $ maya volume create -volname <vol> -size <size>
+           $ mayactl volume create -volname <vol> -size <size>
 
            List Volumes:
-           $ maya volume list
+           $ mayactl volume list
 
            Delete a Volume:
-           $ maya volume delete -volname <vol>
+           $ mayactl volume delete -volname <vol>
 
            Statistics of a Volume:
-           $ maya volume stats <vol>
+           $ mayactl volume stats <vol>
    ```
 
 5. Volume snapshot related mayactl commands are
 
    ```
-   bash-4.3# maya --help snapshot
-   Usage: maya snapshot <subcommand> [options] [args]
+   bash-4.3# mayactl --help snapshot
+   Usage: mayactl snapshot <subcommand> [options] [args]
 
            This command provides operations related to snapshot of a Volume.
 
            Create snapshot:
-           $ maya snapshot create -volname <vol> -snapname <snap>
+           $ mayactl snapshot create -volname <vol> -snapname <snap>
 
            List snapshots:
-           $ maya snapshot list -volname <vol>
+           $ mayactl snapshot list -volname <vol>
 
            Revert to snapshot:
-           $ maya snapshot revert -volname <vol> -snapname <snap>
+           $ mayactl snapshot revert -volname <vol> -snapname <snap>
 
    Subcommands:
        create    Creates snapshot of a Volume
@@ -87,7 +87,7 @@ For getting access to mayactl command line tool, you will have to login / exec i
 
 
 
-Quick chart reference to managing OpenEBS volumes
+### Quick chart reference to managing OpenEBS volumes
 
 | Purpose                                        | Suggested approach                                           | Notes                                                        |
 | ---------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
