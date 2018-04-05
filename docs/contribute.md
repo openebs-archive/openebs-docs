@@ -1,13 +1,13 @@
 ---
 id: contribute
 title: Contributing to OpenEBS
-sidebar_label: Contribution Guide
+sidebar_label: Contributor's Guide
 ---
 ------
 
 
 
-Great!! We at OpenEBS are always on the lookout for more OpenEBS hackers. You can get started by reading this [Overview](./contribute/design/README.md)
+We at OpenEBS are always on the lookout for more OpenEBS hackers. You can get started by reading this [Overview](./contribute/design/README.md)
 
 OpenEBS is innovation in OpenSource. You are welcome to contribute in any way you can and all the help you can provide is very much appreciated. 
 

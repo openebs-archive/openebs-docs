@@ -1,14 +1,16 @@
 ---
 id: weeklycontribute
 title: Contributing to OpenEBS - Weekly
-sidebar_label: Contributor Meetings - Weekly
+sidebar_label: Open source Meetings
 ---
 
-## Webinar details
+## Weekly webinar details
 
-Weekly contributor webinars are held on every Friday at 10:00 AM IST (Thursday 9:30 PM PST). Contributors and users can join this webinar using the zoom link [Join OpenEBS contributors weekly webinar](https://zoom.us/j/438333946)
+Weekly contributor webinars are held on every Thursday 9:30 PM PST (Friday at 10:00 AM IST). Contributors and users can join this webinar using the zoom link [Join OpenEBS contributors weekly webinar](https://zoom.us/j/438333946)
 
 Weekly webinar notes are managed using a [Google document](https://docs.google.com/presentation/d/12xfUKxjKpC-Vm6hSuJ7IFUNAQ3ZCVKJkPqoorDLBzQE/edit#slide=id.g357b4d5d33_0_0)
+
+
 
 ## Slides and recordings of the past contributor meetings
 
