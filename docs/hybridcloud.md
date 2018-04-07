@@ -12,7 +12,8 @@ Hybrid cloud is a cloud computing environment that uses a mix of on-premises, pr
 
 ## Problems
 
-Cloud vendor lock-inProblems with EBS detach/attach/mount processDifficult to manage scale-out storage solutions on private cloud 
+- Cloud vendor lock-inProblems with EBS detach/attach/mount process
+- Difficult to manage scale-out storage solutions on private cloud 
 
 ## OpenEBS solution
 

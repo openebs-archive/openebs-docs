@@ -19,9 +19,15 @@ Hyper Converged Infrastructure (HCI) has many benefits such as horizontally scal
 
 With it's Node Disk Manager's (NDM) capability, OpenEBS enables native hyper convergence capability on Kubernetes clusters. The granular volume policies that take node affinity into consideration for volume scheduling will make sure the distribution of volumes across Kubernetes nodes stays efficient and is in control of Kubernetes operators. 
 
-
+![Managing HCI with Kubernetes and OpenEBS](/docs/assets/hci.png)
 
 With OpenEBS, the Operator rolls out the Kubernetes clusters with minimum amount of storage capacity required. As the demand of storage capacity and performance goes up, more storage into the same storage pool is added or sometimes, new storage pools are added to the nodes. This is commonly referred to as scaleup model of storage. Kubernetes naturally supports scaleout model of adding additional resources on demand (adding new nodes to cluster). When news nodes are added, storage resources on the new nodes are automatically discovered by OpenEBS and they can be configured for automating the storage pools creation and volume provisioning planning. 
+
+
+
+
+
+
 
 
 
