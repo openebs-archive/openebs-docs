@@ -34,6 +34,12 @@ How do I include CoreOS-based test bed (kubernetes cluster) as part of OpenEBS C
 
 How does OpenEBS support  Docker Swarm as a volume plugin? #1117
 
+How do i provide catalog yaml files based on workload and platform #1138
+
+How do I start pods without the need to pull images again? #1143
+
+
+
 
 
 
