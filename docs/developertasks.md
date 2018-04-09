@@ -20,6 +20,15 @@ An operator in the current context refers to a person who is deploying, managing
 4. Where do I specify the size and number of replicas of the OpenEBS volume?
 5. How do I monitor the OpenEBS volumes of my application?
 
+How do I create volumes even when one of the hosts is powered off in both dedicated and hyperconverged mode? #114
+How do I run ELK stack on OpenEBS? #279
+How do I create a benchmark using YSCB tool to test Cassandra DB #565
+How do I create a benchmark using YSCB tool to test MongoDB #566
+Failover feature between AZs? and does it support coreOS, CentOS? #992
+How do I include CoreOS-based test bed (kubernetes cluster) as part of OpenEBS CI #1044
+How does OpenEBS support  Docker Swarm as a volume plugin? #1117
+
+
 
 
 
