@@ -8,7 +8,7 @@ sidebar_label: Introduction
 
 OpenEBS solution is a new approach to solving persistent storage issues for Kubernetes stateful applications. It provides a true cloud native storage solution to the containerized applications, in that the storage software itself is containerized. In other words, with OpenEBS each stateful workload is allocated a dedicated storage controller, which increases the agility and flexibility of data protection operations and granularity of storage policies of the given stateful workload. 
 
-Containerized storage, which is more broadly called as Container Attached Storage, provides the best of NAS/SAN (Enterprise features) and DAS(lower latency). 
+Containerized storage, which is more broadly called as Container Attached Storage, provides the best of NAS/SAN (Enterprise features) and DAS (lower latency). 
 
 
 
@@ -26,10 +26,10 @@ As shown above, in CAS approach, the local disks are given the capabilities of e
 
 ## Usecases of OpenEBS
 
-- Save states of stateful applications in each of the CI/CD pipelines and restore the application to a desired state . See [CI/CD](/docs/cicd.html)
-- As a general storage solution for any stateful application through the external storage plugin a.k.a dynamic provisioner. Apart from being able to natively support granular policies such as capacity, # of replicas, configuration of storage pools, OpenEBS has native integration into cloud native tools such as Prometheus, Grafana, Jaeger and Fluentd. See [Kubernetes storage](/docs/k8sstorage.html)
+- Save states of stateful applications in each of the CI/CD pipelines and restore the application to a desired state. See [CI/CD](/docs/cicd.html)
+- As a general storage solution for any stateful application through the external storage plugin a.k.a dynamic provisioner. Apart from being able to natively support granular policies such as capacity, number of replicas, configuration of storage pools, OpenEBS has native integration into cloud native tools such as Prometheus, Grafana, Jaeger and Fluentd. See [Kubernetes storage](/docs/k8sstorage.html)
 - HyperConverged usecases. With native hyperconvergence enabled, OpenEBS opens up many usecases of hyper converged Infrastructure on Kubernetes. These cases include VDI, on-demand scaling of infrastructure for businesses, integrating automation-orchestration-analytics etc.  See [HCI](/docs/hyperconverged.html)
-- Supporting high availability and easy connectivity to Databases on Kubernetes. Stateful workloads requiring replication support such as MySQL, PostGres, CockroachDB etc can easily be integrated with OpenEBS to provision, monitor and manage the required data persistence on Kubernetes. See [Databases on Kubernetes](/docs/databases.html)
+- Supporting high availability and easy connectivity to Databases on Kubernetes. Stateful workloads requiring replication support such as MySQL, PostGres, CockroachDB and others can easily be integrated with OpenEBS to provision, monitor and manage the required data persistence on Kubernetes. See [Databases on Kubernetes](/docs/databases.html)
 
 
 
@@ -37,7 +37,7 @@ As shown above, in CAS approach, the local disks are given the capabilities of e
 
 In the most simplified form, using OpenEBS involves running OpenEBS operator to install OpenEBS components on Kubernetes cluster and using the default storage classes to provision the storage for stateful applications. 
 
-After the installation of OpenEBS onto the Kubernetes cluster, the operator/administrator builds yaml specifications using  OpenEBS pool CRDs to group the local disks on Kubernetes nodes into pools, then creates storage class catalogues for use by the application developers. 
+After the installation of OpenEBS onto the Kubernetes cluster, the operator/administrator builds YAML specifications using OpenEBS pool CRDs to group the local disks on Kubernetes nodes into pools, then creates storage class catalogs for use by the application developers. 
 
 
 
@@ -51,11 +51,11 @@ For detailed instructions on -How to use OpenEBS, see
 
 ## OpenEBS volume components
 
-When a PV (Persistent Volume) is requested by a PVC (Persistent Volume Claim), OpenEBS provides though a set of Controller and Replica PODs.  A typical stateful application that is using OpenEBS volume can be described as below :
+When a PV (Persistent Volume) is requested by a PVC (Persistent Volume Claim), OpenEBS provides though a set of Controller and Replica PODs. A typical stateful application that is using OpenEBS volume can be described as below:
 
 ![image](/docs/assets/openebs-pv-2replica.png)
 
-OpenEBS Volume Pods  are managed by Kubernetes for most part, and specific scheduling preferences for these parts can be specified using  [OpenEBS scheduler parameters](/docs/openebsscheduler.html).  The volume pods are of two types. 
+OpenEBS Volume Pods are managed by Kubernetes for most part, and specific scheduling preferences for these parts can be specified using  [OpenEBS scheduler parameters](/docs/openebsscheduler.html). The volume pods are of two types. 
 
 1. **A volume controller POD**
 

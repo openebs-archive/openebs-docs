@@ -6,7 +6,40 @@ sidebar_label: Developer tasks
 
 ------
 
-Content to be added
+A developer in the current context refers to a person developing a containerized stateful application that runs on Kubernetes clusters. A developer is assumed not to have the administrative access or rights to the Kuberenetes cluster. 
+
+
+
+An operator in the current context refers to a person who is deploying, managing and monitoring Kubernetes clusters for his or her organization. An Operator has the administrative access to the Kubernetes cluster and is responsible to setup the Kubernetes related infrastructures for access by developers. If you are interested in knowing tasks performed by Kubernetes operators or administrators, on the OpenEBS enabled Kubernetes clusters,  [refer to the Operators tasks](/docs/operatortasks.html)
+
+
+
+1. I am an application developer. My stateful application needs persistent storage. How do I get started with OpenEBS ?
+2. I want to delete the OpenEBS volume and the data inside it. How do I do that ?
+3. I want to deploy MySQL database in Master-Slave mode. What are the best practices? What tasks need to be done by the Operator?
+4. Where do I specify the size and number of replicas of the OpenEBS volume?
+5. How do I monitor the OpenEBS volumes of my application?
+
+How do I create volumes even when one of the hosts is powered off in both dedicated and hyperconverged mode? #114
+
+How do I run ELK stack on OpenEBS? #279
+
+How do I create a benchmark using YSCB tool to test Cassandra DB #565
+
+How do I create a benchmark using YSCB tool to test MongoDB #566
+
+Failover feature between AZs? and does it support coreOS, CentOS? #992
+
+How do I include CoreOS-based test bed (kubernetes cluster) as part of OpenEBS CI #1044
+
+How does OpenEBS support  Docker Swarm as a volume plugin? #1117
+
+How do i provide catalog yaml files based on workload and platform #1138
+
+How do I start pods without the need to pull images again? #1143
+
+
+
 
 
 

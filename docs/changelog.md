@@ -1,7 +1,7 @@
 ---
 id: changelog
-title: Change Log
-sidebar_label: Change Log
+title: Changelog
+sidebar_label: Changelog
 ---
 
 ------

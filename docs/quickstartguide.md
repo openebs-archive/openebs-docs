@@ -10,21 +10,21 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 ### As Kubernetes operator / admin:
 
-1. Check if open-iscsi is installed and running on kubelet. Know more <<TBD: Provide a link here >>
+1. Check if open-iscsi is installed and running on kubelet. [Learn how](#iSCSIConfig)
 
-2. Install OpenEBS on the cluster by executing the following single command on the Kubernetes shell
+2. Install OpenEBS on the cluster by executing the following single command on the Kubernetes shell.
 
    ```
    kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
    ```
 
-3. Create a catalog of storage classes and publish them to your developers for their use. Some ready to use storage classes are added to the cluster when OpenEBS is installed
+3. Optional: Create a catalog of storage classes and publish them to your developers. A default storage class (openebs-standard) is added to the cluster when OpenEBS is installed.
 
 ### As application developer:
 
-1. Create a PVC spec with the right storage class and use it in the application yaml file
+1. Create a PVC spec with the right storage class and use it in the application yaml file.
 
-2. Apply the yaml file using `kubectl apply -f` command and observe that an OpenEBS volume is provisioned and bound to the application pod
+2. Apply the yaml file using `kubectl apply -f` command and observe that an OpenEBS volume is provisioned and bound to the application pod.
 
    ​
 
