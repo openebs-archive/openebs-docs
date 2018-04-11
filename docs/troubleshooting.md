@@ -3,14 +3,6 @@ id: troubleshooting
 title: OpenEBS - Troubleshooting
 sidebar_label: Troubleshooting
 ---
-The following topics are covered in this chapter.
-
-* [Overview](#Overview)
-* [Installation](#Installation)
-* [Storage Classes](#StroageClasses)
-* [Storage Pools](#StoragePools)
-* [Accessing Logs](#AccessingLogs)
-* <a class="flip" onclick=myshowfunction()>Persistent Volumes</a>
 <script>
 	function myshowfunction()
 	{
@@ -25,6 +17,31 @@ The following topics are covered in this chapter.
 		}
 	}
 </script>
+
+The following topics are covered in this chapter.
+
+* [Overview](#Overview)
+* <a class="flip" onclick=myshowfunction()>Installation</a>
+<ul id="panel" style="display: none; margin-left: 20px">
+	<li style="color: #f1584d"><a href="#SyslogsFill">Issue with syslogs getting filled in a Vagrant environment #50</a></li>
+	<li style="color: #f1584d"><a href="#VagrantUpProgress">What do I do if Vagrant up does not progress? #167</a></li>
+	<li style="color: #f1584d"><a href="#VagrantUpFail">Why does Vagrant up fail with the message "ttyname failed: Inappropriate ioctl for device"? #188</a></li>
+	<li style="color: #f1584d"><a href="#KubeNodeNoRespond">Kubernetes nodes do not respond #218</a></li>
+	<li style="color: #f1584d"><a href="#VagrantUpNotRespond">Vagrant up command on version 2.0.0 does not respond on Windows 8 #301</a></li>
+	<li style="color: #f1584d"><a href="#NodeOnline">How do I bring up a node online when it displays NotReady status #308</a></li>
+	<li style="color: #f1584d"><a href="#VagrantfileIndent">How do I properly indent a Vagrantfile using a vagrant validate command?</a></li>
+	<li style="color: #f1584d"><a href="#WeavenetPod">Issue with weave-net pod is restarting several times while running Prometheus and Percona components simultaneously. #601</a></li>
+	<li style="color: #f1584d"><a href="#MinikubeError">Minikube displays an error "Error starting host: Error getting state for host: machine does not exist" while installing. #602</a></li>
+	<li style="color: #f1584d"><a href="#HelmInstallError">While installing OpenEBS using Helm Charts, the command helm install openebs-charts/openebs displays an error. #1032</a></li>
+	<li style="color: #f1584d"><a href="#OnpremiseAnsiblePlaybook">The on-premise kubernetes setup for versions greater than 1.8 using the ansible-playbooks fails.</a></li>
+	
+</ul>
+
+* [Storage Classes](#StroageClasses)
+* [Storage Pools](#StoragePools)
+* [Accessing Logs](#AccessingLogs)
+* <a class="flip" onclick=myshowfunction()>Persistent Volumes</a>
+
 <ul id="panel" style="display: none; margin-left: 20px">
 	<li style="color: #f1584d"><a href="#ContainerCreating">Application pod is stuck in ContainerCreating state after deployment</a></li>
 	<li style="color: #f1584d"><a href="#CrashLoopBackOff">Application pod enters CrashLoopBackOff state</li>
@@ -106,6 +123,14 @@ The following procedure helps you run Logger.
     `kubectl get pod -o wide` 
 
 6. Attach this log support bundle while raising issues on the OpenEBS repository.
+
+# Issues in Installation <a name="Installation"</a>
+
+This section contains steps to troubleshoot and resolve issues faced while installing.
+
+The following issues are covered in this section.
+
+[Issue with syslogs getting filled in a Vagrant environment #50](#SyslogsFill)
 
 # Issues in Persistent Volumes <a name="PersistentVolumes"></a>
 
