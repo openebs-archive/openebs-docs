@@ -10,7 +10,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 ### As Kubernetes operator/admin:
 
-1. Check if open-iscsi is installed and running on kubelet. See [Steps for configuring and verifying open-iscsi](https://docs.openebs.io/docs/prerequisites.html#steps-for-configuring-and-verifying-open-iscsi)
+1. Check if open-iscsi is installed and running on kubelet. See [Steps for configuring and verifying open-iscsi](/docs/prerequisites.html#steps-for-configuring-and-verifying-open-iscsi)
 
 2. Install OpenEBS on your cluster by executing the following single command on the Kubernetes shell.
 
