@@ -246,6 +246,25 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 
 # Miscellaneous <a name="Miscellaneous"></a>
 
+Issue with syslogs getting filled in a Vagrant environment #50
+What do I do if Vagrant up does not progress? #167
+Why does Vagrant up fail with the message "ttyname failed: Inappropriate ioctl for device" #188
+While setting up vagrant version 1.7, kubemaster-01 runs while the Kubernetes node does not respond #218
+Vagrant up command on version 2.0.0 does not respond on Windows 8 #301
+How do I bring up a minion node online when it displays NotReady status #308
+Issue with weave-net pod is restarting several times while running Prometheus and Percona components simultaneously. #601
+Minikube displays an error "Error starting host: Error getting state for host: machine does not exist" while installing. #602
+PVC is not created while deploying Percona Galera Cluster #1011
+While installing OpenEBS using Helm Charts, the command helm install openebs-charts/openebs displays an error.#1032
+Issue running Jenkins with Rancher #1121
+The on-premise kubernetes setup for versions greater than 1.8 using the ansible-playbooks fails with an error. #1127
+Deleting cluster using oebs-cloud.sh failed to delete resources vpc and dhcp-options #1230
+OpenEBS PV pods are failing to come up #1245
+Newly created volume fails to mount with fsck errors #1276
+MongoDB - fails to generate load using sysbench #1287
+
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
