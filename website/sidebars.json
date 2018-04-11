@@ -3,7 +3,7 @@
     "Getting Started": ["quickstartguide", "introduction", "gethelp", "faq"],
     "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "storageschema"],
     "Setup": ["prerequisites", "installation", "supportedplatforms", "setupstorageclasses", "setupstoragepools"],
-    "Usecases": ["cicd", "k8sstorage", "bigdata", "hyperconverged", "hyperscale", "hybridcloud", "databases"],
+    "Usecases": ["cicd", "k8sstorage", "bigdata", "hyperconverged", "hyperscale", "hybridcloud"],
     "Tasks": ["developertasks", "operatortasks", "mayactl"],
     "API": ["api"],
     "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "mayaonline"],
