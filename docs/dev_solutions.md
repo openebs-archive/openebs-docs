@@ -170,7 +170,7 @@ Add OpenEBS related storage classes, that can then be used by developers and app
 
 To use OpenEBS as persistent storage for your stateful workloads, set the storage class in the Persistent Volume Claim (PVC) of your application to one of the OpenEBS storage classes.
 
-Get the list of storage classes using the following command. Choose the storage class that best suits your application.
+Get the list of storage classes using the following command. Choose the storage class that best suits your application requirement.
 
     kubectl get sc
 
@@ -187,3 +187,4 @@ Some sample YAML files for stateful workloads using OpenEBS are provided in the 
        a.appendChild(r);
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
+
