@@ -41,6 +41,20 @@ The following topics are covered in this chapter.
 * [Storage Pools](#StoragePools)
 * [Accessing Logs](#AccessingLogs)
 * <a class="flip" onclick=myshowfunction()>Persistent Volumes</a>
+<script>
+	function myshowfunction()
+	{
+		var element = document.getElementById("panel");
+		if (element.style.display != "none")
+		{
+			element.style.display="none";
+		}
+		else
+		{
+			element.style.display="block";
+		}
+	}
+</script>
 
 <ul id="panel" style="display: none; margin-left: 20px">
 	<li style="color: #f1584d"><a href="#ContainerCreating">Application pod is stuck in ContainerCreating state after deployment</a></li>
