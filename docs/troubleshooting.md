@@ -21,7 +21,8 @@ sidebar_label: Troubleshooting
 The following topics are covered in this chapter.
 
 * [Overview](#Overview)
-* <a class="flip" onclick=myshowfunction()>Installation</a>
+* [Installation](#Installation)
+  <a class="flip" onclick=myshowfunction()>Installation</a>
   <ul id="panel" style="display: none; margin-left: 20px">
 	<li style="color: #f1584d"><a href="#SyslogsFill">Issue with syslogs getting filled in a Vagrant environment #50</a></li>
 	<li style="color: #f1584d"><a href="#VagrantUpProgress">What do I do if Vagrant up does not progress? #167</a></li>
@@ -34,13 +35,13 @@ The following topics are covered in this chapter.
 	<li style="color: #f1584d"><a href="#MinikubeError">Minikube displays an error "Error starting host: Error getting state for host: machine does not exist" while installing. #602</a></li>
 	<li style="color: #f1584d"><a href="#HelmInstallError">While installing OpenEBS using Helm Charts, the command helm install openebs-charts/openebs displays an error. #1032</a></li>
 	<li style="color: #f1584d"><a href="#OnpremiseAnsiblePlaybook">The on-premise kubernetes setup for versions greater than 1.8 using the ansible-playbooks fails. #1127</a></li>
-	
   </ul>
 
 * [Storage Classes](#StroageClasses)
 * [Storage Pools](#StoragePools)
 * [Accessing Logs](#AccessingLogs)
-* <a class="flip" onclick=myshowfunction()>Persistent Volumes</a>
+* [Persistent Volumes](#PersistentVolumes)
+  <a class="flip" onclick=myshowfunction()>Persistent Volumes</a>
 <script>
 	function myshowfunction()
 	{
@@ -145,15 +146,25 @@ This section contains steps to troubleshoot and resolve issues faced while insta
 The following issues are covered in this section.
 
 [Issue with syslogs getting filled in a Vagrant environment #50](#SyslogsFill)
+
 [What do I do if Vagrant up does not progress? #167](#VagrantUpProgress) 
+
 [Why does Vagrant up fail with the message "ttyname failed: Inappropriate ioctl for device"? #188](#VagrantUpFail) 
+
 [Kubernetes nodes do not respond #218](#KubeNodeNoRespond) 
+
 [Vagrant up command on version 2.0.0 does not respond on Windows 8 #301](#VagrantUpNotRespond)
+
 [How do I bring up a node online when it displays NotReady status #308](#NodeOnline)
+
 [How do I properly indent a Vagrantfile using a vagrant validate command? #312](#VagrantfileIndent)
+
 [Issue with weave-net pod is restarting several times while running Prometheus and Percona components simultaneously. #601](#WeavenetPod)
+
 [Minikube displays an error "Error starting host: Error getting state for host: machine does not exist" while installing. #602](#MinikubeError)
+
 [While installing OpenEBS using Helm Charts, the command helm install openebs-charts/openebs displays an error. #1032](#HelmInstallError) 
+
 [The on-premise kubernetes setup for versions greater than 1.8 using the ansible-playbooks fails. #1127](#OnpremiseAnsiblePlaybook) 
 
 
