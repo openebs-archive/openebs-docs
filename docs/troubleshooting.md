@@ -3,7 +3,13 @@ id: troubleshooting
 title: OpenEBS - Troubleshooting
 sidebar_label: Troubleshooting
 ---
-<script>
+
+The following topics are covered in this chapter.
+
+* [Overview](#Overview)
+* [Installation](#Installation)
+  <a class="flip" onclick=myshowfunction()>Installation</a>
+  <script>
 	function myshowfunction()
 	{
 		var element = document.getElementById("panel");
@@ -18,11 +24,6 @@ sidebar_label: Troubleshooting
 	}
 </script>
 
-The following topics are covered in this chapter.
-
-* [Overview](#Overview)
-* [Installation](#Installation)
-  <a class="flip" onclick=myshowfunction()>Installation</a>
   <ul id="panel" style="display: none; margin-left: 20px">
 	<li style="color: #f1584d"><a href="#SyslogsFill">Issue with syslogs getting filled in a Vagrant environment #50</a></li>
 	<li style="color: #f1584d"><a href="#VagrantUpProgress">What do I do if Vagrant up does not progress? #167</a></li>
