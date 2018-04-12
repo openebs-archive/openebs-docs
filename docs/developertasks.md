@@ -22,6 +22,10 @@ An operator in the current context refers to a person who is deploying, managing
 
 How do I create volumes even when one of the hosts is powered off in both dedicated and hyperconverged mode? #114
 
+How do I verify MongoDB workflow in OpenEBS? #503
+
+How do I verify Redis workflow in OpenEBS? # 564
+
 How do I create a benchmark using YSCB tool to test Cassandra DB #565
 
 How do I create a benchmark using YSCB tool to test MongoDB #566
