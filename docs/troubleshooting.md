@@ -7,8 +7,8 @@ sidebar_label: Troubleshooting
 The following topics are covered in this chapter.
 
 * [Overview](#Overview)
-* [Installation](#Installation)
-  <a class="flip" onclick=myshowfunction()>Installation</a>
+* <a class="flip" onclick=myshowfunction()>Installation</a>
+
   <script>
 	function myshowfunction()
 	{
@@ -41,8 +41,8 @@ The following topics are covered in this chapter.
 * [Storage Classes](#StroageClasses)
 * [Storage Pools](#StoragePools)
 * [Accessing Logs](#AccessingLogs)
-* [Persistent Volumes](#PersistentVolumes)
-  <a class="flip" onclick=myshowfunction()>Persistent Volumes</a>
+* <a class="flip" onclick=myshowfunction()>Persistent Volumes</a>
+
 <script>
 	function myshowfunction()
 	{
