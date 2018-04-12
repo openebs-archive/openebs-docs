@@ -71,7 +71,7 @@ cd openebs/k8s
 Apply the openebs-operator on the OpenShift cluster using the following commands.
 
 ```
-oc apply -f openebs-operator 
+oc apply -f openebs-operator.yaml 
 oc apply -f openebs-storageclasses.yaml
 ```
 
