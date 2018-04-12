@@ -8,7 +8,6 @@ The following topics are covered in this chapter.
 
 * [Overview](#Overview)
 * <a class="flip" onclick=myshowfunction()>Installation</a>
-
   <script>
 	function myshowfunction()
 	{
@@ -42,7 +41,6 @@ The following topics are covered in this chapter.
 * [Storage Pools](#StoragePools)
 * [Accessing Logs](#AccessingLogs)
 * <a class="flip" onclick=myshowfunction()>Persistent Volumes</a>
-
 <script>
 	function myshowfunction()
 	{
@@ -60,9 +58,9 @@ The following topics are covered in this chapter.
 
   <ul id="panel" style="display: none; margin-left: 20px">
 	<li style="color: #f1584d"><a href="#ContainerCreating">Application pod is stuck in ContainerCreating state after deployment</a></li>
-	<li style="color: #f1584d"><a href="#CrashLoopBackOff">Application pod enters CrashLoopBackOff state</li>
-	<li style="color: #f1584d"><a href="#StaleData">Stale data seen post application pod reschedule on other nodes</li>
-	<li style="color: #f1584d"><a href="#TerminateRestart">Application and OpenEBS pods terminate/restart under heavy I/O load</li>
+	<li style="color: #f1584d"><a href="#CrashLoopBackOff">Application pod enters CrashLoopBackOff state</a></li>
+	<li style="color: #f1584d"><a href="#StaleData">Stale data seen post application pod reschedule on other nodes</a></li>
+	<li style="color: #f1584d"><a href="#TerminateRestart">Application and OpenEBS pods terminate/restart under heavy I/O load</a></li>
   </ul>
 
 * [Recover from hardware failures](#RecoverHardwareFailures)
@@ -139,8 +137,8 @@ The following procedure helps you run Logger.
     `kubectl get pod -o wide` 
 
 6. Attach this log support bundle while raising issues on the OpenEBS repository.
-
-# Issues in Installation <a name="Installation"</a>
+ 
+# Issues in Installation <a name="Installation"></a>
 
 This section contains steps to troubleshoot and resolve issues faced while installing.
 
