@@ -16,7 +16,7 @@ In this section, we are describing about the integration ofstackpoint with OpenE
 
 On “Configure yourcluster” page click the edit button on **Distribution** and choose **Ubuntu16.04 LTS**.
 
-![https://cdn-images-1.medium.com/max/760/0*ty0IA_1uuDxaCQoX.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image002.jpg)
+[https://cdn-images-1.medium.com/max/760/0*ty0IA_1uuDxaCQoX.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image002.jpg)
 
 Change the **ClusterName**something meaningful like **OpenEBS Demo**.
 
@@ -34,7 +34,7 @@ Now click on **Submit **to create your cluster. This should take around 5–8 mi
 
 Click on **Solutions** tab on the top of the screen and select **Import Charts** from the upper left.
 
-![https://cdn-images-1.medium.com/max/760/0*vZr9hqN35SCCsx-a.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image006.jpg)
+[https://cdn-images-1.medium.com/max/760/0*vZr9hqN35SCCsx-a.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image006.jpg)
 
 Add the chart repo
 with the following details:
@@ -50,7 +50,7 @@ Click on **ReviewRepository**.
 
 Make sure **Access Verified**shows ok and click on **Save Repository** button to finish adding chart repo.
 
-![https://cdn-images-1.medium.com/max/760/0*tS9uArAROjoOLc05.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image010.jpg)
+[https://cdn-images-1.medium.com/max/760/0*tS9uArAROjoOLc05.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image010.jpg)
 
 **Adding OpenEBS to Your Kubernetes Cluster**
 
