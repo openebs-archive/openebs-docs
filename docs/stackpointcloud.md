@@ -6,7 +6,7 @@ sidebar_label: StackPointCloud
 
 ------
 
-In this section, we are describing about the integration of StackPoint with OpenEBS. It is possible to integrate StackPoint with OpenEBS install major platforms like AWS, Google Cloud (GKE & GCE), Azure &Digital Ocean. Here, We are covering integration of StackPoint with OpenEBS in AWS platform.
+In this section, we are describing about the integration of StackPoint with OpenEBS. It is possible to integrate StackPoint with OpenEBS in all major platforms like AWS, Google Cloud (GKE & GCE), Azure &Digital Ocean. Here, We are covering integration of StackPoint with OpenEBS in AWS platform.
 
  
 
@@ -18,7 +18,11 @@ On “Configure your cluster” page click the edit button on **Distribution** a
 
 ![img](https://cdn-images-1.medium.com/max/800/0*ty0IA_1uuDxaCQoX.png)
 
+
+
 Change the **Cluster Name** something meaningful like **OpenEBS Demo**.
+
+
 
 ![img](https://cdn-images-1.medium.com/max/800/0*50cyzQI-2DZIX-AG.png)
 
@@ -46,15 +50,19 @@ with the following details:
  — **type :** packaged-charts
  — **repo url** : <https://openebs.github.io/charts/>
 
+
+
 Click on **Review Repository**.
 
 ![img](https://cdn-images-1.medium.com/max/800/0*lkT38CLmsESK2i1T.png)
 
+
+
 Make sure **Access Verified** shows ok and click on **Save Repository** button to finish adding chart repo.
 
+
+
 ![**img**](https://cdn-images-1.medium.com/max/800/0*tS9uArAROjoOLc05.png)
-
-
 
 **Adding OpenEBS to Your Kubernetes Cluster**
 
@@ -96,6 +104,8 @@ State field should be green after OpenEBS is successfully added.
 
 
 ![img](https://cdn-images-1.medium.com/max/800/0*1nY357dtw3PNOfAi.png)
+
+
 
 Now your cluster is ready; you can run your workloads on openebs-standard storage class if you using default storage class.
 
