@@ -1,86 +1,129 @@
 ---
 id: prerequisites
-title: Prerequisites
+title: Pre-requisites for Installation
 sidebar_label: Prerequisites
 ---
 
-Setting up OpenEBS Cluster
-==========================
+------
 
-This section helps you to setup a simple OpenEBS Cluster with three machines, VMs or Servers. OpenEBS is both a scale-out and scale-up solution. The OpenEBS cluster created using this section can be taken into production and scaled up later to meet changing storage demands, by adding additional machines to the cluster.
+This section will help you to understand the pre-requisites for the OpenEBS installation in a Kubernetes installed environment.
 
-The clients (docker-hosts) can be configured to consume the OpenEBS storage either via Network (iSCSI) or using TCMU. This section helps you connect to the storage using iSCSI.
+The minimum requirements for the OpenEBS installation are;
 
-In this section, you will setup a simple OpenEBS cluster with three machines as follows:
+1.  Kubernetes cluster version >= 1.7.5 (OpenEBS needs CRD feature of Kubernetes)
+2.  Each Kubernetes node should have the open-iscsi package installed. 
 
-**master-0** used as OpenEBS Maya Master (omm) and **host-01** and **host-02** used as OpenEBS Storage Host (osh).
 
-If you plan to setup using VMs on a Virtual Box, you can go to the preparing machines using Vagrant section below.
+Installing and configuring open-iscsi on Kubernetes will vary slightly depending on the platform and you can [find those instructions here](#iSCSIConfig). 
 
-![](/_static/gettingstarted.png%0A%20:align:%20center)
 
-Preparing for OpenEBS Installation
-==============================================
 
-Since OpenEBS is delivered through containers, OpenEBS hosts can be run on any operating system with container engine. This section will use Ubuntu 16.04 and docker.
+### Required Kubernetes knowledge
 
-## Preparing Software
+To understand how to use OpenEBS with Kubernetes, familiarize yourself with [Kubernetes Storage Concepts](https://kubernetes.io/docs/concepts/storage/persistent-volumes/), specifically:
 
-OpenEBS is a software-only solution that can be installed using the released binaries or built and installed directly from source. In this section you will use Ubuntu 16.04 as the underlying operating system.
+- Persistent Volumes and Persistent Volume Claims
+- Dynamic Volume Provisioner
+- Storage Classes
 
-To download and install, you will require wget and unzip.
 
-    sudo apt-get update
-    sudo apt-get install -y wget unzip
 
-## Preparing Network
 
-Typically, the storage is accessed through a different network (with high bandwidth 10G or 40G etc.,) rather than management on 1G. You will need to identify the IP address on which the management traffic flows and the interface that is used for data.
+If you have verified that open-iscsi initiator package is configured on your Kubernetes cluster, you can proceed to [installation of OpenEBS](/docs/installation.html). 
 
-It is possible that the same interface can be used for both management and data.
+<a name="iSCSIConfig"></a>
 
-    ubuntu@host-01:~$ ip addr show
-    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
-        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-        inet 127.0.0.1/8 scope host lo
-           valid_lft forever preferred_lft forever
-        inet6 ::1/128 scope host 
-           valid_lft forever preferred_lft forever
-    2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
-        link/ether 02:d8:e4:47:7a:33 brd ff:ff:ff:ff:ff:ff
-        inet 10.0.2.15/24 brd 10.0.2.255 scope global enp0s3
-           valid_lft forever preferred_lft forever
-        inet6 fe80::d8:e4ff:fe47:7a33/64 scope link 
-           valid_lft forever preferred_lft forever
-    3: enp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
-        link/ether 08:00:27:9a:7e:b0 brd ff:ff:ff:ff:ff:ff
-        inet 172.28.128.9/24 brd 172.28.128.255 scope global enp0s8
-           valid_lft forever preferred_lft forever
-        inet6 fe80::a00:27ff:fe9a:7eb0/64 scope link 
-           valid_lft forever preferred_lft forever
-    ubuntu@host-01:~$ 
+## Steps for configuring and verifying open-iscsi 
 
-For example, you will be using the interface enp0s8 and subnet 172.28.128.0/24 for both management and data in this section.
+The open-iscsi initiator packages depend on your host O/S or kubelet container. You can follow the following steps for installation / verification of open-iscsi package. In case you are using GKE, use the host machine as Ubuntu. 
 
-## Preparing Disk Storage
+### On Ubuntu host
 
-You can use maya to manage the local and remote disks. Optionally create RAID and file system layer on top of the raw disks, and so on.
+If an iSCSI initiator is already installed on your host, check that initiator name is configured and iSCSI service is running using the following commands.
 
-In this section for the sake of simplicity, you will use the following directory */opt/openebs/*. Ensure that the directory is writeable. Note that you add new replication stores at runtime and attach to VSMs. So when you move this node into production, you can move the content from local directories to local/remote disk based storage.
+```
+sudo cat /etc/iscsi/initiatorname.iscsi
+```
 
-    sudo mkdir -p /opt/openebs
-    sudo chown -R <docker-user> /opt/openebs
+```
+sudo service open-iscsi status
+```
 
-Setup Vagrant VMs for OpenEBS Installation
-===========================================
+If an iSCSI initiator is not available on your host, install open-iscsi package by following below commands: 
 
-The Vagrantfile is available from GitHub repository. You can either copy or download the Vagrant file or clone the code to your box. Ensure that you have VirtualBox 5.0.24 and above and Vagrant 1.9.0 and above.
+```
+sudo apt-get update
+```
 
-The commands for setting up using cloned code is as follows:
+```
+sudo apt-get install open-iscsi
+```
 
-    git clone https://github.com/openebs/maya.git
-    cd maya/demo
-    vagrant up
+
+
+```
+sudo service open-iscsi restart
+```
+
+
+
+### On CentOS host
+
+If an iSCSI initiator is already installed on your host, check that initiator name is configured and iSCSI service is running using the following commands.
+
+```
+vi /etc/iscsi/initiatorname.iscsi
+```
+
+```
+systemctl status iscsi.service
+```
+
+If an iSCSI initiator is not available on your host, install open iscsi-initiator-utils RPM package by following the below commands: 
+
+```
+yum install iscsi-initiator-utils -y
+```
+
+You can verify the installation following the steps mentioned above. 
+
+<a name="Azure"></a>
+
+### Configuring open-iscsi on Azure cloud
+
+On Azure cloud, you need to verify the open-iscsi package is installed on the kubelet. To validate, you can connect to the nodes through SSH using their public IP addresses by running the following command.
+
+```
+devops@Azure:~$ ssh azureuser@40.xx.yyy.221
+
+azureuser@aks-nodepool1-46849391-1:~$
+```
+
+ **Note**: azureuser is the default username.
+
+Obtain the container ID of the hyperkube kubelet on each node by running the following command:
+
+```
+azureuser@aks-nodepool1-46849391-1:~$ sudo docker ps | grep "hyperkube kubele" 
+3aab0f9a48e2    k8s-gcrio.azureedge.net/hyperkube-amd64:v1.8.7   "/hyperkube kubele..."   48 minutes ago      Up 48 minutes                           eager_einstein
+```
+
+Check the status of iSCSI service by running the following command:
+
+```
+azureuser@aks-nodepool1-46849391-1:~$ service open-iscsi status
+```
+
+If open-iscsi is not installed, run the following commands to install and configure iSCSI initiator in each node.
+
+```
+azureuser@aks-nodepool1-46849391-1:~$ sudo docker exec -it 3aab0f9a48e2 bash
+# apt-get update
+# apt install -y open-iscsi
+# exit
+```
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

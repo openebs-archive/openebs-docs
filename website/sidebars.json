@@ -1,10 +1,14 @@
 {
   "docs": {
-    "Getting Started": ["gsoverview", "features", "ha", "releasenotes", "faq"],
-    "Setup": ["overview", "prerequisites", "openshift", "cloudsolutions", "onpremise", "Azure", "devsolutions", "runOpenEBSoperator", "namespace"],
-    "Usecases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "Kafka", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
-    "Policies": ["storagepolicies"], 
-    "Troubleshooting": ["troubleshooting", "tsgcollectlogs", "tsgpvs"],
-    "Contributing to OpenEBS documents": ["contribute"]
+    "Getting Started": ["quickstartguide", "introduction", "gethelp", "faq"],
+    "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "storageschema"],
+    "Setup": ["prerequisites", "installation", "supportedplatforms", "setupstorageclasses", "setupstoragepools"],
+    "Usecases": ["cicd", "k8sstorage", "bigdata", "hyperconverged", "hyperscale", "hybridcloud"],
+    "Tasks": ["developertasks", "operatortasks", "mayactl"],
+    "API": ["api"],
+    "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "mayaonline"],
+    "Releases": ["changelog"],
+    "Contributor Resources": ["weeklycontribute", "contribute"],
+    "General": ["troubleshooting", "knownissues", "whatworksdoesnotwork", "blogsrefmatl"]
   }
 }
