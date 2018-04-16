@@ -14,7 +14,7 @@ In this section, we are describing about the integration of StackPoint with Open
 
 
 
-On “Configure your cluster” page click the edit button on **Distribution** and choose **Ubuntu16.04 LTS**.
+On “**Configure your cluster**” page in AWS, click the edit button on **Distribution** and choose **Ubuntu16.04 LTS**.
 
 ![img](https://cdn-images-1.medium.com/max/800/0*ty0IA_1uuDxaCQoX.png)
 
@@ -39,6 +39,8 @@ Now click on **Submit** to create your cluster. This should take around 5–8 mi
 
 
 Click on **Solutions** tab on the top of the screen and select **Import Charts** from the upper left.
+
+
 
 ![img](https://cdn-images-1.medium.com/max/800/0*vZr9hqN35SCCsx-a.png)
 
@@ -89,8 +91,9 @@ Once the Kubernetes cluster is up on AWS with functional Helm, click on the **So
 
 Add the solution with the following details:
 
-\- **namespace :** default
-\- **values -> rbacEnabled :** false
+> \- **namespace :** default
+> \- **values -> rbacEnabled :** false
+>
 
 
 
