@@ -79,7 +79,7 @@ On the **Control Plane** tab click on your cluster name **OpenEBS Demo**.
 
 
 
-Once the Kubernetes cluster is up on AWS with functional Helm, click on the **Solutions** tab and **Add Solution **button.
+Once the Kubernetes cluster is up on AWS with functional Helm, click on the **Solutions** tab and **Add Solution** button.
 
 
 
