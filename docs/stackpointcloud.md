@@ -30,7 +30,7 @@ Change the **Cluster Name** something meaningful like **OpenEBS Demo**.
 
 You can run etcd on either 3 node dedicated cluster or Hosted on same cluster itself. You can leave all other options as default. 
 
-Now click on **Submit **to create your cluster. This should take around 5–8 minutes to bring up one Master and two Workers Kubernetes Cluster.
+Now click on **Submit** to create your cluster. This should take around 5–8 minutes to bring up one Master and two Workers Kubernetes Cluster.
 
  
 
@@ -46,9 +46,10 @@ Click on **Solutions** tab on the top of the screen and select **Import Charts**
 
 Add the chart repo
 with the following details:
- — **name :** openebs-charts
- — **type :** packaged-charts
- — **repo url** : <https://openebs.github.io/charts/>
+
+>  — **name :** openebs-charts
+>  — **type :** packaged-charts
+>  — **repo url** : <https://openebs.github.io/charts/>
 
 
 
