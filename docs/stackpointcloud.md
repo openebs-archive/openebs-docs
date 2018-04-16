@@ -6,15 +6,15 @@ sidebar_label: StackPointCloud
 
 ------
 
-In this section, we are describing about the integration of stackpoint with OpenEBS. It is possible to integrate stackpoint with OpenEBS install major platforms like AWS, Google Cloud (GKE & GCE), Azure &Digital Ocean.Here, We are covering integration of stackpoint with OpenEBS in AWS platform.
+In this section, we are describing about the integration of StackPoint with OpenEBS. It is possible to integrate StackPoint with OpenEBS install major platforms like AWS, Google Cloud (GKE & GCE), Azure &Digital Ocean. Here, We are covering integration of StackPoint with OpenEBS in AWS platform.
 
  
 
-### **ConfigureK8s Cluster**
+### **Configure K8s Cluster**
 
 
 
-On “Configure yourcluster” page click the edit button on **Distribution** and choose **Ubuntu16.04 LTS**.
+On “Configure your cluster” page click the edit button on **Distribution** and choose **Ubuntu16.04 LTS**.
 
 ![img](https://cdn-images-1.medium.com/max/800/0*ty0IA_1uuDxaCQoX.png)
 
@@ -24,7 +24,7 @@ Change the **Cluster Name** something meaningful like **OpenEBS Demo**.
 
 
 
-You can run etcd on either 3 node dedicated cluster or Hosted on same cluster itself. You can leave all other option as default. 
+You can run etcd on either 3 node dedicated cluster or Hosted on same cluster itself. You can leave all other options as default. 
 
 Now click on **Submit **to create your cluster. This should take around 5–8 minutes to bring up one Master and two Workers Kubernetes Cluster.
 
@@ -44,15 +44,13 @@ Add the chart repo
 with the following details:
  — **name :** openebs-charts
  — **type :** packaged-charts
- — **repo
-url :**
-<https://openebs.github.io/charts/>
+ — **repo url** : <https://openebs.github.io/charts/>
 
 Click on **Review Repository**.
 
 ![img](https://cdn-images-1.medium.com/max/800/0*lkT38CLmsESK2i1T.png)
 
-Make sure **Access Verified **shows ok and click on **Save Repository** button to finish adding chart repo.
+Make sure **Access Verified** shows ok and click on **Save Repository** button to finish adding chart repo.
 
 ![**img**](https://cdn-images-1.medium.com/max/800/0*tS9uArAROjoOLc05.png)
 
@@ -60,26 +58,42 @@ Make sure **Access Verified **shows ok and click on **Save Repository** button t
 
 **Adding OpenEBS to Your Kubernetes Cluster**
 
+
+
 First, make sure your cluster and all nodes are up.
 
 On the **Control Plane** tab click on your cluster name **OpenEBS Demo**.
 
+
+
 ![img](https://cdn-images-1.medium.com/max/800/0*0wxTlbbO_yPMJZ8F.png)
+
+
 
 Once the Kubernetes cluster is up on AWS with functional Helm, click on the **Solutions** tab and **Add Solution **button.
 
+
+
 ![img](https://cdn-images-1.medium.com/max/800/0*QofakUAHAb_DRYWp.png)
+
+
 
 Add the solution with the following details:
 
 \- **namespace :** default
 \- **values -> rbacEnabled :** false
 
+
+
 ![img](https://cdn-images-1.medium.com/max/800/0*JiSAsRHf5SND0Cbp.png)
+
+
 
 Click on **Install** to finally add OpenEBS into your cluster.
 
-State field should begreen after OpenEBS is successfully added.
+State field should be green after OpenEBS is successfully added.
+
+
 
 ![img](https://cdn-images-1.medium.com/max/800/0*1nY357dtw3PNOfAi.png)
 
@@ -87,7 +101,7 @@ Now your cluster is ready; you can run your workloads on openebs-standard storag
 
  
 
-To confirm, click on **K8s Dashboard.** This will bring up your Kubernetes Dashboard UI in a new window. You should be able to find the **openebs-standard **option under **StorageClasses**.
+To confirm, click on **K8s Dashboard.** This will bring up your Kubernetes Dashboard UI in a new window. You should be able to find the **openebs-standard** option under **StorageClasses**.
 
  
 
