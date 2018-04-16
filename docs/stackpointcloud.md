@@ -16,15 +16,15 @@ In this section, we are describing about the integration ofstackpoint with OpenE
 
 On “Configure yourcluster” page click the edit button on **Distribution** and choose **Ubuntu16.04 LTS**.
 
-[https://cdn-images-1.medium.com/max/760/0*ty0IA_1uuDxaCQoX.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image002.jpg)
+![img](https://cdn-images-1.medium.com/max/800/0*ty0IA_1uuDxaCQoX.png)
 
-Change the **ClusterName**something meaningful like **OpenEBS Demo**.
+Change the **Cluster Name** something meaningful like **OpenEBS Demo**.
 
-![https://cdn-images-1.medium.com/max/760/0*50cyzQI-2DZIX-AG.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image004.jpg)
+![img](https://cdn-images-1.medium.com/max/800/0*50cyzQI-2DZIX-AG.png)
 
 
 
-You can run etcd on either 3 node dedicated cluster orHosted on same cluster itself. You can leave all other option as default. 
+You can run etcd on either 3 node dedicated cluster or Hosted on same cluster itself. You can leave all other option as default. 
 
 Now click on **Submit **to create your cluster. This should take around 5–8 minutes to bring up one Master and two Workers Kubernetes Cluster.
 
@@ -34,7 +34,9 @@ Now click on **Submit **to create your cluster. This should take around 5–8 mi
 
 Click on **Solutions** tab on the top of the screen and select **Import Charts** from the upper left.
 
-[https://cdn-images-1.medium.com/max/760/0*vZr9hqN35SCCsx-a.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image006.jpg)
+![img](https://cdn-images-1.medium.com/max/800/0*vZr9hqN35SCCsx-a.png)
+
+
 
 Add the chart repo
 with the following details:
@@ -44,38 +46,38 @@ with the following details:
 url :**
 <https://openebs.github.io/charts/>
 
-Click on **ReviewRepository**.
+Click on **Review Repository**.
 
-![https://cdn-images-1.medium.com/max/760/0*lkT38CLmsESK2i1T.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image008.jpg)
+![img](https://cdn-images-1.medium.com/max/800/0*lkT38CLmsESK2i1T.png)
 
-Make sure **Access Verified**shows ok and click on **Save Repository** button to finish adding chart repo.
+Make sure **Access Verified **shows ok and click on **Save Repository** button to finish adding chart repo.
 
-[https://cdn-images-1.medium.com/max/760/0*tS9uArAROjoOLc05.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image010.jpg)
+![img](https://cdn-images-1.medium.com/max/800/0*tS9uArAROjoOLc05.png)
 
 **Adding OpenEBS to Your Kubernetes Cluster**
 
 First, make sure your cluster and all nodes are up.
 
-On the **ControlPlane**tab click on your cluster name **OpenEBS Demo**.
+On the **Control Plane**tab click on your cluster name **OpenEBS Demo**.
 
-![https://cdn-images-1.medium.com/max/760/0*0wxTlbbO_yPMJZ8F.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image012.jpg)
+![img](https://cdn-images-1.medium.com/max/800/0*0wxTlbbO_yPMJZ8F.png)
 
 Once the Kubernetes cluster is up on AWS with functional Helm, click on the **Solutions** tab and **Add Solution **button.
 
-![https://cdn-images-1.medium.com/max/760/0*QofakUAHAb_DRYWp.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image014.jpg)
+![img](https://cdn-images-1.medium.com/max/800/0*QofakUAHAb_DRYWp.png)
 
-Add the solution withthe following details:
+Add the solution with the following details:
 
 \- **namespace :** default
 \- **values -> rbacEnabled :** false
 
-![https://cdn-images-1.medium.com/max/760/0*JiSAsRHf5SND0Cbp.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image016.jpg)
+![img](https://cdn-images-1.medium.com/max/800/0*JiSAsRHf5SND0Cbp.png)
 
-Click on **Install** to finally addOpenEBS into your cluster.
+Click on **Install** to finally add OpenEBS into your cluster.
 
 State field should begreen after OpenEBS is successfully added.
 
-![https://cdn-images-1.medium.com/max/760/0*1nY357dtw3PNOfAi.png](file:///C:\Users\ranji\AppData\Local\Temp\msohtmlclip1\01\clip_image018.jpg)
+![img](https://cdn-images-1.medium.com/max/800/0*1nY357dtw3PNOfAi.png)
 
 Now your cluster is ready; you can run your workloads on openebs-standard storage class if you using default storage class.
 
