@@ -29,13 +29,13 @@ const siteConfig = {
     //{page: 'help', label: 'Help'},
   ],
   users,
-  editUrl: 'https://github.com/openebs/openebs-docs/edit/staging/docs/',
+  editUrl: 'https://github.com/openebs/openebs-docs/edit/newstaging/docs/',
   /* path to images for header/footer */
   headerIcon: 'img/OpenEBSLogo.png',
   favicon: 'img/favicon.ico',
   /* colors for website */
   colors: {
-    primaryColor: '#f15a29',
+    primaryColor: '#f1584d',
     secondaryColor: '#205C3B',
   },
   // organizationName: 'deltice', // or set an env variable ORGANIZATION_NAME
