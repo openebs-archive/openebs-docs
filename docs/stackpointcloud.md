@@ -6,7 +6,7 @@ sidebar_label: StackPointCloud
 
 ------
 
-In this section, we are describing about the integration ofstackpoint with OpenEBS. It is possible to integrate stackpoint with OpenEBS inall major platforms like AWS, Google Cloud (GKE & GCE), Azure &DigitalOcean.Here, We are covering integration of stackpoint with OpenEBS inAWS platform.
+In this section, we are describing about the integration of stackpoint with OpenEBS. It is possible to integrate stackpoint with OpenEBS install major platforms like AWS, Google Cloud (GKE & GCE), Azure &Digital Ocean.Here, We are covering integration of stackpoint with OpenEBS in AWS platform.
 
  
 
@@ -30,7 +30,9 @@ Now click on **Submit **to create your cluster. This should take around 5–8 mi
 
  
 
-##### **Import OpenEBS Helm Charts**
+### **Import OpenEBS Helm Charts**
+
+
 
 Click on **Solutions** tab on the top of the screen and select **Import Charts** from the upper left.
 
@@ -52,13 +54,15 @@ Click on **Review Repository**.
 
 Make sure **Access Verified **shows ok and click on **Save Repository** button to finish adding chart repo.
 
-![img](https://cdn-images-1.medium.com/max/800/0*tS9uArAROjoOLc05.png)
+![**img**](https://cdn-images-1.medium.com/max/800/0*tS9uArAROjoOLc05.png)
+
+
 
 **Adding OpenEBS to Your Kubernetes Cluster**
 
 First, make sure your cluster and all nodes are up.
 
-On the **Control Plane**tab click on your cluster name **OpenEBS Demo**.
+On the **Control Plane** tab click on your cluster name **OpenEBS Demo**.
 
 ![img](https://cdn-images-1.medium.com/max/800/0*0wxTlbbO_yPMJZ8F.png)
 
