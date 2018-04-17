@@ -46,7 +46,7 @@ When a Persistent Volume (PV) is requested by a PVC (Persistent Volume Claim), O
 
 OpenEBS Volume Pods are managed by Kubernetes for most part and specific scheduling preferences for these parts can be specified using [OpenEBS scheduler parameters](/docs/openebsscheduler.html). The volume pods are of two types. 
 
-1. **A volume controller Pod**
+1. **Volume Controller Pod**
 
    Each volume will have its own storage controller a.k.a volume controller Pod. Some benefits of having a dedicated storage controller per volume are:
 
@@ -54,7 +54,7 @@ OpenEBS Volume Pods are managed by Kubernetes for most part and specific schedul
    - scaling up/down replicas as they are deployments with node/pod affinity constraints
    - extending the manageability via namespaces/RBAC to storage
 
-2. **A volume replica Pod**
+2. **Volume Replica Pod**
 
    A replica Pod will have software that manages a pool of disks, provides enterprise features such as data integrity, data resiliency, compression, encryption and so on. When replication is needed, it is recommended to have a minimum of three replicas for each volume. This will maintain quorum among the replicas when a replica becomes unavailable and data has to be served without interruption.
 
@@ -65,11 +65,11 @@ For more details on how OpenEBS internals work, see [OpenEBS Architecture](/docs
 Deploying OpenEBS on Kubernetes clusters is easy. See [Get Started now](/docs/quickstartguide.html).
 
 
-### See also:
+### See Also:
 
 - [Container Attached Storage (CAS)](/docs/conceptcas.html)
-- [OpenEBS architecture](/docs/architecture.html)
-- [Most common OpenEBS Operator tasks](/docs/operatortasks.html)
+- [OpenEBS Architecture](/docs/architecture.html)
+- [Most Common OpenEBS Operator Tasks](/docs/operatortasks.html)
 
 
 
