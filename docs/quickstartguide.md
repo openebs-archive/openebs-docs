@@ -27,13 +27,13 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 2. Apply the YAML file using `kubectl apply -f` command. Verify that an OpenEBS volume is provisioned and bound to the application pod.
 
 
-### Also Read:
+### See Also:
 
-- Pre-requisites 
-- OpenEBS architecture
-- Constructing storage classes
-- Monitoring OpenEBS volumes
-- Taking snapshots of OpenEBS volumes
+-[Prerequisites](/docs/prerequisites.html)
+- [OpenEBS architecture](/docs/architecture.html)
+- [Constructing storage classes](/docs/architecture.html)
+- [Monitoring OpenEBS volumes](/storagepolicies.html#volume-monitoring-policy)
+- Taking snapshots of OpenEBS volumes(
 
 
 
