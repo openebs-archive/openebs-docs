@@ -8,7 +8,7 @@ sidebar_label: Developer Tasks
 
 A developer in the current context refers to a person developing a containerized stateful application that runs on Kubernetes clusters. A developer does not have the administrative access or rights to the Kuberenetes cluster. 
 
-An operator in the current context refers to a person who is deploying, managing, and monitoring Kubernetes clusters for his or her organization. An Operator has administrative access to the Kubernetes cluster and is responsible for setting up Kubernetes related infrastructure for develpers' access. To know the various tasks performed by Kubernetes operators or administrators, on the OpenEBS enabled Kubernetes clusters, see [Operators Tasks](/docs/operatortasks.html).
+To know the various tasks performed by Kubernetes operators or administrators, on the OpenEBS enabled Kubernetes clusters, see [Operators Tasks](/docs/operatortasks.html).
 
 
 
