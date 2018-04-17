@@ -48,7 +48,7 @@ OpenEBS Volume Pods are managed by Kubernetes for most part and specific schedul
 
 1. **Volume Controller Pod**
 
-   Each volume will have its own storage controller a.k.a volume controller Pod. Some benefits of having a dedicated storage controller per volume are:
+   Each volume will have its own storage controller a.k.a volume controller pod. Some benefits of having a dedicated storage controller per volume are:
 
    - managing the storage with the same tools that you use to manage Kuberentes objects (like *kubectl*)
    - scaling up/down replicas as they are deployments with node/pod affinity constraints
