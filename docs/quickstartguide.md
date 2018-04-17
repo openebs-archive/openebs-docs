@@ -29,7 +29,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 ### See Also:
 
--[Prerequisites](/docs/prerequisites.html)
+- [Prerequisites](/docs/prerequisites.html)
 - [OpenEBS architecture](/docs/architecture.html)
 - [Constructing storage classes](/docs/architecture.html)
 - [Monitoring OpenEBS volumes](/storagepolicies.html#volume-monitoring-policy)
