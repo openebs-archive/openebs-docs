@@ -187,6 +187,23 @@ The following issues are covered in this section.
 
 [Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the size of the available node disk](#NodeDiskSize)
 
+[OpenEBS Persistent Volume pods fail to run](#PVPodsFail) 
+
+[Newly created volume fails to mount with fsck errors](#VolumeMountfsck) #1276
+
+**Issue**
+## OpenEBS Persistent Volume pods fail to run <a name="PVPodsFail"></a>
+The pvc controller and replicas change from running to terminating state. However, maya-apiserver and openebs-provisioner are stable with no restarts.
+
+**Workaround:**
+Change the PVC specifications from ReadWriteMany to ReadWriteOnce. For more information, see https://github.com/openebs/openebs/issues/1245.
+
+**Issue** 
+Newly created volume fails to mount with fsck errors](#VolumeMountfsck) 
+
+**Workaround:**
+For more information, see https://github.com/openebs/openebs/issues/1276.
+
 **Issue:**
 ## Application pod is stuck in *ContainerCreating* state after deployment <a name="ContainerCreating"></a>
 
