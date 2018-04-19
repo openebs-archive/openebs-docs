@@ -169,7 +169,7 @@ pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-ctrl-7d7c98745-49qcm   2/2       Runnin
 pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-rep-578b5bcc6b-5758m   1/1       Running             0          32m
 pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-rep-578b5bcc6b-zkhn8   1/1       Running             0          32m
 ```
-The AKS cluster runs ubuntu 16.04 LTS with the kubelet running in a container (debian-jessie 8). The kubelet logs show the absence of the iSCSI initiator. Hence, the volume is not attached to the node. Configuring kubelet to run with iSCSI utils should fix this issue. For more information, see https://app.zenhub.com/workspace/o/openebs/openebs/issues/1335
+The AKS cluster runs ubuntu 16.04 LTS with the kubelet running in a container (debian-jessie 8). The kubelet logs show the absence of the iSCSI initiator. Hence, the volume is not attached to the node. Configuring kubelet to run with iSCSI utils should fix this issue. For more information, see  https://github.com/openebs/openebs/issues/1335.
 
 # Issues in Persistent Volumes <a name="PersistentVolumes"></a>
 
@@ -184,6 +184,8 @@ The following issues are covered in this section.
 [Stale data seen post application pod reschedule on other nodes](#StaleData)
 
 [Application and OpenEBS pods terminate/restart under heavy I/O load](#TerminateRestart)
+
+[Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the size of the available node disk](#NodeDiskSize)
 
 **Issue:**
 ## Application pod is stuck in *ContainerCreating* state after deployment <a name="ContainerCreating"></a>
@@ -302,6 +304,12 @@ The above cause can be confirmed from the `kubectl describe pod` which displays 
 **Workaround:**
 You can resolve this issue by upgrading the Kubernetes cluster infrastructure resources (Memory, CPU).
 
+**Issue:**
+## Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the disk size of the node available <a name="#NodeDiskSize"></a>
+
+**Workaround:**
+To reclaim the space currently, you must perform a manual delete `rm -rf` of the files in */var/openebs* (or whichever path the storage pool is created on). For more information, see https://github.com/openebs/openebs/issues/1436.
+
 # Recover from hardware failures <a name="RecoverHardwareFailures"></a>
 
 # Recover from node failures <a name="RecoverNodeFailures"></a>
@@ -309,6 +317,7 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 # Maintenance and cleanup <a name="MaintClean"></a>
 
 # Miscellaneous <a name="Miscellaneous"></a>
+
 
 While setting up vagrant version 1.7, kubemaster-01 runs while the Kubernetes node does not respond #218
 
