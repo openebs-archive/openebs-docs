@@ -10,7 +10,6 @@ services:
 script:
   - python tag.py
   - cd website
-  - npm install docusaurus
   - npm run build
   - cd ..
   - 
