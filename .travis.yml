@@ -7,6 +7,8 @@ env:
 sudo: required
 services:
 - docker
+before_script:
+  - npm install
 script:
   - python tag.py
   - cd website
