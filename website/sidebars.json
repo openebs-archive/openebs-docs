@@ -7,6 +7,6 @@
     "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "mayaonline"],
     "Releases": ["changelog"],
     "Troubleshooting": ["troubleshooting", "tsgcollectlogs", "tsgpvs"],
-    "Contributor Resources": ["weeklycontribute", "contribute"],
+    "Contributor Resources": ["weeklycontribute", "contribute"]
   }
 }
