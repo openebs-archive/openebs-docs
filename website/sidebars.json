@@ -3,12 +3,10 @@
     "Getting Started": ["quickstartguide", "introduction", "gethelp", "faq"],
     "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "storageschema"],
     "Setup": ["prerequisites", "installation", "supportedplatforms", "setupstorageclasses", "setupstoragepools"],
-    "Usecases": ["cicd", "k8sstorage", "bigdata", "hyperconverged", "hyperscale", "hybridcloud"],
     "Tasks": ["developertasks", "operatortasks", "mayactl"],
-    "API": ["api"],
     "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "mayaonline"],
     "Releases": ["changelog"],
-    "Contributor Resources": ["weeklycontribute", "contribute"],
-    "General": ["troubleshooting", "knownissues", "whatworksdoesnotwork", "blogsrefmatl"]
+    "Troubleshooting": ["troubleshooting", "tsgcollectlogs", "tsgpvs"],
+    "Contributor Resources": ["weeklycontribute", "contribute"]
   }
 }
