@@ -339,7 +339,8 @@ The pvc controller and replicas change from running to terminating state. Howeve
 Change the PVC specifications from ReadWriteMany to ReadWriteOnce. For more information, see https://github.com/openebs/openebs/issues/1245.
 
 **Issue** 
-Newly created volume fails to mount with fsck errors](#VolumeMountfsck) 
+## Newly created volume fails to mount with fsck errors](#VolumeMountfsck) 
+The persistent volume controller and replicas changes state from running to terminating. However, maya-apiserver and openebs-provisioner are stable with no restarts.
 
 **Workaround:**
 For more information, see https://github.com/openebs/openebs/issues/1276.
