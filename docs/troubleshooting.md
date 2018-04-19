@@ -150,6 +150,26 @@ The following issues are covered in this section.
 
 [The on-premise kubernetes setup for versions greater than 1.8 using the ansible-playbooks fails. #1127](#OnpremiseAnsiblePlaybook) 
 
+[One of the 3 pods does not run while installing OpenEBS on a Kubernetes cluster in Azure #1335](#PodNotRunningAzure)
+
+**Issue:**
+##  One of the pods is not running <a name="PodNotRunningAzure"></a>
+
+**Troubleshooting the issue and Workaround:**
+
+After creating a three node Kubernetes cluster in AZURE of Standard_A0 type and using OpenEBS operator, storageclass yaml, and the azure yaml files to create the storage class and Statefulset, one of the pod is not running as seen below
+
+```
+kubectl get pods
+NAME                                                            READY     STATUS              RESTARTS   AGE
+maya-apiserver-7b8f548dd8-67s6x                                 1/1       Running             0          36m
+openebs-provisioner-7958c6d44f-g9qvr                            1/1       Running             0          36m
+pgset-0                                                         0/1       ContainerCreating   0          32m
+pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-ctrl-7d7c98745-49qcm   2/2       Running             0          32m
+pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-rep-578b5bcc6b-5758m   1/1       Running             0          32m
+pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-rep-578b5bcc6b-zkhn8   1/1       Running             0          32m
+```
+The AKS cluster runs ubuntu 16.04 LTS with the kubelet running in a container (debian-jessie 8). The kubelet logs show the absence of the iSCSI initiator. Hence, the volume is not attached to the node. Configuring kubelet to run with iSCSI utils should fix this issue. For more information, see  https://github.com/openebs/openebs/issues/1335.
 
 # Issues in Persistent Volumes <a name="PersistentVolumes"></a>
 
@@ -164,6 +184,8 @@ The following issues are covered in this section.
 [Stale data seen post application pod reschedule on other nodes](#StaleData)
 
 [Application and OpenEBS pods terminate/restart under heavy I/O load](#TerminateRestart)
+
+[Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the size of the available node disk](#NodeDiskSize)
 
 **Issue:**
 ## Application pod is stuck in *ContainerCreating* state after deployment <a name="ContainerCreating"></a>
@@ -281,6 +303,12 @@ The above cause can be confirmed from the `kubectl describe pod` which displays 
 
 **Workaround:**
 You can resolve this issue by upgrading the Kubernetes cluster infrastructure resources (Memory, CPU).
+
+**Issue:**
+## Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the disk size of the node available <a name="NodeDiskSize"></a>
+
+**Workaround:**
+To reclaim the space currently, you must perform a manual delete `rm -rf` of the files in */var/openebs* (or whichever path the storage pool is created on). For more information, see https://github.com/openebs/openebs/issues/1436.
 
 # Recover from hardware failures <a name="RecoverHardwareFailures"></a>
 
