@@ -150,6 +150,26 @@ The following issues are covered in this section.
 
 [The on-premise kubernetes setup for versions greater than 1.8 using the ansible-playbooks fails. #1127](#OnpremiseAnsiblePlaybook) 
 
+[One of the 3 pods does not run while installing OpenEBS on a Kubernetes cluster in Azure #1335](#PodNotRunningAzure)
+
+**Issue:**
+##  One of the pods is not running <a name="PodNotRunningAzure"></a>
+
+**Troubleshooting the issue and Workaround:**
+
+After creating a three node Kubernetes cluster in AZURE of Standard_A0 type and using OpenEBS operator, storageclass yaml, and the azure yaml files to create the storage class and Statefulset, one of the pod is not running as seen below
+
+```
+kubectl get pods
+NAME                                                            READY     STATUS              RESTARTS   AGE
+maya-apiserver-7b8f548dd8-67s6x                                 1/1       Running             0          36m
+openebs-provisioner-7958c6d44f-g9qvr                            1/1       Running             0          36m
+pgset-0                                                         0/1       ContainerCreating   0          32m
+pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-ctrl-7d7c98745-49qcm   2/2       Running             0          32m
+pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-rep-578b5bcc6b-5758m   1/1       Running             0          32m
+pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-rep-578b5bcc6b-zkhn8   1/1       Running             0          32m
+```
+The AKS cluster runs ubuntu 16.04 LTS with the kubelet running in a container (debian-jessie 8). The kubelet logs show the absence of the iSCSI initiator. Hence, the volume is not attached to the node. Configuring kubelet to run with iSCSI utils should fix this issue. For more information, see https://app.zenhub.com/workspace/o/openebs/openebs/issues/1335
 
 # Issues in Persistent Volumes <a name="PersistentVolumes"></a>
 
@@ -290,29 +310,11 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 
 # Miscellaneous <a name="Miscellaneous"></a>
 
-Issue with syslogs getting filled in a Vagrant environment #50
-
-What do I do if Vagrant up does not progress? #167
-
-Why does Vagrant up fail with the message "ttyname failed: Inappropriate ioctl for device" #188
-
 While setting up vagrant version 1.7, kubemaster-01 runs while the Kubernetes node does not respond #218
-
-Vagrant up command on version 2.0.0 does not respond on Windows 8 #301
-
-How do I bring up a minion node online when it displays NotReady status #308
-
-Issue with weave-net pod is restarting several times while running Prometheus and Percona components simultaneously. #601
-
-Minikube displays an error "Error starting host: Error getting state for host: machine does not exist" while installing. #602
 
 PVC is not created while deploying Percona Galera Cluster #1011
 
-While installing OpenEBS using Helm Charts, the command helm install openebs-charts/openebs displays an error.#1032
-
 Issue running Jenkins with Rancher #1121
-
-The on-premise kubernetes setup for versions greater than 1.8 using the ansible-playbooks fails with an error. #1127
 
 Deleting cluster using oebs-cloud.sh failed to delete resources vpc and dhcp-options #1230
 
@@ -321,6 +323,8 @@ OpenEBS PV pods are failing to come up #1245
 Newly created volume fails to mount with fsck errors #1276
 
 MongoDB - fails to generate load using sysbench #1287
+
+How do I recover application data in case of volume read-only issues? #1328
 
 
 
