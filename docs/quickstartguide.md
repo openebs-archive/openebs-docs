@@ -14,7 +14,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 2. You can install OpenEBS either through helm or by using OpenEBS operator
 
-   #### Using helm:
+   **Using helm:**
 
    ```
    helm repo add openebs-charts https://openebs.github.io/charts/
@@ -24,7 +24,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
    For more details on installing OpenEBS using helm, see [install through helm](/docs/installation.html#helm)
 
-   #### Using OpenEBS operator:
+   **Using OpenEBS operator:**
 
    Execute the following single command on the Kubernetes shell
 
@@ -35,7 +35,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 3. **Optional:** Create a catalog of storage classes and publish them to your developers. A default storage class (*openebs-standard*) is added to the cluster when you install OpenEBS
 
-4. Optional: An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/mayaonline.html) for better visibility, manageability of volumes and integrated ChatOps experience with Slack
+4. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/mayaonline.html) for better visibility, manageability of volumes and integrated ChatOps experience with Slack
 
 ### As an Application Developer:
 
