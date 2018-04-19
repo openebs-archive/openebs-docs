@@ -305,7 +305,7 @@ The above cause can be confirmed from the `kubectl describe pod` which displays 
 You can resolve this issue by upgrading the Kubernetes cluster infrastructure resources (Memory, CPU).
 
 **Issue:**
-## Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the disk size of the node available <a name="#NodeDiskSize"></a>
+## Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the disk size of the node available <a name="NodeDiskSize"></a>
 
 **Workaround:**
 To reclaim the space currently, you must perform a manual delete `rm -rf` of the files in */var/openebs* (or whichever path the storage pool is created on). For more information, see https://github.com/openebs/openebs/issues/1436.
