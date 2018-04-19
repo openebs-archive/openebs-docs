@@ -1,9 +1,1 @@
-.DS_Store
-lib/core/metadata.js
-lib/core/MetadataBlog.js
-website/translated_docs
-website/build/
-website/yarn.lock
 
-website/i18n/*
-!website/i18n/en.json

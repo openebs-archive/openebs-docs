@@ -1,15 +1,3 @@
-.DS_STORE
-*~
-*.pyc
-.grunt
-_SpecRunner.html
-__benchmarks__
-build/
-remote-repo/
-coverage/
-flow-coverage/
-.module-cache
-test/the-files-to-test.generated.js
 *.log*
 chrome-user-data
 *.sublime-project
