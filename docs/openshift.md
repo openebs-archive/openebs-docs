@@ -56,7 +56,7 @@ oc adm policy add-scc-to-user hostaccess admin --as:system:admin
 
 **Note:** While the above procedures may be sufficient to enable host access to the containers, you may also need to do the following.
 
-- Disable selinux (via `setenforce 0`) to ensure the same.
+- Disable selinux (via `setenforce 0`) to ensure the same. (This has to ben done all OpenShif nodes)
 - Edit the restricted scc to use `runAsUser: type: RunAsAny` (the replica pod runs with root user)
 
 ### Install OpenEBS
