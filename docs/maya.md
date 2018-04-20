@@ -6,7 +6,7 @@ sidebar_label: Maya
 
 ------
 
-The control plane of OpenEBS is generally referred to as Maya. The control plane has several components
+The control plane of OpenEBS is generally referred to as Maya. The control plane has several components as follows:
 
 - Maya-Provisioner
 - Maya-ApiServer
@@ -14,13 +14,13 @@ The control plane of OpenEBS is generally referred to as Maya. The control plane
 - Side cars
 - Maya - Node Disk Manager
 
-The above components are collectively referred to as Maya.  Control plane components are described in some more details in [the architecture section](/docs/architecture.html#control-plane). 
+The above components are collectively referred to as Maya.  For more details about the control plane components, see [the architecture section](/docs/architecture.html#control-plane). 
 
 
 
 ## MayaOnline
 
-[MayaOnline](https://www.mayaonline.io) is not part of the control plane of a OpenEBS cluster.  MayaOnline is the Saas service for connecting OpenEBS clusters to provide a cross-cloud control plane. MayaOnline provides a permanent [free tier](https://www.mayaonline.io/freetier) to OpenEBS community. 
+[MayaOnline](https://www.mayaonline.io) is not part of the control plane of a OpenEBS cluster.  MayaOnline is the SaaS service for connecting OpenEBS clusters to provide a cross-cloud control plane. MayaOnline provides a permanent [free tier](https://www.mayaonline.io/freetier) to the OpenEBS community. 
 
 
 
