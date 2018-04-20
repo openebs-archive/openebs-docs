@@ -38,7 +38,6 @@ cd openebs-docs
 ### Start server
 
 ```
-
 cd openebs-docs/website
 
 openebs-docs/website$ npm install docusaurus
