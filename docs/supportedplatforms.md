@@ -10,7 +10,7 @@ OpenEBS is tested on the following platforms
 
 [Native Kubernetes](#NativeK8s) (Versions 1.7.5+, 1.8, 1.9, 1.10, 1.11)
 
-[MiniKube](#MiniKube) (Versions )
+[MiniKube](#MiniKube) (Versions 0.25.x, 0.26.x)
 
 [GKE](#GKE) (Kubernetes versions 1.7.x , 1.8.x,)
 
@@ -20,9 +20,9 @@ OpenEBS is tested on the following platforms
 
 [IBM Cloud Private](#IBM) (Versions 1.2.0, 2.1.0, 2.1.0.1, 2.1.0.2) 
 
-[RedHat OpenShift](#OpenShift) (Versions 3.5, 3.6, 3.8)
+[RedHat OpenShift](#OpenShift) (Versions 3.7, 3.8)
 
-[RedHat MiniShift](#OpenShift) (Versions )
+[RedHat MiniShift](#OpenShift) (Versions 1.10.0+)
 
 
 
@@ -36,7 +36,7 @@ As a prerequisite, OpenEBS requires CRD capabilities of Kubernetes and hence Kub
 
 OpenEBS is tested on versions 1.7.5+, 1.8, 1.9, 1.10 and 1.11.
 
-Similarly, MiniKube versions that are tested for OpenEBS are x.y, x.y
+Similarly, MiniKube versions that are tested for OpenEBS are 0.25.x and 0.26.x 
 
 Another prerequisite is open-iSCSI packages should be installed and configured. For installing open-iscsi on Ubuntu, CentOS and CoreOS, refer to the [prerequisites section](/docs/prerequisites.html#iSCSIConfig) 
 
@@ -46,7 +46,7 @@ Another prerequisite is open-iSCSI packages should be installed and configured. 
 
 GKE with Kubernetes versions 1.8 onwards are supported. While creating the cluster, make sure you choose Ubuntu 16.4 or above, which comes with open-iscsi installed and configured.
 
-<<TODO: Add a screenshot of the cluster config where the linux image is chosen on GKE>>
+![Ubuntu on GKE](/docs/assets/gke-ubuntu.png)
 
 Note: COS image does not come with the open-iscsi package and also installing new packages on cos based hosts is not allowed on GKE. Hence, OpenEBS will not work on GKE with hosts based on COS image.
 
@@ -54,21 +54,21 @@ Note: COS image does not come with the open-iscsi package and also installing ne
 
 ## Azure Cloud
 
-On Azure, kubelet runs inside a container and open-iscsi packages are not available by default on Azure. Refer to the instructions to install and configure [open-iscsi on Azure](/docs/prerequisites.html#Azure)
+On Azure, kubelet runs inside a container and open-iscsi packages are not available by default on Azure. Refer to the instructions to install and configure [open-iscsi on Azure](https://github.com/openebs/openebs-docs/blob/master/docs/openebs_azure.md)
 
-Once the prerequisites are met you can follow the steps as mentioned in [installation](/docs/installation.html#Install) section. 
+Once the prerequisites are met you can follow the steps as mentioned in [installation](/docs/installation.html) section like you install OpenEBS on a vanilla Kubernetes cluster 
 
 <a name="AWS"></a>
 
 ## AWS
 
-On AWS, you can setup Kubernetes cluster using ubuntu machines using EC2. Once the prerequisites are met you can follow the steps as mentioned in [installation](/docs/installation.html#Install) section. 
+On AWS, you can setup Kubernetes cluster using ubuntu machines using EC2. Once the prerequisites are met you can follow the steps as mentioned in [installation](/docs/installation.html) section 
 
 <a name="IBM"></a>
 
 ## IBM Cloud Private
 
-<<Write the IBM Cloud Private specs, add a screenshot>>
+OpenEBS is tested with IBM Private Cloud 2.1 version. For details on how to integrate OpenEBS into IBM Private Cloud charts/catalog, [refer to the instructions here](/docs/ibmcloud.html)
 
 <a name="OpenShift"></a>
 
