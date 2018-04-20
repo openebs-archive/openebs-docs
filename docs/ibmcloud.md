@@ -22,13 +22,12 @@ In this section, we are describing about configuring **OpenEBS** as a **persiste
 
 - [OpenEBS](https://github.com/openebs/openebs)
 
-   
 
-### Install IBM Cloud Private
+### **Install IBM Cloud Private**
 
 Follow instructions from [Introduction to IBM Cloud Private](http://containerized.me/introduction-to-ibm-cloud-private/) to deploy a multi-node ICP cluster.
 
-### Install OpenEBS on ICP
+### **Install OpenEBS on ICP**
 
 1. Log in to the ICP console and go to the **Admin/Repositories** menu.![img](https://cdn-images-1.medium.com/max/800/0*PPZPNSr9_mW_9AZq.png)
 
@@ -68,22 +67,29 @@ Follow instructions from [Introduction to IBM Cloud Private](http://containerize
 
 Now,OpenEBS is installed on IBMPrivateCloud. You are ready to run any stateful application on OpenEBS. Let’s try to deploy a stateful app on OpenEBS.  Next section will help you on it.
 
-### Install MongoDB on OpenEBS
+### **Install MongoDB on OpenEBS**
 
 1. Under **Catalog**, select **ibm-mongodb-dev** and click **Configure**.
+
 2. Configure MongoDB deployment with the following parameters:
-    — **Release name:** mongodb-<your-release-name> (you need to pick a unique name here)
-    — **Target Namespace:** default (same as OpenEBS)
-    — **persistence enabled:** true
-    — **persistence useDynamicProvisioning:** true
-    — **dataVolume storageClassName:** openebs-mongodb
-    — **dataVolume size:** 2G (default is 20Gi, remove “i” — in current version it is not supported)
-    — **database password:** mongo
+    — **Release name:** mongodb-<your-release-name> (you need to pick a unique name here)
+       — **Target Namespace:** default (same as OpenEBS)
+       — **persistence enabled:** true
+       — **persistence useDynamicProvisioning:** true
+       — **dataVolume storageClassName:** openebs-mongodb
+       — **dataVolume size:** 2G (default is 20Gi, remove “i” — in current version it is not supported)
+       — **database password:** mongo
     Accept the license agreements, keep all the other values as default and click **Install**.![img](https://cdn-images-1.medium.com/max/800/0*UTiLWk3zOy5bw_Wh.png)
+
 3. Go to **Workloads/Helm Releases** and select your MongoDB release. Under the **PersistentVolumeClaim** table you are going to see the volume claim and OpenEBS storage class.![img](https://cdn-images-1.medium.com/max/800/0*PNNp0nDxsZXzYwIH.png)
-4.  f you go to the **Workloads/Deployments** page, you can find the storage controller and two volume replicas (as configured) running.![img](https://cdn-images-1.medium.com/max/800/0*pD7rHAX_D8_cxcfl.png)
-5.  Confirm that replicas are running on separate nodes. Click on the PVC name ending with **rep** (Example: pvc-23025190-c516–11e7-b45e-e8fd90000064-rep). Scroll down, and you will see that pods are running on separate hosts. ![img](https://cdn-images-1.medium.com/max/800/0*pD7rHAX_D8_cxcfl.png)
-6. You have successfully deployed a stateful application on a persistent block storage presented by OpenEBS.
+
+4. f you go to the **Workloads/Deployments** page, you can find the storage controller and two volume replicas (as configured) running.![img](https://cdn-images-1.medium.com/max/800/0*pD7rHAX_D8_cxcfl.png)
+
+5. Confirm that replicas are running on separate nodes. Click on the PVC name ending with **rep** (Example: pvc-23025190-c516–11e7-b45e-e8fd90000064-rep). Scroll down, and you will see that pods are running on separate hosts. ![img](https://cdn-images-1.medium.com/max/800/0*pD7rHAX_D8_cxcfl.png)
+
+    ​
+
+    You have successfully deployed a stateful application on a persistent block storage presented by OpenEBS.
 
 
 
