@@ -87,8 +87,6 @@ Now,OpenEBS is installed on IBMPrivateCloud. You are ready to run any stateful a
 
 5. Confirm that replicas are running on separate nodes. Click on the PVC name ending with **rep** (Example: pvc-23025190-c516–11e7-b45e-e8fd90000064-rep). Scroll down, and you will see that pods are running on separate hosts. ![img](https://cdn-images-1.medium.com/max/800/0*pD7rHAX_D8_cxcfl.png)
 
-    ​
-
     You have successfully deployed a stateful application on a persistent block storage presented by OpenEBS.
 
 
