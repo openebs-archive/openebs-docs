@@ -6,6 +6,10 @@ sidebar_label: Storage Engines
 
 ------
 
+```
+Note: The feature of choosing a storage engine is available only from OpenEBS 0.6 release onwards
+```
+
 OpenEBS supports two pluggable storage engines - Jiva and cStor
 
 The type of storage engine is specified in the volume policies of OpenEBS. A storage class is chosen by the application developer. 
@@ -51,7 +55,7 @@ spec:
 - name: ReplicaImage
   value: openebs/jiva:0.5.0
 - name: ReplicaCount
-  value: "1"
+  value: "3"
 - name: StoragePool
   value: ssd
 ```
@@ -74,7 +78,7 @@ spec:
   - name: ReplicaImage
     value: openebs/cstor:0.5.0
   - name: ReplicaCount
-    value: "1"
+    value: "3"
   - name: StoragePool
     value: ssd
 ```

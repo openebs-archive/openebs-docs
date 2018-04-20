@@ -12,7 +12,12 @@ sidebar_label: Changelog
 
 * Version 0.6.0 
 
-This version is currently under development.
+This version is currently under development. Following features are under development
+
+- Support for volume policies
+- Support for Kubernetes integrated volume snapshot and restore features
+- Introducing cStor (Beta) as the additional storage engine
+- Initial support for Node Disk Manager (NDM)
 
 ## Stable/Current Release
 
