@@ -4,7 +4,7 @@ title: Overview
 sidebar_label: Overview
 ---
 <center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
-  Documentation for OpenEBS v0.5-old is no longer actively maintained. The version you are currently viewing is a static snapshot. For up-to-date documentation, see the [latest](https://docs.openebs.io) version.
+  Our docs for version 0.5 release are getting updated. The documentation you are currently viewing is a static snapshot of earlier version for the same 0.5 release.  Click here for [latest](https://docs.openebs.io) version.
 </strong></p></center>
 
 OpenEBS can run on various platforms: from your laptop, to VMs on a cloud provider. OpenEBS is also aimed at providing the option of using hybrid deployments where data is distributed between cloud and
