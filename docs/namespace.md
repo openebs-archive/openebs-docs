@@ -3,6 +3,9 @@ id: namespace
 title: Customizing Namespace
 sidebar_label: Customizing Namespace
 ---
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  Documentation for OpenEBS v0.5-old is no longer actively maintained. The version you are currently viewing is a static snapshot. For up-to-date documentation, see the [latest](https://docs.openebs.io) version.
+</strong></p></center>
 
 OpenEBS is usually deployed in the *default* namespace. You can deploy OpenEBS in another namespace  other than the *default* namespace.  For example, you can customize namespace to *openebs* instead of *default*, in the *openebs-operator.yaml* file. 
 

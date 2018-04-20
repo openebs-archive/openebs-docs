@@ -3,6 +3,9 @@ id: RabbitMQ
 title: RabbitMQ
 sidebar_label: RabbitMQ
 ---
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  Documentation for OpenEBS v0.5-old is no longer actively maintained. The version you are currently viewing is a static snapshot. For up-to-date documentation, see the [latest](https://docs.openebs.io) version.
+</strong></p></center>
 
 ## Deploying RabbitMQ as a StatefulSet
 

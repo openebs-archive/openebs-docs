@@ -1,6 +1,63 @@
 /*Root*/
+
+@media (max-width: 375px) {
+  .logo {
+    display: flex;
+  }
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 375px) {
+    .reactNavSearchWrapper input#search_input_react {
+        width:181px;
+   }
+}
+
+body{
+  font-size: 16px;
+}
+
+.mainContainer {
+  font-size: 15px;
+}
+
+/* Navigation header bg color */
+.fixedHeaderContainer {
+    background: #282828;
+}
+
+/* Content headers */
+.container .wrapper h1 {
+    color: #282828;
+}
+.container .wrapper h2 {
+    color: #282828;
+}
+.container .wrapper h3 {
+    color: #282828;
+}
+.container .wrapper h4 {
+    color: #282828;
+}
+.mainContainer .wrapper .post .postHeader h1 {
+    font-size: 220%;
+    padding: 0 0 30;
+}
+.mainContainer .wrapper .post h1, .mainContainer .wrapper .post h2 {
+    font-weight: 400;
+}
+.mainContainer .wrapper .post h3 {
+    font-weight: 450;
+}
+
+/* Body */	
 body {
+    color : #282828;
     background: #fff;
+}
+h1, h2, h3, h4 {
+    color: #282828;
 }
 
 /* Css for image size */
@@ -9,7 +66,7 @@ img {
   height: auto;
 }
 
-
+/* CSS for footer */
 footer.nav-footer {
     background: #1b1b1b;
 }
@@ -23,20 +80,16 @@ footer .sitemap .nav-home {
   opacity: initial;
   transition: initial;
 }
+
 /* NAV bar */
+
 .fixedHeaderContainer header img {
-    width: 150px;
-    height: auto;
+    height: 60%;
+    margin-right: 10px;
 }
 
 .fixedHeaderContainer header h2 {
-    color:#f15a29;
-}
-
-.fixedHeaderContainer {
-    background:#f15a29;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.25);
-    transition: background-color 0.3s ease-in-out;
+    color:#f1584d;
 }
 
 .headerTitle {
@@ -50,8 +103,7 @@ footer .sitemap .nav-home {
 
 .navigationSlider .slidingNav ul li a:focus,
 .navigationSlider .slidingNav ul li a:hover {
-    text-decoration: underline;
-    background: #f2f2f2;
+    background: #f1584d;
 }
 
 /* Side bar*/
@@ -60,9 +112,23 @@ nav.toc .toggleNav {
     padding: 3%;
 }
 
+nav.toc .toggleNav ul li a {
+    color: #282828;
+}
+nav.toc .toggleNav .navGroup h3 {
+    font-weight: 600;
+    font-size: 20px;
+}
+nav.toc .toggleNav ul li.navListItemActive {
+    background: #f1584d;
+    color: #fff;
+}
+nav.toc .toggleNav ul li a.navItemActive{
+    color: #ffffff;
+}
 nav.toc .toggleNav .navGroup.navGroupActive h3 {
-    background:#f2f2f2;
-    color:#4a4848;
+    background:#fff;
+    color:#f1584d;
 }
 
 nav.toc .toggleNav .navGroup.navGroupActive {
@@ -120,7 +186,19 @@ pre code{
     border-color: #f2a850;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 375px) {
+
+    .fixedHeaderContainer header img {
+        width: 108px;
+        height: auto;
+    }
+    .fixedHeaderContainer header h2{
+        color: #fff;
+    }
+
+}
+
+@media (max-width: 376px) and (min-width: 576px) {
 
     .fixedHeaderContainer header img {
         width: 141px;
@@ -131,12 +209,11 @@ pre code{
     }
 
 }
+
 /* css for tables */
 table tr th {
     background: #f2f2f2;
-    color: #f3efef;
     font-weight: bold;
-    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
     text-transform: uppercase;
 }
 
@@ -160,6 +237,7 @@ table tr th {
     padding: 0.5em;
 }
 
+/* CSS for search bar */
 input#search_input_react 
 {
   background-color: #ffffff;
@@ -168,4 +246,8 @@ input#search_input_react
 }
 input#search_input_react:focus, input#search_input_react:active {
     color: #555;
+}
+
+#panel, .flip {
+    cursor: pointer;
 }
