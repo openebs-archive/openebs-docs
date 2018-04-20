@@ -31,7 +31,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
    ```
    kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
    ```
-   ​
+   
 
 3. **Optional:** Create a catalog of storage classes and publish them to your developers. A default storage class (*openebs-standard*) is added to the cluster when you install OpenEBS
 
@@ -60,13 +60,13 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
              storage: 100G
    ```
 
-   ​
+   
 
 2. Apply the YAML file using `kubectl apply -f` command. Verify that an OpenEBS volume is provisioned and bound to the application pod.
 
 3. Note: Because OpenEBS is [CAS](/docs/conceptscas.html), you will observe that new PODs (one volume controller pod and as many volume replica PODs as the number of replicas configured in the storage class) are created
 
-   ​
+ 
 
 
 ### See Also:
@@ -75,8 +75,8 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 - [OpenEBS architecture](/docs/architecture.html)
 - [Constructing storage classes](/docs/architecture.html)
 - [Monitoring OpenEBS volumes](/storagepolicies.html#volume-monitoring-policy)
+- [Taking snapshots of OpenEBS volumes](/docs/developertasks.md#how-do-i-take-snapshots-of-openebs-volumes)
 
-  ​
 
 
 
