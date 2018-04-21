@@ -6,9 +6,9 @@ sidebar_label: Storage Engines
 
 ------
 
-```
-Note: The feature of choosing a storage engine is available only from OpenEBS 0.6 release onwards
-```
+`Note: The feature of choosing a storage engine is available only from OpenEBS 0.6 release onwards`
+
+
 
 OpenEBS supports two pluggable storage engines - Jiva and cStor
 
@@ -16,9 +16,9 @@ The type of storage engine is specified in the volume policies of OpenEBS. A sto
 
 ### Choosing a storage engine
 
-A storage class contains the provisioner details and a reference to the Volume Parameter Group (VPG). Create a storage class that refers to a VPG.  
+A storage class contains the provisioner details and a reference to the Volume Parameter Group (VPG). Create a storage class that refers to a VPG  
 
-Example of a storage class with a VPG reference is shown below.
+Example of a storage class with a VPG reference is shown below
 
 ```
 apiVersion: storage.k8s.io/v1

@@ -29,7 +29,7 @@ To understand how to use OpenEBS with Kubernetes, familiarize yourself with [Kub
 
 
 
-If you have verified that open-iscsi initiator package is configured on your Kubernetes cluster, you can proceed to [installation of OpenEBS](/docs/installation.html). 
+If you have verified that open-iscsi initiator package is configured on your Kubernetes cluster, you can proceed to [installation of OpenEBS](/docs/next/installation.html). 
 
 <a name="iSCSIConfig"></a>
 

@@ -25,15 +25,15 @@ It is very simple to install OpenEBS on your existing k8s cluster. OpenEBS insta
 
 ## Setup OpenEBS using helm charts
 
-With simple and easy steps, you can install OpenEBS on your existing k8s cluster using helm chart
-
-Download and Install the latest OpenEBS Operator files using the following commands.
+Download and install the latest OpenEBS Operator files using the following commands.
 
 ```
 helm repo add openebs-charts https://openebs.github.io/charts/
 helm repo update
 helm install openebs-charts/openebs --name openebs --namespace openebs
 ```
+
+
 
 ## Configuration
 
@@ -69,30 +69,17 @@ helm install --name openebs -f values.yaml openebs-charts/openebs
 
 ## Setup OpenEBS using kubectl
 
-You can easily setup OpenEBS on your existing Kubernetes cluster with a few simple kubectl commands.
-
-Download the latest OpenEBS Operator files using the following commands.
+OpenEBS operator yaml file is available at https://openebs.github.io/charts/openebs-operator.yaml . Use kubectl to install the OpenEBS components using this operator
 
 
 
 ```
-git clone <https://github.com/openebs/openebs.git>
+kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
 ```
 
 
 
-Apply the  openebs-operator.yaml to deploy OpenEBS on your k8 cluster.
-
-
-
-```
-cd openebs/k8s
-kubectl apply -f openebs-operator.yaml
-```
-
-
-
- Once you apply the same, two Kubernetes Pods will be created along with *maya-apiserver*  and *openebs-provisioner* . *openebs-provisioner* will communicate with kubernetes controllers and  *maya-apiserver* will provision the OpenEBS volume.
+This operator installs the control plane components - maya-apiserver, openebs-provisioner and the required storage classes
 
 ```
 name@MayaMaster:~$ kubectl get pods
@@ -103,29 +90,11 @@ openebs-provisioner-1174174075-n989p   1/1       Running   0          4h
 
 
 
-Next comes OpenEBS storage classes. Add OpenEBS related storage classes in your cluster that can be used by developers and applications using the following command.
-
-
-
-```
-kubectl apply -f openebs-storageclasses.yaml
-```
-
-
-
-There is some common workload related storage classes are installed by default on your kubernetes cluster once OpenEBS is installed. You can customize or use the default storage classes to run your application of OpenEBS volume. To know the installed default storage class details, use following command.
-
-
-
 ```
 kubectl get sc
 ```
 
 
-
-So, you are in the last steps of running stateful applications with OpenES storage volume.
-
-Use corresponding storage class name in your PVC yaml file to set run the stateful workload on OpenEBS volume.
 
 Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo)
 
@@ -133,9 +102,7 @@ Some sample YAML files for stateful workloads using OpenEBS are provided in the 
 
 **Configurations**
 
-
-
- The following are some of the parameters of the OpenEBS volume and their default values.  
+The following are some of the parameters of the OpenEBS volume and their default values.  
 
 ```
 Namespace= default
@@ -177,7 +144,7 @@ This is to ensure that the replicas are not rescheduled elsewhere (other nodes) 
 
 
 
-### **STEP-2 : OBTAIN YAMLSPECIFICATIONS FROM OPENEBS LATEST RELEASE**
+### **STEP-2 : OBTAIN YAML SPECIFICATIONS FROM OPENEBS LATEST RELEASE**
 
 
 
@@ -187,7 +154,7 @@ Note: Replace version name with [v0.5.0](https://github.com/openebs/openebs/rele
 
 
 
-### **STEP-3:UPGRADE TO THE LATEST OPENEBS OPERATOR**
+### **STEP-3: UPGRADE TO THE LATEST OPENEBS OPERATOR**
 
 
 
@@ -215,7 +182,7 @@ The above storage-class template can be used to create new ones with desired pro
 
 
 
-### **STEP-4: CREATE THE OPENEBSMONITORING DEPLOYMENTS (Prometheus & Grafana)**
+### **STEP-4: CREATE THE OPENEBS MONITORING DEPLOYMENTS (Prometheus & Grafana)**
 
 
 
@@ -261,7 +228,7 @@ pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep-6b9f46bc6b-hvc8b    1/1       Runni
 
 
 
-### **STEP-6:VERIFY THAT ALL THE REPLICAS ARE REGISTERED AND ARE IN RW MODE**
+### **STEP-6: VERIFY THAT ALL THE REPLICAS ARE REGISTERED AND ARE IN RW MODE**
 
 
 
@@ -321,7 +288,7 @@ Perform the following actions if Step-4 was executed.
 
 - Access the grafana dashboard at http://*NodeIP*:32515
 - Add the prometheus data source by giving URL as http://*NodeIP*:32514
-- Once data source is validated, import the dashboard JSON from :<https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-pg-dashboard.json>
+- Once data source is validated, import the dashboard JSON from : <https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-pg-dashboard.json>
 - Access the volume stats by selecting the volume name (pvc-*) in the OpenEBS Volume dashboard
 
 **Note** : For new applications select a newly created storage-class that has monitoring enabled to automatically start viewing metrics

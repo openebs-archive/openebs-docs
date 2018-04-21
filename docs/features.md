@@ -16,7 +16,7 @@ Avoiding vendor/cloud lock-in is the common goal for most of the users and enter
 
 ### Simplified installation
 
-[Installing](/docs/installation.html) OpenEBS on a Kubernetes cluster is very simple and straight forward. Installation is achieved through the OpenEBS operator or using helm charts.    
+[Installing](/docs/next/installation.html) OpenEBS on a Kubernetes cluster is very simple and straight forward. Installation is achieved through the OpenEBS operator or using helm charts.    
 
 ### Enterprise grade replication and data protection 
 
