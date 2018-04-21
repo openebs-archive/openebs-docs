@@ -87,18 +87,6 @@ For getting access to mayactl command line tool, you will have to login / exec i
 
 
 
-### Quick chart reference to managing OpenEBS volumes
-
-| Purpose                                        | Suggested approach                                           | Notes                                                        |
-| ---------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Create a new volume                            | Add the PVC spec to your application yaml where spec refers to the chosen storageClass and do `kubectl apply -f <app-with-pvc-spec.yaml>` | TODO: Provide a link to the volume creation task             |
-| Delete a volume                                | <TODO>                                                       | TODO: Provide a link to the volume deletion task             |
-| Create a snapshot                              | Create a new yaml file containing the VolumeSnapshot spec with volume name and snapshot name and do `kubectl apply -f <volume-snap.yaml>` | TODO: Provide a link to the snapshot creation task           |
-| Restore from a snapshot / creating a new clone | Create a new yaml file containing the PVC spec refering to the snapshot and do `kubectl apply -f <pvc-clone.yaml>` | For creating clones using APIs , [you can refer to an example here](/docs/snap-clone.html) |
-| Find status of a volume                        | Exec into maya-apiserver pod and do `mayactl volume stats <volume>` |                                                              |
-| List all the OpenEBS volumes                   | Exec into maya-apiserver pod and do `mayactl volume list`    |                                                              |
-
-
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

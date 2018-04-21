@@ -12,15 +12,17 @@ The control plane of OpenEBS is generally referred to as Maya. The control plane
 - Maya-ApiServer
 - Logger
 - Side cars
-- Maya - Node Disk Manager
+- Maya - Node Disk Manager (NDM)
 
-The above components are collectively referred to as Maya.  For more details about the control plane components, see [the architecture section](/docs/architecture.html#control-plane). 
+The above components are collectively referred to as Maya.  For more details about the control plane components, see [the architecture section](/docs/next/architecture.html#control-plane) 
+
+`Note: Some of the above components such as NDM are available only from release 0.6 onwards`
 
 
 
 ## MayaOnline
 
-[MayaOnline](https://www.mayaonline.io) is not part of the control plane of a OpenEBS cluster.  MayaOnline is the SaaS service for connecting OpenEBS clusters to provide a cross-cloud control plane. MayaOnline provides a permanent [free tier](https://www.mayaonline.io/freetier) to the OpenEBS community. 
+[MayaOnline](https://docs.mayaonline.io) is the SaaS service for connecting OpenEBS clusters to provide a cross-cloud control plane. MayaOnline provides a permanent free tier to the OpenEBS community 
 
 
 
