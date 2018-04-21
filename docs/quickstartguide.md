@@ -10,7 +10,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 ### As a Kubernetes Operator/Administrator:
 
-1. As a prerequisite, check if open-iscsi is installed and running on kubelet. See [Steps for configuring and verifying open-iscsi](/docs/prerequisites.html#steps-for-configuring-and-verifying-open-iscsi).
+1. As a prerequisite, check if open-iscsi is installed and running on kubelet. See [Steps for configuring and verifying open-iscsi](/docs/next/prerequisites.html#steps-for-configuring-and-verifying-open-iscsi).
 
 2. You can install OpenEBS either through helm or by using OpenEBS operator
 
@@ -22,7 +22,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
    helm install openebs-charts/openebs --name openebs --namespace openebs
    ```
 
-   For more details on installing OpenEBS using helm, see [install through helm](/docs/installation.html#helm)
+   For more details on installing OpenEBS using helm, see [install through helm](/docs/next/installation.html#helm)
 
    **Using OpenEBS operator:**
 
@@ -35,7 +35,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 3. **Optional:** Create a catalog of storage classes and publish them to your developers. A default storage class (*openebs-standard*) is added to the cluster when you install OpenEBS
 
-4. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/mayaonline.html) for better visibility, manageability of volumes and integrated ChatOps experience with Slack
+4. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/next/mayaonline.html) for better visibility, manageability of volumes and integrated ChatOps experience with Slack
 
 ### As an Application Developer:
 
@@ -64,19 +64,15 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 2. Apply the YAML file using `kubectl apply -f` command. Verify that an OpenEBS volume is provisioned and bound to the application pod.
 
-3. Note: Because OpenEBS is [CAS](/docs/conceptscas.html), you will observe that new PODs (one volume controller pod and as many volume replica PODs as the number of replicas configured in the storage class) are created
+3. Note: Because OpenEBS is [CAS](/docs/next/conceptscas.html), you will observe that new PODs (one volume controller pod and as many volume replica PODs as the number of replicas configured in the storage class) are created
 
    ​
 
 
 ### See Also:
 
-- [Prerequisites](/docs/prerequisites.html)
-- [OpenEBS architecture](/docs/architecture.html)
-- [Constructing storage classes](/docs/architecture.html)
-- [Monitoring OpenEBS volumes](/storagepolicies.html#volume-monitoring-policy)
-
-  ​
+- [Prerequisites](/docs/next/prerequisites.html)
+- [OpenEBS architecture](/docs/next/architecture.html)
 
 
 
