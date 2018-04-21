@@ -26,7 +26,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
    **Using OpenEBS operator:**
 
-   Execute the following single command on the Kubernetes shell
+   As a **cluster admin**, execute the following single command on the Kubernetes shell
 
    ```
    kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml

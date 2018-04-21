@@ -69,7 +69,9 @@ helm install --name openebs -f values.yaml openebs-charts/openebs
 
 ## Setup OpenEBS using kubectl
 
-OpenEBS operator yaml file is available at https://openebs.github.io/charts/openebs-operator.yaml . Use kubectl to install the OpenEBS components using this operator
+OpenEBS operator yaml file is available at https://openebs.github.io/charts/openebs-operator.yaml . 
+
+Set the context to **cluster-admin** and apply the above operator.
 
 
 
