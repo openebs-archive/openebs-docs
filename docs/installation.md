@@ -6,24 +6,26 @@ sidebar_label: Installation
 
 ------
 
-This section describes about the OpenEBS installation and its up-gradation to its latest version.
-
-Install section deals with different ways of OpenEBS installation and Upgrade section deals with upgrading OpenEBS to it latest available version from its previous version. 
+OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here](/docs/next/supportedplatforms.html)
 
 
 
-Install
-=========
+On an existing Kubernetes cluster, as a cluster-admin, you can install OpenEBS in  2 ways
 
-It is very simple to install OpenEBS on your existing k8s cluster. OpenEBS installation can be done by 2 ways
+1. Using helm charts
 
-1. Helm charts
-2. kubectl  
+2. By applying OpenEBS operator using kubectl  
+
+   ​
 
 
 <a name="helm"></a>
 
+![Helm and OpenEBS](/docs/assets/helm.png)
+
 ## Setup OpenEBS using helm charts
+
+You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster
 
 Download and install the latest OpenEBS Operator files using the following commands.
 

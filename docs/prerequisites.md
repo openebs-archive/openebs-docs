@@ -6,12 +6,15 @@ sidebar_label: Prerequisites
 
 ------
 
-This section will help you to understand the pre-requisites for the OpenEBS installation in a Kubernetes installed environment.
+The following prerequisites are required for installing OpenEBS
 
-The minimum requirements for the OpenEBS installation are;
+1. A Kubernetes cluster with version >= 1.7.5 (OpenEBS needs CRD feature of Kubernetes)
 
-1.  Kubernetes cluster version >= 1.7.5 (OpenEBS needs CRD feature of Kubernetes)
-2.  Each Kubernetes node should have the open-iscsi package installed. 
+2. open-iscsi package is installed and configured on the Kubernetes cluster
+
+3. kubectl or helm is installed and ready to use
+
+   ​
 
 
 Installing and configuring open-iscsi on Kubernetes will vary slightly depending on the platform and you can [find those instructions here](#iSCSIConfig). 
@@ -29,13 +32,15 @@ To understand how to use OpenEBS with Kubernetes, familiarize yourself with [Kub
 
 
 
-If you have verified that open-iscsi initiator package is configured on your Kubernetes cluster, you can proceed to [installation of OpenEBS](/docs/next/installation.html). 
-
 <a name="iSCSIConfig"></a>
 
 ## Steps for configuring and verifying open-iscsi 
 
-The open-iscsi initiator packages depend on your host O/S or kubelet container. You can follow the following steps for installation / verification of open-iscsi package. In case you are using GKE, use the host machine as Ubuntu. 
+The open-iscsi initiator packages depend on your host operating system or kubelet container. Use the following steps for installation / verification of open-iscsi package
+
+### GKE
+
+With GKE, you must create Kubernetes cluster with the host machine as Ubuntu.  Ubuntu host on GKE comes with iSCSI configured
 
 ### On Ubuntu host
 
