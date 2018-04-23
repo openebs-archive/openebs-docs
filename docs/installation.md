@@ -21,11 +21,14 @@ On an existing Kubernetes cluster, as a cluster administrator, you can install O
 
 <a name="helm"></a>
 
-![Helm and OpenEBS](/docs/assets/helm.png)
-
 ## Setup OpenEBS using helm charts
 
 You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster.
+=======
+------
+
+![Helm and OpenEBS](/docs/assets/helm.png)
+
 
 Download and install the latest OpenEBS Operator files using the following commands.
 
