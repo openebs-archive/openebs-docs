@@ -5,9 +5,9 @@ sidebar_label: mayactl
 ---
 ------
 
-`mayactl` is the command line tool for interacting with OpenEBS volumes. `mayactl` is not used/required  while provisioning or managing the OpenEBS volumes, but it is currently used while debugging and troubleshooting. 
+`mayactl` is the command line tool for interacting with OpenEBS volumes. `mayactl` is not used/required while provisioning or managing the OpenEBS volumes, but it is currently used while debugging and troubleshooting. 
 
-For getting access to mayactl command line tool, you will have to login / exec into the maya-apiserver pod on the Kubernetes. The steps are outlined below
+For getting access to mayactl command line tool, you will have to login / execute into the maya-apiserver pod on Kubernetes. The steps are outlined below.
 
 
 
@@ -18,7 +18,7 @@ For getting access to mayactl command line tool, you will have to login / exec i
    maya-apiserver-3053842955-zdlz4       1/1       Running            0          24d
    ```
 
-2. It is possible that there are multiple instances of maya-apiserver pods for scale purposes. You can run mayactl in any one of them. Pick one of the pods for the below `exec` command
+2. It is possible that there are multiple instances of maya-apiserver pods for scaling purposes. You can run mayactl in any one of them. Pick one of the pods for the below `exec` command
 
    ```
    kubeshell:~$ kubectl exec -it maya-apiserver-3053842955-zdlz4 /bin/bash
@@ -41,7 +41,7 @@ For getting access to mayactl command line tool, you will have to login / exec i
        volume      Provides operations related to a Volume
    ```
 
-4. Volume related mayactl commands are
+4. Volume related mayactl commands are as follows:
 
    ```
    bash-4.3# mayactl --help volume
@@ -62,7 +62,7 @@ For getting access to mayactl command line tool, you will have to login / exec i
            $ mayactl volume stats <vol>
    ```
 
-5. Volume snapshot related mayactl commands are
+5. Volume snapshot related mayactl commands are as follows:
 
    ```
    bash-4.3# mayactl --help snapshot
