@@ -10,24 +10,27 @@ OpenEBS is tested on various platforms. Refer to the platform versions and assoc
 
 
 
-On an existing Kubernetes cluster, as a cluster-admin, you can install OpenEBS in  2 ways
+On an existing Kubernetes cluster, as a cluster administrator, you can install OpenEBS in the following two ways.
 
 1. Using helm charts
 
-2. By applying OpenEBS operator using kubectl  
+2. Applying OpenEBS operator using kubectl  
 
    ​
 
 
 <a name="helm"></a>
 
+
+
 ## Setup OpenEBS using helm charts
 
+You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster.
+=======
 ------
 
-![Helm and OpenEBS](/docs/assets/helm.png)
+![Installing OpenEBS using helm ](/docs/assets/helm.png)
 
-You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster
 
 Download and install the latest OpenEBS Operator files using the following commands.
 
@@ -41,7 +44,7 @@ helm install openebs-charts/openebs --name openebs --namespace openebs
 
 ## Configuration
 
-The following tables lists the configurable parameters of the OpenEBS chart and their default values.
+The following table lists the configurable parameters of the OpenEBS chart and their default values.
 
 | Parameter                          | Description                                  | Default                           |
 | ---------------------------------- | -------------------------------------------- | --------------------------------- |
@@ -63,7 +66,7 @@ The following tables lists the configurable parameters of the OpenEBS chart and 
 
 Specify each parameter using the `--set key=value` argument to `helm install`.
 
-Alternatively, a YAML file (values.yaml) that specifies the values for the parameters can be provided while installing the chart. You can customize it or go with default values. For example,
+Alternatively, a YAML file (values.yaml) that specifies the values for parameters can be provided while installing the chart. You can customize it or go with default values. For example,
 
 ```
 helm install --name openebs -f values.yaml openebs-charts/openebs
@@ -73,7 +76,12 @@ helm install --name openebs -f values.yaml openebs-charts/openebs
 
 ## Setup OpenEBS using kubectl
 
-OpenEBS operator yaml file is available at https://openebs.github.io/charts/openebs-operator.yaml . 
+OpenEBS operator yaml file is available at https://openebs.github.io/charts/openebs-operator.yaml. 
+=======
+------
+
+![Installing OpenEBS with Operator](/docs/assets/operator.png)
+
 
 Set the context to **cluster-admin** and apply the above operator.
 
@@ -85,7 +93,7 @@ kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
 
 
 
-This operator installs the control plane components - maya-apiserver, openebs-provisioner and the required storage classes
+This operator installs the control plane components such as maya-apiserver, openebs-provisioner, and the required storage classes.
 
 ```
 name@MayaMaster:~$ kubectl get pods
@@ -102,13 +110,13 @@ kubectl get sc
 
 
 
-Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo)
+Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo).
 
 
 
 **Configurations**
 
-The following are some of the parameters of the OpenEBS volume and their default values.  
+Following are some of the parameters for the OpenEBS volume and their default values.  
 
 ```
 Namespace= default
@@ -122,11 +130,11 @@ Capacity: 5G
 
  
 
-
 Upgrade
 =========
 
-There are 3 main upgrade paths we are supporting. Each upgrade has its own significant changes to support and ease use of OpenEBS volume in your k8s cluster.
+OpenEBS supports 3 main upgrade paths. Each upgrade has its own significant changes to support and ease use of OpenEBS volume in your k8s cluster.
+
 
 From 0.4.0 to 0.5.0
 
@@ -136,31 +144,26 @@ From 0.5.1 to 0.5.3
 
 
 
-These are the general steps to upgrade your current OpenEBS volume from above mentioned paths.
+Following are the general steps to upgrade your current OpenEBS volume from above mentioned paths.
 
 
 
-### **STEP-1: CORDON ALL NODES WHICH DO NOT HOST OPENEBS VOLUME REPLICAS**
+### **STEP-1: Cordon all nodes which do not host OpenEBS volume replicas**
 
-
-
-Perform kubectl cordon <node> on all nodes that don't have the openebs volume replicas.
+Perform kubectl cordon <node> on all nodes that do not have the OpenEBS volume replicas.
 
 This is to ensure that the replicas are not rescheduled elsewhere (other nodes) upon upgrade and "stick" to the same nodes.
 
 
+### **STEP-2 : Obtain YAML specifications from OpenEBS latest release**
 
-### **STEP-2 : OBTAIN YAML SPECIFICATIONS FROM OPENEBS LATEST RELEASE**
+Create a directory and obtain specifications from https://github.com/openebs/openebs/releases/tag/<version>> into the new directory folder files. 
 
-
-
-Create a directory and obtain specification from [https://github.com/openebs/openebs/releases/tag/<version>>  into the new directory folder files. 
-
-Note: Replace version name with [v0.5.0](https://github.com/openebs/openebs/releases/tag/v0.5.0), [v0.5.1](https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1) or v0.5.3
+Note: Replace version name with [v0.5.0](https://github.com/openebs/openebs/releases/tag/v0.5.0), [v0.5.1](https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1) or [v0.5.3](https://github.com/openebs/openebs/releases/tag/v0.5.3).
 
 
 
-### **STEP-3: UPGRADE TO THE LATEST OPENEBS OPERATOR**
+### **STEP-3: Upgrade to the latest OpenEBS Operator**
 
 
 
@@ -178,29 +181,23 @@ storageclass "openebs-standard" created
 ```
 
 
+**Note** : This step will upgrade the operator deployments with the corresponding images, and also
 
-**Notes** : This step will upgrade the operator deployments with the corresponding images, and also
-
-- Sets up the pre-requisites for volume monitoring
-- Creates a new OpenEBS storage-class called openebs-standard with : vol-size=5G,     storage-replica-count=2, storagepool=default, monitoring=True
+- sets up the prerequisites for volume monitoring
+- creates a new OpenEBS storage-class called openebs-standard with : vol-size=5G, storage-replica-count=2, storagepool=default, monitoring=True
 
 The above storage-class template can be used to create new ones with desired properties.
 
+### **STEP-4: Create the OpenEBS Monitoring deployments (Prometheus and Grafana)**
+
+This is an optional step which will be useful if you need to track storage metrics on your OpenEBS volume. We recommended using the monitoring framework to track your OpenEBS volume metrics.
 
 
-### **STEP-4: CREATE THE OPENEBS MONITORING DEPLOYMENTS (Prometheus & Grafana)**
-
-
-
-This is an optional step and which will be useful if you need to track storage metrics on your OpenEBS volume. We recommended using the monitoring framework to track your OpenEBS volume metrics.
-
-
-
-### **STEP-5: UPDATE OPENEBS VOLUME (CONTROLLER AND REPLICA)DEPLOYMENTS**
+### **STEP-5: Update OpenEBS volume (controller and replica) deployments**
 
 
 
-Obtain the name of the OpenEBS Persistent Volume (PV) that has to be updated
+Obtain the name of the OpenEBS Persistent Volume (PV) that has to be updated.
 
 ```
 test@Master:~$ kubectl get pv
@@ -208,7 +205,7 @@ NAME                                       CAPACITY   ACCESS MODES   RECLAIM POL
 pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc   5G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-basic   
 ```
 
-Go to the  patch folder to point to the appropriate patch.Run the script *oebs_update.sh* by passing the PV as argument
+Go to the  patch folder to point to the appropriate patch. Run the *oebs_update.sh* script by passing the PV as an argument.
 
 ```
 test@Master:~$ ./oebs_update pvc-01174ced-0a40-11e8-be1c-000c298ff5fc
@@ -217,7 +214,7 @@ deployment "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-ctrl" patched
 replicaset "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-ctrl-59df76689f" deleted
 ```
 
-Verify that the volume controller and replica pods are running post upgrade
+Verify that the volume controller and replica pods are running post upgrade.
 
 ```
 test@Master:~$ kubectl get pods
@@ -234,7 +231,7 @@ pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep-6b9f46bc6b-hvc8b    1/1       Runni
 
 
 
-### **STEP-6: VERIFY THAT ALL THE REPLICAS ARE REGISTERED AND ARE IN RW MODE**
+### **STEP-6: Verify that all the replicas are registered and are in RW mode**
 
 
 
@@ -286,34 +283,28 @@ test@Master:~$ curl GET http://10.47.0.5:9501/v1/replicas | grep createTypes | j
 
 
 
-### **STEP-7: CONFIGURE GRAFANA TO MONITOR VOLUME METRICS**
-
+### **STEP-7: Configure Grafana to monitor volume metrics**
 
 
 Perform the following actions if Step-4 was executed.
 
-- Access the grafana dashboard at http://*NodeIP*:32515
-- Add the prometheus data source by giving URL as http://*NodeIP*:32514
-- Once data source is validated, import the dashboard JSON from : <https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-pg-dashboard.json>
-- Access the volume stats by selecting the volume name (pvc-*) in the OpenEBS Volume dashboard
+- Access the Grafana dashboard at http://*NodeIP*:32515.
+- Add the Prometheus data source by specifying URL as http://*NodeIP*:32514
+- Once the data source is validated, import the dashboard JSON from the <https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-pg-dashboard.json> URL.
+- Access the volume stats by selecting the volume name (pvc-*) in the OpenEBS Volume dashboard.
 
-**Note** : For new applications select a newly created storage-class that has monitoring enabled to automatically start viewing metrics
+**Note** : For new applications, select a newly created storage-class that has monitoring enabled to automatically start viewing metrics.
 
-
-
-The detailed steps for the supported upgrade path are mentioned in below sections.
-
-
+Detailed steps for the supported upgrade paths are mentioned in the following sections.
 
 ### **Upgrade from 0.4.0 to 0.5.0**
 
-It is possible to upgrade your OpenEBS volume from 0.4.0 to 0.5.0 by following the steps mentioned above. The detailed steps are mentioned here (<https://github.com/openebs/openebs/releases/tag/v0.5.0>) and README will give better understanding of the change log and limitations of latest version (https://github.com/openebs/openebs/blob/master/k8s/upgrades/0.4.0-0.5.0/README.md)
+It is possible to upgrade your OpenEBS volume from 0.4.0 to 0.5.0 by following the steps mentioned above. Detailed steps are mentioned here (<https://github.com/openebs/openebs/releases/tag/v0.5.0>). The README ensures better understanding of the change log and limitations of the latest version are available at (https://github.com/openebs/openebs/blob/master/k8s/upgrades/0.4.0-0.5.0/README.md).
 
- 
 
 ### **Upgrade from 0.5.0 to 0.5.1**
 
-It is possible to upgrade your OpenEBS volume from 0.5.0 to 0.5.1 by following the steps mentioned above. The detailed steps are mentioned here (<https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1>)
+It is possible to upgrade your OpenEBS volume from 0.5.0 to 0.5.1 by following the steps mentioned above. The detailed steps are mentioned here (<https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1>).
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
