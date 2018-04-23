@@ -21,13 +21,15 @@ On an existing Kubernetes cluster, as a cluster administrator, you can install O
 
 <a name="helm"></a>
 
+
+
 ## Setup OpenEBS using helm charts
 
 You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster.
 =======
 ------
 
-![Helm and OpenEBS](/docs/assets/helm.png)
+![Installing OpenEBS using helm ](/docs/assets/helm.png)
 
 
 Download and install the latest OpenEBS Operator files using the following commands.
@@ -75,6 +77,11 @@ helm install --name openebs -f values.yaml openebs-charts/openebs
 ## Setup OpenEBS using kubectl
 
 OpenEBS operator yaml file is available at https://openebs.github.io/charts/openebs-operator.yaml. 
+=======
+------
+
+![Installing OpenEBS with Operator](/docs/assets/operator.png)
+
 
 Set the context to **cluster-admin** and apply the above operator.
 
@@ -123,11 +130,11 @@ Capacity: 5G
 
  
 
-
 Upgrade
 =========
 
 OpenEBS supports 3 main upgrade paths. Each upgrade has its own significant changes to support and ease use of OpenEBS volume in your k8s cluster.
+
 
 From 0.4.0 to 0.5.0
 
