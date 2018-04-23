@@ -18,11 +18,11 @@ Storage policies can be created, updated, and deleted in a running OpenEBS clust
 
 ## Should I Add a Custom Storage Policy to my OpenEBS Cluster?
 
-Storage policies are meant to be created per team, per workload, per storage controller, and so on. that fits your requirement. Since OpenEBS storage controllers (i.e. jiva or cStor) run from within a container, a custom storage policy can be created and set against a particular storage controller instance that meets the demands of the application (which consumes the storage exposed from the storage controller instance). You can now define policies based on the type of application at the storage-class level. Following are some of the properties that can be customized at the default level in the *openebs-storageclasses.yaml* file.
+Storage policies are meant to be created per team, workload, storage controller, and so on that fits your requirement. Since OpenEBS storage controllers (i.e. jiva or cStor) run from within a container, a custom storage policy can be created and set against a particular storage controller instance that meets the demands of the application (which consumes the storage exposed from the storage controller instance). You can now define policies based on the type of application at the storageclass level. Following are some of the properties that can be customized at the default level in the *openebs-storageclasses.yaml* file.
 
 ## Types of Storage Policies
 
-OpenEBS supports several types of Storage Policies as follows:
+OpenEBS supports several types of Storage Policies such as the following:
 
 - openebs.io/jiva-replica-count
 - openebs.io/jiva-replica-image
@@ -53,7 +53,7 @@ You can specify the jiva replica image using the *openebs.io/jiva-replica-image*
 
 Jiva replica image is a docker image.
 
-Following is a sample intent that makes use of replica image policy:
+Following is a sample intent that makes use of replica image policy.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -92,7 +92,7 @@ parameters:
 
 ## Storage Pool Policy
 
-A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on a:
+A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on any of the following.
 
 - host-os or
 - mounted disk
@@ -146,6 +146,9 @@ parameters:
     openebs.io/jiva-replica-image: "openebs/jiva:0.5.0"
     openebs.io/volume-monitor: "true"
 ```
+
+
+
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
    (function(h,o,t,j,a,r){
