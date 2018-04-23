@@ -16,6 +16,8 @@ On an existing Kubernetes cluster, as a cluster-admin, you can install OpenEBS i
 
 2. By applying OpenEBS operator using kubectl  
 
+   ------
+
    ​
 
 
