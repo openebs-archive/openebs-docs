@@ -16,16 +16,16 @@ On an existing Kubernetes cluster, as a cluster-admin, you can install OpenEBS i
 
 2. By applying OpenEBS operator using kubectl  
 
-   ------
-
    ​
 
 
 <a name="helm"></a>
 
-![Helm and OpenEBS](/docs/assets/helm.png)
-
 ## Setup OpenEBS using helm charts
+
+------
+
+![Helm and OpenEBS](/docs/assets/helm.png)
 
 You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster
 
