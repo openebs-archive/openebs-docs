@@ -22,13 +22,13 @@ To install OpenEBS in OpenShift environment you need to set role/permission and 
 oc adm policy add-cluster-role-to-user cluster-admin admin --as=system:admin
 ```
 
-- Assign password to the administrator user using the following command.
+- (Optional) In case, password is not set assign password to the administrator user using the following command.
 
 ```
 htpasswd /etc/origin/htpasswd admin
 ```
 
-- Login as administrator user and use the "default" project (administrator is logged into this project by default).
+- (Optional) In case admin login has been timed out, login as administrator user and use the "default" project (administrator is logged into this project by default).
 
 ```
 oc login -u admin
@@ -64,7 +64,7 @@ oc adm policy add-scc-to-user hostaccess admin --as:system:admin
 Download the latest OpenEBS operator files and sample application specifications on the OpenShift-Master machine using the following commands.
 
 ```
-git clone <https://github.com/openebs/openebs.git> 
+git clone https://github.com/openebs/openebs.git 
 cd openebs/k8s
 ```
 
