@@ -25,12 +25,11 @@ On an existing Kubernetes cluster, as a cluster administrator, you can install O
 
 ## Setup OpenEBS using helm charts
 
-You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster.
-=======
 ------
 
 ![Installing OpenEBS using helm ](/docs/assets/helm.png)
 
+You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster.
 
 Download and install the latest OpenEBS Operator files using the following commands.
 
@@ -76,11 +75,12 @@ helm install --name openebs -f values.yaml openebs-charts/openebs
 
 ## Setup OpenEBS using kubectl
 
-OpenEBS operator yaml file is available at https://openebs.github.io/charts/openebs-operator.yaml. 
-=======
 ------
 
 ![Installing OpenEBS with Operator](/docs/assets/operator.png)
+
+OpenEBS operator yaml file is available at https://openebs.github.io/charts/openebs-operator.yaml. 
+
 
 
 Set the context to **cluster-admin** and apply the above operator.
