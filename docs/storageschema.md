@@ -53,8 +53,6 @@ The SP objects are again used by Node Disk Manager (NDM) to create actual pools 
 
 As shown above, the end result of an SPC is either a cStor pool or a Jiva pool created inside the replica pod. For creating the cStor pools inside the replica pod, the Kuberntes side-car pattern is used. 
 
-#### 
-
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
