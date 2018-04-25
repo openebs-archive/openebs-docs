@@ -6,7 +6,7 @@
     "Tasks": ["mayactl"],
     "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "mayaonline"],
     "Releases": ["changelog"],
-    "Troubleshooting": ["troubleshooting", "tsgcollectlogs", "tsgpvs"],
+    "Troubleshooting": ["troubleshooting", "tsgcollectlogs", "tsg_installation", "tsgpvs"],
     "Contributor Resources": ["weeklycontribute", "contribute"]
   }
 }
