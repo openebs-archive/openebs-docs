@@ -6,3 +6,4 @@ chrome-user-data
 .vscode
 *.swp
 *.swo
+docs/ibmcloud.md
