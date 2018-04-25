@@ -29,19 +29,35 @@ On an existing Kubernetes cluster, as a cluster administrator, you can install O
 
 ![Installing OpenEBS using helm ](/docs/assets/helm.png)
 
-You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster. OpenEBS charts are available from [Kubernetes stable helm charts](https://github.com/kubernetes/charts/tree/master/stable).  As a cluster admin, install the charts using the following command with a namespace of your choice.
+You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster. OpenEBS charts are available from [Kubernetes stable helm charts](https://github.com/kubernetes/charts/tree/master/stable).  
+
+### Setup RBAC for tiller before installing OpenEBS chart
+
+```
+kubectl -n kube-system create sa tiller
+kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"spec": {"serviceAccountName": "tiller"}}}}'
+```
+
+
+
+Install the charts using the following command with a namespace of your choice.
 
 ```
 helm install stable/openebs --name openebs --namespace openebs
 ```
+
+
 
 The above command installs the required OpenEBS services except storage class templates. 
 
 Install the storage class templates using the following command.
 
 ```
-kubectl apply -f  https://github.com/openebs/openebs/blob/master/k8s/openebs-storageclasses.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
 ```
+
+
 
 The above command deploys storage class templates.  As a next step, it is recommended to setup a catalog of storage classes for your application developers to use from. Learn more about setting up [OpenEBS storage classes here](/docs/next/setupstorageclasses.html).
 
@@ -71,7 +87,9 @@ The following table lists the configurable parameters of the OpenEBS chart and t
 
 Specify each parameter using the `--set key=value` argument to `helm install`.
 
-Alternatively, a YAML file (values.yaml) that specifies the values for parameters can be provided while installing the chart. You can customize it or go with default values. For example,
+Alternatively, a YAML file ([values.yaml](https://github.com/openebs/openebs/blob/master/k8s/charts/openebs/values.yaml)) that specifies the values for parameters can be provided while installing the chart. You can customize it or go with default values.
+
+For example,
 
 ```
 helm install -f values.yaml table/openebs --name openebs --namespace openebs
