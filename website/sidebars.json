@@ -2,7 +2,7 @@
   "docs": {
     "Getting Started": ["quickstartguide", "introduction", "gethelp", "faq"],
     "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "storageschema", "storagepolicies"],
-    "Setup": ["prerequisites", "installation", "supportedplatforms", "setupstorageclasses", "setupstoragepools"],
+    "Setup": ["prerequisites", "supportedplatforms", "installation", "upgrade", "setupstorageclasses", "setupstoragepools"],
     "Tasks": ["mayactl"],
     "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "mayaonline"],
     "Releases": ["changelog"],
