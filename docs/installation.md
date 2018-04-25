@@ -61,7 +61,7 @@ kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/op
 
 The above command deploys storage class templates.  As a next step, it is recommended to setup a catalog of storage classes for your application developers to use from. Learn more about setting up [OpenEBS storage classes here](/docs/next/setupstorageclasses.html).
 
-Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo).
+Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://github.com/openebs/openebs/tree/master/k8s/demo).
 
 ### Default values for helm chart parameters
 
