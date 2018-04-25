@@ -6,14 +6,16 @@ sidebar_label: StackPointCloud
 
 ------
 
+
+
 In this section, we describing StackPoint Integration with OpenEBS . It is possible to integrate StackPoint with OpenEBS in all major platforms like AWS, Google Cloud (GKE & GCE), Azure &Digital Ocean. Here, We are covering the detailed steps for the installation of OpenEBS using StackPoint in AWS.
 
- Prerequisites
+ **Prerequisites**
 
 1. An AWS account.
 2. Ubuntu machine to run awscli.
 
-### Creating a User
+### **Creating a User in AWS**
 
 To create a user in AWS, use the following procedure.
 
@@ -32,11 +34,11 @@ A user will be created as seen in the following image. Note down the user's **Ac
 
 Now, the user account is created in AWS and you can go to **stackpoint.io** for creating cluster and installing OpenEBS.
 
-Note: If you already created a k8s cluster using stackpoint, you can go to 
+Note: If you already created a k8s cluster using stackpoint, you can go to  
 
-[#]: 	"(Import OpenEBS Helm Charts)"
+[#]: ImportOpenEBSHelmCharts
 
-else proceed with next step.
+  else proceed with next step.
 
 ### **Configure K8s Cluster**
 
