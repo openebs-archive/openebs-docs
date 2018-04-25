@@ -1,46 +1,46 @@
 ---
 id: openshift
-title: OpenEBS is certified on OpenShift
+title: Using OpenEBS on OpenShift
 sidebar_label: OpenShift
 ---
 
 ------
 
-Just in case you are new to OpenShift, you can follow the links
+If you are new to OpenShift, you can follow the links listed below.
 
-[How to setup Openshift](https://docs.openshift.com/enterprise/3.0/install_config/install/first_steps.html)
+* [How to setup Openshift](https://docs.openshift.com/enterprise/3.0/install_config/install/first_steps.html)
 
-[Quick Reference](https://github.com/openebs/openebs/blob/cfb97d2b407612ebdb8fd1eae48e28b6a3ad248f/k8s/openshift/byo/baremetal/README.md)
+* [Quick Reference](https://github.com/openebs/openebs/blob/cfb97d2b407612ebdb8fd1eae48e28b6a3ad248f/k8s/openshift/byo/baremetal/README.md)
 
-Once the OpenShift cluster is ready, you can proceed with installation of OpenEBS packages. The procedure is slightly different from other platforms as OpenShift uses different commands than regular Kubernetes commands. 
+Once the OpenShift cluster is ready, you can proceed with installing OpenEBS packages. The procedure is slightly different when compared to other platforms. OpenShift uses commands that are not regular Kubernetes commands. 
 
-To install OpenEBS in OpenShift environment you need to set role/permission and few change in the commands as mentioned in Install section. You can follow the below procedure to setup OpenEBS.
+To install OpenEBS in an OpenShift environment, you need to set role/permission and make a few changes to the commands mentioned in the *Installation* section. The following procedure allows you to setup OpenEBS.
 
-- Execute the following command to create a new administrator user with cluster-admin role/permissions which can be used to run the OpenEBS operator and deploy applications.
+1. Run the following command to create a new administrator user with *cluster-admin* role/permissions which can be used to run the OpenEBS operator and deploy applications.
 
 ```
 oc adm policy add-cluster-role-to-user cluster-admin admin --as=system:admin
 ```
 
-- (Optional) In case, password is not set assign password to the administrator user using the following command.
+- (Optional) If the password is not set, assign the password to the administrator user using the following command.
 
 ```
 htpasswd /etc/origin/htpasswd admin
 ```
 
-- (Optional) In case admin login has been timed out, login as administrator user and use the "default" project (administrator is logged into this project by default).
+- (Optional) If the admin login has timed out, login as administrator user and use the "default" project (administrator is logged into this project by default).
 
 ```
 oc login -u admin
 ```
 
-- Provide access to the host-volumes (which are needed by the OpenEBS volume replicas) by updating the default security context (scc) using the following command.
+2. Provide access to the host-volumes (which are required by the OpenEBS volume replicas) by updating the default security context (scc) using the following command.
 
 ```
 oc edit scc restricted
 ```
 
-Add **allowHostDirVolumePlugin: true** and save changes.
+3. Add **allowHostDirVolumePlugin: true** and save changes.
 
 Alternatively, you can use the following command.
 
@@ -48,16 +48,16 @@ Alternatively, you can use the following command.
 oc adm policy add-scc-to-user hostaccess admin --as:system:admin
 ```
 
-- Allow the containers in the project to run as root using the following command.
+4. Allow the containers in the project to run as root using the following command.
 
   ```
   oc adm policy add-scc-to-user anyuid -z default --as=system:admin
   ```
 
-**Note:** While the above procedures may be sufficient to enable host access to the containers, you may also need to do the following.
+**Note:** While the above procedure may be sufficient to enable host access to the containers, you may also need to do the following.
 
-- Disable selinux (via `setenforce 0`) to ensure the same. (To be done on all OpenShift nodes)
-- Edit the restricted scc to use `runAsUser: type: RunAsAny` (The replica pod runs with root user)
+- Disable selinux (via `setenforce 0`) to ensure the same (disable on all OpenShift nodes).
+- Edit the restricted scc to use `runAsUser: type: RunAsAny` (the replica pod runs with root user).
 
 ### Install OpenEBS
 
@@ -86,9 +86,9 @@ oc get sc
 
 ### Deploy a sample application with OpenEBS storage.
 
-- Use OpenEBS as persistent storage for a percona deployment by selecting the openebs-percona storageclass in the persistent volume claim. A sample is available in the openebs git repo (which was cloned in the previous steps).
+Use OpenEBS as persistent storage for a Percona deployment by selecting the openebs-percona storageclass in the persistent volume claim. A sample is available in the openebs git repository (which was cloned in the previous steps).
 
-Apply the following percona deployment yaml using the following commands.
+Apply the following Percona deployment yaml using the following commands.
 
 ```
 cd demo/percona 
