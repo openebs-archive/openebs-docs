@@ -78,6 +78,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 ### See Also:
 
 - [Prerequisites](/docs/next/prerequisites.html)
+- [Tested platforms](/docs/next/supportedplatforms.html)
 - [OpenEBS architecture](/docs/next/architecture.html)
 
 
