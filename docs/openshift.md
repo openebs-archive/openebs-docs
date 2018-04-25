@@ -6,7 +6,7 @@ sidebar_label: OpenShift
 
 ------
 
-If you are new to OpenShift, you can follow the links listed below.
+This section helps you to install OpenEBS on OpenShift. If you are new to OpenShift, you can follow the links listed below.
 
 * [How to setup Openshift](https://docs.openshift.com/enterprise/3.0/install_config/install/first_steps.html)
 
