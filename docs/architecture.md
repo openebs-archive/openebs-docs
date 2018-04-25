@@ -36,7 +36,7 @@ The control plane of an OpenEBS cluster is often referred to as Maya. OpenEBS co
 
 ![Maya is the control plane of OpenEBS](https://raw.githubusercontent.com/openebs/maya/master/docs/openebs-maya-architecture.png)
 
-OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs), which is the standard Kubernetes external storage plugin. Primary task of OpenEBS PV provisioner is to initiate the volume provisioning to application PODS, and to implement the Kubernetes specification for PVs.
+OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs), which is a standard Kubernetes external storage plugin. The primary task of OpenEBS PV provisioner is to initiate the volume provisioning to application PODS, and to implement the Kubernetes specification for PVs.
 
 m-apiserver exposes storage REST API and takes the bulk of volume policy processing and management. 
 

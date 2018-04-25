@@ -11,20 +11,20 @@ You can use the various following methods to get answers to your queries and any
 
 The OpenEBS team hangs out on Slack in the #openebs-users channel. To participate in discussions with the OpenEBS team go to [Slack OpenEBS Community](https://openebs-community.slack.com/messages/C3NPGQ6G3/).
 
-Slack requires registration, but the OpenEBS team welcomes anyone to register at <http://slack.openebs.io/>. Feel free to chat with the OpenEBS team/users and get answers to your queries. 
+Slack requires registration, but the OpenEBS team welcomes anyone to register at <http://slack.openebs.io/>. 
 
 ## Email
 
-Email your queries to the following email adress. OpenEBS experts will help resolving your queries.
-<support at openebs dot io>
+We prefer to communicate through Slack. However, if you wish to email us, we are available at  help@openebs.io. OpenEBS team will respond to you at the earliest.
+
 
 ## Documentation
 
-Access the latest documentation at https://docs.openebs.io. Enter the search string in the **Search** box provided to know more.
+Our documentation is available at [https://docs.openebs.io](https://docs.openebs.io). While we actively maintain the documentation of the latest release, the documentation for older releases also is made available from the same website. You can provide the feedback through the feedback handle on the right side of the pages.
 
 ## Blogs
 
-You can also go through the various blogs from our team members available at https://blog.openebs.io/ for more information.
+Our community blogs are available at [https://blog.openebs.io](https://blog.openebs.io). 
 
 
 
