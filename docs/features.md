@@ -8,7 +8,7 @@ sidebar_label: Features
 
 ### Containerized Storage
 
-OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found [here](/docs/conceptcas.html).
+OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found [here](/docs/next/conceptcas.html).
 
 ### Avoid cloud lock-in
 
