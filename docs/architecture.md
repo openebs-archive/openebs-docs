@@ -14,7 +14,7 @@ OpenEBS follows CAS model where each volume has a dedicated controller POD and s
 
 OpenEBS solution/project has many components, which can be grouped into the following categories.
 
-- [Control plane components](#ControlPlane) - Provisioner, API Server, volume exports, and volume side-cars
+- [Control plane components](#ControlPlane) - Provisioner, API Server, volume exports, and volume sidecars
 - [Data plane components](#DataPlane) - Jiva and cStor
 - [Node disk manager](#NDM) - Discover, monitor and manage the disks attached to the Kubernetes node
 - [Integrations with cloud native tools](#CNTools)  - For more productivity on storage front, integrations are done with Prometheus, Grafana, Fluentd and Jaeger
@@ -36,14 +36,14 @@ The control plane of an OpenEBS cluster is often referred to as Maya. OpenEBS co
 
 ![Maya is the control plane of OpenEBS](https://raw.githubusercontent.com/openebs/maya/master/docs/openebs-maya-architecture.png)
 
-OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs), which is the standard Kubernetes external storage plugin. Primary task of OpenEBS PV provisioner is to initiate the volume provisioning to application PODS, and to implement the Kubernetes specification for PVs.
+OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs), which is the standard Kubernetes external storage plugin. The primary task of an OpenEBS PV provisioner is to initiate volume provisioning to application PODS and to implement the Kubernetes specification for PVs.
 
 m-apiserver exposes storage REST API and takes the bulk of volume policy processing and management. 
 
-The connectivity between control plane data plane is achieved through Kubernetes side-car pattern. There are couple of scenarios in which the control plane needs to communicate with the data plane. 
+The connectivity between control plane data plane is achieved through Kubernetes sidecar pattern. There are a couple of scenarios as follows in which the control plane needs to communicate with the data plane. 
 
-- For volume statistics such as IOPS, throughput, latency etc. This is achieved through volume-exporter side-car
-- For volume policy enforcement with volume controller pod and disk/pool management with the volume replica pod. This is achieved through volume-management side-car(s)
+- For volume statistics such as IOPS, throughput, latency etc. - achieved through volume-exporter sidecar
+- For volume policy enforcement with volume controller pod and disk/pool management with the volume replica pod - achieved through volume-management sidecar(s)
 
 The above control plane components are explained in detail below.
 
@@ -53,11 +53,9 @@ The above control plane components are explained in detail below.
 
 This component runs as a POD and is core to the provisioning decisions. 
 
-Developer constructs a claim with the required volume parameters, chooses the appropriate storage class and invokes kubelet on the yaml specification. The OpenEBS PV dynamic provisioner interacts with the maya-apiserver to create the deployment specifications for volume controller pod and volume replica pod(s) on appropriate nodes. The scheduling of the volume pods (controller/replica) can be controlled using annotations in PVC specification, details of which are discussed in a separate section.
+Developer constructs a claim with the required volume parameters, chooses the appropriate storage class and invokes kubelet on the yaml specification. The OpenEBS PV dynamic provisioner interacts with the maya-apiserver to create the deployment specifications for volume controller pod and volume replica pod(s) on appropriate nodes. Scheduling of the volume pods (controller/replica) can be controlled using annotations in PVC specification, details of which are discussed in a separate section.
 
-Currently OpenEBS provisioner supports only one type of binding - iSCSI. 
-
-
+Currently OpenEBS provisioner supports only one type of binding i.e. iSCSI. 
 
 ### Maya-ApiServer
 
@@ -69,13 +67,13 @@ As the name suggests, m-apiserver exposes the OpenEBS REST APIs.
 
 m-apiserver is also responsible for creating deployment specification files required for creating the volume pods. After generating these specification files, it invokes kube-apiserver for scheduling the pods accordingly. At the end of volume provisioning by the OpenEBS PV provisioner, a Kubernetes object PV is created and is mounted on the application pod . The PV is hosted by the controller pod which is supported by a set of replica pods in different nodes. Controller pod and replica pods are part of the data plane and are described in more detail in the [Storage Engines](/docs/storageengine.html) section.
 
-Another important task of m-apiserver is volume policy management. OpenEBS provides very granular specification for expressing policies. m-apiserver interprets these yaml specifications, converts them into enforceable components and enforces them through volume-management side-cars.
+Another important task of m-apiserver is volume policy management. OpenEBS provides very granular specification for expressing policies. m-apiserver interprets these yaml specifications, converts them into enforceable components and enforces them through volume-management sidecars.
 
 
 
 ### Maya volume exporter
 
-Maya volume export is a side-car for each of the storage controller pods (cStor/Jiva). These side cars connect the control plane to the data plane for fetching statistics. The granularity of statistics is at the volume level. Some example statistics are: 
+Maya volume export is a sidecar for each of the storage controller pods (cStor/Jiva). These sidecars connect the control plane to the data plane for fetching statistics. The granularity of statistics is at the volume level. Some example statistics are: 
 
 - volume read latency
 - volume write latency
@@ -87,13 +85,13 @@ Maya volume export is a side-car for each of the storage controller pods (cStor/
 
 ![OpenEBS volume exporter data flow](/docs/assets/vol-exporter.png)
 
-These statitics are typically pulled  either by prometheus client that is installed and configured during OpenEBS installation or by weave cortex agent that is installed and configured during connectivity to [MayaOnline](https://mayaonline.io).
+These statitics are typically pulled  either by Prometheus client that is installed and configured during OpenEBS installation or by weave cortex agent that is installed and configured during connectivity to [MayaOnline](https://mayaonline.io).
 
-### Volume management side-cars
+### Volume management sidecars
 
-For passing controller configuration parameters and volume policies to the volume controller pod which is data plane and for passing replica configuration parameters and replica data protection parameters to the volume replica pod, side-cars are used. 
+For passing controller configuration parameters and volume policies to the volume controller pod which is data plane and for passing replica configuration parameters and replica data protection parameters to the volume replica pod, sidecars are used. 
 
-![volume management side-cars for cStor](/docs/assets/vol-mgmt-sidecars.png)
+![volume management sidecars for cStor](/docs/assets/vol-mgmt-sidecars.png)
 
 
 
@@ -131,9 +129,7 @@ cStor is a high performing storage engine built with proven building blocks of s
 Note: This storage engine is available from version 0.6 release onwards
 ```
 
-
-
-Node Disk Manager fills the gap in the chain of tools required for managing persistent storage for stateful applications using Kubernetes. Administrators in the container era are increasing tasks with the goal of automating the infrastructure needs of an application or application developer. The complex work flow automations in the storage provisioning requires flexible structures in the storage stack so that Cloud Native tools in Kubernetes ecosystem can easily use them. Node Disk Manager or NDM unifies disparate disks to a common Kubernetes object and provides the capability to pool them. NDM discovers, provisions, monitors, and manages the underlying disks in such a way that Kubernetes PV provisioners and Prometheus can easily integrate into the disk subsystem. 
+Node Disk Manager fills the gap in the chain of tools required for managing persistent storage for stateful applications using Kubernetes. Administrators in the container era are increasing tasks with the goal of automating the infrastructure needs of an application or application developer. The complex work flow automations in storage provisioning requires flexible structures in the storage stack so that Cloud Native tools in the Kubernetes ecosystem can easily use them. Node Disk Manager or NDM unifies disparate disks to a common Kubernetes object and provides the capability to pool them. NDM discovers, provisions, monitors, and manages the underlying disks in such a way that Kubernetes PV provisioners and Prometheus can easily integrate into the disk subsystem. 
 
 ![Node Disk Manager](/docs/assets/ndm.png)
 
@@ -143,11 +139,9 @@ Node Disk Manager fills the gap in the chain of tools required for managing pers
 
 ------
 
-
-
 ### Prometheus and Grafana 
 
-Prometheus is installed as a microservice by the OpenEBS operator during the initial setup. Prometheus monitoring for a given volume is controlled by a volume policy.  With granular volume stats, disk-pool stats and disk stats, the prometheus and grafana tool combination will empower the OpenEBS user community immensely in persistent data monitoring. 
+Prometheus is installed as a microservice by the OpenEBS operator during the initial setup. Prometheus monitoring for a given volume is controlled by a volume policy.  With granular volume, disk-pool, and disk statistics, the Prometheus and Grafana tool combination will empower the OpenEBS user community immensely in persistent data monitoring. 
 
 ### Jaeger
 
