@@ -8,15 +8,15 @@ sidebar_label: Quick Start Guide
 
 Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
-### As a Kubernetes Operator/Administrator:
+## As a Kubernetes Operator/Administrator:
 
 1. As a prerequisite, check if open-iscsi is installed and running on kubelet. See [Steps for configuring and verifying open-iscsi](/docs/next/prerequisites.html#steps-for-configuring-and-verifying-open-iscsi).
 
 2. You can install OpenEBS either through helm or by using OpenEBS operator
 
-   **Using helm:**
+   ### Using helm:
 
-   As a **cluster admin**, install the chart from Kubernetes stable and deploy the storage class templates
+   [Setup RBAC for helm tiller](/docs/next/installation.html#helm) and install the chart from Kubernetes stable and deploy the storage class templates
 
    ```
    helm install stable/openebs --name openebs --namespace openebs
@@ -28,7 +28,9 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
    For more details on installing OpenEBS using helm, see [install through helm](/docs/next/installation.html#helm)
 
-   **Using OpenEBS operator:**
+   ​
+
+   ### Using OpenEBS operator:
 
    As a **cluster admin**, execute the following single command on the Kubernetes shell
 
