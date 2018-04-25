@@ -101,26 +101,25 @@ azureuser@aks-nodepool1-46849391-1:~$
 
  **Note**: azureuser is the default username.
 
-Obtain the container ID of the hyperkube kubelet on each node by running the following command:
+Obtain the container ID of the hyperkube kubelet on each node by running the following command,
 
 ```
 azureuser@aks-nodepool1-46849391-1:~$ sudo docker ps | grep "hyperkube kubele" 
 3aab0f9a48e2    k8s-gcrio.azureedge.net/hyperkube-amd64:v1.8.7   "/hyperkube kubele..."   48 minutes ago      Up 48 minutes                           eager_einstein
 ```
 
-Check the status of iSCSI service by running the following command:
+Get inside the kubelet container by running the following command and install open-iscsi package in each Kubernetes node.
+
+```
+azureuser@aks-nodepool1-46849391-1:~$ sudo docker exec -it <Container ID> bash
+# apt-get update
+# apt install -y open-iscsi
+```
+
+Check the status of iSCSI service by running the following command inside kubelet container.
 
 ```
 azureuser@aks-nodepool1-46849391-1:~$ service open-iscsi status
-```
-
-If open-iscsi is not installed, run the following commands to install and configure iSCSI initiator in each node.
-
-```
-azureuser@aks-nodepool1-46849391-1:~$ sudo docker exec -it 3aab0f9a48e2 bash
-# apt-get update
-# apt install -y open-iscsi
-# exit
 ```
 
 
