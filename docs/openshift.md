@@ -10,7 +10,7 @@ Just in case you are new to OpenShift, you can follow the links
 
 [How to setup Openshift](https://docs.openshift.com/enterprise/3.0/install_config/install/first_steps.html)
 
-[Quick Reference](https://docs.mayaonline.io/docs/setupk8sopenshift.html)
+[Quick Reference](https://github.com/openebs/openebs/blob/cfb97d2b407612ebdb8fd1eae48e28b6a3ad248f/k8s/openshift/byo/baremetal/README.md)
 
 Once the OpenShift cluster is ready, you can proceed with installation of OpenEBS packages. The procedure is slightly different from other platforms as OpenShift uses different commands than regular Kubernetes commands. 
 
@@ -56,7 +56,7 @@ oc adm policy add-scc-to-user hostaccess admin --as:system:admin
 
 **Note:** While the above procedures may be sufficient to enable host access to the containers, you may also need to do the following.
 
-- Disable selinux (via `setenforce 0`) to ensure the same.
+- Disable selinux (via `setenforce 0`) to ensure the same. (This has to ben done all OpenShift nodes)
 - Edit the restricted scc to use `runAsUser: type: RunAsAny` (the replica pod runs with root user)
 
 ### Install OpenEBS
