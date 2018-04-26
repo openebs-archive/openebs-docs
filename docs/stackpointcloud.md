@@ -117,7 +117,7 @@ On the **Control Plane** tab from  **stackpoint.io**, click on your cluster name
 
 
 
-Once the Kubernetes cluster is up on AWS with functional Helm, click on the **Solutions** tab and **Add Solution** button and click on **My charts** . Select **openebs** and edit with the following details:
+Once the Kubernetes cluster is up on AWS with functional Helm, click on the **Solutions** tab and **Add Solution** button and click on **My charts** . Select **openebs** and edit with the following details.
 
 
 
