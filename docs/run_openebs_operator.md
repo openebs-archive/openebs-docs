@@ -104,7 +104,7 @@ Check whether the storage classes are applied successfully using the following c
 
 **See Also:**
 
-[Setting Up OpenEBS - Overview](/docs/install_overview.html).
+[Setting Up OpenEBS - Overview](/docs/next/install_overview.html).
 
 
 
