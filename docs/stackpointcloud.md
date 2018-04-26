@@ -105,7 +105,7 @@ Make sure **Access Verified** shows ok and click on **Save Repository** button t
 
 First, make sure your cluster and all nodes are up.
 
-On the **Control Plane** tab from  **stackpoint.io**, click on your cluster name .
+On the **Control Plane** tab from  **stackpoint.io**, click on your cluster name.
 
 
 
@@ -113,28 +113,24 @@ On the **Control Plane** tab from  **stackpoint.io**, click on your cluster name
 
 
 
-Once the Kubernetes cluster is up on AWS with functional Helm, click on the **Solutions** tab and **Add Solution** button and click on **My charts** . Select **openebs** and edit with the following details.
-
-
-
-
-
-![img](/docs/assets/charts_stackpoint.png)
-
-Add the solution with the following details:
-
-> \- **namespace :** default
->
+Once the Kubernetes cluster is up on AWS with functional Helm, click on the **Solutions** tab and **Add Solution** button.
 
 
 
 ![img](/docs/assets/solutions_stackpoint.png)
 
+Next,click on **My charts** . Select **openebs**.
+
+![img](/docs/assets/charts_stackpoint.png)
+
+Edit the below value and Click on **Install** to deploy OpenEBS into your cluster.
+
+> \- **namespace :** default
+>
+
+![](docs/assets/install_stackpoint.png)
 
 
-Click on **Install** to finally add OpenEBS into your cluster.
-
-![](/docs/assets/install_stackpoint.png)
 
 State field should be green after OpenEBS is successfully added.
 
