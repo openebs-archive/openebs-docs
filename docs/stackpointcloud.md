@@ -130,13 +130,13 @@ Add the solution with the following details:
 
 
 
-![img](/docs/assets/solutions_stackpoint-1524732841060.png)
+![img](/docs/assets/solutions_stackpoint.png)
 
 
 
 Click on **Install** to finally add OpenEBS into your cluster.
 
-![](/docs/assets/install_stackpoint-1524732860744.png)
+![](/docs/assets/install_stackpoint.png)
 
 State field should be green after OpenEBS is successfully added.
 
