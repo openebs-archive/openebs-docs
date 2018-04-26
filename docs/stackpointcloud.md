@@ -140,7 +140,9 @@ Click on **Install** to finally add OpenEBS into your cluster.
 
 State field should be green after OpenEBS is successfully added.
 
-![img](stackpointcloud.assets/1524661191811-1524723191480.png)
+
+
+![1524727342674](stackpointcloud.assets/1524727342674.png)
 
 
 
