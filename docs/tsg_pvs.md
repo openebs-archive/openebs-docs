@@ -10,19 +10,19 @@ This section captures steps to troubleshoot and resolve some errors faced while 
 
 The following issues are covered in this section.
 
-[Application pod is stuck in ContainerCreating state after deployment](#Application pod is stuck in ContainerCreating state after deployment)
+[Application pod is stuck in ContainerCreating state after deployment](#ApplnPodStuck)
 
-[Application pod enters CrashLoopBackOff state](#Application pod enters CrashLoopBackOff state)
+[Application pod enters CrashLoopBackOff state](#CrashLoopBackOff)
 
-[Stale data seen post application pod reschedule on other nodes](#Stale data seen post application pod reschedule on other nodes)
+[Stale data seen post application pod reschedule on other nodes](#StaleData)
 
-[Application and OpenEBS pods terminate/restart under heavy I/O load](#Application and OpenEBS pods terminate/restart under heavy I/O load)
+[Application and OpenEBS pods terminate/restart under heavy I/O load](#ApplnPodsTerminate)
 
-[Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the size of the available node disk](#Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the disk size of the node available)
+[Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the size of the available node disk](#NodeDiskSize)
 
 ## Issue: 
 
-### Application pod is stuck in ContainerCreating state after deployment
+### Application pod is stuck in ContainerCreating state after deployment  
 
 ## Troubleshooting the issue and Workaround:
 
