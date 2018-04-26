@@ -152,7 +152,7 @@ Now your cluster is ready. Now you can install OpenEBS storage class templates o
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
 ```
 
- The above command deploys storage class templates. Now you can run your workloads on openebs-standard storage class if you using default storage class.
+The above command deploys storage class templates. Now you can run your workloads with **openebs-standard** storage class if you using default storage class.
 
 To confirm, click on **K8s Dashboard.** This will bring up your Kubernetes Dashboard UI in a new window. You should be able to find the **openebs-standard** option under **StorageClasses**.
 
