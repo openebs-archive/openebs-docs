@@ -46,9 +46,9 @@ Note: If you already created a k8s cluster using stackpoint, you can go to
 
 Goto **Your Clusters** section in **stackpoint.io** and select **Add a Cluster now** button. Select **AWS** and Cloud provider and go to next page. 
 
+![platform](/assets/platform_stackpoint.png)
 
 
-![image](stackpointcloud.assets/1524658121198-1524725422841.png)
 
 Add your AWS credentials like **Access Key ID** and **Secret Access Key** click the **create** button . In this page, you can edit your Node configuration details . The recommended configuration is One Master Node and 3 Worker Nodes . You can submit once details are entered
 
