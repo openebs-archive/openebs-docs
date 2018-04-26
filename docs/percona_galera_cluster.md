@@ -91,6 +91,7 @@ Test Replication in the Galera Cluster
 
 * Check the replication cluster size on any of the nodes using the following command. 
 
+```
     mysql> show status like 'wsrep_cluster_size';
     +--------------------+-------+
     | Variable_name      | Value |
@@ -98,6 +99,7 @@ Test Replication in the Galera Cluster
     | wsrep_cluster_size | 3     |
     +--------------------+-------+
     1 row in set (0.01 sec)
+```
 
 * On the pxc-node1, create a test database with some content using the following commands. 
 
@@ -128,7 +130,9 @@ Test Replication in the Galera Cluster
     mysql> INSERT INTO Hardware (Name,HWtype,Model) VALUES ('TestBox','Server','DellR820');
     Query OK, 1 row affected (0.06 sec)
     
+    ```
     mysql> select * from Hardware;
+    
     +---------+--------+----------+
     | Name    | HWtype | Model    |
     +---------+--------+----------+
@@ -138,6 +142,7 @@ Test Replication in the Galera Cluster
     
     mysql> exit
     Bye
+    ```
 
 * Verify that this data is synchronized on the other nodes, for example, node2, using the following command. 
 
@@ -158,6 +163,7 @@ Test Replication in the Galera Cluster
     
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
     
+    ```
     mysql> show databases;
     +--------------------+
     | Database           |
@@ -189,6 +195,7 @@ Test Replication in the Galera Cluster
     
     mysql> exit
     Bye
+    ```
 
 * Verify the multi-master capability of the cluster, by writing additional tables into the database using the following command. Use a node other than node1, for example node3. 
 
@@ -209,6 +216,7 @@ Test Replication in the Galera Cluster
     
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
     
+```
     mysql>
     
     mysql> show databases;
@@ -244,7 +252,7 @@ Test Replication in the Galera Cluster
     
     mysql> exit
     Bye
-
+```
 
 
 
