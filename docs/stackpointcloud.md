@@ -46,7 +46,7 @@ Note: If you already created a k8s cluster using stackpoint, you can go to
 
 Goto **Your Clusters** section in **stackpoint.io** and select **Add a Cluster now** button. Select **AWS** and Cloud provider and go to next page. 
 
-![img](stackpointcloud.assets/1524658121198.png)
+![platform](stackpointcloud.assets/platform_stackpoint-1524726684169.png)
 
 
 
@@ -62,7 +62,7 @@ Click on **Distribution** and choose **Ubuntu16.04 LTS**.
 
 
 
-![img](stackpointcloud.assets/1524659987512.png)
+![image](stackpointcloud.assets/1524659987512-1524725376106.png)
 
 
 
@@ -140,7 +140,9 @@ Click on **Install** to finally add OpenEBS into your cluster.
 
 State field should be green after OpenEBS is successfully added.
 
-![img](stackpointcloud.assets/1524661191811-1524723191480.png)
+
+
+![1524727342674](stackpointcloud.assets/1524727342674.png)
 
 
 
