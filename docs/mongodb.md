@@ -18,7 +18,7 @@ This section provides detailed instructions which allow you to perform the follo
 
 1. ### Run OpenEBS Operator
 
-   For the prerequisites and running OpenEBS Operator, see [Running OpenEBS Operator](http://openebs.readthedocs.io/en/latest/Usecases/run_openebs_operator.html).
+   For the prerequisites and running OpenEBS Operator, see [Running OpenEBS Operator](/docs/next/runOpenEBSoperator.html).
 
 2. ### Deploy Mongo-StatefulSet with OpenEBS Storage
 
@@ -87,7 +87,7 @@ It may take some time for the pods to start as the images must be pulled and ins
 
 The following procedure helps you install Sysbench.
 
-* Download the appropriate branch of Percona-Lab's Sysbench fork with support for MongoDB integration on Kubernetes nodes. The Sysbench dependencies are installed in these Kubernetes nodes. (see, [Prerequisites](/docs/prerequisites.html)).
+* Download the appropriate branch of Percona-Lab's Sysbench fork with support for MongoDB integration on Kubernetes nodes. The Sysbench dependencies are installed in these Kubernetes nodes. (see, [Prerequisites](/docs/next/prerequisites.html)).
 
     git clone -b dev-mongodb-support-1.0 https://github.com/Percona-Lab/sysbench.git
 * Enter the Sysbench local repository and perform the following commands in the given order.
