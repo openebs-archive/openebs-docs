@@ -34,11 +34,7 @@ A user will be created as seen in the following image. Note down the user's **Ac
 
 Now, the user account is created in AWS and you can go to **stackpoint.io** for creating cluster and installing OpenEBS.
 
-Note: If you already created a k8s cluster using stackpoint, you can go to  
-
-[#]: ImportOpenEBSHelmCharts
-
-  else proceed with next step.
+Note: If you already created a k8s cluster using stackpoint, you can go to     
 
 ### **Configure K8s Cluster**
 
@@ -48,7 +44,7 @@ Goto **Your Clusters** section in **stackpoint.io** and select **Add a Cluster n
 
 ![image](/docs/assets/platform_stackpoint.png)
 
-Add your AWS credentials like **Access Key ID** and **Secret Access Key** click the **create** button . In this page, you can edit your Node configuration details . The recommended configuration is One Master Node and 3 Worker Nodes . You can submit once details are entered
+Add your AWS credentials like **Access Key ID** and **Secret Access Key** and click the **create** button .  Then,you can edit your Node configuration details . The recommended configuration is One Master Node and 3 Worker Nodes . 
 
 
 
@@ -84,7 +80,9 @@ Add the chart repo
 with the following details:
 
 >  — **name :** openebs-charts
+>
 >  — **type :** packaged-charts
+>
 >  — **Packaged Charts URL** : <https://openebs.github.io/charts/>
 
 
@@ -107,7 +105,7 @@ Make sure **Access Verified** shows ok and click on **Save Repository** button t
 
 First, make sure your cluster and all nodes are up.
 
-On the **Control Plane** tab from  **stackpoint.io**, click on your cluster name **OpenEBS Demo**.
+On the **Control Plane** tab from  **stackpoint.io**, click on your cluster name .
 
 
 
