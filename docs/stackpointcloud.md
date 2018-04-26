@@ -46,7 +46,7 @@ Note: If you already created a k8s cluster using stackpoint, you can go to
 
 Goto **Your Clusters** section in **stackpoint.io** and select **Add a Cluster now** button. Select **AWS** and Cloud provider and go to next page. 
 
-![platform](/assets/platform_stackpoint.png)
+![platform](stackpointcloud.assets/platform_stackpoint-1524726684169.png)
 
 
 
