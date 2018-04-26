@@ -12,11 +12,11 @@ OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always
 
 ### Avoid cloud lock-in
 
-Avoiding vendor/cloud lock-in is the common goal for most of the users and enterprises and this goal has contributed significantly to the adoption of Kubernetes as it is the widely accepted orchestration platform for containers. However, data of the stateful application data remains as the lock-in contributor either to a given technology or to a cloud. With CAS approach, orchestration is made possible in a way storage controllers can migrate the data in the background to anywhere and live migration becomes a fairly easy task. In other words, stateful workloads can be moved from a Kubernetes cluster to any other Kubernetes cluster.
+Avoiding vendor/cloud lock-in is the common goal for most of the users and enterprises and this goal has contributed significantly to the adoption of Kubernetes as it is the widely accepted orchestration platform for containers. However, data of the stateful application remains as the lock-in contributor either to a given technology or to a cloud. With CAS approach, orchestration is made possible in such a way that storage controllers can migrate the data in the background to anywhere and live migration becomes a fairly easy task. In other words, stateful workloads can be moved from a Kubernetes cluster to any other Kubernetes cluster.
 
 ### Simplified installation
 
-[Installing](/docs/next/installation.html) OpenEBS on a Kubernetes cluster is very simple and straight forward. Installation is achieved through the OpenEBS operator or using helm charts.    
+[Installing](/docs/next/installation.html) OpenEBS on a Kubernetes cluster is very simple and straight forward. Installation is achieved through the OpenEBS operator or by using helm charts.    
 
 ### Enterprise grade replication and data protection 
 
@@ -28,19 +28,19 @@ Containerization of storage software and dedicating such controller for each vol
 
 ### Enables Hyperconvergence on Kubernetes
 
-Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by using Kubernetes constructs. Using OpenEBS, nodes in the Kubernetes cluster can be horizontally scaled without worrying about managing persistent storage needs of stateful applications. The storage needs (capacity planning, performance planning, and volume managment) of the cluster can easily be automated using the volume and pool policies of OpenEBS. 
+Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by using Kubernetes constructs. Using OpenEBS, nodes in the Kubernetes cluster can be horizontally scaled without worrying about managing persistent storage needs of stateful applications. The storage needs (capacity planning, performance planning, and volume managment) of a cluster can easily be automated using the volume and pool policies of OpenEBS. 
 
 ### Kubernestes integrated Snapshots and Clones
 
-OpenEBS implements the Kubenetes snapshot provisioner specification. Taking snapshots of a given volume and creating clones from a given snapshot are native to Kubernetes. 
+OpenEBS implements the Kubernetes snapshot provisioner specification. Taking snapshots of a given volume and creating clones from a given snapshot are native to Kubernetes. 
 
 ### No blast radius
 
-CAS architecture does not follow a typical distributed storage architecture with blast radius limitations. With synchronous replication happening from storage controller onto the storage replicas, the storage becomes highly available. The metadata of replicas of volumes are not shared among the nodes and is independently managed on each local node. If a node fails, the storage controller, which is a stateless container in this case, is spun on a node where second or third replica is running and data continues to be available. Hence, with CAS there is no blast radius effect that is typically seen in distributed storage systems such as Ceph, Glusterfs etc. in the event of node failures.
+CAS architecture does not follow a typical distributed storage architecture with blast radius limitations. With synchronous replication happening from storage controller onto the storage replicas, the storage becomes highly available. The metadata of volume replicas are not shared among the nodes and is independently managed on each local node. If a node fails, the storage controller, which is a stateless container in this case, is spun on a node where second or third replica is running and data continues to be available. Hence, with CAS there is no blast radius effect that is typically seen in distributed storage systems such as Ceph, Glusterfs etc. in the event of node failures.
 
 ### Integration with Prometheus and Grafana
 
-Prometheus is installed as a microservice by the OpenEBS operator during the initial setup. Prometheus monitoring for a given volume is controlled by a volume policy. With granular volume stats, disk-pool stats and disk stats, the Prometheus and Grafana tool combination will empower the OpenEBS user community immensely in persistent data monitoring.
+Prometheus is installed as a microservice by the OpenEBS operator during the initial setup. Prometheus monitoring for a given volume is controlled by a volume policy. With granular volume, disk-pool, and disk statistics, the Prometheus and Grafana tool combination will empower the OpenEBS user community immensely in persistent data monitoring.
 
 ### Integration with WeaveScope
 
