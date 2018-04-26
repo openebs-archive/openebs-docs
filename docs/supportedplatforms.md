@@ -6,7 +6,7 @@ sidebar_label: Platforms
 
 ------
 
-OpenEBS is tested on the following platforms
+OpenEBS is tested on the following platforms.
 
 [Native Kubernetes](#NativeK8s) (Versions 1.7.5+, 1.8, 1.9, 1.10, 1.11)
 
@@ -32,49 +32,49 @@ OpenEBS is tested on the following platforms
 
 ## Native Kubernetes and MiniKube
 
-As a prerequisite, OpenEBS requires CRD capabilities of Kubernetes and hence Kubernetes versions 1.7.5+ are suitable. 
+As a prerequisite, OpenEBS requires Kubernetes CRD capabilities and hence Kubernetes versions 1.7.5+ are suitable. 
 
 OpenEBS is tested on versions 1.7.5+, 1.8, 1.9, 1.10 and 1.11.
 
-Similarly, MiniKube versions that are tested for OpenEBS are 0.25.x and 0.26.x 
+Similarly, MiniKube versions that are tested for OpenEBS are 0.25.x and 0.26.x.
 
-Another prerequisite is open-iSCSI packages should be installed and configured. For installing open-iscsi on Ubuntu, CentOS and CoreOS, refer to the [prerequisites section](/docs/next/prerequisites.html#iSCSIConfig) 
+Another prerequisite is open-iSCSI packages must be installed and configured. For installing open-iscsi on Ubuntu, CentOS, and CoreOS, see the [prerequisites](/docs/next/prerequisites.html#iSCSIConfig) section.
 
 <a name="GKE"></a>
 
 ## GKE
 
-GKE with Kubernetes versions 1.8 onwards are supported. While creating the cluster, make sure you choose Ubuntu 16.4 or above, which comes with open-iscsi installed and configured.
+GKE with Kubernetes versions 1.8 onwards are supported. While creating a cluster, ensure that you choose Ubuntu 16.4 or above, which comes with open-iscsi installed and configured.
 
 ![Ubuntu on GKE](/docs/assets/gke-ubuntu.png)
 
-Note: COS image does not come with the open-iscsi package and also installing new packages on cos based hosts is not allowed on GKE. Hence, OpenEBS will not work on GKE with hosts based on COS image.
+**Note:** COS image does not come with the open-iscsi package and also installing new packages on COS based hosts is not allowed on GKE. Hence, OpenEBS will not work on GKE with hosts based on COS image.
 
 <a name="Azure"></a>
 
 ## Azure Cloud
 
-On Azure, kubelet runs inside a container and open-iscsi packages are not available by default on Azure. Refer to the instructions to install and configure [open-iscsi on Azure](https://github.com/openebs/openebs-docs/blob/master/docs/openebs_azure.md)
+On Azure, kubelet runs inside a container and open-iscsi packages are not available by default on Azure. For instructions to install and configure, see [open-iscsi on Azure](https://staging-docs.openebs.io/docs/next/prerequisites.html).
 
-Once the prerequisites are met you can follow the steps as mentioned in [installation](/docs/next/installation.html) section like you install OpenEBS on a vanilla Kubernetes cluster 
+Once the prerequisites are met, you can follow the steps mentioned in [installation](/docs/next/installation.html) section similar to installing OpenEBS on a vanilla Kubernetes cluster.
 
 <a name="AWS"></a>
 
 ## AWS
 
-On AWS, you can setup Kubernetes cluster using ubuntu machines using EC2. Once the prerequisites are met you can follow the steps as mentioned in [installation](/docs/next/installation.html) section 
+On AWS, you can setup Kubernetes cluster using Ubuntu machines using EC2. Once the prerequisites are met you can follow the steps as mentioned in the [installation](/docs/next/installation.html) section.
 
 <a name="IBM"></a>
 
 ## IBM Cloud Private
 
-OpenEBS is tested with IBM Private Cloud 2.1 version. For details on how to integrate OpenEBS into IBM Private Cloud charts/catalog, [refer to the instructions here](/docs/next/ibmcloud.html)
+OpenEBS is tested with IBM Private Cloud version 2.1. For details about how to integrate OpenEBS into IBM Private Cloud charts/catalog, [see instructions here](/docs/next/ibmcloud.html).
 
 <a name="OpenShift"></a>
 
 ## RedHat OpenShift and RedHat MiniShift
 
-OpenShift installation would require certain changes in installation procedure.  You need to use *oc* instead of *kubecltl*.  Detailed explanation available at [Integration of OpenEBS with OpenShift](/docs/next/openshift.html) 
+OpenShift installation may require some changes to the installation procedure.  You need to use *oc* instead of *kubecltl*.  Detailed explanation is available at [Integration of OpenEBS with OpenShift](/docs/next/openshift.html). 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

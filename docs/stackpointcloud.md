@@ -6,31 +6,67 @@ sidebar_label: StackPointCloud
 
 ------
 
-In this section, we are describing about the integration of StackPoint with OpenEBS. It is possible to integrate StackPoint with OpenEBS in all major platforms like AWS, Google Cloud (GKE & GCE), Azure &Digital Ocean. Here, We are covering integration of StackPoint with OpenEBS in AWS platform.
 
- 
+
+In this section, we describing StackPoint Integration with OpenEBS . It is possible to integrate StackPoint with OpenEBS in all major platforms like AWS, Google Cloud (GKE & GCE), Azure &Digital Ocean. Here, We are covering the detailed steps for the installation of OpenEBS using StackPoint in AWS.
+
+ **Prerequisites**
+
+1. An AWS account.
+2. Ubuntu machine to run awscli.
+
+### **Creating a User in AWS**
+
+To create a user in AWS, use the following procedure.
+
+1. Open **AWS Management Console.**
+2. Select the option **IAM** (Identity and Access Management) under the services category **Security, Identity & Compliance.**
+3. Select **Users** on the left pane in the dashboard.
+4. Click **Add user**. Provide a Username. For example, devops.
+5. Select **Access type** as **Programmatic access** and click **Next:Permissions.**
+6. Select **Attach existing policies directly** as permission.
+7. Select the policy **IAMFullAccess** from the policies list. Type **IAMFullAccess** in the search box and select the policy.
+8. Click **Next:review** and click **Create User**.
+
+A user will be created as seen in the following image. Note down the user's **Access Key ID** and **Secret access key.**
+
+![User_Addition](https://docs.mayaonline.io/assets/Add_user.jpg)
+
+Now, the user account is created in AWS and you can go to **stackpoint.io** for creating cluster and installing OpenEBS.
+
+Note: If you already created a k8s cluster using stackpoint, you can go to  
+
+[#]: ImportOpenEBSHelmCharts
+
+  else proceed with next step.
 
 ### **Configure K8s Cluster**
 
 
 
-On “**Configure your cluster**” page in AWS, click the edit button on **Distribution** and choose **Ubuntu16.04 LTS**.
+Goto **Your Clusters** section in **stackpoint.io** and select **Add a Cluster now** button. Select **AWS** and Cloud provider and go to next page. 
 
-![img](https://cdn-images-1.medium.com/max/800/0*ty0IA_1uuDxaCQoX.png)
-
-
-
-Change the **Cluster Name** something meaningful like **OpenEBS Demo**.
+![1524658121198](C:\Users\ranji\AppData\Local\Temp\1524658121198.png)
 
 
 
-![img](https://cdn-images-1.medium.com/max/800/0*50cyzQI-2DZIX-AG.png)
+Add your AWS credentials like **Access Key ID** and **Secret Access Key** click the **create** button . In this page, you can edit your Node configuration details . The recommended configuration is One Master Node and 3 Worker Nodes . You can submit once details are entered
 
 
 
-You can run etcd on either 3 node dedicated cluster or Hosted on same cluster itself. You can leave all other options as default. 
+![1524658208298](C:\Users\ranji\AppData\Local\Temp\1524658208298.png)
 
-Now click on **Submit** to create your cluster. This should take around 5–8 minutes to bring up one Master and two Workers Kubernetes Cluster.
+
+
+Click on **Distribution** and choose **Ubuntu16.04 LTS**. 
+
+
+
+![1524659987512](C:\Users\ranji\AppData\Local\Temp\1524659987512.png)
+
+
+
+Now click on **Submit** to create your cluster. This should take around 5–8 minutes to bring up one Master and three Workers Kubernetes Cluster.
 
  
 
@@ -38,7 +74,7 @@ Now click on **Submit** to create your cluster. This should take around 5–8 mi
 
 
 
-Click on **Solutions** tab on the top of the screen and select **Import Charts** from the upper left.
+Click on **Solutions** tab on the top of the screen and select  **Trusted charts** and select **OpenEBS** from **Trusted charts** and then **Import Charts** from the upper right.
 
 
 
@@ -51,7 +87,7 @@ with the following details:
 
 >  — **name :** openebs-charts
 >  — **type :** packaged-charts
->  — **repo url** : <https://openebs.github.io/charts/>
+>  — **Packaged Charts URL** : <https://openebs.github.io/charts/>
 
 
 
@@ -73,31 +109,30 @@ Make sure **Access Verified** shows ok and click on **Save Repository** button t
 
 First, make sure your cluster and all nodes are up.
 
-On the **Control Plane** tab click on your cluster name **OpenEBS Demo**.
+On the **Control Plane** tab from  **stackpoint.io**, click on your cluster name **OpenEBS Demo**.
 
 
 
-![img](https://cdn-images-1.medium.com/max/800/0*0wxTlbbO_yPMJZ8F.png)
+![1524660936689](C:\Users\ranji\AppData\Local\Temp\1524660936689.png)
 
 
 
-Once the Kubernetes cluster is up on AWS with functional Helm, click on the **Solutions** tab and **Add Solution** button.
+Once the Kubernetes cluster is up on AWS with functional Helm, click on the **Solutions** tab and **Add Solution** button and click on **My charts** . Select **openebs** and edit with the following details:
 
 
 
-![img](https://cdn-images-1.medium.com/max/800/0*QofakUAHAb_DRYWp.png)
+![1524661026624](C:\Users\ranji\AppData\Local\Temp\1524661026624.png)
 
 
 
 Add the solution with the following details:
 
 > \- **namespace :** default
-> \- **values -> rbacEnabled :** false
 >
 
 
 
-![img](https://cdn-images-1.medium.com/max/800/0*JiSAsRHf5SND0Cbp.png)
+![1524661069200](C:\Users\ranji\AppData\Local\Temp\1524661069200.png)
 
 
 
@@ -107,13 +142,17 @@ State field should be green after OpenEBS is successfully added.
 
 
 
-![img](https://cdn-images-1.medium.com/max/800/0*1nY357dtw3PNOfAi.png)
+![1524661191811](C:\Users\ranji\AppData\Local\Temp\1524661191811.png)
 
 
 
-Now your cluster is ready; you can run your workloads on openebs-standard storage class if you using default storage class.
+Now your cluster is ready. Now you can install OpenEBS storage class templates on this kubernetes cluster using the following command.
 
- 
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
+```
+
+ The above command deploys storage class templates. Now you can run your workloads on openebs-standard storage class if you using default storage class.
 
 To confirm, click on **K8s Dashboard.** This will bring up your Kubernetes Dashboard UI in a new window. You should be able to find the **openebs-standard** option under **StorageClasses**.
 
