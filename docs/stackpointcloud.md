@@ -46,7 +46,7 @@ Note: If you already created a k8s cluster using stackpoint, you can go to
 
 Goto **Your Clusters** section in **stackpoint.io** and select **Add a Cluster now** button. Select **AWS** and Cloud provider and go to next page. 
 
-![](stackpointcloud.assets/1524658121198.png)
+![img](stackpointcloud.assets/1524658121198.png)
 
 
 
@@ -54,7 +54,7 @@ Add your AWS credentials like **Access Key ID** and **Secret Access Key** click 
 
 
 
-![](stackpointcloud.assets/1524658208298.png)
+![img](stackpointcloud.assets/1524658208298.png)
 
 
 
@@ -62,7 +62,7 @@ Click on **Distribution** and choose **Ubuntu16.04 LTS**.
 
 
 
-![](stackpointcloud.assets/1524659987512.png)
+![img](stackpointcloud.assets/1524659987512.png)
 
 
 
@@ -113,7 +113,7 @@ On the **Control Plane** tab from  **stackpoint.io**, click on your cluster name
 
 
 
-![](stackpointcloud.assets/1524660936689.png)
+![img](stackpointcloud.assets/1524660936689.png)
 
 
 
@@ -123,7 +123,7 @@ Once the Kubernetes cluster is up on AWS with functional Helm, click on the **So
 
 
 
-![](stackpointcloud.assets/1524661026624.png)
+![img](stackpointcloud.assets/1524661026624.png)
 
 Add the solution with the following details:
 
@@ -132,7 +132,7 @@ Add the solution with the following details:
 
 
 
-![](stackpointcloud.assets/1524661069200.png)
+![img](stackpointcloud.assets/1524661069200.png)
 
 
 
@@ -140,7 +140,7 @@ Click on **Install** to finally add OpenEBS into your cluster.
 
 State field should be green after OpenEBS is successfully added.
 
-![](stackpointcloud.assets/1524661191811-1524723191480.png)
+![img](stackpointcloud.assets/1524661191811-1524723191480.png)
 
 
 
