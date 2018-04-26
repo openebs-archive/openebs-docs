@@ -35,15 +35,15 @@ OpenEBS Volume comprises of Pods that are managed by Kubernetes itself, and each
 -   scaling up/down replicas as they are deployments with node/pod affinity constraints
 -   extending the manageability via namespaces/RBAC to storage
 
-You can try out OpenEBS on your Kubernetes cluster using the [Quick Start Guide](/docs/prerequisites.html).
+You can try out OpenEBS on your Kubernetes cluster using the [Quick Start Guide](/docs/next/prerequisites.html).
 
 If you are new to Kubernetes, here are some guides that can help you setup Kubernetes and install OpenEBS:
 
-- [Minikube](devsolutions.html#minikube)
-- [Baremetal](/docs/onpremise.html#running-the-setup-on-ubuntu-1604)
-- [Amazon EC2](/docs/cloudsolutions.html#amazon-cloud)
-- [GKE](/docs/cloudsolutions.html#google-cloud)
-- [OpenShift](/docs/openshift.html)
+- [Minikube](/docs/next/devsolutions.html#minikube)
+- [Baremetal](/docs/next/onpremise.html#running-the-setup-on-ubuntu-1604)
+- [Amazon EC2](/docs/next/cloudsolutions.html#amazon-cloud)
+- [GKE](/docs/next/cloudsolutions.html#google-cloud)
+- [OpenShift](/docs/next/openshift.html)
 
 Once OpenEBS is installed on your Kubernetes cluster, you can start using it by specifying OpenEBS Storage Classes in your PVCs. Example: 
 
@@ -68,14 +68,14 @@ depending the application/namespace. This flexibility is provided via Custom Res
 
 Ready to try some stateful applications with OpenEBS? Here are some examples to start:
 
-- [MySQL](/docs/PerconaDB.html)
-- [Jenkins](/docs/Jenkins.html)
+- [MySQL](/docs/next/PerconaDB.html)
+- [Jenkins](/docs/next/Jenkins.html)
 
 Learn more by joining us on [Slack](http://slack.openebs.io). Feel free to come and ask any questions. Go to [Slack OpenEBS Community](https://openebs-community.slack.com/messages/C3NPGQ6G3/).
 
 **See Also:**
 
-[Changelog](/docs/releasenotes.html)
+[Changelog](/docs/next/releasenotes.html)
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
