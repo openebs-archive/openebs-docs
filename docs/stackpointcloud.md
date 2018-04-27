@@ -34,11 +34,7 @@ A user will be created as seen in the following image. Note down the user's **Ac
 
 Now, the user account is created in AWS and you can go to **stackpoint.io** for creating cluster and installing OpenEBS.
 
-Note: If you already created a k8s cluster using stackpoint, you can go to  
-
-[#]: ImportOpenEBSHelmCharts
-
-  else proceed with next step.
+Note: If you already created a k8s cluster using stackpoint, you can go to     
 
 ### **Configure K8s Cluster**
 
@@ -46,15 +42,13 @@ Note: If you already created a k8s cluster using stackpoint, you can go to
 
 Goto **Your Clusters** section in **stackpoint.io** and select **Add a Cluster now** button. Select **AWS** and Cloud provider and go to next page. 
 
-![platform](/stackpointcloud.assets/platform_stackpoint-1524726684169.png)
+![image](/docs/assets/platform_stackpoint.png)
+
+Add your AWS credentials like **Access Key ID** and **Secret Access Key** and click the **create** button .  Then,you can edit your Node configuration details . The recommended configuration is One Master Node and 3 Worker Nodes . 
 
 
 
-Add your AWS credentials like **Access Key ID** and **Secret Access Key** click the **create** button . In this page, you can edit your Node configuration details . The recommended configuration is One Master Node and 3 Worker Nodes . You can submit once details are entered
-
-
-
-![img](stackpointcloud.assets/1524658208298.png)
+![img](/docs/assets/provider_stackpoint.png)
 
 
 
@@ -62,7 +56,7 @@ Click on **Distribution** and choose **Ubuntu16.04 LTS**.
 
 
 
-![image](stackpointcloud.assets/1524659987512-1524725376106.png)
+![image](/docs/assets/ubuntu_stackpoint.png)
 
 
 
@@ -86,7 +80,9 @@ Add the chart repo
 with the following details:
 
 >  — **name :** openebs-charts
+>
 >  — **type :** packaged-charts
+>
 >  — **Packaged Charts URL** : <https://openebs.github.io/charts/>
 
 
@@ -109,40 +105,38 @@ Make sure **Access Verified** shows ok and click on **Save Repository** button t
 
 First, make sure your cluster and all nodes are up.
 
-On the **Control Plane** tab from  **stackpoint.io**, click on your cluster name **OpenEBS Demo**.
+On the **Control Plane** tab from  **stackpoint.io**, click on your cluster name.
 
 
 
-![img](stackpointcloud.assets/1524660936689.png)
+![img](/docs/assets/cluster_stackpoint.png)
 
 
 
-Once the Kubernetes cluster is up on AWS with functional Helm, click on the **Solutions** tab and **Add Solution** button and click on **My charts** . Select **openebs** and edit with the following details.
+Once the Kubernetes cluster is up on AWS with functional Helm, click on the **Solutions** tab and **Add Solution** button.
 
 
 
+![img](/docs/assets/solutions_stackpoint.png)
 
+Next,click on **My charts** . Select **openebs**.
 
-![img](stackpointcloud.assets/1524661026624.png)
+![img](/docs/assets/charts_stackpoint.png)
 
-Add the solution with the following details:
+Edit the below value and Click on **Install** to deploy OpenEBS into your cluster.
 
 > \- **namespace :** default
 >
 
+![](docs/assets/install_stackpoint.png)
 
 
-![img](stackpointcloud.assets/1524661069200.png)
-
-
-
-Click on **Install** to finally add OpenEBS into your cluster.
 
 State field should be green after OpenEBS is successfully added.
 
 
 
-![1524727342674](stackpointcloud.assets/1524727342674.png)
+![1524727342674](/docs/assets/openebs-success-install-stackpoint.PNG)
 
 
 

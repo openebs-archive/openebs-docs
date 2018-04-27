@@ -10,19 +10,19 @@ This section captures steps to troubleshoot and resolve some errors faced while 
 
 The following issues are covered in this section.
 
-[Application pod is stuck in ContainerCreating state after deployment](#Application pod is stuck in ContainerCreating state after deployment)
+[Application pod is stuck in ContainerCreating state after deployment](#ApplnPodStuck)
 
-[Application pod enters CrashLoopBackOff state](#Application pod enters CrashLoopBackOff state)
+[Application pod enters CrashLoopBackOff state](#CrashLoopBackOff)
 
-[Stale data seen post application pod reschedule on other nodes](#Stale data seen post application pod reschedule on other nodes)
+[Stale data seen post application pod reschedule on other nodes](#StaleData)
 
-[Application and OpenEBS pods terminate/restart under heavy I/O load](#Application and OpenEBS pods terminate/restart under heavy I/O load)
+[Application and OpenEBS pods terminate/restart under heavy I/O load](#ApplnPodsTerminate)
 
-[Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the size of the available node disk](#Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the disk size of the node available)
+[Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the size of the available node disk](#NodeDiskSize)
 
 ## Issue: 
 
-### Application pod is stuck in ContainerCreating state after deployment
+### Application pod is stuck in ContainerCreating state after deployment  <a name="ApplnPodStuck"></a>
 
 ## Troubleshooting the issue and Workaround:
 
@@ -56,7 +56,7 @@ The following issues are covered in this section.
 
 ## Issue: 
 
-### Application pod enters CrashLoopBackOff state
+### Application pod enters CrashLoopBackOff state <a name="CrashLoopBackOff"></a>
 
 This issue is due to failed application operations in the container. Typically this is caused due to failed writes on the mounted PV. To confirm this, check the status of the PV mount inside the application pod.
 
@@ -113,7 +113,7 @@ This issue is due to failed application operations in the container. Typically t
 
 ## Issue:
 
-### Stale data seen post application pod reschedule on other nodes
+### Stale data seen post application pod reschedule on other nodes <a name="StaleData"></a>
 
 - Sometimes, stale application data is seen on the OpenEBS volume mounts after application pod reschedule. Typically, these applications are Kubernetes deployments, with the reschedule to other nodes occurring due to rolling updates.
 - This occurs due to the iSCSI volume mounts and sessions staying alive/persisting on the nodes even after the pod terminates. This behavior is observed on some versions of GKE clusters (1.7.x).
@@ -127,7 +127,7 @@ This issue is due to failed application operations in the container. Typically t
 
 ## Issue:
 
-### Application and OpenEBS pods terminate/restart under heavy I/O load
+### Application and OpenEBS pods terminate/restart under heavy I/O load <a name="ApplnPodsTerminate"></a>
 
 This is caused due to lack of resources on the Kubernetes nodes, which causes the pods to evict under loaded conditions as the node becomes *unresponsive*. The pods transition from *Running* state to *unknown* state followed by *Terminating* before restarting again.
 
@@ -141,7 +141,7 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 
 ## Issue:
 
-### Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the disk size of the node available
+### Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the disk size of the node available <a name="NodeDiskSize"></a>
 
 ## Workaround:
 
