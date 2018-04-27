@@ -15,7 +15,7 @@ You can access the latest documents at https://docs.openebs.io.
     > -   create an issue see, [Creating an Issue](#createissue).
     > -   create your own branch see, [Creating a Branch](#createbranch).
     > -   work on the content by creating an RST file, and
-    > -   create a pull request see, [Creating a Pull Request](createpullrequest).
+    > -   create a pull request see, [Creating a Pull Request](createpullrequest)
 
 Review Process for Documentation Issues and Pull Requests
 ---------------------------------------------------------
