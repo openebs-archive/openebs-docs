@@ -226,7 +226,7 @@ Running in Azure K8s Clusters (not verified)
 OpenEBS Release Version 0.4.0
 -----------------------------
 
-You can try out OpenEBS v0.4.0 on your Kubernetes Cluster using the [quick start guide](http://openebs.readthedocs.io/en/latest/getting_started/quick_install.html).
+You can try out OpenEBS v0.4.0 on your Kubernetes Cluster using the [quick start guide](/docs/next/overview.html).
 
 ### Downloads for v0.4.0
 
@@ -243,7 +243,7 @@ The following OpenEBS v0.4.0 containers are available at the [Docker Hub](https:
 -   OpenEBS Volume - Dynamic Provisioner is merged into kubernetes-incubator/external-storage project
 -   OpenEBS Maya API Server uses the Kubernetes scheduler logic to place OpenEBS Volume Replicas on different nodes
 -   OpenEBS Maya API Server can be customized by providing ENV options through K8s YAML file for default replica count and jiva image to be used
--   OpenEBS user documentation is available at <http://openebs.readthedocs.io/en/latest/>
+-   OpenEBS user documentation is available at <https://docs.openebs.io>
 -   OpenEBS now supports deployment on AWS, along with previously supported Google Cloud and On-premise setups
 -   OpenEBS Vagrant boxes are upgraded to support Kubernetes version 1.7.5
 -   OpenEBS can now be deployed within a minikube setup
