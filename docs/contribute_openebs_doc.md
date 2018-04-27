@@ -12,10 +12,10 @@ You can access the latest documents at https://docs.openebs.io.
 1.  If you would like to give feedback on existing content, create an issue on documentation see, [Creating an Issue](http://openebs.readthedocs.io/en/latest/contribute/contribute_openebs_doc.html#creating-an-issue).
 2.  If you would like to contribute to new content,
 
-    > -   create an issue see, [Creating an Issue](http://openebs.readthedocs.io/en/latest/contribute/contribute_openebs_doc.html#creating-an-issue)
-    > -   create your own branch see, [Creating a Branch](/docs/contribute/contribute_openebs_doc.html#creating-a-branch)
+    > -   create an issue see, [Creating an Issue](#createissue).
+    > -   create your own branch see, [Creating a Branch](#createbranch).
     > -   work on the content by creating an RST file, and
-    > -   create a pull request see, [Creating a Pull Request](/docs/openebs_doc.html#creating-a-pull-request).
+    > -   create a pull request see, [Creating a Pull Request](createpullrequest).
 
 Review Process for Documentation Issues and Pull Requests
 ---------------------------------------------------------
@@ -32,11 +32,11 @@ Review Process for Documentation Issues and Pull Requests
 
     Before editing the files, familiarize yourself with the reStructured markup.
 
-5.  Once you are done with your edits and ready for review, you must create a PR see [Creating a Pull          Request](contribute/contribute_openebs_doc.html#creating-a-pull-request).
-6.  The documents must be approved. see, [PR Approval Process](contribute/contribute_openebs_doc.html#pr-approval-process).
+5.  Once you are done with your edits and ready for review, you must create a PR see [Creating a Pull Request](createpullrequest).
+6.  The documents must be approved. see, [PR Approval Process](#prapprovalprocess).
 
-Creating an Issue
------------------
+Creating an Issue  <a name="createissue"></a>
+------------------------------------------------------
 
 1.  Go to <https://github.com/openebs/openebs/issues>.
 2.  Click **New issue**.
@@ -44,7 +44,7 @@ Creating an Issue
 4.  You can enter a detailed description in the edit box below.
 5.  Click **Submit new issue**.
 
-Creating a Branch
+Creating a Branch <a name="createbranch"></a>
 -----------------
 
 1.  Create your openebs fork from (<https://github.com/openebs/openebs>). If you already have a forked
@@ -56,7 +56,7 @@ Creating a Branch
     git checkout -b <issue name>-#<issue number>
     ```
 
-Creating a Pull Request
+Creating a Pull Request <a name="createpullrequest"></a>
 -----------------------
 
 1.  Go to your fork on Github.
@@ -64,7 +64,7 @@ Creating a Pull Request
 3.  Click **New pull request**.
 4.  Add "Fixes \#\<*Issue number*\>" in the commit message.
 
-PR Approval Process
+PR Approval Process <a name="prapprovalprocess"></a>
 -------------------
 
 1.  Once the assignee is ready with the final draft, the reviewers have to approve the content.
