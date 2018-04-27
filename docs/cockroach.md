@@ -98,15 +98,16 @@ Testing your Database
 ​1. Launch a temporary interactive pod and start the built-in SQL client
 inside it using the following command. 
 
-    ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --rm --restart=Never -- sql --insecure --host=cockroachdb-public
+```
+ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --rm --restart=Never -- sql --insecure --host=cockroachdb-public
+```
+
 2. Run some basic CockroachDB SQL statements as follows: 
 
+```
     > CREATE DATABASE bank;
-
     > CREATE TABLE bank.accounts (id INT PRIMARY KEY, balance DECIMAL);
-
     > INSERT INTO bank.accounts VALUES (1, 1000.50);
-
     > SELECT * FROM bank.accounts;
 
     +----+---------+
@@ -115,17 +116,18 @@ inside it using the following command.
     |  1 |  1000.5 |
     +----+---------+
     (1 row)
+```
 
-​3. Exit the SQL shell using the following command. :
+​3. Exit the SQL shell using the following command.
 
+```
     >\q
+ ```
 
 Using a Load Generator
 ----------------------
 
-1. Download and apply the CockroachDB load generator from the OpenEBS
-
-repository using the following commands.
+1. Download and apply the CockroachDB load generator from the OpenEBS repository using the following commands.
 
 ```
 ubuntu@kubemaster:~wget
@@ -141,13 +143,18 @@ cockroachdb-lg 1 0 2m
 ```
 
 3.  This is a Kubernetes Job YAML. It creates a database named test with a table named kv containing random k:v pairs.
+
 4.  The Kubernetes Job will run for a duration of 5 minutes, which is a configurable value in the YAML.
 
 5. Launch a temporary interactive pod and start the built-in SQL client inside it using the following command. 
 
-    ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --rm --restart=Never -- sql --insecure --host=cockroachdb-public
+```
+ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --rm --restart=Never -- sql --insecure --host=cockroachdb-public
+```
+
 6. Set the default database as test and display the contents of the kv table as follows: 
 
+```
     > SHOW DATABASES;
     +--------------------+
     |      Database      |
@@ -195,10 +202,13 @@ cockroachdb-lg 1 0 2m
     (1 row)
     
     Time: 438.68592ms
+ ```
 
 ​7. Exit the SQL shell using the following command. 
 
-    >\q
+```
+>\q
+```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
