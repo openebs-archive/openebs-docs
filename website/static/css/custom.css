@@ -251,3 +251,22 @@ input#search_input_react:focus, input#search_input_react:active {
 #panel, .flip {
     cursor: pointer;
 }
+
+/* CSS for version dropdown */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 375px) {
+    element.style {
+      position: relative;
+}
+
+    .ver-link {
+      cursor: pointer;
+      color: #fff;
+      margin-right: 141px;
+}
+    p {
+      line-height: 1;
+      font-size: 12px;
+}
+}
