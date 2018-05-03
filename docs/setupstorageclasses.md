@@ -81,11 +81,9 @@ parameters:
 
 User has to add `openebs.io/fstype: "xfs"` in the openebs-storageclasses.yaml.
 
-https://github.com/openebs/openebs/issues/1446
-
-
-
 Follow the below link to understand how to deploy an application on OpenEBS volume using xfs filesystem. Here we have taken mongo-DB application as an example.
+
+https://github.com/openebs/openebs/issues/1446
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
