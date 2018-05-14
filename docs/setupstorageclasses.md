@@ -61,7 +61,7 @@ apiVersion: storage.k8s.io/v1
 
 
 
-By default, OpenEBS comes with ext4 file system. However, if you wants to use xfs file system you can do so by adding the below entries in the openebs-storageclasses.yaml.
+By default, OpenEBS comes with ext4 file system. However, if you want to use xfs file system you can do so by adding the below entries in the openebs-storageclasses.yaml.
 
 ```
 vi openebs/k8s/openebs-storageclasses.yaml
