@@ -61,7 +61,7 @@ apiVersion: storage.k8s.io/v1
 
 
 
-By default OpenEBS comes with ext4  file system. However if the user wants to use xfs file system he can do that by adding the below entries in the  openebs-storageclasses.yaml.
+By default, OpenEBS comes with ext4 file system. However, if you want to use xfs file system you can do so by adding the below entries in the openebs-storageclasses.yaml.
 
 ```
 vi openebs/k8s/openebs-storageclasses.yaml
@@ -79,9 +79,9 @@ parameters:
   openebs.io/fstype: "xfs"
 ```
 
-User has to add `openebs.io/fstype: "xfs"` in the openebs-storageclasses.yaml.
+You must add `openebs.io/fstype: "xfs"` in the openebs-storageclasses.yaml.
 
-Follow the below link to understand how to deploy an application on OpenEBS volume using xfs filesystem. Here we have taken mongo-DB application as an example.
+Follow the link below to understand how to deploy an application on the OpenEBS volume using xfs file system. Here, mongo-DB application is used as an example.
 
 https://github.com/openebs/openebs/issues/1446
 
