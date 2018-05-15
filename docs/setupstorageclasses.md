@@ -79,7 +79,7 @@ parameters:
   openebs.io/fstype: "xfs"
 ```
 
-You must add `openebs.io/fstype: "xfs"` in the openebs-storageclasses.yaml.
+Note: Support for xfs file system has been introduced from 0.5.4 and onwards. In order to change the file system you must have 0.5.4 or latest build. You must add `openebs.io/fstype: "xfs"` in the openebs-storageclasses.yaml.
 
 Follow the link below to understand how to deploy an application on the OpenEBS volume using xfs file system. Here, mongo-DB application is used as an example.
 
