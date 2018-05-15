@@ -130,6 +130,28 @@ parameters:
 
 ```
 
+## Storage Class Policy 
+
+You can specify storage class policy.  Here you can mention specify the capacity, file system type.
+
+By default OpenEBS comes with ext4 file system. However if the user wants to use xfs file system he can do that.
+
+Following is a sample setting.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+   name: openebs-mongodb
+provisioner: openebs.io/provisioner-iscsi
+parameters:
+  openebs.io/storage-pool: "test-mntdir"
+  openebs.io/jiva-replica-count: "1"
+  openebs.io/volume-monitor: "true"
+  openebs.io/capacity: 5G
+  openebs.io/fstype: "xfs"
+```
+
 ## Volume Monitoring Policy
 
 You can specify the monitoring policy for a particular volume using *openebs.io/volume-monitor* property.

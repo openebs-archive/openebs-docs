@@ -46,26 +46,44 @@ Defining a storage class supported by OpenEBS:
 
 ```
 apiVersion: storage.k8s.io/v1
-	kind: StorageClass 	(Kind always should be StorageClass)
+	kind: StorageClass 	#(Kind always should be StorageClass)
 	metadata:
-   	name: openebs-standalone 	(Name of the StorageClass)
+   	name: openebs-standalone 	#(Name of the StorageClass)
 	provisioner: openebs.io/provisioner-iscsi
 	parameters:
   	openebs.io/storage-pool: "default"
-  	openebs.io/jiva-replica-count: "1" (This value represents the  number of replicas of a StorageClass)
+  	openebs.io/jiva-replica-count: "1" #(This value represents the  number of replicas of a StorageClass)
   	openebs.io/volume-monitor: "true"
-  	openebs.io/capacity: 5G 	(Capacity of the StorageClass)
+  	openebs.io/capacity: 5G 	#(Capacity of the StorageClass)
 
 
 ```
 
 
 
+By default, OpenEBS comes with ext4 file system. However, if you want to use xfs file system you can do so by adding the below entries in the openebs-storageclasses.yaml.
 
+```
+vi openebs/k8s/openebs-storageclasses.yaml
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+   name: openebs-mongodb
+provisioner: openebs.io/provisioner-iscsi
+parameters:
+  openebs.io/storage-pool: "test-mntdir"
+  openebs.io/jiva-replica-count: "1"
+  openebs.io/volume-monitor: "true"
+  openebs.io/capacity: 5G
+  openebs.io/fstype: "xfs"
+```
 
+You must add `openebs.io/fstype: "xfs"` in the openebs-storageclasses.yaml.
 
+Follow the link below to understand how to deploy an application on the OpenEBS volume using xfs file system. Here, mongo-DB application is used as an example.
 
-
+https://github.com/openebs/openebs/issues/1446
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
