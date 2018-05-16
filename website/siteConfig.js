@@ -29,6 +29,7 @@ const siteConfig = {
     //{page: 'help', label: 'Help'},
   ],
   users,
+  onPageNav: 'separate',
   editUrl: 'https://github.com/openebs/openebs-docs/edit/newstaging/docs/',
   /* path to images for header/footer */
   headerIcon: 'img/OpenEBSLogo.png',
