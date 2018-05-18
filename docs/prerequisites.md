@@ -126,7 +126,7 @@ Check the status of iSCSI service by running the following command inside kubele
 azureuser@aks-nodepool1-46849391-1:~$ service open-iscsi status
 ```
 
-If hyperkube kubelet is running as a binary in the nodes, check for open-iscsi status in the node. If
+**Note:** If hyperkube kubelet is running as a binary in the nodes, check for open-iscsi status in the node. If
 open-iscsi is not present, follow the procedure below to install open-iscsi.
 
 ```
@@ -137,9 +137,7 @@ azureuser@aks-nodepool1-46849391-1:~$
 
 ### Configuring RBAC on Azure cloud
 
-On Azure cloud,
-
-you must enable the cluster role binding by applying the following yaml.
+On Azure cloud, you must enable the cluster role binding by applying the following yaml.
 
 ```
 apiVersion: rbac.authorization.k8s.io/v1
