@@ -53,7 +53,7 @@ Alternatively, a YAML file ([values.yaml](https://raw.githubusercontent.com/open
 helm install -f values.yaml stable/openebs --name openebs --namespace openebs
 ```
 
-**Note:** Newer version of OpenEBS has been made available which supports XFS. To use this functionality, use the  [values.yaml](https://raw.githubusercontent.com/openebs/openebs/master/k8s/charts/openebs/values.yaml)
+**Note:** Newer version (0.5.4) of OpenEBS has been made available which supports XFS. To use this functionality, use the  [values.yaml](https://raw.githubusercontent.com/openebs/openebs/master/k8s/charts/openebs/values.yaml). Please refer the [changelog](https://docs.openebs.io/docs/next/changelog.html) for details.
 
 Using the above helm chart method, it installs the required OpenEBS services except storage class templates. The storage class templates can be installed using the following command.
 
