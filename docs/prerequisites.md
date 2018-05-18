@@ -39,7 +39,15 @@ The open-iscsi initiator packages depend on your host operating system or kubele
 
 ### GKE
 
-With GKE, you must create Kubernetes cluster with the host machine as Ubuntu.  Ubuntu host on GKE comes with iSCSI configured.
+With GKE, you must create Kubernetes cluster with the host machine as Ubuntu.  Ubuntu host on GKE comes with iSCSI configured. 
+
+You might need an admin-context in case if you are installing OpenEBS without helm approach. For that use below command to set admin-context.
+
+```
+kubectl create clusterrolebinding <myclustername>-cluster-admin-binding --clusterrole=cluster-admin --user=<myusername>
+```
+
+
 
 ### On Ubuntu host
 
@@ -62,8 +70,6 @@ sudo apt-get update
 ```
 sudo apt-get install open-iscsi
 ```
-
-
 
 ```
 sudo service open-iscsi restart
