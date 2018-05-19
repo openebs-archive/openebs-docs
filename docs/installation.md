@@ -23,69 +23,63 @@ On an existing Kubernetes cluster, as a cluster administrator, you can install O
 
 
 
-## Install OpenEBS using helm charts
+## Helm based OpenEBS Installation
 
 ------
 
 ![Installing OpenEBS using helm ](/docs/assets/helm.png)
 
-You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster. OpenEBS charts are available from [Kubernetes stable helm charts](https://github.com/kubernetes/charts/tree/master/stable).  
+You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster. 
 
-### Setup RBAC for tiller before installing OpenEBS chart
+## Prerequisites
+- Kubernetes 1.7.5+ with RBAC enabled
+- iSCSI PV support in the underlying infrastructure
 
+## Installing OpenEBS 
 ```
-kubectl -n kube-system create sa tiller
-kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
-kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"spec": {"serviceAccountName": "tiller"}}}}'
-```
-
-
-
-Install the charts using the following command with a namespace of your choice.
-
-```
-helm install stable/openebs --name openebs --namespace openebs
+helm install stable/openebs
 ```
 
-Alternatively, a YAML file ([values.yaml](https://raw.githubusercontent.com/openebs/openebs/master/k8s/charts/openebs/values.yaml)) that specifies the values for parameters can be provided while installing the chart. You can customize it or go with default values.
-
+## Installing OpenEBS with the release name `my-release`:
 ```
-helm install -f values.yaml stable/openebs --name openebs --namespace openebs
-```
-
-**Note:** Newer version (0.5.4) of OpenEBS has been made available which supports XFS. To use this functionality, use the  [values.yaml](https://raw.githubusercontent.com/openebs/openebs/master/k8s/charts/openebs/values.yaml). Please refer the [changelog](https://docs.openebs.io/docs/next/changelog.html) for details.
-
-Using the above helm chart method, it installs the required OpenEBS services except storage class templates. The storage class templates can be installed using the following command.
-
-```
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
+helm install --name `my-release` stable/openebs
 ```
 
- As a next step, it is recommended to setup a catalog of storage classes for your application developers to use from. Learn more about setting up [OpenEBS storage classes here](/docs/next/setupstorageclasses.html).
+## To uninstall/delete the `my-release` deployment:
+```
+helm ls --all
+helm delete `my-release`
+```
 
-Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://github.com/openebs/openebs/tree/master/k8s/demo).
+## Configuration
 
-### Default values for helm chart parameters
+The following tables lists the configurable parameters of the OpenEBS chart and their default values.
 
-The following table lists the configurable parameters of the OpenEBS chart and their default values.
+| Parameter                            | Description                                   | Default                           |
+| ------------------------------------ | --------------------------------------------- | --------------------------------- |
+| `rbac.create`                        | Enable RBAC Resources                         | `true`                            |
+| `serviceAccount.create`              | Specify if Service Account should be created  | `true`                            |
+| `serviceAccount.name`                | Specify the name of service account           | `openebs-maya-operator`           |
+| `image.pullPolicy`                   | Container pull policy                         | `IfNotPresent`                    |
+| `apiserver.image`                    | Docker Image for API Server                   | `openebs/m-apiserver`             |
+| `apiserver.imageTag`                 | Docker Image Tag for API Server               | `0.5.3`                           |
+| `apiserver.replicas`                 | Number of API Server Replicas                 | `1`                               |
+| `provisioner.image`                  | Docker Image for Provisioner                  | `openebs/openebs-k8s-provisioner` |
+| `provisioner.imageTag`               | Docker Image Tag for Provisioner              | `0.5.3`                           |
+| `provisioner.replicas`               | Number of Provisioner Replicas                | `1`                               |
+| `jiva.image`                         | Docker Image for Jiva                         | `openebs/jiva`                    |
+| `jiva.imageTag`                      | Docker Image Tag for Jiva                     | `0.5.3`                           |
+| `jiva.replicas`                      | Number of Jiva Replicas                       | `3`                               |
 
-| Parameter               | Description                                  | Default                           |
-| ----------------------- | -------------------------------------------- | --------------------------------- |
-| `rbac.create`           | Enable RBAC Resources                        | `true`                            |
-| `serviceAccount.create` | Specify if Service Account should be created | `true`                            |
-| `serviceAccount.name`   | Specify the name of service account          | `openebs-maya-operator`           |
-| `image.pullPolicy`      | Container pull policy                        | `IfNotPresent`                    |
-| `apiserver.image`       | Docker Image for API Server                  | `openebs/m-apiserver`             |
-| `apiserver.imageTag`    | Docker Image Tag for API Server              | `0.5.4`                           |
-| `apiserver.replicas`    | Number of API Server Replicas                | `1`                               |
-| `provisioner.image`     | Docker Image for Provisioner                 | `openebs/openebs-k8s-provisioner` |
-| `provisioner.imageTag`  | Docker Image Tag for Provisioner             | `0.5.4`                           |
-| `provisioner.replicas`  | Number of Provisioner Replicas               | `1`                               |
-| `jiva.image`            | Docker Image for Jiva                        | `openebs/jiva`                    |
-| `jiva.imageTag`         | Docker Image Tag for Jiva                    | `0.5.4`                           |
-| `jiva.replicas`         | Number of Jiva Replicas                      | `3`                               |
+Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 
-Specify each parameter using the `--set key=value` argument to `helm install`.
+Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
+
+```shell
+helm install --name `my-release` -f values.yaml stable/openebs
+```
+
+> **Tip**: You can use the default [values.yaml](values.yaml)
 
 ## Install OpenEBS using kubectl
 
