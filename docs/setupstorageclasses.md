@@ -8,21 +8,25 @@ sidebar_label: Storage Classes
 
 **Storage Class**
 
-A Storage Class provides a way for administrators to describe the “classes” of storage they offer. Different classes might map to quality-of-service levels, or to backup policies, or to arbitrary policies determined by the cluster administrators. This concept is sometimes called “profiles” in other storage systems.
+A Storage Class provides a way for administrators to describe the “classes” of storage they offer. Different classes may map to quality-of-service levels, backup policies, or to arbitrary policies determined by the cluster administrators. This concept is sometimes called “profiles” in other storage systems.
 
 **Setting Up Storage Class On OpenEBS**
 
 Once OpenEBS is installed on your Kubernetes cluster, you can start using it by specifying corresponding OpenEBS Storage Classes in your PVCs.
 
-Apply the openebs-operator.yaml file on the Kubernetes cluster. This creates the maya api-server and OpenEBS provisioner deployments.
+Apply the openebs-operator.yaml file on the Kubernetes cluster using the following command. This creates the maya api-server and OpenEBS provisioner deployments.
 
-		kubectl apply -f openebs-operator.yaml
+```
+kubectl apply -f openebs-operator.yaml
+```
 
 Add the OpenEBS storage classes using the following command. This can be used by users to map a suitable storage profile for their applications in their respective persistent volume claims.
 
-		kubectl apply -f openebs-storageclasses.yaml
+```
+kubectl apply -f openebs-storageclasses.yaml
+```
 
-OpenEBS Storage provides several features that can be customized for each volume. Some of features that could be customized per application are:
+OpenEBS Storage provides several features that can be customized for each volume. Some of features that could be customized per application are as follows:
 
 - Number of replications
 - Zone or node affinity
@@ -32,36 +36,54 @@ OpenEBS Storage provides several features that can be customized for each volume
 
 OpenEBS comes with some pre-defined set of storage classes that can be readily used.
 
-Please visit the below link for the pre-defined storage classes.
+Go to the following link for the pre-defined storage classes.
 https://github.com/openebs/openebs/blob/master/k8s/openebs-storageclasses.yaml
 
 
-It is also possible that user can create a new custom storage class.
+It is also possible that a user can create a new custom storage class.
 
 Defining a storage class supported by OpenEBS:
 
 ```
 apiVersion: storage.k8s.io/v1
-	kind: StorageClass 	(Kind always should be StorageClass)
+	kind: StorageClass 	#(Kind always should be StorageClass)
 	metadata:
-   	name: openebs-standalone 	(Name of the StorageClass)
+   	name: openebs-standalone 	#(Name of the StorageClass)
 	provisioner: openebs.io/provisioner-iscsi
 	parameters:
   	openebs.io/storage-pool: "default"
-  	openebs.io/jiva-replica-count: "1" (This value represents the number of replica of the StorageClass)
+  	openebs.io/jiva-replica-count: "1" #(This value represents the  number of replicas of a StorageClass)
   	openebs.io/volume-monitor: "true"
-  	openebs.io/capacity: 5G 	(Capacity of the StorageClass)
+  	openebs.io/capacity: 5G 	#(Capacity of the StorageClass)
 
 
 ```
 
 
 
+By default, OpenEBS comes with ext4 file system. However, if you want to use xfs file system you can do so by adding the below entries in the openebs-storageclasses.yaml.
 
+```
+vi openebs/k8s/openebs-storageclasses.yaml
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+   name: openebs-mongodb
+provisioner: openebs.io/provisioner-iscsi
+parameters:
+  openebs.io/storage-pool: "test-mntdir"
+  openebs.io/jiva-replica-count: "1"
+  openebs.io/volume-monitor: "true"
+  openebs.io/capacity: 5G
+  openebs.io/fstype: "xfs"
+```
 
+Note: Support for xfs file system has been introduced from 0.5.4 and onwards. In order to change the file system you must have 0.5.4 or latest build. You must add `openebs.io/fstype: "xfs"` in the openebs-storageclasses.yaml.
 
+Follow the link below to understand how to deploy an application on the OpenEBS volume using xfs file system. Here, mongo-DB application is used as an example.
 
-
+https://github.com/openebs/openebs/issues/1446
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

@@ -6,93 +6,108 @@ sidebar_label: Installation
 
 ------
 
-This section describes about the OpenEBS installation and its up-gradation to its latest version.
-
-Install section deals with different ways of OpenEBS installation and Upgrade section deals with upgrading OpenEBS to it latest available version from its previous version. 
+OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here](/docs/next/supportedplatforms.html)
 
 
 
-Install
-=========
+On an existing Kubernetes cluster, as a cluster administrator, you can install OpenEBS in the following two ways.
 
-It is very simple to install OpenEBS on your existing k8s cluster. OpenEBS installation can be done by 2 ways
+1. Using helm charts
 
-1. Helm charts
-2. kubectl  
+2. Using OpenEBS operator through kubectl  
 
-
+   ​
 
 
-## Setup OpenEBS using helm charts
+<a name="helm"></a>
 
-With simple and easy steps, you can install OpenEBS on your existing k8s cluster using helm chart
 
-Download and Install the latest OpenEBS Operator files using the following commands.
+
+## Install OpenEBS using helm charts
+
+------
+
+![Installing OpenEBS using helm ](/docs/assets/helm.png)
+
+You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster. OpenEBS charts are available from [Kubernetes stable helm charts](https://github.com/kubernetes/charts/tree/master/stable).  
+
+### Setup RBAC for tiller before installing OpenEBS chart
 
 ```
-helm repo add openebs-charts https://openebs.github.io/charts/
-helm repo update
-helm install openebs-charts/openebs --name openebs --namespace openebs
+kubectl -n kube-system create sa tiller
+kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"spec": {"serviceAccountName": "tiller"}}}}'
 ```
 
-## Configuration
 
-The following tables lists the configurable parameters of the OpenEBS chart and their default values.
 
-| Parameter                          | Description                                  | Default                           |
-| ---------------------------------- | -------------------------------------------- | --------------------------------- |
-| `rbac.create`                      | Enable RBAC Resources                        | `true`                            |
-| `image.pullPolicy`                 | Container pull policy                        | `IfNotPresent`                    |
-| `apiserver.image`                  | Docker Image for API Server                  | `openebs/m-apiserver`             |
-| `apiserver.imageTag`               | Docker Image Tag for API Server              | `0.5.3`                           |
-| `apiserver.replicas`               | Number of API Server Replicas                | `2`                               |
-| `apiserver.antiAffinity.enabled`   | Enable anti-affinity for API Server Replicas | `true`                            |
-| `apiserver.antiAffinity.type`      | Anti-affinity type for API Server            | `Hard`                            |
-| `provisioner.image`                | Docker Image for Provisioner                 | `openebs/openebs-k8s-provisioner` |
-| `provisioner.imageTag`             | Docker Image Tag for Provisioner             | `0.5.3`                           |
-| `provisioner.replicas`             | Number of Provisioner Replicas               | `2`                               |
-| `provisioner.antiAffinity.enabled` | Enable anti-affinity for API Server Replicas | `true`                            |
-| `provisioner.antiAffinity.type`    | Anti-affinity type for Provisioner           | `Hard`                            |
-| `jiva.image`                       | Docker Image for Jiva                        | `openebs/jiva`                    |
-| `jiva.imageTag`                    | Docker Image Tag for Jiva                    | `0.5.3`                           |
-| `jiva.replicas`                    | Number of Jiva Replicas                      | `3`                               |
+Install the charts using the following command with a namespace of your choice.
+
+```
+helm install stable/openebs --name openebs --namespace openebs
+```
+
+Alternatively, a YAML file ([values.yaml](https://raw.githubusercontent.com/openebs/openebs/master/k8s/charts/openebs/values.yaml)) that specifies the values for parameters can be provided while installing the chart. You can customize it or go with default values.
+
+```
+helm install -f values.yaml stable/openebs --name openebs --namespace openebs
+```
+
+**Note:** Newer version (0.5.4) of OpenEBS has been made available which supports XFS. To use this functionality, use the  [values.yaml](https://raw.githubusercontent.com/openebs/openebs/master/k8s/charts/openebs/values.yaml). Please refer the [changelog](https://docs.openebs.io/docs/next/changelog.html) for details.
+
+Using the above helm chart method, it installs the required OpenEBS services except storage class templates. The storage class templates can be installed using the following command.
+
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
+```
+
+ As a next step, it is recommended to setup a catalog of storage classes for your application developers to use from. Learn more about setting up [OpenEBS storage classes here](/docs/next/setupstorageclasses.html).
+
+Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://github.com/openebs/openebs/tree/master/k8s/demo).
+
+### Default values for helm chart parameters
+
+The following table lists the configurable parameters of the OpenEBS chart and their default values.
+
+| Parameter               | Description                                  | Default                           |
+| ----------------------- | -------------------------------------------- | --------------------------------- |
+| `rbac.create`           | Enable RBAC Resources                        | `true`                            |
+| `serviceAccount.create` | Specify if Service Account should be created | `true`                            |
+| `serviceAccount.name`   | Specify the name of service account          | `openebs-maya-operator`           |
+| `image.pullPolicy`      | Container pull policy                        | `IfNotPresent`                    |
+| `apiserver.image`       | Docker Image for API Server                  | `openebs/m-apiserver`             |
+| `apiserver.imageTag`    | Docker Image Tag for API Server              | `0.5.4`                           |
+| `apiserver.replicas`    | Number of API Server Replicas                | `1`                               |
+| `provisioner.image`     | Docker Image for Provisioner                 | `openebs/openebs-k8s-provisioner` |
+| `provisioner.imageTag`  | Docker Image Tag for Provisioner             | `0.5.4`                           |
+| `provisioner.replicas`  | Number of Provisioner Replicas               | `1`                               |
+| `jiva.image`            | Docker Image for Jiva                        | `openebs/jiva`                    |
+| `jiva.imageTag`         | Docker Image Tag for Jiva                    | `0.5.4`                           |
+| `jiva.replicas`         | Number of Jiva Replicas                      | `3`                               |
 
 Specify each parameter using the `--set key=value` argument to `helm install`.
 
-Alternatively, a YAML file (values.yaml) that specifies the values for the parameters can be provided while installing the chart. You can customize it or go with default values. For example,
+## Install OpenEBS using kubectl
 
-```
-helm install --name openebs -f values.yaml openebs-charts/openebs
-```
+------
+
+![Installing OpenEBS with Operator](/docs/assets/operator.png)
+
+OpenEBS operator yaml file is available at https://openebs.github.io/charts/openebs-operator.yaml. 
 
 
 
-## Setup OpenEBS using kubectl
-
-You can easily setup OpenEBS on your existing Kubernetes cluster with a few simple kubectl commands.
-
-Download the latest OpenEBS Operator files using the following commands.
+Set the context to **cluster-admin** and apply the above operator.
 
 
 
 ```
-git clone <https://github.com/openebs/openebs.git>
+kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
 ```
 
 
 
-Apply the  openebs-operator.yaml to deploy OpenEBS on your k8 cluster.
-
-
-
-```
-cd openebs/k8s
-kubectl apply -f openebs-operator.yaml
-```
-
-
-
- Once you apply the same, two Kubernetes Pods will be created along with *maya-apiserver*  and *openebs-provisioner* . *openebs-provisioner* will communicate with kubernetes controllers and  *maya-apiserver* will provision the OpenEBS volume.
+This operator installs the control plane components such as maya-apiserver, openebs-provisioner, and also deploys the required storage class templates.
 
 ```
 name@MayaMaster:~$ kubectl get pods
@@ -101,249 +116,29 @@ maya-apiserver-1633167387-v4sf1        1/1       Running   0          4h
 openebs-provisioner-1174174075-n989p   1/1       Running   0          4h
 ```
 
-
-
-Next comes OpenEBS storage classes. Add OpenEBS related storage classes in your cluster that can be used by developers and applications using the following command.
-
-
-
-```
-kubectl apply -f openebs-storageclasses.yaml
-```
-
-
-
-There is some common workload related storage classes are installed by default on your kubernetes cluster once OpenEBS is installed. You can customize or use the default storage classes to run your application of OpenEBS volume. To know the installed default storage class details, use following command.
-
-
+You can see the newly deployed storage classes using the following command
 
 ```
 kubectl get sc
 ```
 
+As a next step, it is recommended to setup a catalog of storage classes for your application developers to use from. Learn more about setting up [OpenEBS storage classes here](/docs/next/setupstorageclasses.html).
 
+Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo).
 
-So, you are in the last steps of running stateful applications with OpenES storage volume.
+### See Also:
 
-Use corresponding storage class name in your PVC yaml file to set run the stateful workload on OpenEBS volume.
+[Setting up OpenEBS storage classes](/docs/next/setupstorageclasses.html)
 
-Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo)
+[OpenEBS architecture](/docs/next/architecture.html)
 
+[Overview of CAS](/docs/next/conceptscas.html)
 
+[Upgrading OpenEBS](/docs/next/upgrade.html)
 
-**Configurations**
+ <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
 
-
- The following are some of the parameters of the OpenEBS volume and their default values.  
-
-```
-Namespace= default
-
-OPENEBS_IO_JIVA_REPLICA_COUNT=3
-
-Image: 0.5.3
-
-Capacity: 5G
-```
-
- 
-
-
-Upgrade
-=========
-
-There are 3 main upgrade paths we are supporting. Each upgrade has its own significant changes to support and ease use of OpenEBS volume in your k8s cluster.
-
-From 0.4.0 to 0.5.0
-
-From 0.5.0 to 0.5.1
-
-From 0.5.1 to 0.5.3
-
-
-
-These are the general steps to upgrade your current OpenEBS volume from above mentioned paths.
-
-
-
-### **STEP-1: CORDON ALL NODES WHICH DO NOT HOST OPENEBS VOLUME REPLICAS**
-
-
-
-Perform kubectl cordon <node> on all nodes that don't have the openebs volume replicas.
-
-This is to ensure that the replicas are not rescheduled elsewhere (other nodes) upon upgrade and "stick" to the same nodes.
-
-
-
-### **STEP-2 : OBTAIN YAMLSPECIFICATIONS FROM OPENEBS LATEST RELEASE**
-
-
-
-Create a directory and obtain specification from [https://github.com/openebs/openebs/releases/tag/<version>>  into the new directory folder files. 
-
-Note: Replace version name with [v0.5.0](https://github.com/openebs/openebs/releases/tag/v0.5.0), [v0.5.1](https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1) or v0.5.3
-
-
-
-### **STEP-3:UPGRADE TO THE LATEST OPENEBS OPERATOR**
-
-
-
-```
-test@Master:~$ kubectl apply -f k8s/openebs-operator.yaml
-serviceaccount "openebs-maya-operator" configured
-clusterrole "openebs-maya-operator" configured
-clusterrolebinding "openebs-maya-operator" configured
-deployment "maya-apiserver" configured
-service "maya-apiserver-service" configured
-deployment "openebs-provisioner" configured
-customresourcedefinition "storagepoolclaims.openebs.io" created
-customresourcedefinition "storagepools.openebs.io" created
-storageclass "openebs-standard" created
-```
-
-
-
-**Notes** : This step will upgrade the operator deployments with the corresponding images, and also
-
-- Sets up the pre-requisites for volume monitoring
-- Creates a new OpenEBS storage-class called openebs-standard with : vol-size=5G,     storage-replica-count=2, storagepool=default, monitoring=True
-
-The above storage-class template can be used to create new ones with desired properties.
-
-
-
-### **STEP-4: CREATE THE OPENEBSMONITORING DEPLOYMENTS (Prometheus & Grafana)**
-
-
-
-This is an optional step and which will be useful if you need to track storage metrics on your OpenEBS volume. We recommended using the monitoring framework to track your OpenEBS volume metrics.
-
-
-
-### **STEP-5: UPDATE OPENEBS VOLUME (CONTROLLER AND REPLICA)DEPLOYMENTS**
-
-
-
-Obtain the name of the OpenEBS Persistent Volume (PV) that has to be updated
-
-```
-test@Master:~$ kubectl get pv
-NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                     STORAGECLASS       REASON    AGE
-pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc   5G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-basic   
-```
-
-Go to the  patch folder to point to the appropriate patch.Run the script *oebs_update.sh* by passing the PV as argument
-
-```
-test@Master:~$ ./oebs_update pvc-01174ced-0a40-11e8-be1c-000c298ff5fc
-deployment "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep" patched
-deployment "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-ctrl" patched
-replicaset "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-ctrl-59df76689f" deleted
-```
-
-Verify that the volume controller and replica pods are running post upgrade
-
-```
-test@Master:~$ kubectl get pods
-NAME                                                             READY     STATUS    RESTARTS   AGE
-maya-apiserver-2288016177-lzctj                                  1/1       Running   0          3m
-openebs-grafana-2789105701-0rw6v                                 1/1       Running   0          2m
-openebs-prometheus-4109589487-4bngb                              1/1       Running   0          2m
-openebs-provisioner-2835097941-5fcxh                             1/1       Running   0          3m
-percona-2503451898-5k9xw                                         1/1       Running   0          9m
-pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-ctrl-6489864889-ml2zw   2/2       Running   0          10s
-pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep-6b9f46bc6b-4vjkf    1/1       Running   0          20s
-pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep-6b9f46bc6b-hvc8b    1/1       Running   0          20s
-```
-
-
-
-### **STEP-6:VERIFY THAT ALL THE REPLICAS ARE REGISTERED AND ARE IN RW MODE**
-
-
-
-```
-test@Master:~$ curl GET http://10.47.0.5:9501/v1/replicas | grep createTypes | jq
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100   162  100   162    0     0     27      0  0:00:06  0:00:05  0:00:01    37
-100   971  100   971    0     0   419k      0 --:--:-- --:--:-- --:--:--  419k
-{
-  "createTypes": {
-    "replica": "http://10.47.0.5:9501/v1/replicas"
-  },
-  "data": [
-    {
-      "actions": {
-        "preparerebuild": "http://10.47.0.5:9501/v1/replicas/dGNwOi8vMTAuNDcuMC4zOjk1MDI=?action=preparerebuild",
-        "verifyrebuild": "http://10.47.0.5:9501/v1/replicas/dGNwOi8vMTAuNDcuMC4zOjk1MDI=?action=verifyrebuild"
-      },
-      "address": "tcp://10.47.0.3:9502",
-      "id": "dGNwOi8vMTAuNDcuMC4zOjk1MDI=",
-      "links": {
-        "self": "http://10.47.0.5:9501/v1/replicas/dGNwOi8vMTAuNDcuMC4zOjk1MDI="
-      },
-      "mode": "RW",
-      "type": "replica"
-    },
-    {
-      "actions": {
-        "preparerebuild": "http://10.47.0.5:9501/v1/replicas/dGNwOi8vMTAuNDQuMC41Ojk1MDI=?action=preparerebuild",
-        "verifyrebuild": "http://10.47.0.5:9501/v1/replicas/dGNwOi8vMTAuNDQuMC41Ojk1MDI=?action=verifyrebuild"
-      },
-      "address": "tcp://10.44.0.5:9502",
-      "id": "dGNwOi8vMTAuNDQuMC41Ojk1MDI=",
-      "links": {
-        "self": "http://10.47.0.5:9501/v1/replicas/dGNwOi8vMTAuNDQuMC41Ojk1MDI="
-      },
-      "mode": "RW",
-      "type": "replica"
-    }
-  ],
-  "links": {
-    "self": "http://10.47.0.5:9501/v1/replicas"
-  },
-  "resourceType": "replica",
-  "type": "collection"
-}
-```
-
-
-
-### **STEP-7: CONFIGURE GRAFANA TO MONITOR VOLUME METRICS**
-
-
-
-Perform the following actions if Step-4 was executed.
-
-- Access the grafana dashboard at http://*NodeIP*:32515
-- Add the prometheus data source by giving URL as http://*NodeIP*:32514
-- Once data source is validated, import the dashboard JSON from :<https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-pg-dashboard.json>
-- Access the volume stats by selecting the volume name (pvc-*) in the OpenEBS Volume dashboard
-
-**Note** : For new applications select a newly created storage-class that has monitoring enabled to automatically start viewing metrics
-
-
-
-The detailed steps for the supported upgrade path are mentioned in below sections.
-
-
-
-### **Upgrade from 0.4.0 to 0.5.0**
-
-It is possible to upgrade your OpenEBS volume from 0.4.0 to 0.5.0 by following the steps mentioned above. The detailed steps are mentioned here (<https://github.com/openebs/openebs/releases/tag/v0.5.0>) and README will give better understanding of the change log and limitations of latest version (https://github.com/openebs/openebs/blob/master/k8s/upgrades/0.4.0-0.5.0/README.md)
-
- 
-
-### **Upgrade from 0.5.0 to 0.5.1**
-
-It is possible to upgrade your OpenEBS volume from 0.5.0 to 0.5.1 by following the steps mentioned above. The detailed steps are mentioned here (<https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1>)
-
-
-<!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};

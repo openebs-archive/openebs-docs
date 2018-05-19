@@ -12,14 +12,20 @@ sidebar_label: Changelog
 
 * Version 0.6.0 
 
-This version is currently under development.
+This version is currently under development. Following features are under development
+
+- Support for volume policies
+- Support for Kubernetes integrated volume snapshot and restore features
+- Introducing cStor (Beta) as the additional storage engine
+- Initial support for Node Disk Manager (NDM)
 
 ## Stable/Current Release
 
-* [Version 0.5.3](https://github.com/openebs/openebs/releases/tag/v0.5.3)
+* [Version 0.5.4](https://github.com/openebs/openebs/releases/tag/v0.5.4)
 
 ## Older Releases
 
+* [Version 0.5.3](https://github.com/openebs/openebs/releases/tag/v0.5.3)
 * [Version 0.5.2](https://github.com/openebs/openebs/releases/tag/v0.5.2)
 * [Version 0.5.1](https://github.com/openebs/openebs/releases/tag/v0.5.1)
 * [Version 0.5.0](https://github.com/openebs/openebs/releases/tag/v0.5.0)

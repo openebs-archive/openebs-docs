@@ -5,9 +5,9 @@ sidebar_label: mayactl
 ---
 ------
 
-`mayactl` is the command line tool for interacting with OpenEBS volumes. `mayactl` is not used/required  while provisioning or managing the OpenEBS volumes, but it is currently used while debugging and troubleshooting. 
+`mayactl` is the command line tool for interacting with OpenEBS volumes. `mayactl` is not used/required while provisioning or managing the OpenEBS volumes, but it is currently used while debugging and troubleshooting. 
 
-For getting access to mayactl command line tool, you will have to login / exec into the maya-apiserver pod on the Kubernetes. The steps are outlined below
+For getting access to mayactl command line tool, you will have to login / execute into the maya-apiserver pod on Kubernetes. The steps are outlined below.
 
 
 
@@ -18,7 +18,7 @@ For getting access to mayactl command line tool, you will have to login / exec i
    maya-apiserver-3053842955-zdlz4       1/1       Running            0          24d
    ```
 
-2. It is possible that there are multiple instances of maya-apiserver pods for scale purposes. You can run mayactl in any one of them. Pick one of the pods for the below `exec` command
+2. It is possible that there are multiple instances of maya-apiserver pods for scaling purposes. You can run mayactl in any one of them. Pick one of the pods for the below `exec` command
 
    ```
    kubeshell:~$ kubectl exec -it maya-apiserver-3053842955-zdlz4 /bin/bash
@@ -41,7 +41,7 @@ For getting access to mayactl command line tool, you will have to login / exec i
        volume      Provides operations related to a Volume
    ```
 
-4. Volume related mayactl commands are
+4. Volume related mayactl commands are as follows:
 
    ```
    bash-4.3# mayactl --help volume
@@ -62,7 +62,7 @@ For getting access to mayactl command line tool, you will have to login / exec i
            $ mayactl volume stats <vol>
    ```
 
-5. Volume snapshot related mayactl commands are
+5. Volume snapshot related mayactl commands are as follows:
 
    ```
    bash-4.3# mayactl --help snapshot
@@ -85,18 +85,6 @@ For getting access to mayactl command line tool, you will have to login / exec i
        revert    Reverts to specific snapshot of a Volume
    ```
 
-
-
-### Quick chart reference to managing OpenEBS volumes
-
-| Purpose                                        | Suggested approach                                           | Notes                                                        |
-| ---------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Create a new volume                            | Add the PVC spec to your application yaml where spec refers to the chosen storageClass and do `kubectl apply -f <app-with-pvc-spec.yaml>` | TODO: Provide a link to the volume creation task             |
-| Delete a volume                                | <TODO>                                                       | TODO: Provide a link to the volume deletion task             |
-| Create a snapshot                              | Create a new yaml file containing the VolumeSnapshot spec with volume name and snapshot name and do `kubectl apply -f <volume-snap.yaml>` | TODO: Provide a link to the snapshot creation task           |
-| Restore from a snapshot / creating a new clone | Create a new yaml file containing the PVC spec refering to the snapshot and do `kubectl apply -f <pvc-clone.yaml>` | For creating clones using APIs , [you can refer to an example here](/docs/snap-clone.html) |
-| Find status of a volume                        | Exec into maya-apiserver pod and do `mayactl volume stats <volume>` |                                                              |
-| List all the OpenEBS volumes                   | Exec into maya-apiserver pod and do `mayactl volume list`    |                                                              |
 
 
 

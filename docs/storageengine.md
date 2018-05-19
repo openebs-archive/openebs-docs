@@ -6,13 +6,17 @@ sidebar_label: Storage Engines
 
 ------
 
+`Note: The feature of choosing a storage engine is available only from OpenEBS 0.6 release onwards`
+
+
+
 OpenEBS supports two pluggable storage engines - Jiva and cStor
 
 The type of storage engine is specified in the volume policies of OpenEBS. A storage class is chosen by the application developer. 
 
 ### Choosing a storage engine
 
-A storage class contains the provisioner details and a reference to the Volume Parameter Group (VPG). Create a storage class that refers to a VPG.  
+A storage class contains the provisioner details and a reference to the Volume Parameter Group (VPG). Create a storage class that refers to a VPG  
 
 Example of a storage class with a VPG reference is shown below.
 
@@ -30,11 +34,11 @@ parameters:
 
 
 
-There are two parameters in a VPG that decide if the storage engine is Jiva or cStor. Those are ControllerImage and ReplicaImage. Set these two parameters either to Jiva or cStor. 
+There are two parameters in a VPG that decide if the storage engine is Jiva or cStor. They are ControllerImage and ReplicaImage. Set these two parameters either for Jiva or cStor. 
 
 
 
-#### For Jiva engine, the VPG looks as follows
+#### For Jiva engine, the VPG is similar to the following.
 
 ```
 apiVersion: openebs.io/v1alpha1
@@ -51,14 +55,14 @@ spec:
 - name: ReplicaImage
   value: openebs/jiva:0.5.0
 - name: ReplicaCount
-  value: "1"
+  value: "3"
 - name: StoragePool
   value: ssd
 ```
 
 
 
-#### For cStor engine, the VPG looks as follows
+#### For cStor engine, the VPG is similar to the following.
 
 ```
 apiVersion: openebs.io/v1alpha1
@@ -74,7 +78,7 @@ spec:
   - name: ReplicaImage
     value: openebs/cstor:0.5.0
   - name: ReplicaCount
-    value: "1"
+    value: "3"
   - name: StoragePool
     value: ssd
 ```
