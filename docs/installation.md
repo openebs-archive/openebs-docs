@@ -14,7 +14,7 @@ On an existing Kubernetes cluster, as a cluster administrator, you can install O
 
 1. Using helm charts
 
-2. Using OpenEBS operator through kubectl  
+2. Using OpenEBS operator through kubectl 
 
    ​
 
@@ -62,13 +62,13 @@ The following tables lists the configurable parameters of the OpenEBS chart and 
 | `serviceAccount.name`                | Specify the name of service account           | `openebs-maya-operator`           |
 | `image.pullPolicy`                   | Container pull policy                         | `IfNotPresent`                    |
 | `apiserver.image`                    | Docker Image for API Server                   | `openebs/m-apiserver`             |
-| `apiserver.imageTag`                 | Docker Image Tag for API Server               | `0.5.3`                           |
+| `apiserver.imageTag`                 | Docker Image Tag for API Server               | `0.5.4`                           |
 | `apiserver.replicas`                 | Number of API Server Replicas                 | `1`                               |
 | `provisioner.image`                  | Docker Image for Provisioner                  | `openebs/openebs-k8s-provisioner` |
-| `provisioner.imageTag`               | Docker Image Tag for Provisioner              | `0.5.3`                           |
+| `provisioner.imageTag`               | Docker Image Tag for Provisioner              | `0.5.4`                           |
 | `provisioner.replicas`               | Number of Provisioner Replicas                | `1`                               |
 | `jiva.image`                         | Docker Image for Jiva                         | `openebs/jiva`                    |
-| `jiva.imageTag`                      | Docker Image Tag for Jiva                     | `0.5.3`                           |
+| `jiva.imageTag`                      | Docker Image Tag for Jiva                     | `0.5.4`                           |
 | `jiva.replicas`                      | Number of Jiva Replicas                       | `3`                               |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
