@@ -10,8 +10,7 @@ sidebar_label: API
         var base_url = window.location.origin;
         window.location = base_url;
         window.open(base_url+"/apireference.html", '_blank');
-    } 
-    //document.write(""); 
+    }
     setTimeout('Redirect()', 0);   
 </script>
 
