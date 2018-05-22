@@ -5,13 +5,8 @@ sidebar_label: API
 ---
 
 <script type="text/javascript">   
-    function Redirect() 
-    {  
-        var base_url = window.location.origin;
-        window.location = base_url;
-        window.open(base_url+"/apireference.html", '_blank');
-    }
-    setTimeout('Redirect()', 0);   
+    var base_url = window.location.origin;
+    window.location = base_url + "/apireference.html";  
 </script>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
