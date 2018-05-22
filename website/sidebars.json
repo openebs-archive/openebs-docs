@@ -4,10 +4,10 @@
     "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "storageschema", "storagepolicies"],
     "Setup": ["prerequisites", "supportedplatforms", "installation", "upgrade", "setupstorageclasses", "setupstoragepools"],
     "Tasks": ["mayactl"],
+    "API": ["api"],
     "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "mayaonline"],
     "Releases": ["changelog"],
     "Troubleshooting": ["troubleshooting", "tsgcollectlogs", "tsg_install", "tsgpvs"],
-    "Contributor Resources": ["weeklycontribute", "contribute"],
-    "References": ["api"]
+    "Contributor Resources": ["weeklycontribute", "contribute"]
   }
 }
