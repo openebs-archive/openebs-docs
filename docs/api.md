@@ -1,16 +1,19 @@
 ---
 id: api
 title: Using OpenEBS APIs
-sidebar_label: APIs
+sidebar_label: API
 ---
 
-------
-
-Content to be developed.
-
-
-
-
+<script type="text/javascript">   
+    function Redirect() 
+    {  
+        var base_url = window.location.origin;
+        window.location = base_url;
+        window.open(base_url+"/apireference.html", '_blank');
+    } 
+    //document.write(""); 
+    setTimeout('Redirect()', 0);   
+</script>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
