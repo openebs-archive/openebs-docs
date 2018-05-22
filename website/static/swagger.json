@@ -19,7 +19,11 @@
       "name": "Apache License",
       "url": "http://www.apache.org/licenses/"
     },
-    "version": "0.5.3"
+    "version": "0.5.3",
+     "x-logo": { 
+     "backgroundColor": "#FFFFFF",
+     "url": "/img/openebslogo4.png"
+     }
   },
   "host": "m-apiserverUrl",
   "basePath": "/latest",
