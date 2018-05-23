@@ -22,7 +22,7 @@
     "version": "0.5.3",
      "x-logo": { 
      "backgroundColor": "#FFFFFF",
-     "url": "/img/openebslogo4.png"
+     "url": "/img/openebslogo.png"
      }
   },
   "host": "m-apiserverUrl",
