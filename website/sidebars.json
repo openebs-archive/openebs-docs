@@ -6,6 +6,7 @@
     "Usecases": ["bluegreen", "cicd", "k8sstorage", "bigdata", "hyperconverged", "hyperscale", "hybridcloud"],
     "Tasks": ["developertasks", "operatortasks", "mayactl"],
     "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "mayaonline"],
+    "Databases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "Kafka", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
     "Releases": ["changelog"],
     "Troubleshooting": ["troubleshooting", "tsgcollectlogs", "tsg_install", "tsgpvs"],
     "Contributor Resources": ["weeklycontribute", "contribute"]
