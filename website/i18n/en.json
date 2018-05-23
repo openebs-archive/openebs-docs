@@ -124,6 +124,8 @@
     "Persistent Volumes": "Persistent Volumes",
     "upgrade": "Upgrading OpenEBS",
     "Upgrade": "Upgrade",
+    "usingminikube": "Use MiniKube to get started with OpenEBS",
+    "With Minikube": "With Minikube",
     "weeklycontribute": "Contributing to OpenEBS - Weekly",
     "Open source Meetings": "Open source Meetings",
     "Getting Started": "Getting Started",
