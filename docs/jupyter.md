@@ -3,6 +3,7 @@ id: Jupyter
 title: Using OpenEBS volumes for Jupyter
 sidebar_label: Jupyter
 ---
+------
 
 This section provides detailed instructions on how to run a jupyter pod on OpenEBS storage in a Kubernetes cluster and uses a *jupyter ui editor* to generate load in order to illustrate input/output traffic on
 the storage.

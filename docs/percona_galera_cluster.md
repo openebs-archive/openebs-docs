@@ -3,6 +3,7 @@ id: PerconaGalera
 title: Using OpenEBS for Percona Galera Cluster
 sidebar_label: Percona Galera Cluster
 ---
+------
 
 This section provides detailed instructions on how to perform the following tasks.
 

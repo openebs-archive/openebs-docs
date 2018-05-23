@@ -3,6 +3,7 @@ id: Redis
 title: Using OpenEBS for Redis
 sidebar_label: Redis StatefulSet
 ---
+------
 
 This section demonstrates the deployment of Redis as a StatefulSet in a Kubernetes cluster. You can spawn a Redis StatefulSet that will use OpenEBS as its persistent storage.
 

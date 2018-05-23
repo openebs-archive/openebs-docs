@@ -3,9 +3,7 @@ id: MongoDB
 title: Using OpenEBS volumes for MongoDB
 sidebar_label: MongoDB
 ---
-
-Running MongoDB on OpenEBS
---------------------------
+------
 
 This section provides detailed instructions which allow you to perform the following tasks.
 

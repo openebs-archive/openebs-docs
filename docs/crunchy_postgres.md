@@ -3,6 +3,7 @@ id: CrunchyPostgres
 title: Using OpenEBS for Crunchy Postgres
 sidebar_label: Crunchy Postgres
 ---
+------
 
 This section provides instructions to run a PostgreSQL StatefulSet with OpenEBS storage and perform simple database operations to verify successful deployment.
 

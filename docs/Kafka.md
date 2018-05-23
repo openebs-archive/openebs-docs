@@ -3,6 +3,7 @@ id: Kafka
 title: Using OpenEBS for OpenEBS
 sidebar_label: Kafka
 ---
+------
 
 ### Deploying Kafka as a StatefulSet
 

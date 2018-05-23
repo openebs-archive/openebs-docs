@@ -3,6 +3,7 @@ id: PerconaDB
 title: Using OpenEBS for PerconaDB
 sidebar_label: PerconaDB
 ---
+------
 
 This section provides detailed instructions on how to run a *percona-mysql* application pod on OpenEBS storage in a Kubernetes cluster and uses a *mysql-client* container to generate load (in the
 form of insert and select DB queries) in order to illustrate input/output traffic on the storage.

@@ -1,10 +1,11 @@
 ---
 id: Cassandra
-title: Running Cassandra with OpenEBS
+title: Using OpenEBS for Cassandra
 sidebar_label: Cassandra
 ---
+------
 
-This section provides detailed instructions to run a Cassandra StatefulSet with OpenEBS storage and perform some simple database operations to verify successful deployment.
+This page provides detailed instructions to run a Cassandra StatefulSet with OpenEBS storage and perform some simple database operations to verify successful deployment.
 
 About Cassandra
 ---------------

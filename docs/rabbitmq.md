@@ -3,6 +3,7 @@ id: RabbitMQ
 title: Using OpenEBS for RabbitMQ
 sidebar_label: RabbitMQ
 ---
+------
 
 ## Deploying RabbitMQ as a StatefulSet
 
