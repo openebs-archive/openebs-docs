@@ -25,3 +25,7 @@ after_success:
   - if [ "$TRAVIS_BRANCH" = "0.6" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/newstaging-openebs-docs;
        docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$COMMIT . && docker push $REPO;
     fi
+
+  - if [ "$TRAVIS_BRANCH" = "api-docs" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/api-openebs-docs;
+       docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$COMMIT . && docker push $REPO;
+    fi
