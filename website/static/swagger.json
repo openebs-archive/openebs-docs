@@ -1,0 +1,537 @@
+{
+  "consumes": [
+    "application/json",
+    "application/xml"
+  ],
+  "produces": [
+    "application/json",
+    "application/xml"
+  ],
+  "schemes": [
+    "http"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Openebs Provisioner communicates with Maya API server for volume creation and much more.",
+    "title": "Maya API Server.",
+    "termsOfService": "By using our services, you abide by our terms and conditions.",
+    "license": {
+      "name": "Apache License",
+      "url": "http://www.apache.org/licenses/"
+    },
+    "version": "0.5.3",
+     "x-logo": { 
+     "backgroundColor": "#FFFFFF",
+     "url": "/img/openebslogo.png"
+     }
+  },
+  "host": "m-apiserverUrl",
+  "basePath": "/latest",
+  "paths": {
+    "/snapshots/create/": {
+      "post": {
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "oauth": [
+              "read",
+              "write"
+            ]
+          }
+        ],
+        "description": "Create snapshot for a volume.",
+        "consumes": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "produces": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "schemes": [
+          "http"
+        ],
+        "tags": [
+          "Snapshots"
+        ],
+        "summary": "Create Snapshot",
+        "operationId": "CreateSnapshot",
+        "responses": {
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/snapshots/list/": {
+      "get": {
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "oauth": [
+              "read",
+              "write"
+            ]
+          }
+        ],
+        "description": "List snapshots for a volume.",
+        "consumes": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "produces": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "schemes": [
+          "http"
+        ],
+        "tags": [
+          "Snapshots"
+        ],
+        "summary": "List Snapshots",
+        "operationId": "GetSnapshot",
+        "responses": {
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/snapshots/revert/": {
+      "put": {
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "oauth": [
+              "read",
+              "write"
+            ]
+          }
+        ],
+        "description": "Revert snapshots for a volume.",
+        "consumes": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "produces": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "schemes": [
+          "http"
+        ],
+        "tags": [
+          "Snapshots"
+        ],
+        "summary": "Revert Snapshots",
+        "operationId": "RevertSnapshot",
+        "responses": {
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/volume/": {
+      "get": {
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "oauth": [
+              "read",
+              "write"
+            ]
+          }
+        ],
+        "description": "List all the volumes.",
+        "consumes": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "produces": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "schemes": [
+          "http"
+        ],
+        "tags": [
+          "Volumes"
+        ],
+        "summary": "List volumes",
+        "operationId": "GetVolume",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/volumeSummary"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "oauth": [
+              "read",
+              "write"
+            ]
+          }
+        ],
+        "description": "Create a volume.",
+        "consumes": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "produces": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "schemes": [
+          "http"
+        ],
+        "tags": [
+          "Volumes"
+        ],
+        "summary": "Create Volume.",
+        "operationId": "CreateVolume",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "metadata"
+              ],
+              "properties": {
+                "metadata": {
+                  "$ref": "#/definitions/VolumeCreateMetadata"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/VolumeCreated"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/volume/delete/{name}": {
+      "get": {
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "oauth": [
+              "read",
+              "write"
+            ]
+          }
+        ],
+        "description": "This will delete available volumes.",
+        "consumes": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "produces": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "schemes": [
+          "http"
+        ],
+        "tags": [
+          "Volumes"
+        ],
+        "summary": "Deletes volumes.",
+        "operationId": "DeleteVolume",
+        "parameters": [
+          {
+            "uniqueItems": true,
+            "type": "string",
+            "x-go-name": "VolumeName",
+            "description": "Name of volume.",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/volume/info/{name}": {
+      "get": {
+        "security": [
+          {
+            "api_key": []
+          },
+          {
+            "oauth": [
+              "read",
+              "write"
+            ]
+          }
+        ],
+        "description": "Get a specific volume.",
+        "consumes": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "produces": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "schemes": [
+          "http"
+        ],
+        "tags": [
+          "Volumes"
+        ],
+        "summary": "List a specific volume.",
+        "operationId": "GetSpecificVolume",
+        "parameters": [
+          {
+            "uniqueItems": true,
+            "type": "string",
+            "x-go-name": "VolumeName",
+            "description": "Name of volume.",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/SpecificVolumeSummary"
+          },
+          "404": {
+            "$ref": "#/responses/noSuchVolume"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Item": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/Metadata"
+        },
+        "status": {
+          "$ref": "#/definitions/Status"
+        }
+      },
+      "x-go-package": "github.com/openebs/maya/cmd/maya-apiserver"
+    },
+    "Meta": {
+      "type": "object",
+      "title": "Standard list metadata.",
+      "x-go-package": "github.com/openebs/maya/cmd/maya-apiserver"
+    },
+    "Metadata": {
+      "type": "object",
+      "required": [
+        "name",
+        "creationTimestamp"
+      ],
+      "properties": {
+        "annotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "Annotations"
+        },
+        "creationTimestamp": {
+          "description": "The time the snapshot was successfully created.",
+          "type": "string",
+          "x-go-name": "CreationTimestamp",
+          "example": "null"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "Labels"
+        },
+        "name": {
+          "description": "Volume Name",
+          "type": "string",
+          "x-go-name": "VolumeName",
+          "example": "OpenEBS Volume"
+        }
+      },
+      "x-go-package": "github.com/openebs/maya/cmd/maya-apiserver"
+    },
+    "Status": {
+      "type": "object",
+      "properties": {
+        "Message": {
+          "type": "string",
+          "x-go-name": "StatusProperty1",
+          "example": "null"
+        },
+        "Phase": {
+          "type": "string",
+          "x-go-name": "Property2",
+          "example": "NotRunning"
+        },
+        "Reason": {
+          "type": "string",
+          "x-go-name": "Property3",
+          "example": "null"
+        }
+      },
+      "x-go-package": "github.com/openebs/maya/cmd/maya-apiserver"
+    },
+    "VolumeCreateMetadata": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "description": "Volume Name",
+          "type": "string",
+          "x-go-name": "VolumeName",
+          "example": "OpenEBS Volume"
+        }
+      },
+      "x-go-package": "github.com/openebs/maya/cmd/maya-apiserver"
+    }
+  },
+  "responses": {
+    "SpecificVolumeSummary": {
+      "description": "Summary volume data that matches the query",
+      "schema": {
+        "type": "object",
+        "required": [
+          "status",
+          "metadata"
+        ],
+        "properties": {
+          "metadata": {
+            "$ref": "#/definitions/Metadata"
+          },
+          "status": {
+            "$ref": "#/definitions/Status"
+          }
+        }
+      }
+    },
+    "VolumeCreated": {
+      "description": "Volume Created",
+      "schema": {
+        "type": "object",
+        "required": [
+          "metadata",
+          "status"
+        ],
+        "properties": {
+          "metadata": {
+            "$ref": "#/definitions/Metadata"
+          },
+          "status": {
+            "$ref": "#/definitions/Status"
+          }
+        }
+      }
+    },
+    "noSuchVolume": {
+      "description": "No Such Volume",
+      "schema": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "description": "The Error Message",
+            "type": "string",
+            "x-go-name": "Message",
+            "example": "Volume 'example-vol-name' not found."
+          }
+        }
+      }
+    },
+    "serverError": {
+      "description": "Server Error",
+      "schema": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "description": "The Error Message",
+            "type": "string",
+            "x-go-name": "Message",
+            "example": "Something went wrong."
+          }
+        }
+      }
+    },
+    "volumeSummary": {
+      "description": "Summary volume data that matches the query",
+      "schema": {
+        "type": "object",
+        "required": [
+          "items",
+          "metadata"
+        ],
+        "properties": {
+          "items": {
+            "description": "List of openebs volumes.",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Item"
+            },
+            "x-go-name": "Items"
+          },
+          "metadata": {
+            "$ref": "#/definitions/Meta"
+          }
+        }
+      }
+    }
+  },
+  "x-meta-array": [
+    "value1",
+    "value2"
+  ],
+  "x-meta-array-obj": [
+    {
+      "name": "obj",
+      "value": "field"
+    }
+  ],
+  "x-meta-value": "value"
+}
