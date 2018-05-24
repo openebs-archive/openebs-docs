@@ -12,9 +12,9 @@
   ],
   "swagger": "2.0",
   "info": {
-    "description": "Openebs Provisioner communicates with Maya API server for volume creation and much more.",
+    "description": "Maya-apiserver helps with creation of CAS Volumes and provides API endpoints to manage those volumes. Maya-apiserver can also be considered as a template engine that can be easily extended to support any kind of CAS storage solutions. It takes as input a set of CAS templates that are converted into CAS K8s YAMLs based on user requests.",
     "title": "Maya API Server.",
-    "termsOfService": "By using our services, you abide by our terms and conditions.",
+    "termsOfService": "https://github.com/openebs/openebs/blob/master/LICENSE",
     "license": {
       "name": "Apache License",
       "url": "http://www.apache.org/licenses/"
@@ -255,7 +255,7 @@
     },
     "/volumes/delete/{name}": {
       "get": {
-        "description": "This will delete available volumes.",
+        "description": "Deletes a particular volume.",
         "consumes": [
           "application/json"
         ],
@@ -837,6 +837,18 @@
       }
     }
   },
+  "tags": [
+    {
+      "description": "A volume in OpenEBS has the same design as a pod in K8s.\nAlternatively,a volume in OpenEBS can be considered as a StoragePod.\n",
+      "name": "Volumes",
+      "x-displayName": "Volumes"
+    },
+    {
+      "description": "VolumeSnapshot is volume snapshot object accessible to the user. Upon successful creation of the actual\n snapshot by the volume provider it is bound to the corresponding Volume Snapshot Data through the Volume Snapshot Spec.",
+      "name": "Snapshots",
+      "x-displayName": "Snapshots"
+    }
+  ],
   "x-meta-array": [
     "value1",
     "value2"
