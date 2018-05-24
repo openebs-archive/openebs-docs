@@ -255,7 +255,7 @@
     },
     "/volumes/delete/{name}": {
       "get": {
-        "description": "This will delete available volumes.",
+        "description": "Deletes a particular volume.",
         "consumes": [
           "application/json"
         ],
