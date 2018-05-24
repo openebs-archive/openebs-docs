@@ -22,7 +22,7 @@
     "version": "0.5.3",
     "x-logo": {
       "backgroundColor": "#FFFFFF",
-      "url": "img/openebslogo.png"
+      "url": "/img/openebslogo.png"
     }
   },
   "host": "m-apiserverUrl",
@@ -255,7 +255,7 @@
     },
     "/volumes/delete/{name}": {
       "get": {
-        "description": "Deletes a particular volume.",
+        "description": "This will delete available volumes.",
         "consumes": [
           "application/json"
         ],
@@ -839,16 +839,20 @@
   },
   "tags": [
     {
-      "description": "A volume in OpenEBS has the same design as a pod in K8s.\nAlternatively,a volume in OpenEBS can be considered as a StoragePod.\n",
+      "description": "A volume in OpenEBS has the same design as a pod in K8s.\nAlternatively,a volume in OpenEBS can be considered as a StoragePod..\n",
       "name": "Volumes",
       "x-displayName": "Volumes"
     },
     {
-      "description": "VolumeSnapshot is volume snapshot object accessible to the user. Upon successful creation of the actual\n snapshot by the volume provider it is bound to the corresponding Volume Snapshot Data through the Volume Snapshot Spec.",
+      "description": "VolumeSnapshot is volume snapshot object accessible to the user. Upon successful creation of the actual\n snapshot by the volume provider it is bound to the corresponding Volume Snapshot Data through the Volume Snapshot Spec",
       "name": "Snapshots",
       "x-displayName": "Snapshots"
     }
   ],
+  "externalDocs": {
+    "description": "Back To OpenEBS Documentation",
+    "url": "https://docs.openebs.io"
+  },
   "x-meta-array": [
     "value1",
     "value2"
