@@ -255,18 +255,20 @@ input#search_input_react:focus, input#search_input_react:active {
 /* CSS for version dropdown */
 @media only screen
 and (min-device-width : 320px)
-and (max-device-width : 375px) {
+and (max-device-width : 720px) {
     element.style {
       position: relative;
-}
+    }
 
     .ver-link {
       cursor: pointer;
       color: #fff;
-      margin-right: 141px;
-}
+      margin-right: 130px;
+      margin-top: 10px;
+    }
+
     p {
       line-height: 1;
       font-size: 12px;
-}
+    }
 }
