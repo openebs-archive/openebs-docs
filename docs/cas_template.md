@@ -12,17 +12,14 @@ OpenEBS control plane provides CAS templating as an approach to provision persis
 
 OpenEBS dynamic storage provisioner along with maya api service works towards accomplishing the goal of provisioning CAS storage volume via CAS template and  finally exposing this storage volume as a PV object to be consumed by a kubernetes application.
 
-As mentioned in installation section, install OpenEBS in your k8s environment.  Verify OpenEBS are components are running.
+As mentioned in installation section, install OpenEBS in your k8s environment.  Verify OpenEBS are components are running. 
 
 ```
+root@ranjith:~# kubectl get pods
 NAME                                                             READY     STATUS    RESTARTS   AGE
-
 maya-apiserver-59b466f987-m29wj                                  1/1       Running   0          1h
-
 openebs-provisioner-55ff5cd67f-2fbdv                             1/1       Running   0          1h
 ```
-
-
 
 Check maya api service and custom resource definitions are created and  running
 
