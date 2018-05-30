@@ -1,18 +1,12 @@
 ---
-id: volumepolicy
-title: Volume Policies
-sidebar_label: Volume Policy
+id: castemplate
+title: CAS Template
+sidebar_label: CAS Template
 ---
 
 
-Volume Policies
+CAS Template
 ==================
-
-
-
-========================
-
-
 
 
 
