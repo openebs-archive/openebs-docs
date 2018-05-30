@@ -1,105 +1,75 @@
 ---
 id: storageengine
-title: OpenEBS Storage Engines
+title: Pluggable OpenEBS Storage Engines
 sidebar_label: Storage Engines
 ---
 
 ------
 
-`Note: The feature of choosing a storage engine is available only from OpenEBS 0.6 release onwards`
+`Feature status: Pre-Alpha /Experimental. Users are advised to use this feature with caution.`
+
+## Overview of a storage engine
+
+OpenEBS follows CAS architecture, where in each storage volume is provided with it's own storage controller and replica pods. A storage engine refers to the software functionality that is associated with a storage volume. The storage engine will usually have one controller pod and multiple replication pods. Storage engines are usually hardened to optimize a given workload for either with a feature set or for performance. Operators or administrators typically choose a storage engine with a specific software version and build optimized volume templates that are fine tuned with type of underlying disks, resiliency, number of replicas, set of nodes participating in the Kubernetes cluster. Users can then choose an optimal volume template at the time of volume provisioning, thus providing the maximum flexibility in running the optimum software and storage combination for all the storage volumes on a given Kubernetes cluster.
 
 
 
-OpenEBS supports two pluggable storage engines - Jiva and cStor
+## Types of storage engines
 
-The type of storage engine is specified in the volume policies of OpenEBS. A storage class is chosen by the application developer. 
+OpenEBS provides two types of storage engines. 
 
-### Choosing a storage engine
-
-A storage class contains the provisioner details and a reference to the Volume Parameter Group (VPG). Create a storage class that refers to a VPG  
-
-Example of a storage class with a VPG reference is shown below.
-
-```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: openebs-repaffinity-0.6.0
-  annotations:
-    provisioner.openebs.io/version: 0.6.0
-provisioner: openebs.io/provisioner-iscsi
-parameters:
-  openebs.io/volume-parameter-group: openebs-policy-repaffinity-0.6.0
-```
+1. Jiva (Recommended engine and reliable)
+2. cStor (Initial availability is planned for 0.7 release. Currently a developer build can be chosen if desired)
 
 
 
-There are two parameters in a VPG that decide if the storage engine is Jiva or cStor. They are ControllerImage and ReplicaImage. Set these two parameters either for Jiva or cStor. 
+### Jiva
 
-
-
-#### For Jiva engine, the VPG is similar to the following.
-
-```
-apiVersion: openebs.io/v1alpha1
-kind: VolumeParameterGroup
-metadata:
-  name: openebs-policy-repaffinity-0.6.0
-spec:
-  policies:
-
-- name: VolumeMonitor
-  enabled: "true"
-- name: ControllerImage
-  value: openebs/jiva:0.5.0
-- name: ReplicaImage
-  value: openebs/jiva:0.5.0
-- name: ReplicaCount
-  value: "3"
-- name: StoragePool
-  value: ssd
-```
-
-
-
-#### For cStor engine, the VPG is similar to the following.
-
-```
-apiVersion: openebs.io/v1alpha1
-kind: VolumeParameterGroup
-metadata:
-  name: openebs-policy-repaffinity-0.6.0
-spec:
-  policies:
-  - name: VolumeMonitor
-    enabled: "true"
-  - name: ControllerImage
-    value: openebs/cstor:0.5.0
-  - name: ReplicaImage
-    value: openebs/cstor:0.5.0
-  - name: ReplicaCount
-    value: "3"
-  - name: StoragePool
-    value: ssd
-```
-
-
-
-------
-
-### Overview of Jiva storage engine
+Jiva has a single container image for both controller and replica. Docker image is available at https://hub.docker.com/r/openebs/jiva/ iva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs entirely in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation. It supports  thin provisioning, snapshotting, cloning of storage volumes.
 
 ![Jiva storage engine of OpenEBS](/docs/assets/jiva.png)
 
 
 
-------
+### cStor
 
-### Overview of cStor storage engine
+cStor storage engine has separate container image files for storage controller and storage replica. Docker images for controller is at << https://hub.docker.com/r/openebs/cstor-controller/>> and for replica is at << https://hub.docker.com/r/openebs/cstor-pool/>>. cStor is a high performing storage engine built with proven building blocks of storage components. Access protocol iSCSI stack is a linux ported  BSD based Multi-threaded iSCSI protocol stack originally developed at CloudByte. This iSCSI is field tested at thousands of installations for many years". The storage block layer is the DMU layer of user space ZFS inherited from the proven OpenSolaris stack. With these proven building blocks, cStor engine is highly reliable for storing and protecting enterprise data. 
 
 ![cStor storage engine of OpenEBS](/docs/assets/cStor.png)
 
+## Choosing a storage engine
 
+Developer does not directly choose a storage engine, but chooses a pre-defined storage class. Operator or Adminstrator constructs a storage class that refers to a CAS template containing the type of storage engine. 
+
+![Choosing a storage engine](/docs/assets/cas-template.png)
+
+## CAS template
+
+CAS template is a customizable resource template (or a YAML file ). In kubernetes terminology it is a custom resource (CR). Operator typically builds several of this templates with various combinations of storage engines and storage pool details. Currently, following properties can be specified in a CAS template CR. 
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: CASTemplate
+metadata:  
+  name: openebs-jiva-v0.6.0-with-3-ssd-replica-v0.1
+spec:  
+  defaultConfig:  
+  - name: ControllerImage    
+    value: "openebs/jiva:0.6.0"  
+  - name: ReplicaImage    
+    value: "openebs/jiva:0.6.0"  
+  - name: ReplicaCount    
+    value: "3"  
+  - name: StoragePool    
+    value: "default"  
+  - name: Monitoring    value: "true"  
+run:    
+  tasks:    ... 
+```
+
+
+
+## Use case example
 
 
 
