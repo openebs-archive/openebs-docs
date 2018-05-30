@@ -1,7 +1,7 @@
 ---
 id: snapshots
 title: Configuring Snapshot
-sidebar_label: snapshots
+sidebar_label: Snapshots
 ---
 
 ------

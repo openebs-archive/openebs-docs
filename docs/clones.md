@@ -1,7 +1,7 @@
 ---
 id: clones
 title: Creating Clone From Snapshot
-sidebar_label: clones
+sidebar_label: Clones
 ---
 
 ------
