@@ -1,7 +1,7 @@
 ---
 id: storageengine
 title: Pluggable OpenEBS Storage Engines
-sidebar_label: Storage Engines
+sidebar_label: CAS Engines
 ---
 
 ------
