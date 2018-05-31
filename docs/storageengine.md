@@ -66,7 +66,8 @@ spec:  
     value: "3"  
   - name: StoragePool    
     value: "default"  
-  - name: Monitoring    value: "true"  
+  - name: Monitoring    
+    enabled: "true"  
 run:    
   tasks:    ... 
 ```
@@ -143,12 +144,44 @@ spec:  
     value: "3"  
   - name: SASPOOL1    
     value: "default"  
-  - name: Monitoring    value: "true"  
-  <<TODO: Insert volume taint parameters in the above yaml and corresponding taint spec for each node>>
----
-<<spec for specifying tolerations for each nodes>>
----
-<<spec for specifying node affinity between application pod and controller pod>>
+  - name: Monitoring    
+    enabled: "true"  
+  - name: TaintTolerations
+    value: |-
+      t1:
+        key: node.openebs.io/disktype
+        operator: Equal
+        value: SASPOOL1
+        effect: NoSchedule
+      t2:
+        key: node.openebs.io/disktype
+        operator: Equal
+        value: SASPOOL1
+        effect: NoExecute
+    - name: EvictionTolerations
+    value: |-
+      t1:
+        effect: NoExecute
+        key: node.alpha.kubernetes.io/notReady
+        operator: Exists
+      t2:
+        effect: NoExecute
+        key: node.alpha.kubernetes.io/unreachable
+        operator: Exists
+     - name: NodeAffinityRequiredSchedIgnoredExec
+    value: |-
+      t1:
+        key: beta.kubernetes.io/os
+        operator: In
+        values:
+        - linux
+  - name: NodeAffinityPreferredSchedIgnoredExec
+    value: |-
+      t1:
+        key: some-node-label-key
+        operator: In
+        values:
+        - some-node-label-value
 run:    
   tasks:    ... 
 ```
@@ -159,7 +192,7 @@ run:    
 apiVersion: openebs.io/v1alpha1
 kind: CASTemplate
 metadata:  
-  name: openebs-saspool1-jiva-v0.6.0-with-3-replica-v0.1
+  name: openebs-ssdpool1-jiva-v0.6.0-with-3-replica-v0.1
 spec:  
   defaultConfig:  
   - name: ControllerImage    
@@ -168,14 +201,46 @@ spec:  
     value: "openebs/jiva:0.6.0"  
   - name: ReplicaCount    
     value: "3"  
-  - name: SASPOOL1    
+  - name: SSDPOOL1    
     value: "default"  
-  - name: Monitoring    value: "true"  
-  <<TODO: Insert volume taint parameters in the above yaml and corresponding taint spec for each node>>
----
-<<spec for specifying tolerations for each nodes>>
----
-<<spec for specifying node affinity between application pod and controller pod>>
+  - name: Monitoring    
+    enabled: "true"  
+  - name: TaintTolerations
+    value: |-
+      t1:
+        key: node.openebs.io/disktype
+        operator: Equal
+        value: SSDPOOL1
+        effect: NoSchedule
+      t2:
+        key: node.openebs.io/disktype
+        operator: Equal
+        value: SSDPOOL1
+        effect: NoExecute
+    - name: EvictionTolerations
+    value: |-
+      t1:
+        effect: NoExecute
+        key: node.alpha.kubernetes.io/notReady
+        operator: Exists
+      t2:
+        effect: NoExecute
+        key: node.alpha.kubernetes.io/unreachable
+        operator: Exists
+     - name: NodeAffinityRequiredSchedIgnoredExec
+    value: |-
+      t1:
+        key: beta.kubernetes.io/os
+        operator: In
+        values:
+        - linux
+  - name: NodeAffinityPreferredSchedIgnoredExec
+    value: |-
+      t1:
+        key: some-node-label-key
+        operator: In
+        values:
+        - some-node-label-value
 run:    
   tasks:    ... 
 ```
