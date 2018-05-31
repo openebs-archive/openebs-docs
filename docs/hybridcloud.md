@@ -4,6 +4,10 @@ title: OpenEBS Usecases - Hybrid Cloud
 sidebar_label: Hybrid Cloud
 ---
 
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  Documentation for OpenEBS v0.5 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for [latest](https://docs.openebs.io) version.
+</strong></p></center>
+
 ------
 
 Hybrid cloud is a cloud computing environment that uses a mix of on-premises, private cloud and third-party, public cloud services with orchestration between the two or more platforms. When using multiple cloud vendors, manageability, ease of migration and being able to efficiently manage cloud lock-in becomes top concerns. OpenEBS provides abstraction of data plane management, ability to manage storage same way on all vendors and migrate as you need, when you need.

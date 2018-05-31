@@ -4,6 +4,10 @@ title: Running OpenEBS on Google Cloud
 sidebar_label: Google Cloud
 ---
 
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  Documentation for OpenEBS v0.5 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for [latest](https://docs.openebs.io) version.
+</strong></p></center>
+
 Content to be developed
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->

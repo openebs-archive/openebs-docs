@@ -4,6 +4,10 @@ title: Using OpenEBS on IBM Cloud
 sidebar_label: IBMCloud
 ---
 
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  Documentation for OpenEBS v0.5 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for [latest](https://docs.openebs.io) version.
+</strong></p></center>
+
 ------
 
 In this section, we are describing about configuring **OpenEBS** as a **persistent storage** option and deploying a stateful workload (MongoDB) using OpenEBS storage classes in **IBM Cloud Private (ICP)** . 

@@ -4,6 +4,10 @@ title: Upgrading OpenEBS
 sidebar_label: Upgrade
 ---
 
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  Documentation for OpenEBS v0.5 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for [latest](https://docs.openebs.io) version.
+</strong></p></center>
+
 ------
 
 OpenEBS supports three main upgrade paths. Each upgrade has its own significant changes to support and ease use of OpenEBS volume in your k8s cluster.

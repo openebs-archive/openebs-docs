@@ -4,6 +4,10 @@ title: OpenEBS Tasks for Application Developers
 sidebar_label: Developer Tasks
 ---
 
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  Documentation for OpenEBS v0.5 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for [latest](https://docs.openebs.io) version.
+</strong></p></center>
+
 ------
 
 A developer in the current context refers to a person developing a containerized stateful application that runs on Kubernetes clusters. A developer does not have the administrative access or rights to the Kuberenetes cluster. 

@@ -4,6 +4,10 @@ title: Using OpenEBS on OpenShift
 sidebar_label: OpenShift
 ---
 
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  Documentation for OpenEBS v0.5 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for [latest](https://docs.openebs.io) version.
+</strong></p></center>
+
 ------
 
 This section helps you to install OpenEBS on OpenShift. If you are new to OpenShift, you can follow the links listed below.
