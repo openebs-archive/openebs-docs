@@ -10,7 +10,9 @@ sidebar_label: Storage Engines
 
 ## Overview of a storage engine
 
-OpenEBS follows CAS architecture, where in each storage volume is provided with it's own storage controller and replica pods. A storage engine refers to the software functionality that is associated with a storage volume. The storage engine will usually have one controller pod and multiple replication pods. Storage engines are usually hardened to optimize a given workload for either with a feature set or for performance. Operators or administrators typically choose a storage engine with a specific software version and build optimized volume templates that are fine tuned with type of underlying disks, resiliency, number of replicas, set of nodes participating in the Kubernetes cluster. Users can then choose an optimal volume template at the time of volume provisioning, thus providing the maximum flexibility in running the optimum software and storage combination for all the storage volumes on a given Kubernetes cluster.
+OpenEBS follows CAS architecture, where in each storage volume is provided with it's own storage controller and replica pods. A storage engine refers to the software functionality that is associated with a storage volume. A storage engine usually has one controller pod and multiple replication pods. Storage engines can be hardened to optimize a given workload for either with a feature set or for performance. 
+
+Operators or administrators typically choose a storage engine with a specific software version and build optimized volume templates that are fine tuned with type of underlying disks, resiliency, number of replicas, set of nodes participating in the Kubernetes cluster. Users can then choose an optimal volume template at the time of volume provisioning, thus providing the maximum flexibility in running the optimum software and storage combination for all the storage volumes on a given Kubernetes cluster.
 
 
 
@@ -29,9 +31,9 @@ Jiva has a single container image for both controller and replica. Docker image 
 
 ![Jiva storage engine of OpenEBS](/docs/assets/jiva.png)
 
-
-
 ### cStor
+
+`Note: Initial availability of cStor is planned to be in 0.7 release`
 
 cStor storage engine has separate container image files for storage controller and storage replica. Docker images for controller is at << https://hub.docker.com/r/openebs/cstor-controller/>> and for replica is at << https://hub.docker.com/r/openebs/cstor-pool/>>. cStor is a high performing storage engine built with proven building blocks of storage components. Access protocol iSCSI stack is a linux ported  BSD based Multi-threaded iSCSI protocol stack originally developed at CloudByte. This iSCSI is field tested at thousands of installations for many years". The storage block layer is the DMU layer of user space ZFS inherited from the proven OpenSolaris stack. With these proven building blocks, cStor engine is highly reliable for storing and protecting enterprise data. 
 
@@ -43,9 +45,11 @@ Developer does not directly choose a storage engine, but chooses a pre-defined s
 
 ![Choosing a storage engine](/docs/assets/cas-template.png)
 
-## CAS template
+As shown above, storage engine details are to be decided during the creation of a CAS template. 
 
-CAS template is a customizable resource template (or a YAML file ). In kubernetes terminology it is a custom resource (CR). Operator typically builds several of this templates with various combinations of storage engines and storage pool details. Currently, following properties can be specified in a CAS template CR. 
+## Overview of CAS template
+
+A CAS template is a customizable resource file (or a YAML file ) used by an operator to define the basic components of a storage engine. In kubernetes terminology it is a custom resource (CR). Operator typically builds several of these templates with various combinations of storage engines and storage pools. Currently, following properties can be specified in a CAS template CR. 
 
 ```
 apiVersion: openebs.io/v1alpha1
@@ -70,6 +74,179 @@ run:    
 
 
 ## Use case example
+
+### Persistent storage requirements
+
+Alice and Joe are developers of two different applications in a fintech enterprise, where the company is moving their DevOps from a legacy model to micro services model with Kubernetes as the orchestrator engine. Both the applications are stateful in nature and need a persistent storage, but the persistent storage needs differ vastly. 
+
+- Alice's application uses MongoDB and has high capacity and performance requirements. For testing the application during development, Alice wishes to test the changes with a real data in the database and also expects the data is stored in a volume with enterprise grade reliability.
+- Joe's application uses MySQL to store a simple configuration, the size of which is expected to be in the order of few Giga Bytes. The performance expectations on the persistent volume of this application is moderate. 
+
+Both of them expect their DevOps administrator to provide a suitable storage class to choose from and do not want to learn deeper details about how persistent storage volumes are being provisioned, or how they are managed. 
+
+Eve is one of the DevOps admins in the company. Eve is reponsible for designing and managing the storage infrastructure needs. 
+
+### Infrastructure setup
+
+DevOps team manages a single Kubernetes cluster, which is currently scaled to 32 nodes. They have planned to provide different classes of persistent storage tiers to their developers:
+
+- SAS disks based storage for moderate performance needs
+- SSD based storage for high performance needs
+- In each of these tiers, they decided to offer varying degrees of resiliency (number of copies of data)
+
+They have provisioned 12 SAS disks of 1TB each in each of the nodes from 1 to 4 and 12 SSDs of 1TB each in each of the nodes from 11 to19. 
+
+### Pools creation
+
+Eve planned the storage pools in the following manner
+
+| POOL     | Nodes                  | Data copies | Configuration                                             |
+| -------- | ---------------------- | ----------- | --------------------------------------------------------- |
+| SASPool1 | N1                     | 1           | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
+| SASPool2 | N2, N3, N4             | 3           | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
+| SSDPool1 | N11                    | 1           | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
+| SSDPool2 | N12, N13, N14          | 3           | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
+| SSDPool3 | N15, N16, N17,N18, N19 | 5           | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
+
+The storage pools are created using OpenEBS node disk manager (NDM)'s yaml specification. `Note: Initial availability of NDM is planned to be in 0.7 release`
+
+### CAS templates creation
+
+After pools are created, next step for Eve is to create CAS templates in such a way that
+
+- SASPool1, and SASPool1 are created using JIVA storage engine
+- SSDPool1, SSDPool2 and SSDPool3 are created using cStor storage engine
+
+Apart from selecting storage engines appropriately, Eve has two challenges related to Kubernetes scheduling. 
+
+1. Make sure that the volume pods meant to be associated with a given pool are scheduled by Kubernetes only on the nodes having those pools. For example volume pods of SASPool1 are scheduled on Nodes N1, N2 and N3 and not on any other nodes. This is achieved by appropriate volume pods taint toleration configuration in the CAS templates and on the nodes.
+2. Make sure that the OpenEBS controller pod (either Jiva or cStor) is scheduled as much as possible on the same node as the application pod (in this use case example, MongoDB or MySQL). This is achieved by configuring node affinity in the volume pods in the CAS templates.
+
+Eve creates five new CAS template files and creates corresponding Kubernetes CRs. 
+
+**CAS template 1 (CAS-CR-SASPool1.yaml):**
+
+
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: CASTemplate
+metadata:  
+  name: openebs-saspool1-jiva-v0.6.0-with-3-replica-v0.1
+spec:  
+  defaultConfig:  
+  - name: ControllerImage    
+    value: "openebs/jiva:0.6.0"  
+  - name: ReplicaImage    
+    value: "openebs/jiva:0.6.0"  
+  - name: ReplicaCount    
+    value: "3"  
+  - name: SASPOOL1    
+    value: "default"  
+  - name: Monitoring    value: "true"  
+  <<TODO: Insert volume taint parameters in the above yaml and corresponding taint spec for each node>>
+---
+<<spec for specifying tolerations for each nodes>>
+---
+<<spec for specifying node affinity between application pod and controller pod>>
+run:    
+  tasks:    ... 
+```
+
+**CAS template 2 (CAS-CR-SSDPool2.yaml)**
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: CASTemplate
+metadata:  
+  name: openebs-saspool1-jiva-v0.6.0-with-3-replica-v0.1
+spec:  
+  defaultConfig:  
+  - name: ControllerImage    
+    value: "openebs/jiva:0.6.0"  
+  - name: ReplicaImage    
+    value: "openebs/jiva:0.6.0"  
+  - name: ReplicaCount    
+    value: "3"  
+  - name: SASPOOL1    
+    value: "default"  
+  - name: Monitoring    value: "true"  
+  <<TODO: Insert volume taint parameters in the above yaml and corresponding taint spec for each node>>
+---
+<<spec for specifying tolerations for each nodes>>
+---
+<<spec for specifying node affinity between application pod and controller pod>>
+run:    
+  tasks:    ... 
+```
+
+
+
+Eve creates 6 CRs with the above manifests
+
+### Storage classes creation
+
+The last step for Eve is to create volume catalogs or in Kubernetes language "Storage Classes". Eve creates multiple storage classes as shown in the table below
+
+| Storage Class Name               | CAS template                                     | Replicas |
+| -------------------------------- | ------------------------------------------------ | -------- |
+| SC-high-perf-no-resilience       | openebs-ssdpool1-jiva-v0.6.0-with-1-replica-v0.1 | 1        |
+| SC-high-perf-high-resilience     | openebs-ssdpool2-jiva-v0.6.0-with-3-replica-v0.1 | 3        |
+| SC-high-perf-veryhigh-resilience | openebs-ssdpool3-jiva-v0.6.0-with-5-replica-v0.1 | 5        |
+| SC-low-perf-no-resilience        | openebs-saspool1-jiva-v0.6.0-with-1-replica-v0.1 | 1        |
+| SC-high-perf-high-resilience     | openebs-saspool2-jiva-v0.6.0-with-3-replica-v0.1 | 3        |
+
+Example of storage class : **SC-high-perf-high-resilience**
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:  
+  name: SC-high-perf-high-resilience  
+  annotations:
+    cas.openebs.io/template: openebs-ssdpool2-jiva-v0.6.0-with-3-replica-v0.1
+provisioner: openebs.io/provisioner-iscsi
+```
+
+Eve notifies the availability of these 5 storage classes to the developers.
+
+### Using persistent storage
+
+Developers Alice and Joe can choose one of these storage classes in constructing the PVC. Typically, developers have to select only the following parameters to construct a PVC
+
+- Size of the volume required
+- Storage class
+- Namespace (if required)
+
+Alice's PVC **alice-mongodb-vol** for MongoDB looks like:
+
+```
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:  
+  name: alice-mongodb-vol  
+spec:  
+  storageClassName: SC-high-perf-high-resilience   
+  resources:    
+    requests:      
+      storage: 200Gi
+```
+
+
+
+Joe's PVC **joe-mysql-vol** for MySQL looks like:
+
+```
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:  
+  name: joe-mysql-vol  
+spec:  
+  storageClassName: SC-low-perf-high-resilience   
+  resources:    
+    requests:      
+      storage: 50Gi
+```
 
 
 
