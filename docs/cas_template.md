@@ -32,6 +32,17 @@ maya-apiserver-service                              ClusterIP   10.75.246.127   
 
 ```
 
+Apply **crds.yaml** to register OpenEBS custom components to kubernetes datastore.
+
+
+
+```
+root@ranjith:~/community/feature-demos/volumepolicies/replica-pinning$ kubectl apply -f crds.yaml
+customresourcedefinition.apiextensions.k8s.io "volumeparametergroups.openebs.io" created
+```
+
+Check the crd status
+
 ```
 root@ranjith:~# kubectl get crd
 NAME                                    AGE
@@ -61,7 +72,7 @@ pvc-63f8178a-6346-11e8-a784-42010a80011c-rep-67bcffd9b6-4dwpr    1/1       Runni
 pvc-63f8178a-6346-11e8-a784-42010a80011c-rep-67bcffd9b6-6w9z4    1/1       Running   0          1h
 ```
 
-Verify PVC and PV are created with required properties
+Verify PVC and PV are created with required properties. This will create a PV with no more customized properties.
 
 ```
 root@ranjith:~/community/feature-demos/volumepolicies/replica-pinning# kubectl get pvc
@@ -77,7 +88,26 @@ pvc-63f8178a-6346-11e8-a784-42010a80011c   1Gi        RWO            Delete     
 
 ```
 
+Use below command to create a cas volume with customized properties done on **vol-policies.yaml**
 
+```
+curl -k -H "Content-Type: application/yaml" -XPOST  -d"$(cat oe-vol-rep-pinning-060.yaml)"  http://"$(kubectl get svc maya-apiserver-service --template={{.spec.clusterIP}})":5656/v1alpha1/volumes/
+```
+
+Verify new jiva controller and replica pods are created . 
+
+```
+root@ranjith:~$ kubectl get pods
+NAME                                                            READY     STATUS    RESTARTS   AGE
+jivavolpol-ctrl-78486c99f5-xl7pm                                2/2       Running   0          5m
+jivavolpol-rep-5bf8978fbf-qpxcq                                 1/1       Running   0          4m
+maya-apiserver-59b466f987-hg6mj                                 1/1       Running   0          8m
+openebs-provisioner-55ff5cd67f-5mrnx                            1/1       Running   0          8m
+pvc-0a53a9fc-649e-11e8-ab85-000c296fd8d3-ctrl-6677446d9-5wrnn   1/1       Running   0          7m
+pvc-0a53a9fc-649e-11e8-ab85-000c296fd8d3-rep-6bb7cdb9f-7kx8d    0/1       Pending   0          7m
+pvc-0a53a9fc-649e-11e8-ab85-000c296fd8d3-rep-6bb7cdb9f-br6c9    1/1       Running   0          7m
+pvc-0a53a9fc-649e-11e8-ab85-000c296fd8d3-rep-6bb7cdb9f-d8n4h    0/1       Pending   0          7m
+```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
