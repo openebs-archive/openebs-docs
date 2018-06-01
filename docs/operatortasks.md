@@ -5,7 +5,7 @@ sidebar_label: Operator Tasks
 ---
 
 <center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
-  Documentation for OpenEBS v0.5 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for [latest](https://docs.openebs.io) version.
+  Documentation for OpenEBS v0.5 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for the [latest](https://docs.openebs.io) version.
 </strong></p></center>
 
 An operator in the current context refers to a person who is deploying, managing, and monitoring Kubernetes clusters for his or her organization. An Operator has administrative access to the Kubernetes cluster and is responsible for setting up Kubernetes related infrastructure for develpers' access.
