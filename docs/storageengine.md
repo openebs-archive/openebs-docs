@@ -78,10 +78,10 @@ run:    
 
 ### Persistent storage requirements
 
-Alice and Joe are developers of two different applications in a fintech enterprise, where the company is moving their DevOps from a legacy model to micro services model with Kubernetes as the orchestrator engine. Both the applications are stateful in nature and need a persistent storage, but the persistent storage needs differ vastly. 
+Alice and Joe are developers of two different applications in a fintech enterprise, where the company is moving their DevOps from a legacy model to micro services model with Kubernetes as the orchestrating engine. Both the applications are stateful in nature and need persistent storage, but the persistent storage needs of these two applications differ vastly. 
 
-- Alice's application uses MongoDB and has high capacity and performance requirements. For testing the application during development, Alice wishes to test the changes with a real data in the database and also expects the data is stored in a volume with enterprise grade reliability.
-- Joe's application uses MySQL to store a simple configuration, the size of which is expected to be in the order of few Giga Bytes. The performance expectations on the persistent volume of this application is moderate. 
+- Alice's application uses MongoDB and has high capacity and performance requirements. For testing the application during development, Alice wishes to test the changes with real data in the database and also expects the data is stored in a volume with enterprise grade reliability.
+- Joe's application uses MySQL to store simple configuration data, the size of which is expected to be in the order of few Giga Bytes. The performance expectations on the persistent volume of this application is moderate. 
 
 Both of them expect their DevOps administrator to provide a suitable storage class to choose from and do not want to learn deeper details about how persistent storage volumes are being provisioned, or how they are managed. 
 
@@ -93,7 +93,7 @@ DevOps team manages a single Kubernetes cluster, which is currently scaled to 32
 
 - SAS disks based storage for moderate performance needs
 - SSD based storage for high performance needs
-- In each of these tiers, they decided to offer varying degrees of resiliency (number of copies of data)
+- In each of these tiers, they decided to offer varying degrees of resiliency by varying the number of copies of data
 
 They have provisioned 12 SAS disks of 1TB each in each of the nodes from 1 to 4 and 12 SSDs of 1TB each in each of the nodes from 11 to19. 
 
@@ -101,15 +101,15 @@ They have provisioned 12 SAS disks of 1TB each in each of the nodes from 1 to 4 
 
 Eve planned the storage pools in the following manner
 
-| POOL     | Nodes                  | Data copies | Configuration                                             |
-| -------- | ---------------------- | ----------- | --------------------------------------------------------- |
-| SASPool1 | N1                     | 1           | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
-| SASPool2 | N2, N3, N4             | 3           | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
-| SSDPool1 | N11                    | 1           | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
-| SSDPool2 | N12, N13, N14          | 3           | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
-| SSDPool3 | N15, N16, N17,N18, N19 | 5           | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
+| POOL     | Nodes                  | Expected data copies | Configuration                                             |
+| -------- | ---------------------- | -------------------- | --------------------------------------------------------- |
+| SASPool1 | N1                     | 1                    | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
+| SASPool2 | N2, N3, N4             | 3                    | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
+| SSDPool1 | N11                    | 1                    | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
+| SSDPool2 | N12, N13, N14          | 3                    | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
+| SSDPool3 | N15, N16, N17,N18, N19 | 5                    | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
 
-The storage pools are created using OpenEBS node disk manager (NDM)'s yaml specification. `Note: Initial availability of NDM is planned to be in 0.7 release`
+OpenEBS supports pool creation and management through the use of Storage Pools(SP) and Storage Pool Claims (SPC). The SPC YAML manifests are maintained by operators for versioning.   `Note: Initial availability of SPC functionality is planned to be in 0.7 release`
 
 ### CAS templates creation
 
@@ -120,10 +120,10 @@ After pools are created, next step for Eve is to create CAS templates in such a 
 
 Apart from selecting storage engines appropriately, Eve has two challenges related to Kubernetes scheduling. 
 
-1. Make sure that the volume pods meant to be associated with a given pool are scheduled by Kubernetes only on the nodes having those pools. For example volume pods of SASPool1 are scheduled on Nodes N1, N2 and N3 and not on any other nodes. This is achieved by appropriate volume pods taint toleration configuration in the CAS templates and on the nodes.
-2. Make sure that the OpenEBS controller pod (either Jiva or cStor) is scheduled as much as possible on the same node as the application pod (in this use case example, MongoDB or MySQL). This is achieved by configuring node affinity in the volume pods in the CAS templates.
+1. **Replica pod and node affinity challenge:** Make sure that the volume pods meant to be associated with a given pool are scheduled by Kubernetes only on the nodes having those pools. For example volume pods of SASPool2 are scheduled on Nodes N2, N3 and N4 and not on any other nodes. This is achieved by appropriate volume pods taint toleration configuration in the CAS templates and on the nodes.
+2. **Controller pod and application pod affinity challenge:** Make sure that the OpenEBS controller pod (either Jiva or cStor) is scheduled as much as possible on the same node as the application pod (in this use case example, MongoDB or MySQL). This is achieved by configuring node affinity in the volume pods in the CAS templates.
 
-Eve creates five new CAS template files and creates corresponding Kubernetes CRs. 
+Eve creates five new CAS template files and creates corresponding Kubernetes CRs. Two example template YAML files are shown below.
 
 **CAS template 1 (CAS-CR-SASPool1.yaml):**
 
@@ -312,6 +312,18 @@ spec:  
     requests:      
       storage: 50Gi
 ```
+
+
+
+Initial work for the DevOps operators is shown in the above use case example. Developers get started with the volume provisioning. Day2 operations related to persistent storage typlically include taking snapshot of data, restoration from the snapshots, monitoring the health of pools and stateful applications, data migration. [MayaOnline](https://www.mayaonline.io) is useful for many of these day2 storage operations.
+
+
+
+## See Also:
+
+[Storage Pools](/docs/next/setupstoragepools.html)
+
+[Storage Classes](/docs/next/setupstorageclasses.html)
 
 
 
