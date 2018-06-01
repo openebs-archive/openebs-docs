@@ -4,6 +4,10 @@ title: Connecting OpenEBS to MayaOnline
 sidebar_label: MayaOnline
 ---
 
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  Documentation for OpenEBS v0.5 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for the [latest](https://docs.openebs.io) version.
+</strong></p></center>
+
 ------
 
 [MayaOnline](https://docs.mayaonline.io/docs/overview.html) is a free SaaS service offering that acts as a cross-cloud control plane for OpenEBS enabled Kubernetes clusters and provides visibility into applications usage of OpenEBS volumes. 

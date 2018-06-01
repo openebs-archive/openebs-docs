@@ -4,6 +4,10 @@ title: OpenEBS Usecases - Hyperscale
 sidebar_label: Hyperscale
 ---
 
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  Documentation for OpenEBS v0.5 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for the [latest](https://docs.openebs.io) version.
+</strong></p></center>
+
 ------
 
 Although we think hyperconverged is a better way to provide storage for cloud-native, largely scalable and elastic stateful workloads, especially on new hardware where local SSD/NMVe are available, there are cases where IT admins prefer to deploy and maintain compute and storage separately. The goal of hyperscale, as described on Wikipedia, is “to scale appropriately as increased demand is added to the system.” OpenEBS provides different ways to deploy storage for your cloud-native workloads, no matter what your preferences are.

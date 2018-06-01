@@ -4,6 +4,10 @@ title: Contributing to OpenEBS - Weekly
 sidebar_label: Open source Meetings
 ---
 
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  Documentation for OpenEBS v0.5 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for the [latest](https://docs.openebs.io) version.
+</strong></p></center>
+
 ## Weekly webinar details
 
 Weekly contributor webinars are held on every Thursday 9:30 PM PST (Friday at 10:00 AM IST). Contributors and users can join this webinar using the zoom link [Join OpenEBS contributors weekly webinar](https://zoom.us/j/438333946)

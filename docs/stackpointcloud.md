@@ -4,6 +4,10 @@ title: Using OpenEBS on StackPoint Cloud
 sidebar_label: StackPointCloud
 ---
 
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  Documentation for OpenEBS v0.5 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for the [latest](https://docs.openebs.io) version.
+</strong></p></center>
+
 ------
 
 This section helps you integrate StackPoint with OpenEBS. It is possible to integrate StackPoint with OpenEBS in all major platforms such as AWS, Google Cloud (GKE & GCE), Azure, and Digital Ocean. Detailed procedure for installing OpenEBS using StackPoint in AWS is explained below.
