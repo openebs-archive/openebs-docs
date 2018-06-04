@@ -6,7 +6,7 @@ sidebar_label: Storage Schema
 
 ------
 
-`Note: Disk Object feature is available only from OpenEBS 0.6 release onwards`
+`Note: Disk Object feature is available only from OpenEBS 0.7 release onwards`
 
 OpenEBS introduces more elements into the storage configuration to give the administrator an end-to-end control and experience while managing persistent storage on the Kubernetes cluster. Apart from the standard Kubernetes constructs of PVC, SC and PV, OpenEBS introduces Volume Pods, Storage Pools Claims, Storage Pools, and Disk Objects. The stack of these constructs is shown below.
 
