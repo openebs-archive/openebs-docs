@@ -8,7 +8,7 @@ sidebar_label: Blue Green
 
 ## Problem statement
 
-Blue Green deployments are the preferred practice for live upgrades. Stateful applications need to be supported for this scenarios as well. Main issues are
+Blue Green deployments are the preferred practice for live upgrades. Stateful applications need to be supported for this scenarios as well. Stateful applications need to have the ability to write to a new copy of the data when 
 
 - Upgrading storage involves all the stateful applications in the cluster
 - Very difficult to revert back to the original software version of the storage cluster

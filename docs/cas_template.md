@@ -1,7 +1,7 @@
 ---
 id: castemplate
 title: CAS Template
-sidebar_label: CAS Template
+sidebar_label: CAS Templates
 ---
 
 
