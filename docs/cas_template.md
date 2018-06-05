@@ -12,101 +12,112 @@ OpenEBS control plane provides CAS templating as an approach to provision persis
 
 OpenEBS dynamic storage provisioner along with maya api service works towards accomplishing the goal of provisioning CAS storage volume via CAS template and  finally exposing this storage volume as a PV object to be consumed by a kubernetes application.
 
-As mentioned in installation section, install OpenEBS in your k8s environment.  Verify OpenEBS are components are running. 
+Download below yaml files to deploy CAST Volume.
 
 ```
-root@ranjith:~# kubectl get pods
+wget https://raw.githubusercontent.com/AmitKumarDas/community/6ce9621d992ba669f9079c59fc4d07498bd523f5/feature-demos/cas-templates/crudops/openebs-operator.yaml
+wget https://raw.githubusercontent.com/AmitKumarDas/community/6ce9621d992ba669f9079c59fc4d07498bd523f5/feature-demos/cas-templates/crudops/cas-template-create.yaml
+wget https://raw.githubusercontent.com/AmitKumarDas/community/6ce9621d992ba669f9079c59fc4d07498bd523f5/feature-demos/cas-templates/crudops/cas-run-tasks.yaml
+```
+
+Install OpenEBS in your k8s cluster by applying the *openebs-operator.yaml* file.
+
+```
+root@ubuntu-16:~$ kubectl apply -f openebs-operator.yaml
+```
+
+This operator installs the control plane components such as maya-apiserver, openebs-provisioner,storage pool and also deploys the default storage class templates.
+
+```
+root@ubuntu-16:~$ kubectl get pods
+NAME                                   READY     STATUS    RESTARTS   AGE
+maya-apiserver-587554dd45-s8bg9        1/1       Running   0          10m
+openebs-provisioner-55ff5cd67f-68m6b   1/1       Running   0          10m
+
+root@ubuntu-16:~$ kubectl get sc
+NAME                 PROVISIONER                    AGE
+openebs-standard     openebs.io/provisioner-iscsi   10m
+standard (default)   k8s.io/minikube-hostpath       5d
+
+ranjith@ubuntu-16:~$ kubectl get sp
+NAME      AGE
+ssd       10m
+```
+
+Now you are ready to apply CAS template which will create a default template.
+
+```
+root@ubuntu-16:~$ kubectl apply -f cas-template-create.yaml
+castemplate.openebs.io "cast-standard-0.6.0" created
+
+root@ubuntu-16:~$ kubectl get cast
+NAME                  AGE
+cast-standard-0.6.0   15s
+```
+
+Apply below yaml to create template tasks . This will deploy configmap related to CAS template.
+
+```
+root@ubuntu-16:~$ kubectl apply -f cas-run-tasks.yaml
+configmap "volume-read-list-controller-service-0.6.0" created
+configmap "volume-read-list-controller-pods-0.6.0" created
+configmap "volume-read-list-replica-pods-0.6.0" created
+configmap "volume-read-output-0.6.0" created
+configmap "volume-create-output-0.6.0" created
+configmap "volume-create-put-service-0.6.0" created
+configmap "volume-create-get-path-0.6.0" created
+configmap "volume-create-get-pvc-0.6.0" created
+configmap "volume-create-list-replica-pods-0.6.0" created
+configmap "volume-create-patch-replica-0.6.0" created
+configmap "volume-create-put-controller-0.6.0" created
+configmap "volume-create-put-replica-0.6.0" created
+```
+
+Now,default CAS template feature has deployed in your k8s cluster .This template can be used while provisioning  persistent CAST volume. To provision CAST template volume and run your application,  modify storage class as "openebs-standard"  in your application pvc yaml and apply it. Default CAS Template values are 
+
+| Property        | Value              |
+| --------------- | ------------------ |
+| VolumeMonitor   | true               |
+| ControllerImage | openebs/jiva:0.5.0 |
+| ReplicaImage    | openebs/jiva:0.5.0 |
+| ReplicaCount    | 1                  |
+| StoragePool     | ssd                |
+
+Also this will have Taint toleration,Eviction toleration and Node-affinity toleration field. You can customize the key-value pair of above tolerations based on the taints applied on the Nodes. 
+
+### Deploy a Test CAST volume
+
+You can test CAS Template by deploying one persistent volume.
+
+```
+root@ubuntu-16:~$ kubectl apply -f pvc.yaml
+persistentvolumeclaim "casvolume-claim" created
+
+```
+
+This will create CAST volume with default template values.
+
+```
+root@ubuntu-16:~$ kubectl get pvc
+NAME              STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
+casvolume-claim   Bound     pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3   1Gi        RWO            openebs-standard   9s
+
+root@ubuntu-16:~$ kubectl get pv
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                     STORAGECLASS       REASON    AGE
+pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3   6Gi        RWO            Delete           Bound     default/casvolume-claim   openebs-standard             10s
+
+```
+
+Volume Pods are also created as per the default values in CAS Template.
+
+```
+root@ubuntu-16:~$ kubectl get pods
 NAME                                                             READY     STATUS    RESTARTS   AGE
-maya-apiserver-59b466f987-m29wj                                  1/1       Running   0          1h
-openebs-provisioner-55ff5cd67f-2fbdv                             1/1       Running   0          1h
-```
+maya-apiserver-587554dd45-s8bg9                                  1/1       Running   0          14m
+openebs-provisioner-55ff5cd67f-68m6b                             1/1       Running   0          14m
+pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3-ctrl-745445b5b5-whbbn   2/2       Running   0          30s
+pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3-rep-57478cd89f-44v8s    1/1       Running   0          30s
 
-Check maya api service and custom resource definitions are created and  running
-
-```
-root@ranjith:~# kubectl get svc
-NAME                                                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
-kubernetes                                          ClusterIP   10.75.240.1     <none>        443/TCP             23h
-maya-apiserver-service                              ClusterIP   10.75.246.127   <none>        5656/TCP            17h
-
-
-```
-
-Apply **crds.yaml** to register OpenEBS custom components to kubernetes datastore.
-
-
-
-```
-root@ranjith:~/community/feature-demos/volumepolicies/replica-pinning$ kubectl apply -f crds.yaml
-customresourcedefinition.apiextensions.k8s.io "volumeparametergroups.openebs.io" created
-```
-
-Check the crd status
-
-```
-root@ranjith:~# kubectl get crd
-NAME                                    AGE
-scalingpolicies.scalingpolicy.kope.io   23h
-storagepoolclaims.openebs.io            18h
-storagepools.openebs.io                 18h
-volumeparametergroups.openebs.io        17h
-volumepolicies.openebs.io               18h
-```
-
-Now you are ready to apply CAS template which will provision persistent volume according to your customized changes in volume properties and pinning to corresponding nodes. 
-
-```
-root@ranjith:~/community/feature-demos/volumepolicies/replica-pinning# kubectl apply -f vol-policies.yaml
-```
-
-Verify jiva controller and replica pods are running
-
-```
-root@ranjith:~/community/feature-demos/volumepolicies/replica-pinning# kubectl get pods
-NAME                                                             READY     STATUS    RESTARTS   AGE
-maya-apiserver-59b466f987-m29wj                                  1/1       Running   0          1h
-openebs-provisioner-55ff5cd67f-2fbdv                             1/1       Running   0          1h
-pvc-63f8178a-6346-11e8-a784-42010a80011c-ctrl-7cf5574bf9-br6jc   1/1       Running   0          1h
-pvc-63f8178a-6346-11e8-a784-42010a80011c-rep-67bcffd9b6-452ht    1/1       Running   0          1h
-pvc-63f8178a-6346-11e8-a784-42010a80011c-rep-67bcffd9b6-4dwpr    1/1       Running   0          1h
-pvc-63f8178a-6346-11e8-a784-42010a80011c-rep-67bcffd9b6-6w9z4    1/1       Running   0          1h
-```
-
-Verify PVC and PV are created with required properties. This will create a PV with no more customized properties.
-
-```
-root@ranjith:~/community/feature-demos/volumepolicies/replica-pinning# kubectl get pvc
-NAME                        STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                AGE
-openebs-repaffinity-0.6.0   Bound     pvc-63f8178a-6346-11e8-a784-42010a80011c   1Gi        RWO            openebs-repaffinity-0.6.0   17h
-```
-
-```
-root@ranjith:~/community/feature-demos/volumepolicies/replica-pinning# kubectl get pv
-NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                               STORAGECLASS                REASON    AGE
-pvc-63f8178a-6346-11e8-a784-42010a80011c   1Gi        RWO            Delete           Bound     default/openebs-repaffinity-0.6.0   openebs-repaffinity-0.6.0             17h
-
-
-```
-
-Use below command to create a cas volume with customized properties done on **vol-policies.yaml**
-
-```
-curl -k -H "Content-Type: application/yaml" -XPOST  -d"$(cat oe-vol-rep-pinning-060.yaml)"  http://"$(kubectl get svc maya-apiserver-service --template={{.spec.clusterIP}})":5656/v1alpha1/volumes/
-```
-
-Verify new jiva controller and replica pods are created . 
-
-```
-root@ranjith:~$ kubectl get pods
-NAME                                                            READY     STATUS    RESTARTS   AGE
-jivavolpol-ctrl-78486c99f5-xl7pm                                2/2       Running   0          5m
-jivavolpol-rep-5bf8978fbf-qpxcq                                 1/1       Running   0          4m
-maya-apiserver-59b466f987-hg6mj                                 1/1       Running   0          8m
-openebs-provisioner-55ff5cd67f-5mrnx                            1/1       Running   0          8m
-pvc-0a53a9fc-649e-11e8-ab85-000c296fd8d3-ctrl-6677446d9-5wrnn   1/1       Running   0          7m
-pvc-0a53a9fc-649e-11e8-ab85-000c296fd8d3-rep-6bb7cdb9f-7kx8d    0/1       Pending   0          7m
-pvc-0a53a9fc-649e-11e8-ab85-000c296fd8d3-rep-6bb7cdb9f-br6c9    1/1       Running   0          7m
-pvc-0a53a9fc-649e-11e8-ab85-000c296fd8d3-rep-6bb7cdb9f-d8n4h    0/1       Pending   0          7m
 ```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
