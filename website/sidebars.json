@@ -5,6 +5,7 @@
     "Setup": ["prerequisites", "supportedplatforms", "installation","setupstoragepools", "castemplate", "setupstorageclasses", "setupstoragevolumes", "snapshots", "upgrade"],
     "Usecases": ["bluegreen", "cicd","hybridcloud","hyperscale"],
     "Tasks": ["mayactl"],
+    "API": ["api"],
     "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "mayaonline"],
     "Databases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "Kafka", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
     "Releases": ["changelog"],
