@@ -67,10 +67,10 @@ For more details on how OpenEBS internals work, see [OpenEBS Architecture](/docs
 Deploying OpenEBS on Kubernetes clusters is easy. See [Get Started now](/docs/next/quickstartguide.html).
 
 
-### See Also:
+## See Also:
 
-- [Container Attached Storage (CAS)](/docs/next/conceptcas.html)
-- [OpenEBS Architecture](/docs/next/architecture.html)
+#### [Container Attached Storage (CAS)](/docs/next/conceptcas.html)
+#### [OpenEBS Architecture](/docs/next/architecture.html)
 
 
 
