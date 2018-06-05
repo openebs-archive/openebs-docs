@@ -5,9 +5,6 @@ sidebar_label: CAS Templates
 ---
 
 
-CAS Template
-==================
-
 OpenEBS control plane provides CAS templating as an approach to provision persistent volume that make use of CAS storage engine. CAS Template allows operators to specify the desired state of storage which in turn takes action to converge towards this desired state which means creating and updating kubernetes resources as appropriate. CAS template based provisioning forms a part of kubernetes PVC to PV state transition.
 
 OpenEBS dynamic storage provisioner along with maya api service works towards accomplishing the goal of provisioning CAS storage volume via CAS template and  finally exposing this storage volume as a PV object to be consumed by a kubernetes application.
