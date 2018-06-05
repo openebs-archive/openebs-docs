@@ -100,7 +100,7 @@ Verifying Successful Cassandra Deployment
 
 You can verify the deployment starting from listing the functional replicas to creating and deleting test data in the Cassandra database.
 
-#### 1. Install the Cqlsh Utility
+### 1. Install the Cqlsh Utility
 
 Cqlsh is a Python based utility that enables you to execute Cassandra Query Language (CQL). CQL is a declarative language that enables users to query Cassandra using semantics similar to SQL.
 
@@ -113,7 +113,7 @@ Install the python-minimal and python-pip apt packages (if not available) and pe
 
 Installing Csqlsh may take a few minutes (typically, the cassandra-driver package takes time to download and setup).
 
-#### 2. Verify Replica Status on Cassandra
+### 2. Verify Replica Status on Cassandra
 
 ```
 test@Master:~$ kubectl exec cassandra-0 -- nodetool status
@@ -130,7 +130,7 @@ UN  10.44.0.3  83.1 KiB    32           100.0%           1d2e3b79-4b0b-4bf9-b435
 
 A status of "UN" implies Up and Normal. The "Owns" column suggests the data distribution percentage for the content placed into the Cassandra keyspaces. In the current example, a replica count of 2 is chosen due to which the data is evenly distributed and copies are maintained.
 
-#### 3. Create a Test Keyspace with Tables
+### 3. Create a Test Keyspace with Tables
 
 - Identify the IP Address of any of the Cassandra replicas, for example, Cassandra-0. This is available from the output of the nodetool status command executed in the previous step.
 
