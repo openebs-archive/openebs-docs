@@ -321,9 +321,8 @@ Initial work for the DevOps operators is shown in the above use case example. De
 
 ## See Also:
 
-[Storage Pools](/docs/next/setupstoragepools.html)
-
-[Storage Classes](/docs/next/setupstorageclasses.html)
+#### [Storage Pools](/docs/next/setupstoragepools.html)
+#### [Storage Classes](/docs/next/setupstorageclasses.html)
 
 
 
