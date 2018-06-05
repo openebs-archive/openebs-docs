@@ -102,12 +102,10 @@ Finally mount the “demo-snap-vol-claim” PersistentVolumeClaim into a percon
 With OpenEBS , developers and DevOps admin can easily and seamlessly automate the process of reproducing the status of a failed stateful application pipeline stage. 
 
 
+## See Also
 
-### See Also
-
-Learn more about how OpenEBS volumes work
-
-Volume Policies of OpenEBS
+#### Learn more about how OpenEBS volumes work
+#### Volume Policies of OpenEBS
 
 
 
