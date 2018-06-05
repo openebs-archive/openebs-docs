@@ -191,8 +191,8 @@ img[alt$="<>"] {
     float: none!important;
 }
 
-pre code{
-    border-color: #f2a850;
+pre code {
+    border-color: #F0F0F0;
 }
 
 @media (max-width: 375px) {
