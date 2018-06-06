@@ -13,14 +13,20 @@ Download below yaml files to deploy CAST Volume.
 
 ```
 wget https://raw.githubusercontent.com/AmitKumarDas/community/6ce9621d992ba669f9079c59fc4d07498bd523f5/feature-demos/cas-templates/crudops/openebs-operator.yaml
+```
+
+```
 wget https://raw.githubusercontent.com/AmitKumarDas/community/6ce9621d992ba669f9079c59fc4d07498bd523f5/feature-demos/cas-templates/crudops/cas-template-create.yaml
+```
+
+```
 wget https://raw.githubusercontent.com/AmitKumarDas/community/6ce9621d992ba669f9079c59fc4d07498bd523f5/feature-demos/cas-templates/crudops/cas-run-tasks.yaml
 ```
 
 Install OpenEBS in your k8s cluster by applying the *openebs-operator.yaml* file.
 
 ```
-root@ubuntu-16:~$ kubectl apply -f openebs-operator.yaml
+kubectl apply -f openebs-operator.yaml
 ```
 
 This operator installs the control plane components such as maya-apiserver, openebs-provisioner,storage pool and also deploys the default storage class templates.
@@ -42,30 +48,19 @@ This operator installs the control plane components such as maya-apiserver, open
 Now you are ready to apply CAS template which will create a default template.
 
 ```
-root@ubuntu-16:~$ kubectl apply -f cas-template-create.yaml
-castemplate.openebs.io "cast-standard-0.6.0" created
+kubectl apply -f cas-template-create.yaml
+```
 
-root@ubuntu-16:~$ kubectl get cast
-NAME                  AGE
-cast-standard-0.6.0   15s
+This will create a CAS Template and it can be checked by below command
+
+```
+kubectl get cast
 ```
 
 Apply below yaml to create template tasks . This will deploy configmap related to CAS template.
 
 ```
-root@ubuntu-16:~$ kubectl apply -f cas-run-tasks.yaml
-configmap "volume-read-list-controller-service-0.6.0" created
-configmap "volume-read-list-controller-pods-0.6.0" created
-configmap "volume-read-list-replica-pods-0.6.0" created
-configmap "volume-read-output-0.6.0" created
-configmap "volume-create-output-0.6.0" created
-configmap "volume-create-put-service-0.6.0" created
-configmap "volume-create-get-path-0.6.0" created
-configmap "volume-create-get-pvc-0.6.0" created
-configmap "volume-create-list-replica-pods-0.6.0" created
-configmap "volume-create-patch-replica-0.6.0" created
-configmap "volume-create-put-controller-0.6.0" created
-configmap "volume-create-put-replica-0.6.0" created
+kubectl apply -f cas-run-tasks.yaml
 ```
 
 Now,default CAS template feature has deployed in your k8s cluster .This template can be used while provisioning  persistent CAST volume. To provision CAST template volume and run your application,  modify storage class as "openebs-standard"  in your application pvc yaml and apply it. Default CAS Template values are 
@@ -84,36 +79,38 @@ Also this will have Taint toleration,Eviction toleration and Node-affinity toler
 
 You can test CAS Template by deploying one persistent volume.
 
-```
-root@ubuntu-16:~$ kubectl apply -f pvc.yaml
-persistentvolumeclaim "casvolume-claim" created
+Download test pvc.yaml from running below command
 
+```
+wget https://raw.githubusercontent.com/AmitKumarDas/community/6ce9621d992ba669f9079c59fc4d07498bd523f5/feature-demos/cas-templates/crudops/pvc.yaml
+```
+
+Then apply pvc.yaml file to create persistent CAST volume
+
+```
+kubectl apply -f pvc.yaml
 ```
 
 This will create CAST volume with default template values.
 
-```
-root@ubuntu-16:~$ kubectl get pvc
-NAME              STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
-casvolume-claim   Bound     pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3   1Gi        RWO            openebs-standard   9s
-
-root@ubuntu-16:~$ kubectl get pv
-NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                     STORAGECLASS       REASON    AGE
-pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3   6Gi        RWO            Delete           Bound     default/casvolume-claim   openebs-standard             10s
-
-```
+> root@ubuntu-16:~$ kubectl get pvc
+> NAME              STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
+> casvolume-claim   Bound     pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3   1Gi        RWO            openebs-standard   9s
+>
+> root@ubuntu-16:~$ kubectl get pv
+> NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                     STORAGECLASS       REASON    AGE
+> pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3   6Gi        RWO            Delete           Bound     default/casvolume-claim   openebs-standard             10s
+>
 
 Volume Pods are also created as per the default values in CAS Template.
 
-```
-root@ubuntu-16:~$ kubectl get pods
-NAME                                                             READY     STATUS    RESTARTS   AGE
-maya-apiserver-587554dd45-s8bg9                                  1/1       Running   0          14m
-openebs-provisioner-55ff5cd67f-68m6b                             1/1       Running   0          14m
-pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3-ctrl-745445b5b5-whbbn   2/2       Running   0          30s
-pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3-rep-57478cd89f-44v8s    1/1       Running   0          30s
-
-```
+> root@ubuntu-16:~$ kubectl get pods
+> NAME                                                             READY     STATUS    RESTARTS   AGE
+> maya-apiserver-587554dd45-s8bg9                                  1/1       Running   0          14m
+> openebs-provisioner-55ff5cd67f-68m6b                             1/1       Running   0          14m
+> pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3-ctrl-745445b5b5-whbbn   2/2       Running   0          30s
+> pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3-rep-57478cd89f-44v8s    1/1       Running   0          30s
+>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
