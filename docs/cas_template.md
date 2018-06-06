@@ -25,21 +25,19 @@ root@ubuntu-16:~$ kubectl apply -f openebs-operator.yaml
 
 This operator installs the control plane components such as maya-apiserver, openebs-provisioner,storage pool and also deploys the default storage class templates.
 
-```
-root@ubuntu-16:~$ kubectl get pods
-NAME                                   READY     STATUS    RESTARTS   AGE
-maya-apiserver-587554dd45-s8bg9        1/1       Running   0          10m
-openebs-provisioner-55ff5cd67f-68m6b   1/1       Running   0          10m
-
-root@ubuntu-16:~$ kubectl get sc
-NAME                 PROVISIONER                    AGE
-openebs-standard     openebs.io/provisioner-iscsi   10m
-standard (default)   k8s.io/minikube-hostpath       5d
-
-ranjith@ubuntu-16:~$ kubectl get sp
-NAME      AGE
-ssd       10m
-```
+> root@ubuntu-16:~$ kubectl get pods
+> NAME                                   READY     STATUS    RESTARTS   AGE
+> maya-apiserver-587554dd45-s8bg9        1/1       Running   0          10m
+> openebs-provisioner-55ff5cd67f-68m6b   1/1       Running   0          10m
+>
+> root@ubuntu-16:~$ kubectl get sc
+> NAME                 PROVISIONER                    AGE
+> openebs-standard     openebs.io/provisioner-iscsi   10m
+> standard (default)   k8s.io/minikube-hostpath       5d
+>
+> ranjith@ubuntu-16:~$ kubectl get sp
+> NAME      AGE
+> ssd       10m
 
 Now you are ready to apply CAS template which will create a default template.
 
