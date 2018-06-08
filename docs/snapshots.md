@@ -14,11 +14,11 @@ The possible operations of this feature is creating, restoring, and deleting a s
 
 OpenEBS operator will deploy a snapshot-controller and a snapshot-provisioner container inside a single pod called snapshot-controller.
 
-Snapshot-controller will create a CRD for `VolumeSnapshot` and `VolumeSnapshotData` custom resources when it starts and will also watch for `VolumeSnapshotresources` and take snapshots of the volumes based on the referred snapshot plugin. 
+A snapshot-controller, when it starts, will create a CRD for `VolumeSnapshot` and `VolumeSnapshotData` custom resources. It will also watch for `VolumeSnapshotresources` and take snapshots of the volumes based on the referred snapshot plugin. 
 
 Snapshot-provisioner will be used to restore a snapshot as a new persistent volume via dynamic provisioning.
 
-With OpenEBS 0.6 release openebs-operator.yaml will deploy both snapshot-controller and snapshot-provisioner. You can obtain the yaml from here [openebs-operator.yaml](https://raw.githubusercontent.com/prateekpandey14/openebs/fd746f466c8d64d2d1163419aeb432bae03b0d84/k8s/openebs-operator.yaml) 
+With OpenEBS 0.6 release openebs-operator.yaml will deploy both snapshot-controller and snapshot-provisioner. You can obtain the yaml from [here](https://raw.githubusercontent.com/prateekpandey14/openebs/fd746f466c8d64d2d1163419aeb432bae03b0d84/k8s/openebs-operator.yaml). 
 
 Once snapshot-controller is running, you will be able to see the created CustomResourceDefinitions (CRD) as in the following example.
 
@@ -255,7 +255,7 @@ spec:
       name: percona
 ```
 
-Once *restore-storageclass.yaml* is created, you have to deploy the yaml by using the following command.
+Once *restore-storageclass.yaml* is created, you have to deploy the yaml using the following command.
 
 ```
 $ kubectl apply -f percona-openebs-deployment-2.yaml
