@@ -5,11 +5,11 @@ sidebar_label: CAS Templates
 ---
 
 
-OpenEBS control plane provides CAS templating as an approach to provision persistent volume that make use of CAS storage engine. CAS Template allows operators to specify the desired state of storage which in turn takes action to converge towards this desired state which means creating and updating kubernetes resources as appropriate. CAS template based provisioning forms a part of kubernetes PVC to PV state transition.
+OpenEBS control plane provides CAS templates as an approach to provision persistent volumes that make use of CAS storage engine. CAS Template (CAST) allows operators to specify the desired state of storage and also acts to converge towards this desired state which means creating and updating appropriate Kubernetes resources. CAS template based provisioning forms a part of Kubernetes PVC to PV state transition.
 
-OpenEBS dynamic storage provisioner along with maya api service works towards accomplishing the goal of provisioning CAS storage volume via CAS template and  finally exposing this storage volume as a PV object to be consumed by a kubernetes application.
+OpenEBS dynamic storage provisioner along with maya api service works towards accomplishing the goal of provisioning CAS storage volume via CAS template. This storage volume is exposed as a PV object which is consumed by a Kubernetes application.
 
-Download below yaml files to deploy CAST Volume.
+Download the following yaml files to deploy the CAST Volume.
 
 ```
 wget https://raw.githubusercontent.com/AmitKumarDas/community/6ce9621d992ba669f9079c59fc4d07498bd523f5/feature-demos/cas-templates/crudops/openebs-operator.yaml
@@ -29,7 +29,7 @@ Install OpenEBS in your k8s cluster by applying the *openebs-operator.yaml* file
 kubectl apply -f openebs-operator.yaml
 ```
 
-This operator installs the control plane components such as maya-apiserver, openebs-provisioner,storage pool and also deploys the default storage class templates.
+The operator installs control plane components such as maya-apiserver, openebs-provisioner, storage pool and also deploys the default storage class templates.
 
 >     root@ubuntu-16:~$ kubectl get pods
 >     NAME                                   READY     STATUS    RESTARTS   AGE
@@ -49,25 +49,25 @@ This operator installs the control plane components such as maya-apiserver, open
 > ssd       10m
 > ```
 
-Now you are ready to apply CAS template which will create a default template.
+Now you are ready to apply the CAS template which creates a default template.
 
 ```
 kubectl apply -f cas-template-create.yaml
 ```
 
-This will create a CAS Template and it can be checked by below command
+The CAS Template is created and you can check using the following command.
 
 ```
 kubectl get cast
 ```
 
-Apply below yaml to create template tasks . This will deploy configmap related to CAS template.
+Apply the following yaml to create template tasks which will deploy the configmap related to CAS template.
 
 ```
 kubectl apply -f cas-run-tasks.yaml
 ```
 
-Now,default CAS template feature has deployed in your k8s cluster .This template can be used while provisioning  persistent CAST volume. To provision CAST template volume and run your application,  modify storage class as "openebs-standard"  in your application pvc yaml and apply it. Default CAS Template values are 
+The default CAS template is now deployed in your k8s cluster. This template can be used while provisioning persistent CAST volume. To provision CAST template volume and run your application, modify the storage class as "openebs-standard" in your application pvc yaml and apply it. The default CAS Template values are as follows:
 
 | Property        | Value              |
 | --------------- | ------------------ |
@@ -77,25 +77,25 @@ Now,default CAS template feature has deployed in your k8s cluster .This template
 | ReplicaCount    | 1                  |
 | StoragePool     | ssd                |
 
-Also this will have Taint toleration,Eviction toleration and Node-affinity toleration field. You can customize the key-value pair of above tolerations based on the taints applied on the Nodes. 
+Also these values will have Taint toleration, Eviction toleration, and Node-affinity toleration fields. You can customize the key-value pair of above tolerations based on the taints applied on the Nodes. 
 
 ### Deploy a Test CAST volume
 
-You can test CAS Template by deploying one persistent volume.
+You can test a CAS Template by deploying one persistent volume.
 
-Download test pvc.yaml from running below command
+Download test pvc.yaml by running the following command.
 
 ```
 wget https://raw.githubusercontent.com/AmitKumarDas/community/6ce9621d992ba669f9079c59fc4d07498bd523f5/feature-demos/cas-templates/crudops/pvc.yaml
 ```
 
-Then apply pvc.yaml file to create persistent CAST volume
+Apply the pvc.yaml file to create persistent CAST volume using the following command.
 
 ```
 kubectl apply -f pvc.yaml
 ```
 
-This will create CAST volume with default template values.
+The CAST volume is created with default template values as in the following example.
 
 > root@ubuntu-16:~$ kubectl get pvc
 > NAME              STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
@@ -106,7 +106,7 @@ This will create CAST volume with default template values.
 > pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3   6Gi        RWO            Delete           Bound     default/casvolume-claim   openebs-standard             10s
 >
 
-Volume Pods are also created as per the default values in CAS Template.
+Volume Pods are also created as per the default values in the CAS Template as in the following example.
 
 > root@ubuntu-16:~$ kubectl get pods
 > NAME                                                             READY     STATUS    RESTARTS   AGE
