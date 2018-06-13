@@ -5,6 +5,9 @@ sidebar_label: CAS Templates
 ---
 
 
+
+`Feature status: Pre-Alpha /Experimental. Users are advised to use this feature with caution.`
+
 OpenEBS control plane provides CAS templates as an approach to provision persistent volumes that make use of CAS storage engine. CAS Template (CAST) allows operators to specify the desired state of storage and also acts to converge towards this desired state which means creating and updating appropriate Kubernetes resources. CAS template based provisioning forms a part of Kubernetes PVC to PV state transition.
 
 OpenEBS dynamic storage provisioner along with maya api service works towards accomplishing the goal of provisioning CAS storage volume via CAS template. This storage volume is exposed as a PV object which is consumed by a Kubernetes application.
@@ -31,25 +34,19 @@ kubectl apply -f openebs-operator.yaml
 
 The operator installs control plane components such as maya-apiserver, openebs-provisioner, storage pool and also deploys the default storage class templates.
 
->     ```
->     root@ubuntu-16:~$ kubectl get pods
->     NAME                                   READY     STATUS    RESTARTS   AGE
->     maya-apiserver-587554dd45-s8bg9        1/1       Running   0          10m
->     openebs-provisioner-55ff5cd67f-68m6b   1/1       Running   0          10m
->     ```
+*root@ubuntu-16:~$ kubectl get pods*
+*NAME                                   READY     STATUS    RESTARTS   AGE*
+*maya-apiserver-587554dd45-s8bg9        1/1       Running   0          10m*
+*openebs-provisioner-55ff5cd67f-68m6b   1/1       Running   0          10m*
 
-> ```
-> root@ubuntu-16:~$ kubectl get sc
-> NAME                 PROVISIONER                    AGE
-> openebs-standard     openebs.io/provisioner-iscsi   10m
-> standard (default)   k8s.io/minikube-hostpath       5d
-> ```
+*root@ubuntu-16:~$ kubectl get sc*
+*NAME                 PROVISIONER                    AGE*
+*openebs-standard     openebs.io/provisioner-iscsi   10m*
+*standard (default)   k8s.io/minikube-hostpath       5d*
 
-> ```
-> root@ubuntu-16:~$ kubectl get sp
-> NAME      AGE
-> ssd       10m
-> ```
+*root@ubuntu-16:~$ kubectl get sp*
+*NAME      AGE*
+*ssd       10m*
 
 Now you are ready to apply the CAS template which creates a default template.
 
