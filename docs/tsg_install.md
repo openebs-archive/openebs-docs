@@ -8,7 +8,7 @@ sidebar_label: Installation
 
 This section contains steps to troubleshoot and resolve issues faced while installing.
 
-The following issue is covered in this section.
+The following issues are covered in this section.
 
 [One of the 3 pods does not run while installing OpenEBS on a Kubernetes cluster in Azure](#PodNotRunningAzure)
 
