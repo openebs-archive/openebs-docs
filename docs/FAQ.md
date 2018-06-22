@@ -172,10 +172,11 @@ Currently OpenEBS don't have the feature to resize the volume through yaml. we n
                           Attached scsi disk sdb          State: running
   ```
 
-  ​
 
 
-- **Check the mounted path on disk sdb using the following command**:
+
+
+- **Check the mounted path on disk sdb using the following command:** 
 
   ```
   root@OpenEBSt# mount | grep /dev/sdb | more
@@ -194,7 +195,7 @@ Currently OpenEBS don't have the feature to resize the volume through yaml. we n
 
   ​
 
-- **Logout from the ISCSI target using the following command**:
+- **Logout from the ISCSI target using the following command:** 
 
 ```
 root@OpenEBS:/home/prabhat# iscsiadm -m node -u
@@ -202,7 +203,7 @@ Logging out of session [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e
 Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful
 ```
 
-- **You need to get the volume id using the below command**:
+- **You need to get the volume ID using the below command**: 
 
   ```
   root@OpenEBS:~# curl http://10.106.254.221:9501/v1/volumes
@@ -232,49 +233,62 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
   pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-ctrl-75bf7d6bdd-wg2gk   2/2       Running   0          3h
   pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq    1/1       Running   0          3h
 
+   root@OpenEBS:~# kubectl delete pod pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq
 
-  root@OpenEBS:~# kubectl delete pod pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq
-  pod "pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq" deleted
-  ```
-
-- **Logging to the target using below commands:**
+    pod "pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq" deleted
 
   ```
-  root@OpenEBS:/home/prabhat# iscsiadm -m discovery -t st -p 10.106.254.221:326
+
+
+ 
+
+- **Logging to the target using below commands:** 
+
+```
+ root@OpenEBS:/home/prabhat# iscsiadm -m discovery -t st -p 10.106.254.221:326
   10.106.254.221:3260,1 iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2
 
   root@OpenEBS:/home/prabhat# iscsiadm -m node -T iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 -p 10.106.254.221:3260 -l
   Logging in to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] (multiple)
   Login to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful.
-  ```
+```
 
-- **Check the file system consistency using the below command. sdc is the device after logging:**
 
-  ```
-  e2fsck -f /dev/sdc
-  ```
 
-- **Expand the file system**:
 
-  ```
-  resize2fs /dev/sdc
-  ```
+- **Check the file system consistency using the below command. sdc is the device after logging:** 
 
-- **Mount the file system:**
+```
+e2fsck -f /dev/sdc
+```
 
-  ```
+
+- **Expand the file system**: 
+
+```
+ resize2fs /dev/sdc
+```
+
+
+- **Mount the file system:** 
+
+```
   root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.99.197.30:3260-iqn.2016-09.com.openebs.jiva:pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2-lun-0
 
   root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/pods/3d71c842-6893-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2
-  ```
+```
 
-- **Restart the application pod**: 
 
-  ```
-  kubectl delete pod percona-b98f87dbd-nqssn
-  ```
+- **Restart the application pod:**   
 
-- **Write the data on the expanded disk:**
+```
+kubectl delete pod percona-b98f87dbd-nqssn
+```
+
+
+
+
+- **Write the data on the expanded disk:** 
 
   ​
 
