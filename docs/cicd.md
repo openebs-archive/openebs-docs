@@ -1,8 +1,4 @@
----
-id: cicd
-title: OpenEBS Usecases - CI/CD
-sidebar_label: CI/CD
----
+
 
 ------
 
@@ -24,13 +20,27 @@ OpenEBS provides a perfect solution for this problem. OpenEBS has integrated the
 
 DevOps admin integrates Jenkins/Travis/other CI-CD systems to provision and take snapshot as shown above. At the end of CI pipeline, the OpenEBS volume and all the snapshots are deleted/destroyed. Once CD is done, DevOps admin configures the OpenEBS volume such that periodic snapshots are taken and preserved.
 
-<< Spec file for taking a snapshot>>
+```
+apiVersion: volumesnapshot.external-storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: snapshot-demo
+  namespace: default
+spec:
+  persistentVolumeClaimName: demo-vol1-claim
+```
 
-<<kubectl apply -f >>
+The following command creates the snapshot named snapshot-demo.  
 
-<<Kubeapi for taking a snapshot>>
+```
+$ cd e2e/ansible/playbooks/feature/snapshots/kubectl_snapshot
+$ kubectl apply -f snapshot.yaml
+volumesnapshot "snapshot-demo" created
+$ kubectl get volumesnapshot 
+NAME            AGE 
+snapshot-demo   18s
 
-
+```
 
 How to take periodic snapshots of a given OpenEBS volume
 
@@ -40,9 +50,50 @@ When a stage of CI pipeline fails, the DevOps admin can easily restore the state
 
 ![Restoring the state of a stateful application](/docs/assets/snap-restore.png)
 
-<< spec file for new PVC with snapshot>>
 
-<<Kubectl apply -f pvc.yaml>>
+
+Now we have created a snapshot, we can restore it to new PVC. To do this we need to create a special StorageClass implemented by snapshot-provisioner. We will then create a PersistentVolumeClaim referencing this StorageClass for dynamically provision new PersistentVolume.  
+
+You can use `$ vi restore-storageclass.yaml` to create the yaml and add the below entries.
+
+```
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: snapshot-promoter
+provisioner: volumesnapshot.external-storage.k8s.io/snapshot-promoter
+```
+
+Once the restore-storageclass.yaml is created, you have to deploy the yaml by using the below command.
+
+```
+$ kubectl apply -f restore-storageclass.yaml
+```
+
+We can now create a PersistentVolumeClaim that will use the StorageClass to dynamically provision a PersistentVolume that contains the info of our snapshot. Please create yaml that will delpoy  a PersistentVolumeClaim  using the below entries.  Use `$ vi restore-pvc.yaml` command to create the yaml and then add the below entries to the yaml.
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: demo-snap-vol-claim
+  annotations:
+    snapshot.alpha.kubernetes.io/snapshot: snapshot-demo
+spec:
+  storageClassName: snapshot-promoter
+  accessModes: ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+```
+
+Once the restore-pvc.yaml is created ,  you have to deploy the yaml by using the below command.
+
+```
+$ kubectl apply -f restore-pvc.yaml
+```
+
+Finally mount the “demo-snap-vol-claim” PersistentVolumeClaim into a percona-snapsot Pod to see that the snapshot was restored properly. While deploying the percona-snapshot Pod you have to edit the deplyment yaml and mention the restore PersistentVolumeClaim name, volume name and volume mount accordingly. Please find the below example for your reference.
 
 
 
@@ -51,12 +102,10 @@ When a stage of CI pipeline fails, the DevOps admin can easily restore the state
 With OpenEBS , developers and DevOps admin can easily and seamlessly automate the process of reproducing the status of a failed stateful application pipeline stage. 
 
 
+## See Also
 
-### See Also
-
-Learn more about how OpenEBS volumes work
-
-Volume Policies of OpenEBS
+#### Learn more about how OpenEBS volumes work
+#### Volume Policies of OpenEBS
 
 
 

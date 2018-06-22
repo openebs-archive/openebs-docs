@@ -107,13 +107,190 @@ For enabling high availability, OpenEBS recommends having a minimum of 3 nodes i
 There are at least four common reasons for running OpenEBS on Amazon EBS that are listed as follows:
 
 * **Attach / Detach:**  The attach / detach process can slow the environment operations dependent on EBS.  
-
 * **No volume management needed:**  OpenEBS removes the need for volume management, enabling the combination of multiple underlying EBS volumes without the user needing to run LVM or other volume manager.  This saves time and reduces operational complexity.
-
 * **Expansion and inclusion of NVMe:**  OpenEBS allows users to add additional capacity without experiencing downtime.  This online addition of capacity can include NVMe and SSD instances from cloud providers or deployed in physical servers.  This means that as performance requirements increase, or decrease, you can use Kubernetes via storage policies to instruct OpenEBS to change capacity accordingly. 
-
 * **Other enterprise capabilities:**  OpenEBS adds other capabilities such as extremely efficient snapshots and clones as well as forthcoming capabilities such as encryption.  Snapshots and clones facilitate much more efficient CI/CD workflows as zero space copies of databases and other stateful workloads can be used in these and other workflows, improving these without incurring additional storage space or administrative effort.  The snapshot capabilities can also be used for replication.  As of February 2018 these replication capabilities are under development.
 
+
+## How to expand the Jiva Storage Volumes
+
+Currently OpenEBS don't have the feature to resize the volume through yaml. we need to follow the      below mentioned steps to do it manually.                                                     
+
+- **Obtain ISCSI target and disk details using the following command**:
+
+  ```
+  root@OpenEBS:~# iscsiadm -m session -P 3
+  iSCSI Transport Class version 2.0-870
+  version 2.0-873
+  Target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 (non-flash)
+          Current Portal: 10.106.254.221:3260,1
+          Persistent Portal: 10.106.254.221:3260,1
+                  **********
+                  Interface:
+                  **********
+                  Iface Name: default
+                  Iface Transport: tcp
+                  Iface Initiatorname: iqn.1993-08.org.debian:01:c6385a9091e6
+                  Iface IPaddress: 20.10.45.20
+                  Iface HWaddress: <empty>
+                  Iface Netdev: <empty>
+                  SID: 1
+                  iSCSI Connection State: LOGGED IN
+                  iSCSI Session State: LOGGED_IN
+                  Internal iscsid Session State: NO CHANGE
+                  *********
+                  Timeouts:
+                  *********
+                  Recovery Timeout: 120
+                  Target Reset Timeout: 30
+                  LUN Reset Timeout: 30
+                  Abort Timeout: 15
+                  *****
+                  CHAP:
+                  *****
+                  username: <empty>
+                  password: ********
+                  username_in: <empty>
+                  password_in: ********
+                  ************************
+                  Negotiated iSCSI params:
+                  ************************
+                  HeaderDigest: None
+                  DataDigest: None
+                  MaxRecvDataSegmentLength: 262144
+                  MaxXmitDataSegmentLength: 65536
+                  FirstBurstLength: 65536
+                  MaxBurstLength: 262144
+                  ImmediateData: Yes
+                  InitialR2T: Yes
+                  MaxOutstandingR2T: 1
+                  ************************
+                  Attached SCSI devices:
+                  ************************
+                  Host Number: 3  State: running
+                  scsi3 Channel 00 Id 0 Lun: 0
+                          Attached scsi disk sdb          State: running
+  ```
+
+
+
+
+
+- **Check the mounted path on disk sdb using the following command:** 
+
+  ```
+  root@OpenEBSt# mount | grep /dev/sdb | more
+  /dev/sdb on /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.106.254.221:3260-iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-lun-0 type ext4 (rw,relatime,data=ordered)
+  /dev/sdb on /var/lib/kubelet/pods/8de04c10-64a3-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 type ext4 (rw,relatime,data=ordered)
+  ```
+
+  ​
+
+- **Unmount the file system using the following command**:
+
+  ```
+  root@OpenEBS#umount /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.106.254.221:3260-iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-lun-0
+  root@OpenEBS#umount /var/lib/kubelet/pods/8de04c10-64a3-11e8-994b000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2
+  ```
+
+  ​
+
+- **Logout from the ISCSI target using the following command:** 
+
+```
+root@OpenEBS:/home/prabhat# iscsiadm -m node -u
+Logging out of session [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260]
+Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful
+```
+
+- **You need to get the volume ID using the below command**: 
+
+  ```
+  root@OpenEBS:~# curl http://10.106.254.221:9501/v1/volumes
+
+  {"data":[{"actions":{"revert":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=revert","shutdown":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=shutdown","snapshot":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=snapshot"},"id":"**cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==**","links":{"self":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg=="},"name":"pvc-8de2f9e7-64a3-11e8-994b000c2959d9a2","replicaCount":1,"type":"volume"}],"links":{"self":"http://10.106.254.221:9501/v1/volumes"},"resourceType":"volume","type":"collection"}
+  ```
+
+
+- **Modify the volume capacity using the below command**:
+
+  ```
+  syntax:curl -H "Content-Type: application/json" -X POST -d '{"name":"<volname>","size":"<size>"}' http://<target ip>:9501/v1/volumes/<id>?action=resize
+
+  root@prabhat-virtual-machine:~#curl -H "Content-Type: application/json" -X POST -d '{"name":"pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2","size":"7G"}' http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=resize
+  ```
+
+  ​
+
+- **Restart the replicas.You need to delete all the replicas of pod in single command.In the below example the percona is running with single replica.**
+
+  ```
+  root@OpenEBS:~# kubectl get pods
+  NAME                                                             READY     STATUS    RESTARTS   AGE
+  maya-apiserver-9679b678-n79bz                                    1/1       Running   0          3h
+  openebs-provisioner-55ff5cd67f-lgwh2                             1/1       Running   0          3h
+  percona                                                          1/1       Running   0          3h
+  pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-ctrl-75bf7d6bdd-wg2gk   2/2       Running   0          3h
+  pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq    1/1       Running   0          3h
+
+   root@OpenEBS:~# kubectl delete pod pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq
+
+    pod "pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq" deleted
+
+  ```
+
+
+ 
+
+- **Logging to the target using below commands:** 
+
+```
+ root@OpenEBS:/home/prabhat# iscsiadm -m discovery -t st -p 10.106.254.221:326
+  10.106.254.221:3260,1 iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2
+
+  root@OpenEBS:/home/prabhat# iscsiadm -m node -T iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 -p 10.106.254.221:3260 -l
+  Logging in to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] (multiple)
+  Login to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful.
+```
+
+
+
+
+- **Check the file system consistency using the below command. sdc is the device after logging:** 
+
+```
+e2fsck -f /dev/sdc
+```
+
+
+- **Expand the file system**: 
+
+```
+ resize2fs /dev/sdc
+```
+
+
+- **Mount the file system:** 
+
+```
+  root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.99.197.30:3260-iqn.2016-09.com.openebs.jiva:pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2-lun-0
+
+  root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/pods/3d71c842-6893-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2
+```
+
+
+- **Restart the application pod:**   
+
+```
+kubectl delete pod percona-b98f87dbd-nqssn
+```
+
+
+
+
+- **Write the data on the expanded disk:** 
+
+  ​
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
