@@ -9,7 +9,7 @@
     "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "mayaonline"],
     "Databases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "Kafka", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
     "Releases": ["changelog"],
-    "Troubleshooting": ["troubleshooting", "tsgcollectlogs", "tsgiscsi", "tsg_install", "tsgpvs"],
+    "Troubleshooting": ["troubleshooting", "tsgcollectlogs", "tsgiscsi", "tsg_install", "tsgopenshift", "tsgpvs"],
     "Contributor Resources": ["weeklycontribute", "contribute"]
   }
 }
