@@ -47,7 +47,7 @@ The AKS cluster runs ubuntu 16.04 LTS with the kubelet running in a container (d
 
 ### Workaround:
 
-On AKS, while installing OpenEBS using Helm, if you get the following error, you must enable RBAC on Azure. For more details, see [Prerequisites](https://staging-docs.openebs.io/docs/next/prerequisites.html).
+On AKS, while installing OpenEBS using Helm, if you get the following error, you must enable RBAC on Azure. For more details, see [Prerequisites](/docs/next/prerequisites.html).
 
 ```
 $ helm installstable/openebs --name openebs --namespace openebs
