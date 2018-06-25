@@ -6,8 +6,6 @@ sidebar_label: FAQ
 
 ------
 
-
-
 ## What is most distinctive about the OpenEBS architecture?
 
 The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.
@@ -112,11 +110,11 @@ There are at least four common reasons for running OpenEBS on Amazon EBS that ar
 * **Other enterprise capabilities:**  OpenEBS adds other capabilities such as extremely efficient snapshots and clones as well as forthcoming capabilities such as encryption.  Snapshots and clones facilitate much more efficient CI/CD workflows as zero space copies of databases and other stateful workloads can be used in these and other workflows, improving these without incurring additional storage space or administrative effort.  The snapshot capabilities can also be used for replication.  As of February 2018 these replication capabilities are under development.
 
 
-## How to expand the Jiva Storage Volumes
+## How do you expand the Jiva Storage Volumes?
 
-Currently OpenEBS don't have the feature to resize the volume through yaml. we need to follow the      below mentioned steps to do it manually.                                                     
+Currently OpenEBS does not support resizing a volume using an yaml file. The following procedure helps you manually resize a volume.                                                     
 
-- **Obtain ISCSI target and disk details using the following command**:
+1. **Obtain iSCSI target and disk details using the following command**:
 
   ```
   root@OpenEBS:~# iscsiadm -m session -P 3
@@ -173,10 +171,7 @@ Currently OpenEBS don't have the feature to resize the volume through yaml. we n
   ```
 
 
-
-
-
-- **Check the mounted path on disk sdb using the following command:** 
+2. **Check the mount path on disk sdb using the following command:** 
 
   ```
   root@OpenEBSt# mount | grep /dev/sdb | more
@@ -184,18 +179,16 @@ Currently OpenEBS don't have the feature to resize the volume through yaml. we n
   /dev/sdb on /var/lib/kubelet/pods/8de04c10-64a3-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 type ext4 (rw,relatime,data=ordered)
   ```
 
-  ​
 
-- **Unmount the file system using the following command**:
+3. **Unmount the file system using the following command**:
 
   ```
   root@OpenEBS#umount /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.106.254.221:3260-iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-lun-0
   root@OpenEBS#umount /var/lib/kubelet/pods/8de04c10-64a3-11e8-994b000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2
   ```
 
-  ​
 
-- **Logout from the ISCSI target using the following command:** 
+4. **Logout from the iSCSI target using the following command:** 
 
 ```
 root@OpenEBS:/home/prabhat# iscsiadm -m node -u
@@ -203,7 +196,7 @@ Logging out of session [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e
 Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful
 ```
 
-- **You need to get the volume ID using the below command**: 
+5. **Get the volume ID using the following command**: 
 
   ```
   root@OpenEBS:~# curl http://10.106.254.221:9501/v1/volumes
@@ -212,7 +205,7 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
   ```
 
 
-- **Modify the volume capacity using the below command**:
+6. **Modify the volume capacity using the following command**:
 
   ```
   syntax:curl -H "Content-Type: application/json" -X POST -d '{"name":"<volname>","size":"<size>"}' http://<target ip>:9501/v1/volumes/<id>?action=resize
@@ -220,9 +213,8 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
   root@prabhat-virtual-machine:~#curl -H "Content-Type: application/json" -X POST -d '{"name":"pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2","size":"7G"}' http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=resize
   ```
 
-  ​
 
-- **Restart the replicas.You need to delete all the replicas of pod in single command.In the below example the percona is running with single replica.**
+7. **Restart the replicas. You must delete all the replicas of a pod using a single command. In the below example Percona is running with a single replica.**
 
   ```
   root@OpenEBS:~# kubectl get pods
@@ -238,11 +230,9 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
     pod "pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq" deleted
 
   ```
-
-
  
 
-- **Logging to the target using below commands:** 
+8. **Log in to the target using the following commands:** 
 
 ```
  root@OpenEBS:/home/prabhat# iscsiadm -m discovery -t st -p 10.106.254.221:326
@@ -253,24 +243,21 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
   Login to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful.
 ```
 
-
-
-
-- **Check the file system consistency using the below command. sdc is the device after logging:** 
+9. **Check the file system consistency using the following command. sdc is the device after logging:** 
 
 ```
 e2fsck -f /dev/sdc
 ```
 
 
-- **Expand the file system**: 
+10. **Expand the file system**: 
 
 ```
  resize2fs /dev/sdc
 ```
 
 
-- **Mount the file system:** 
+11. **Mount the file system:** 
 
 ```
   root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.99.197.30:3260-iqn.2016-09.com.openebs.jiva:pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2-lun-0
@@ -279,18 +266,16 @@ e2fsck -f /dev/sdc
 ```
 
 
-- **Restart the application pod:**   
+12. **Restart the application pod:**   
 
 ```
 kubectl delete pod percona-b98f87dbd-nqssn
 ```
 
 
+13. **Write the data on the expanded disk:** 
 
 
-- **Write the data on the expanded disk:** 
-
-  ​
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
