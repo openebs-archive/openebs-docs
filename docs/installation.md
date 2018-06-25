@@ -6,30 +6,25 @@ sidebar_label: Installation
 
 ------
 
-OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here](/docs/next/supportedplatforms.html)
+OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here](/docs/next/supportedplatforms.html).
 
 
 
-On an existing Kubernetes cluster, as a cluster administrator, you can install OpenEBS in the following two ways.
+On an existing Kubernetes cluster, as a cluster administrator, you can install OpenEBS in the following two ways:
 
-1. Using helm charts
+1. Using Helm charts.
 
-2. Using OpenEBS operator through kubectl  
-
-   ​
+2. Using OpenEBS operator through `kubectl`.
 
 
 <a name="helm"></a>
-
-
-
-## Install OpenEBS using helm charts
+## Install OpenEBS using Helm charts
 
 ------
 
-![Installing OpenEBS using helm ](/docs/assets/helm.png)
+![Installing OpenEBS using Helm ](/docs/assets/helm.png)
 
-You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster. OpenEBS charts are available from [Kubernetes stable helm charts](https://github.com/kubernetes/charts/tree/master/stable).  
+You should have [configured Helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster. OpenEBS charts are available from [Kubernetes stable Helm charts](https://github.com/kubernetes/charts/tree/master/stable).  
 
 ### Setup RBAC for tiller before installing OpenEBS chart
 
@@ -41,7 +36,7 @@ kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"sp
 
 
 
-Install the charts using the following command with a namespace of your choice.
+Install the charts using the following command with a namespace of your choice:
 
 ```
 helm install stable/openebs --name openebs --namespace openebs
@@ -55,17 +50,17 @@ helm install -f values.yaml stable/openebs --name openebs --namespace openebs
 
 **Note:** Newer version (0.5.4) of OpenEBS has been made available which supports XFS. To use this functionality, use the  [values.yaml](https://raw.githubusercontent.com/openebs/openebs/master/k8s/charts/openebs/values.yaml). Please refer the [changelog](https://docs.openebs.io/docs/next/changelog.html) for details.
 
-Using the above helm chart method, it installs the required OpenEBS services except storage class templates. The storage class templates can be installed using the following command.
+Using the above Helm chart method, install the required OpenEBS services, except storage class templates. The storage class templates can be installed using the following command:
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
 ```
 
- As a next step, it is recommended to setup a catalog of storage classes for your application developers to use from. Learn more about setting up [OpenEBS storage classes here](/docs/next/setupstorageclasses.html).
+As a next step, it is recommended to setup a catalog of storage classes for your application developers to use from. Learn more about setting up OpenEBS storage classes [here](/docs/next/setupstorageclasses.html).
 
 Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://github.com/openebs/openebs/tree/master/k8s/demo).
 
-### Default values for helm chart parameters
+### Default values for Helm chart parameters
 
 The following table lists the configurable parameters of the OpenEBS chart and their default values.
 
@@ -87,6 +82,11 @@ The following table lists the configurable parameters of the OpenEBS chart and t
 
 Specify each parameter using the `--set key=value` argument to `helm install`.
 
+Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example:
+```
+helm install --name `my-release` -f values.yaml stable/openebs
+```
+
 ## Install OpenEBS using kubectl
 
 ------
@@ -96,18 +96,13 @@ Specify each parameter using the `--set key=value` argument to `helm install`.
 OpenEBS operator yaml file is available at https://openebs.github.io/charts/openebs-operator.yaml. 
 
 
-
 Set the context to **cluster-admin** and apply the above operator.
-
-
 
 ```
 kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
 ```
 
-
-
-This operator installs the control plane components such as maya-apiserver, openebs-provisioner, and also deploys the required storage class templates.
+This operator installs the control plane components such as maya-apiserver and openebs-provisioner and also deploys the required storage class templates.
 
 ```
 name@MayaMaster:~$ kubectl get pods
@@ -116,21 +111,21 @@ maya-apiserver-1633167387-v4sf1        1/1       Running   0          4h
 openebs-provisioner-1174174075-n989p   1/1       Running   0          4h
 ```
 
-You can see the newly deployed storage classes using the following command
+You can see the newly deployed storage classes using the following command:
 
 ```
 kubectl get sc
 ```
 
-As a next step, it is recommended to setup a catalog of storage classes for your application developers to use from. Learn more about setting up [OpenEBS storage classes here](/docs/next/setupstorageclasses.html).
+As a next step, it is recommended to setup a catalog of storage classes for your application developers to use from. Learn more about setting up OpenEBS storage classes [here](/docs/next/setupstorageclasses.html).
 
 Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo).
 
 ### See Also:
 
-[Setting up OpenEBS storage classes](/docs/next/setupstorageclasses.html)
+[Setting up OpenEBS Storage Classes](/docs/next/setupstorageclasses.html)
 
-[OpenEBS architecture](/docs/next/architecture.html)
+[OpenEBS Architecture](/docs/next/architecture.html)
 
 [Overview of CAS](/docs/next/conceptscas.html)
 
