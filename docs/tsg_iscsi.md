@@ -7,10 +7,10 @@ sidebar_label: iSCSI
 ------
 
 ## Issue:
-**The iscsi login is working from host/node but When done from within the container-it fails.**
+**iSCSI login works from the host/node, but when you login from within the container, it fails.**
 
 ## Troubleshooting the issue and Workaround:
-**If below error is seen when trying to login from kubelet:**
+**If the following error occurs when you are trying to login from kubelet, then the issue is because of the difference in versions between the kubelet and the node.**
 ```
 root@worker3:/# iscsiadm -m discovery -t st -p 10.43.21.74:3260
 10.43.21.74:3260,1 iqn.2016-09.com.openebs.jiva:pvc-641131af-75e2-11e8-990b-9600000c0999
@@ -20,19 +20,19 @@ iscsiadm: Could not login to [iface: default, target: iqn.2016-09.com.openebs.ji
 iscsiadm: initiator reported error (12 - iSCSI driver not found. Please make sure it is loaded, and retry the operation)
 iscsiadm: Could not log into all portals
 ```
-**Then the issue is with difference in version between the kubelet and node. The following command can be used to determine this:**
+**You can use the following command to verify the issue.**
 ```
 root@worker1 ~ # iscsiadm -V
 iscsiadm version 2.0-873
 root@worker1 ~ # sudo docker exec kubelet iscsiadm -V
 iscsiadm version 2.0-874
 ```
-**Remove the iscsi from the host/node by using the following command:**
+**Remove iscsi from the host/node by using the following command.**
 ```
 service iscsid stop
 sudo apt remove open-iscsi
 ```
-**The above command will only remove iscsi from node. But the iscsi inside the kubelet will be running.Verify the same from the following command**
+**The above command only removes iSCSI from the node, but iSCSI inside the kubelet will be running. Verify using the following command.**
 ```
 root@worker1 ~ # iscsiadm -V
 -bash: /usr/bin/iscsiadm: No such file or directory
@@ -45,7 +45,7 @@ root@worker1 ~ # sudo docker exec kubelet ps -auxfwww | grep iscsid
 root     25492  0.0  0.0  12944   924 pts/0    S+   15:27   0:00          \_ grep --color=auto iscsid
 ```
 
-**The iscsi login from within the kubelet should be successful now.**
+**The iSCSI login within kubelet will now be successful.**
 
 
 
