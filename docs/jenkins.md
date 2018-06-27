@@ -22,42 +22,56 @@ Deploying Jenkins Pod with Persistent Storage
 
 Before getting started, check the status of the cluster using the following command. 
 
-    ubuntu@kubemaster:~kubectl get nodes
-    NAME            STATUS    AGE       VERSION
-    kubemaster      Ready     3d        v1.7.5
-    kubeminion-01   Ready     3d        v1.7.5
-    kubeminion-02   Ready     3d        v1.7.5
+    ubuntu@kubemaster-01:~/openebs/k8s$ kubectl get nodes
+    NAME            STATUS    ROLES     AGE       VERSION
+    kubemaster-01   Ready     master    16m       v1.9.4
+    kubeminion-01   Ready     <none>    12m       v1.9.4
+    kubeminion-02   Ready     <none>    9m        v1.9.4
+    kubeminion-03   Ready     <none>    7m        v1.9.4
+
+Also make sure that you have deployed OpenEBS in your cluster.
+
+```
+ubuntu@kubemaster-01:~/openebs/k8s$ kubectl get pods -n openebs
+NAME                                           READY     STATUS    RESTARTS   AGE
+maya-apiserver-84fd4f776d-lvxcp                1/1       Running   0          6m
+openebs-provisioner-74cb999586-268k7           1/1       Running   0          6m
+openebs-snapshot-controller-6449b4cdbb-24fz4   2/2       Running   0          6m
+```
 
 Download and apply the Jenkins YAML file from the OpenEBS repository using the following commands. 
 
-    ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/jenkins/jenkins.yml
-    ubuntu@kubemaster:~kubectl apply -f jenkins.yml
+    ubuntu@kubemaster-01:~$ git clone https://github.com/openebs/openebs
+    ubuntu@kubemaster-01:~$ cd openebs/k8s/demo/jenkins
+    ubuntu@kubemaster-01:~/openebs/k8s/demo/jenkins$ kubectl apply -f jenkins.yml
+    persistentvolumeclaim "jenkins-claim" created
+    deployment "jenkins" created
+    service "jenkins-svc" created
 
-Get the status of running pods using the following command. 
+Get the status of running pods using the following command.  Applications are running in 
 
-    ubuntu@kubemaster:~kubectl get pods
-    NAME                                                             READY     STATUS    RESTARTS   AGE
-    jenkins-2748455067-85jv2                                         1/1       Running   0          9m
-    maya-apiserver-3416621614-r4821                                  1/1       Running   0          17m
-    openebs-provisioner-4230626287-7kjt4                             1/1       Running   0          17m
-    pvc-c52aa2d0-bcbc-11e7-a3ad-021c6f7dbe9d-ctrl-1457148150-v6ccz   1/1       Running   0          9m
-    pvc-c52aa2d0-bcbc-11e7-a3ad-021c6f7dbe9d-rep-2977732037-kqv6f    1/1       Running   0          9m
-    pvc-c52aa2d0-bcbc-11e7-a3ad-021c6f7dbe9d-rep-2977732037-s6g2s    1/1       Running   0          9m
+    ubuntu@kubemaster-01:~/openebs/k8s/demo/jenkins$ kubectl get pods
+    NAME                                                            READY     STATUS    RESTARTS   AGE
+    jenkins-6bc67f99d7-jpn62                                        1/1       Running   0          30m
+    pvc-e4bcafe4-791c-11e8-ae41-02b983f0a4db-ctrl-dcbb9f74c-smvnl   2/2       Running   0          30m
+    pvc-e4bcafe4-791c-11e8-ae41-02b983f0a4db-rep-5547d6bcd-8cw4z    1/1       Running   0          30m
+    pvc-e4bcafe4-791c-11e8-ae41-02b983f0a4db-rep-5547d6bcd-fjj7d    1/1       Running   0          30m
+    pvc-e4bcafe4-791c-11e8-ae41-02b983f0a4db-rep-5547d6bcd-q4tm8    1/1       Running   0          30m
+    
 
 Get the status of underlying persistent volumes used by Jenkins deployment using the following command. 
 
-    ubuntu@kubemaster:~kubectl get pvc
-    NAME            STATUS    VOLUME                                     CAPACITY   ACCESSMODES   STORAGECLASS       AGE
-    jenkins-claim   Bound     pvc-c52aa2d0-bcbc-11e7-a3ad-021c6f7dbe9d   5G         RWO           openebs-standard   12m
+    ubuntu@kubemaster-01:~/openebs/k8s/demo/jenkins$ kubectl get pvc
+    NAME            STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
+    jenkins-claim   Bound     pvc-e4bcafe4-791c-11e8-ae41-02b983f0a4db   5G         RWO            openebs-standard   21m
 
 Get the status of Jenkins service using the following command. 
 
-    ubuntu@kubemaster:~kubectl get svc
-    NAME                                                CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
-    jenkins-svc                                         10.107.147.241   <nodes>       80:32540/TCP        25m
-    kubernetes                                          10.96.0.1        <none>        443/TCP             3d
-    maya-apiserver-service                              10.97.14.255     <none>        5656/TCP            33m
-    pvc-c52aa2d0-bcbc-11e7-a3ad-021c6f7dbe9d-ctrl-svc   10.110.186.186   <none>        3260/TCP,9501/TCP   25m                            
+    ubuntu@kubemaster-01:~/openebs/k8s/demo/jenkins$ kubectl get svc
+    NAME                                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
+    jenkins-svc                                         NodePort    10.109.111.160   <none>        80:30577/TCP        21m
+    kubernetes                                          ClusterIP   10.96.0.1        <none>        443/TCP             1h
+    pvc-e4bcafe4-791c-11e8-ae41-02b983f0a4db-ctrl-svc   ClusterIP   10.106.18.214    <none>        3260/TCP,9501/TCP   21m                     
 
 Launching Jenkins
 -----------------
@@ -68,12 +82,19 @@ The Jenkins deployment YAML, creates a NodePort service type to make Jenkins ava
 
 The cluster is setup using vagrant VMs and the IP addresses are autogenerated by vagrant.
 
-Get the node IP Address that is running the Jenkins pod using the following command. Get the port number from the Jenkins service using the following command. 
+Get the node IP Address that is running the Jenkins pod using the following command. 
 
-    ubuntu@kubemaster-01:~ kubectl describe svc jenkins-svc | grep NodePort:
-    NodePort:       <unset> 32540/TCP
+    ubuntu@kubemaster-01:~/openebs/k8s/demo/jenkins$ kubectl describe pod jenkins-6bc67f99d7-r6hw7 | grep Node:
+    Node:           kubeminion-02/172.28.128.5
 
-Open the <https://172.28.128.5:32540> URL in your browser.
+Get the port number from the Jenkins service using the following command. 
+
+```
+ubuntu@kubemaster-01:~/openebs/k8s/demo/jenkins$ kubectl describe svc jenkins-svc | grep NodePort:
+NodePort:                 <unset>  30577/TCP
+```
+
+Open the <https://172.28.128.5:30577> URL in your browser.
 
 **Note:**
 
