@@ -14,6 +14,10 @@ The following issues are covered in this section.
 
 [Installing OpenEBS on Azure fails](#RBACNotEnableAzure)
 
+[Error while starting Minikube](#MinikubeStartError)
+
+[Kubeminion error while setting up OpenEBS on Vagrant](#KubeminionError)
+
 
 
 ## Issue: 
@@ -53,6 +57,50 @@ On AKS, while installing OpenEBS using Helm, if you get the following error, you
 $ helm installstable/openebs --name openebs --namespace openebs
 Error: release openebsfailed: clusterroles.rbac.authorization.k8s.io "openebs" isforbidden: attempt to grant extra privileges:[PolicyRule{Resources:["nodes"], APIGroups:["*"],Verbs:["get"]} PolicyRule{Resources:["nodes"],APIGroups:["*"], Verbs:["list"]}PolicyRule{Resources:["nodes"], APIGroups:["*"],Verbs:["watch"]} PolicyRule{Resources:["nodes/proxy"],APIGroups:["*"], Verbs:["get"]}PolicyRule{Resources:["nodes/proxy"], APIGroups:["*"],Verbs:["list"]} PolicyRule{Resources:["nodes/proxy"],APIGroups:["*"], Verbs:["watch"]}PolicyRule{Resources:["namespaces"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["services"],APIGroups:["*"], Verbs:["*"]} PolicyRule{Resources:["pods"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["deployments"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["events"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["endpoints"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["persistentvolumes"],APIGroups:["*"], Verbs:["*"]} PolicyRule{Resources:["persistentvolumeclaims"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["storageclasses"],APIGroups:["storage.k8s.io"], Verbs:["*"]}PolicyRule{Resources:["storagepools"], APIGroups:["*"],Verbs:["get"]} PolicyRule{Resources:["storagepools"], APIGroups:["*"],Verbs:["list"]} PolicyRule{NonResourceURLs:["/metrics"],Verbs:["get"]}] user=&{system:serviceaccount:kube-system:tiller6f3172cc-4a08-11e8-9af5-0a58ac1f1729 [system:serviceaccounts system:serviceaccounts:kube-systemsystem:authenticated] map[]} ownerrules=[]ruleResolutionErrors=[clusterroles.rbac.authorization.k8s.io"cluster-admin" not found]
 ```
+
+## Issue: 
+
+## Error while starting Minikube
+
+The following error occurs while starting Minikube on Ubuntu 16.04.3 LTS
+
+```
+harsh@atlantis:~/.kube$ sudo -E minikube start --vm-driver=none
+Starting local Kubernetes v1.7.5 cluster...
+Starting VM...
+E1011 01:01:01.315176   21844 start.go:146] Error starting host: Error getting state for host: machine does not exist.
+
+ Retrying.
+E1011 01:01:01.315654   21844 start.go:152] Error starting host:  Error getting state for host: machine does not exist
+```
+
+## <a name="MinikubeStartError"></a>
+
+### Workaround:
+
+Delete the Minikube VM using the following command and restart the VM with no flags. 
+
+```minikube delete```
+
+
+## Issue:
+<a name="KubeminionError"></a>
+
+## Kubeminion error while setting up OpenEBS on Vagrant version 1.8.2 or higher
+
+The following error occurred.
+
+```
+==> kubeminion-01: Using Master IP  - 172.28.128.3
+==> kubeminion-01: Using Token -  bdb573.063666e8dded3776
+```
+
+### Workaround:
+
+All the vagrant files must have a minimum 2 GB memory allocated for master and a minimum 2 GB memory allocated for nodes. 
+
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
