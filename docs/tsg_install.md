@@ -16,9 +16,7 @@ The following issues are covered in this section.
 
 [Error while starting Minikube](#MinikubeStartError)
 
-[Kubeminion error while setting up OpenEBS on Vagrant](#KubeminionError)
-
-
+[On Vagrant Percona and weave-net is restarting several no of times](#Percona and weave-net is restarting)
 
 ## Issue: 
 
@@ -83,23 +81,16 @@ Delete the Minikube VM using the following command and restart the VM with no fl
 ```minikube delete```
 
 
+
 ## Issue:
-<a name="KubeminionError"></a>
 
-## Kubeminion error while setting up OpenEBS on Vagrant version 1.8.2 or higher
+## Error: On Vagrant Percona and weave-net is restarting several no of times
 
-The following error occurred.
+## <a name="Percona and weave-net is restarting"></a>
 
-```
-==> kubeminion-01: Using Master IP  - 172.28.128.3
-==> kubeminion-01: Using Token -  bdb573.063666e8dded3776
-```
+Percona and weave-net restarts several times while running prometheus and percona components at the same time on Vagrant setup.
 
-### Workaround:
-
-All the vagrant files must have a minimum 2 GB memory allocated for master and a minimum 2 GB memory allocated for nodes. 
-
-
+This issue gets resolved once 2 GB or more RAM  has been assigned to the minions. As it has been identified that 1GB of RAM is not enough for the minions to run pods. Less RAM might result in pods getting evicted and getting restarted.
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
