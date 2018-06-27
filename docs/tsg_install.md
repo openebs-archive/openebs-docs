@@ -16,7 +16,7 @@ The following issues are covered in this section.
 
 [Error while starting Minikube](#MinikubeStartError)
 
-[On Vagrant Percona and weave-net is restarting several no of times](#Percona and weave-net is restarting)
+[On Vagrant Percona and weave-net is restarting several no of times](#PerconaWeavenetRestart)
 
 ## Issue: 
 
@@ -86,7 +86,7 @@ Delete the Minikube VM using the following command and restart the VM with no fl
 
 ## Error: On Vagrant Percona and weave-net is restarting several no of times
 
-## <a name="Percona and weave-net is restarting"></a>
+## <a name="PerconaWeavenetRestart"></a>
 
 Percona and weave-net restarts several times while running prometheus and percona components at the same time on Vagrant setup.
 
