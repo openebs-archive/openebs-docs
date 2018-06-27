@@ -10,8 +10,8 @@ More on the Docusaurus can be found here: https://docusaurus.io/docs/en/installa
 
 ```
 sudo apt-get install python-software-properties
-curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 
+curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 ```
 
 ### To get the latest nodejs package
@@ -22,9 +22,9 @@ sudo apt-get install -y nodejs
 
 
 ### Install yarn
+
 ```
 npm install -g yarn
-
 ```
 
 ### Clone openebs-docs
@@ -42,7 +42,8 @@ cd openebs-docs/website
 
 openebs-docs/website$ npm start
 ```
-Above step will start server on the localhost:3000
+
+Above step will start server on the `localhost:3000`
 
 ### How OpenEBS-docs get published?
 
