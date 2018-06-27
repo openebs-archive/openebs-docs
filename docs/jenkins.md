@@ -29,7 +29,7 @@ Before getting started, check the status of the cluster using the following comm
     kubeminion-02   Ready     <none>    9m        v1.9.4
     kubeminion-03   Ready     <none>    7m        v1.9.4
 
-Also make sure that you have deployed OpenEBS in your cluster.
+Also make sure that you have deployed OpenEBS in your cluster. 
 
 ```
 ubuntu@kubemaster-01:~/openebs/k8s$ kubectl get pods -n openebs
@@ -48,7 +48,7 @@ Download and apply the Jenkins YAML file from the OpenEBS repository using the f
     deployment "jenkins" created
     service "jenkins-svc" created
 
-Get the status of running pods using the following command.  Applications are running in 
+Get the status of running pods using the following command.  Applications are running in default namespace.
 
     ubuntu@kubemaster-01:~/openebs/k8s/demo/jenkins$ kubectl get pods
     NAME                                                            READY     STATUS    RESTARTS   AGE
@@ -57,7 +57,6 @@ Get the status of running pods using the following command.  Applications are ru
     pvc-e4bcafe4-791c-11e8-ae41-02b983f0a4db-rep-5547d6bcd-8cw4z    1/1       Running   0          30m
     pvc-e4bcafe4-791c-11e8-ae41-02b983f0a4db-rep-5547d6bcd-fjj7d    1/1       Running   0          30m
     pvc-e4bcafe4-791c-11e8-ae41-02b983f0a4db-rep-5547d6bcd-q4tm8    1/1       Running   0          30m
-    
 
 Get the status of underlying persistent volumes used by Jenkins deployment using the following command. 
 
