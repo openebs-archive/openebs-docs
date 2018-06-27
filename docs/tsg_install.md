@@ -16,6 +16,8 @@ The following issues are covered in this section.
 
 [Error while starting Minikube](#MinikubeStartError)
 
+[Kubeminion error while setting up OpenEBS on Vagrant](#KubeminionError)
+
 
 
 ## Issue: 
@@ -79,6 +81,25 @@ E1011 01:01:01.315654   21844 start.go:152] Error starting host:  Error getting 
 Delete the Minikube VM using the following command and restart the VM with no flags. 
 
 ```minikube delete```
+
+
+## Issue:
+<a name="KubeminionError"></a>
+
+## Kubeminion error while setting up OpenEBS on Vagrant version 1.8.2 or higher
+
+The following error occurred.
+
+```
+==> kubeminion-01: Using Master IP  - 172.28.128.3
+==> kubeminion-01: Using Token -  bdb573.063666e8dded3776
+```
+
+### Workaround:
+
+All the vagrant files must have a minimum 2 GB memory allocated for master and a minimum 2 GB memory allocated for nodes. 
+
+
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
