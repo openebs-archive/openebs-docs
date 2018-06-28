@@ -112,9 +112,9 @@ There are at least four common reasons for running OpenEBS on Amazon EBS that ar
 
 ## How do you expand the Jiva Storage Volumes?
 
-Currently OpenEBS volume can be resize by following the below mentioned steps.                                                     
+Currently OpenEBS volume can be resized using the following procedure.                                                     
 
-1.Obtain iSCSI target and disk details using the following command:
+1. Obtain iSCSI target and disk details using the following command.
 
   ```
   root@OpenEBS:~# iscsiadm -m session -P 3
@@ -125,7 +125,7 @@ Currently OpenEBS volume can be resize by following the below mentioned steps.
   ```
 
 
-2.Check the mount path on disk sdb using the following command: 
+2. Check the mount path on disk sdb using the following command.
 
   ```
   root@OpenEBSt# mount | grep /dev/sdb | more
@@ -134,7 +134,7 @@ Currently OpenEBS volume can be resize by following the below mentioned steps.
   ```
 
 
-3.Unmount the file system using the following command:
+3. Unmount the file system using the following command.
 
   ```
   root@OpenEBS#umount /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.106.254.221:3260-iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-lun-0
@@ -142,7 +142,7 @@ Currently OpenEBS volume can be resize by following the below mentioned steps.
   ```
 
 
-4.Logout from the iSCSI target using the following command:
+4. Logout from the iSCSI target using the following command.
 
 ```
 root@OpenEBS:/home/prabhat# iscsiadm -m node -u
@@ -150,7 +150,7 @@ Logging out of session [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e
 Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful
 ```
 
-5.Get the volume ID using the following command: 
+5. Get the volume ID using the following command.
 
   ```
   root@OpenEBS:~# curl http://10.106.254.221:9501/v1/volumes
@@ -159,7 +159,7 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
   ```
 
 
-6.Modify the volume capacity using the following command:
+6. Modify the volume capacity using the following command. 
 
   ```
   syntax:curl -H "Content-Type: application/json" -X POST -d '{"name":"<volname>","size":"<size>"}' http://<target ip>:9501/v1/volumes/<id>?action=resize
@@ -168,7 +168,7 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
   ```
 
 
-7.Restart the replicas. You must delete all the replicas of a pod using a single command. In the below example Percona is running with a single replica.
+7. Restart the replicas. You must delete all the replicas of a pod using a single command. In the example given below, Percona is running with a single replica.
 
   ```
   root@OpenEBS:~# kubectl get pods
@@ -186,7 +186,7 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
   ```
  
 
-8.Log in to the target using the following commands: 
+8. Log in to the target using the following commands. 
 
 ```
  root@OpenEBS:/home/prabhat# iscsiadm -m discovery -t st -p 10.106.254.221:326
@@ -197,21 +197,21 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
   Login to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful.
 ```
 
-9.Check the file system consistency using the following command. sdc is the device after logging: 
+9. Check the file system consistency using the following command. sdc is the device after logging.
 
 ```
 e2fsck -f /dev/sdc
 ```
 
 
-10.Expand the file system: 
+10. Expand the file system using the following command.
 
 ```
  resize2fs /dev/sdc
 ```
 
 
-11.Mount the file system: 
+11. Mount the file system using the following command.
 
 ```
   root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.99.197.30:3260-iqn.2016-09.com.openebs.jiva:pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2-lun-0
@@ -220,14 +220,14 @@ e2fsck -f /dev/sdc
 ```
 
 
-12.Restart the application pod:   
+12. Restart the application pod using the following command.
 
 ```
 kubectl delete pod percona-b98f87dbd-nqssn
 ```
 
 
-13.Application pod should be in running state and you can use the resized volume. 
+13. Application pod must be in running state and you can use the resized volume. 
 
 
 
