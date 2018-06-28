@@ -87,6 +87,12 @@ The following table lists the configurable parameters of the OpenEBS chart and t
 
 Specify each parameter using the `--set key=value` argument to `helm install`.
 
+If you want to change the default values, use — set key=value argument in the installation command as in the following example.
+
+```
+helm install stable/openebs --set apiserver.imageTag=ci --set provisioner.imageTag=ci --set jiva.imageTag=ci --namespace openebs
+```
+
 ## Install OpenEBS using kubectl
 
 ------
