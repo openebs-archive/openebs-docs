@@ -90,8 +90,9 @@ Specify each parameter using the `--set key=value` argument to `helm install`.
 If you want to change the default values, use — set key=value argument in the installation command as in the following example.
 
 ```
-helm install stable/openebs --set apiserver.imageTag=ci --set provisioner.imageTag=ci --set jiva.imageTag=ci --namespace openebs
+helm install stable/openebs --set apiserver.imageTag=<value> --set provisioner.imageTag=<value> --namespace <name>
 ```
+**Note:** --name flag is optional.
 
 ## Install OpenEBS using kubectl
 
