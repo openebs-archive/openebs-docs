@@ -277,6 +277,8 @@ By default, the databases cannot be viewed on the secondary instance through the
          syncedTo: Mon Oct 23 2017 07:28:27 GMT+0000 (UTC)
          0 secs (0 hrs) behind the primary
 
+* The way the PVCs are associated with a deployment in a StatefulSet are different and don't follow the same process as a Deployment. The StatefulSet internally creates the PVC objects. Also currently a delete Statefulset doesn't delete the corresponding PVCs created.
+
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
    (function(h,o,t,j,a,r){
