@@ -36,11 +36,17 @@ This section provides detailed instructions which allow you to perform the follo
            environment: test
           .
           .
-      Apply the mongo-statefulset.yml using the following commands.
+   Apply the mongo-statefulset.yml using the following commands.
 
-    test@Master:~$ kubectl apply -f mongo-statefulset.yml
-    service "mongo" created
-    S "mongo" created
+   ```
+   test@Master:~$ kubectl apply -f mongo-statefulset.yml
+   
+   service "mongo" created
+   
+   statefulset "mongo" created
+   ```
+
+   
 
 Verify that MongoDB replicas, mongo headless service and OpenEBS persistent volumes comprising of the controller and replica pods are successfully deployed and are in *Running* state. 
 
@@ -76,128 +82,61 @@ It may take some time for the pods to start as the images must be pulled and ins
 
 3. ### Generate Load on the MongoDB Instance
 
-   In this example, you will be using a custom-built Sysbench framework integrated with support for OLTP tests MongoDB through the lua scripts. Sysbench is a multi-purpose benchmarking tool which can run DB benchmarks as well as regular raw/file device input/output.
+   In this example, you will be using a mongo-loadgen.yaml to create load on mongo-0.mongo pod.
 
-### Installing Sysbench
+   The mongo-loadgen.yaml  can be created with below entries.
 
-The following procedure helps you install Sysbench.
+   ```
+   apiVersion: batch/v1
+   kind: Job
+   metadata:
+     name: mongo-loadgen
+   spec:
+     template:
+       metadata:
+         name: mongo-loadgen
+       spec:
+         restartPolicy: Never
+         containers:
+         - name: mongo-loadgen
+           image: openebs/tests-sysbench-mongo
+           command: ["/bin/bash"]
+           args: ["-c", "./sysbench/sysbench --mongo-write-concern=1 --mongo-url='mongodb://mongo-0.mongo' --mongo-database-name=sbtest --test=./sysbench/tests/mongodb/oltp.lua --oltp_table_size=100 --oltp_tables_count=10 --num-threads=10 --rand-type=pareto --report-interval=10 --max-requests=0 --max-time=600 --oltp-point-selects=10 --oltp-simple-ranges=1 --oltp-sum-ranges=1 --oltp-order-ranges=1 --oltp-distinct-ranges=1 --oltp-index-updates=1 --oltp-non-index-updates=1 --oltp-inserts=1 run"]
+           tty: true
+   ```
 
-* Download the appropriate branch of Percona-Lab's Sysbench fork with support for MongoDB integration on Kubernetes nodes. The Sysbench dependencies are installed in these Kubernetes nodes. (see, [Prerequisites](/docs/next/prerequisites.html)).
-
-    git clone -b dev-mongodb-support-1.0 https://github.com/Percona-Lab/sysbench.git
-* Enter the Sysbench local repository and perform the following commands in the given order.
-
-    cd sysbench
-    ./autogen.sh
-    ./configure
-    make
-**Note:**
-
-In case of errors where some header files belonging to the *libbson/libmongoc* packages are not found, update the include path. A workaround for this is to place all header files inside libbson-1.0 and
-libmongoc-1.0 into /usr/include folder.
-
-### Executing the Sysbench Benchmark
-
--   Identify the primary MongoDB instance name or IP (In the current S specification YAML, "mongo-0" is always configured as the primary instance that takes the client input/output)
--   Trigger the Sysbench command using the following command to -
-    -   prepare the database
-    -   add the collections
-    -   perform the benchmark run
-
-**Note:** Replace the mongo-url parameter based on the appropriate IP which can be obtained by kubectl describe pod mongo-0 | grep IP.
-
-    test@Host02:~/sysbench$ ./sysbench/sysbench --mongo-write-concern=1 --mongo-url="mongodb://10.44.0.3" --mongo-database-name=sbtest --test=./sysbench/tests/mongodb/oltp.lua --oltp_table_size=100 --oltp_tables_count=10 --num-threads=10 --rand-type=pareto --report-interval=10 --max-requests=0 --max-time=600 --oltp-point-selects=10 --oltp-simple-ranges=1 --oltp-sum-ranges=1 --oltp-order-ranges=1 --oltp-distinct-ranges=1 --oltp-index-updates=1 --oltp-non-index-updates=1 --oltp-inserts=1 run
-
-The parameters used for Sysbench can be modified based on system capability and storage definition to obtain realistic benchmark figures.
-
-The benchmark output displayed is similar to the following: 
+**Note:** While creating mongo-loadgen.yaml,in the --mongo-url section user has to mention your pod mongo pod name. Here in this example its mongo-0.mongo.
 
 ```
-sysbench 1.0: multi-threaded system evaluation benchmark
-
-Running the test with following options: 
-Number of threads: 10 
-Report intermediate results every 10 second(s) 
-Initializing random number generator from current time
-
-Initializing worker threads...
-
-setting write concern to 1 
-Threads started!
-
-[ 10s] threads: 10, tps: 56.60, reads: 171.50, writes: 170.40, response time: 316.14ms (95%), errors: 0.00, reconnects: 0.00 
-[ 20s] threads: 10, tps: 74.70, reads: 222.90, writes: 223.50, response time: 196.30ms (95%), errors: 0.00, reconnects: 0.00 
-[ 30s] threads: 10, tps: 76.00, reads: 227.70, writes: 228.00, response time: 196.71ms (95%), errors: 0.00, reconnects: 0.00 
-[ 40s] threads: 10, tps: 79.60, reads: 239.70, writes: 238.80, response time: 329.08ms (95%), errors: 0.00, reconnects: 0.00 
-: 
-: 
-OLTP test statistics: 
-	queries performed: 
-		read: 154189 
-		write: 154122 
-		other: 51374 
-		total: 359685 
-	transactions: 51374 (85.61 per sec.) 
-	read/write requests: 308311 (513.79 per sec.) 
-	other operations: 51374 (85.61 per sec.) 
-	ignored errors: 0 (0.00 per sec.) 
-	reconnects: 0 (0.00 per sec.)
-
-General statistics:   
-	total time: 600.0703s 
-	total number of events: 51374 
-	total time taken by event execution: 6000.1853s 
-	response time: 
-		min: 26.11ms
-		avg: 116.79ms 
-		max: 2388.03ms 
-		approx. 95 percentile: 224.00ms
-
-Threads fairness:
-	events (avg/stddev): 5137.4000/21.50 
-	execution time (avg/stddev): 600.0185/0.02
+vi mongo-loadgen.yaml
 ```
 
 
-While the benchmark is in progress, performance and capacity usage statistics on the OpenEBS storage volume can be viewed using the mayactl commands that must be executed on the maya-apiserver pod.
 
-Run an interactive bash session for the maya-apiserver pod container. 
+> --mongo-url='mongodb://mongo-0.mongo'
 
-    test@Master:~$ kubectl exec -it maya-apiserver-1089964587-x5q15 /bin/bash
-    root@maya-apiserver-1089964587-x5q15:/#
+Now run the below commands.
 
-Obtain the list of OpenEBS persistent volumes created by the MongoDB S application YAML. :
+```
+kubectl apply -f mongo-statefulset.yml
+```
 
-    ​```
-    root@maya-apiserver-1089964587-x5q15:/# maya volume list
-    Name                                      Status
-    pvc-0d39583c-bad7-11e7-869d-000c298ff5fc  Running
-    pvc-21da76b6-bad7-11e7-869d-000c298ff5fc  Running
-     :
-     ```
+To check the pod status rum the below command.
 
-View usage and input/output metrics for the required volume through the stats command.
+```
+kubectl get pods
+```
 
-    root@maya-apiserver-1089964587-x5q15:/# maya volume stats pvc-0d39583c-bad7-11e7-869d-000c298ff5fc
-    IQN     : iqn.2016-09.com.openebs.jiva:pvc-0d39583c-bad7-11e7-869d-000c298ff5fc
-    Volume  : pvc-0d39583c-bad7-11e7-869d-000c298ff5fc
-    Portal  : 10.105.60.71:3260
-    Size    : 5G
-    
-         Replica|   Status|   DataUpdateIndex|
-                |         |                  |
-       10.44.0.2|   Online|              4341|
-       10.36.0.3|   Online|              4340|
-    
-    ----------- Performance Stats -----------
-    
-       r/s|   w/s|   r(MB/s)|   w(MB/s)|   rLat(ms)|   wLat(ms)|
-         0|    14|     0.000|    14.000|      0.000|     71.325|
-    
-    ------------ Capacity Stats -------------
-    
-       Logical(GB)|   Used(GB)|
-             0.214|      0.205|
+
+Once all your pods are running run the below command.
+
+```
+kubectl apply -f mongo-loadgen.yaml
+```
+
+Now Mongo-DB is running . To run Mongo-DB with xfs file system please follow the steps mentioned in link below.
+
+https://github.com/openebs/openebs/issues/1446
 
 ### Verifying MongoDB Replication
 
