@@ -41,12 +41,9 @@ openebs-snapshot-controller-6449b4cdbb-24fz4   2/2       Running   0          6m
 
 Download and apply the Jenkins YAML file from the OpenEBS repository using the following commands. 
 
-    ubuntu@kubemaster-01:~$ git clone https://github.com/openebs/openebs
-    ubuntu@kubemaster-01:~$ cd openebs/k8s/demo/jenkins
-    ubuntu@kubemaster-01:~/openebs/k8s/demo/jenkins$ kubectl apply -f jenkins.yml
-    persistentvolumeclaim "jenkins-claim" created
-    deployment "jenkins" created
-    service "jenkins-svc" created
+    git clone https://github.com/openebs/openebs
+    cd openebs/k8s/demo/jenkins
+    kubectl apply -f jenkins.yml
 
 Get the status of running pods using the following command.  Application Pod and PVC pods are running in default namespace.
 
