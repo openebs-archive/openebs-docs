@@ -4,11 +4,10 @@ title: Using OpenEBS APIs
 sidebar_label: API
 ---
 
-<script type="text/javascript">   
-    var base_url = window.location.origin;
-    window.location = base_url + "/apireference.html";  
-</script>
 
+OpenEBS provides API interaction with Maya API Server which is the central control plane of it. Maya API Server is a RESTful API accessed by an HTTP client such as curl, or the HTTP library of programming languages. The API follows the open API standards and the reference documentation is generated using swagger.
+<br/>Click on the following link to visit API reference.<br/>
+<a href="/apireference.html" target="_blank">OpenEBS API Reference </a>
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
    (function(h,o,t,j,a,r){
