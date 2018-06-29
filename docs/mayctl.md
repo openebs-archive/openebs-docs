@@ -14,14 +14,14 @@ For getting access to mayactl command line tool, you will have to login / execut
 1. Find out the name of the maya-apiserver
 
    ```
-   kubeshell:~$ kubectl get pods | grep maya-apiserver
-   maya-apiserver-3053842955-zdlz4       1/1       Running            0          24d
+   ubuntu@kubemaster-01:~$ kubectl get pods -n openebs | grep -i maya-apiserver
+   maya-apiserver-84fd4f776d-wx6vp                1/1       Running   0          17h
    ```
 
 2. It is possible that there are multiple instances of maya-apiserver pods for scaling purposes. You can run mayactl in any one of them. Pick one of the pods for the below `exec` command
 
    ```
-   kubeshell:~$ kubectl exec -it maya-apiserver-3053842955-zdlz4 bash
+   ubuntu@kubemaster-01:~$ kubectl exec -it maya-apiserver-84fd4f776d-wx6vp /bin/bash  -n openebs
    bash-4.3#
    ```
 
@@ -32,64 +32,105 @@ For getting access to mayactl command line tool, you will have to login / execut
    ​
 
    ```
-   bash-4.3# mayactl --help
-   Usage: maya [--version] [--help] <command> [<args>]
+   bash-4.3#mayactl --help
+   Maya means 'Magic' a tool for storage orchestration
 
-   Available commands are:
-       snapshot    Provides operations related to snapshot of a Volume
-       version     Prints version and other details relevant to maya
-       volume      Provides operations related to a Volume
+   Usage:
+     mayactl [command]
+
+   Available Commands:
+     help        Help about any command
+     snapshot    Provides operations related to a Volume snapshot
+     version     Prints version and other details relevant to maya
+     volume      Provides operations related to a Volume
    ```
 
 4. Volume related mayactl commands are as follows:
 
    ```
-   bash-4.3# mayactl volume --help
+   bash-4.3#  mayactl volume --help
+
+   The following commands helps in operating a Volume such as create, list, and so on.
+
    Usage: mayactl volume <subcommand> [options] [args]
 
-           This command provides operations related to a Volume.
+   Examples:
 
-           Create a Volume:
-           $ mayactl volume create --volname <volume_name> --size <size>
+    # Create a Volume:
+      $ mayactl volume create --volname <vol> --size <size>
 
-           List Volumes:
-           $ mayactl volume list
+    # List Volumes:
+      $ mayactl volume list
 
-           Delete a Volume:
-           $ mayactl volume delete --volname <volume_name>
+    # Delete a Volume:
+      $ mayactl volume delete --volname <vol>
 
-           Statistics of a Volume:
-           $ mayactl volume stats --volname <volume_name>
-           
-           Statistics of a Volume in JSON:
-           $ mayactl volume stats --volname <volume_name> --json json
-           
-           Access mode of a volume:
-           $ mayactl volume info --volname <volume_name>
+    # Delete a Volume created in 'test' namespace:
+      $ mayactl volume delete --volname <vol> --namespace test
+
+    # Statistics of a Volume:
+      $ mayactl volume stats --volname <vol>
+
+    # Statistics of a Volume created in 'test' namespace:
+      $ mayactl volume stats --volname <vol> --namespace test
+
+    # Info of a Volume:
+      $ mayactl volume info --volname <vol>
+
+    # Info of a Volume created in 'test' namespace:
+      $ mayactl volume info --volname <vol> --namespace test
+
+   Usage:
+     mayactl volume [command]
+
+   Available Commands:
+     create      Creates a new Volume
+     delete      Deletes a Volume
+     info        Displays Openebs Volume information
+     list        Displays status information about Volume(s)
+     stats       Displays the runtime statisics of Volumes
 
    ```
 
 5. Volume snapshot related mayactl commands are as follows:
 
    ```
-   bash-4.3# mayactl snapshot --help 
+   bash-4.3#  mayactl snapshot --help
+
+   Command provides operations related to a volume snapshot.
+
+   If you have specified an OpenEBS volume in a namespace other than the 'default',
+   you must use --namespace flag with a command. If not, you will see the results only
+   in the 'default' namespace.
+
    Usage: mayactl snapshot <subcommand> [options] [args]
 
-           This command provides operations related to snapshot of a Volume.
+   Examples:
+     # Create a snapshot:
+       $ mayactl snapshot create --volname <vol> --snapname <snap>
 
-           Create snapshot:
-           $ mayactl snapshot create --volname <volume_name> --snapname <snap>
+     # Create a snapshot for a volume created in 'test' namespace
+       $ mayactl snapshot create --volname <vol> --snapname <snap> --namespace test
 
-           List snapshots:
-           $ mayactl snapshot list ---volname <volume_name>
+     # Lists snapshot:
+       $ mayactl snapshot list --volname <vol>
 
-           Revert to snapshot:
-           $ mayactl snapshot revert --volname <volume_name> --snapname <snap>
+     # Lists snapshots for a volume created in 'test' namespace
+       $ mayactl snapshot list --volname <vol> --namespace test
 
-   Subcommands:
-       create    Creates snapshot of a Volume
-       list      Lists all the snapshots of a Volume
-       revert    Reverts to specific snapshot of a Volume
+     # Reverts a snapshot:
+       $ mayactl snapshot revert --volname <vol> --snapname <snap>
+
+     # Revert a snapshot for a volume created in 'test' namespace
+       $ mayactl snapshot revert --volname <vol> --snapname <snap> --namespace test
+
+   Usage:
+     mayactl snapshot [command]
+
+   Available Commands:
+     create      Creates a new Snapshot
+     list        Lists all the snapshots of a Volume
+     revert      Reverts to specific snapshot of a Volume
    ```
 
 
