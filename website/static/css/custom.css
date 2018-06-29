@@ -281,3 +281,21 @@ and (max-device-width : 720px) {
       font-size: 12px;
     }
 }
+
+}
+
+/**
+ * Styles for the Swagger API documentation (engine/api/v1.x/index.html)
+ */
+
+
+/* ReDoc doesn't change outer page styles */
+.redoc-body{
+    margin: 0px;
+}
+/**
+ * Disable request-type badges, see https://github.com/Rebilly/ReDoc/issues/61
+ */
+redoc .operation-type {
+    display: none !important;
+}
