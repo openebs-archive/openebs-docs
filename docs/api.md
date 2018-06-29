@@ -4,8 +4,7 @@ title: Using OpenEBS APIs
 sidebar_label: API
 ---
 
-
-OpenEBS provides API interaction with Maya API Server which is the central control plane of it. Maya API Server is a RESTful API accessed by an HTTP client such as curl, or the HTTP library of programming languages. The API follows the open API standards and the reference documentation is generated using swagger.
+OpenEBS REST APIs provide a bundle of function that encompasses the features in OpenEBS managed by REST Client such as curl or the HTTP library of programming languages. The API follows the open API standards and the reference documentation is generated using swagger.
 <br/>Click on the following link to visit API reference.<br/>
 <a href="/apireference.html" target="_blank">OpenEBS API Reference </a>
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
