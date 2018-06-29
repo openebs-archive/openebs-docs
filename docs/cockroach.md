@@ -25,68 +25,90 @@ Deploying CockroachDB with Persistent Storage
 
 Before starting, check the status of the cluster using the following command. 
 
-    ubuntu@kubemaster:~kubectl get nodes
-    NAME            STATUS    AGE       VERSION
-    kubemaster      Ready     3d        v1.8.2
-    kubeminion-01   Ready     3d        v1.8.2
-    kubeminion-02   Ready     3d        v1.8.2
+    ubuntu@kubemaster-01:~$ kubectl get nodes
+    NAME            STATUS    ROLES     AGE       VERSION
+    kubemaster-01   Ready     master    1d        v1.9.4
+    kubeminion-01   Ready     <none>    1d        v1.9.4
+    kubeminion-02   Ready     <none>    1d        v1.9.4
+    kubeminion-03   Ready     <none>    1d        v1.9.4
 
-Download and apply the CockroachDB YAMLs from the OpenEBS repository
+Also make sure that you have deployed OpenEBS in your cluster.
+
+```
+ubuntu@kubemaster-01:~/openebs/k8s$ kubectl get pods -n openebs
+NAME                                           READY     STATUS    RESTARTS   AGE
+maya-apiserver-17fd5l776d-wvxrp                1/1       Running   0          4m
+openebs-provisioner-24ab929502-461s7           1/1       Running   0          4m
+openebs-snapshot-controller-6449b4cdcc-34fx4   2/2       Running   0          4m
+```
+
+Do ssh to kubemaster and download and apply the CockroachDB YAMLs from the OpenEBS repository
 using the following commands. 
 
-    ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cockroachDB/cockroachdb-sc.yaml
-    ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cockroachDB/cockroachdb-sts.yaml
-    ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cockroachDB/cockroachdb-svc.yaml
-    
-    ubuntu@kubemaster:~kubectl apply -f cockroachdb-sc.yaml
-    ubuntu@kubemaster:~kubectl apply -f cockroachdb-sts.yml
-    ubuntu@kubemaster:~kubectl apply -f cockroachdb-svc.yml
+    git clone https://github.com/openebs/openebs.git
+    cd openebs/k8s/demo/cockroachDB/
+
+```
+kubectl apply -f cockroachdb-sc.yaml
+kubectl apply -f cockroachdb-sts.yaml
+kubectl apply -f cockroachdb-svc.yaml
+```
 
 Get the status of running pods using the following command. 
 
-    ubuntu@kubemaster:~$ kubectl get pods
+    ubuntu@kubemaster-01:~/openebs/k8s/demo/cockroachDB$ kubectl get pods
     NAME                                                             READY     STATUS    RESTARTS   AGE
-    cockroachdb-0                                                    1/1       Running   0          22h
-    cockroachdb-1                                                    1/1       Running   0          21h
-    cockroachdb-2                                                    1/1       Running   0          21h
-    maya-apiserver-5f744bdcbc-q5lbb                                  1/1       Running   0          22h
-    openebs-provisioner-6fd9458d96-spvws                             1/1       Running   0          22h
-    pvc-42e9cafc-d4d7-11e7-8d7b-000c29119159-ctrl-6c8654f6f9-4m7jb   2/2       Running   0          21h
-    pvc-42e9cafc-d4d7-11e7-8d7b-000c29119159-rep-7c89c65dd4-p4l6w    1/1       Running   0          21h
-    pvc-42e9cafc-d4d7-11e7-8d7b-000c29119159-rep-7c89c65dd4-wmwl2    1/1       Running   0          21h
-    pvc-7005a715-d4d7-11e7-8d7b-000c29119159-ctrl-7944b78f8f-r575t   2/2       Running   0          21h
-    pvc-7005a715-d4d7-11e7-8d7b-000c29119159-rep-84746c8dbf-glrhq    1/1       Running   0          21h
-    pvc-7005a715-d4d7-11e7-8d7b-000c29119159-rep-84746c8dbf-l6zlr    1/1       Running   0          21h
-    pvc-ef78ba18-d4d6-11e7-8d7b-000c29119159-ctrl-78f6c95f87-w8tgq   2/2       Running   0          22h
-    pvc-ef78ba18-d4d6-11e7-8d7b-000c29119159-rep-649d9fd578-rxthz    1/1       Running   0          22h
-    pvc-ef78ba18-d4d6-11e7-8d7b-000c29119159-rep-649d9fd578-wp6xc    1/1       Running   0          22h
+    cockroachdb-0                                                    1/1       Running   0          24m
+    cockroachdb-1                                                    1/1       Running   0          23m
+    cockroachdb-2                                                    1/1       Running   0          18m
+    pvc-24b487f3-79f2-11e8-bc7b-02b983f0a4db-ctrl-5c447d79c9-ghvr9   2/2       Running   0          18m
+    pvc-24b487f3-79f2-11e8-bc7b-02b983f0a4db-rep-546b8496c5-6spc9    1/1       Running   0          18m
+    pvc-24b487f3-79f2-11e8-bc7b-02b983f0a4db-rep-546b8496c5-grgkb    1/1       Running   0          18m
+    pvc-24b487f3-79f2-11e8-bc7b-02b983f0a4db-rep-546b8496c5-mk5mk    1/1       Running   0          18m
+    pvc-40e2c0ce-79f1-11e8-bc7b-02b983f0a4db-ctrl-6cd77d978f-zmwsz   2/2       Running   0          24m
+    pvc-40e2c0ce-79f1-11e8-bc7b-02b983f0a4db-rep-648fb8d7b4-c6wm8    1/1       Running   0          24m
+    pvc-40e2c0ce-79f1-11e8-bc7b-02b983f0a4db-rep-648fb8d7b4-jr859    1/1       Running   0          24m
+    pvc-40e2c0ce-79f1-11e8-bc7b-02b983f0a4db-rep-648fb8d7b4-rhshx    1/1       Running   0          24m
+    pvc-78d2841a-79f1-11e8-bc7b-02b983f0a4db-ctrl-74b5c5889c-tkj9l   2/2       Running   0          23m
+    pvc-78d2841a-79f1-11e8-bc7b-02b983f0a4db-rep-769cd58f5-kfwnn     1/1       Running   0          23m
+    pvc-78d2841a-79f1-11e8-bc7b-02b983f0a4db-rep-769cd58f5-kmz4h     1/1       Running   0          23m
+    pvc-78d2841a-79f1-11e8-bc7b-02b983f0a4db-rep-769cd58f5-nd5mj     1/1       Running   0          23m
 
 Get the status of running StatefulSet using the following command. 
 
-    ubuntu@kubemaster:~$ kubectl get statefulset
+    ubuntu@kubemaster-01:~/openebs/k8s/demo/cockroachDB$ kubectl get statefulset
     NAME          DESIRED   CURRENT   AGE
-    cockroachdb   3         3         22h
+    cockroachdb   3         3         25m
 
 Get the status of underlying persistent volume used by CockroachDB
 StatefulSet using the following command. 
 
-    ubuntu@kubemaster:~$ kubectl get pvc
+    ubuntu@kubemaster-01:~/openebs/k8s/demo/cockroachDB$ kubectl get pvc
     NAME                    STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS          AGE
-    datadir-cockroachdb-0   Bound     pvc-ef78ba18-d4d6-11e7-8d7b-000c29119159   10Gi       RWO            openebs-cockroachdb   22h
-    datadir-cockroachdb-1   Bound     pvc-42e9cafc-d4d7-11e7-8d7b-000c29119159   10Gi       RWO            openebs-cockroachdb   22h
-    datadir-cockroachdb-2   Bound     pvc-7005a715-d4d7-11e7-8d7b-000c29119159   10Gi       RWO            openebs-cockroachdb   22h
+    datadir-cockroachdb-0   Bound     pvc-40e2c0ce-79f1-11e8-bc7b-02b983f0a4db   10G        RWO            openebs-cockroachdb   25m
+    datadir-cockroachdb-1   Bound     pvc-78d2841a-79f1-11e8-bc7b-02b983f0a4db   10G        RWO            openebs-cockroachdb   23m
+    datadir-cockroachdb-2   Bound     pvc-24b487f3-79f2-11e8-bc7b-02b983f0a4db   10G        RWO            openebs-cockroachdb   18m
+
+Get the status of persistent volumes using following command. Here replica count is 3 . So 3 PVs will be created.
+
+```
+ubuntu@kubemaster-01:~/openebs/k8s/demo/cockroachDB$ kubectl get pv
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                           STORAGECLASS          REASON    AGE
+pvc-24b487f3-79f2-11e8-bc7b-02b983f0a4db   10G        RWO            Delete           Bound     default/datadir-cockroachdb-2   openebs-cockroachdb             18m
+pvc-40e2c0ce-79f1-11e8-bc7b-02b983f0a4db   10G        RWO            Delete           Bound     default/datadir-cockroachdb-0   openebs-cockroachdb             25m
+pvc-78d2841a-79f1-11e8-bc7b-02b983f0a4db   10G        RWO            Delete           Bound     default/datadir-cockroachdb-1   openebs-cockroachdb             23m
+```
 
 Get the status of the services using the following command. 
 
-    ubuntu@kubemaster:~kubectl get svc
+    ubuntu@kubemaster-01:~/openebs/k8s/demo/cockroachDB$ kubectl get svc
     NAME                                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)              AGE
-    cockroachdb                                         ClusterIP   None             <none>        26257/TCP,8080/TCP   22h
-    cockroachdb-public                                  ClusterIP   10.98.208.2      <none>        26257/TCP,8080/TCP   22h
-    kubernetes                                          ClusterIP   10.96.0.1        <none>        443/TCP              20d
-    maya-apiserver-service                              ClusterIP   10.98.148.4      <none>        5656/TCP             22h
-    pvc-42e9cafc-d4d7-11e7-8d7b-000c29119159-ctrl-svc   ClusterIP   10.96.109.197    <none>        3260/TCP,9501/TCP    22h
-    pvc-7005a715-d4d7-11e7-8d7b-000c29119159-ctrl-svc   ClusterIP   10.105.222.30    <none>        3260/TCP,9501/TCP    22h
-    pvc-ef78ba18-d4d6-11e7-8d7b-000c29119159-ctrl-svc   ClusterIP   10.110.107.240   <none>        3260/TCP,9501/TCP    22h
+    cockroachdb                                         ClusterIP   None             <none>        26257/TCP,8080/TCP   25m
+    cockroachdb-public                                  ClusterIP   10.96.125.27     <none>        26257/TCP,8080/TCP   25m
+    kubernetes                                          ClusterIP   10.96.0.1        <none>        443/TCP              1d
+    pvc-24b487f3-79f2-11e8-bc7b-02b983f0a4db-ctrl-svc   ClusterIP   10.104.104.197   <none>        3260/TCP,9501/TCP    19m
+    pvc-40e2c0ce-79f1-11e8-bc7b-02b983f0a4db-ctrl-svc   ClusterIP   10.97.181.169    <none>        3260/TCP,9501/TCP    25m
+    pvc-78d2841a-79f1-11e8-bc7b-02b983f0a4db-ctrl-svc   ClusterIP   10.97.93.255     <none>        3260/TCP,9501/TCP    24m
 
 Testing your Database
 ---------------------
@@ -97,7 +119,7 @@ Testing your Database
 inside it using the following command. 
 
 ```
-ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --rm --restart=Never -- sql --insecure --host=cockroachdb-public
+kubectl run cockroachdb -it --image=cockroachdb/cockroach --rm --restart=Never -- sql --insecure --host=cockroachdb-public
 ```
 
 2. Run some basic CockroachDB SQL statements as follows: 
@@ -120,7 +142,7 @@ ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --r
 
 ```
     >\q
- ```
+```
 
 Using a Load Generator
 ----------------------
@@ -128,23 +150,21 @@ Using a Load Generator
 1. Download and apply the CockroachDB load generator from the OpenEBS repository using the following commands.
 
 ```
-ubuntu@kubemaster:~wget
-https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cockroachDB/cockroachdb-lg.yaml
-ubuntu@kubemaster:~kubectl apply -f cockroachdb-lg.yaml
+cd openebs/k8s/demo/cockroachDB/
+kubectl apply -f cockroachdb-lg.yaml
 ```
 
 2. Get the status of the job using the following command. 
 
 ```
-ubuntu@kubemaster:~kubectl get jobs NAME DESIRED SUCCESSFUL AGE
+ubuntu@kubemaster:~kubectl get jobs 
+NAME DESIRED SUCCESSFUL AGE
 cockroachdb-lg 1 0 2m
 ```
 
-3.  This is a Kubernetes Job YAML. It creates a database named test with a table named kv containing random k:v pairs.
+This is a Kubernetes Job YAML. It creates a database named test with a table named kv containing random k:v pairs. The Kubernetes Job will run for a duration of 5 minutes, which is a configurable value in the YAML.
 
-4.  The Kubernetes Job will run for a duration of 5 minutes, which is a configurable value in the YAML.
-
-5. Launch a temporary interactive pod and start the built-in SQL client inside it using the following command. 
+3.  Launch a temporary interactive pod and start the built-in SQL client inside it using the following command. 
 
 ```
 ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --rm --restart=Never -- sql --insecure --host=cockroachdb-public
@@ -200,7 +220,7 @@ ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --r
     (1 row)
     
     Time: 438.68592ms
- ```
+```
 
 ​7. Exit the SQL shell using the following command. 
 

@@ -1,6 +1,6 @@
 ---
 id: castemplate
-title: CAS Template
+title: CAS Templates
 sidebar_label: CAS Templates
 ---
 
@@ -34,19 +34,25 @@ kubectl apply -f openebs-operator.yaml
 
 The operator installs control plane components such as maya-apiserver, openebs-provisioner, storage pool and also deploys the default storage class templates.
 
-`root@ubuntu-16:~$ kubectl get pods`
-`NAME                                   READY     STATUS    RESTARTS   AGE`
-`maya-apiserver-587554dd45-s8bg9        1/1       Running   0          10m`
-`openebs-provisioner-55ff5cd67f-68m6b   1/1       Running   0          10m`
+```
+root@ubuntu-16:~$ kubectl get pods
+NAME                                   READY     STATUS    RESTARTS   AGE
+maya-apiserver-587554dd45-s8bg9        1/1       Running   0          10m
+openebs-provisioner-55ff5cd67f-68m6b   1/1       Running   0          10m
+```
 
-`root@ubuntu-16:~$ kubectl get sc`
-`NAME                 PROVISIONER                    AGE`
-`openebs-standard     openebs.io/provisioner-iscsi   10m`
-`standard (default)   k8s.io/minikube-`hostpath       5d
+```
+root@ubuntu-16:~$ kubectl get sc
+NAME                 PROVISIONER                    AGE
+openebs-standard     openebs.io/provisioner-iscsi   10m
+standard (default)   k8s.io/minikube-hostpath       5d
+```
 
-`root@ubuntu-16:~$ kubectl get sp`
-`NAME      AGE`
-`ssd       10m`
+```
+root@ubuntu-16:~$ kubectl get sp
+NAME      AGE
+ssd       10m
+```
 
 Now you are ready to apply the CAS template which creates a default template.
 
@@ -96,32 +102,30 @@ kubectl apply -f pvc.yaml
 
 The CAST volume is created with default template values as in the following example.
 
-> ```
-> root@ubuntu-16:~$ kubectl get pvc
-> NAME              STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
-> casvolume-claim   Bound     pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3   1Gi        RWO            openebs-standard   9s
->
-> root@ubuntu-16:~$ kubectl get pv
-> NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                     STORAGECLASS       REASON    AGE
-> pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3   6Gi        RWO            Delete           Bound     default/casvolume-claim   openebs-standard             10s
-> ```
->
-> 
->
+```
+root@ubuntu-16:~$ kubectl get pvc
+NAME              STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
+casvolume-claim   Bound     pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3   1Gi        RWO            openebs-standard   9s
+
+root@ubuntu-16:~$ kubectl get pv
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                     STORAGECLASS       REASON    AGE
+pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3   6Gi        RWO            Delete           Bound     default/casvolume-claim   openebs-standard             10s
+```
+
+
 
 Volume Pods are also created as per the default values in the CAS Template as in the following example.
 
-> ```
-> root@ubuntu-16:~$ kubectl get pods
-> NAME                                                             READY     STATUS    RESTARTS   AGE
-> maya-apiserver-587554dd45-s8bg9                                  1/1       Running   0          14m
-> openebs-provisioner-55ff5cd67f-68m6b                             1/1       Running   0          14m
-> pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3-ctrl-745445b5b5-whbbn   2/2       Running   0          30s
-> pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3-rep-57478cd89f-44v8s    1/1       Running   0          30s
-> ```
->
-> 
->
+```
+root@ubuntu-16:~$ kubectl get pods
+NAME                                                             READY     STATUS    RESTARTS   AGE
+maya-apiserver-587554dd45-s8bg9                                  1/1       Running   0          14m
+openebs-provisioner-55ff5cd67f-68m6b                             1/1       Running   0          14m
+pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3-ctrl-745445b5b5-whbbn   2/2       Running   0          30s
+pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3-rep-57478cd89f-44v8s    1/1       Running   0          30s
+```
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

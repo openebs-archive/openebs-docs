@@ -6,6 +6,8 @@ sidebar_label: Snapshots
 
 ------
 
+`Feature status: Pre-Alpha /Experimental. Users are advised to use this feature with caution.`
+
 ## What is a Snapshot?
 
 A storage snapshot is a set of reference markers for data at a particular point in time. A snapshot acts like a detailed table of contents, providing you with accessible copies of data that you can roll back to.

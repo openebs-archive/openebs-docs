@@ -37,7 +37,6 @@ following command.
     ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/couchbase/couchbase-statefulset.yml
     ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/couchbase/couchbase-service.yml
 
-
     ubuntu@kubemaster:~kubectl apply -f couchbase-statefulset.yml
     ubuntu@kubemaster:~kubectl apply -f couchbase-service.yml
 
@@ -94,17 +93,26 @@ Launching Couchbase as a Server
 
 The Couchbase service YAML, creates a NodePort service type for making the Couchbase server available outside the cluster.
 
-Get the node's IP Address which is running the Couchbase server using the following command. 
+Get the node which is running the Couchbase server using the following command. 
 
     ubuntu@kubemaster:~kubectl describe pod couchbase-0 | grep Node:
     Node:       kubeminion-02/20.10.29.203
+
+Get the node's External IP Address which is running the Couchbase server using the following command.
+
+```
+root@prabhat-virtual-machine:~/openebs/k8s/demo/couchbase# kubectl get nodes -o wide
+NAME            STATUS    ROLES     AGE       VERSION         EXTERNAL-IP      OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME
+kubeminion-01   Ready     <none>    4h        v1.10.4-gke.0   35.192.216.68    Ubuntu 16.04.4 LTS   4.13.0-1015-gcp   docker://17.3.2
+kubeminion-02   Ready     <none>    4h        v1.10.4-gke.0   35.224.182.169   Ubuntu 16.04.4 LTS   4.13.0-1015-gcp   docker://17.3.2
+```
 
 Get the port number from the Couchbase UI service using the following command. :
 
     ubuntu@kubemaster:~ kubectl describe svc couchbase-ui | grep NodePort:
     NodePort:       couchbase  30438/TCP
 
-Go to the <https://20.10.29.203:30438> URL from your browser and perform the following procedure from the UI.
+Go to the <http://35.224.182.169:30438> URL from your browser and perform the following procedure from the UI.
 
 **Note:**
 
