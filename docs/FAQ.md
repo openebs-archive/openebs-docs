@@ -230,13 +230,19 @@ kubectl delete pod percona-b98f87dbd-nqssn
 13. Application pod must be in running state and you can use the resized volume. 
 
 
-## How to destroy demo apps from k8s cluster
+## How to destroy demo apps from k8s cluster?
 
 Goto your application yaml file located in your kube master and apply the yaml with following way
 
 `kubectl delete -f <application yaml>`
 
 This will delete the application pod and its corresponding pvc associated to it.
+
+## What is the default OpenEBS retention policy?
+
+The default retention is the same used by the K8s.For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim.
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
