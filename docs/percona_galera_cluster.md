@@ -33,45 +33,77 @@ For the prerequisites and running OpenEBS Operator, see Running OpenEBS Operator
 Deploying the Percona Galera Cluster with OpenEBS Storage
 ---------------------------------------------------------
 
-The deployment specification YAMLs are available at *OpenEBS/k8s/demo/galera-xtradb-cluster/deployments*. Run the following commands in the given order. 
+The deployment specification YAMLs are available at *OpenEBS/k8s/demo/galera-xtradb-cluster/deployments*. 
 
-    test@Master:~/openebs$ cd k8s/demo/galera-xtradb-cluster/
-    test@Master:~/openebs/k8s/demo/galera-xtradb-cluster$ ls -ltr
-    total 16
-    -rw-rw-r-- 1 test test 1802 Oct 30 17:44 pxc-node3.yaml
-    -rw-rw-r-- 1 test test 1802 Oct 30 17:44 pxc-node2.yaml
-    -rw-rw-r-- 1 test test 1797 Oct 30 17:44 pxc-node1.yaml
-    -rw-rw-r-- 1 test test  174 Oct 30 17:44 pxc-cluster-service.yaml
-    
-    test@Master:~/openebs/k8s/demo/galera-xtradb-cluster$ kubectl apply -f pxc-cluster-service.yaml
-    service "pxc-cluster" created
-    testk@Master:~/openebs/k8s/demo/galera-xtradb-cluster$
-    
-    testk@Master:~/openebs/k8s/demo/galera-xtradb-cluster$ kubectl apply -f pxc-node1.yaml
-    service "pxc-node1" created
-    deployment "pxc-node1" created
-    persistentvolumeclaim "datadir-claim-1" created
+Verify k8s cluster is running fine.
 
-Wait until the pxc-node1 YAML is processed and repeat the step with pxc-node2 and pxc-node3 YAMLs.
+```
+ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl get nodes
+NAME            STATUS    ROLES     AGE       VERSION
+kubemaster-01   Ready     master    6h        v1.9.4
+kubeminion-01   Ready     <none>    6h        v1.9.4
+kubeminion-02   Ready     <none>    6h        v1.9.4
+kubeminion-03   Ready     <none>    6h        v1.9.4
+```
+
+Verify OpenEBS pods are running fine with below command
+
+```
+ubuntu@kubemaster-01:~$ kubectl get pods -n openebs
+NAME                                           READY     STATUS    RESTARTS   AGE
+maya-apiserver-84fd4f776d-sq5sf                1/1       Running   0          20m
+openebs-provisioner-74cb999586-fr9kf           1/1       Running   0         20m
+openebs-snapshot-controller-6449b4cdbb-5n2qk   2/2       Running   0          20m
+```
+
+Clone latest OpenEBS repo and deploy your gallera application with OpenEBS.
+
+```
+git clone https://github.com/openebs/openebs.git
+cd openebs/k8s/demo//galera-xtradb-cluster/deployments/
+```
+
+Run the following commands in the given order. 
+
+```
+kubectl apply -f pxc-cluster-service.yaml
+```
+
+```
+kubectl apply -f pxc-node1.yaml
+```
+
+Wait until the pxc-node1.yaml is processed and repeat the step with pxc-node2 .
+
+```
+kubectl apply -f pxc-node2.yaml
+```
+
+Wait until the pxc-node2.yaml is processed and repeat the step with pxc-node3 .
+
+```
+kubectl apply -f pxc-node3.yaml
+```
 
 Verify that all the replicas are up and running using the following command. :
 
-    test@Master:~/galera-deployment$ kubectl get pods
+    ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl get pods
     NAME                                                             READY     STATUS    RESTARTS   AGE
-    maya-apiserver-2245240594-r7mj7                                  1/1       Running   0          2d
-    openebs-provisioner-4230626287-nr6h4                             1/1       Running   0          2d
-    pvc-235b15a5-bd1f-11e7-9be8-000c298ff5fc-ctrl-2525793473-nv88z   1/1       Running   0          12m
-    pvc-235b15a5-bd1f-11e7-9be8-000c298ff5fc-rep-144100677-2rm8b     1/1       Running   0          12m
-    pvc-235b15a5-bd1f-11e7-9be8-000c298ff5fc-rep-144100677-gmn51     1/1       Running   0          12m
-    pvc-82885a9c-bd1e-11e7-9be8-000c298ff5fc-ctrl-2555717164-sspqn   1/1       Running   0          16m
-    pvc-82885a9c-bd1e-11e7-9be8-000c298ff5fc-rep-3501200001-p9778    1/1       Running   0          16m
-    pvc-82885a9c-bd1e-11e7-9be8-000c298ff5fc-rep-3501200001-x3nxs    1/1       Running   0          16m
-    pvc-cc94c5eb-bd1f-11e7-9be8-000c298ff5fc-ctrl-15702123-tn460     1/1       Running   0          7m
-    pvc-cc94c5eb-bd1f-11e7-9be8-000c298ff5fc-rep-4137665767-0lhjb    1/1       Running   0          7m
-    pvc-cc94c5eb-bd1f-11e7-9be8-000c298ff5fc-rep-4137665767-h8r6j    1/1       Running   0          7m
-    pxc-node1-2984138107-zjf22                                       1/1       Running   0          16m
-    pxc-node2-1007987438-q831l                                       1/1       Running   0          12m
-    pxc-node3-82203929-mh5p9                                         1/1       Running   0          7m
+    pvc-4e2ef5e4-7f81-11e8-9f2f-02b983f0a4db-ctrl-7fd86b86d-j9j62    2/2       Running   0          8m
+    pvc-4e2ef5e4-7f81-11e8-9f2f-02b983f0a4db-rep-5f7664d5c7-5g98x    1/1       Running   0          8m
+    pvc-4e2ef5e4-7f81-11e8-9f2f-02b983f0a4db-rep-5f7664d5c7-cv9r4    1/1       Running   0          8m
+    pvc-4e2ef5e4-7f81-11e8-9f2f-02b983f0a4db-rep-5f7664d5c7-mv8nf    1/1       Running   0          8m
+    pvc-b975e7cd-7f81-11e8-9f2f-02b983f0a4db-ctrl-68d7c9c478-pdd4w   2/2       Running   0          5m
+    pvc-b975e7cd-7f81-11e8-9f2f-02b983f0a4db-rep-897675dc5-gmk5l     1/1       Running   0          5m
+    pvc-b975e7cd-7f81-11e8-9f2f-02b983f0a4db-rep-897675dc5-hlksk     1/1       Running   0          5m
+    pvc-b975e7cd-7f81-11e8-9f2f-02b983f0a4db-rep-897675dc5-jv9fn     1/1       Running   0          5m
+    pvc-ebb3b0f7-7f81-11e8-9f2f-02b983f0a4db-ctrl-6b5ddddd88-srv42   2/2       Running   0          3m
+    pvc-ebb3b0f7-7f81-11e8-9f2f-02b983f0a4db-rep-7c6784b7bd-2gntx    1/1       Running   0          3m
+    pvc-ebb3b0f7-7f81-11e8-9f2f-02b983f0a4db-rep-7c6784b7bd-kxpp2    1/1       Running   0          3m
+    pvc-ebb3b0f7-7f81-11e8-9f2f-02b983f0a4db-rep-7c6784b7bd-pxl6q    1/1       Running   0          3m
+    pxc-node1-688f987789-rmvds                                       1/1       Running   0          8m
+    pxc-node2-7f64f4cfd4-gt8sh                                       1/1       Running   0          5m
+    pxc-node3-65ddfd699-xj4kc                                        1/1       Running   0          3m
 
 Deployment Guidelines
 ---------------------
@@ -83,6 +115,29 @@ Deployment Guidelines
 
 Test Replication in the Galera Cluster
 --------------------------------------
+
+* Login to the database from any one of the node pod. It can be done by following command.
+
+  `ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl exec -it pxc-node1-688f987789-rmvds /bin/bash`
+
+* Enter to mysql db and root user password for db is  ***c-krit***. 
+
+  ```
+  root@pxc-node1-688f987789-rmvds:/# mysql -uroot -p -h pxc-cluster;
+  Enter password:
+  Welcome to the MySQL monitor.  Commands end with ; or \g.
+  Your MySQL connection id is 6
+  Server version: 5.6.24-72.2-56-log Percona XtraDB Cluster (GPL), Release rel72.2, Revision 43abf03, WSREP version 25.11, wsrep_25.11
+
+  Copyright (c) 2009-2015 Percona LLC and/or its affiliates
+  Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
+
+  Oracle is a registered trademark of Oracle Corporation and/or its
+  affiliates. Other names may be trademarks of their respective
+  owners.
+
+  Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+  ```
 
 * Check the replication cluster size on any of the nodes using the following command. 
 
@@ -96,82 +151,18 @@ Test Replication in the Galera Cluster
     1 row in set (0.01 sec)
 ```
 
-* On the pxc-node1, create a test database with some content using the following commands. 
+* On the pxc-node1, create a test database with some content using the following commands. You have already entered into node1 using first step.
 
-    test@Master:~/galera-deployment$ kubectl exec -it pxc-node1-2984138107-zjf22 /bin/bash
-    root@pxc-node1-2984138107-zjf22:/# mysql -uroot -p -h pxc-cluster
-    Enter password:
-    Welcome to the MySQL monitor.  Commands end with ; or \g.
-    Your MySQL connection id is 5
-    Server version: 5.6.24-72.2-56-log Percona XtraDB Cluster (GPL), Release rel72.2, Revision 43abf03, WSREP version 25.11, wsrep_25.11
-    
-    Copyright (c) 2009-2015 Percona LLC and/or its affiliates
-    Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
-    
-    Oracle is a registered trademark of Oracle Corporation and/or its
-    affiliates. Other names may be trademarks of their respective owners.
-    
-    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-    
+    ```
     mysql> create database testdb;
     Query OK, 1 row affected (0.10 sec)
-    
+
     mysql> use testdb;
     Database changed
-    
+
     mysql> CREATE TABLE Hardware (Name VARCHAR(20),HWtype VARCHAR(20),Model VARCHAR(20));
     Query OK, 0 rows affected (0.11 sec)
-    
-    mysql> INSERT INTO Hardware (Name,HWtype,Model) VALUES ('TestBox','Server','DellR820');
-    Query OK, 1 row affected (0.06 sec)
-    
-    ```
-    mysql> select * from Hardware;
-    
-    +---------+--------+----------+
-    | Name    | HWtype | Model    |
-    +---------+--------+----------+
-    | TestBox | Server | DellR820 |
-    +---------+--------+----------+
-    1 row in set (0.00 sec)
-    
-    mysql> exit
-    Bye
-    ```
 
-* Verify that this data is synchronized on the other nodes, for example, node2, using the following command. 
-
-    test@Master:~/galera-deployment$ kubectl exec -it pxc-node2-1007987438-q831l /bin/bash
-    root@pxc-node2-1007987438-q831l:/#
-    root@pxc-node2-1007987438-q831l:/#
-    root@pxc-node2-1007987438-q831l:/# mysql -uroot -p -h pxc-cluster
-    Enter password:
-    Welcome to the MySQL monitor.  Commands end with ; or \g.
-    Your MySQL connection id is 4
-    Server version: 5.6.24-72.2-56-log Percona XtraDB Cluster (GPL), Release rel72.2, Revision 43abf03, WSREP version 25.11, wsrep_25.11
-    
-    Copyright (c) 2009-2015 Percona LLC and/or its affiliates
-    Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
-    
-    Oracle is a registered trademark of Oracle Corporation and/or its
-    affiliates. Other names may be trademarks of their respective owners.
-    
-    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-    
-    ```
-    mysql> show databases;
-    +--------------------+
-    | Database           |
-    +--------------------+
-    | information_schema |
-    | mysql              |
-    | performance_schema |
-    | test               |
-    | testdb             |
-    +--------------------+
-    5 rows in set (0.00 sec)
-    mysql> use testdb;
-    Database changed
     mysql> show tables;
     +------------------+
     | Tables_in_testdb |
@@ -179,41 +170,50 @@ Test Replication in the Galera Cluster
     | Hardware         |
     +------------------+
     1 row in set (0.00 sec)
-    
+
+    mysql> INSERT INTO Hardware (Name,HWtype,Model) VALUES ('TestBox','Server','DellR820');
+    Query OK, 1 row affected (0.06 sec)
+
     mysql> select * from Hardware;
+
     +---------+--------+----------+
     | Name    | HWtype | Model    |
     +---------+--------+----------+
     | TestBox | Server | DellR820 |
     +---------+--------+----------+
     1 row in set (0.00 sec)
-    
+
     mysql> exit
     Bye
     ```
 
-* Verify the multi-master capability of the cluster, by writing additional tables into the database using the following command. Use a node other than node1, for example node3. 
+    ​
 
-    test@Master:~/galera-deployment$ kubectl exec -it pxc-node3-82203929-mh5p9 /bin/bash
-    root@pxc-node3-82203929-mh5p9:/#
-    root@pxc-node3-82203929-mh5p9:/#
-    root@pxc-node3-82203929-mh5p9:/# mysql -uroot -p -h pxc-cluster;
+* Verify that this data is synchronized on the other nodes, for example, node2, using the following command.  
+
+    ```
+    ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl exec -it pxc-node2-7f64f4cfd4-gt8sh /bin/bash
+
+    root@pxc-node2-7f64f4cfd4-gt8sh:/# mysql -uroot -p -h pxc-cluster;
     Enter password:
     Welcome to the MySQL monitor.  Commands end with ; or \g.
-    Your MySQL connection id is 6
+    Your MySQL connection id is 7
     Server version: 5.6.24-72.2-56-log Percona XtraDB Cluster (GPL), Release rel72.2, Revision 43abf03, WSREP version 25.11, wsrep_25.11
-    
     Copyright (c) 2009-2015 Percona LLC and/or its affiliates
     Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
-    
     Oracle is a registered trademark of Oracle Corporation and/or its
-    affiliates. Other names may be trademarks of their respective owners.
-    
+    affiliates. Other names may be trademarks of their respective
+    owners.
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-    
-```
-    mysql>
-    
+
+    mysql> show status like 'wsrep_cluster_size';
+    +--------------------+-------+
+    | Variable_name      | Value |
+    +--------------------+-------+
+    | wsrep_cluster_size | 3     |
+    +--------------------+-------+
+    1 row in set (0.01 sec)
+
     mysql> show databases;
     +--------------------+
     | Database           |
@@ -224,18 +224,47 @@ Test Replication in the Galera Cluster
     | test               |
     | testdb             |
     +--------------------+
-    5 rows in set (0.00 sec)
-    
+    5 rows in set (0.01 sec)
+
     mysql> use testdb;
     Reading table information for completion of table and column names
     You can turn off this feature to get a quicker startup with -A
-    
     Database changed
-    mysql>
-    
+
+    mysql> select * from Hardware;
+    +---------+--------+----------+
+    | Name    | HWtype | Model    |
+    +---------+--------+----------+
+    | TestBox | Server | DellR820 |
+    +---------+--------+----------+
+    1 row in set (0.00 sec)
+    ```
+
+    ​
+
+* Verify the multi-master capability of the cluster, by writing additional tables into the database using the following command. Use a node other than node1, for example node3. 
+
+    ```
+    ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl exec -it pxc-node3-65ddfd699-xj4kc /bin/bash
+
+    root@pxc-node3-65ddfd699-xj4kc:/# mysql -uroot -p -h pxc-cluster;
+    Enter password:
+    Welcome to the MySQL monitor.  Commands end with ; or \g.
+    Your MySQL connection id is 12
+    Server version: 5.6.24-72.2-56-log Percona XtraDB Cluster (GPL), Release rel72.2, Revision 43abf03, WSREP version 25.11, wsrep_25.11
+    Copyright (c) 2009-2015 Percona LLC and/or its affiliates
+    Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
+    Oracle is a registered trademark of Oracle Corporation and/or its
+    affiliates. Other names may be trademarks of their respective
+    owners.
+    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+    mysql> use testdb;
+    Database changed
+
     mysql> INSERT INTO Hardware (Name,HWtype,Model) VALUES ('ProdBox','Server','DellR720');
-    Query OK, 1 row affected (0.03 sec)
-    
+    Query OK, 1 row affected (0.10 sec)
+
     mysql> select * from Hardware;
     +---------+--------+----------+
     | Name    | HWtype | Model    |
@@ -244,11 +273,12 @@ Test Replication in the Galera Cluster
     | ProdBox | Server | DellR720 |
     +---------+--------+----------+
     2 rows in set (0.00 sec)
-    
+
     mysql> exit
     Bye
-```
+    ```
 
+    ​
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
