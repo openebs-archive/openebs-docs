@@ -184,7 +184,7 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
     pod "pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq" deleted
 
   ```
- 
+
 
 8. Log in to the target using the following commands. 
 
@@ -214,9 +214,9 @@ e2fsck -f /dev/sdc
 11. Mount the file system using the following command.
 
 ```
-  root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.99.197.30:3260-iqn.2016-09.com.openebs.jiva:pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2-lun-0
+root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.99.197.30:3260-iqn.2016-09.com.openebs.jiva:pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2-lun-0
 
-  root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/pods/3d71c842-6893-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2
+root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/pods/3d71c842-6893-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2
 ```
 
 
@@ -230,6 +230,13 @@ kubectl delete pod percona-b98f87dbd-nqssn
 13. Application pod must be in running state and you can use the resized volume. 
 
 
+## How to destroy demo apps from k8s cluster
+
+Goto your application yaml file located in your kube master and apply the yaml with following way
+
+`kubectl delete -f <application yaml>`
+
+This will delete the application pod and its corresponding pvc associated to it.
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
