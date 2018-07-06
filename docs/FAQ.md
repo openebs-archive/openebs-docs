@@ -6,8 +6,6 @@ sidebar_label: FAQ
 
 ------
 
-
-
 ## What is most distinctive about the OpenEBS architecture?
 
 The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.
@@ -112,71 +110,22 @@ There are at least four common reasons for running OpenEBS on Amazon EBS that ar
 * **Other enterprise capabilities:**  OpenEBS adds other capabilities such as extremely efficient snapshots and clones as well as forthcoming capabilities such as encryption.  Snapshots and clones facilitate much more efficient CI/CD workflows as zero space copies of databases and other stateful workloads can be used in these and other workflows, improving these without incurring additional storage space or administrative effort.  The snapshot capabilities can also be used for replication.  As of February 2018 these replication capabilities are under development.
 
 
-## How to expand the Jiva Storage Volumes
+## How do you expand the Jiva Storage Volumes?
 
-Currently OpenEBS don't have the feature to resize the volume through yaml. we need to follow the      below mentioned steps to do it manually.                                                     
+Currently OpenEBS volume can be resized using the following procedure.                                                     
 
-- **Obtain ISCSI target and disk details using the following command**:
+1. Obtain iSCSI target and disk details using the following command.
 
   ```
   root@OpenEBS:~# iscsiadm -m session -P 3
-  iSCSI Transport Class version 2.0-870
-  version 2.0-873
   Target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 (non-flash)
           Current Portal: 10.106.254.221:3260,1
-          Persistent Portal: 10.106.254.221:3260,1
-                  **********
-                  Interface:
-                  **********
-                  Iface Name: default
-                  Iface Transport: tcp
-                  Iface Initiatorname: iqn.1993-08.org.debian:01:c6385a9091e6
-                  Iface IPaddress: 20.10.45.20
-                  Iface HWaddress: <empty>
-                  Iface Netdev: <empty>
-                  SID: 1
-                  iSCSI Connection State: LOGGED IN
-                  iSCSI Session State: LOGGED_IN
-                  Internal iscsid Session State: NO CHANGE
-                  *********
-                  Timeouts:
-                  *********
-                  Recovery Timeout: 120
-                  Target Reset Timeout: 30
-                  LUN Reset Timeout: 30
-                  Abort Timeout: 15
-                  *****
-                  CHAP:
-                  *****
-                  username: <empty>
-                  password: ********
-                  username_in: <empty>
-                  password_in: ********
-                  ************************
-                  Negotiated iSCSI params:
-                  ************************
-                  HeaderDigest: None
-                  DataDigest: None
-                  MaxRecvDataSegmentLength: 262144
-                  MaxXmitDataSegmentLength: 65536
-                  FirstBurstLength: 65536
-                  MaxBurstLength: 262144
-                  ImmediateData: Yes
-                  InitialR2T: Yes
-                  MaxOutstandingR2T: 1
-                  ************************
-                  Attached SCSI devices:
-                  ************************
-                  Host Number: 3  State: running
-                  scsi3 Channel 00 Id 0 Lun: 0
-                          Attached scsi disk sdb          State: running
+          Persistent Portal: 10.106.254.221:3260,1                  
+          Attached scsi disk sdb          State: running
   ```
 
 
-
-
-
-- **Check the mounted path on disk sdb using the following command:** 
+2. Check the mount path on disk sdb using the following command.
 
   ```
   root@OpenEBSt# mount | grep /dev/sdb | more
@@ -184,18 +133,16 @@ Currently OpenEBS don't have the feature to resize the volume through yaml. we n
   /dev/sdb on /var/lib/kubelet/pods/8de04c10-64a3-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 type ext4 (rw,relatime,data=ordered)
   ```
 
-  ​
 
-- **Unmount the file system using the following command**:
+3. Unmount the file system using the following command.
 
   ```
   root@OpenEBS#umount /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.106.254.221:3260-iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-lun-0
   root@OpenEBS#umount /var/lib/kubelet/pods/8de04c10-64a3-11e8-994b000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2
   ```
 
-  ​
 
-- **Logout from the ISCSI target using the following command:** 
+4. Logout from the iSCSI target using the following command.
 
 ```
 root@OpenEBS:/home/prabhat# iscsiadm -m node -u
@@ -203,7 +150,7 @@ Logging out of session [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e
 Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful
 ```
 
-- **You need to get the volume ID using the below command**: 
+5. Get the volume ID using the following command.
 
   ```
   root@OpenEBS:~# curl http://10.106.254.221:9501/v1/volumes
@@ -212,7 +159,7 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
   ```
 
 
-- **Modify the volume capacity using the below command**:
+6. Modify the volume capacity using the following command. 
 
   ```
   syntax:curl -H "Content-Type: application/json" -X POST -d '{"name":"<volname>","size":"<size>"}' http://<target ip>:9501/v1/volumes/<id>?action=resize
@@ -220,9 +167,8 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
   root@prabhat-virtual-machine:~#curl -H "Content-Type: application/json" -X POST -d '{"name":"pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2","size":"7G"}' http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=resize
   ```
 
-  ​
 
-- **Restart the replicas.You need to delete all the replicas of pod in single command.In the below example the percona is running with single replica.**
+7. Restart the replicas. You must delete all the replicas of a pod using a single command. In the example given below, Percona is running with a single replica.
 
   ```
   root@OpenEBS:~# kubectl get pods
@@ -240,9 +186,7 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
   ```
 
 
- 
-
-- **Logging to the target using below commands:** 
+8. Log in to the target using the following commands. 
 
 ```
  root@OpenEBS:/home/prabhat# iscsiadm -m discovery -t st -p 10.106.254.221:326
@@ -253,44 +197,52 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
   Login to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful.
 ```
 
-
-
-
-- **Check the file system consistency using the below command. sdc is the device after logging:** 
+9. Check the file system consistency using the following command. sdc is the device after logging.
 
 ```
 e2fsck -f /dev/sdc
 ```
 
 
-- **Expand the file system**: 
+10. Expand the file system using the following command.
 
 ```
  resize2fs /dev/sdc
 ```
 
 
-- **Mount the file system:** 
+11. Mount the file system using the following command.
 
 ```
-  root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.99.197.30:3260-iqn.2016-09.com.openebs.jiva:pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2-lun-0
+root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.99.197.30:3260-iqn.2016-09.com.openebs.jiva:pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2-lun-0
 
-  root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/pods/3d71c842-6893-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2
+root@OpenEBS:~# mount /dev/sdc /var/lib/kubelet/pods/3d71c842-6893-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2
 ```
 
 
-- **Restart the application pod:**   
+12. Restart the application pod using the following command.
 
 ```
 kubectl delete pod percona-b98f87dbd-nqssn
 ```
 
 
+13. Application pod must be in running state and you can use the resized volume. 
 
 
-- **Write the data on the expanded disk:** 
+## How to destroy demo apps from k8s cluster?
 
-  ​
+Goto your application yaml file located in your kube master and apply the yaml with following way
+
+`kubectl delete -f <application yaml>`
+
+This will delete the application pod and its corresponding pvc associated to it.
+
+## What is the default OpenEBS retention policy?
+
+The default retention is the same used by the K8s.For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim.
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
