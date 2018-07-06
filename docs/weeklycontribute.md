@@ -16,6 +16,8 @@ Weekly webinar notes are managed using a [Google document](https://docs.google.c
 
 |       Date       | Topics Discussed                                             | Resources                                                    |
 | :--------------: | ------------------------------------------------------------ | ------------------------------------------------------------ |
+|   6 July 2018    | Demo of Litmus NodeDiskManager and BDD                       | [Session](https://www.youtube.com/watch?v=LPzB12ghUGs&feature=youtu.be) |
+|   29 June 2018   | OpenEBS Litmus How To  - Running on Local PVs                | [Slides](https://www.slideshare.net/OpenEBS/using-litmus-with-local-pv-weekly-contributors-meet-29th-june-2018)/[Session](https://www.youtube.com/watch?v=UMmWEQ01n6U&feature=youtu.be) |
 |   22 June 2018   | CAS Templates - Code Walkthrough                             | [Session](https://www.youtube.com/watch?v=wqhO7Adrt38&feature=youtu.be) |
 |   15 June 2018   | Mayactl operations in 0.6 release                            | [Session](https://www.youtube.com/watch?v=7uyFy3EzbsE&t=17s) |
 |   08 June 2018   | Kubernetes running Percona on OpenEBS cStor                  | [Session](https://www.youtube.com/watch?v=Vu2aIOiq0ic)       |
