@@ -53,32 +53,44 @@ On your Ubuntu host, do the following.
 
 1. Install minikube.
 
+    ```
     curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
     chmod +x minikube 
     sudo mv minikube /usr/local/bin/
+    ```
+
+    ​
 
 2. Install kubectl.
 
+    ```
     curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
     chmod +x kubectl 
     sudo mv kubectl /usr/local/bin/
+    ```
 
 3. Setup directories for storing minkube and kubectl configurations. 
 
+    ```
     mkdir $HOME/.kube || true
     touch $HOME/.kube/config
+    ```
 
 4. Setup the environment for minikube. Copy the following to the \~/.profile. 
 
+    ```
     export MINIKUBE_WANTUPDATENOTIFICATION=false
     export MINIKUBE_WANTREPORTERRORPROMPT=false
     export MINIKUBE_HOME=$HOME
     export CHANGE_MINIKUBE_NONE_USER=true
     export KUBECONFIG=$HOME/.kube/config
+    ```
 
 5. Start minikube. 
 
+    ```
     sudo -E minikube start --vm-driver=none
+    ```
 
 ### Verifying that minikube is Configured
 
@@ -95,12 +107,17 @@ When minikube is configured, *minikube status* will display the following output
 **Note:**
 
 - If minikube status displays *Stopped*, add sudo minikube start command.
+
 - If minikube displays errors indicating permission denied to the configuration files, fix the permissions by running the following commands.
 
+    ```
     sudo chown -R $USER $HOME/.kube
     sudo chgrp -R $USER $HOME/.kube
     sudo chown -R $USER $HOME/.minikube
     sudo chgrp -R $USER $HOME/.minikube
+    ```
+
+    ​
 
 ### Verifying that Kubernetes is configured
 
