@@ -242,7 +242,33 @@ This will delete the application pod and its corresponding pvc associated to it.
 
 The default retention is the same used by the K8s.For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim.
 
+## How can you schedule OpenEBS Replica and Controller Pods on specified nodes?
 
+You can schedule pods on specified nodes using the Kubernetes "NodeSelector" option. While you can also use Taints/Tolerations for this purpose, "NodeSelector" is simpler to setup using the node labels. An added advantage is that you can do this without having to worry about pushing taints to non-storage nodes.
+
+The following variables must be added in the *openebs-operator.yaml* file.
+
+* DEFAULT_CONTROLLER_NODE_SELECTOR allows you to specify the nodes on which OpenEBS controller must be scheduled. To use this feature, 
+the nodes must already be labeled with the key=value. For example, `kubectl label nodes <node-name> nodetype=storage`
+**Note:** It is recommended that the node selector for controller must be the same as that of the stateful applications. This is supported for maya api server version 0.6 onwards.
+
+```
+
+- name: DEFAULT_CONTROLLER_NODE_SELECTOR
+          value: "nodetype=storage"
+```
+
+* DEFAULT_REPLICA_NODE_SELECTOR allows you to specify the nodes on which OpenEBS replicas must to be scheduled. To use this feature, 
+the nodes must already be labeled with the key=value. For example, `kubectl label nodes <node-name> nodetype=storage`
+**Note:** It is recommended that the node selector for replica must specify the nodes that have disks/ssds attached to them. This is supported for maya api server version 0.6 onwards.
+
+```
+- name: DEFAULT_REPLICA_NODE_SELECTOR
+          value: "nodetype=storage"
+	  
+```
+
+	  
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
