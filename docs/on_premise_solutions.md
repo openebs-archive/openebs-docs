@@ -427,7 +427,7 @@ This environment represents multiple VMs. The VMs are all listed above with thei
 
 ### Running Stateful Workloads using OpenEBS
 
-Some sample YAML files for stateful workloads using OpenEBS are provided [here](https://github.com/openebs/openebs/tree/master/k8s/demo). For more information visit <http://openebs.readthedocs.io/en/latest/>
+Some sample YAML files for stateful workloads using OpenEBS are provided [here](https://github.com/openebs/openebs/tree/master/k8s/demo).
 
 ## Troubleshooting
 
@@ -442,13 +442,11 @@ Using Ansible
 
 This section provides detailed instructions on how to perform the OpenEBS on-premise deployment. The objective of this procedure is to have the following functional.
 
--   Kubernetes cluster (K8s master & K8s nodes/host) configured with the OpenEBS iSCSI flexvol driver,
--   OpenEBS Maya Master
--   OpenEBS Storage Hosts
+-   Kubernetes cluster (K8s master & K8s nodes) configured with the OpenEBS iSCSI flexvol driver.
 
 Depending on your need, you can either setup only the Kubernetes cluster or the OpenEBS cluster or both. The number of nodes in each category is configurable.
 
-The Kubernetes cluster is setup, in this framework using *kubeadm*.
+The Kubernetes cluster is setup using *kubeadm*.
 
 ## Running the Setup on Ubuntu 16.04
 
@@ -459,8 +457,6 @@ The following instructions have been verified on -
 
 ## Prerequisites:
 
--   At least three Linux machines of either VMs or bare-metal, if deploying the setup in a hyperconverged mode (with K8s as well as OpenEBS residing on the same machines) or five Linux machines (with
-    K8s and OpenEBS running on separate machines)
 -   The above instruction assumes a minimal setup with a test-harness, K8s/OpenEBS master and a single K8s node/OpenEBS node. The masters and nodes can be scaled if the user so desires
 -   All Linux machines must have the following:
     -   Basic development packages
@@ -470,12 +466,11 @@ The following instructions have been verified on -
 -   The machine used as test-harness must also have the following:
     -   Git
     -   Ansible (version \>= 2.3)
--   Deployment can be performed by both root as well as non-root users. In case of the latter, ensure that the users are part of the sudo group. This is required to run certain operations which require root
-    privileges.
+-   Deployment can be performed by both root as well as non-root users. In case of the latter, ensure that the users are part of the sudo group. This is required to run certain operations which require root privileges.
 
 **Minimum System Requirements**
 
-The Vagrant VMs (ubuntu-xenial) that are used in the on-premise installation requires a mininum of 10GB hard-disk space each (3 VMs are recommended for a hyperconverged deployment) and 1GB operating memory.
+The Vagrant VMs (ubuntu-xenial) that are used in the on-premise installation requires a minimum of 10GB hard-disk space each (3 VMs are recommended) and 1GB operating memory.
 
 The recommended configuration for the VM host is as follows:
 
@@ -508,8 +503,8 @@ Setup the local working directory where the ansible code will be downloaded. Per
 
 ## Setup Environment for OpenEBS Installation
 
--   Setup environment variables for the usernames and passwords of all the machines which have been brought up in the previous steps on the test-harness (this machine will be interchangeably used with the term 'localhost'). Ensure that these are setup in the **.profile ** file of the localhost user which will be running the ansible code or playbooks, that is the ansible\_user.
--   Ensure that the env variables setup in the previous step are available in the current user session. Perform *source \~/.profile to achieve the same and verify through echo \$VARIABLE.
+-   Setup environment variables for the usernames and passwords of all the machines which have been brought up in the previous steps on the test-harness (this machine will be interchangeably used with the term 'localhost'). Ensure that these are setup in the **\~/.profile ** file of the localhost user which will be running the ansible code or playbooks, that is the ansible\_user.
+-   Ensure that the environment variables setup in the previous step are available in the current user session. Perform *source \~/.profile to achieve the same and verify through echo \$VARIABLE.
 
 \* Edit the *inventory/machines.in* file to place the latest HostCode, IP, username variable, password variable for all the machines setup. For more details on editing *machines.in*, see the [Inventory README](https://github.com/openebs/openebs/blob/master/e2e/ansible/inventory/README.md).
 
@@ -529,24 +524,19 @@ Setup the local working directory where the ansible code will be downloaded. Per
         testuser@OpenEBSClient:~/openebs/e2e/ansible/inventory$ ls -ltr hosts
         -rw-rw-r-- 1 testuser testuser 1482 Jun  5 10:00 hosts
 
--   OpenEBS installation can be performed:
-    1.  in hyperconverged mode, where the OpenEBS storage services run as pods on the Kubernetes cluster itself.
+-   OpenEBS installation can be performed in hyperconverged mode, where the OpenEBS storage services run as pods on the Kubernetes cluster itself.
 
-The subsequent section explains the installation procedure for hyperconverged mode.
+The subsequent section explains the installation procedure.
 
 ## OpenEBS Installation - Hyperconverged Mode
 
 -   Update the *inventory/group\_vars/all.yml* with the appropriate value *hyperconverged* for the key *deployment\_mode*.
--   In this mode, the OpenEBS maya-apiserver and openebs-storage provisioner are run as deployments on the Kubernetes cluster with associated pods, and the Kubernetes hosts act as the OpenEBS storage
-    hosts as well. These are setup using an openebs-operator on the Kubernetes cluster. The setup also involves integration of OpenEBS storage-classes into the Kubernetes cluster. These essentially
-    define the storage profile such as size, number of replicas, type of pool atec, and the provisioner associated with it.
+-   In this mode, the OpenEBS maya-apiserver and openebs-storage provisioner are run as deployments on the Kubernetes cluster with associated pods, and the Kubernetes hosts act as the OpenEBS storage hosts as well. These are setup using an openebs-operator on the Kubernetes cluster. The setup also involves integration of OpenEBS default storage-classes into the Kubernetes cluster. These essentially define the storage profile such as volume size, number of replicas, type of pool, and the provisioner associated with it.
 
-    Applications can consume storage by specifying a persistent volume claim in which the storage class is an openebs-storage class.
+    Applications can consume storage by specifying a persistent volume claim which uses openebs-storage class.
 
--   Setup the Kubernetes cluster using the setup-kubernetes playbook, followed by the setup-openebs playbook to deploy the OpenEBS pods. Internally, this runs the hyperconverged ansible role which executes the openebs-operator and integrates openebs-storage classes into the
-    Kubernetes cluster.
-    -   Execute the setup-kubernetes ansible playbook to create the Kubernetes cluster followed by the setup-openebs playbook. These playbooks install the requisite dependencies on the machines,
-        update the configuration files on the boxes and sets up Kubernetes cluster. 
+-   Setup the Kubernetes cluster using the setup-kubernetes playbook, followed by the setup-openebs playbook to deploy the OpenEBS pods. Internally, this runs the hyperconverged ansible role which executes the openebs-operator and integrates openebs-storage classes into the Kubernetes cluster.
+-   Execute the setup-kubernetes ansible playbook to create the Kubernetes cluster followed by the setup-openebs playbook. These playbooks install the requisite dependencies on the machines, update the configuration files on the boxes and sets up Kubernetes cluster. 
 
             testuser@OpenEBSClient:~/openebs/e2e/ansible$ ansible-playbook setup-kubernetes.yml
 
@@ -560,19 +550,21 @@ The subsequent section explains the installation procedure for hyperconverged mo
             kubehost02   Ready     2d        v1.6.3
             kubemaster   Ready     2d        v1.6.3
 
--   Verify that the Kubernetes cluster is running using the kubectl get nodes command.
--   Verify that the maya-apiserver and openebs-provisioner are deployed successfully on the Kubernetes cluster. 
+-   Verify that the Kubernetes cluster is running using the kubectl get nodes command. 
 
         name@MayaMaster:~$ kubectl get deployments
         NAME                  DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
         maya-apiserver        1         1         1            1           4h
         openebs-provisioner   1         1         1            1           4h
-        name@MayaMaster:~$ kubectl get pods
+        
+-   Verify that the maya-apiserver and openebs-provisioner are deployed successfully on the Kubernetes cluster.
+        
+        name@MayaMaster:~$ kubectl get pods 
         NAME                                   READY     STATUS    RESTARTS   AGE
         maya-apiserver-1633167387-v4sf1        1/1       Running   0          4h
         openebs-provisioner-1174174075-n989p   1/1       Running   0          4h
 
--   Verify that the OpenEBS storage classes are applied successfully. 
+-   Verify that the OpenEBS storage classes are created successfully. 
 
         name@MayaMaster:~$ kubectl get sc
         NAME              TYPE
@@ -583,14 +575,12 @@ The subsequent section explains the installation procedure for hyperconverged mo
 ## Run Sample Applications on the OpenEBS Setup
 
 -   Test the OpenEBS setup installed using the above procedure by deploying a sample application pod.
--   *run-hyperconverged-tests.yml* can be used to run tests on the hyperconverged installation.
--   By default, all tests are commented in the above playbooks. Uncomment the desired test and execute the playbook. In the example below, a percona mysql DB is deployed on a hyperconverged
-    installation. 
+-   *run-hyperconverged-tests.yml* can be used to run tests.
+-   By default, all tests are commented in the above playbooks. Uncomment the desired test and execute the playbook. In the example below, a percona mysql DB is deployed on a hyperconverged installation. 
 
         ciuser@OpenEBSClient:~/openebs/e2e/ansible$ ansible-playbook run-hyperconverged-tests.yml
 
--   Verify that the pod is deployed on the Kubernetes nodes along with the OpenEBS storage pods created as per the storage-class in the persistent volume claim, by executing the following command on the
-    Kubernetes master. 
+-   Verify that the pods are deployed on the Kubernetes nodes along with OpenEBS storage pods created as per the storage-class in the persistent volume claim, by executing the following command on the Kubernetes master. 
 
         name@MayaMaster:~$ kubectl get pods
         NAME                                                            READY     STATUS    RESTARTS   AGE
@@ -614,10 +604,11 @@ The subsequent section explains the installation procedure for hyperconverged mo
 -   Verify that the storage volume is receiving input/output by checking the increments to *DataUpdateIndex* in the output of the volume stats command issued in the maya-apiserver pod. Some additional performance statistics are also available in the command output. 
 
         name@MayaMaster:~$ kubectl exec maya-apiserver-1633167387-v4sf1 -c maya-apiserver -- maya volume stats pvc-a2a6d71f-5b21-11e7-bf1c-000c298ff5fc
-        ------------------------------------ IQN:
-        iqn.2016-09.com.openebs.jiva:pvc-a2a6d71f-5b21-11e7-bf1c-000c298ff5fc
-        Volume: pvc-a2a6d71f-5b21-11e7-bf1c-000c298ff5fc Portal:
-        10.104.223.35:3260 Size: 5G
+        ------------------------------------ 
+        IQN:iqn.2016-09.com.openebs.jiva:pvc-a2a6d71f-5b21-11e7-bf1c-000c298ff5fc
+        Volume: pvc-a2a6d71f-5b21-11e7-bf1c-000c298ff5fc 
+        Portal:10.104.223.35:3260 
+        Size: 5G
         Replica Status DataUpdateIndex 10.36.0.2 Online 2857 10.44.0.3
         Online 2857 ------------------------------------ r/s| w/s|
         r(MB/s)| w(MB/s)| rLat(ms)| wLat(ms)| rBlk(KB)| wBlk(KB)| 0| 3|
