@@ -267,7 +267,9 @@ the nodes must already be labeled with the key=value. For example, `kubectl labe
           value: "nodetype=storage"
 	  
 ```
-
+## How to setup OpenEBS using Ansible?
+This section provides instructions on how to perform the OpenEBS on-premise deployment.
+Detailed explanation is available at [On premise deployment](https://github.com/openebs/openebs-docs/blob/v0.5.3/docs/on_premise_solutions.md).
 	  
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
