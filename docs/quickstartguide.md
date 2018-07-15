@@ -23,7 +23,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
    ```
 
    ```
-   kubectl apply -f  https://github.com/openebs/openebs/blob/master/k8s/openebs-storageclasses.yaml
+   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
    ```
 
    For more details on installing OpenEBS using helm, see [install through helm](/docs/next/installation.html#helm)
