@@ -273,7 +273,7 @@ Detailed explanation is available at [On premise deployment](https://github.com/
 	  
 ## How to launch Kubernetes dashboard on local machine?
 OpenEBS provides vagrant boxes with prepackaged Kubernetes images.
-Steps for launching Kubernetes dashboard is available at [kubernetes UI](https://github.com/openebs/openebs/blob/v0.5/k8s/vagrant/README.md).
+Steps for launching Kubernetes dashboard is available at [Kubernetes UI](https://github.com/openebs/openebs/blob/v0.5/k8s/vagrant/README.md).
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
