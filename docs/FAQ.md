@@ -271,6 +271,10 @@ the nodes must already be labeled with the key=value. For example, `kubectl labe
 This section provides instructions on how to perform the OpenEBS on-premise deployment.
 Detailed explanation is available at [On premise deployment](https://github.com/openebs/openebs-docs/blob/v0.5.3/docs/on_premise_solutions.md).
 	  
+## How to launch kubernetes dashboard on local machine?
+OpenEBS provides vagrant boxes with prepackaged Kuberentes images.
+Steps for launching kubernetes dashboard is available at [kubernetes UI](https://github.com/openebs/openebs/blob/v0.5/k8s/vagrant/README.md).
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
