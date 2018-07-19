@@ -93,7 +93,7 @@ Specify each parameter using the `--set key=value` argument to `helm install`.
 
 ![Installing OpenEBS with Operator](/docs/assets/operator.png)
 
-OpenEBS operator yaml file is available at https://openebs.github.io/charts/openebs-operator.yaml. 
+OpenEBS operator yaml file is available at https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml. 
 
 
 
@@ -102,7 +102,7 @@ Set the context to **cluster-admin** and apply the above operator.
 
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml
 ```
 
 
