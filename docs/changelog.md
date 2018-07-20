@@ -8,18 +8,9 @@ sidebar_label: Changelog
 
 
 
-## Development Release
-
-* Version 0.7.0 
-
-This version is currently under development. Following features are under development
-
-- Introducing cStor (Alpha) as the additional storage engine
-- Initial support for Node Disk Manager (NDM)
-
 ## Stable/Current Release
 
-* [Version 0.6.0](https://github.com/openebs/openebs/releases/tag/v0.6.0)
+* [Version 0.6.0](https://github.com/openebs/openebs/releases/tag/v0.6) ([Release blog](https://blog.openebs.io/openebs-0-6-serves-ios-amidst-chaos-and-much-more-45c68eb59c6a))
 
 ## Older Releases
 

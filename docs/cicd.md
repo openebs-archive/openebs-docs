@@ -1,7 +1,10 @@
-
+---
+id: cicd
+title: OpenEBS use case - CI/CD
+sidebar_label: Snapshots in CI/CD 
+---
 
 ------
-
 
 
 ## Problem Statement
@@ -42,7 +45,7 @@ snapshot-demo   18s
 
 ```
 
-How to take periodic snapshots of a given OpenEBS volume
+
 
 When a stage of CI pipeline fails, the DevOps admin can easily restore the state of the stateful application and provide access to the application developer, most likely in an automated way. 
 
@@ -52,7 +55,7 @@ When a stage of CI pipeline fails, the DevOps admin can easily restore the state
 
 
 
-Now we have created a snapshot, we can restore it to new PVC. To do this we need to create a special StorageClass implemented by snapshot-provisioner. We will then create a PersistentVolumeClaim referencing this StorageClass for dynamically provision new PersistentVolume.  
+After a snapshot is created, it can be used to restore to a  new PVC. To do this we need to create a special StorageClass implemented by snapshot-provisioner. We will then create a PersistentVolumeClaim referencing this StorageClass for dynamically provision new PersistentVolume.  
 
 You can use `$ vi restore-storageclass.yaml` to create the yaml and add the below entries.
 
