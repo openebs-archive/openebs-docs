@@ -34,13 +34,13 @@ Administrator can choose to provide the scheduling configuration for control pla
 
 **Step2:**  Modify the configuration for scheduling pods in the file *openebs-operator.yaml* for using either NODE_SELECTOR  method or using TAINTS method as shown below.
 
-### NODE_SELECTOR method (preferred method): ([Why?](/docs/next/scheduler.html#selecting-between-node-selector-method-taint-methods))
+### NODE_SELECTOR method (preferred): ([Why?](/docs/next/scheduler.html#selecting-between-node-selector-method-taint-method))
 
 #### Scheduling control plane pods
 
 **Label the required Nodes**
 
-Label the needed Nodes with *openebs=controlnode*. It can be done as follows.
+Label the required Nodes with appropriate label. In this case, we are labelling node as  *openebs=controlnode*. It can be done as follows.
 
 ```
 kubectl label nodes <node-name> openebs=controlnode
@@ -117,7 +117,7 @@ spec:
       containers:
 ```
 
-#### Scheduling data plane pods
+#### **Scheduling data plane pods**
 
 Now you can modify the configuration data plane pods as below.
 
@@ -150,22 +150,6 @@ The change is to add below entries as environmental variable under *maya-api ser
 <To do>
 
 
-
-## When OpenEBS is already installed
-
-### NODE-SELECTOR method ([Why?](/docs/next/scheduler.html#selecting-between-node-selector-method-taint-methods))
-
-#### Scheduling control plane pods
-
-#### Scheduling data plane pods
-
-
-
-### TAINTS method
-
-#### Scheduling control plane pods
-
-#### Scheduling data plane pods
 
 
 
