@@ -4,7 +4,7 @@ title: Scheduling OpenEBS control plane and data plane pods
 sidebar_label: Scheduler
 ---
 
-
+------
 
 OpenEBS **DOES NOT** have a separate scheduler of it's own to manage the scheduling of it's pods. It uses Kubernetes scheduler for managing the scheduling needs of administrator. 
 
@@ -135,9 +135,15 @@ spec:
 
 
 
-## Selecting between NODE-SELECTOR method TAINT methods 
+## Selecting between NODE-SELECTOR method TAINT method 
 
+Kubernetes provides these two methods to control scheduling of pods on cluster nodes. For more details on these features you can refer to the Kubernetes documentation on [NODE-SELECTORS](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/) and [Taints&Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)
 
+In general NODE-SELECTOR method is suitable for assigning OpenEBS control plane pods to a set of given nodes as there is a direct representation of where the pods have to go. For example, administrator can choose to configure the control pods on (N1,N2) or (N3,N4,N5).
+
+Taints and tolerations method is recommended when the administrator wants to dedicate only certain nodes for OpenEBS Jiva pods (target or replica). For example, out of 20 nodes in a given Kubernetes cluster, if Jiva pods have to be dedicated for 3 nodes (N8,N9,N10) then taints are setup on N8,N9 and N10 and tolerations are provided to Maya-Apiserver. 
+
+ 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
