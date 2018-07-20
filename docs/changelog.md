@@ -19,7 +19,7 @@ This version is currently under development. Following features are under develo
 
 ## Stable/Current Release
 
-* [Version 0.6.0](https://github.com/openebs/openebs/releases/tag/v0.6.0)
+* [Version 0.6.0](https://github.com/openebs/openebs/releases/tag/v0.6)
 
 ## Older Releases
 

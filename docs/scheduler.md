@@ -121,35 +121,52 @@ spec:
 
 Now you can modify the configuration data plane pods as below.
 
-**Update the NODE_SELECTOR for storage target**
+**Update the NODE_SELECTOR for storage target and storage replica**
 
 The change is to add below entries as environmental variable under *maya-api server* deployment in the openebs-operator.yaml file. 
 
 ```
--name: DEFAULT_CONTROLLER_NODE_SELECTOR
- value: "openebs=controlnode" 
+ apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: maya-apiserver
+  namespace: openebs
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: maya-apiserver
+    spec:
+      serviceAccountName: openebs-maya-operator
+      nodeSelector:
+        openebs: controlnode
+      containers:
+      - name: maya-apiserver
+        imagePullPolicy: Always
+        image: openebs/m-apiserver:0.6.0
+        ports:
+        - containerPort: 5656
+        env:
+        - name: OPENEBS_IO_JIVA_CONTROLLER_IMAGE
+          value: "openebs/jiva:0.6.0"
+        - name: OPENEBS_IO_JIVA_REPLICA_IMAGE
+          value: "openebs/jiva:0.6.0"
+        - name: OPENEBS_IO_VOLUME_MONITOR_IMAGE
+          value: "openebs/m-exporter:0.6.0"
+        - name: OPENEBS_IO_JIVA_REPLICA_COUNT
+          value: "3"
+        - name: DEFAULT_CONTROLLER_NODE_SELECTOR
+          value: "openebs=controlnode"
+        - name: DEFAULT_REPLICA_NODE_SELECTOR
+          value: "openebs=controlnode"
 ```
 
-**Update the NODE_SELECTOR for storage replica**
 
-The change is to add below entries as environmental variable under *maya-api server* deployment in the openebs-operator.yaml file. 
-
-```
--name: DEFAULT_REPLICA_NODE_SELECTOR
- value: "openebs=controlnode"
-```
 
 **Step 3:** Run the operator file to install OpenEBS and schedule the OpenEBS control planes pods on the required node(s) 
 
 `kubectl apply -f openebs-operator.yaml `
-
-
-
-### TAINTS method:
-
-<To do>
-
-
 
 
 
