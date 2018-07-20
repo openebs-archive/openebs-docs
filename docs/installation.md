@@ -93,7 +93,7 @@ Specify each parameter using the `--set key=value` argument to `helm install`.
 
 ![Installing OpenEBS with Operator](/docs/assets/operator.png)
 
-OpenEBS operator yaml file is available at https://openebs.github.io/charts/openebs-operator.yaml. 
+OpenEBS operator yaml file is available at https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml. 
 
 
 
@@ -102,7 +102,7 @@ Set the context to **cluster-admin** and apply the above operator.
 
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml
 ```
 
 
@@ -126,15 +126,15 @@ As a next step, it is recommended to setup a catalog of storage classes for your
 
 Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo).
 
-### See Also:
+## See Also:
 
-[Setting up OpenEBS storage classes](/docs/next/setupstorageclasses.html)
+#### [Setting up OpenEBS storage classes](/docs/next/setupstorageclasses.html)
 
-[OpenEBS architecture](/docs/next/architecture.html)
+#### [OpenEBS architecture](/docs/next/architecture.html)
 
-[Overview of CAS](/docs/next/conceptscas.html)
+#### [Overview of CAS](/docs/next/conceptscas.html)
 
-[Upgrading OpenEBS](/docs/next/upgrade.html)
+#### [Upgrading OpenEBS](/docs/next/upgrade.html)
 
  <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 

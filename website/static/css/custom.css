@@ -6,6 +6,15 @@
   }
 }
 
+/* CSS for sidebars dropdown in mobile view */
+
+@media only screen and (max-width: 735px){
+ul#languages-dropdown-items {
+    display: block;
+    background-color: #ffffff;
+}
+}
+
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 375px) {
@@ -182,8 +191,8 @@ img[alt$="<>"] {
     float: none!important;
 }
 
-pre code{
-    border-color: #f2a850;
+pre code {
+    border-color: #F0F0F0;
 }
 
 @media (max-width: 375px) {
@@ -255,18 +264,38 @@ input#search_input_react:focus, input#search_input_react:active {
 /* CSS for version dropdown */
 @media only screen
 and (min-device-width : 320px)
-and (max-device-width : 375px) {
+and (max-device-width : 720px) {
     element.style {
       position: relative;
-}
+    }
 
     .ver-link {
       cursor: pointer;
       color: #fff;
-      margin-right: 141px;
-}
+      margin-right: 130px;
+      margin-top: 10px;
+    }
+
     p {
       line-height: 1;
       font-size: 12px;
+    }
 }
+
+}
+
+/**
+ * Styles for the Swagger API documentation (engine/api/v1.x/index.html)
+ */
+
+
+/* ReDoc doesn't change outer page styles */
+.redoc-body{
+    margin: 0px;
+}
+/**
+ * Disable request-type badges, see https://github.com/Rebilly/ReDoc/issues/61
+ */
+redoc .operation-type {
+    display: none !important;
 }

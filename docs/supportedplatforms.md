@@ -34,6 +34,8 @@ OpenEBS is tested on the following platforms.
 
 As a prerequisite, OpenEBS requires Kubernetes CRD capabilities and hence Kubernetes versions 1.7.5+ are suitable. 
 
+**Note:** Container runtime such as Docker must be installed/available.
+
 OpenEBS is tested on versions 1.7.5+, 1.8, 1.9, 1.10 and 1.11.
 
 Similarly, MiniKube versions that are tested for OpenEBS are 0.25.x and 0.26.x.
@@ -54,7 +56,7 @@ GKE with Kubernetes versions 1.8 onwards are supported. While creating a cluster
 
 ## Azure Cloud
 
-On Azure, kubelet runs inside a container and open-iscsi packages are not available by default on Azure. For instructions to install and configure, see [open-iscsi on Azure](https://staging-docs.openebs.io/docs/next/prerequisites.html).
+On Azure, kubelet runs inside a container and open-iscsi packages are not available by default on Azure. For instructions to install and configure, see [open-iscsi on Azure](/docs/next/prerequisites.html).
 
 Once the prerequisites are met, you can follow the steps mentioned in [installation](/docs/next/installation.html) section similar to installing OpenEBS on a vanilla Kubernetes cluster.
 

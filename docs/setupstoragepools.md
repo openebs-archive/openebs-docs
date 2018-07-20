@@ -33,36 +33,36 @@ lsblk
 Once user has verified the same do a format on the disk. Use the below command to format the disk.
 
 ```
-sudo mkfs.ext4 -L datapartition /dev/sdb
+sudo mkfs.ext4 /dev/sdb
 ```
 
 Now mount the disk on your OpenEBS cluster.
 
 ```
-sudo mount  /dev/sdb /mnt/openebs_disk
+sudo mount /dev/sdb /mnt/openebs_disk
 ```
 
-Once it is done make the below entries on openebs-operator.yaml .
+Once it is done,make the below entries on openebs-operator.yaml . 
 
 ```
-vi openebs-operator.yaml
 apiVersion: openebs.io/v1alpha1
 kind: StoragePool
 metadata:
-	name: test-mntdir 			  #--Name of the storage pool
+	name: test-mntdir 			 
 	type: hostdir
 spec:
-	path: "/mnt/openebs_disk"      #--Change the path with mounted path
+	path: "/mnt/openebs_disk"      
 ```
+
+**Note:** Change path with your mounted path if its not default mount path. Also,remember your pool name. Here pool name is *test-mntdir*
 
 Next the user has to add the below entries to the corresponding storage class. 
 
 Here it is openebs-storageclasses.yaml .
 
-For example here we have taken the Percona application.
+For example here we have taken the Percona application. So adding storage pool name in *openebs-percona* storage class.
 
 ```
-vi openebs-storageclasses.yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -72,7 +72,7 @@ parameters:
     openebs.io/jiva-replica-count: "2"
     openebs.io/capacity: "2G"
     openebs.io/jiva-replica-image: "openebs/jiva:0.5.0"
-    openebs.io/storage-pool: "test-mntdir"  	#--Name of the storage pool
+    openebs.io/storage-pool: "test-mntdir"  
 ```
 
 User should mention the storage class name in the application.yaml . E.g. demo-percona-mysql-pvc.yaml for the percona application. 
