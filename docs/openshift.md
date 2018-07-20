@@ -78,8 +78,8 @@ oc apply -f openebs-storageclasses.yaml
 Verify that the OpenEBS operator services are created successfully and deployments are running using the following commands. Also, check whether the storage classes are created successfully.
 
 ```
-oc get deployments
-oc get sa
+oc get deployments -n openebs
+oc get sa -n openebs
 oc get clusterrole openebs-maya-operator
 oc get sc
 ```
