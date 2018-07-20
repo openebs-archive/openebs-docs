@@ -100,7 +100,12 @@ This issue is due to failed application operations in the container. Typically t
 
      While this step may not be necessary most times (as the application is already undergoing periodic restarts as part of the CrashLoop cycle), it can be performed if the application pod's next restart is scheduled with an exponential back-off delay.
 
-**Note:**  In environments where the kubelet runs in a container, perform the following steps as part of the recovery procedure for a Volume-Read only issue.
+**Notes:**  
+
+1. The above procedure works for applications that are either pods or deployments/statefulsets. In case of the latter, the application pod can be restarted
+(i.e., deleted) after step-4 (iscsi logout) as the deployment/statefulset controller will take care of rescheduling the application on a same/different node with the volume. 
+
+2. In environments where the kubelet runs in a container, perform the following steps as part of the recovery procedure for a Volume-Read only issue.
 
 - Confirm that the OpenEBS target does not exist as a Read Only device by the OpenEBS controller and that all replicas are in Read/Write mode.
 - Un-mount the iSCSI volume from the node in which the application pod is scheduled.
@@ -110,6 +115,9 @@ This issue is due to failed application operations in the container. Typically t
   - Login
 - Re-mount the iSCSI device (may appear with a new SCSI device name) on the node.
 - Verify if the application pod is able to start using/writing into the newly mounted device.
+
+3. Once the application is back in "Running" state post recovery by following steps 1-9, if existing/older data is not visible (i.e., it comes up as a fresh instance), it is possible that the application pod is using the docker container filesystem instead of the actual PV (observed sometimes due to the reconciliation attempts by Kubernetes to get the pod to a desired state in the absence of the mounted iSCSI disk). 
+This can be checked by performing a `df -h` or `mount` command inside the application pods. These commands should show the scsi device `/dev/sd*` mounted on the specified mount point. If not, the application pod can be forced to use the PV by restarting it (deployment/statefulset) or performing  a docker stop of the application container on the node (pod). 
 
 ## Issue:
 
