@@ -3,7 +3,7 @@
     "Getting Started": ["quickstartguide", "introduction","usingminikube", "gethelp", "faq"],
     "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "storageschema", "storagepolicies"],
     "Setup": ["supportedplatforms", "prerequisites", "scheduler", "installation", "setupstoragepools", "castemplate", "setupstorageclasses", "setupstoragevolumes", "snapshots", "upgrade"],
-    "Usecases": ["bluegreen", "cicd","hybridcloud","hyperscale"],
+    "Usecases": ["bluegreen", "cicd"],
     "Tasks": ["mayactl"],
     "API": ["api"],
     "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "mayaonline"],
