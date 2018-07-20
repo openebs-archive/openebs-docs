@@ -34,6 +34,8 @@ OpenEBS is tested on the following platforms.
 
 As a prerequisite, OpenEBS requires Kubernetes CRD capabilities and hence Kubernetes versions 1.7.5+ are suitable. 
 
+**Note:** Container runtime such as Docker must be installed/available.
+
 OpenEBS is tested on versions 1.7.5+, 1.8, 1.9, 1.10 and 1.11.
 
 Similarly, MiniKube versions that are tested for OpenEBS are 0.25.x and 0.26.x.
