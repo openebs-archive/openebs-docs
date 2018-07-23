@@ -36,6 +36,8 @@ Administrator can choose to provide the scheduling configuration for control pla
 
 ### NODE_SELECTOR method (preferred): ([Why?](/docs/next/scheduler.html#selecting-between-node-selector-method-taint-method))
 
+
+
 #### Scheduling control plane pods
 
 **Label the required Nodes**
@@ -117,6 +119,8 @@ spec:
       containers:
 ```
 
+
+
 #### Scheduling data plane pods
 
 Now you can modify the configuration for data plane pods as below.
@@ -162,13 +166,9 @@ spec:
           value: "openebs=controlnode"
 ```
 
-
-
-**Step 3:** Run the operator file to install OpenEBS and schedule the OpenEBS control planes pods on the required node(s) 
-
-`kubectl apply -f openebs-operator.yaml `
-
 ### TAINTS method
+
+
 
 #### Scheduling control plane pods
 
@@ -265,6 +265,8 @@ spec:
         value: "storage"
         effect: "NoSchedule"
 ```
+
+
 
 #### Scheduling data plane pods
 
