@@ -36,7 +36,7 @@ Administrator can choose to provide the scheduling configuration for control pla
 
 ### NODE_SELECTOR method (preferred): ([Why?](/docs/next/scheduler.html#selecting-between-node-selector-method-taint-method))
 
-#### Scheduling control plane pods
+#### **Scheduling control plane pods**
 
 **Label the required Nodes**
 
@@ -168,8 +168,6 @@ spec:
 
 `kubectl apply -f openebs-operator.yaml `
 
-
-
 ### TAINTS method
 
 #### Scheduling control plane pods
@@ -181,19 +179,16 @@ Taint all the Nodes in the cluster with appropriate taint. In this case, we are 
 **For Storage Nodes**
 
 ```
-kubectl taint nodes gke-ranjithtaint-default-pool-65334ea0-83gx role=storage:NoSchedule
-
-kubectl taint nodes gke-ranjithtaint-default-pool-65334ea0-h5q8 role=storage:NoSchedule
-
-kubectl taint nodes gke-ranjithtaint-default-pool-65334ea0-p7zg role=storage:NoSchedule
+kubectl taint nodes <node name> role=storage:NoSchedule
+kubectl taint nodes <node name> role=storage:NoSchedule
+kubectl taint nodes <node name> role=storage:NoSchedule
 ```
 
 **For Application Nodes**
 
 ```
-kubectl taint nodes gke-ranjithtaint-default-pool-65334ea0-7kh2 role=app:NoSchedule
-
-kubectl taint nodes gke-ranjithtaint-default-pool-65334ea0-7wwq role=app:NoSchedule
+kubectl taint nodes <node name> role=app:NoSchedule
+kubectl taint nodes <node name> role=app:NoSchedule
 ```
 
 **Modify the configuration for control pods**
@@ -271,7 +266,7 @@ spec:
         effect: "NoSchedule"
 ```
 
-#### Scheduling data plane pods
+#### **Scheduling data plane pods**
 
 Now you can modify the configuration for data plane pods as below.
 
@@ -293,7 +288,7 @@ The change is to add below entries as environmental variable under *maya-api ser
 kubectl apply -f openebs-operator.yaml
 ```
 
-
+Note: Don't forget to put toleration in application yaml before applying corresponding application yaml. This will schedule application in application node.
 
 ## Selecting between NODE-SELECTOR method TAINT method 
 
