@@ -40,7 +40,7 @@ Administrator can choose to provide the scheduling configuration for control pla
 
 **Label the required Nodes**
 
-Label the required Nodes with appropriate label. In this case, we are labelling node as  *openebs=controlnode*. It can be done as follows.
+Label the required Nodes with appropriate label. In this case, we are labelling required nodes as  *openebs=controlnode*. It can be done as follows.
 
 ```
 kubectl label nodes <node-name> openebs=controlnode
@@ -48,7 +48,7 @@ kubectl label nodes <node-name> openebs=controlnode
 
 **Modify the configuration control pods** 
 
-Now you can modify the configuration control plane pods as below.
+Now you can modify the configuration for control plane pods as below in *openebs-operator.yaml*.
 
 **Update the NODE_SELECTOR for openebs-provisioner**
 
@@ -119,7 +119,7 @@ spec:
 
 #### **Scheduling data plane pods**
 
-Now you can modify the configuration data plane pods as below.
+Now you can modify the configuration for data plane pods as below.
 
 **Update the NODE_SELECTOR for storage target and storage replica**
 
@@ -165,6 +165,131 @@ spec:
 
 
 **Step 3:** Run the operator file to install OpenEBS and schedule the OpenEBS control planes pods on the required node(s) 
+
+`kubectl apply -f openebs-operator.yaml `
+
+
+
+### TAINTS method
+
+#### Scheduling control plane pods
+
+**Taint all Nodes in the cluster**
+
+Taint all the Nodes in the cluster with appropriate taint. In this case, we are using 5 node cluster and 3 will be used for storage and 2 will be used for application running. Taint used for storage Nodes is `role=storage:NoSchedule` and for application nodes is `role=app:NoSchedule`. It can be done as follows.
+
+**For Storage Nodes**
+
+```
+kubectl taint nodes gke-ranjithtaint-default-pool-65334ea0-83gx role=storage:NoSchedule
+
+kubectl taint nodes gke-ranjithtaint-default-pool-65334ea0-h5q8 role=storage:NoSchedule
+
+kubectl taint nodes gke-ranjithtaint-default-pool-65334ea0-p7zg role=storage:NoSchedule
+```
+
+**For Application Nodes**
+
+```
+kubectl taint nodes gke-ranjithtaint-default-pool-65334ea0-7kh2 role=app:NoSchedule
+
+kubectl taint nodes gke-ranjithtaint-default-pool-65334ea0-7wwq role=app:NoSchedule
+
+
+```
+
+**Modify the configuration for control pods**
+
+Now you can modify the configuration for control plane pods as below in *openebs-operator.yaml*.
+
+**Update Taint Policy  for openebs-provisioner**
+
+```
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: openebs-provisioner
+  namespace: openebs
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: openebs-provisioner
+    spec:
+      serviceAccountName: openebs-maya-operator
+      tolerations:
+      - key: "role"
+        operator: "Equal"
+        value: "storage"
+        effect: "NoSchedule"
+```
+
+**Update the Taint policy for maya-apiserver**
+
+```
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: maya-apiserver
+  namespace: openebs
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: maya-apiserver
+    spec:
+      serviceAccountName: openebs-maya-operator
+      tolerations:
+      - key: "role"
+        operator: "Equal"
+        value: "storage"
+        effect: "NoSchedule"
+```
+
+**Update the Taint Policy  for openebs-snapshot-controller-apiserver**
+
+```
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: openebs-snapshot-operator
+  namespace: openebs
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: openebs-snapshot-operator
+    spec:
+      serviceAccountName: openebs-maya-operator
+      tolerations:
+      - key: "role"
+        operator: "Equal"
+        value: "storage"
+        effect: "NoSchedule"
+```
+
+#### Scheduling data plane pods
+
+Now you can modify the configuration for data plane pods as below.
+
+**Update the Taint policy for storage target and storage replica**
+
+The change is to add below entries as environmental variable under *maya-api server* deployment in the openebs-operator.yaml file. 
+
+```
+-name: DEFAULT_CONTROLLER_NODE_TAINT_TOLERATION
+ value: role=storage:NoSchedule
+
+-name: DEFAULT_REPLICA_NODE_TAINT_TOLERATION
+ value: role=storage:NoSchedule
+```
+
+**Step 3:** Run the operator file to install OpenEBS and schedule the OpenEBS control planes pods on the appropriate node(s) 
 
 `kubectl apply -f openebs-operator.yaml `
 
