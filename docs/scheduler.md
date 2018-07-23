@@ -36,7 +36,7 @@ Administrator can choose to provide the scheduling configuration for control pla
 
 ### NODE_SELECTOR method (preferred): ([Why?](/docs/next/scheduler.html#selecting-between-node-selector-method-taint-method))
 
-#### **Scheduling control plane pods**
+#### Scheduling control plane pods
 
 **Label the required Nodes**
 
@@ -117,7 +117,7 @@ spec:
       containers:
 ```
 
-#### **Scheduling data plane pods**
+#### Scheduling data plane pods
 
 Now you can modify the configuration for data plane pods as below.
 
@@ -266,7 +266,7 @@ spec:
         effect: "NoSchedule"
 ```
 
-#### **Scheduling data plane pods**
+#### Scheduling data plane pods
 
 Now you can modify the configuration for data plane pods as below.
 
