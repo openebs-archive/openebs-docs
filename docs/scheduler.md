@@ -1,48 +1,46 @@
 ---
 id: scheduler
-title: Scheduling OpenEBS control plane and data plane pods
+title: Scheduling OpenEBS Control Plane and Data Plane Pods
 sidebar_label: Scheduler
 ---
 
 ------
 
-OpenEBS **DOES NOT** have a separate scheduler of it's own to manage the scheduling of it's pods. It uses Kubernetes scheduler for managing the scheduling needs of administrator. 
+OpenEBS does not have a separate scheduler to manage the scheduling of pods. It uses Kubernetes scheduler for managing the scheduling needs of an administrator. 
 
-OpenEBS deals with many types of Kubernetes pods in it's life cycle. These can be broadly categorized into two types.
+OpenEBS deals with many types of Kubernetes pods in its life cycle. These can be broadly categorized into two types.
 
 - **Control plane pods**
   - OpenEBS API Server
   - OpenEBS Provisioner
-  - OpenEBS Snapshot controller
+  - OpenEBS Snapshot Controller
 - **Data plane pods**
   - Jiva data plane 
     - Jiva storage target pod
-    - Jiva storage replica pod(s)
-  - cStor data plane `(Initial availability from 0.7 release)`
+    - Jiva storage replica pods
+  - cStor data plane `(available from 0.7 release)`
     - cStor storage target pod
-    - cStor storage replica pod(s)
+    - cStor storage replica pods
 
-Control plane pods are scheduled during the installation of OpenEBS. Data plane pods are scheduled during the provisioning of volumes. 
+Control plane pods are scheduled while installing OpenEBS. Data plane pods are scheduled during the provisioning of volumes. 
 
-## Before OpenEBS installation
+# Before OpenEBS Installation
 
-Administrator can choose to provide the scheduling configuration for control plane and data plane pods during the time of installation. 
+The OpenEBS administrator can choose to provide the scheduling configuration for control plane and data plane pods during installation. The following procedure allows you to modify the configuration. 
 
-**Step1:** Download openebs-operator file.
+1. Download the *openebs-operator* file using the following command.
 
 `wget  https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml `
 
-**Step2:**  Modify the configuration for scheduling pods in the file *openebs-operator.yaml* for using either NODE_SELECTOR  method or using TAINTS method as shown below.
+2. Modify the configuration for scheduling pods in the *openebs-operator.yaml* file. You can either use NODE_SELECTOR or TAINTS method as follows.
 
-### NODE_SELECTOR method (preferred): ([Why?](/docs/next/scheduler.html#selecting-between-node-selector-method-taint-method))
+## NODE_SELECTOR method (preferred): ([Why?](/docs/next/scheduler.html#selecting-between-node-selector-method-taint-method))
 
-
-
-#### Scheduling control plane pods
+### Scheduling control plane pods using NODE_SELECTOR
 
 **Label the required Nodes**
 
-Label the required Nodes with appropriate label. In this case, we are labelling required nodes as  *openebs=controlnode*. It can be done as follows.
+Label the required Nodes with appropriate label. In this case, the required nodes are labelled as  *openebs=controlnode* as in the following example.
 
 ```
 kubectl label nodes <node-name> openebs=controlnode
@@ -50,7 +48,15 @@ kubectl label nodes <node-name> openebs=controlnode
 
 **Modify the configuration control pods** 
 
-Now you can modify the configuration for control plane pods as below in *openebs-operator.yaml*.
+You can modify the configuration for control plane pods as follows in *openebs-operator.yaml* file. 
+
+For openebs-provisioner, under spec: section you can add the following.
+
+```
+nodeSelector:
+        openebs: controlnode
+```
+#### Example:
 
 **Update the NODE_SELECTOR for openebs-provisioner**
 
@@ -73,6 +79,14 @@ spec:
       containers:      
 ```
 
+For maya-apiserver, under spec: section you can add the following.
+```
+nodeSelector:
+        openebs: controlnode
+```
+
+#### Example:
+
 **Update the NODE_SELECTOR for maya-apiserver**
 
 ```
@@ -93,6 +107,14 @@ spec:
         openebs: controlnode
       containers:
 ```
+
+For openebs-snapshot-controller-apiserver, under spec: section you can add the following.
+
+```
+nodeSelector:
+        openebs: controlnode
+```
+#### Example:
 
 **Update the NODE_SELECTOR for openebs-snapshot-controller-apiserver**
 
@@ -120,14 +142,22 @@ spec:
 ```
 
 
+### Scheduling data plane pods using NODE_SELECTOR
 
-#### Scheduling data plane pods
-
-Now you can modify the configuration for data plane pods as below.
+You can modify the configuration for data plane pods as follows:
 
 **Update the NODE_SELECTOR for storage target and storage replica**
 
-The change is to add below entries as environmental variable under *maya-api server* deployment in the openebs-operator.yaml file. 
+Add the following entries as an environmental variable under *maya-api server* deployment in the openebs-operator.yaml file. 
+
+```
+- name: DEFAULT_CONTROLLER_NODE_SELECTOR
+          value: "openebs=controlnode"
+        - name: DEFAULT_REPLICA_NODE_SELECTOR
+          value: "openebs=controlnode"
+```
+
+#### Example:
 
 ```
  apiVersion: apps/v1beta1
@@ -166,15 +196,15 @@ spec:
           value: "openebs=controlnode"
 ```
 
-### TAINTS method
+## TAINTS method
 
-
-
-#### Scheduling control plane pods
+### Scheduling control plane pods using Taints
 
 **Taint all Nodes in the cluster**
 
-Taint all the Nodes in the cluster with appropriate taint. In this case, we are using 5 node cluster and 3 will be used for storage and 2 will be used for application running. Taint used for storage Nodes is `role=storage:NoSchedule` and for application nodes is `role=app:NoSchedule`. It can be done as follows.
+Taint all nodes in the cluster with appropriate taint. In this example, we are using a 5 node cluster. 3 nodes will be used for storage and 2 nodes will be used for running applications. Taint used for storage nodes is `role=storage:NoSchedule` and for application nodes is `role=app:NoSchedule`.
+
+#### Example
 
 **For Storage Nodes**
 
@@ -193,9 +223,9 @@ kubectl taint nodes <node name> role=app:NoSchedule
 
 **Modify the configuration for control pods**
 
-Now you can modify the configuration for control plane pods as below in *openebs-operator.yaml*.
+You can modify the configuration for control plane pods as follows in the *openebs-operator.yaml* file.
 
-**Update Taint Policy  for openebs-provisioner**
+**Update Taint Policy for openebs-provisioner**
 
 ```
 apiVersion: apps/v1beta1
@@ -268,13 +298,13 @@ spec:
 
 
 
-#### Scheduling data plane pods
+### Scheduling data plane pods using Taints
 
-Now you can modify the configuration for data plane pods as below.
+Now you can modify the configuration for data plane pods as follows:
 
 **Update the Taint policy for storage target and storage replica**
 
-The change is to add below entries as environmental variable under *maya-api server* deployment in the openebs-operator.yaml file. 
+Add the following entries as an environmental variable under *maya-api server* deployment in the openebs-operator.yaml file. 
 
 ```
 -name: DEFAULT_CONTROLLER_NODE_TAINT_TOLERATION
@@ -284,13 +314,13 @@ The change is to add below entries as environmental variable under *maya-api ser
  value: role=storage:NoSchedule
 ```
 
-**Step 3:** Run the operator file to install OpenEBS and schedule the OpenEBS control planes pods on the appropriate node(s) 
+3. Run the operator file to install OpenEBS and schedule the OpenEBS control plane pods on the appropriate nodes.
 
 ```
 kubectl apply -f openebs-operator.yaml
 ```
 
-Note: Don't forget to put toleration in application yaml before applying corresponding application yaml. This will schedule application in application node.
+**Note:** Remember to put toleration in the application yaml before applying a corresponding application yaml file. This will schedule an application in application node.
 
 ## Selecting between NODE-SELECTOR method TAINT method 
 
