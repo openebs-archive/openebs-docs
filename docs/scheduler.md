@@ -194,8 +194,6 @@ kubectl taint nodes gke-ranjithtaint-default-pool-65334ea0-p7zg role=storage:NoS
 kubectl taint nodes gke-ranjithtaint-default-pool-65334ea0-7kh2 role=app:NoSchedule
 
 kubectl taint nodes gke-ranjithtaint-default-pool-65334ea0-7wwq role=app:NoSchedule
-
-
 ```
 
 **Modify the configuration for control pods**
@@ -291,7 +289,9 @@ The change is to add below entries as environmental variable under *maya-api ser
 
 **Step 3:** Run the operator file to install OpenEBS and schedule the OpenEBS control planes pods on the appropriate node(s) 
 
-`kubectl apply -f openebs-operator.yaml `
+```
+kubectl apply -f openebs-operator.yaml
+```
 
 
 
