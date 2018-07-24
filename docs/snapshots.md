@@ -270,7 +270,7 @@ Once the percona-snapshot pod is in running state, you can check the integrity 
 You can delete a snapshot that you have created which will also delete the corresponding Volume Snapshot Data resource from Kubernetes. The following command will delete the *snapshot.yaml* file.
 
 ```
-kubectl apply -f snapshot.yaml
+kubectl delete -f snapshot.yaml
 ```
 
 This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` you have already provisioned using the snapshot. On the other hand, deleting any `PersistentVolumeClaims` or `PersistentVolumes` that you have used to take a snapshot or have been provisioned using a snapshot will not delete the snapshot from the OpenEBS backend. You have to delete them manually. 
