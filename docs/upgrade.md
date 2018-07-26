@@ -45,13 +45,13 @@ storageclass "openebs-standard" created
 - sets up the prerequisites for volume monitoring
 - creates a new OpenEBS storage-class called openebs-standard with vol-size=5G, storage-replica-count=2, storagepool=default, and monitoring=True
 
-You can used the above storage-class template to create new ones with desired properties.
+You can use the above storage-class template to create new ones with desired properties.
 
 4. Create the OpenEBS Monitoring deployments (Prometheus and Grafana).
 
 This is an optional step which is useful if you need to track storage metrics on your OpenEBS volume. OpenEBS recommends using the monitoring framework to track your OpenEBS volume metrics.
 
-5. Update OpenEBS volume (controller and replica) deployments by obtaining the name of the OpenEBS Persistent Volume (PV) that must be updated using the `kubectl get pv` command.
+5. Update OpenEBS volume (controller and replica) deployments by obtaining the name of the OpenEBS Persistent Volume (PV) that must be updated.
 
 ```
 test@Master:~$ kubectl get pv
@@ -59,19 +59,24 @@ NAME                                       CAPACITY   ACCESS MODES   RECLAIM POL
 pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc   5G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-basic   
 ```
 
-Go to the patch folder to point to the appropriate patch. Run the *oebs_update.sh* script by passing the PV as an argument.
+    a. Go to the patch folder to point to the appropriate patch. Run the *oebs_update.sh* script by passing the PV as an argument.
 
 ```
 test@Master:~$ ./oebs_update pvc-01174ced-0a40-11e8-be1c-000c298ff5fc
+```
+```
 deployment "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep" patched
 deployment "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-ctrl" patched
 replicaset "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-ctrl-59df76689f" deleted
 ```
 
-Verify that the volume controller and replica pods are running post upgrade.
+    b. Verify that the volume controller and replica pods are running post upgrade.
 
 ```
 test@Master:~$ kubectl get pods
+```
+
+```
 NAME                                                             READY     STATUS    RESTARTS   AGE
 maya-apiserver-2288016177-lzctj                                  1/1       Running   0          3m
 openebs-grafana-2789105701-0rw6v                                 1/1       Running   0          2m
@@ -87,6 +92,9 @@ pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep-6b9f46bc6b-hvc8b    1/1       Runni
 
 ```
 test@Master:~$ curl GET http://10.47.0.5:9501/v1/replicas | grep createTypes | jq
+```
+
+```
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   162  100   162    0     0     27      0  0:00:06  0:00:05  0:00:01    37
@@ -132,16 +140,16 @@ test@Master:~$ curl GET http://10.47.0.5:9501/v1/replicas | grep createTypes | j
 ```
 7. Configure Grafana to monitor volume metrics.
 
-Perform the following actions if you performed step 4.
+Perform the following actions if you performed step 4 earlier.
 
 - Access the Grafana dashboard at http://*NodeIP*:32515.
 - Add the Prometheus data source by specifying URL as http://*NodeIP*:32514.
 - Once the data source is validated, import the dashboard JSON from the <https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-pg-dashboard.json> URL.
 - Access the volume statistics by selecting the volume name *(pvc-*)* in the OpenEBS Volume dashboard.
 
-**Note** : For new applications, select a newly created storage-class that has monitoring enabled to automatically start viewing metrics.
+**Note:** For new applications, select a newly created storage-class that has monitoring enabled to automatically start viewing metrics.
 
-Detailed steps for the supported upgrade paths are mentioned in the following sections.
+Detailed steps for supported upgrade paths are mentioned in the following sections.
 
 ### **Upgrade from 0.4.0 to 0.5.0**
 
@@ -154,7 +162,7 @@ It is possible to upgrade your OpenEBS volume from 0.5.0 to 0.5.1 by following t
 ### **Upgrade from 0.5.0 to 0.6.0**
 
 
-<<TBD>>
+<< TBD >>
   
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
