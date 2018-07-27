@@ -1,14 +1,15 @@
 {
   "docs": {
-    "Getting Started": ["quickstartguide", "introduction","usingminikube", "gethelp", "faq"],
+    "Getting Started": ["quickstartguide", "introduction","usingminikube", "gethelp"],
     "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "storageschema", "storagepolicies"],
     "Setup": ["supportedplatforms", "prerequisites", "scheduler", "installation", "upgrade", "setupstoragepools", "castemplate", "setupstorageclasses", "setupstoragevolumes", "snapshots"],
     "Usecases": ["bluegreen", "cicd"],
-    "Tasks": ["mayactl"],
-    "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "mayaonline"],
+    "Integrations": ["openshift", "stackpointcloud", "ibmcloud", "rancher", "mayaonline"],
     "Databases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "Kafka", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
-    "Releases": ["changelog"],
+    "Tasks": ["tasks_install", "tasks_volumeprovisioning", "tasks_snapclones", "tasks_backuprestore", "tasks_monitoring"],
+    "FAQs": ["faq"],
     "Troubleshooting": ["readonlyvolumes", "troubleshooting", "tsgcollectlogs", "tsgiscsi", "tsg_install", "tsgopenshift", "tsgpvs"],
+    "Releases": ["changelog"],
     "Contributor Resources": ["weeklycontribute", "contribute"]
   }
 }
