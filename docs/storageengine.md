@@ -27,9 +27,13 @@ OpenEBS provides two types of storage engines.
 
 ### Jiva
 
-Jiva has a single container image for both controller and replica. Docker image is available at https://hub.docker.com/r/openebs/jiva/ iva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs entirely in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation. It supports  thin provisioning, snapshotting, cloning of storage volumes.
+Jiva has a single container image for both controller and replica. Docker image is available at https://hub.docker.com/r/openebs/jiva/ . Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs entirely in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation. It supports  thin provisioning, snapshotting, cloning of storage volumes.
 
 ![Jiva storage engine of OpenEBS](/docs/assets/jiva.png)
+
+#### Sparse file layout of Jiva
+
+
 
 ### cStor
 

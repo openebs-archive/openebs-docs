@@ -6,25 +6,7 @@ sidebar_label: Installation
 
 ------
 
-This section contains steps to troubleshoot and resolve issues faced while installing.
-
-The following issues are covered in this section.
-
-[One of the 3 pods does not run while installing OpenEBS on a Kubernetes cluster in Azure](#PodNotRunningAzure)
-
-[Installing OpenEBS on Azure fails](#RBACNotEnableAzure)
-
-[Error while starting Minikube](#MinikubeStartError)
-
-[On Vagrant Percona and weave-net is restarting several no of times](#PerconaWeavenetRestart)
-
-## Issue: 
-
 ## On Azure, stateful pods are not running when OpenEBS volumes are provisioned
-
-## <a name="PodNotRunningAzure"></a>
-
-### Troubleshooting the issue and Workaround:
 
 On AKS, after provisioning the OpenEBS volume through the OpenEBS dynamic provisioner, the application pod is not coming up. It stays in `ContainerCreating` state
 
@@ -41,13 +23,7 @@ pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-rep-578b5bcc6b-zkhn8   1/1       Runnin
 
 The AKS cluster runs ubuntu 16.04 LTS with the kubelet running in a container (debian-jessie 8). The kubelet logs show the absence of the iSCSI initiator. Hence, the volume is not attached to the node. Configuring kubelet to run with iSCSI utils should fix this issue. For more information, see  https://github.com/openebs/openebs/issues/1335.
 
-## Issue: 
-
 ## On Azure, OpenEBS installation fails
-
-## <a name="RBACNotEnableAzure"></a>
-
-### Workaround:
 
 On AKS, while installing OpenEBS using Helm, if you get the following error, you must enable RBAC on Azure. For more details, see [Prerequisites](/docs/next/prerequisites.html).
 
@@ -56,41 +32,7 @@ $ helm installstable/openebs --name openebs --namespace openebs
 Error: release openebsfailed: clusterroles.rbac.authorization.k8s.io "openebs" isforbidden: attempt to grant extra privileges:[PolicyRule{Resources:["nodes"], APIGroups:["*"],Verbs:["get"]} PolicyRule{Resources:["nodes"],APIGroups:["*"], Verbs:["list"]}PolicyRule{Resources:["nodes"], APIGroups:["*"],Verbs:["watch"]} PolicyRule{Resources:["nodes/proxy"],APIGroups:["*"], Verbs:["get"]}PolicyRule{Resources:["nodes/proxy"], APIGroups:["*"],Verbs:["list"]} PolicyRule{Resources:["nodes/proxy"],APIGroups:["*"], Verbs:["watch"]}PolicyRule{Resources:["namespaces"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["services"],APIGroups:["*"], Verbs:["*"]} PolicyRule{Resources:["pods"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["deployments"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["events"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["endpoints"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["persistentvolumes"],APIGroups:["*"], Verbs:["*"]} PolicyRule{Resources:["persistentvolumeclaims"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["storageclasses"],APIGroups:["storage.k8s.io"], Verbs:["*"]}PolicyRule{Resources:["storagepools"], APIGroups:["*"],Verbs:["get"]} PolicyRule{Resources:["storagepools"], APIGroups:["*"],Verbs:["list"]} PolicyRule{NonResourceURLs:["/metrics"],Verbs:["get"]}] user=&{system:serviceaccount:kube-system:tiller6f3172cc-4a08-11e8-9af5-0a58ac1f1729 [system:serviceaccounts system:serviceaccounts:kube-systemsystem:authenticated] map[]} ownerrules=[]ruleResolutionErrors=[clusterroles.rbac.authorization.k8s.io"cluster-admin" not found]
 ```
 
-## Issue: 
 
-## Error while starting Minikube
-
-The following error occurs while starting Minikube on Ubuntu 16.04.3 LTS
-
-```
-harsh@atlantis:~/.kube$ sudo -E minikube start --vm-driver=none
-Starting local Kubernetes v1.7.5 cluster...
-Starting VM...
-E1011 01:01:01.315176   21844 start.go:146] Error starting host: Error getting state for host: machine does not exist.
-
- Retrying.
-E1011 01:01:01.315654   21844 start.go:152] Error starting host:  Error getting state for host: machine does not exist
-```
-
-## <a name="MinikubeStartError"></a>
-
-### Workaround:
-
-Delete the Minikube VM using the following command and restart the VM with no flags. 
-
-```minikube delete```
-
-
-
-## Issue:
-
-## Error: On Vagrant Percona and weave-net is restarting several no of times
-
-## <a name="PerconaWeavenetRestart"></a>
-
-Percona and weave-net restarts several times while running prometheus and percona components at the same time on Vagrant setup.
-
-This issue gets resolved once 2 GB or more RAM  has been assigned to the minions. As it has been identified that 1GB of RAM is not enough for the minions to run pods. Less RAM might result in pods getting evicted and getting restarted.
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
