@@ -12,6 +12,8 @@ The following prerequisites are required for installing OpenEBS.
 
 2. open-iscsi package installed and configured on the Kubernetes cluster
 
+   **Note:** Do not install open-iscsi / iscsi-initiator-utils on host nodes if a kubelet container, for example, Rancher Container Engine (RKE) already has the package installed.
+
 3. kubectl or helm installed and ready to use
 
 **Note:** 
