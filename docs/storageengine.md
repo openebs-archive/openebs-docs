@@ -27,13 +27,41 @@ OpenEBS provides two types of storage engines.
 
 ### Jiva
 
-Jiva has a single container image for both controller and replica. Docker image is available at https://hub.docker.com/r/openebs/jiva/ . Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs entirely in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation. It supports  thin provisioning, snapshotting, cloning of storage volumes.
+Jiva has a single container image for both controller and replica. Docker image is available at https://hub.docker.com/r/openebs/jiva/ .  Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs entirely in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation. It supports  thin provisioning, snapshotting, cloning of storage volumes.
 
 ![Jiva storage engine of OpenEBS](/docs/assets/jiva.png)
 
-#### Sparse file layout of Jiva
+#### Sparse file layout of Jiva 
+
+The following content is directly taken from Rancher's LongHorn [announcement documentation](https://rancher.com/microservices-block-storage/) 
+
+**Replica Operations of Jiva**
+
+------
+
+Jiva replicas are built using Linux sparse files, which support thin provisioning. Jiva does not maintain additional metadata to indicate which blocks are used. The block size is 4K. When you take a snapshot, you create a differencing disk. As the number of snapshots grows, the differencing disk chain could get quite long. To improve read performance, Jiva therefore maintains a read index that records which differencing disk holds valid data for each 4K block. In the following figure, the volume has eight blocks. The read index has eight entries and is filled up lazily as read operation takes place. A write operation resets the read index, causing it to point to the live data. ![Longhorn read index](http://cdn.rancher.com/wp-content/uploads/2017/04/14095610/Longhorn-blog-3.png)
 
 
+
+The read index is kept in memory and consumes one byte for each 4K block. The byte-sized read index means you can take as many as 254 snapshots for each volume. The read index consumes a certain amount of in-memory data structure for each replica. A 1TB volume, for example, consumes 256MB of in-memory read index. We will potentially consider placing the read index in memory-mapped files in the future.
+
+**Replica Rebuild**
+
+------
+
+When the controller detects failures in one of its replicas, it marks the replica as being in an error state. The Longhorn/Jiva volume manager is responsible for initiating and coordinating the process of rebuilding the faulty replica as follows:
+
+- The Longhorn/Jiva volume manager creates a blank replica and calls the controller to add the blank replica into its replica set.
+- To add the blank replica, the controller performs the following operations:
+  - Pauses all read and write operations.
+  - Adds the blank replica in WO (write-only) mode.
+  - Takes a snapshot of all existing replicas, which will now have a blank differencing disk at its head.
+  - Unpauses all read the write operations. Only write operations will be dispatched to the newly added replica.
+  - Starts a background process to sync all but the most recent differencing disk from a good replica to the blank replica.
+  - After the sync completes, all replicas now have consistent data, and the volume manager sets the new replica to RW (read-write) mode.
+- The Longhorn/Jiva volume manager calls the controller to remove the faulty replica from its replica set.
+
+It is not very efficient to rebuild replicas from scratch. We can improve rebuild performance by trying to reuse the sparse files left from the faulty replica.
 
 ### cStor
 
