@@ -32,9 +32,9 @@ Kubernetes automatically re-schedules the controller as a new Kubernetes pod. Po
 
 The controller is automatically re-scheduled as a new Kubernetes pod. Policies are in place that ensures faster rescheduling. If Kubernetes node is unavailable, the controller gets scheduled on one of the available nodes.
 
-### What happens when an OpenEBS volume replica pod crashes for reasons other than node not-ready and node unreachable?
+### What happens when an OpenEBS volume replica pod crashes? 
 
-The replica is automatically rescheduled as a new Kubernetes pod. The replica may or may not be rescheduled on the same K8s node. There is data loss with this newly scheduled replica if it gets rescheduled on a different K8s node.
+The replica is automatically rescheduled as a new Kubernetes pod when an OpenEBS volume replica pod crashes for reasons other than node not-ready and node unreachable. The replica may or may not be rescheduled on the same K8s node. There is data loss with this newly scheduled replica if it gets rescheduled on a different K8s node.
 
 ### What happens when a K8s node that hosts OpenEBS volume replica goes offline?
 
@@ -94,7 +94,7 @@ OpenEBS has been engineered so that it does not require any changes to the conta
 
 Performance tests on release v.0.5.2 shows acceptable performance, but additional efforts are ongoing to improve performance. OpenEBS will soon implement many changes to improve performance elsewhere in the stack and much more is coming via the cStor storage engine.
 
-## What are the minimum requirements? What are the supported container orchestrators?
+## What are the minimum requirements and supported container orchestrators?
 
 OpenEBS is currently tightly integrated into Kubernetes. Support for Docker Swarm is something OpenEBS is looking at in future releases.
 
