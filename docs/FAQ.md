@@ -24,19 +24,19 @@ An OpenEBS Jiva volume is a controller deployed during OpenEBS installation. Vol
 
 **Note:** Each replica is scheduled in a unique K8s node, and a K8s node never has two replicas of one OpenEBS volume.
 
-### What happens when an OpenEBS volume controller pod crashes?
+* What happens when an OpenEBS volume controller pod crashes?
 
 Kubernetes automatically re-schedules the controller as a new Kubernetes pod. Policies are in place that ensures faster rescheduling.
 
-### What happens when a K8s node that hosts OpenEBS volume controller goes offline?
+* What happens when a K8s node that hosts OpenEBS volume controller goes offline?
 
 The controller is automatically re-scheduled as a new Kubernetes pod. Policies are in place that ensures faster rescheduling. If Kubernetes node is unavailable, the controller gets scheduled on one of the available nodes.
 
-### What happens when an OpenEBS volume replica pod crashes? 
+* What happens when an OpenEBS volume replica pod crashes? 
 
 The replica is automatically rescheduled as a new Kubernetes pod when an OpenEBS volume replica pod crashes for reasons other than node not-ready and node unreachable. The replica may or may not be rescheduled on the same K8s node. There is data loss with this newly scheduled replica if it gets rescheduled on a different K8s node.
 
-### What happens when a K8s node that hosts OpenEBS volume replica goes offline?
+* What happens when a K8s node that hosts OpenEBS volume replica goes offline?
 
 There is no storage downtime as the other available replica displays inputs/outputs. Policies are in place that does not allow rescheduling of crashed replica (as the replica is tied to a node’s resources) on any other node.
 
@@ -46,9 +46,9 @@ OpenEBS stores data in a configurable number of replicas. These are placed to ma
 
 To determine exactly where your data is physically stored, you can run the following kubectl commands.
 
-(a) Run `kubectl get pvc` to fetch the volume name. The volume name looks like: *pvc-ee171da3-07d5-11e8-a5be-42010a8001be*.
+* Run `kubectl get pvc` to fetch the volume name. The volume name looks like: *pvc-ee171da3-07d5-11e8-a5be-42010a8001be*.
 
-(b) For each volume, you will notice one IO controller pod and one or more replicas (as per the storage class configuration). For the above PVC, run the following command to get the IO controller and replica pods. `kubectl get pods --all-namespaces | grep pvc-ee171da3-07d5-11e8-a5be-42010a8001be`
+* For each volume, you will notice one IO controller pod and one or more replicas (as per the storage class configuration). For the above PVC, run the following command to get the IO controller and replica pods. `kubectl get pods --all-namespaces | grep pvc-ee171da3-07d5-11e8-a5be-42010a8001be`
 
 The output displays the following pods.
 	
@@ -56,7 +56,7 @@ The output displays the following pods.
  - Replica 1: *pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-hls6s*
  - Replica 2: *pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-tr28f*
 
-(c) To check the location where the data is stored, get the details of the replica pod. For getting the details of Replica 1 above, use the `kubectl get pod -o yaml pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-hls6s` command. Check the volumes section.
+* To check the location where the data is stored, get the details of the replica pod. For getting the details of Replica 1 above, use the `kubectl get pod -o yaml pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-hls6s` command. Check the volumes section.
 
 ```
 volumes:
