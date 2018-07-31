@@ -127,15 +127,11 @@ This will delete the application pod and the corresponding pvc associated to it.
 
 The default retention is the same used by the K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim.
 
-	  
-```
 ## How to setup OpenEBS using Ansible?
-This section provides instructions on how to perform the OpenEBS on-premise deployment.
-Detailed explanation is available at [On premise deployment](https://github.com/openebs/openebs-docs/blob/v0.5.3/docs/on_premise_solutions.md).
+This section provides instructions on how to perform the OpenEBS on-premise deployment. Detailed explanation is available at [On premise deployment](https://github.com/openebs/openebs-docs/blob/v0.5.3/docs/on_premise_solutions.md).
 	  
 ## How to launch Kubernetes dashboard on local machine?
-OpenEBS provides vagrant boxes with prepackaged Kubernetes images.
-Steps for launching Kubernetes dashboard is available at [Kubernetes UI](https://github.com/openebs/openebs/blob/v0.5/k8s/vagrant/README.md).
+OpenEBS provides vagrant boxes with prepackaged Kubernetes images. The procedure for launching Kubernetes dashboard is available at [Kubernetes UI](https://github.com/openebs/openebs/blob/v0.5/k8s/vagrant/README.md).
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
