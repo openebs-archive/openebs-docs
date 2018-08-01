@@ -17,7 +17,7 @@ OpenEBS has many components, which can be grouped into the following categories.
 - [Control plane components](#ControlPlane) - Provisioner, API Server, volume exports, and volume sidecars
 - [Data plane components](#DataPlane) - Jiva and cStor
 - [Node disk manager](#NDM) - Discover, monitor, and manage the media attached to the Kubernetes node
-- [Integrations with cloud native tools](#CNTools)  - Integrations are done with Prometheus, Grafana, Fluentd, and Jaeger
+- [Integrations with cloud native tools](#CNTools)  - Integrations are done with Prometheus, Grafana, Fluentd, and Jaeger.
 
 
 <a name="ControlPlane"></a>
@@ -25,14 +25,10 @@ OpenEBS has many components, which can be grouped into the following categories.
 ------
 
 
-
 ## Control Plane
-
-
 
 The control plane of an OpenEBS cluster is often referred to as Maya. The OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies, exporting the volume metrics for consumption by prometheus/grafana, and so on.
 
- 
 
 ![Maya is the control plane of OpenEBS](https://raw.githubusercontent.com/openebs/maya/master/docs/openebs-maya-architecture.png)
 
@@ -61,19 +57,16 @@ Currently the OpenEBS provisioner supports only one type of binding i.e. iSCSI.
 
 ![OpenEBS m-apiserver Internals](/docs/assets/m-apiserver.png)
 
-m-apiserver runs as a POD.
-
-As the name suggests, m-apiserver exposes the OpenEBS REST APIs. 
+m-apiserver runs as a POD. As the name suggests, m-apiserver exposes the OpenEBS REST APIs. 
 
 m-apiserver is also responsible for creating deployment specification files required for creating the volume pods. After generating these specification files, it invokes kube-apiserver for scheduling the pods accordingly. At the end of volume provisioning by the OpenEBS PV provisioner, a Kubernetes object PV is created and is mounted on the application pod . The PV is hosted by the controller pod which is supported by a set of replica pods in different nodes. The controller pod and replica pods are part of the data plane and are described in more detail in the [Storage Engines](/docs/next/storageengine.html) section.
-
 
 Another important task of the m-apiserver is volume policy management. OpenEBS provides very granular specification for expressing policies. m-apiserver interprets these yaml specifications, converts them into enforceable components and enforces them through volume-management sidecars.
 
 
-### Maya volume exporter
+### Maya Volume Exporter
 
-Maya volume export is a sidecar for each of the storage controller pods (cStor/Jiva). These sidecars connect the control plane to the data plane for fetching statistics. The granularity of statistics is at the volume level. Some example statistics are: 
+Maya volume exporter is a sidecar for each of the storage controller pods (cStor/Jiva). These sidecars connect the control plane to the data plane for fetching statistics. The granularity of statistics is at the volume level. Some example statistics are: 
 
 - volume read latency
 - volume write latency
@@ -87,19 +80,15 @@ Maya volume export is a sidecar for each of the storage controller pods (cStor/J
 
 These statitics are typically pulled either by the Prometheus client that is installed and configured during OpenEBS installation or by the Weave Cortex agent that is installed and configured during connectivity to [MayaOnline](https://mayaonline.io).
 
-### Volume management sidecars
+### Volume Management Sidecars
 
 Sidecars are also used for passing controller configuration parameters and volume policies to the volume controller pod which is a data plane and for passing replica configuration parameters and replica data protection parameters to the volume replica pod. 
 
 ![volume management sidecars for cStor](/docs/assets/vol-mgmt-sidecars.png)
 
-
-
 <a name="DataPlane"></a>
 
 ------
-
-
 
 ## Data Plane 
 
@@ -115,8 +104,6 @@ The Jiva storage engine is developed with Rancher's LongHorn and gotgt as the ba
 
 cStor is a high performing storage engine built with proven building blocks of storage components such as "BSD based Multi-threaded iSCSI protocol stack that is still serving hundreds of installations" and DMU layer of user space ZFS. cStor gives provable data integrity, CoW based snapshots and more. Common use cases include larger environments using snapshots and clones as a part of a test, deploy and operate pipelines; for example clones are often used with DBs running on OpenEBS in staging pipelines.  More details on cStor architecture are [written here](/data/next/storageengine.html).
 
-
-
 ## Node Disk Manager<a name="NDM"></a>
 
 ------
@@ -125,14 +112,11 @@ cStor is a high performing storage engine built with proven building blocks of s
 Note: This storage engine is available from version 0.6 release onwards
 ```
 
-Node Disk Manager fills a gap in the chain of tools required for managing persistent storage for stateful applications using Kubernetes. DevOps architects in the container era must serve the infrastructure needs of applications and of application developers in an automated way that delivers reslience and consistency across environments. These requirements mean that the storage stack must itself be extremely flexible so that Kubernetes and other software in the cloud native ecosystem can easily use this stack. The Node Disk Manager or NDM plays a foundational role in the storage stack for Kubernetes by unifying disparate disks and by providing the capability to pool them in part by identifying them as a Kubernetes object.  Also, NDM discovers, provisions, monitors, and manages the underlying disks in such a way that Kubernetes PV provisioners such as  OpenEBS and other storage systems and Prometheus can manage the disk subsystems. 
-
+Node Disk Manager (NDM) fills a gap in the chain of tools required for managing persistent storage for stateful applications using Kubernetes. DevOps architects in the container era must serve the infrastructure needs of applications and of application developers in an automated way that delivers reslience and consistency across environments. These requirements mean that the storage stack must itself be extremely flexible so that Kubernetes and other software in the cloud native ecosystem can easily use this stack. The NDM plays a foundational role in the storage stack for Kubernetes by unifying disparate disks and by providing the capability to pool them in part by identifying them as a Kubernetes object.  Also, NDM discovers, provisions, monitors, and manages the underlying disks in such a way that Kubernetes PV provisioners such as  OpenEBS and other storage systems and Prometheus can manage the disk subsystems. 
 
 ![Node Disk Manager](/docs/assets/ndm.png)
 
-
-
-## Integrations with cloud native tools <a name="CNTools"></a>
+## Integrations with Cloud Native Tools <a name="CNTools"></a>
 
 ------
 
