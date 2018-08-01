@@ -24,21 +24,21 @@ An OpenEBS Jiva volume is a controller deployed during OpenEBS installation. Vol
 
 **Note:** Each replica is scheduled in a unique K8s node, and a K8s node never has two replicas of one OpenEBS volume.
 
-**What happens when an OpenEBS volume controller pod crashes?**
+  *  **What happens when an OpenEBS volume controller pod crashes?**
 
-Kubernetes automatically re-schedules the controller as a new Kubernetes pod. Policies are in place that ensures faster rescheduling.
+     Kubernetes automatically re-schedules the controller as a new Kubernetes pod. Policies are in place that ensures faster rescheduling.
 
-**What happens when a K8s node that hosts OpenEBS volume controller goes offline?**
+  *  **What happens when a K8s node that hosts OpenEBS volume controller goes offline?**
 
-The controller is automatically re-scheduled as a new Kubernetes pod. Policies are in place that ensures faster rescheduling. If Kubernetes node is unavailable, the controller gets scheduled on one of the available nodes.
+     The controller is automatically re-scheduled as a new Kubernetes pod. Policies are in place that ensures faster rescheduling. If Kubernetes node is unavailable, the controller gets scheduled on one of the available nodes.
 
-**What happens when an OpenEBS volume replica pod crashes?** 
+  *  **What happens when an OpenEBS volume replica pod crashes?** 
 
-The replica is automatically rescheduled as a new Kubernetes pod when an OpenEBS volume replica pod crashes for reasons other than node not-ready and node unreachable. The replica may or may not be rescheduled on the same K8s node. There is data loss with this newly scheduled replica if it gets rescheduled on a different K8s node.
+     The replica is automatically rescheduled as a new Kubernetes pod when an OpenEBS volume replica pod crashes for reasons other than node not-ready and node unreachable. The replica may or may not be rescheduled on the same K8s node. There is data loss with this newly scheduled replica if it gets rescheduled on a different K8s node.
 
-**What happens when a K8s node that hosts OpenEBS volume replica goes offline?**
+  *  **What happens when a K8s node that hosts OpenEBS volume replica goes offline?**
 
-There is no storage downtime as the other available replica displays inputs/outputs. Policies are in place that does not allow rescheduling of crashed replica (as the replica is tied to a node’s resources) on any other node.
+     There is no storage downtime as the other available replica displays inputs/outputs. Policies are in place that does not allow rescheduling of crashed replica (as the replica is tied to a node’s resources) on any other node.
 
 ## Where is my data stored and how can I see that?
 
@@ -52,11 +52,11 @@ To determine exactly where your data is physically stored, you can run the follo
 
 The output displays the following pods.
 
-     - IO Controller: *pvc-ee171da3-07d5-11e8-a5be-42010a8001be-ctrl-6798475d8c-7dcqd*
+   *  IO Controller: *pvc-ee171da3-07d5-11e8-a5be-42010a8001be-ctrl-6798475d8c-7dcqd*
      
-     - Replica 1: *pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-hls6s*
+   *  Replica 1: *pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-hls6s*
      
-     - Replica 2: *pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-tr28f*
+   *  Replica 2: *pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-tr28f*
 
 * To check the location where the data is stored, get the details of the replica pod. For getting the details of Replica 1 above, use the `kubectl get pod -o yaml pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-hls6s` command. Check the volumes section.
 
@@ -110,10 +110,10 @@ For enabling high availability, OpenEBS recommends having a minimum of 3 nodes i
 
 There are at least four common reasons for running OpenEBS on Amazon EBS that are listed as follows:
 
-* **Attach / Detach:**  The attach / detach process can slow the environment operations dependent on EBS.  
-* **No volume management needed:**  OpenEBS removes the need for volume management, enabling the combination of multiple underlying EBS volumes without the user needing to run LVM or other volume manager.  This saves time and reduces operational complexity.
-* **Expansion and inclusion of NVMe:**  OpenEBS allows users to add additional capacity without experiencing downtime.  This online addition of capacity can include NVMe and SSD instances from cloud providers or deployed in physical servers.  This means that as performance requirements increase, or decrease, you can use Kubernetes via storage policies to instruct OpenEBS to change capacity accordingly. 
-* **Other enterprise capabilities:**  OpenEBS adds other capabilities such as extremely efficient snapshots and clones as well as forthcoming capabilities such as encryption.  Snapshots and clones facilitate much more efficient CI/CD workflows as zero space copies of databases and other stateful workloads can be used in these and other workflows, improving these without incurring additional storage space or administrative effort.  The snapshot capabilities can also be used for replication.  As of February 2018 these replication capabilities are under development.
+  *  **Attach / Detach:**  The attach / detach process can slow the environment operations dependent on EBS.  
+  *  **No volume management needed:**  OpenEBS removes the need for volume management, enabling the combination of multiple underlying EBS volumes without the user needing to run LVM or other volume manager.  This saves time and reduces operational complexity.
+  *  **Expansion and inclusion of NVMe:**  OpenEBS allows users to add additional capacity without experiencing downtime.  This online addition of capacity can include NVMe and SSD instances from cloud providers or deployed in physical servers.  This means that as performance requirements increase, or decrease, you can use Kubernetes via storage policies to instruct OpenEBS to change capacity accordingly. 
+  *  **Other enterprise capabilities:**  OpenEBS adds other capabilities such as extremely efficient snapshots and clones as well as forthcoming capabilities such as encryption.  Snapshots and clones facilitate much more efficient CI/CD workflows as zero space copies of databases and other stateful workloads can be used in these and other workflows, improving these without incurring additional storage space or administrative effort.  The snapshot capabilities can also be used for replication.  As of February 2018 these replication capabilities are under development.
                                                  
 ## How do you destroy demo applications from k8s cluster?
 
@@ -125,13 +125,9 @@ This will delete the application pod and the corresponding pvc associated to it.
 
 ## What is the default OpenEBS retention policy?
 
-The default retention is the same used by the K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim.
+The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim.
 
-## How to setup OpenEBS using Ansible?
-This section provides instructions on how to perform the OpenEBS on-premise deployment. Detailed explanation is available at [On premise deployment](https://github.com/openebs/openebs-docs/blob/v0.5.3/docs/on_premise_solutions.md).
-	  
-## How to launch Kubernetes dashboard on local machine?
-OpenEBS provides vagrant boxes with prepackaged Kubernetes images. The procedure for launching Kubernetes dashboard is available at [Kubernetes UI](https://github.com/openebs/openebs/blob/v0.5/k8s/vagrant/README.md).
+
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
