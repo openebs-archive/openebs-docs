@@ -35,15 +35,15 @@ git clone https://github.com/openebs/openebs.git
 cd openebs/k8s
 ```
 
-
-
 ## Step 2
 
-Apply *openebs-operator.yaml* and then apply *openebs-storageclasses.yaml*.
+Apply *openebs-operator.yaml* and apply your corresponding *storageclasses.yaml*. 
+
+Note:For StatefulSet applications,It is recommended to use replica count as 1 inside the corresponding storageclass yaml.
 
 ## Step 3
 
-We can deploy Jiva replica Pods for usual application scenario and StateFulSet applications . It is described  Jiva replica pod deployment for both type of applications in below section.  
+We can deploy Jiva replica Pods for usual application scenario and StatefulSet applications . It is described  Jiva replica pod deployment for both type of application scenario in below section.  
 
 ### Deploy Jiva Replica Pods for Usual Applications
 
@@ -74,10 +74,21 @@ spec:
       storage: 5G
 ```
 
-Once application yaml has modified, apply the same. Now the Jiva replica will be deployed in different AZs within the same region.
+Once application yaml has modified, apply the same using below way. We are using Percona application as an example.
 
 ```
-OpenEBS_Node@strong-eon-153112:~/new/openebs/k8s$ kubectl get pods -o wide
+kubectl apply -f demo-percona-mysql-pvc.yaml
+```
+
+Now the Jiva replica will be deployed in different AZs within the same region. Use following command to check the status of Jiva replica Pods.
+
+```
+kubectl get pods -o wide
+```
+
+It will show the output like below
+
+```
 NAME                                                             READY     STATUS    RESTARTS   AGE       IP          NODE
 percona                                                          1/1       Running   0          4m        10.60.3.8   gke-ranjith-az-default-pool-fdbb2564-lrr0
 pvc-596cc598-9547-11e8-ae86-42010a80016b-ctrl-754458ff4c-9mcc8   2/2       Running   0          2m        10.60.6.4   gke-ranjith-az-default-pool-92abeeec-149z
@@ -88,7 +99,7 @@ pvc-596cc598-9547-11e8-ae86-42010a80016b-rep-56b5478d66-zkdk4    1/1       Runni
 
 ### Deploy Jiva Replica Pods for StateFul Set Applications
 
-Some stateful application with 3 replicas, it is desirable to provision the PVs for each stateful instance in a default availability zone. The following labels can be attached to a stateful set by the user to indicate that PVs should be in different availability zones:
+Some stateful application with 3 replicas, it is desirable to provision the PVs for each stateful instance in a default availability zone. The following labels can be attached to a stateful set yaml by the user to indicate that PVs should be in different availability zones: 
 
 ```
 labels:
@@ -100,23 +111,50 @@ labels:
 Example:
 
 ```
-volumeClaimTemplates:
- - metadata:
-     name: mongo-persistent-storage
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+ name: mongo
+spec:
+ serviceName: "mongo"
+ replicas: 3
+ template:
+   metadata:
      labels:
+       role: mongo
+       environment: test
        "volumeprovisioner.mapi.openebs.io/application": "mongo-app1"
        "volumeprovisioner.mapi.openebs.io/replica-topology-key-domain": "failure-domain.beta.kubernetes.io"
        "volumeprovisioner.mapi.openebs.io/replica-topology-key-type": "zone"
    spec:
-     storageClassName: openebs-mongodb
-     accessModes:
-       - ReadWriteOnce
-     resources:
-       requests:
-         storage: 5G
 ```
 
-Once application yaml has modified, apply the same. Now  PVs for each stateful instance  will be deployed across AZs along with applications.
+Once STS yaml has modified, apply the same. We are using MongoDB STS application as an example.
+
+```
+kubectl apply -f mongo-statefulset.yml
+```
+
+Now  PVs for each stateful instance  will be deployed across AZs.Use following command to check it.
+
+```
+kubectl get pods -o wide
+```
+
+It will show the output like below.
+
+```
+NAME                                                             READY     STATUS    RESTARTS   AGE       IP           NODE
+mongo-0                                                          2/2       Running   0          16m       10.60.6.13   gke-ranjith-az-default-pool-92abeeec-149z
+mongo-1                                                          2/2       Running   0          16m       10.60.5.12   gke-ranjith-az-default-pool-4b954fa8-bnnh
+mongo-2                                                          2/2       Running   0          15m       10.60.1.11   gke-ranjith-az-default-pool-fdbb2564-44th
+pvc-32ac4408-9579-11e8-ae86-42010a80016b-ctrl-74b7fd89bc-d9g2f   2/2       Running   0          16m       10.60.3.21   gke-ranjith-az-default-pool-fdbb2564-lrr0
+pvc-32ac4408-9579-11e8-ae86-42010a80016b-rep-7bcd5d4fd4-rk6l6    1/1       Running   0          16m       10.60.3.20   gke-ranjith-az-default-pool-fdbb2564-lrr0
+pvc-4d23ecfa-9579-11e8-ae86-42010a80016b-ctrl-76487f7bc7-s8cv4   2/2       Running   0          16m       10.60.0.16   gke-ranjith-az-default-pool-4b954fa8-k3s1
+pvc-4d23ecfa-9579-11e8-ae86-42010a80016b-rep-65bfc7688d-m68gl    1/1       Running   0          16m       10.60.5.11   gke-ranjith-az-default-pool-4b954fa8-bnnh
+pvc-730c2362-9579-11e8-ae86-42010a80016b-ctrl-7694b846fb-4zhhn   2/2       Running   0          15m       10.60.3.22   gke-ranjith-az-default-pool-fdbb2564-lrr0
+pvc-730c2362-9579-11e8-ae86-42010a80016b-rep-dd4b8ff95-pwxh2     1/1       Running   0          15m       10.60.4.18   gke-ranjith-az-default-pool-92abeeec-vn3c
+```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
