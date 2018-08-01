@@ -56,8 +56,8 @@ body{
 .mainContainer .wrapper .post h1, .mainContainer .wrapper .post h2 {
     font-weight: 400;
 }
-.mainContainer .wrapper .post h3 {
-    font-weight: 450;
+.mainContainer .wrapper .post h3, .mainContainer .wrapper .post h3 {
+    font-weight: 400;
 }
 
 /* Body */	
@@ -68,7 +68,15 @@ body {
 h1, h2, h3, h4 {
     color: #282828;
 }
-
+.mainContainer .wrapper .post h2 {
+    font-size: 190%;
+}
+.mainContainer .wrapper .post h3 {
+    font-size: 155%;
+}
+.mainContainer .wrapper .post h4 {
+    font-size: 120%;
+}
 /* Css for image size */
 img {
   max-width: max-content;
@@ -173,24 +181,6 @@ nav.toc .toggleNav .navGroup.navGroupActive {
     margin-bottom: 0.5rem !important;
 }
 
-/* CSS for aligning images in markdown */
-
-img[alt$=">"] {
-  float:right;
-}
-
-img[alt$="<"] {
-  float:left;
-}
-
-img[alt$="<>"] {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    margin: auto;
-    float: none!important;
-}
-
 pre code {
     border-color: #F0F0F0;
 }
@@ -272,7 +262,7 @@ and (max-device-width : 720px) {
     .ver-link {
       cursor: pointer;
       color: #fff;
-      margin-right: 130px;
+      margin-right: 150px;
       margin-top: 10px;
     }
 
@@ -280,8 +270,6 @@ and (max-device-width : 720px) {
       line-height: 1;
       font-size: 12px;
     }
-}
-
 }
 
 /**
@@ -299,3 +287,4 @@ and (max-device-width : 720px) {
 redoc .operation-type {
     display: none !important;
 }
+
