@@ -30,7 +30,7 @@ To understand how to use OpenEBS with Kubernetes, you must familiarize yourself 
 
 <a name="iSCSIConfig"></a>
 
-## Steps for configuring and verifying open-iscsi 
+## Steps for Configuring and Verifying open-iscsi 
 
 The open-iscsi initiator packages depend on your host operating system or kubelet container. Use the following procedure for installing/verifying open-iscsi package.
 
@@ -38,7 +38,7 @@ The open-iscsi initiator packages depend on your host operating system or kubele
 
 With GKE, you must create a Kubernetes cluster with the host machine as Ubuntu.  Ubuntu host on GKE comes with iSCSI configured. 
 
-You may need an admin-context if you are installing OpenEBS without helm approach. Use the following command to set admin-context.
+You may need an admin-context if you are installing OpenEBS without helm. Use the following command to set the admin-context.
 
 ```
 kubectl create clusterrolebinding <myclustername>-cluster-admin-binding --clusterrole=cluster-admin --user=<myusername>
@@ -99,9 +99,8 @@ You can verify the installation using the procedure mentioned above.
 On Azure cloud, you need to verify if the open-iscsi package is installed on the kubelet. To validate, you can connect to the nodes through SSH using their public IP addresses by running the following command.
 
 ```
-devops@Azure:~$ ssh azureuser@40.xx.yyy.221
+ssh azureuser@40.xx.yyy.221
 
-azureuser@aks-nodepool1-46849391-1:~$
 ```
 
 **Note**: azureuser is the default username.
@@ -109,14 +108,14 @@ azureuser@aks-nodepool1-46849391-1:~$
 Obtain the container ID of the hyperkube kubelet on each node by running the following command.
 
 ```
-azureuser@aks-nodepool1-46849391-1:~$ sudo docker ps | grep "hyperkube kubele" 
+sudo docker ps | grep "hyperkube kubele" 
 3aab0f9a48e2    k8s-gcrio.azureedge.net/hyperkube-amd64:v1.8.7   "/hyperkube kubele..."   48 minutes ago      Up 48 minutes                           eager_einstein
 ```
 
 Get to the kubelet container by running the following command and install open-iscsi package in each Kubernetes node.
 
 ```
-azureuser@aks-nodepool1-46849391-1:~$ sudo docker exec -it <Container ID> bash
+sudo docker exec -it <Container ID> bash
 # apt-get update
 # apt install -y open-iscsi
 ```
@@ -124,13 +123,12 @@ azureuser@aks-nodepool1-46849391-1:~$ sudo docker exec -it <Container ID> bash
 Check the status of iSCSI service by running the following command inside the kubelet container.
 
 ```
-azureuser@aks-nodepool1-46849391-1:~$ service open-iscsi status
+service open-iscsi status
 ```
 
 **Note:** If hyperkube kubelet is running as binary in the nodes, check for open-iscsi status in the node. If open-iscsi is not present, install open-iscsi using the following procedure.
 
 ```
-azureuser@aks-nodepool1-46849391-1:~$ 
 # apt-get update
 # apt install -y open-iscsi
 ```
