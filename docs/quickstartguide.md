@@ -79,7 +79,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 3. **Note:** Because OpenEBS is a [CAS](/docs/next/conceptscas.html), you will observe that new pods (one volume controller pod and as many volume replica PODs as the number of replicas configured in the storage class) are created.
 
 
-## See Also:
+### See Also:
 
 #### [Prerequisites](/docs/next/prerequisites.html)
 #### [Tested platforms](/docs/next/supportedplatforms.html)
