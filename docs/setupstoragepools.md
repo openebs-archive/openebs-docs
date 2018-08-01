@@ -14,9 +14,26 @@ Pools can be provisioned to include any amount of capacity and use any combinati
 
 Using the custom resource feature of Kubernetes you can mount an external disk from any SAN or GPT or DAS and create a volume on top of the external disk.
 
-**Configuring A Storage Pool On OpenEBS:**
+**Creating And Attching a Disk ON GKE Node**
 
-In order to utilize a external disk you should create a storage pool. To create a storage pool you must first mount the external disk to the cluster.
+To create a GPD on a GKE cluster please run following command on master node. In the following commnad disk1 is the name of the disk, also you can mention the size as well.
+```
+gcloud compute disks create disk1 --size 100GB --type pd-standard  --zone us-central1-a
+```
+Next you can attach the disk to the the node. Use the follwing command to attach the disk to a particular node. Replace `<Node Name>` with your actula node name. Here disk1 is the name of the disk created earlier.
+```
+gcloud compute instances attach-disk <Node Name> --disk disk1 --zone us-central1-a
+```
+
+**Configuring A Storage Pool On OpenEBS**
+
+In order to utilize a external disk you should create a storage pool. On the node where you have attached the disk follow the below command.
+Use the below command to login to the node from master. Replace `< Node Name>` with your actual node nmae and `< Zone Of Your Node >` with actual zone.
+```
+gcloud compute ssh < Node Name > --zone=< Zone Of Your Node >
+```
+
+To create a storage pool you must first mount the external disk to the cluster. 
 
 ```
 sudo mkdir /mnt/openebs_disk
@@ -53,6 +70,11 @@ spec:
 ```
 
 **Note:** Change path with your mounted path if it is not your default mount path. Also, remember your pool name. In this example, the pool name is *test-mntdir*.
+
+**Scheduling The Pool On A Node**
+
+If you want to schedule your pool on a particular node please follow [these](https://docs.openebs.io/docs/next/scheduler.html) steps before applying the openebs-operator.yaml
+
 
 You must add the following entries to the corresponding storage class. 
 
