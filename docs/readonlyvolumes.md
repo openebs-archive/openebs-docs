@@ -25,12 +25,6 @@ chown: changing ownership of '/var/lib/mysql/mysql': Read-only file system
 chown: changing ownership of '/var/lib/mysql/': Read-only file system
 ```
 
-## Enable TaintNodesByCondition feature of Kubernetes
-
-In 0.6 release, when OpenEBS is installed, taints and tolerations are automatically set in such a way that the controller pods are immediately rescheduled if the node state changes from NodeReady to either NodeNotReady or Unknown. However, for these configurations to work, Kubernetes version should be >= 1.8. This feature is in alpha state and needs to be turned on manually using —feature-gates option. 
-
-For more information, search for "Taint Nodes by Condition" [here](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/) 
-
 ## How to recover from ReadOnly state ?	
 
 More details on the recovery steps are provided [here](https://docs.openebs.io/docs/next/tsgpvs.html#workaround-recovery). 
@@ -53,14 +47,14 @@ To avoid the data loss situation, this behavior is change in 0.6 release. Now, i
 
 For example, consider a Jiva volume with three replicas: 
 
-- Losing one replica will not affect the RW status of the volume, bothe the remaining replicas will continue to be in RW mode
+- Losing one replica will not affect the RW status of the volume, both the the remaining replicas will continue to be in RW mode
 - Losing second replica will mark the third replica as RO and the volume will also become RO
 
 
 
 ## What to look for in the Roadmap related to volume readonly issues?
 
-Some issues are still in open state such as [openebs#1612](https://github.com/openebs/openebs/issues/1612) . Furture releases such as 0.7 will have fixes to these issue which will reduces the conditions under which volumes can go into read only mode.
+Some issues are still in open state such as [openebs#1612](https://github.com/openebs/openebs/issues/1612) . Future releases such as 0.7 will have fixes to these issue which will reduces the conditions under which volumes can go into read only mode.
 
  
 
@@ -75,3 +69,4 @@ Some issues are still in open state such as [openebs#1612](https://github.com/op
        a.appendChild(r);
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
+
