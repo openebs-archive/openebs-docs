@@ -8,22 +8,18 @@ sidebar_label: CAS Engines
 
 `Feature status: Pre-Alpha /Experimental. Users are advised to use this feature with caution.`
 
-## Overview of a storage engine
+## Overview of a Storage Engine
 
 OpenEBS follows CAS architecture, where in each storage volume is provided with it's own storage controller and replica pods. A storage engine refers to the software functionality that is associated with a storage volume. A storage engine usually has one controller pod and multiple replication pods. Storage engines can be hardened to optimize a given workload for either with a feature set or for performance. 
 
 Operators or administrators typically choose a storage engine with a specific software version and build optimized volume templates that are fine tuned with type of underlying disks, resiliency, number of replicas, set of nodes participating in the Kubernetes cluster. Users can then choose an optimal volume template at the time of volume provisioning, thus providing the maximum flexibility in running the optimum software and storage combination for all the storage volumes on a given Kubernetes cluster.
 
-
-
-## Types of storage engines
+## Types of Storage Engines
 
 OpenEBS provides two types of storage engines. 
 
 1. Jiva (Recommended engine and reliable)
 2. cStor (Initial availability is planned for 0.7 release. Currently a developer build can be chosen if desired)
-
-
 
 ### Jiva
 
@@ -71,7 +67,7 @@ cStor storage engine has separate container image files for storage controller a
 
 ![cStor storage engine of OpenEBS](/docs/assets/cStor.png)
 
-## Choosing a storage engine
+## Choosing a Storage Engine
 
 Developer does not directly choose a storage engine, but chooses a pre-defined storage class. Operator or Adminstrator constructs a storage class that refers to a CAS template containing the type of storage engine. 
 
@@ -79,7 +75,7 @@ Developer does not directly choose a storage engine, but chooses a pre-defined s
 
 As shown above, storage engine details are to be decided during the creation of a CAS template. 
 
-## Overview of CAS template
+## Overview of CAS Template
 
 A CAS template is a customizable resource file (or a YAML file ) used by an operator to define the basic components of a storage engine. In kubernetes terminology it is a custom resource (CR). Operator typically builds several of these templates with various combinations of storage engines and storage pools. Currently, following properties can be specified in a CAS template CR. 
 
@@ -104,11 +100,9 @@ run:    
   tasks:    ... 
 ```
 
+## Use Case
 
-
-## Use case example
-
-### Persistent storage requirements
+### Persistent Storage Requirements
 
 Alice and Joe are developers of two different applications in a fintech enterprise, where the company is moving their DevOps from a legacy model to micro services model with Kubernetes as the orchestrating engine. Both the applications are stateful in nature and need persistent storage, but the persistent storage needs of these two applications differ vastly. 
 
@@ -119,7 +113,7 @@ Both of them expect their DevOps administrator to provide a suitable storage cla
 
 Eve is one of the DevOps admins in the company. Eve is reponsible for designing and managing the storage infrastructure needs. 
 
-### Infrastructure setup
+### Infrastructure Setup
 
 DevOps team manages a single Kubernetes cluster, which is currently scaled to 32 nodes. They have planned to provide different classes of persistent storage tiers to their developers:
 
@@ -129,9 +123,9 @@ DevOps team manages a single Kubernetes cluster, which is currently scaled to 32
 
 They have provisioned 12 SAS disks of 1TB each in each of the nodes from 1 to 4 and 12 SSDs of 1TB each in each of the nodes from 11 to19. 
 
-### Pools creation
+### Creating Pools
 
-Eve planned the storage pools in the following manner
+Eve planned the storage pools in the following way.
 
 | POOL     | Nodes                  | Expected data copies | Configuration                                             |
 | -------- | ---------------------- | -------------------- | --------------------------------------------------------- |
@@ -143,7 +137,7 @@ Eve planned the storage pools in the following manner
 
 OpenEBS supports pool creation and management through the use of Storage Pools(SP) and Storage Pool Claims (SPC). The SPC YAML manifests are maintained by operators for versioning.   `Note: Initial availability of SPC functionality is planned to be in 0.7 release`
 
-### CAS templates creation
+### Creating CAS Templates
 
 After pools are created, next step for Eve is to create CAS templates in such a way that
 
@@ -152,14 +146,12 @@ After pools are created, next step for Eve is to create CAS templates in such a 
 
 Apart from selecting storage engines appropriately, Eve has two challenges related to Kubernetes scheduling. 
 
-1. **Replica pod and node affinity challenge:** Make sure that the volume pods meant to be associated with a given pool are scheduled by Kubernetes only on the nodes having those pools. For example volume pods of SASPool2 are scheduled on Nodes N2, N3 and N4 and not on any other nodes. This is achieved by appropriate volume pods taint toleration configuration in the CAS templates and on the nodes.
-2. **Controller pod and application pod affinity challenge:** Make sure that the OpenEBS controller pod (either Jiva or cStor) is scheduled as much as possible on the same node as the application pod (in this use case example, MongoDB or MySQL). This is achieved by configuring node affinity in the volume pods in the CAS templates.
+1. **Replica pod and node affinity challenge:** Ensure that the volume pods meant to be associated with a given pool are scheduled by Kubernetes only on the nodes having those pools. For example volume pods of SASPool2 are scheduled on Nodes N2, N3 and N4 and not on any other nodes. This is achieved by appropriate volume pods taint toleration configuration in the CAS templates and on the nodes.
+2. **Controller pod and application pod affinity challenge:** Ensure that the OpenEBS controller pod (either Jiva or cStor) is scheduled as much as possible on the same node as the application pod (in this use case example, MongoDB or MySQL). This is achieved by configuring node affinity in the volume pods in the CAS templates.
 
 Eve creates five new CAS template files and creates corresponding Kubernetes CRs. Two example template YAML files are shown below.
 
-**CAS template 1 (CAS-CR-SASPool1.yaml):**
-
-
+**CAS template 1 (CAS-CR-SASPool1.yaml)**
 
 ```
 apiVersion: openebs.io/v1alpha1
@@ -277,13 +269,11 @@ run:    
   tasks:    ... 
 ```
 
+Eve creates 6 CRs with the above manifests.
 
+### Creating Storage Classes
 
-Eve creates 6 CRs with the above manifests
-
-### Storage classes creation
-
-The last step for Eve is to create volume catalogs or in Kubernetes language "Storage Classes". Eve creates multiple storage classes as shown in the table below
+The last step for Eve is to create volume catalogs or in Kubernetes language "Storage Classes". Eve creates multiple storage classes as shown in the table below.
 
 | Storage Class Name               | CAS template                                     | Replicas |
 | -------------------------------- | ------------------------------------------------ | -------- |
@@ -307,15 +297,15 @@ provisioner: openebs.io/provisioner-iscsi
 
 Eve notifies the availability of these 5 storage classes to the developers.
 
-### Using persistent storage
+### Using Persistent Storage
 
-Developers Alice and Joe can choose one of these storage classes in constructing the PVC. Typically, developers have to select only the following parameters to construct a PVC
+Developers Alice and Joe can choose one of these storage classes in constructing the PVC. Typically, developers have to select only the following parameters to construct a PVC.
 
 - Size of the volume required
 - Storage class
 - Namespace (if required)
 
-Alice's PVC **alice-mongodb-vol** for MongoDB looks like:
+Alice's PVC **alice-mongodb-vol** for MongoDB looks like the following.
 
 ```
 kind: PersistentVolumeClaim
@@ -329,9 +319,7 @@ spec:  
       storage: 200Gi
 ```
 
-
-
-Joe's PVC **joe-mysql-vol** for MySQL looks like:
+Joe's PVC **joe-mysql-vol** for MySQL looks like the following.
 
 ```
 kind: PersistentVolumeClaim
@@ -345,13 +333,10 @@ spec:  
       storage: 50Gi
 ```
 
-
-
 Initial work for the DevOps operators is shown in the above use case example. Developers get started with the volume provisioning. Day2 operations related to persistent storage typlically include taking snapshot of data, restoration from the snapshots, monitoring the health of pools and stateful applications, data migration. [MayaOnline](https://www.mayaonline.io) is useful for many of these day2 storage operations.
 
 
-
-## See Also:
+### See Also:
 
 #### [Storage Pools](/docs/next/setupstoragepools.html)
 #### [Storage Classes](/docs/next/setupstorageclasses.html)
