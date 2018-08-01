@@ -8,7 +8,7 @@
     "Databases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "Kafka", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
     "Tasks": ["tasks_install", "tasks_volumeprovisioning", "tasks_snapclones", "tasks_backuprestore", "tasks_monitoring"],
     "FAQs": ["faq"],
-    "Troubleshooting": ["readonlyvolumes", "troubleshooting", "tsgcollectlogs", "tsgiscsi", "tsg_install", "tsgopenshift", "tsgpvs"],
+    "Troubleshooting": ["troubleshooting", "readonlyvolumes", "tsgcollectlogs", "tsgiscsi", "tsg_install", "tsgopenshift", "tsgpvs"],
     "Releases": ["changelog"],
     "Contributor Resources": ["weeklycontribute", "contribute"]
   }

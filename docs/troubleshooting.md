@@ -1,7 +1,7 @@
 ---
 id: troubleshooting
 title: OpenEBS Troubleshooting Overview
-sidebar_label: Troubleshooting
+sidebar_label: Overview
 ---
 
 ------
