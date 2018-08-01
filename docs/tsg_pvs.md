@@ -8,23 +8,9 @@ sidebar_label: Persistent Volumes
 
 This section captures steps to troubleshoot and resolve some errors faced while using OpenEBS Persistent Volumes (PVs). The procedures and commands used in this document are mostly generic and are applicable on any common Linux platform/Kubernetes environment. 
 
-The following issues are covered in this section.
+### Application pod is stuck in ContainerCreating state after deployment  
 
-[Application pod is stuck in ContainerCreating state after deployment](#ApplnPodStuck)
-
-[Application pod enters CrashLoopBackOff state](#CrashLoopBackOff)
-
-[Stale data seen post application pod reschedule on other nodes](#StaleData)
-
-[Application and OpenEBS pods terminate/restart under heavy I/O load](#ApplnPodsTerminate)
-
-[Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the size of the available node disk](#NodeDiskSize)
-
-## Issue: 
-
-### Application pod is stuck in ContainerCreating state after deployment  <a name="ApplnPodStuck"></a>
-
-## Troubleshooting the issue and Workaround:
+### Troubleshooting the issue and Workaround:
 
 - Obtain the output of the `kubectl describe pod <application_pod>` and check the events.
 
@@ -54,13 +40,11 @@ The following issues are covered in this section.
   - *allowHostDirVolumePlugin: true*
   - *runAsUser: runAsAny*
 
-## Issue: 
-
-### Application pod enters CrashLoopBackOff state <a name="CrashLoopBackOff"></a>
+### Application pod enters CrashLoopBackOff state 
 
 This issue is due to failed application operations in the container. Typically this is caused due to failed writes on the mounted PV. To confirm this, check the status of the PV mount inside the application pod.
 
-## Troubleshooting the issue:
+#### Troubleshooting the issue:
 
 - Perform a `kubectl exec -it <app>` bash (or any available shell) on the application pod and attempt writes on the volume mount. The volume mount can be obtained either from the application specification ("volumeMounts" in container spec) or by performing a `df -h` command in the controller shell (the OpenEBS iSCSI device will be mapped to the volume mount).
 - The writes can be a attempted using a simple command like `echo abc > t.out` on the mount. If the writes fail with *Read-only file system errors*, it means the iSCSI connections to the OpenEBS volumes are lost. You can confirm by checking the node's system logs including iscsid, kernel (syslog) and the kubectl logs (`journalctl -xe, kubelet.log`).
@@ -76,7 +60,7 @@ This issue is due to failed application operations in the container. Typically t
 
 - In certain cases, the node/replica loss can lead to the replica quorum not being met (i.e., less than 51% of replicas available) for an extended period of time, causing the OpenEBS volume to be presented as a RO device.
 
- ## Workaround/Recovery:
+ #### Workaround/Recovery:
 
   The procedure to ensure application recovery in the above cases is as follows:
 
@@ -119,39 +103,35 @@ This issue is due to failed application operations in the container. Typically t
 3. Once the application is back in "Running" state post recovery by following steps 1-9, if existing/older data is not visible (i.e., it comes up as a fresh instance), it is possible that the application pod is using the docker container filesystem instead of the actual PV (observed sometimes due to the reconciliation attempts by Kubernetes to get the pod to a desired state in the absence of the mounted iSCSI disk). 
 This can be checked by performing a `df -h` or `mount` command inside the application pods. These commands should show the scsi device `/dev/sd*` mounted on the specified mount point. If not, the application pod can be forced to use the PV by restarting it (deployment/statefulset) or performing  a docker stop of the application container on the node (pod). 
 
-## Issue:
-
-### Stale data seen post application pod reschedule on other nodes <a name="StaleData"></a>
+### Stale data seen post application pod reschedule on other nodes 
 
 - Sometimes, stale application data is seen on the OpenEBS volume mounts after application pod reschedule. Typically, these applications are Kubernetes deployments, with the reschedule to other nodes occurring due to rolling updates.
 - This occurs due to the iSCSI volume mounts and sessions staying alive/persisting on the nodes even after the pod terminates. This behavior is observed on some versions of GKE clusters (1.7.x).
 - Ideally, the kubelet (iSCSI volume plugin) should bring down mounts and iscsi sessions once the application has been deleted on the node. If not, it can result in data being read off the node's page (mount) cache whenever the application is re-scheduled onto it, even though the volume is being updated while on a different node.
 
-## Workaround:
+#### Workaround:
 
 1. Un-mount the device and logout from the existing iSCSI session on stale (non-owning) node.
 2. Re-login and re-mount the volume on the current/scheduled (owning) node.
 3. Ensure application pod uses the new mount by restarting it using docker stop.
 
-## Issue:
-
-### Application and OpenEBS pods terminate/restart under heavy I/O load <a name="ApplnPodsTerminate"></a>
+### Application and OpenEBS pods terminate/restart under heavy I/O load
 
 This is caused due to lack of resources on the Kubernetes nodes, which causes the pods to evict under loaded conditions as the node becomes *unresponsive*. The pods transition from *Running* state to *unknown* state followed by *Terminating* before restarting again.
 
-### Troubleshooting the issue:
+#### Troubleshooting the issue:
 
 The above cause can be confirmed from the `kubectl describe pod` which displays the termination reason as *NodeControllerEviction*. You can get more information from the kube-controller-manager.log on the Kubernetes master.
 
-## Workaround:
+#### Workaround:
 
 You can resolve this issue by upgrading the Kubernetes cluster infrastructure resources (Memory, CPU).
 
-## Issue:
+### Delete did not re-claim the disk size 
 
-### Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the disk size of the node available <a name="NodeDiskSize"></a>
+Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change the disk size of the node available 
 
-## Workaround:
+#### Workaround:
 
 To reclaim the space currently, you must perform a manual delete `rm -rf` of the files in */var/openebs* (or whichever path the storage pool is created on). For more information, see https://github.com/openebs/openebs/issues/1436.
 
