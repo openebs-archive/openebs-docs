@@ -6,29 +6,31 @@ sidebar_label: Storage Pools
 
 ------
 
-**Storage Pool**
+## Storage Pools
 
-Storage pools are capacity aggregated from disparate physical storage resources in a shared storage environment. Storage pools can be configured in varying sizes and provide a number of benefits, including performance, management and data protection improvements.
+Storage pools are capacity aggregated from disparate physical storage resources in a shared storage environment. Storage pools can be configured in varying sizes and provide a number of benefits, including performance, management, and data protection improvements.
 
 Pools can be provisioned to include any amount of capacity and use any combination of physical storage space in a storage area network (SAN).
 
-Using the custom resource feature of Kubernetes you can mount an external disk from any SAN or GPT or DAS and create a volume on top of the external disk.
+Using the custom resource feature of Kubernetes you can mount an external disk from any SAN, GPT, or DAS and create a volume on top of the external disk.
 
-**Creating And Attching a Disk ON GKE Node**
+## Creating and Attaching a Disk on GKE Node
 
-To create a GPD on a GKE cluster please run following command on master node. In the following commnad disk1 is the name of the disk, also you can mention the size as well.
+To create a GPD on a GKE cluster run the following command on master node. In the following commnad disk1 is the name of the disk. You can also mention the size.
+
 ```
 gcloud compute disks create disk1 --size 100GB --type pd-standard  --zone us-central1-a
 ```
-Next you can attach the disk to the the node. Use the follwing command to attach the disk to a particular node. Replace `<Node Name>` with your actula node name. Here disk1 is the name of the disk created earlier.
+Attach the disk to the node. Use the following command to attach the disk to a particular node. Replace `<Node Name>` with your actual node name. Here disk1 is the name of the disk created earlier.
+
 ```
 gcloud compute instances attach-disk <Node Name> --disk disk1 --zone us-central1-a
 ```
 
-**Configuring A Storage Pool On OpenEBS**
+## Configuring a Storage Pool on OpenEBS
 
-In order to utilize a external disk you should create a storage pool. On the node where you have attached the disk follow the below command.
-Use the below command to login to the node from master. Replace `< Node Name>` with your actual node nmae and `< Zone Of Your Node >` with actual zone.
+To utilize an external disk, you must create a storage pool on the node where you have attached the disk. Use the following command to login to the node from master. Replace `< Node Name>` with your actual node nmae and `< Zone Of Your Node >` with the actual zone.
+
 ```
 gcloud compute ssh < Node Name > --zone=< Zone Of Your Node >
 ```
@@ -39,7 +41,7 @@ To create a storage pool you must first mount the external disk to the cluster.
 sudo mkdir /mnt/openebs_disk
 ```
 
-Verify the name and the size of the disk using the following command.
+Verify the name and size of the disk using the following command.
 
 ```
 lsblk
@@ -69,18 +71,13 @@ spec:
 	path: "/mnt/openebs_disk"      
 ```
 
-**Note:** Change path with your mounted path if it is not your default mount path. Also, remember your pool name. In this example, the pool name is *test-mntdir*.
+**Note:** Change the path with your mounted path if it is not your default mount path. Also, remember your pool name. In this example, the pool name is *test-mntdir*.
 
-**Scheduling The Pool On A Node**
+## Scheduling the Pool on a Node
 
-If you want to schedule your pool on a particular node please follow [these](https://docs.openebs.io/docs/next/scheduler.html) steps before applying the openebs-operator.yaml
+If you want to schedule your pool on a particular node please follow [this](https://docs.openebs.io/docs/next/scheduler.html) procedure before applying the *openebs-operator.yaml* file.
 
-
-You must add the following entries to the corresponding storage class. 
-
-In this example, it is *openebs-storageclasses.yaml*.
-
-In the following example, Percona application is used. Hence, you must add the storage pool name in the *openebs-percona* storage class.
+You must add the following entries to the corresponding storage class. In this example, it is *openebs-storageclasses.yaml* file. Hence, you must add the storage pool name in the *openebs-percona* storage class as Percona application is used in the example.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -95,7 +92,7 @@ parameters:
     openebs.io/storage-pool: "test-mntdir"  
 ```
 
-You must mention the storage class name in the *application.yaml* file. For example, demo-percona-mysql-pvc.yaml file for the percona application. 
+You must mention the storage class name in the *application.yaml* file. For example, *demo-percona-mysql-pvc.yaml* file for the percona application. 
 
 Run the following commands.
 
@@ -104,17 +101,16 @@ kubectl apply -f openebs-operator.yaml
 kubectl apply -f openebs-storageclasses.yaml
 ```
 
-Running the application using the following command.
+Run the application using the following command.
 
 ```
 cd demo/percona
 kubectl apply -f demo-percona-mysql-pvc.yaml
 ```
+
 The Percona application now runs inside the `test-mntdir` storage pool.
 
-Similarly you can create a storage pool for different applications as per requirement.
-
-
+Similarly, you can create a storage pool for different applications as per requirement.
 
 
 
