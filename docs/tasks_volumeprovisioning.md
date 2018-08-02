@@ -5,21 +5,21 @@ sidebar_label: Volume provisioning
 ---
 ------
 
-## Specify volume size
+## Specifying Volume Size
 
-## Specify number of  replicas
+## Specifying Number of Replicas
 
-## Increase  number of  Jiva replicas
+## Increasing Number of Jiva Replicas
 
-Following steps has to be performed for increasing number of replicas.If current no.of replica is 3, then expansion of Jiva replica count is online activity. It is recommended to perform the change with no load on the volume if current replica  count is 1.
+The following procedure must be performed for increasing number of replicas. You can scale up the Jiva replica online, if the current replica count is 2 or more. OpenEBS recommends you to perform the change with no load on the volume if current replica count is 1.
 
-**Step1:** Get the current  Jiva replica count  using below command
+1. Get the current  Jiva replica count using the following command.
 
 ```
 kubectl get deploy
 ```
 
-Output of above command will be like as below. From this example, it is showing that current Jiva replica count is 1.
+The following output is displayed. In this example, it shows that current Jiva replica count is 1.
 
 ```
 NAME                                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
@@ -27,60 +27,54 @@ pvc-564ae713-95fb-11e8-8754-42010a8000df-ctrl   1         1         1           
 pvc-564ae713-95fb-11e8-8754-42010a8000df-rep    1         1         1            1           19s
 ```
 
-**Step 2:** Check the value of *REPLICATION_FACTOR* under environment variable in Jiva controller deployment
-
-It can be done as below
+2. Check the value of *REPLICATION_FACTOR* under environment variable in Jiva controller deployment using the following command.
 
 ```
 kubectl get deploy <jiva_controller_deployment> -o yaml 
 ```
 
-For example:
+**Example:**
 
 ```
  kubectl get deploy pvc-564ae713-95fb-11e8-8754-42010a8000df-ctrl -o yaml
 ```
 
-**Step 3:** Update the value of REPLICATION_FACTOR under environmental variable by increasing one count from current value in Jiva deployment yaml.
-
-It can be done as below
+3. Update the value of REPLICATION_FACTOR under environmental variable by increasing one count from current value in Jiva deployment yaml using the following command.
 
 ```
 kubectl edit deploy <jiva_controller_deployment>
 ```
 
-For Example: 
+**Example:**
 
 ```
 kubectl edit deploy pvc-564ae713-95fb-11e8-8754-42010a8000df-ctrl                                deployment "pvc-564ae713-95fb-11e8-8754-42010a8000df-ctrl" edited
 ```
 
-**Step 4:** Now, increase the Jiva replica count by 1
-
-This can be done as below
+4. Increase the Jiva replica count by 1 using the following command.
 
 ```
 kubectl scale deployment <jiva_replica_deployment> --replicas=<new_count>
 ```
 
-For example:
+**Example:**
 
 ```
 kubectl scale deploy pvc-564ae713-95fb-11e8-8754-42010a8000df-rep --replicas=2
 deployment "pvc-564ae713-95fb-11e8-8754-42010a8000df-rep" scaled
 ```
 
-Now,It will show as corresponding deployment is scaled. Repeat all the steps if you want to increase Jiva replica count further.
+The corresponding deployment is scaled. Repeat the procedure if you want to increase Jiva replica count further.
 
-### How to verify expanded replica is running fine?
+### Verifying if expanded replica is running
 
-Get the number of running pods using below command
+Get the number of running pods using following command.
 
 ```
 kubectl get pods
 ```
 
-Output will be as below. Here new replica is showing as running.
+The following output is displayed. The new replica is displayed as running.
 
 ```
 NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -172,8 +166,6 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
     pod "pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq" deleted
 
   ```
-
-
 8. Log in to the target using the following commands. 
 
 ```
@@ -191,13 +183,11 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
 e2fsck -f /dev/sdc
 ```
 
-
 10. Expand the file system using the following command.
 
 ```
  resize2fs /dev/sdc
 ```
-
 
 11. Mount the file system using the following command.
 
