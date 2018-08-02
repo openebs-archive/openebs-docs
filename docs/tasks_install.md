@@ -7,7 +7,7 @@ sidebar_label: Install and upgrade
 
 ## Installing OpenEBS across AZs
 
-The first step is to create a GKE cluster with 2 nodes each in 3 regions. For more information about how to create a cluster in different AZs, click [here](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster).
+Create a GKE cluster with 2 nodes each in 3 regions as a first step. For more information about how to create a cluster in different AZs, click [here](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster).
 
 You have now created a cluster with 2 Nodes each in 3 different zones in the same region. The `kubectl get nodes --show-labels` command displays the labels applied on corresponding nodes in the cluster. You must use **failure-domain.beta.kubernetes.io/zone** as the topology key to achieve the requirement.
 
