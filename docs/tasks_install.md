@@ -5,14 +5,13 @@ sidebar_label: Install and upgrade
 ---
 ------
 
-## Install across AZs
+## Installing OpenEBS across AZs
 
-The beginning step is create a GKE cluster with 2 nodes each in 3 regions. To know more about how to create a cluster in different AZs , please check [here](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster).
+The first step is to create a GKE cluster with 2 nodes each in 3 regions. For more information about how to create a cluster in different AZs, click [here](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster).
 
-Here we created a cluster with 2 Nodes each in 3 different zones in the same region. Below will shows the labels applied on the corresponding Nodes in the cluster. We need to use **failure-domain.beta.kubernetes.io/zone** as the topology key to achieve the requirement.
+You have now created a cluster with 2 Nodes each in 3 different zones in the same region. The `kubectl get nodes --show-labels` command displays the labels applied on corresponding nodes in the cluster. You must use **failure-domain.beta.kubernetes.io/zone** as the topology key to achieve the requirement.
 
 ```
-OpenEBS_Node@strong-eon-153112:~/new/openebs/k8s$ kubectl get nodes --show-labels
 NAME                                        STATUS    ROLES     AGE       VERSION        LABELS
 gke-ranjith-az-default-pool-4b954fa8-bnnh   Ready     <none>    1h        v1.9.7-gke.3   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/fluentd-ds-ready=true,beta.kubernetes.io/instance-type=n1-standard-2,beta.kubernetes.io/os=linux,cloud.google.com/gke-nodepool=default-pool,failure-domain.beta.kubernetes.io/region=us-central1,failure-domain.beta.kubernetes.io/zone=us-central1-b,kubernetes.io/hostname=gke-ranjith-az-default-pool-4b954fa8-bnnh
 gke-ranjith-az-default-pool-4b954fa8-k3s1   Ready     <none>    1h        v1.9.7-gke.3   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/fluentd-ds-ready=true,beta.kubernetes.io/instance-type=n1-standard-2,beta.kubernetes.io/os=linux,cloud.google.com/gke-nodepool=default-pool,failure-domain.beta.kubernetes.io/region=us-central1,failure-domain.beta.kubernetes.io/zone=us-central1-b,kubernetes.io/hostname=gke-ranjith-az-default-pool-4b954fa8-k3s1
@@ -22,32 +21,32 @@ gke-ranjith-az-default-pool-fdbb2564-44th   Ready     <none>    1h        v1.9.7
 gke-ranjith-az-default-pool-fdbb2564-lrr0   Ready     <none>    1h        v1.9.7-gke.3   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/fluentd-ds-ready=true,beta.kubernetes.io/instance-type=n1-standard-2,beta.kubernetes.io/os=linux,cloud.google.com/gke-nodepool=default-pool,failure-domain.beta.kubernetes.io/region=us-central1,failure-domain.beta.kubernetes.io/zone=us-central1-c,kubernetes.io/hostname=gke-ranjith-az-default-pool-fdbb2564-lrr0
 ```
 
-
-
 The OpenEBS administrator can choose to provide the scheduling configuration for jiva replica pods across different AZs within the same region during installation. The following procedure allows you to modify the configuration.
 
-## Step 1
+### 1. Clone OpenEBS Repository.
 
-Clone OpenEBS repo to install OpenEBS cluster. 
+To get the latest OpenEBS repository use the following command.
 
 ```
 git clone https://github.com/openebs/openebs.git
 cd openebs/k8s
 ```
 
-## Step 2
+### 2. Deploying OpenEBS Cluster
 
 Apply *openebs-operator.yaml* and apply your corresponding *storageclasses.yaml*. 
 
-Note:For StatefulSet applications,It is recommended to use replica count as 1 inside the corresponding storageclass yaml.
+   **Note:** For StatefulSet applications, OpenEBS recommends using replica count as 1 within the corresponding storageclass yaml.
 
-## Step 3
+### 3. Deploying Jiva Replica Across AZs
 
-We can deploy Jiva replica Pods for usual application scenario and StatefulSet applications . It is described  Jiva replica pod deployment for both type of application scenario in below section.  
+You can deploy Jiva replica pods in the stateful and StatefulSet applications. The following section describes deploying Jiva replica pod for both types of applications.  
 
-### Deploy Jiva Replica Pods for Usual Applications
+### Deploying Jiva Replica Pods for Stateful Applications
 
-Modify your application yaml  inside *metadata:* section under PVC. You can add as follows:
+Stateful applications are those that are maintaining the data integrity at the storage level using OpenEBS. 
+ 
+Add the following content in your application yaml under PVC in the *metadata:* section.
 
 ```
  labels:
@@ -74,19 +73,19 @@ spec:
       storage: 5G
 ```
 
-Once application yaml has modified, apply the same using below way. We are using Percona application as an example.
+Once you modify the application yaml, apply the same using the following command. The following command uses Percona application as an example.
 
 ```
 kubectl apply -f demo-percona-mysql-pvc.yaml
 ```
 
-Now the Jiva replica will be deployed in different AZs within the same region. Use following command to check the status of Jiva replica Pods.
+The Jiva replica is now deployed in different AZs within the same region. Use the following command to check the status of Jiva replica pods.
 
 ```
 kubectl get pods -o wide
 ```
 
-It will show the output like below
+The following output is displayed.
 
 ```
 NAME                                                             READY     STATUS    RESTARTS   AGE       IP          NODE
@@ -97,9 +96,9 @@ pvc-596cc598-9547-11e8-ae86-42010a80016b-rep-56b5478d66-xcrzf    1/1       Runni
 pvc-596cc598-9547-11e8-ae86-42010a80016b-rep-56b5478d66-zkdk4    1/1       Running   0          2m        10.60.3.7   gke-ranjith-az-default-pool-fdbb2564-lrr0
 ```
 
-### Deploy Jiva Replica Pods for StateFul Set Applications
+### Deploying Jiva Replica Pods for StatefulSet Applications
 
-Some stateful application with 3 replicas, it is desirable to provision the PVs for each stateful instance in a default availability zone. The following labels can be attached to a stateful set yaml by the user to indicate that PVs should be in different availability zones: 
+If your environment contains some stateful applications with 3 replicas, it is desirable to provision the PVs for each stateful instance in a default availability zone. The following labels can be attached to a statefulset yaml so that the PVs are deployed in different availability zones.
 
 ```
 labels:
@@ -129,19 +128,19 @@ spec:
    spec:
 ```
 
-Once STS yaml has modified, apply the same. We are using MongoDB STS application as an example.
+Once you modify the STS yaml, apply the same. The following command uses MongoDB STS application as an example.
 
 ```
 kubectl apply -f mongo-statefulset.yml
 ```
 
-Now  PVs for each stateful instance  will be deployed across AZs.Use following command to check it.
+PVs for each stateful instance are now deployed across AZs. Use the following command to verify.
 
 ```
 kubectl get pods -o wide
 ```
 
-It will show the output like below.
+The output is displayed as follows.
 
 ```
 NAME                                                             READY     STATUS    RESTARTS   AGE       IP           NODE
