@@ -24,7 +24,7 @@ OpenEBS is tested on the following platforms.
 
 [RedHat MiniShift](#OpenShift) (Versions 1.10.0+)
 
-
+**Note:** For Bare metal, you must install Ubuntu and follow the procedure [here](https://github.com/openebs/openebs-docs/blob/v0.5.3/docs/on_premise_solutions.md).
 
 <a name="NativeK8s"></a>
 
@@ -77,6 +77,7 @@ OpenEBS is tested with IBM Private Cloud version 2.1. For details about how to i
 ## RedHat OpenShift and RedHat MiniShift
 
 OpenShift installation may require some changes to the installation procedure.  You need to use *oc* instead of *kubecltl*.  Detailed explanation is available at [Integration of OpenEBS with OpenShift](/docs/next/openshift.html). 
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
