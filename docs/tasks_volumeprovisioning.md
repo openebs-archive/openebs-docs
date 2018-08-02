@@ -11,6 +11,87 @@ sidebar_label: Volume provisioning
 
 ## Increase  number of  Jiva replicas
 
+Following steps has to be performed for increasing number of replicas.If current no.of replica is 3, then expansion of Jiva replica count is online activity. It is recommended to perform the change with no load on the volume if current replica  count is 1.
+
+**Step1:** Get the current  Jiva replica count  using below command
+
+```
+kubectl get deploy
+```
+
+Output of above command will be like as below. From this example, it is showing that current Jiva replica count is 1.
+
+```
+NAME                                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+pvc-564ae713-95fb-11e8-8754-42010a8000df-ctrl   1         1         1            1           19s
+pvc-564ae713-95fb-11e8-8754-42010a8000df-rep    1         1         1            1           19s
+```
+
+**Step 2:** Check the value of *REPLICATION_FACTOR* under environment variable in Jiva controller deployment
+
+It can be done as below
+
+```
+kubectl get deploy <jiva_controller_deployment> -o yaml 
+```
+
+For example:
+
+```
+ kubectl get deploy pvc-564ae713-95fb-11e8-8754-42010a8000df-ctrl -o yaml
+```
+
+**Step 3:** Update the value of REPLICATION_FACTOR under environmental variable by increasing one count from current value in Jiva deployment yaml.
+
+It can be done as below
+
+```
+kubectl edit deploy <jiva_controller_deployment>
+```
+
+For Example: 
+
+```
+kubectl edit deploy pvc-564ae713-95fb-11e8-8754-42010a8000df-ctrl                                deployment "pvc-564ae713-95fb-11e8-8754-42010a8000df-ctrl" edited
+```
+
+**Step 4:** Now, increase the Jiva replica count by 1
+
+This can be done as below
+
+```
+kubectl scale deployment <jiva_replica_deployment> --replicas=<new_count>
+```
+
+For example:
+
+```
+kubectl scale deploy pvc-564ae713-95fb-11e8-8754-42010a8000df-rep --replicas=2
+deployment "pvc-564ae713-95fb-11e8-8754-42010a8000df-rep" scaled
+```
+
+Now,It will show as corresponding deployment is scaled. Repeat all the steps if you want to increase Jiva replica count further.
+
+### How to verify expanded replica is running fine?
+
+Get the number of running pods using below command
+
+```
+kubectl get pods
+```
+
+Output will be as below. Here new replica is showing as running.
+
+```
+NAME                                                             READY     STATUS    RESTARTS   AGE
+percona                                                          1/1       Running   0          3m
+pvc-564ae713-95fb-11e8-8754-42010a8000df-ctrl-7c8dcdf78c-85szs   2/2       Running   0          1m
+pvc-564ae713-95fb-11e8-8754-42010a8000df-rep-688cc58bbf-qhb8c    1/1       Running   0          37s
+pvc-564ae713-95fb-11e8-8754-42010a8000df-rep-688cc58bbf-rbxnw    1/1       Running   0          3m
+```
+
+
+
 ## Move the data to another cluster
 
 ## Move the replicas to another node
