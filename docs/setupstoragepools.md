@@ -73,7 +73,7 @@ spec:
 
 **Note:** Change the path with your mounted path if it is not your default mount path. Also, remember your pool name. In this example, the pool name is *test-mntdir*.
 
-## Scheduling the Pool on a Node
+## Scheduling a Pool on a Node
 
 If you want to schedule your pool on a particular node please follow [this](https://docs.openebs.io/docs/next/scheduler.html) procedure before applying the *openebs-operator.yaml* file.
 
