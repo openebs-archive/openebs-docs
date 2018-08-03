@@ -7,27 +7,27 @@ sidebar_label: Upgrade
 ------
 
 OpenEBS supports the upgrade to 0.6 version only from 0.5.3 and 0.5.4.
-For older verions please upgrade to either 0.5.3 or 0.5.4 before upgrading to 0.6. For steps tp upgrade 0.5.3 or 0.5.4 please [cLick](https://v05-docs.openebs.io/) here.
+For older verions, upgrade to either 0.5.3 or 0.5.4 before upgrading to 0.6. For steps to upgrade 0.5.3 or 0.5.4,[cLick](https://v05-docs.openebs.io/) here.
 
-The upgrade of OpenEBS is a two step process.
+Upgrading OpenEBS is a two step process.
 
-*Step-1*: Upgrade the OpenEBS Operator
+1. Upgrade the OpenEBS Operator
 
-*Steo-2*: Upgrade the OpenEBS volumes that were created with older OpenEBS Operator.
+2. Upgrade the OpenEBS volumes that were created with older OpenEBS Operator.
 
-Upgrade steps for OpenEBS Operator depends on how OpenEBS was installed. Depending upon the type of installation please select one of the following.
-**Steps-1 Upgrade OpenEBS Operator**
+Upgrading OpenEBS Operator depends on how OpenEBS was installed. Depending upon the type of installation select one of the following.
+**Step-1 Upgrade OpenEBS Operator**
 
 **Upgrade Using Kubectl** ( OpenEBS was installed by kubectl using openebs-operator.yaml file)
 
-**Note** The sample steps below will work only if you have installed openebs without modifying the default values.
+**Note** The following sample steps will work only if you have installed openebs without modifying the default values.
 
-Delete the older openebs-operator and storage classes. Use the follwing command to delete the old openebs-operator.
+Delete the older openebs-operator and storage classes. Use the following command to delete the old openebs-operator file.
 ```
 kubectl delete -f openebs-operator.yaml
 ```
 
-The response sholud be like this.
+The output must be displayed as follows.
 ```
 serviceaccount "openebs-maya-operator" deleted
 clusterrole "openebs-maya-operator" deleted
@@ -40,12 +40,12 @@ customresourcedefinition "storagepools.openebs.io" deleted
 storageclass "openebs-standard" deleted
 ```
 
-Next delete the storage classes. Use the follwing command,
+Delete the storage classes next. Execute the following command.
 ```
 kubectl delete -f openebs-storageclasses.yaml
 ```
 
-The response should be like this.
+The output must be similar to the following.
 ```
 storageclass "openebs-standalone" deleted
 storageclass "openebs-percona" deleted
@@ -57,15 +57,15 @@ storageclass "openebs-kafka" deleted
 storageclass "openebs-zk" deleted
 storageclass "openebs-es-data-sc" deleted
 ```
-Wait for the objects to got delete, you can verify the same using the following command.
+Wait for the objects to be deleted. You can verify the same using the following command.
 ```
 kubectl get deploy
 ```
-Now you can install the 0.6 operator using following command
+You can now install the 0.6 operator using command.
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
 ```
-The response should be like this.
+The output must be similar to the following.
 ```
 namespace "openebs" created
 serviceaccount "openebs-maya-operator" created
@@ -81,12 +81,12 @@ storageclass "openebs-standard" created
 storageclass "openebs-snapshot-promoter" created
 customresourcedefinition "volumepolicies.openebs.io" created
 ```
-Next you have to deploy the 0.6 storage classes, using the follwing command.
+You must deploy the 0.6 storage classes, using the following command.
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
 ```
 
-The response should be like this.
+The output must be similar to the following.
 ```
 storageclass "openebs-standalone" created
 storageclass "openebs-percona" created
