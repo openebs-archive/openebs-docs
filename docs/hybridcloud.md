@@ -8,7 +8,6 @@ sidebar_label: Hybrid Cloud
 
 Hybrid cloud is a cloud computing environment that uses a mix of on-premises, private cloud and third-party, public cloud services with orchestration between the two or more platforms. When using multiple cloud vendors, manageability, ease of migration and being able to efficiently manage cloud lock-in becomes top concerns. OpenEBS provides abstraction of data plane management, ability to manage storage same way on all vendors and migrate as you need, when you need.
 
-???DIAGRAM???
 
 ## Problems
 
