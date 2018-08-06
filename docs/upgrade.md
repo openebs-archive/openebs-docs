@@ -20,7 +20,7 @@ Upgrading OpenEBS Operator depends on how OpenEBS was installed. Depending upon 
 
 **Upgrade Using Kubectl** ( OpenEBS was installed by kubectl using openebs-operator.yaml file)
 
-**Note** The following sample steps will work only if you have installed openebs without modifying the default values.
+**Note** The following sample steps will work only if you have installed OpenEBS without modifying the default values.
 
 Delete the older openebs-operator and storage classes. Use the following command to delete the old openebs-operator file.
 ```
@@ -101,13 +101,13 @@ storageclass "openebs-es-data-sc" created
 
 **Upgrade Using Helm** ( OpenEBS was installed by helm chart)
 
-**Note** The sample steps below will work if you have installed openebs with default values provided by stable/openebs helm chart.
+**Note** The following sample steps below will work if you have installed OpenEBS with default values provided by stable/openebs helm chart.
 
-Run the following command to get the release name.
+Run the following command to view the release name.
 ```
 helm ls
 ```
-The response should be like below.
+The response is similar to the following.
 ```
 NAME    REVISION        UPDATED                         STATUS          CHART           NAMESPACE
 openebs 1               Fri Aug  3 14:50:11 2018        DEPLOYED        openebs-0.5.3   openebs
@@ -122,19 +122,19 @@ helm upgrade -f https://openebs.github.io/charts/helm-values-0.6.0.yaml <release
 
 **Using customized operator YAML or helm chart**
 
-Before you proceed with upgradation, you must update your custom helm chart or YAML with 0.6 release tags and changes made in the values/templates.
+Before proceeding with upgrade, you must update your custom helm chart or YAML with 0.6 release tags and changes made in the values/templates.
 
-You can use the following as references to know about the changes in 0.6: 
+Use the following as reference for the changes made in 0.6: 
 - stable/openebs [PR#6768](https://github.com/helm/charts/pull/6768) or 
 - openebs-charts [PR#1646](https://github.com/openebs/openebs/pull/1646) as reference.
 
 After updating the YAML or helm chart values, you can use the steps mentioned above to upgrade the OpenEBS operator depending upon your type of installation.
 
-**Step-2 Upgrade OpenEBS old volumes created with 0.5.3 or0.5.4**
+**Step-2 Upgrade OpenEBS old volumes created with 0.5.3 or 0.5.4**
 
 Even after the OpenEBS Operator has been upgraded to 0.6, the old volumes will continue to work with 0.5.3 or 0.5.4. Each of the volumes should be upgraded (one at a time) to 0.6, using the steps provided below.
 
-**Note:** There has been a change in the way OpenEBS Controller Pods communicate with the Replica Pods. So, it is recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, make sure you have taken a backup of the data before starting the below upgrade procedure.
+**Note:** There has been a change in the way OpenEBS Controller Pods communicate with the Replica Pods. So, it is recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, ensure that you have taken a backup of the data before starting the following upgrade procedure.
 
 **Download the upgrade scripts**
 
@@ -146,24 +146,24 @@ wget https://raw.githubusercontent.com/kmova/openebs/599e062a2251d2c16bca59aeac4
 wget https://raw.githubusercontent.com/kmova/openebs/599e062a2251d2c16bca59aeac4a7ed77e445e6e/k8s/upgrades/0.5.x-0.6.0/replica.patch.tpl.yml
 ```
 
-In 0.5.x releases, when a replica is shutdown, it will get rescheduled to another availble node in the cluster and start copying the data from the other replicas. This is not a desired behaviour during upgrades, which will create new replica's as part of the rolling-upgrade. To pin the replicas or force them to the nodes where the data is already present, starting with 0.6 - we use the concept of nodeSelector and Tolerations that will make sure replica's are not moved on node or pod delete operations.
+In 0.5.x releases, when a replica is shutdown, it will get rescheduled to another availble node in the cluster and starts copying the data from the other replicas. This is not a desired behaviour during upgrades, as it creates new replicas due to rolling-upgrade. To pin the replicas or force them to the nodes where the data is already present, starting with 0.6, we use the concept of NodeSelector and Tolerations that will make sure replicas are not moved on node during pod delete operation.
 
-So as part of upgrade, we recommend that you label the nodes where the replica pods are scheduled as follows:
+As part of upgrade, OpenEBS recommends that you label the nodes where the replica pods are scheduled as follows:
 ```
 kubectl label nodes gke-kmova-helm-default-pool-d8b227cc-6wqr "openebs-pv"="openebs-storage"
 ```
 
-Note that the key `openebs-pv` is fixed, however you can use any value in place of `openebs-storage`. This value will be taken as a parameters in the upgrade script below. 
+Note that the key `openebs-pv` is fixed. However you can use any value in place of `openebs-storage`. This value will be taken as a parameter in the upgrade script below. 
 
-Repeat the above step of labellilng the node for all the nodes where replica's are scheduled. The assumption is that all the PV replica's are scheduled on the same set of 3 nodes. 
+Repeat the above step of labellilng the node for all the nodes where replicas are scheduled. The assumption is that all the PV replicas are scheduled on the same set of 3 nodes. 
 
 **Limitations:**
-- Need to handle cases where there are a mix of PVs with 1 and 3 replicas or 
-- Scenario like PV1 replicas are on nodes - n1, n2, n3, where as PV2 replicas are on nodes - n2, n3, n4
-- This is a preliminary script only intended for using on volumes where data has been backed-up.
-- please have the following link handy in case the volume gets into read-only during upgrade 
+- Must handle cases where there are a mix of PVs with 1 and 3 replicas or 
+- Scenarios like PV1 replicas are on nodes - n1, n2, n3, where as PV2 replicas are on nodes - n2, n3, n4
+- This is a preliminary script only intended for use on volumes where data is backed-up.
+- Have the following link handy in case the volume gets into read-only state during the upgrade process.
   https://docs.openebs.io/docs/next/readonlyvolumes.html
-- In the process of running the below steps, if you run into issues, you can always reach us on slack
+- In the process of running the following steps, if you run into issues, you can always reach us on Slack
 
 Select the PV that needs to be upgraded
 
@@ -171,7 +171,7 @@ Use the following command to get the PV.
 ```
 kubectl get pv
 ```
-Upgrade the PV that needs to be upgraded. Use the following command.
+Upgrade the PV that must be upgraded by using the following command.
 ```
 ./oebs_update.sh pvc-48fb36a2-947f-11e8-b1f3-42010a800004 openebs-storage
 
