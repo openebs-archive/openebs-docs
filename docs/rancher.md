@@ -15,6 +15,7 @@ sidebar_label: Rancher
 - Launch **openebs** from Catalog Apps.
 - Add storage class. In storage class provide details such as Name, provisoner, parameter and so on.
 
+```
    Example: 
            Name-openebs- standalone
            Provisioner- openebs.io/provisione-iscsi(custom)
@@ -22,7 +23,7 @@ sidebar_label: Rancher
            openebs.io/jiva-replica-count               3
            openebs.io/storage-pool                     default
            openebs.io/volume-monitor                   true
-                       
+```                       
                        
            
           
