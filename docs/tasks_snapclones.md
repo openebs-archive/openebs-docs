@@ -72,9 +72,6 @@ Now you must mount the demo-snap-vol-claim PVC into a similar application pod fo
 
 For more details on cloning please click [here](https://docs.openebs.io/docs/next/snapshots.html#cloning-and-restoring-a-snapshot).
 
-## Snapshots using MayaOnline
-
-## Clone using MayaOnline
 
 
 
