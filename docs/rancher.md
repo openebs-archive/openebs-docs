@@ -13,7 +13,7 @@ sidebar_label: Rancher
 
 - Use Rancher dashboard and enable the helm stable from Catalogs.
 - Launch **openebs** from Catalog Apps.
-- Add storage class. In storage class provide details such as Name, provisoner, parameter and so on.
+- Add storage class. In storage class provide details such as Name, Provisoner and Parameters.
 
 ```
    Example: 
