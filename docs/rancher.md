@@ -6,7 +6,27 @@ sidebar_label: Rancher
 ------
 
 ## Pre-requisites
+- Rancher should be installed.
+- All the nodes in clusters should have iscsi enabled. See the [prerequisites](/docs/next/prerequisites.html) section.
 
+### Installation of OpenEBS
+
+- Use Rancher dashboard and enable the helm stable from Catalogs.
+- Launch **openebs** from Catalog Apps.
+- Add storage class. In storage class provide details such as Name, Provisoner and Parameters.
+
+```
+   Example: 
+           Name-openebs- standalone
+           Provisioner- openebs.io/provisione-iscsi(custom)
+           Parameters: openebs.io/capacity             5G
+           openebs.io/jiva-replica-count               3
+           openebs.io/storage-pool                     default
+           openebs.io/volume-monitor                   true
+```                       
+                       
+           
+          
 
 
 
