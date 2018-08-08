@@ -48,7 +48,8 @@ kubectl edit deploy <jiva_controller_deployment>
 **Example:**
 
 ```
-kubectl edit deploy pvc-564ae713-95fb-11e8-8754-42010a8000df-ctrl                                deployment "pvc-564ae713-95fb-11e8-8754-42010a8000df-ctrl" edited
+kubectl edit deploy pvc-564ae713-95fb-11e8-8754-42010a8000df-ctrl
+deployment "pvc-564ae713-95fb-11e8-8754-42010a8000df-ctrl" edited
 ```
 
 4. Increase the Jiva replica count by 1 using the following command.
@@ -85,6 +86,177 @@ pvc-564ae713-95fb-11e8-8754-42010a8000df-rep-688cc58bbf-rbxnw    1/1       Runni
 ```
 
 
+
+## Decreasing  Number of Jiva Replicas
+
+The following procedure must be performed for decreasing number of Jiva replicas. You can scale down the Jiva replica online, if the current replica count is 3 or more. OpenEBS recommends you to perform the change with no load on the volume if current replica count is 2.
+
+Do the below steps from master.
+
+1. Get the maya-apiserver pod name  using below command.
+
+   ```
+   kubectl get pods -n openebs
+   ```
+
+2. Do health check up of all replicas of particular volume using below command before doing the change.
+
+   - [ ] Log in to maya-apiserver
+
+     ```
+     kubectl exec -it <maya-apiserver> bash -n openebs
+     ```
+
+     **Example:**
+
+     ```
+     kubectl exec -it maya-apiserver-dc8f6bf4d-ldl6b bash -n openebs
+     ```
+
+
+   - [ ] Get the volume list and put the required volume name in next step.
+
+     ```
+     mayactl volume list
+     ```
+
+   - [ ] Get the health of all replicas . All replicas Access Mode should be in RW mode.
+
+     ```
+     mayactl volume info --volname <volume_name>
+     ```
+
+   **Note:** Add namespace along with above commands if PVC is deployed in particular namespace.
+
+3. Get the current Jiva replica count using the following command.
+
+   ```
+   kubectl get deploy
+   ```
+
+   The following output is displayed. In this example, it shows that current Jiva replica count is 3.
+
+   ```
+   NAME                                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+   percona                                         1         1         1            1           1m
+   pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl   1         1         1            1           1m
+   pvc-339754eb-9add-11e8-a167-067880c021ee-rep    3         3         3            3           1m
+   ```
+
+4. Check the value of *REPLICATION_FACTOR* under environment variable in Jiva controller deployment using the following command.
+
+   ```
+   kubectl get deploy <jiva_controller_deployment> -o yaml 
+   ```
+
+   **Example:**
+
+   ```
+   kubectl get deploy pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl -o yaml
+   ```
+
+5. Now, ssh to all the Nodes where the OpenEBS volume are mounted
+
+6. Goto the directory where required volume is mounted
+
+   ```
+   cd /mnt/openebs_xvdd/<pvc_name>
+   ```
+
+   Example:
+
+   ```
+   cd /mnt/openebs_xvdd/pvc-339754eb-9add-11e8-a167-067880c021ee/
+   ```
+
+7. Edit the file **peer.details** with *ReplicaCount":<one number less>*
+
+   `{"ReplicaCount":2,"QuorumReplicaCount":0}`  
+
+   **Note:** Previously ReplicaCount was 3, Now it has modified to 2. Also,there should be only one count change from the existing replica number.
+
+8. Repeat step 6 & 7 in other Nodes where OpenEBS volume are mounted.
+
+   Do following operations from master Node
+
+9. scale down the replica by reducing one count. Following command will help you to do this. 
+
+   ```
+   kubectl scale deployment <jiva_replica_deployment> --replicas=<one count less>
+   ```
+
+   **Example:**
+
+   ```
+   kubectl scale deployment pvc-339754eb-9add-11e8-a167-067880c021ee-rep --replicas=2
+   ```
+
+10. Check replica count from replica deployment by using below command
+
+    ```
+    kubectl get deploy
+    ```
+
+    The following output will be displayed. Here, Jiva replica count has changed from 3 to 2.
+
+    ```
+    NAME                                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+    percona                                         1         1         1            1           8m
+    pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl   1         1         1            1           8m
+    pvc-339754eb-9add-11e8-a167-067880c021ee-rep    2         2         2            2           8m
+    ```
+
+11. Update the value of REPLICATION_FACTOR under environmental variable by decreasing one count from current value in Jiva deployment yaml using the following command.
+
+    ```
+    kubectl edit deploy <jiva_controller_deployment>
+    ```
+
+    Then, modify below entry
+
+    ```
+      env:
+      - name: REPLICATION_FACTOR
+        value: "2"
+    ```
+
+    **Example:**
+
+    ```
+    kubectl edit deploy  pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl
+    deployment "pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl" edited
+    ```
+
+12. After this change, new replica set for controller will be deployed and we need to clean up old controller replica set. Get the replica set using below command
+
+    ```
+    kubectl get rs
+    ```
+
+    The following output will be displayed.
+
+    ```
+    NAME                                                       DESIRED   CURRENT   READY     AGE
+    percona-7f6bff67f6                                         1         1         1         10m
+    pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl-545dd7cfc    1         1         1         1m
+    pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl-7849d8f54b   0         0         0         10m
+    pvc-339754eb-9add-11e8-a167-067880c021ee-rep-6cf4bcf886    2         2         2         10m
+    ```
+
+13. Now, delete previous Jiva controller replica set  using below command
+
+    ```
+    kubectl delete rs <old_jiva_controller_replicaset>
+    ```
+
+    **Example:**
+
+    ```
+    kubectl delete rs pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl-7849d8f54b
+    replicaset "pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl-7849d8f54b" deleted
+    ```
+
+    Now, the scale down process is completed.Repeat the procedure if you want to decrease Jiva replica count further.
 
 ## Move the data to another cluster
 
