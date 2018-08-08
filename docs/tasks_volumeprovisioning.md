@@ -91,7 +91,7 @@ pvc-564ae713-95fb-11e8-8754-42010a8000df-rep-688cc58bbf-rbxnw    1/1       Runni
 
 The following procedure must be performed for decreasing number of Jiva replicas. You can scale down the Jiva replica online, if the current replica count is 3 or more. OpenEBS recommends you to perform the change with no load on the volume if current replica count is 2.
 
-Do the below steps from master.
+Do the below steps 1 to 4 from master.
 
 1. Get the maya-apiserver pod name  using below command.
 
@@ -101,32 +101,32 @@ Do the below steps from master.
 
 2. Do health check up of all replicas of particular volume using below command before doing the change.
 
-   - [ ] Log in to maya-apiserver
+   - Log in to maya-apiserver
 
      ```
-     kubectl exec -it <maya-apiserver> bash -n openebs
+   kubectl exec -it <maya-apiserver> bash -n openebs
      ```
 
      **Example:**
 
      ```
-     kubectl exec -it maya-apiserver-dc8f6bf4d-ldl6b bash -n openebs
+   kubectl exec -it maya-apiserver-dc8f6bf4d-ldl6b bash -n openebs
      ```
 
 
-   - [ ] Get the volume list and put the required volume name in next step.
+   - Get the volume list and put the required volume name in next step.  
 
-     ```
-     mayactl volume list
-     ```
+   ```
+   mayactl volume list
+   ```
 
-   - [ ] Get the health of all replicas . All replicas Access Mode should be in RW mode.
+   - Get the health of all replicas . All replicas Access Mode should be in RW mode.
 
-     ```
-     mayactl volume info --volname <volume_name>
-     ```
+   ```
+   mayactl volume info --volname <volume_name>
+   ```
 
-   **Note:** Add namespace along with above commands if PVC is deployed in particular namespace.
+​       **Note:** Add namespace along with above commands if PVC is deployed in particular namespace.
 
 3. Get the current Jiva replica count using the following command.
 
@@ -154,6 +154,7 @@ Do the below steps from master.
    ```
    kubectl get deploy pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl -o yaml
    ```
+   Do the following steps from Nodes
 
 5. Now, ssh to all the Nodes where the OpenEBS volume are mounted
 
@@ -193,18 +194,18 @@ Do the below steps from master.
 
 10. Check replica count from replica deployment by using below command
 
-    ```
-    kubectl get deploy
-    ```
+   ```
+   kubectl get deploy
+   ```
 
-    The following output will be displayed. Here, Jiva replica count has changed from 3 to 2.
+   The following output will be displayed. Here, Jiva replica count has changed from 3 to 2.
 
-    ```
-    NAME                                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-    percona                                         1         1         1            1           8m
-    pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl   1         1         1            1           8m
-    pvc-339754eb-9add-11e8-a167-067880c021ee-rep    2         2         2            2           8m
-    ```
+   ```
+   NAME                                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+   percona                                         1         1         1            1           8m
+   pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl   1         1         1            1           8m
+   pvc-339754eb-9add-11e8-a167-067880c021ee-rep    2         2         2            2           8m
+   ```
 
 11. Update the value of REPLICATION_FACTOR under environmental variable by decreasing one count from current value in Jiva deployment yaml using the following command.
 
