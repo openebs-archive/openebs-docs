@@ -32,7 +32,7 @@ The OpenEBS administrator can choose to provide the scheduling configuration for
 
 Download the *openebs-operator* file using the following command.
 
-`wget  https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml `
+`wget  https://github.com/openebs/openebs/blob/v0.6/k8s/openebs-operator.yaml `
 
 ## Step 2
 
@@ -125,18 +125,16 @@ nodeSelector:
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: openebs-snapshot-controller
+  name: openebs-snapshot-operator
   namespace: openebs
 spec:
   replicas: 1
-  nodeSelector:
-    openebs: controlnode
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: openebs-snapshot-controller
+        name: openebs-snapshot-operator
     spec:
       serviceAccountName: openebs-maya-operator
       nodeSelector:
