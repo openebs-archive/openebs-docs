@@ -118,11 +118,11 @@ kubectl get pods -n openebs
   mayactl volume list
   ```
 
-   - Get the health of all replicas . All replicas Access Mode should be in RW mode.
+- Get the health of all replicas . All replicas Access Mode should be in RW mode.
 
-     ```
-      mayactl volume info --volname <volume_name>
-     ```
+  ```
+   mayactl volume info --volname <volume_name>
+  ```
 
 ​       **Note:** Add namespace along with above commands if PVC is deployed in particular namespace.
 
