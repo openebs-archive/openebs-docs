@@ -32,7 +32,7 @@ The OpenEBS administrator can choose to provide the scheduling configuration for
 
 Download the *openebs-operator* file using the following command.
 
-`wget  https://github.com/openebs/openebs/blob/v0.6/k8s/openebs-operator.yaml `
+`wget  https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml `
 
 ## Step 2
 
