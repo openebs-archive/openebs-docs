@@ -95,36 +95,34 @@ Do the below steps 1 to 4 from master.
 
 1. Get the maya-apiserver pod name  using below command.
 
-   ```
-   kubectl get pods -n openebs
-   ```
-
+```
+kubectl get pods -n openebs
+```
 2. Do health check up of all replicas of particular volume using below command before doing the change.
 
-   - Log in to maya-apiserver
+- Log in to maya-apiserver
 
-     ```
-   kubectl exec -it <maya-apiserver> bash -n openebs
-     ```
+  ```
+  kubectl exec -it <maya-apiserver> bash -n openebs
+  ```
 
-     **Example:**
+  **Example:**
 
-     ```
-   kubectl exec -it maya-apiserver-dc8f6bf4d-ldl6b bash -n openebs
-     ```
+  ```
+  kubectl exec -it maya-apiserver-dc8f6bf4d-ldl6b bash -n openebs
+  ```
 
+- Get the volume list and put the required volume name in next step.  
 
-   - Get the volume list and put the required volume name in next step.  
-
-   ```
-   mayactl volume list
-   ```
+  ```
+  mayactl volume list
+  ```
 
    - Get the health of all replicas . All replicas Access Mode should be in RW mode.
 
-   ```
-   mayactl volume info --volname <volume_name>
-   ```
+     ```
+      mayactl volume info --volname <volume_name>
+     ```
 
 ​       **Note:** Add namespace along with above commands if PVC is deployed in particular namespace.
 
