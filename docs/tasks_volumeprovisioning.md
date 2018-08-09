@@ -380,15 +380,15 @@ kubectl delete pod percona-b98f87dbd-nqssn
 
 ## Node affinity for an application
 
-To know about node selector refer the [scheduler](/docs/next/scheduler.html) section.
+To know about node selector, see [scheduler](/docs/next/scheduler.html) section.
 
 **Modify the application yaml**
 
 We have taken mongo-statefulset application as an example.
-For scheduling application to a particular nodes, we need have labeled nodes, so that mongo application will be schedule on required 
+For scheduling application to nodes, we must have labeled nodes, so that mongo application will be scheduled on required 
 nodes.
 
-For mongo-statefulset.yml, under spec:section you can add as follow:
+For mongo-statefulset.yml, under spec:section you can add the following.
 
 ```
 nodeSelector:
