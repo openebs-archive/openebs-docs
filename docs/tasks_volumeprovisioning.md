@@ -192,18 +192,18 @@ kubectl get pods -n openebs
 
 10. Check replica count from replica deployment by using below command
 
-   ```
-   kubectl get deploy
-   ```
+  ```
+  kubectl get deploy
+  ```
 
-   The following output will be displayed. Here, Jiva replica count has changed from 3 to 2.
+  The following output will be displayed. Here, Jiva replica count has changed from 3 to 2.
 
-   ```
-   NAME                                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-   percona                                         1         1         1            1           8m
-   pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl   1         1         1            1           8m
-   pvc-339754eb-9add-11e8-a167-067880c021ee-rep    2         2         2            2           8m
-   ```
+  ```
+  NAME                                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+  percona                                         1         1         1            1           8m
+  pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl   1         1         1            1           8m
+  pvc-339754eb-9add-11e8-a167-067880c021ee-rep    2         2         2            2           8m
+  ```
 
 11. Update the value of REPLICATION_FACTOR under environmental variable by decreasing one count from current value in Jiva deployment yaml using the following command.
 
@@ -256,6 +256,70 @@ kubectl get pods -n openebs
     ```
 
     Now, the scale down process is completed.Repeat the procedure if you want to decrease Jiva replica count further.
+
+## How to verify Jiva replica health sync
+
+This can be get by using mayactl command. In the beginning, find the name of maya-apiserver pod using below command.
+
+```
+kubectl get pods -n openebs
+```
+
+The output will be like below.
+
+```
+NAME                                       READY     STATUS    RESTARTS   AGE
+maya-apiserver-dc8f6bf4d-c2cqh             1/1       Running   0          10m
+openebs-provisioner-7b975bcd56-j2x7d       1/1       Running   0          10m
+openebs-snapshot-operator-7f96fc56-h4w7h   2/2       Running   0          10m
+
+```
+
+Now login to the maya-apiserver pod using below command.
+
+```
+ kubectl exec -it maya-apiserver-dc8f6bf4d-c2cqh -n openebs bash
+```
+
+Do following command to get the volume list.
+
+```
+mayactl volume list
+```
+
+Get all the  replica information of required volume using below command.
+
+```
+mayactl volume info --volname pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343d
+```
+
+The output will be like below.
+
+```
+Name                                      Status
+pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc  Running
+cash-4.3#  mayactl volume info --volname pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343d
+
+Portal Details :
+
+IQN     :   iqn.2016-09.com.openebs.jiva:pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc
+Volume  :   pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc
+Portal  :   100.70.162.71:3260
+Size    :   5G
+Status  :   Running
+
+Replica Details :
+
+NAME                                                              ACCESSMODE      STATUS      IP             NODE
+
+------
+
+pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc-rep-789c9958b9-84mqh     RW              Running     100.96.2.7     ip-172-20-38-252.us-west-2.compute.internal
+pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc-rep-789c9958b9-fb9v5     RW              Running     100.96.3.5     ip-172-20-41-104.us-west-2.compute.internal
+pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc-rep-789c9958b9-x8pjf     RW              Running     100.96.1.6     ip-172-20-45-220.us-west-2.compute.internal
+```
+
+Get the status and access mode of each replica from both the Nodes. Some other access mode labels are NA,WO etc. **NA** means that Node is not yet come up  and **WO** means node has started replication after it come up.
 
 ## Move the data to another cluster
 
