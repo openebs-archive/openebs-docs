@@ -385,7 +385,7 @@ To know about node selector, see [scheduler](/docs/next/scheduler.html) section.
 **Modify the application yaml**
 
 We have taken mongo-statefulset application as an example.
-For scheduling application to nodes, we must have labeled nodes, so that mongo application will be scheduled on required 
+For scheduling application on nodes, you must have labeled nodes so that mongo application will be scheduled on required 
 nodes.
 
 For mongo-statefulset.yml, under spec:section you can add the following.
