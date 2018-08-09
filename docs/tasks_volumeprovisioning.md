@@ -178,7 +178,7 @@ kubectl get pods -n openebs
 
    Do following operations from master Node
 
-9. scale down the replica by reducing one count. Following command will help you to do this. 
+9. Scale down the replica by reducing one count. Following command will help you to do this. 
 
    ```
    kubectl scale deployment <jiva_replica_deployment> --replicas=<one count less>
@@ -442,7 +442,48 @@ kubectl delete pod percona-b98f87dbd-nqssn
 
 13. Application pod must be in running state and you can use the resized volume. 
 
+## Node affinity for an application
 
+To know about node selector, see [scheduler](/docs/next/scheduler.html) section.
+
+**Modify the application yaml**
+
+We have taken mongo-statefulset application as an example.
+For scheduling application on nodes, you must have labelled nodes so that mongo application will be scheduled on required 
+nodes.
+
+For mongo-statefulset.yml, under spec:section you can add the following.
+
+```
+nodeSelector:
+        openebs: controlnode
+```
+
+**Example**
+
+**Update the mongo-statefulset.yml**
+
+```
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+ name: mongo
+spec:
+ serviceName: "mongo"
+ replicas: 3
+ template:
+   metadata:
+     labels:
+       role: mongo
+       environment: test
+   spec:
+     terminationGracePeriodSeconds: 10
+     nodeSelector:
+        openebs: controlnode
+     containers:
+```
+        
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
