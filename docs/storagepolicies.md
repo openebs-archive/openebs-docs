@@ -6,8 +6,6 @@ sidebar_label: Storage Policies
 
 ------
 
-
-
 ## Overview
 
 This section explains storage policies, that every DevOps team can create and apply to their own storage systems. You can now define policies based on the type of application at the StorageClass (a Kubernetes Kind) level. This page explains when to add a storage policy to your OpenEBS cluster and how to use the same.
@@ -16,13 +14,13 @@ A storage policy states the desired behavior of an OpenEBS volume. For example, 
 
 Storage policies can be created, updated, and deleted in a running OpenEBS cluster through corresponding operations on StorageClass. Cluster administrators can update storage policies independent of the cluster. Once a storage policy is installed, users can create and access it’s objects with kubectl commands on StorageClass.
 
-## Should I Add a Custom Storage Policy to my OpenEBS Cluster?
+## Adding a Custom Storage Policy to an OpenEBS Cluster
 
 Storage policies are meant to be created per team, workload, storage controller, and so on that fits your requirement. Since OpenEBS storage controllers (i.e. jiva or cStor) run from within a container, a custom storage policy can be created and set against a particular storage controller instance that meets the demands of the application (which consumes the storage exposed from the storage controller instance). You can now define policies based on the type of application at the storageclass level. Following are some of the properties that can be customized at the default level in the *openebs-storageclasses.yaml* file.
 
 ## Types of Storage Policies
 
-OpenEBS supports several types of Storage Policies such as the following:
+OpenEBS supports several types of Storage Policies such as the following.
 
 - openebs.io/jiva-replica-count
 - openebs.io/jiva-replica-image
@@ -51,9 +49,7 @@ You can specify the jiva replica image using the *openebs.io/jiva-replica-image*
 
 **Note:**
 
-Jiva replica image is a docker image.
-
-Following is a sample intent that makes use of replica image policy.
+Jiva replica image is a docker image. Following is a sample that makes use of replica image policy.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -74,9 +70,7 @@ You can specify the jiva controller image using the *openebs.io/jiva-controller-
 
 **Note:**
 
-Jiva controller image is a docker image.
-
-Following is a sample setting.
+Jiva controller image is a docker image. Following is a sample setting.
 
 ```
 kind: StorageClass
@@ -99,9 +93,7 @@ A storage pool provides a persistent path for an OpenEBS volume. It can be a dir
 
 **Note:**
 
-You must define the storage pool as a Kubernetes Custom Resource (CR) before using it as a Storage Pool policy.
-
-Following is a sample Kubernetes custom resource definition for a storage pool.
+You must define the storage pool as a Kubernetes Custom Resource (CR) before using it as a Storage Pool policy. Following is a sample Kubernetes custom resource definition for a storage pool.
 
 ```
 apiVersion: openebs.io/v1alpha1
@@ -114,7 +106,7 @@ spec:
 
 ```
 
-This storage pool custom resource can now be used as follows:
+This storage pool custom resource can now be used as follows.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -132,9 +124,7 @@ parameters:
 
 ## Storage Class Policy 
 
-You can specify storage class policy.  Here you can mention specify the capacity, file system type.
-
-By default OpenEBS comes with ext4 file system. However if the user wants to use xfs file system he can do that.
+You can specify a storage class policy where you can specify the capacity and file system type. By default, OpenEBS comes with ext4 file system. However, you can also use the xfs file system.
 
 Following is a sample setting.
 
@@ -154,9 +144,7 @@ parameters:
 
 ## Volume Monitoring Policy
 
-You can specify the monitoring policy for a particular volume using *openebs.io/volume-monitor* property.
-
-The following Kubernetes storage class sample uses the Volume Monitoring policy.
+You can specify the monitoring policy for a particular volume using *openebs.io/volume-monitor* property. The following Kubernetes storage class sample uses the Volume Monitoring policy.
 
 ```
 apiVersion: storage.k8s.io/v1

@@ -59,8 +59,6 @@ On your Ubuntu host, do the following.
     sudo mv minikube /usr/local/bin/
     ```
 
-    ​
-
 2. Install kubectl.
 
     ```
@@ -92,9 +90,9 @@ On your Ubuntu host, do the following.
     sudo -E minikube start --vm-driver=none
     ```
 
-### Verifying that minikube is Configured
+### Verifying that Minikube is Configured
 
-Check that minikube is configured and is using the following commands.
+Check that minikube is configured and is using the following command.
 
     minikube status
 
@@ -117,8 +115,6 @@ When minikube is configured, *minikube status* will display the following output
     sudo chgrp -R $USER $HOME/.minikube
     ```
 
-    ​
-
 ### Verifying that Kubernetes is configured
 
 Check that kubectl is configured and services are running using the following commands. 
@@ -128,7 +124,6 @@ Check that kubectl is configured and services are running using the following co
 
 When kubectl is configured, the above kubectl commands will display an output similar to following.
 
-    vagrant@minikube-dev:~$ kubectl get nodes
     NAME           STATUS    AGE       VERSION
     minikube-dev   Ready     8m        v1.7.5
     vagrant@minikube-dev:~$ kubectl get pods --all-namespaces
@@ -136,7 +131,6 @@ When kubectl is configured, the above kubectl commands will display an output si
     kube-system   kube-addon-manager-minikube-dev   1/1       Running   1          8m
     kube-system   kube-dns-910330662-4q4bm          3/3       Running   3          8m
     kube-system   kubernetes-dashboard-txn8f        1/1       Running   1          8m
-    vagrant@minikube-dev:~$ 
 
 ## Setting up OpenEBS
 

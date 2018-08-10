@@ -103,6 +103,21 @@ oc get pods
 
 
 
+### Using OpenEBS on Containerized OpenShift 
+
+This section helps you to install OpenEBS on containerized OpenShift. If you are new to OpenShift, you can follow the links listed below.
+
+* [How to setup Containerized Openshift](https://access.redhat.com/documentation/en-us/openshift_container_platform/3.9/html-single/getting_started/#developers-console-before-you-begin)
+
+* [Quick Reference](https://github.com/openebs/openebs/blob/master/k8s/openshift/byo/baremetal/containerized_openshift_readme.md)
+
+Once the conatinerized OpenShift cluster is ready.you need to run the commands mentioned in the above section.
+
+Before Installing OpenEBS You need to have Node_Selectors label set for the nodes that you want to use for compute. i.e. oc edit <node name> and insert this label **node-role.kubernetes.io/compute: "true"**. That will schedule your pods.
+
+Now you can proceed with the installation of OpenEBS by following the steps mentioned in above section.
+
+
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
    (function(h,o,t,j,a,r){

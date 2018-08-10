@@ -6,38 +6,29 @@ sidebar_label: Upgrade
 
 ------
 
-OpenEBS supports three main upgrade paths. Each upgrade has its own significant changes to support and ease use of OpenEBS volume in your k8s cluster.
+OpenEBS supports the following three main upgrade paths. Each upgrade has its own significant changes to support and ease use of OpenEBS volume in your k8s cluster.
 
-From 0.4.0 to 0.5.0
-
-From 0.5.0 to 0.5.1
-
-From 0.5.1 to 0.5.3
-
+* 0.4.0 > 0.5.0
+* 0.5.0 > 0.5.1
+* 0.5.1 > 0.5.3 ???
+* 0.5.0 > 0.6.0
 
 
-Following are the general steps to upgrade your current OpenEBS volume from above mentioned paths.
+Following are the general steps to upgrade your current OpenEBS volume for the above mentioned paths.
 
-### **STEP-1: Cordon all nodes which do not host OpenEBS volume replicas**
-
-Perform kubectl cordon <node> on all nodes that do not have the OpenEBS volume replicas.
+1. Cordon all nodes which do not host OpenEBS volume replicas using the `kubectl cordon <node>` command on all nodes that do not have the OpenEBS volume replicas.
 
 This is to ensure that the replicas are not rescheduled elsewhere (other nodes) upon upgrade and "stick" to the same nodes.
 
-### **STEP-2 : Obtain YAML specifications from OpenEBS latest release**
+2. Obtain YAML specifications from OpenEBS latest release by creating a directory and obtaining specifications from https://github.com/openebs/openebs/releases/tag/<version>> into the new directory folder files. 
 
-Create a directory and obtain specifications from https://github.com/openebs/openebs/releases/tag/<version>> into the new directory folder files. 
+**Note:** Replace version name with [v0.5.0](https://github.com/openebs/openebs/releases/tag/v0.5.0), [v0.5.1](https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1) or [v0.5.3](https://github.com/openebs/openebs/releases/tag/v0.5.3).
 
-Note: Replace version name with [v0.5.0](https://github.com/openebs/openebs/releases/tag/v0.5.0), [v0.5.1](https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1) or [v0.5.3](https://github.com/openebs/openebs/releases/tag/v0.5.3).
-
-
-
-### **STEP-3: Upgrade to the latest OpenEBS Operator**
-
-
+3. Upgrade to the latest OpenEBS Operator.
 
 ```
 test@Master:~$ kubectl apply -f k8s/openebs-operator.yaml
+
 serviceaccount "openebs-maya-operator" configured
 clusterrole "openebs-maya-operator" configured
 clusterrolebinding "openebs-maya-operator" configured
@@ -49,22 +40,18 @@ customresourcedefinition "storagepools.openebs.io" created
 storageclass "openebs-standard" created
 ```
 
-**Note** : This step will upgrade the operator deployments with the corresponding images, and also
+**Note** : This step upgrades the operator deployments with the corresponding images and does the following.
 
 - sets up the prerequisites for volume monitoring
-- creates a new OpenEBS storage-class called openebs-standard with : vol-size=5G, storage-replica-count=2, storagepool=default, monitoring=True
+- creates a new OpenEBS storage-class called openebs-standard with vol-size=5G, storage-replica-count=2, storagepool=default, and monitoring=True
 
-The above storage-class template can be used to create new ones with desired properties.
+You can use the above storage-class template to create new ones with desired properties.
 
-### **STEP-4: Create the OpenEBS Monitoring deployments (Prometheus and Grafana)**
+4. Create the OpenEBS Monitoring deployments (Prometheus and Grafana).
 
-This is an optional step which will be useful if you need to track storage metrics on your OpenEBS volume. We recommended using the monitoring framework to track your OpenEBS volume metrics.
+This is an optional step which is useful if you need to track storage metrics on your OpenEBS volume. OpenEBS recommends using the monitoring framework to track your OpenEBS volume metrics.
 
-### **STEP-5: Update OpenEBS volume (controller and replica) deployments**
-
-
-
-Obtain the name of the OpenEBS Persistent Volume (PV) that has to be updated.
+5. Update OpenEBS volume (controller and replica) deployments by obtaining the name of the OpenEBS Persistent Volume (PV) that must be updated.
 
 ```
 test@Master:~$ kubectl get pv
@@ -72,19 +59,24 @@ NAME                                       CAPACITY   ACCESS MODES   RECLAIM POL
 pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc   5G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-basic   
 ```
 
-Go to the  patch folder to point to the appropriate patch. Run the *oebs_update.sh* script by passing the PV as an argument.
+    a. Go to the patch folder to point to the appropriate patch. Run the *oebs_update.sh* script by passing the PV as an argument.
 
 ```
 test@Master:~$ ./oebs_update pvc-01174ced-0a40-11e8-be1c-000c298ff5fc
+```
+```
 deployment "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep" patched
 deployment "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-ctrl" patched
 replicaset "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-ctrl-59df76689f" deleted
 ```
 
-Verify that the volume controller and replica pods are running post upgrade.
+    b. Verify that the volume controller and replica pods are running post upgrade.
 
 ```
 test@Master:~$ kubectl get pods
+```
+
+```
 NAME                                                             READY     STATUS    RESTARTS   AGE
 maya-apiserver-2288016177-lzctj                                  1/1       Running   0          3m
 openebs-grafana-2789105701-0rw6v                                 1/1       Running   0          2m
@@ -96,14 +88,13 @@ pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep-6b9f46bc6b-4vjkf    1/1       Runni
 pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep-6b9f46bc6b-hvc8b    1/1       Running   0          20s
 ```
 
-
-
-### **STEP-6: Verify that all the replicas are registered and are in RW mode**
-
-
+6. Verify that all the replicas are registered and are in RW mode.
 
 ```
 test@Master:~$ curl GET http://10.47.0.5:9501/v1/replicas | grep createTypes | jq
+```
+
+```
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   162  100   162    0     0     27      0  0:00:06  0:00:05  0:00:01    37
@@ -147,29 +138,32 @@ test@Master:~$ curl GET http://10.47.0.5:9501/v1/replicas | grep createTypes | j
   "type": "collection"
 }
 ```
+7. Configure Grafana to monitor volume metrics.
 
-
-
-### **STEP-7: Configure Grafana to monitor volume metrics**
-
-Perform the following actions if Step-4 was executed.
+Perform the following actions if you performed step 4 earlier.
 
 - Access the Grafana dashboard at http://*NodeIP*:32515.
-- Add the Prometheus data source by specifying URL as http://*NodeIP*:32514
+- Add the Prometheus data source by specifying URL as http://*NodeIP*:32514.
 - Once the data source is validated, import the dashboard JSON from the <https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-pg-dashboard.json> URL.
-- Access the volume stats by selecting the volume name (pvc-*) in the OpenEBS Volume dashboard.
+- Access the volume statistics by selecting the volume name *(pvc-*)* in the OpenEBS Volume dashboard.
 
-**Note** : For new applications, select a newly created storage-class that has monitoring enabled to automatically start viewing metrics.
+**Note:** For new applications, select a newly created storage-class that has monitoring enabled to automatically start viewing metrics.
 
-Detailed steps for the supported upgrade paths are mentioned in the following sections.
+Detailed steps for supported upgrade paths are mentioned in the following sections.
 
 ### **Upgrade from 0.4.0 to 0.5.0**
 
-It is possible to upgrade your OpenEBS volume from 0.4.0 to 0.5.0 by following the steps mentioned above. Detailed steps are mentioned here (<https://github.com/openebs/openebs/releases/tag/v0.5.0>). The README ensures better understanding of the change log and limitations of the latest version are available at (https://github.com/openebs/openebs/blob/master/k8s/upgrades/0.4.0-0.5.0/README.md).
+It is possible to upgrade your OpenEBS volume from 0.4.0 to 0.5.0 by following the steps mentioned above. Detailed steps are mentioned here (<https://github.com/openebs/openebs/releases/tag/v0.5.0>). The README ensures better understanding of the change log. Limitations of the latest version are available at (https://github.com/openebs/openebs/blob/master/k8s/upgrades/0.4.0-0.5.0/README.md).
 
 ### **Upgrade from 0.5.0 to 0.5.1**
 
 It is possible to upgrade your OpenEBS volume from 0.5.0 to 0.5.1 by following the steps mentioned above. The detailed steps are mentioned here (<https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1>).
+
+### **Upgrade from 0.5.0 to 0.6.0**
+
+
+<< TBD >>
+  
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

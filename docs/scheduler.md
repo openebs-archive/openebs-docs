@@ -32,7 +32,7 @@ The OpenEBS administrator can choose to provide the scheduling configuration for
 
 Download the *openebs-operator* file using the following command.
 
-`wget  https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml `
+`wget  https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml `
 
 ## Step 2
 
@@ -60,7 +60,7 @@ For openebs-provisioner, under spec: section you can add as follows:
 nodeSelector:
         openebs: controlnode
 ```
-#### Example:
+**Example:**
 
 **Update the NODE_SELECTOR for openebs-provisioner**
 
@@ -88,8 +88,7 @@ For maya-apiserver, under spec: section you can add as follows:
 nodeSelector:
         openebs: controlnode
 ```
-
-#### Example:
+**Example:**
 
 **Update the NODE_SELECTOR for maya-apiserver**
 
@@ -118,7 +117,7 @@ For openebs-snapshot-controller-apiserver, under spec: section you can add as fo
 nodeSelector:
         openebs: controlnode
 ```
-#### Example:
+**Example:**
 
 **Update the NODE_SELECTOR for openebs-snapshot-controller-apiserver**
 
@@ -126,18 +125,16 @@ nodeSelector:
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: openebs-snapshot-controller
+  name: openebs-snapshot-operator
   namespace: openebs
 spec:
   replicas: 1
-  nodeSelector:
-    openebs: controlnode
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: openebs-snapshot-controller
+        name: openebs-snapshot-operator
     spec:
       serviceAccountName: openebs-maya-operator
       nodeSelector:
@@ -160,7 +157,7 @@ Add the following entries as an environmental variable under *maya-api server* d
           value: "openebs=controlnode"
 ```
 
-#### Example:
+**Example:**
 
 ```
  apiVersion: apps/v1beta1
@@ -199,15 +196,15 @@ spec:
           value: "openebs=controlnode"
 ```
 
-## Taint method
+### Taint method
 
-### Scheduling control plane pods using Taints
+#### Scheduling control plane pods using Taints
 
 **Taint all nodes in the cluster**
 
 Taint all nodes in the cluster with appropriate taint. In this example, we are using a 5 node cluster. 3 nodes will be used for storage and 2 nodes will be used for running applications. Taint used for storage nodes is `role=storage:NoSchedule` and for application nodes is `role=app:NoSchedule`.
 
-#### Example:
+**Example:**
 
 **For Storage Nodes**
 
@@ -299,7 +296,7 @@ spec:
         effect: "NoSchedule"
 ```
 
-### Scheduling data plane pods using Taints
+#### Scheduling data plane pods using Taints
 
 You can modify the configuration for data plane pods as follows:
 
@@ -325,7 +322,7 @@ kubectl apply -f openebs-operator.yaml
 
 **Note:** Remember to put toleration in the application yaml before applying a corresponding application yaml file. This will schedule an application in the application node.
 
-## Selecting either NODE-SELECTOR or TAINT method 
+# Selecting either NODE-SELECTOR or TAINT method 
 
 Kubernetes provides these two methods to control scheduling pods on cluster nodes. For more details about these features, you can refer to the Kubernetes documentation on [NODE-SELECTORS](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/) and [Taints&Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/).
 

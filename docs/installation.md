@@ -1,6 +1,6 @@
 ---
 id: installation
-title: OpenEBS Installation
+title: Installing OpenEBS
 sidebar_label: Installation
 ---
 
@@ -21,7 +21,7 @@ sidebar_label: Installation
 
 You should have [configured helm](https://docs.helm.sh/using_helm/#quickstart-guide) on your Kubernetes cluster. OpenEBS charts are available from [Kubernetes stable helm charts](https://github.com/kubernetes/charts/tree/master/stable).  
 
-**Setup RBAC for tiller before installing OpenEBS chart**
+**Setup RBAC for Tiller before Installing OpenEBS Chart**
 
 ```
 kubectl -n kube-system create sa tiller
@@ -29,7 +29,7 @@ kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceac
 kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"spec": {"serviceAccountName": "tiller"}}}}'
 ```
 
-## Install OpenEBS using stable helm charts
+## Install OpenEBS using Stable Helm Charts
 
 Install OpenEBS  using the following commands into openebs namespace
 
@@ -38,7 +38,7 @@ helm install  --namespace openebs --name openebs  -f https://openebs.github.io/c
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
 ```
 
-## Using OpenEBS helm charts
+## Using OpenEBS Helm Charts
 
 `(Will be deprecated in the coming releases)`
 
@@ -48,7 +48,7 @@ helm repo update
 helm install openebs-charts/openebs
 ```
 
-## Default values for helm chart parameters
+## Default Values for Helm Chart Parameters
 
 The following table lists the configurable parameters of the OpenEBS chart and their default values.
 
@@ -70,15 +70,13 @@ The following table lists the configurable parameters of the OpenEBS chart and t
 
 Specify each parameter using the `--set key=value` argument to `helm install`.
 
-
-
 ## Install OpenEBS using kubectl
 
 ------
 
 ![Installing OpenEBS with Operator](/docs/assets/operator.png)
 
-Set the context to **cluster-admin** and execute the below commands using kubectl
+Set the context to **cluster-admin** and execute the below commands using kubectl.
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
@@ -95,7 +93,7 @@ openebs-provisioner-5569654c96-rkkhr         1/1       Running   0          1h
 openebs-snapshot-operator-5f7c4d9bd8-gs7g5   2/2       Running   0          1h
 ```
 
-You can see the newly deployed storage classes using the following command
+You can see the newly deployed storage classes using the following command.
 
 ```
 kubectl get sc
@@ -105,7 +103,7 @@ As a next step, it is recommended to setup a catalog of storage classes for your
 
 Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo).
 
-## See Also:
+### See Also:
 
 #### [Setting up OpenEBS storage classes](/docs/next/setupstorageclasses.html)
 
