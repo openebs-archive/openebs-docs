@@ -12,8 +12,19 @@ sidebar_label: Rancher
 ### Installation of OpenEBS
 
 - Use Rancher dashboard and enable the helm stable from Catalogs.
+
+![Helm-Enable](docs/assets/rancher_enable_helm.PNG)
+
+
 - Launch **openebs** from Catalog Apps.
+
+![openebs-installation](docs/assets/rancher_openebs_install.PNG)
+
+
 - Add storage class. In storage class provide details such as Name, Provisoner and Parameters.
+
+![openebs-storageclass](docs/assets/rancher_openebs_storageclass.PNG)
+
 
 ```
    Example: 
