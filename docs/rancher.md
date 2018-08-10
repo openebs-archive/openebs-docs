@@ -15,20 +15,20 @@ sidebar_label: Rancher
  
  1. Go to the Rancher dashboard and select **Catalogs**. The following screen is displayed.
 
-![Helm-Enable](docs/assets/rancher_enable_helm.PNG)
+![Helm-Enable](/docs/assets/rancher_enable_helm.PNG)
 
 
 2. Click **Enable** to enable **Helm Stable**. Helm Stable is now **Enabled**.
 3. Go to **Catalog Apps** from the Rancher dashboard. The following screen is displayed.
 
-![openebs-installation](docs/assets/rancher_openebs_install.PNG)
+![openebs-installation](/docs/assets/rancher_openebs_install.PNG)
 
 
 4. Click **openebs**.
 5. Click **Launch** to launch OpenEBS.
 6. Go to the Rancher dashboard and click **Storage**.
 
-![openebs-storageclass](docs/assets/rancher_openebs_storageclass.PNG)
+![openebs-storageclass](/docs/assets/rancher_openebs_storageclass.PNG)
 
 
 7 Select **Storage Class** to add storage class. Add details such as Name, Provisioner, and Parameters.
