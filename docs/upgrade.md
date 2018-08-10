@@ -6,161 +6,157 @@ sidebar_label: Upgrade
 
 ------
 
-OpenEBS supports the following three main upgrade paths. Each upgrade has its own significant changes to support and ease use of OpenEBS volume in your k8s cluster.
-
-* 0.4.0 > 0.5.0
-* 0.5.0 > 0.5.1
-* 0.5.1 > 0.5.3
-* 0.5.3 and 0.5.4 > 0.6.0
+OpenEBS supports the upgrade to 0.6 version only from 0.5.3 and 0.5.4.
+For older verions, upgrade to either 0.5.3 or 0.5.4 before upgrading to 0.6. For steps to upgrade to 0.5.3 or 0.5.4,[cLick](https://v05-docs.openebs.io/) here.
 
 
-Following are the general steps to upgrade your current OpenEBS volume for the above mentioned paths.
+1. Upgrade the OpenEBS Operator.
 
-1. Cordon all nodes which do not host OpenEBS volume replicas using the `kubectl cordon <node>` command on all nodes that do not have the OpenEBS volume replicas.
+2. Upgrade the OpenEBS volumes that were created with older OpenEBS Operator.
 
-This is to ensure that the replicas are not rescheduled elsewhere (other nodes) upon upgrade and "stick" to the same nodes.
+Upgrading OpenEBS Operator depends on how OpenEBS was installed. Based on the type of installation select one of the following.
+**Step-1 Upgrade OpenEBS Operator**
 
-2. Obtain YAML specifications from OpenEBS latest release by creating a directory and obtaining specifications from https://github.com/openebs/openebs/releases/tag/<version>> into the new directory folder files. 
+**Upgrade Using Kubectl** ( OpenEBS was installed by kubectl using the openebs-operator.yaml file)
 
-**Note:** Replace version name with [v0.5.0](https://github.com/openebs/openebs/releases/tag/v0.5.0), [v0.5.1](https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1) or [v0.5.3](https://github.com/openebs/openebs/releases/tag/v0.5.3).
+**Note** The following sample steps will work only if you have installed OpenEBS without modifying the default values.
 
-3. Upgrade to the latest OpenEBS Operator.
-
+Delete the older openebs-operator and storage classes. Use the following command to delete the old openebs-operator file.
 ```
-test@Master:~$ kubectl apply -f k8s/openebs-operator.yaml
+kubectl delete -f openebs-operator.yaml
+```
 
-serviceaccount "openebs-maya-operator" configured
-clusterrole "openebs-maya-operator" configured
-clusterrolebinding "openebs-maya-operator" configured
-deployment "maya-apiserver" configured
-service "maya-apiserver-service" configured
-deployment "openebs-provisioner" configured
+The output must be displayed as follows.
+```
+serviceaccount "openebs-maya-operator" deleted
+clusterrole "openebs-maya-operator" deleted
+clusterrolebinding "openebs-maya-operator" deleted
+deployment "maya-apiserver" deleted
+service "maya-apiserver-service" deleted
+deployment "openebs-provisioner" deleted
+customresourcedefinition "storagepoolclaims.openebs.io" deleted
+customresourcedefinition "storagepools.openebs.io" deleted
+storageclass "openebs-standard" deleted
+```
+
+Delete the storage classes using the following command.
+```
+kubectl delete -f openebs-storageclasses.yaml
+```
+
+The output must be similar to the following.
+```
+storageclass "openebs-standalone" deleted
+storageclass "openebs-percona" deleted
+storageclass "openebs-jupyter" deleted
+storageclass "openebs-mongodb" deleted
+storageclass "openebs-cassandra" deleted
+storageclass "openebs-redis" deleted
+storageclass "openebs-kafka" deleted
+storageclass "openebs-zk" deleted
+storageclass "openebs-es-data-sc" deleted
+```
+Wait for the objects to be deleted. You can verify the same using the following command.
+```
+kubectl get deploy
+```
+You can now install the 0.6 operator using following command.
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
+```
+The output must be similar to the following.
+```
+namespace "openebs" created
+serviceaccount "openebs-maya-operator" created
+clusterrole "openebs-maya-operator" created
+clusterrolebinding "openebs-maya-operator" created
+deployment "maya-apiserver" created
+service "maya-apiserver-service" created
+deployment "openebs-provisioner" created
+deployment "openebs-snapshot-operator" created
 customresourcedefinition "storagepoolclaims.openebs.io" created
 customresourcedefinition "storagepools.openebs.io" created
 storageclass "openebs-standard" created
+storageclass "openebs-snapshot-promoter" created
+customresourcedefinition "volumepolicies.openebs.io" created
+```
+You must deploy the 0.6 storage classes using the following command.
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
 ```
 
-**Note** : This step upgrades the operator deployments with the corresponding images and does the following.
-
-- sets up the prerequisites for volume monitoring
-- creates a new OpenEBS storage-class called openebs-standard with vol-size=5G, storage-replica-count=2, storagepool=default, and monitoring=True
-
-You can use the above storage-class template to create new ones with desired properties.
-
-4. Create the OpenEBS Monitoring deployments (Prometheus and Grafana).
-
-This is an optional step which is useful if you need to track storage metrics on your OpenEBS volume. OpenEBS recommends using the monitoring framework to track your OpenEBS volume metrics.
-
-5. Update OpenEBS volume (controller and replica) deployments by obtaining the name of the OpenEBS Persistent Volume (PV) that must be updated.
-
+The output must be similar to the following.
 ```
-test@Master:~$ kubectl get pv
-NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                     STORAGECLASS       REASON    AGE
-pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc   5G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-basic   
+storageclass "openebs-standalone" created
+storageclass "openebs-percona" created
+storageclass "openebs-jupyter" created
+storageclass "openebs-mongodb" created
+storageclass "openebs-cassandra" created
+storageclass "openebs-redis" created
+storageclass "openebs-kafka" created
+storageclass "openebs-zk" created
+storageclass "openebs-es-data-sc" created
 ```
 
-    a. Go to the patch folder to point to the appropriate patch. Run the *oebs_update.sh* script by passing the PV as an argument.
+**Upgrade Using Helm** ( OpenEBS was installed by helm chart)
 
-```
-test@Master:~$ ./oebs_update pvc-01174ced-0a40-11e8-be1c-000c298ff5fc
-```
-```
-deployment "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep" patched
-deployment "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-ctrl" patched
-replicaset "pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-ctrl-59df76689f" deleted
-```
+**Note** The following sample steps below will work if you have installed OpenEBS with default values provided by stable/openebs helm chart.
 
-    b. Verify that the volume controller and replica pods are running post upgrade.
-
+Run the following command to view the release name.
 ```
-test@Master:~$ kubectl get pods
+helm ls
+```
+The response is similar to the following.
+```
+NAME    REVISION        UPDATED                         STATUS          CHART           NAMESPACE
+openebs 1               Fri Aug  3 14:50:11 2018        DEPLOYED        openebs-0.5.3   openebs
 ```
 
+Here the release name is openebs.
+
+Upgarde using following command. You have to replace <release-name> with your actual release name.
 ```
-NAME                                                             READY     STATUS    RESTARTS   AGE
-maya-apiserver-2288016177-lzctj                                  1/1       Running   0          3m
-openebs-grafana-2789105701-0rw6v                                 1/1       Running   0          2m
-openebs-prometheus-4109589487-4bngb                              1/1       Running   0          2m
-openebs-provisioner-2835097941-5fcxh                             1/1       Running   0          3m
-percona-2503451898-5k9xw                                         1/1       Running   0          9m
-pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-ctrl-6489864889-ml2zw   2/2       Running   0          10s
-pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep-6b9f46bc6b-4vjkf    1/1       Running   0          20s
-pvc-8cc9c06c-ea22-11e7-9112-000c298ff5fc-rep-6b9f46bc6b-hvc8b    1/1       Running   0          20s
+helm upgrade -f https://openebs.github.io/charts/helm-values-0.6.0.yaml <release-name> stable/openebs
 ```
 
-6. Verify that all the replicas are registered and are in RW mode.
+**Using customized operator YAML or helm chart**
 
+Before proceeding with the upgrade, you must update your custom helm chart or YAML with 0.6 release tags and changes made in the values/templates.
+
+Use the following as reference for the changes made in 0.6: 
+- stable/openebs [PR#6768](https://github.com/helm/charts/pull/6768) or 
+- openebs-charts [PR#1646](https://github.com/openebs/openebs/pull/1646)
+
+After updating the YAML or helm chart values, you can use the steps mentioned above to upgrade the OpenEBS operator depending upon your type of installation.
+
+**Step-2 Upgrade OpenEBS (old volumes) created with 0.5.3 or 0.5.4**
+
+Even after the OpenEBS Operator has been upgraded to 0.6, the old volumes will continue to work with 0.5.3 or 0.5.4. Each of the volumes should be upgraded (one at a time) to 0.6, using the steps provided below.
+
+**Note:** There has been a change in the way OpenEBS Controller Pods communicate with the Replica Pods. Hence, it is recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, ensure that you have taken a backup of the data before starting the following upgrade procedure.
+
+**Download the upgrade scripts**
+
+You can get the requied scripts to your working directory using the following commands.
 ```
-test@Master:~$ curl GET http://10.47.0.5:9501/v1/replicas | grep createTypes | jq
+wget https://raw.githubusercontent.com/kmova/openebs/599e062a2251d2c16bca59aeac4a7ed77e445e6e/k8s/upgrades/0.5.x-0.6.0/controller.patch.tpl.yml
+wget https://raw.githubusercontent.com/kmova/openebs/599e062a2251d2c16bca59aeac4a7ed77e445e6e/k8s/upgrades/0.5.x-0.6.0/oebs_update.sh
+wget https://raw.githubusercontent.com/kmova/openebs/599e062a2251d2c16bca59aeac4a7ed77e445e6e/k8s/upgrades/0.5.x-0.6.0/patch-strategy-recreate.json
+wget https://raw.githubusercontent.com/kmova/openebs/599e062a2251d2c16bca59aeac4a7ed77e445e6e/k8s/upgrades/0.5.x-0.6.0/replica.patch.tpl.yml
 ```
 
+In 0.5.x releases, when a replica is shutdown, it will get rescheduled to another availble node in the cluster and starts copying the data from the other replicas. This is not a desired behaviour during upgrades, as it creates new replicas due to rolling-upgrade. To pin the replicas or force them to the nodes where the data is already present, starting with 0.6, we use the concept of NodeSelector and Tolerations that will make sure replicas are not moved on node during pod delete operation.
+
+As part of upgrade, OpenEBS recommends that you label the nodes where the replica pods are scheduled as follows:
 ```
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100   162  100   162    0     0     27      0  0:00:06  0:00:05  0:00:01    37
-100   971  100   971    0     0   419k      0 --:--:-- --:--:-- --:--:--  419k
-{
-  "createTypes": {
-    "replica": "http://10.47.0.5:9501/v1/replicas"
-  },
-  "data": [
-    {
-      "actions": {
-        "preparerebuild": "http://10.47.0.5:9501/v1/replicas/dGNwOi8vMTAuNDcuMC4zOjk1MDI=?action=preparerebuild",
-        "verifyrebuild": "http://10.47.0.5:9501/v1/replicas/dGNwOi8vMTAuNDcuMC4zOjk1MDI=?action=verifyrebuild"
-      },
-      "address": "tcp://10.47.0.3:9502",
-      "id": "dGNwOi8vMTAuNDcuMC4zOjk1MDI=",
-      "links": {
-        "self": "http://10.47.0.5:9501/v1/replicas/dGNwOi8vMTAuNDcuMC4zOjk1MDI="
-      },
-      "mode": "RW",
-      "type": "replica"
-    },
-    {
-      "actions": {
-        "preparerebuild": "http://10.47.0.5:9501/v1/replicas/dGNwOi8vMTAuNDQuMC41Ojk1MDI=?action=preparerebuild",
-        "verifyrebuild": "http://10.47.0.5:9501/v1/replicas/dGNwOi8vMTAuNDQuMC41Ojk1MDI=?action=verifyrebuild"
-      },
-      "address": "tcp://10.44.0.5:9502",
-      "id": "dGNwOi8vMTAuNDQuMC41Ojk1MDI=",
-      "links": {
-        "self": "http://10.47.0.5:9501/v1/replicas/dGNwOi8vMTAuNDQuMC41Ojk1MDI="
-      },
-      "mode": "RW",
-      "type": "replica"
-    }
-  ],
-  "links": {
-    "self": "http://10.47.0.5:9501/v1/replicas"
-  },
-  "resourceType": "replica",
-  "type": "collection"
-}
+kubectl label nodes gke-kmova-helm-default-pool-d8b227cc-6wqr "openebs-pv"="openebs-storage"
 ```
-7. Configure Grafana to monitor volume metrics.
 
-Perform the following actions if you performed step 4 earlier.
+Note that the key `openebs-pv` is fixed. However you can use any value in place of `openebs-storage`. This value will be taken as a parameter in the upgrade script below. 
 
-- Access the Grafana dashboard at http://*NodeIP*:32515.
-- Add the Prometheus data source by specifying URL as http://*NodeIP*:32514.
-- Once the data source is validated, import the dashboard JSON from the <https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-pg-dashboard.json> URL.
-- Access the volume statistics by selecting the volume name *(pvc-*)* in the OpenEBS Volume dashboard.
-
-**Note:** For new applications, select a newly created storage-class that has monitoring enabled to automatically start viewing metrics.
-
-Detailed steps for supported upgrade paths are mentioned in the following sections.
-
-### **Upgrade from 0.4.0 to 0.5.0**
-
-It is possible to upgrade your OpenEBS volume from 0.4.0 to 0.5.0 by following the steps mentioned above. Detailed steps are mentioned here (<https://github.com/openebs/openebs/releases/tag/v0.5.0>). The README ensures better understanding of the change log. Limitations of the latest version are available at (https://github.com/openebs/openebs/blob/master/k8s/upgrades/0.4.0-0.5.0/README.md).
-
-### **Upgrade from 0.5.0 to 0.5.1**
-
-It is possible to upgrade your OpenEBS volume from 0.5.0 to 0.5.1 by following the steps mentioned above. The detailed steps are mentioned here (<https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1>).
+Repeat the above step of labellilng the node for all the nodes where replicas are scheduled. The assumption is that all the PV replicas are scheduled on the same set of 3 nodes. 
 
 
-  
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
