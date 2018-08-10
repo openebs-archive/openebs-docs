@@ -11,7 +11,7 @@ sidebar_label: Volume provisioning
 
 ## Increasing Number of Jiva Replicas
 
-The following procedure must be performed for increasing number of replicas. You can scale up the Jiva replica online, if the current replica count is 2 or more. OpenEBS recommends you to perform the change with no load on the volume if current replica count is 1.
+The following procedure must be performed for increasing number of replicas. You can increase the Jiva replica online if the current replica count is 2 or more. OpenEBS recommends you to perform the change with no load on the volume if current replica count is 1.
 
 1. Get the current  Jiva replica count using the following command.
 
@@ -65,9 +65,9 @@ kubectl scale deploy pvc-564ae713-95fb-11e8-8754-42010a8000df-rep --replicas=2
 deployment "pvc-564ae713-95fb-11e8-8754-42010a8000df-rep" scaled
 ```
 
-The corresponding deployment is scaled. Repeat the procedure if you want to increase Jiva replica count further.
+The corresponding deployment has increased. Repeat the procedure if you want to increase Jiva replica count further.
 
-### Verifying if expanded replica is running
+### Verifying if Expanded Replica is Running
 
 Get the number of running pods using following command.
 
@@ -75,7 +75,7 @@ Get the number of running pods using following command.
 kubectl get pods
 ```
 
-The following output is displayed. The new replica is displayed as running.
+The following output is displayed. The new replica state displays as running.
 
 ```
 NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -86,21 +86,20 @@ pvc-564ae713-95fb-11e8-8754-42010a8000df-rep-688cc58bbf-rbxnw    1/1       Runni
 ```
 
 
-
 ## Decreasing  Number of Jiva Replicas
 
-The following procedure must be performed for decreasing number of Jiva replicas. You can scale down the Jiva replica online, if the current replica count is 3 or more. OpenEBS recommends you to perform the change with no load on the volume if current replica count is 2.
+The following procedure must be performed for decreasing number of Jiva replicas. You can decrease the Jiva replica online, if the current replica count is 3 or more. OpenEBS recommends you to perform the change with no load on the volume if current replica count is 2.
 
-Do the below steps 1 to 4 from master.
+Perform the following steps 1 to 4 from master.
 
-1. Get the maya-apiserver pod name  using below command.
+1. Get the maya-apiserver pod name using the following command.
 
 ```
 kubectl get pods -n openebs
 ```
-2. Do health check up of all replicas of particular volume using below command before doing the change.
+2. Perform health check for all replicas of a particular volume using the following command before updating.
 
-- Log in to maya-apiserver
+- Log in to maya-apiserver.
 
   ```
   kubectl exec -it <maya-apiserver> bash -n openebs
@@ -112,19 +111,19 @@ kubectl get pods -n openebs
   kubectl exec -it maya-apiserver-dc8f6bf4d-ldl6b bash -n openebs
   ```
 
-- Get the volume list and put the required volume name in next step.  
+- Get the volume list and enter the required volume name in the next step.  
 
   ```
   mayactl volume list
   ```
 
-- Get the health of all replicas . All replicas Access Mode should be in RW mode.
+- Get the health of all replicas. The Access Mode of all replicas must be in RW mode.
 
   ```
    mayactl volume info --volname <volume_name>
   ```
 
-​       **Note:** Add namespace along with above commands if PVC is deployed in particular namespace.
+  **Note:** Add namespace along with above commands if PVC is deployed in particular namespace.
 
 3. Get the current Jiva replica count using the following command.
 
@@ -152,17 +151,17 @@ kubectl get pods -n openebs
    ```
    kubectl get deploy pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl -o yaml
    ```
-   Do the following steps from Nodes
+   Perform the following steps from Nodes.
 
-5. Now, ssh to all the Nodes where the OpenEBS volume are mounted
+5. SSH to all Nodes where the OpenEBS volume is mounted.
 
-6. Goto the directory where required volume is mounted
+6. Go to the directory where required volume is mounted.
 
    ```
    cd /mnt/openebs_xvdd/<pvc_name>
    ```
 
-   Example:
+   **Example:**
 
    ```
    cd /mnt/openebs_xvdd/pvc-339754eb-9add-11e8-a167-067880c021ee/
@@ -172,13 +171,13 @@ kubectl get pods -n openebs
 
    `{"ReplicaCount":2,"QuorumReplicaCount":0}`  
 
-   **Note:** Previously ReplicaCount was 3, Now it has modified to 2. Also,there should be only one count change from the existing replica number.
+   **Note:** Previously ReplicaCount was 3 and it is now modified to 2. Also, there should be only one count change from the existing replica number.
 
-8. Repeat step 6 & 7 in other Nodes where OpenEBS volume are mounted.
+8. Repeat steps 6 and 7 in other Nodes where OpenEBS volume is mounted.
 
-   Do following operations from master Node
+   Perform the following operations from master Node.
 
-9. Scale down the replica by reducing one count. Following command will help you to do this. 
+9. Decrease replica count by reducing one count using the following command. 
 
    ```
    kubectl scale deployment <jiva_replica_deployment> --replicas=<one count less>
@@ -190,7 +189,7 @@ kubectl get pods -n openebs
    kubectl scale deployment pvc-339754eb-9add-11e8-a167-067880c021ee-rep --replicas=2
    ```
 
-10. Check replica count from replica deployment by using below command
+10. Check replica count from replica deployment by executing the following command.
 
   ```
   kubectl get deploy
@@ -211,7 +210,7 @@ kubectl get pods -n openebs
     kubectl edit deploy <jiva_controller_deployment>
     ```
 
-    Then, modify below entry
+    Modify the following entry
 
     ```
       env:
@@ -226,7 +225,7 @@ kubectl get pods -n openebs
     deployment "pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl" edited
     ```
 
-12. After this change, new replica set for controller will be deployed and we need to clean up old controller replica set. Get the replica set using below command
+12. After this change, new replica set for controller will be deployed and you must clean up the old controller replica set. Get the replica set using the following command.
 
     ```
     kubectl get rs
@@ -242,7 +241,7 @@ kubectl get pods -n openebs
     pvc-339754eb-9add-11e8-a167-067880c021ee-rep-6cf4bcf886    2         2         2         10m
     ```
 
-13. Now, delete previous Jiva controller replica set  using below command
+13. Delete the previous Jiva controller replica set using the following command.
 
     ```
     kubectl delete rs <old_jiva_controller_replicaset>
@@ -255,17 +254,17 @@ kubectl get pods -n openebs
     replicaset "pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl-7849d8f54b" deleted
     ```
 
-    Now, the scale down process is completed.Repeat the procedure if you want to decrease Jiva replica count further.
+    Now, decreasing the Jiva replica process is complete. Repeat the procedure if you want to decrease the count further.
 
-## How to verify Jiva replica health sync
+## How to Verify Jiva Replica Health Synchronization
 
-This can be get by using mayactl command. In the beginning, find the name of maya-apiserver pod using below command.
+You can verify using the mayactl command. In the beginning, find the name of maya-apiserver pod using the following command.
 
 ```
 kubectl get pods -n openebs
 ```
 
-The output will be like below.
+The output will be similar to the following.
 
 ```
 NAME                                       READY     STATUS    RESTARTS   AGE
@@ -275,25 +274,25 @@ openebs-snapshot-operator-7f96fc56-h4w7h   2/2       Running   0          10m
 
 ```
 
-Now login to the maya-apiserver pod using below command.
+Login to the maya-apiserver pod using the following command.
 
 ```
  kubectl exec -it maya-apiserver-dc8f6bf4d-c2cqh -n openebs bash
 ```
 
-Do following command to get the volume list.
+Execute the following command to get the volume list.
 
 ```
 mayactl volume list
 ```
 
-Get all the  replica information of required volume using below command.
+Get all the replica information of required volume using the following command.
 
 ```
 mayactl volume info --volname pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343d
 ```
 
-The output will be like below.
+The output will be similar to the following.
 
 ```
 Name                                      Status
@@ -319,64 +318,7 @@ pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc-rep-789c9958b9-fb9v5     RW            
 pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc-rep-789c9958b9-x8pjf     RW              Running     100.96.1.6     ip-172-20-45-220.us-west-2.compute.internal
 ```
 
-Get the status and access mode of each replica from both the Nodes. Some other access mode labels are NA,WO etc. **NA** means that Node is not yet come up  and **WO** means node has started replication after it come up.
-
-## Deploy Jiva Pods with custom namespace
-
-Create the custom namespace if it is not existing in your cluster using below command. 
-
-```
-kubectl create namespace <custom_namespace_name>
-```
-
-**Example:**
-
-```
-kubectl create namespace app
-```
-
-Deploy your pvc yaml using the custom namespace. It can be done as follows.
-
-```
-kubectl apply -f <pvc_yaml> -n <custom_namespace_name>
-```
-
-**Example:**
-
-```
-kubectl apply -f percona-openebs-deployment.yaml -n app
-```
-
-The OpenEBS jiva Pods and application will be created in same custom namespace. You can check it with below commands
-
-```
-kubectl get pods -n app
-```
-
-The following will be the output
-
-```
-NAME                                                             READY     STATUS    RESTARTS   AGE
-percona-7f6bff67f6-hw4ml                                         1/1       Running   0          1m
-pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-ctrl-6b598f7c6c-46dvx   2/2       Running   0          1m
-pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-rep-7c66dd6b84-7mh4m    1/1       Running   0          1m
-pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-rep-7c66dd6b84-xkc85    1/1       Running   0          1m
-pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-rep-7c66dd6b84-zw6vl    1/1       Running   0          1m
-```
-
-Check the pvc status by using below command with custom namespace.
-
-```
-kubectl get pvc -n app
-```
-
-The following will be the output
-
-```
-demo-vol1-claim   Bound     pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc   5G         RWO            openebs-percona   39s
-```
-
-
+Get the status and access mode of each replica from both the Nodes. Some access mode labels are NA, WO etc. **NA** means that Node is not running yet and **WO** means node has started replication after Node started running.
 
 ## Move the data to another cluster
 
@@ -499,47 +441,6 @@ kubectl delete pod percona-b98f87dbd-nqssn
 
 13. Application pod must be in running state and you can use the resized volume. 
 
-## Node affinity for an application
-
-To know about node selector, see [scheduler](/docs/next/scheduler.html) section.
-
-**Modify the application yaml**
-
-We have taken mongo-statefulset application as an example.
-For scheduling application on nodes, you must have labelled nodes so that mongo application will be scheduled on required 
-nodes.
-
-For mongo-statefulset.yml, under spec:section you can add the following.
-
-```
-nodeSelector:
-        openebs: controlnode
-```
-
-**Example**
-
-**Update the mongo-statefulset.yml**
-
-```
----
-apiVersion: apps/v1beta1
-kind: StatefulSet
-metadata:
- name: mongo
-spec:
- serviceName: "mongo"
- replicas: 3
- template:
-   metadata:
-     labels:
-       role: mongo
-       environment: test
-   spec:
-     terminationGracePeriodSeconds: 10
-     nodeSelector:
-        openebs: controlnode
-     containers:
-```
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
