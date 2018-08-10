@@ -65,7 +65,7 @@ kubectl scale deploy pvc-564ae713-95fb-11e8-8754-42010a8000df-rep --replicas=2
 deployment "pvc-564ae713-95fb-11e8-8754-42010a8000df-rep" scaled
 ```
 
-The corresponding deployment has increased. Repeat the procedure if you want to increase Jiva replica count further.
+The corresponding deployment now displays that the Jiva replica count has increased. Repeat the procedure if you want to increase Jiva replica count further.
 
 ### Verifying if Expanded Replica is Running
 
@@ -123,7 +123,7 @@ kubectl get pods -n openebs
    mayactl volume info --volname <volume_name>
   ```
 
-  **Note:** Add namespace along with above commands if PVC is deployed in particular namespace.
+  **Note:** Add namespace along with above commands if PVC is deployed in a particular namespace.
 
 3. Get the current Jiva replica count using the following command.
 
