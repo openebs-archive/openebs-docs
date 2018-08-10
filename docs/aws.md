@@ -20,7 +20,7 @@ Instance Store volume has some drawback that the data in an instance store persi
 - The instance stops
 - The instance terminates
 
-### Why OpenEBS with Instance Store?
+## Why OpenEBS with Instance Store?
 
 Some instance types use NVMe or SATA-based solid state drives (SSD) to deliver high random I/O performance. 
 This is a good option when you need storage with very low latency, but you don't need the data to persist when the instance terminates or you can take advantage of fault-tolerant architectures. OpenEBS will be the best option  in this case to get the high availability of the data along with advantages of using physical disks.
@@ -59,7 +59,7 @@ Use local ubuntu 16.04 machine from where you can login into AWS with appropriat
    aws s3 mb s3://<bucket_name> 
    ```
 
-4.  Export the s3 bucket details using following command.
+4. Export the s3 bucket details using following command.
 
    ```
    export KOPS_STATE_STORE=s3://<bucket_name>
@@ -73,7 +73,7 @@ Use local ubuntu 16.04 machine from where you can login into AWS with appropriat
 
    This will create a cluster in the mentioned zone in your region provided as part of AWS configuration.
 
-6. Above step will give set of command which can be used for customizing your cluster configuration such as Cluster name change,Instance group for Nodes and master etc. Following shows the example output.
+6. Above step will give set of commands which can be used for customizing your cluster configuration such as Cluster name change,Instance group for Nodes and master etc. Following shows the example output.
 
    **Example:**
 
@@ -88,7 +88,7 @@ Use local ubuntu 16.04 machine from where you can login into AWS with appropriat
 
    Finally configure your cluster with: kops update cluster ranjith.k8s.local --yes
 
-7. Change your instance image type and no. of machines by executing corresponding commands. The exact command needed for your cluster will be shown at the end of the previous step command. The following shows some example.
+7. Change your instance image type and number of machines by executing corresponding commands. The exact command needed for your cluster will be shown at the end of the previous step command. The following shows some example.
 
    **Example:**   
 
@@ -101,7 +101,7 @@ Use local ubuntu 16.04 machine from where you can login into AWS with appropriat
    Change your master instance type,no. of machines by executing following way
 
    ```
-     kops edit ig --name=<cluster_name>.k8s.local master-<zone_name> 
+   kops edit ig --name=<cluster_name>.k8s.local master-<zone_name> 
    ```
 
    **Note:** We used c3.xlarge as instance type for both Master and Nodes. Number nodes used is 3.
@@ -116,9 +116,9 @@ Use local ubuntu 16.04 machine from where you can login into AWS with appropriat
 
 10. From EC2 instance page, you will get the each instance type Public IP.
 
-    **Example:**
+   **Example:**
 
-    ![EC2_instance_PublicIP](/docs/assets/insatnce_with_public_ip.PNG)
+   ![EC2_instance_PublicIP](/docs/assets/insatnce_with_public_ip.PNG)
 
 11. Goto **Launch Configuration** section in the EC2 page and take a *copy of Launch configuration* for nodes. Select the configuration for Node group and click on Actions pane.
 
@@ -180,6 +180,7 @@ Use local ubuntu 16.04 machine from where you can login into AWS with appropriat
 16. SSH to Master Node and perform following commands to clone OpenEBS yaml file to deploy.
 
     wget https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
+
     wget https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
 
 17. Edit *openebs-operator.yaml* and add below entry into it. This is to create storage pool on one of the local disk attached to the hosts. Refer [OpenEBS Storage Pools](docs/next/setupstoragepools.html) for more information.
@@ -218,13 +219,13 @@ Use local ubuntu 16.04 machine from where you can login into AWS with appropriat
       openebs.io/storage-pool: "jivaawspool"
     ```
 
-19.  Apply openebs-operator.yaml by following command
+19. Apply openebs-operator.yaml by following command
 
     ```
     kubectl apply -f openebs-operator.yaml
     ```
 
-20.  Apply openebs-storageclasses.yaml by following command
+20. Apply openebs-storageclasses.yaml by following command
 
     ```
     kubectl apply -f openebs-storageclasses.yaml
