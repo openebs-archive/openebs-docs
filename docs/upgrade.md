@@ -10,8 +10,8 @@ OpenEBS supports the following three main upgrade paths. Each upgrade has its ow
 
 * 0.4.0 > 0.5.0
 * 0.5.0 > 0.5.1
-* 0.5.1 > 0.5.3 ???
-* 0.5.0 > 0.6.0
+* 0.5.1 > 0.5.3
+* 0.5.3 and 0.5.4 > 0.6.0
 
 
 Following are the general steps to upgrade your current OpenEBS volume for the above mentioned paths.
@@ -159,10 +159,7 @@ It is possible to upgrade your OpenEBS volume from 0.4.0 to 0.5.0 by following t
 
 It is possible to upgrade your OpenEBS volume from 0.5.0 to 0.5.1 by following the steps mentioned above. The detailed steps are mentioned here (<https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.5.0-0.5.1>).
 
-### **Upgrade from 0.5.0 to 0.6.0**
 
-
-<< TBD >>
   
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
