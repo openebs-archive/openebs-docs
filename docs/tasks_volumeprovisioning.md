@@ -320,7 +320,7 @@ pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc-rep-789c9958b9-x8pjf     RW            
 
 Get the status and access mode of each replica from both the Nodes. Some access mode labels are NA, WO etc. **NA** means that Node is not running yet and **WO** means node has started replication after Node started running.
 
-## Deploy Jiva Pods with Custom Namespace
+## Deploying Jiva Pods with Custom Namespace
 
 Create the custom namespace if it is not existing in your cluster using the following command. 
 
