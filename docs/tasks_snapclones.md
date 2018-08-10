@@ -9,12 +9,6 @@ sidebar_label: Snapshots and Clones
 
 ## Clones using Kubectl
 
-## Snapshots using MayaOnline
-
-## Clone using MayaOnline
-
-
-
 
 
 

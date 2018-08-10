@@ -5,10 +5,6 @@ sidebar_label: Volume provisioning
 ---
 ------
 
-## Specifying Volume Size
-
-## Specifying Number of Replicas
-
 ## Increasing Number of Jiva Replicas
 
 The following procedure must be performed for increasing number of replicas. You can increase the Jiva replica online if the current replica count is 2 or more. OpenEBS recommends you to perform the change with no load on the volume if current replica count is 1.
@@ -358,13 +354,6 @@ Check the pvc status by using the following command with custom namespace.
 The following output is displayed.
 
     demo-vol1-claim   Bound     pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc   5G         RWO            openebs-percona   39s
-    
-
-## Moving Data to Another Cluster
-
-## Moving the Replicas to Another Node
-
-## Deleting Volume Data Permanently  
 
 ## Expanding Jiva Storage Volumes
 
