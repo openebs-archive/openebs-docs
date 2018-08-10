@@ -5,30 +5,37 @@ sidebar_label: Rancher
 ---
 ------
 
-## Pre-requisites
+## Prerequisites
 - Rancher should be installed.
 - All the nodes in clusters should have iscsi enabled. See the [prerequisites](/docs/next/prerequisites.html) section.
 
-### Installation of OpenEBS
+### Installing OpenEBS using Rancher Dashboard
 
-- Use Rancher dashboard and enable the helm stable from Catalogs.
+ The following procedure helps you install OpenEBS using Rancher dashboard.
+ 
+ 1. Go to the Rancher dashboard and select **Catalogs**. The screen is displayed as follows.
 
 ![Helm-Enable](docs/assets/rancher_enable_helm.PNG)
 
 
-- Launch **openebs** from Catalog Apps.
+2. Click **Enable** to enable **Helm Stable**. Helm Stable is now **Enabled**.
+3. Go to **Catalog Apps** from the Rancher dashboard. The following screen is displayed.
 
 ![openebs-installation](docs/assets/rancher_openebs_install.PNG)
 
 
-- Add storage class. In storage class provide details such as Name, Provisoner and Parameters.
+4. Click **openebs**
+5. Click **Launch** to launch OpenEBS
+6. Click **Storage** from the Rancher dashboard.
 
 ![openebs-storageclass](docs/assets/rancher_openebs_storageclass.PNG)
 
 
+7 Select **Storage Class** to add storage class. Add details such as Name, Provisioner, and Parameters.
+
 ```
    Example: 
-           Name-openebs- standalone
+           Name-openebs-percona
            Provisioner- openebs.io/provisione-iscsi(custom)
            Parameters: openebs.io/capacity             5G
            openebs.io/jiva-replica-count               3
