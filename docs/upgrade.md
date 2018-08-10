@@ -7,18 +7,18 @@ sidebar_label: Upgrade
 ------
 
 OpenEBS supports the upgrade to 0.6 version only from 0.5.3 and 0.5.4.
-For older verions, upgrade to either 0.5.3 or 0.5.4 before upgrading to 0.6. For steps to upgrade 0.5.3 or 0.5.4,[cLick](https://v05-docs.openebs.io/) here.
+For older verions, upgrade to either 0.5.3 or 0.5.4 before upgrading to 0.6. For steps to upgrade to 0.5.3 or 0.5.4,[cLick](https://v05-docs.openebs.io/) here.
 
 Upgrading OpenEBS is a two step process.
 
-1. Upgrade the OpenEBS Operator
+1. Upgrade the OpenEBS Operator.
 
 2. Upgrade the OpenEBS volumes that were created with older OpenEBS Operator.
 
-Upgrading OpenEBS Operator depends on how OpenEBS was installed. Depending upon the type of installation select one of the following.
+Upgrading OpenEBS Operator depends on how OpenEBS was installed. Based on the type of installation select one of the following.
 **Step-1 Upgrade OpenEBS Operator**
 
-**Upgrade Using Kubectl** ( OpenEBS was installed by kubectl using openebs-operator.yaml file)
+**Upgrade Using Kubectl** ( OpenEBS was installed by kubectl using the openebs-operator.yaml file)
 
 **Note** The following sample steps will work only if you have installed OpenEBS without modifying the default values.
 
@@ -40,7 +40,7 @@ customresourcedefinition "storagepools.openebs.io" deleted
 storageclass "openebs-standard" deleted
 ```
 
-Delete the storage classes next. Execute the following command.
+Delete the storage classes using the following command.
 ```
 kubectl delete -f openebs-storageclasses.yaml
 ```
@@ -61,7 +61,7 @@ Wait for the objects to be deleted. You can verify the same using the following 
 ```
 kubectl get deploy
 ```
-You can now install the 0.6 operator using command.
+You can now install the 0.6 operator using following command.
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
 ```
@@ -81,7 +81,7 @@ storageclass "openebs-standard" created
 storageclass "openebs-snapshot-promoter" created
 customresourcedefinition "volumepolicies.openebs.io" created
 ```
-You must deploy the 0.6 storage classes, using the following command.
+You must deploy the 0.6 storage classes using the following command.
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
 ```
@@ -115,26 +115,26 @@ openebs 1               Fri Aug  3 14:50:11 2018        DEPLOYED        openebs-
 
 Here the release name is openebs.
 
-Next you you have to upgarde using following command. You have to replace <release-name> with your actual release name.
+Upgarde using following command. You have to replace <release-name> with your actual release name.
 ```
 helm upgrade -f https://openebs.github.io/charts/helm-values-0.6.0.yaml <release-name> stable/openebs
 ```
 
 **Using customized operator YAML or helm chart**
 
-Before proceeding with upgrade, you must update your custom helm chart or YAML with 0.6 release tags and changes made in the values/templates.
+Before proceeding with the upgrade, you must update your custom helm chart or YAML with 0.6 release tags and changes made in the values/templates.
 
 Use the following as reference for the changes made in 0.6: 
 - stable/openebs [PR#6768](https://github.com/helm/charts/pull/6768) or 
-- openebs-charts [PR#1646](https://github.com/openebs/openebs/pull/1646) as reference.
+- openebs-charts [PR#1646](https://github.com/openebs/openebs/pull/1646)
 
 After updating the YAML or helm chart values, you can use the steps mentioned above to upgrade the OpenEBS operator depending upon your type of installation.
 
-**Step-2 Upgrade OpenEBS old volumes created with 0.5.3 or 0.5.4**
+**Step-2 Upgrade OpenEBS (old volumes) created with 0.5.3 or 0.5.4**
 
 Even after the OpenEBS Operator has been upgraded to 0.6, the old volumes will continue to work with 0.5.3 or 0.5.4. Each of the volumes should be upgraded (one at a time) to 0.6, using the steps provided below.
 
-**Note:** There has been a change in the way OpenEBS Controller Pods communicate with the Replica Pods. So, it is recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, ensure that you have taken a backup of the data before starting the following upgrade procedure.
+**Note:** There has been a change in the way OpenEBS Controller Pods communicate with the Replica Pods. Hence, it is recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, ensure that you have taken a backup of the data before starting the following upgrade procedure.
 
 **Download the upgrade scripts**
 
