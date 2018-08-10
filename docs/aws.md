@@ -116,9 +116,9 @@ Use local ubuntu 16.04 machine from where you can login into AWS with appropriat
 
 10. From EC2 instance page, you will get the each instance type Public IP.
 
-   **Example:**
+  **Example:**
 
-   ![EC2_instance_PublicIP](/docs/assets/insatnce_with_public_ip.PNG)
+  ![EC2_instance_PublicIP](/docs/assets/insatnce_with_public_ip.PNG)
 
 11. Goto **Launch Configuration** section in the EC2 page and take a *copy of Launch configuration* for nodes. Select the configuration for Node group and click on Actions pane.
 
@@ -128,9 +128,9 @@ Use local ubuntu 16.04 machine from where you can login into AWS with appropriat
 
 12. Perform changes in the **Configure Details** section as follows.
 
-    - [ ] Change the new configuration name if you need
+    - Change the new configuration name if you need
 
-    - [ ] Edit **Advanced Details** section and add following entry at the end of **User data** section
+    - Edit **Advanced Details** section and add following entry at the end of **User data** section
 
       ```
       #!/bin/bash
@@ -150,7 +150,7 @@ Use local ubuntu 16.04 machine from where you can login into AWS with appropriat
 
       ![User_data](/docs/assets/User_data.PNG)
 
-    - [ ] Click on Skip to review and proceed with Create launch configuration.
+    - Click on Skip to review and proceed with Create launch configuration.
 
 13. Goto **Auto Scale Group** section in the EC2 page. Select the configuration for Node group and click on Actions pane to edit Launch Configuration. Change the existing one with new Launch Configuration and save the new configuration.
 
