@@ -6,7 +6,7 @@
     "Usecases": ["bluegreen", "cicd"],
     "Integrations": ["openshift", "stackpointcloud","aws", "ibmcloud", "rancher", "mayaonline"],
     "Databases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "Kafka", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
-    "Tasks": ["tasks_install", "tasks_volumeprovisioning", "tasks_snapclones", "tasks_backuprestore", "tasks_monitoring"],
+    "Tasks": ["tasks_install", "tasks_volumeprovisioning"],
     "FAQs": ["faq"],
     "Troubleshooting": ["troubleshooting", "readonlyvolumes", "tsgcollectlogs", "tsg_install", "tsgpvs"],
     "Releases": ["changelog"],
