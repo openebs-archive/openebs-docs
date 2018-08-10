@@ -86,7 +86,7 @@ pvc-564ae713-95fb-11e8-8754-42010a8000df-rep-688cc58bbf-rbxnw    1/1       Runni
 ```
 
 
-## Decreasing  Number of Jiva Replicas
+## Decreasing Number of Jiva Replicas
 
 The following procedure must be performed for decreasing number of Jiva replicas. You can decrease the Jiva replica online, if the current replica count is 3 or more. OpenEBS recommends you to perform the change with no load on the volume if current replica count is 2.
 
@@ -256,9 +256,9 @@ kubectl get pods -n openebs
 
     Now, decreasing the Jiva replica process is complete. Repeat the procedure if you want to decrease the count further.
 
-## How to Verify Jiva Replica Health Synchronization
+## Verifying Jiva Replica Health Synchronization
 
-You can verify using the mayactl command. In the beginning, find the name of maya-apiserver pod using the following command.
+You can verify the Jiva replica health synchronization by using the mayactl command. You must first find the name of maya-apiserver pod using the following command.
 
 ```
 kubectl get pods -n openebs
@@ -320,29 +320,29 @@ pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc-rep-789c9958b9-x8pjf     RW            
 
 Get the status and access mode of each replica from both the Nodes. Some access mode labels are NA, WO etc. **NA** means that Node is not running yet and **WO** means node has started replication after Node started running.
 
-## Deploy Jiva Pods with custom namespace
+## Deploy Jiva Pods with Custom Namespace
 
-Create the custom namespace if it is not existing in your cluster using below command. 
+Create the custom namespace if it is not existing in your cluster using the following command. 
 
     kubectl create namespace <custom_namespace_name>
 
-Example:
+**Example:**
 
     kubectl create namespace app
 
-Deploy your pvc yaml using the custom namespace. It can be done as follows.
+Deploy your pvc yaml using the custom namespace using the following command.
 
     kubectl apply -f <pvc_yaml> -n <custom_namespace_name>
 
-Example:
+**Example:**
 
     kubectl apply -f percona-openebs-deployment.yaml -n app
 
-The OpenEBS jiva Pods and application will be created in same custom namespace. You can check it with below commands
+The OpenEBS Jiva Pods and application will be created in the same custom namespace. You can check using the following command.
 
     kubectl get pods -n app
 
-The following will be the output
+The following output will be displayed.
 
     NAME                                                             READY     STATUS    RESTARTS   AGE
     percona-7f6bff67f6-hw4ml                                         1/1       Running   0          1m
@@ -351,23 +351,22 @@ The following will be the output
     pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-rep-7c66dd6b84-xkc85    1/1       Running   0          1m
     pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-rep-7c66dd6b84-zw6vl    1/1       Running   0          1m
 
-Check the pvc status by using below command with custom namespace.
+Check the pvc status by using the following command with custom namespace.
 
     kubectl get pvc -n app
 
-The following will be the output
+The following output is displayed.
 
     demo-vol1-claim   Bound     pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc   5G         RWO            openebs-percona   39s
+    
 
+## Moving Data to Another Cluster
 
+## Moving the Replicas to Another Node
 
-## Move the data to another cluster
+## Deleting Volume Data Permanently  
 
-## Move the replicas to another node
-
-## Permanently delete volume data
-
-## Expanding the Jiva Storage Volumes
+## Expanding Jiva Storage Volumes
 
 You can resize/expand the OpenEBS volume using the following procedure.                                                     
 
@@ -483,24 +482,20 @@ kubectl delete pod percona-b98f87dbd-nqssn
 13. Application pod must be in running state and you can use the resized volume. 
 
 
-## Node affinity for an application
+## Node Affinity for an Application
 
-To know about node selector, see scheduler section.
+To know about node selector, see [scheduler](/docs/next/scheduler.html) section.
 
-**Modify the application yaml**
+**Modifying the application yaml**
 
-We have taken mongo-statefulset application as an example.
-
-For scheduling application on nodes, you must have labelled nodes so that mongo application will be scheduled on required nodes. 
-
-For mongo-statefulset.yml, under spec:section you can add the following.
+For scheduling application on required nodes, you must have labelled the nodes appropriately. For example, the nodes are labelled as `openebs: controlnode`. The same label must be added in the application yaml file. For example, in the mongo-statefulset.yml file, under spec section you can add the following.
 
     nodeSelector:
        openebs: controlnode
 
 **Example:**
 
-Update the mongo-statefulset.yml
+Following is a mongo statefulset application yaml file with the above entry added.
 
     ---
     apiVersion: apps/v1beta1
@@ -520,6 +515,8 @@ Update the mongo-statefulset.yml
          nodeSelector:
             openebs: controlnode
          containers:
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
