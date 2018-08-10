@@ -33,8 +33,9 @@ sidebar_label: Rancher
 
 7 Select **Storage Class** to add storage class. Add details such as Name, Provisioner, and Parameters.
 
-```
-   Example: 
+**Example:**
+
+``` 
            Name-openebs-percona
            Provisioner- openebs.io/provisione-iscsi(custom)
            Parameters: openebs.io/capacity             5G
