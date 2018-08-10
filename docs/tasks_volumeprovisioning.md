@@ -320,6 +320,47 @@ pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc-rep-789c9958b9-x8pjf     RW            
 
 Get the status and access mode of each replica from both the Nodes. Some access mode labels are NA, WO etc. **NA** means that Node is not running yet and **WO** means node has started replication after Node started running.
 
+## Deploy Jiva Pods with custom namespace
+
+Create the custom namespace if it is not existing in your cluster using below command. 
+
+    kubectl create namespace <custom_namespace_name>
+
+Example:
+
+    kubectl create namespace app
+
+Deploy your pvc yaml using the custom namespace. It can be done as follows.
+
+    kubectl apply -f <pvc_yaml> -n <custom_namespace_name>
+
+Example:
+
+    kubectl apply -f percona-openebs-deployment.yaml -n app
+
+The OpenEBS jiva Pods and application will be created in same custom namespace. You can check it with below commands
+
+    kubectl get pods -n app
+
+The following will be the output
+
+    NAME                                                             READY     STATUS    RESTARTS   AGE
+    percona-7f6bff67f6-hw4ml                                         1/1       Running   0          1m
+    pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-ctrl-6b598f7c6c-46dvx   2/2       Running   0          1m
+    pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-rep-7c66dd6b84-7mh4m    1/1       Running   0          1m
+    pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-rep-7c66dd6b84-xkc85    1/1       Running   0          1m
+    pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-rep-7c66dd6b84-zw6vl    1/1       Running   0          1m
+
+Check the pvc status by using below command with custom namespace.
+
+    kubectl get pvc -n app
+
+The following will be the output
+
+    demo-vol1-claim   Bound     pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc   5G         RWO            openebs-percona   39s
+
+
+
 ## Move the data to another cluster
 
 ## Move the replicas to another node
@@ -442,6 +483,43 @@ kubectl delete pod percona-b98f87dbd-nqssn
 13. Application pod must be in running state and you can use the resized volume. 
 
 
+## Node affinity for an application
+
+To know about node selector, see scheduler section.
+
+**Modify the application yaml**
+
+We have taken mongo-statefulset application as an example.
+
+For scheduling application on nodes, you must have labelled nodes so that mongo application will be scheduled on required nodes. 
+
+For mongo-statefulset.yml, under spec:section you can add the following.
+
+    nodeSelector:
+       openebs: controlnode
+
+**Example:**
+
+Update the mongo-statefulset.yml
+
+    ---
+    apiVersion: apps/v1beta1
+    kind: StatefulSet
+    metadata:
+     name: mongo
+    spec:
+     serviceName: "mongo"
+     replicas: 3
+     template:
+       metadata:
+         labels:
+           role: mongo
+           environment: test
+       spec:
+         terminationGracePeriodSeconds: 10
+         nodeSelector:
+            openebs: controlnode
+         containers:
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
