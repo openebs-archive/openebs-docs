@@ -9,7 +9,7 @@ sidebar_label: Rancher
 - Rancher should be installed.
 - All the nodes in clusters should have iscsi enabled. See the [prerequisites](/docs/next/prerequisites.html) section.
 
-### Installing OpenEBS using Rancher Dashboard
+## Installing OpenEBS using Rancher Dashboard
 
  The following procedure helps you install OpenEBS using Rancher dashboard.
  
