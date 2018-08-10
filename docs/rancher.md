@@ -13,7 +13,7 @@ sidebar_label: Rancher
 
  The following procedure helps you install OpenEBS using Rancher dashboard.
  
- 1. Go to the Rancher dashboard and select **Catalogs**. The screen is displayed as follows.
+ 1. Go to the Rancher dashboard and select **Catalogs**. The following screen is displayed.
 
 ![Helm-Enable](docs/assets/rancher_enable_helm.PNG)
 
@@ -24,9 +24,9 @@ sidebar_label: Rancher
 ![openebs-installation](docs/assets/rancher_openebs_install.PNG)
 
 
-4. Click **openebs**
-5. Click **Launch** to launch OpenEBS
-6. Click **Storage** from the Rancher dashboard.
+4. Click **openebs**.
+5. Click **Launch** to launch OpenEBS.
+6. Go to the Rancher dashboard and click **Storage**.
 
 ![openebs-storageclass](docs/assets/rancher_openebs_storageclass.PNG)
 
