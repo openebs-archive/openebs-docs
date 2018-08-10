@@ -9,7 +9,6 @@ sidebar_label: Upgrade
 OpenEBS supports the upgrade to 0.6 version only from 0.5.3 and 0.5.4.
 For older verions, upgrade to either 0.5.3 or 0.5.4 before upgrading to 0.6. For steps to upgrade to 0.5.3 or 0.5.4,[cLick](https://v05-docs.openebs.io/) here.
 
-Upgrading OpenEBS is a two step process.
 
 1. Upgrade the OpenEBS Operator.
 
@@ -157,23 +156,7 @@ Note that the key `openebs-pv` is fixed. However you can use any value in place 
 
 Repeat the above step of labellilng the node for all the nodes where replicas are scheduled. The assumption is that all the PV replicas are scheduled on the same set of 3 nodes. 
 
-**Limitations:**
-- Must handle cases where there are a mix of PVs with 1 and 3 replicas or 
-- Scenarios like PV1 replicas are on nodes - n1, n2, n3, where as PV2 replicas are on nodes - n2, n3, n4
-- This is a preliminary script only intended for use on volumes where data is backed-up.
-- Have the following link handy in case the volume gets into read-only state during the upgrade process.
-  https://docs.openebs.io/docs/next/readonlyvolumes.html
-- In the process of running the following steps, if you run into issues, you can always reach us on Slack
 
-Select the PV that needs to be upgraded
-
-Use the following command to get the PV.
-```
-kubectl get pv
-```
-Upgrade the PV that must be upgraded by using the following command.
-```
-./oebs_update.sh pvc-48fb36a2-947f-11e8-b1f3-42010a800004 openebs-storage
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

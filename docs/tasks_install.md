@@ -23,7 +23,7 @@ gke-ranjith-az-default-pool-fdbb2564-lrr0   Ready     <none>    1h        v1.9.7
 
 The OpenEBS administrator can choose to provide the scheduling configuration for jiva replica pods across different AZs within the same region during installation. The following procedure allows you to modify the configuration.
 
-### 1. Clone OpenEBS Repository.
+1. **Clone OpenEBS Repository.**
 
 To get the latest OpenEBS repository use the following command.
 
@@ -32,20 +32,20 @@ git clone https://github.com/openebs/openebs.git
 cd openebs/k8s
 ```
 
-### 2. Deploying OpenEBS Cluster
+2. **Deploying OpenEBS Cluster**
 
 Apply *openebs-operator.yaml* and apply your corresponding *storageclasses.yaml*. 
 
    **Note:** For StatefulSet applications, OpenEBS recommends using replica count as 1 within the corresponding storageclass yaml.
 
-### 3. Deploying Jiva Replica Across AZs
+3. **Deploying Jiva Replica Across AZs**
 
 You can deploy Jiva replica pods in the stateful and StatefulSet applications. The following section describes deploying Jiva replica pod for both types of applications.  
 
 ### Deploying Jiva Replica Pods for Stateful Applications
 
 Stateful applications are those that are maintaining the data integrity at the storage level using OpenEBS. 
- 
+
 Add the following content in your application yaml under PVC in the *metadata:* section.
 
 ```
