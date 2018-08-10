@@ -7,7 +7,7 @@ sidebar_label: Upgrade
 ------
 
 OpenEBS supports the upgrade to 0.6 version only from 0.5.3 and 0.5.4.
-For older verions, upgrade to either 0.5.3 or 0.5.4 before upgrading to 0.6. For steps to upgrade to 0.5.3 or 0.5.4,[cLick](https://v05-docs.openebs.io/) here.
+For older verions, upgrade to either 0.5.3 or 0.5.4 before upgrading to 0.6. For steps to upgrade to 0.5.3 or 0.5.4,[click](https://v05-docs.openebs.io/) here.
 
 
 1. Upgrade the OpenEBS Operator.
