@@ -16,6 +16,9 @@ Weekly webinar notes are managed using a [Google document](https://docs.google.c
 
 |       Date       | Topics Discussed                                             | Resources                                                    |
 | :--------------: | ------------------------------------------------------------ | ------------------------------------------------------------ |
+|   17 Aug 2018    | Jiva code walkthrough                                        | [Session](https://www.youtube.com/watch?v=kQTY6quS3a0&t=)    |
+|   10 Aug 2018    | NDM Support in Weave Scope                                   | [Session](https://www.youtube.com/watch?v=A84gRbm06Hs)       |
+|    3 Aug 2018    | Demo of cStor and IO Setup                                   | [Session](https://www.youtube.com/watch?v=C_TPkCve4CU)       |
 |   27 July 2018   | Upgrade steps in OpenEBS 0.6                                 | [Slides](https://www.slideshare.net/OpenEBS/upgrade-steps-in-openebs-06) / [Session](https://www.youtube.com/watch?v=n0NKBTMGQmA&feature=youtu.be) |
 |   20 July 2018   | Fixes and Enhancements in OpenEBS 0.6                        | [0.6 Release Notes](https://github.com/openebs/openebs/releases/tag/v0.6) / [Session](https://www.youtube.com/watch?v=0WdwHrsGSL4&t=) |
 |   13 July 2018   | - Deploying OpenEBS with Availability Zones <br/>-  Designing Customer Controller | [Deploying OpenEBS with Availability Zones Slides](https://www.slideshare.net/OpenEBS/deploying-openebs-with-availability-zones?qid=5229627c-be34-4a2e-82fe-3a7dc39f9739&v=&b=&from_search=1) and [Session](https://www.youtube.com/watch?v=sMTUzSRm0PM&t=2s) / [Customer Controller Slides](https://www.slideshare.net/OpenEBS/designing-custom-resource-controller) and [Session](https://www.youtube.com/watch?v=a005Qlx11qc) |
