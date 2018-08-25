@@ -1,7 +1,7 @@
 ---
-id: tasks_install
-title: OpenEBS tasks around Install and Upgrade
-sidebar_label: Install and upgrade
+id: tasks_az
+title: Deploying OpenEBS volumes across AZs on public clouds
+sidebar_label: Deploy acorss AZs 
 ---
 ------
 
