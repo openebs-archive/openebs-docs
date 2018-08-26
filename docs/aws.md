@@ -18,15 +18,15 @@ Instance Store volume's drawback is that the data in an instance store persists 
 - Instance stops
 - Instance terminates
 
-### OpenEBS with AWS Instance Store
+## OpenEBS with AWS Instance Store
 
 Some instance types use NVMe or SATA-based solid state drives (SSD) to deliver high random I/O performance. This is a good option when you need storage with very low latency and do not need the data to persist when the instance terminates. You can also take advantage of fault-tolerant architectures. OpenEBS is an option for high availability of data combined with advantages of using physical disks.
 
-### How is replication done with OpenEBS?
+## How is replication done with OpenEBS?
 
 OpenEBS will have minimum 3 replicas to run OpenEBS cluster with high availability and if a node fails, OpenEBS will manage the data to be replicated to a new disk which will come up as part of ASG. In the meantime your workload is accessing the live data from one the replicas.
 
-![Stateful Applications using OpenEBS and instance stores](/docs/assets/OpenEBS_AWS.png)		
+![Stateful Applications using OpenEBS and instance stores](/docs/assets/OpenEBS_AWS.png)
 
 ## Prerequisites
 
