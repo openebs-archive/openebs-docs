@@ -6,13 +6,11 @@ sidebar_label: AWS
 
 ------
 
-This section covers OpenEBS cluster installation in AWS. AWS has instance type which can be used for different types of use cases. Many of the instance types have EBS as storage for both root and general purposes. Some of the instance types may have instance store volume which  is a temporary storage type located on disks that are physically attached to a host machine.
+This section covers OpenEBS persistent storage solution using AWS instance store disks for applications running on Kubernetes clusters. Instance store disks provide high performance, but they are not guaranteed to be present in the node all the time which of course means that when the node is rescheduled you can lose the data they are storing. 
 
-### Instance Store Volume
+#### Instance Store
 
 Instance store is ideal for temporary storage of information that changes frequently, such as buffers, caches, scratch data, and other temporary content or for data that is replicated across a fleet of instances, such as a load-balanced pool of web servers. 
-
-### Instance Store Lifetime
 
 Instance Store volume's drawback is that the data in an instance store persists only during the lifetime of its associated instance. The data in the instance store may be lost due to the following:
 
@@ -20,9 +18,15 @@ Instance Store volume's drawback is that the data in an instance store persists 
 - Instance stops
 - Instance terminates
 
-## Why OpenEBS with Instance Store?
+### OpenEBS with AWS Instance Store
 
-Some instance types use NVMe or SATA-based solid state drives (SSD) to deliver high random I/O performance. This is a good option when you need storage with very low latency and do not need the data to persist when the instance terminates. You can also take advantage of fault-tolerant architectures. OpenEBS is the best option in this case for high availability of data along with advantages of using physical disks.
+Some instance types use NVMe or SATA-based solid state drives (SSD) to deliver high random I/O performance. This is a good option when you need storage with very low latency and do not need the data to persist when the instance terminates. You can also take advantage of fault-tolerant architectures. OpenEBS is an option for high availability of data combined with advantages of using physical disks.
+
+### How is replication done with OpenEBS?
+
+OpenEBS will have minimum 3 replicas to run OpenEBS cluster with high availability and if a node fails, OpenEBS will manage the data to be replicated to a new disk which will come up as part of ASG. In the meantime your workload is accessing the live data from one the replicas.
+
+![Stateful Applications using OpenEBS and instance stores](/docs/assets/OpenEBS_AWS.png)		
 
 ## Prerequisites
 
