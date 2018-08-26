@@ -3,6 +3,8 @@ id: deployjiva
 title: Deploying Jiva
 sidebar_label: Deploying Jiva
 ---
+------
+
 OpenEBS can be used to create Storage Pool on host disk or externally mounted disk. This Storage Pool can be used to create Jiva volume which can be utilizing to run applications. By default, Jiva volume will be deploying on host root disk. If you are using external disk, more details are mentioned on [storage pool](next/setupstoragepools.html) to create storage pool with external disk. 
 
 ### Deploying Jiva Storage Engine
