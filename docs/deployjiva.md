@@ -41,171 +41,142 @@ Jiva can be deployed in your Kubernetes cluster by following steps. Before insta
   sparse-d3b73e4ba41134752893190aece77c01   18s
   ```
 
-2.       Deploy CAS template which is an approach to provision persistent volumes that make use of CAS storage engine. This can be run by following command.
+2. Deploy CAS template which is an approach to provision persistent volumes that make use of CAS storage engine. This can be run by following command.
 
-         ```
-         kubectl apply -f openebs-pre-release-features.yaml
-         ```
+      ```
+      kubectl apply -f openebs-pre-release-features.yaml
+      ```
 
-         Following command will help to check the CAS Template components.
+      Following command will help to check the CAS Template components.
 
-         ```
-         kubectl get cast -n openebs
-         ```
+      ```
+      kubectl get cast -n openebs
+      ```
 
-         Also, it installs OpenEBS Jiva default storage class which can be used in your application yaml to run application. This can be getting by following below command.
+      Also, it installs OpenEBS Jiva default storage class which can be used in your application yaml to run application. This can be getting by following below command.
 
-         ```
-         kubectl get sc
-         ```
+      ```
+      kubectl get sc
+      ```
 
-         Following is an example output.
+      Following is an example output.
 
-         ```
-         NAME                        PROVISIONER                                                AGE
-         openebs-cstor-sparse        openebs.io/provisioner-iscsi                               1m
-         openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   14m
-         openebs-standard            openebs.io/provisioner-iscsi                               14m
-         standard (default)          kubernetes.io/gce-pd  
-         ```
+      ```
+      NAME                        PROVISIONER                                                AGE
+      openebs-cstor-sparse        openebs.io/provisioner-iscsi                               1m
+      openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   14m
+      openebs-standard            openebs.io/provisioner-iscsi                               14m
+      standard (default)          kubernetes.io/gce-pd  
+      ```
 
-3.        Edit **openebs-config.yaml** to include the mounted disk path associated to each node in the cluster using which you are creating the OpenEBS Storage Pool. Change the *path* under *spec* section
-         with the mounted directory created under each Nodes.
+3. Edit **openebs-config.yaml** to include the mounted disk path associated to each node in the cluster using which you are creating the OpenEBS Storage Pool. Change the *path* under *spec* section
+      with the mounted directory created under each Nodes.
 
-         ```
-         path: "/mnt/openebs_disk"
-         Example:
-         apiVersion: openebs.io/v1alpha1
-         kind: StoragePool
-         metadata:
-           name: default
-           type: hostdir
-         spec:
-           path: "/mnt/openebs_disk"
-         ```
+      ```
+      path: "/mnt/openebs_disk"
+      Example:
+      apiVersion: openebs.io/v1alpha1
+      kind: StoragePool
+      metadata:
+        name: default
+        type: hostdir
+      spec:
+        path: "/mnt/openebs_disk"
+      ```
 
-4.       Apply modified **openebs-config.yaml** by following command
+4. Apply modified **openebs-config.yaml** by following command
 
-         ```
-          kubectl apply -f openebs-config.yaml
-         ```
+      ```
+       kubectl apply -f openebs-config.yaml
+      ```
 
-         This will create custom resource deployments. This can be get by running below command.
+      This will create custom resource deployments. This can be get by running below command.
 
-         ```
-         kubectl get crd -n openebs
-         ```
+      ```
+      kubectl get crd -n openebs
+      ```
 
-         Following is an example output.
+      Following is an example output.
 
-         ```
-         NAME                                                         AGE
-         castemplates.openebs.io                                      59m
-         cstorpools.openebs.io                                        59m
-         cstorvolumereplicas.openebs.io                               59m
-         cstorvolumes.openebs.io                                      59m
-         disks.openebs.io                                             59m
-         runtasks.openebs.io                                          59m
-         storagepoolclaims.openebs.io                                 59m
-         storagepools.openebs.io                                      59m
-         volumesnapshotdatas.volumesnapshot.external-storage.k8s.io   59m
-         volumesnapshots.volumesnapshot.external-storage.k8s.io       59m
-         ```
+      ```
+      NAME                                                         AGE
+      castemplates.openebs.io                                      59m
+      cstorpools.openebs.io                                        59m
+      cstorvolumereplicas.openebs.io                               59m
+      cstorvolumes.openebs.io                                      59m
+      disks.openebs.io                                             59m
+      runtasks.openebs.io                                          59m
+      storagepoolclaims.openebs.io                                 59m
+      storagepools.openebs.io                                      59m
+      volumesnapshotdatas.volumesnapshot.external-storage.k8s.io   59m
+      volumesnapshots.volumesnapshot.external-storage.k8s.io       59m
+      ```
 
-5.       In this case, it is added one additional disk per each node and using above command will create default
-         storage Pool using single disk per each node. Storage pool details can be get by running following  command. 
+5. In this case, it is added one additional disk per each node and using above command will create default
+      storage Pool using single disk per each node. Storage pool details can be get by running following  command. 
 
-         ```
-         kubectl get sp -n openebs
-         ```
+      ```
+      kubectl get sp -n openebs
+      ```
 
-         Following is an example output.
+      Following is an example output.
 
-         ```
-         NAME                            AGE
-         	cstor-pool-default-0.7.0-3xnj   2h
-         	cstor-pool-default-0.7.0-t9n1   2h
-         	cstor-pool-default-0.7.0-y5ql   2h
-         	cstor-sparse-pool-41o7          13h
-         	cstor-sparse-pool-5cpp          13h
-         	cstor-sparse-pool-m1ff          13h
-         	default                         13h
-         ```
+      ```
+      NAME                            AGE
+      	cstor-pool-default-0.7.0-3xnj   2h
+      	cstor-pool-default-0.7.0-t9n1   2h
+      	cstor-pool-default-0.7.0-y5ql   2h
+      	cstor-sparse-pool-41o7          13h
+      	cstor-sparse-pool-5cpp          13h
+      	cstor-sparse-pool-m1ff          13h
+      	default                         13h
+      ```
 
-6.        Now, you are deployed OpenEBS cluster with Jiva Engine. It can create OpenEBS Jiva volume on default storage Pool. By default, OpenEBS Jiva volume will be running with 3 replica count. 
+6. Now, you are deployed OpenEBS cluster with Jiva Engine. It can create OpenEBS Jiva volume on default storage Pool. By default, OpenEBS Jiva volume will be running with 3 replica count. 
 
-7.        Get the sample PVC yaml which can be used to create OpenEBS Jiva volume with default CAS Template values. Following command will help you to get the sample pvc yaml file.
+7. Get the sample PVC yaml which can be used to create OpenEBS Jiva volume with default CAS Template values. Following command will help you to get the sample pvc yaml file.
 
-         ```
-         cd openebs/k8s/demo/
-         ```
+      ```
+      cd openebs/k8s/demo/
+      ```
 
-         In this sample PVC yaml, it will use default storage class *openebs-standard* created as part of
-         **openebs-operator.yaml** installation.
+      In this sample PVC yaml, it will use default storage class *openebs-standard* created as part of
+      **openebs-operator.yaml** installation.
 
-8.        Apply the sample pvc yaml to create Jiva volume using following command.
+8. Apply the sample pvc yaml to create Jiva volume using following command.
 
-         ```
-         kubectl apply -f pvc-standard-jiva-default.yaml
-         ```
+      ```
+      kubectl apply -f pvc-standard-jiva-default.yaml
+      ```
 
-9.       Get the pvc details by running following command .
+9. Get the pvc details by running following command .
 
-         ```
-         kubectl get pvc
-         ```
+      ```
+      kubectl get pvc
+      ```
 
-         Following is an example output.
+      Following is an example output.
 
-         ```
-         NAME              STATUS    VOLUME                               CAPACITY   ACCESS MODES   STORAGECLASS       AGE
-         demo-vol1-claim   Bound     default-demo-vol1-claim-3249598138   4G         RWO            openebs-standard   52s
-         ```
+      ```
+      NAME              STATUS    VOLUME                               CAPACITY   ACCESS MODES   STORAGECLASS       AGE
+      demo-vol1-claim   Bound     default-demo-vol1-claim-3249598138   4G         RWO            openebs-standard   52s
+      ```
 
-         Get the pv details by running below command.
+      Get the pv details by running below command.
 
-         ```
-         kubectl get pv
-         ```
+      ```
+      kubectl get pv
+      ```
 
-         Following is an example output.
+      Following is an example output.
 
-         ```
-         NAME                                 CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                     STORAGECLASS       REASON    AGE
-         default-demo-vol1-claim-3249598138   4G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-standard             45m
-         ```
+      ```
+      NAME                                 CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                     STORAGECLASS       REASON    AGE
+      default-demo-vol1-claim-3249598138   4G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-standard             45m
+      ```
 
-10.         Use this pvc name in your application yaml to run your application using OpenEBS cStor volume.
+10. Use this pvc name in your application yaml to run your application using OpenEBS cStor volume.
 
-
-
-
-x!C}
-
-
-
-
-x!C}
-
-
-
-
-x!C}
-
-
-
-
-x!C}
-
-
-
-
-x!C}
-
-
-
-
-x!C}
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
