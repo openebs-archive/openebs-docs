@@ -251,14 +251,16 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 
  Output similar to the following is displayed.
 
-    ```
-    NAME                                                             READY     STATUS    RESTARTS   AGE       IP           NODE
-    percona-7f6bff67f6-cz47d                                         1/1       Running   0          1m        100.96.3.7   ip-172-20-40-26.us-west-2.compute.internal
-    pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-ctrl-84bcf764d6-269rj   2/2       Running   0          1m        100.96.1.4   ip-172-20-62-11.us-west-2.compute.internal
-    pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-rep-54b8f49ff8-bzjq4    1/1       Running   0          1m        100.96.1.5   ip-172-20-62-11.us-west-2.compute.internal
-    pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-rep-54b8f49ff8-lpz2k    1/1       Running   0          1m        100.96.2.8   ip-172-20-32-255.us-west-2.compute.internal
-    pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-rep-54b8f49ff8-rqnr7    1/1       Running   0          1m        100.96.3.6   ip-172-20-40-26.us-west-2.compute.internal
-    ```
+```
+NAME                                                             READY     STATUS    RESTARTS   AGE       IP           NODE
+percona-7f6bff67f6-cz47d                                         1/1       Running   0          1m        100.96.3.7   ip-172-20-		40-26.us-west-2.compute.internal
+pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-ctrl-84bcf764d6-269rj   2/2       Running   0          1m        100.96.1.4   ip-172-20-62-11.us-west-2.compute.internal
+pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-rep-54b8f49ff8-bzjq4    1/1       Running   0          1m        	100.96.1.5   ip-172-20-62-11.us-west-2.compute.internal
+pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-rep-54b8f49ff8-lpz2k    1/1       Running   0          1m        100.96.2.8   ip-172-20-32-255.us-west-2.compute.internal
+pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-rep-54b8f49ff8-rqnr7    1/1       Running   0          1m        100.96.3.6   ip-172-20-40-26.us-west-2.compute.internal
+```
+
+
 
 23. Get the status of PVC using the following command.
 
@@ -266,12 +268,14 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     kubectl get pvc
     ```
 
- Output similar to the following is displayed.
+ Output similar to the following is displayed. 
 
-    ```
-    NAME              STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE
-    demo-vol1-claim   Bound     pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6   5G         RWO            openebs-percona   3m 
-    ```
+```
+NAME              STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE
+demo-vol1-claim   Bound     pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6   5G         RWO            openebs-percona   3m 
+```
+
+
 
 24. Get the status of PV using the following command.
 
@@ -281,10 +285,8 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 
  Output of the above command will be similar to the following.
 
-    ```
     NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                     STORAGECLASS      REASON    AGE
     pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6   5G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-percona             3m 
-    ```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
