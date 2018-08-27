@@ -32,7 +32,7 @@ const siteConfig = {
   onPageNav: 'separate',
   editUrl: 'https://github.com/openebs/openebs-docs/edit/staging/docs/',
   /* path to images for header/footer */
-  headerIcon: 'img/OpenEBSLogo.png',
+  headerIcon: 'img/openebs-logo.svg',
   favicon: 'img/favicon.ico',
   /* colors for website */
   colors: {
