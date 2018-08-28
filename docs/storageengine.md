@@ -6,7 +6,7 @@ sidebar_label: CAS Engines
 
 ------
 
-`Feature status: Pre-Alpha /Experimental. Users are advised to use this feature with caution.`
+`Feature status: Alpha / Experimental. 
 
 ## Overview of a Storage Engine
 
