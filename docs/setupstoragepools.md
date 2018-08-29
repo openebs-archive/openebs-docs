@@ -35,7 +35,7 @@ To utilize an external disk, you must create a storage pool on the node where yo
 gcloud compute ssh < Node Name > --zone=< Zone Of Your Node >
 ```
 
-To create a storage pool you must first mount the external disk to the cluster. 
+To create a storage pool you must first mount the external disk to all required nodes in the cluster.
 
 ```
 sudo mkdir /mnt/openebs_disk
@@ -44,10 +44,16 @@ sudo mkdir /mnt/openebs_disk
 Verify the name and size of the disk using the following command.
 
 ```
-lsblk
+sudo lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL
 ```
 
-Once you have verified the same, format the disk. Use the following command to format the disk.
+Once you have verified the same, format the newly mounted disk. Use the following command to format the disk.
+
+```
+sudo mkfs.ext4 /dev/<device-name>
+```
+
+**Example:**
 
 ```
 sudo mkfs.ext4 /dev/sdb
@@ -71,7 +77,7 @@ spec:
 	path: "/mnt/openebs_disk"      
 ```
 
-**Note:** Change the path with your mounted path if it is not your default mount path. Also, remember your pool name. In this example, the pool name is *test-mntdir*.
+**Note:** Change the path with your mounted path if it is not your default mount path. Also, remember your pool name. In this example, the pool name is *test-mntdir*. 
 
 ## Scheduling a Pool on a Node
 
