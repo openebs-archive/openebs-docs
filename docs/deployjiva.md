@@ -11,47 +11,21 @@ OpenEBS can be used to create Storage Pool on a host disk or an externally mount
 
 Jiva can be deployed in your Kubernetes cluster by using the following procedure. Before installation, all [prerequisites](/docs/next/prerequisites.html) must be set on the Nodes. 
 
-1. Clone latest OpenEBS repository using the following command.
-
-  ```
-  git clone https://github.com/openebs/openebs.git
-  cd openebs/k8s
-  wget https://raw.githubusercontent.com/openebs/charts/master/docs/openebs-config-0.7.0-RC2.yaml
-  ```
-
-  Apply openebs-operator.yaml file to create OpenEBS control plane components. 
+1. Apply openebs-operator.yaml file to create OpenEBS control plane components. 
 
   ```
   kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/openebs-operator-0.7.0-RC2.yaml
   ```
 
-  OpenEBS pods are created under “*openebs*” namespace. By applying the above commands, Node Disk Manager, CAS Template, and default storage classes are created. 
+  OpenEBS pods are created under “*openebs*” namespace. CAS Template and default Storage Classes are created as part of executing above command
 
-  Node Disk Manager manages the disks associated to each node in the cluster. You can get the disk details by running the following command.
-
-  ```
-  kubectl get disk
-  ```
-
-  Following is an example output.
-
-  ```
-  NAME                                      AGE
-  disk-1ff520175e1b073c9686eb6e766c382c     18s
-  disk-99e493868eb213dd776b248f542d1c79     18s
-  disk-c88cbc696fc8d523372ab291ef83f4bd     18s
-  sparse-2112d48d72a3f8a083e4ad26068b44bf   18s
-  sparse-98f52f461c60564140e7178603b71858   18s
-  sparse-d3b73e4ba41134752893190aece77c01   18s
-  ```
-
-   CAS Template is an approach to provision persistent volumes that make use of CAS storage engine. The following command will help check the CAS Template components.
+  CAS Template is an approach to provision persistent volumes that make use of CAS storage engine. The following command will help check the CAS Template components.
 
   ```
   kubectl get cast -n openebs
   ```
 
-   Also, it installs the default Jiva storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
+  Also, it installs the default Jiva storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
 
   ```
   kubectl get sc
@@ -66,7 +40,22 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
       openebs-standard            openebs.io/provisioner-iscsi                               14m
       standard (default)          kubernetes.io/gce-pd  									14m
 
-2. Edit **openebs-config.yaml** to include the mounted disk path associated to each node in the cluster that you are using to create the OpenEBS Storage Pool. Change the *path* under *spec* section with the mounted directory created under each Node as below.
+2. Create a "*openebs-config.yaml*" in your node and paste below yaml files to create Storage Pool on your hosted path on the Node. Jiva storage pool will be created by default on "/var/openebs" inside the hosted path on the nodes. 
+
+      ```
+      ---
+      apiVersion: openebs.io/v1alpha1
+      kind: StoragePool
+      metadata:
+        name: default
+        type: hostdir
+      spec:
+        path: "/var/openebs"
+      ---
+      ```
+      If you would like to create storage pool on external disk which is mounted on the nodes, change the path mentioned in the above yaml with appropriate disk mounted path on the Nodes. 
+
+      If your external disk is mounted as "*/mnt/openebs_disk*" in your node, change the path as below way
 
       ```
       path: "/mnt/openebs_disk"
@@ -75,6 +64,7 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
       **Example:**
 
       ```
+      ---
       apiVersion: openebs.io/v1alpha1
       kind: StoragePool
       metadata:
@@ -82,6 +72,7 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
         type: hostdir
       spec:
         path: "/mnt/openebs_disk"
+      ---
       ```
 
 3. Apply modified **openebs-config.yaml** by using the following command
@@ -90,30 +81,8 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
       kubectl apply -f openebs-config-0.7.0-RC2.yaml
       ```
 
-      This will create custom resource deployments. Run the following command.
-
-      ```
-      kubectl get crd -n openebs
-      ```
-
-      Following is an example output.
-
-      ```
-      NAME                                                         AGE
-      castemplates.openebs.io                                      59m
-      cstorpools.openebs.io                                        59m
-      cstorvolumereplicas.openebs.io                               59m
-      cstorvolumes.openebs.io                                      59m
-      disks.openebs.io                                             59m
-      runtasks.openebs.io                                          59m
-      storagepoolclaims.openebs.io                                 59m
-      storagepools.openebs.io                                      59m
-      volumesnapshotdatas.volumesnapshot.external-storage.k8s.io   59m
-      volumesnapshots.volumesnapshot.external-storage.k8s.io       59m
-      ```
-
 4. In this case, one additional disk per node is added and using the above command will create default
-      storage Pool using single disk per node. You can get the storage pool details by running the following command. 
+      storage pool on external of disk per each node. You can get the storage pool details by running the following command. 
 
       ```
       kubectl get sp -n openebs
@@ -134,9 +103,10 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
 
 5. Now, you have deployed OpenEBS cluster with Jiva Engine. It can create OpenEBS Jiva volume on default storage Pool. By default, OpenEBS Jiva volume runs with 3 replica count. 
 
-6. Get the sample PVC yaml which can be used to create OpenEBS Jiva volume with default CAS Template values. The following command will help you to get the sample pvc yaml file.
+6. Get the sample PVC yaml which can be used to create OpenEBS Jiva volume with default CAS Template values. The following command will help you to get the sample pvc yaml file *pvc-standard-jiva-default.yaml*.
 
       ```
+      git clone https://github.com/openebs/openebs.git
       cd openebs/k8s/demo/
       ```
 
@@ -148,7 +118,7 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
       kubectl apply -f pvc-standard-jiva-default.yaml
       ```
 
-8. Get the pvc details by running the following command.
+8. Get the Jiva pvc details by running the following command.
 
       ```
       kubectl get pvc
@@ -161,7 +131,7 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
       demo-vol1-claim   Bound     default-demo-vol1-claim-3249598138   4G         RWO            openebs-standard   52s
       ```
 
-      Get the pv details by running the following command.
+      Get the Jiva  pv details by running the following command.
 
       ```
       kubectl get pv
@@ -174,7 +144,7 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
       default-demo-vol1-claim-3249598138   4G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-standard             45m
       ```
 
-9. Use this pvc name in your application yaml to run your application using OpenEBS cStor volume.
+9. Use this pvc name in your application yaml to run your application using OpenEBS Jiva volume.
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
