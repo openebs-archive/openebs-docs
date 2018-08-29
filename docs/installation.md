@@ -78,7 +78,7 @@ Specify each parameter using the `--set key=value` argument to `helm install`.
 
 Set the context to **cluster-admin** and execute the below commands using kubectl.
 
-As a cluster admin, you can deploy jiva or cStor based on your requirements. For more information about deploying them, see deploying jiva and deploying cStor.
+As a cluster admin, you can deploy jiva or cStor based on your requirements. For more information about deploying them, see [deploying jiva](/docs/next/deployjiva.html) and [deploying cStor](/docs/next/deploycstor.html).
 
 Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo).
 
