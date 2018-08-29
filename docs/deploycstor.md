@@ -77,7 +77,7 @@ cStor can be deployed in your Kubernetes cluster by performing the following ste
    wget https://openebs.github.io/charts/openebs-config-0.7.0-RC2.yaml
    ```
 
-3. Edit **openebs-config-0.7.0-RC2.yaml** to include the disk details associated to each node in the cluster which you are using for creating the OpenEBS cStor Pool. Replace the disk names under *diskList* section, which you can get from running `kubectl get disks` command.
+3. Edit **openebs-config-0.7.0-RC2.yaml** to include the disk details associated to each node in the cluster which you are using for creating the OpenEBS cStor Pool. Replace the disk names under *diskList* section, which you can get from running `kubectl get disks --show-labels` command.
 
    ```
    disks:
