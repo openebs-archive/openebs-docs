@@ -14,7 +14,7 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
 1. Apply openebs-operator.yaml file to create OpenEBS control plane components. 
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/openebs-operator-0.7.0-RC2.yaml
+  kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0-RC2.yaml
   ```
 
   OpenEBS pods are created under “*openebs*” namespace. CAS Template and default Storage Classes are created as part of executing above command
@@ -40,7 +40,7 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
       openebs-standard            openebs.io/provisioner-iscsi                               14m
       standard (default)          kubernetes.io/gce-pd  									14m
 
-2. Create a "*openebs-config.yaml*" in your node and paste below yaml files to create Storage Pool on your hosted path on the Node. Jiva storage pool will be created by default on "/var/openebs" inside the hosted path on the nodes. 
+2. Create a **openebs-config.yaml** in your node and paste below yaml files to create Storage Pool on your hosted path on the Node. Jiva storage pool will be created by default on "/var/openebs" inside the hosted path on the nodes. 
 
       ```
       ---
@@ -78,11 +78,10 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
 3. Apply modified **openebs-config.yaml** by using the following command
 
       ```
-      kubectl apply -f openebs-config-0.7.0-RC2.yaml
+      kubectl apply -f openebs-config.yaml
       ```
 
-4. In this case, one additional disk per node is added and using the above command will create default
-      storage pool on external of disk per each node. You can get the storage pool details by running the following command. 
+4. Now storage pool is created on the Node as per your requirement. You can get the storage pool details by running the following command. 
 
       ```
       kubectl get sp -n openebs
@@ -101,7 +100,7 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
       default                         13h
       ```
 
-5. Now, you have deployed OpenEBS cluster with Jiva Engine. It can create OpenEBS Jiva volume on default storage Pool. By default, OpenEBS Jiva volume runs with 3 replica count. 
+5. Now, you have deployed OpenEBS cluster with Jiva Engine. It can create OpenEBS Jiva volume on default storage pool. By default, OpenEBS Jiva volume runs with 3 replica count. 
 
 6. Get the sample PVC yaml which can be used to create OpenEBS Jiva volume with default CAS Template values. The following command will help you to get the sample pvc yaml file *pvc-standard-jiva-default.yaml*.
 
