@@ -16,13 +16,13 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
   ```
   git clone https://github.com/openebs/openebs.git
   cd openebs/k8s
-  wget https://raw.githubusercontent.com/openebs/charts/master/docs/openebs-config-0.7.0-RC1.yaml
+  wget https://raw.githubusercontent.com/openebs/charts/master/docs/openebs-config-0.7.0-RC2.yaml
   ```
 
   Apply openebs-operator.yaml file to create OpenEBS control plane components. 
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/openebs-operator-0.7.0-RC1.yaml
+  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/openebs-operator-0.7.0-RC2.yaml
   ```
 
   OpenEBS pods are created under “*openebs*” namespace. By applying the above commands, Node Disk Manager, CAS Template, and default storage classes are created. 
@@ -87,7 +87,7 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
 3. Apply modified **openebs-config.yaml** by using the following command
 
       ```
-      kubectl apply -f openebs-config-0.7.0-RC1.yaml
+      kubectl apply -f openebs-config-0.7.0-RC2.yaml
       ```
 
       This will create custom resource deployments. Run the following command.

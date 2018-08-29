@@ -23,13 +23,13 @@ cStor can be deployed in your Kubernetes cluster by performing the following ste
    ```
    git clone https://github.com/openebs/openebs.git
    cd openebs/k8s
-   wget https://raw.githubusercontent.com/openebs/charts/master/docs/openebs-config-0.7.0-RC1.yaml
+   wget https://raw.githubusercontent.com/openebs/charts/master/docs/openebs-config-0.7.0-RC2.yaml
    ```
 
    Apply openebs-operator.yaml file to create OpenEBS control plane components. 
 
    ```
-   kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/openebs-operator-0.7.0-RC1.yaml
+   kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/openebs-operator-0.7.0-RC2.yaml
    ```
    OpenEBS pods are created under “*openebs*” namespace. By applying the above commands, Node Disk Manager, CAS Template and default Storage Classes are created. 
 
@@ -106,7 +106,7 @@ cStor can be deployed in your Kubernetes cluster by performing the following ste
 3. Apply the modified openebs-config.yaml by running the following command.
 
    ```
-   kubectl apply -f openebs-config-0.7.0-RC1.yaml
+   kubectl apply -f openebs-config-0.7.0-RC2.yaml
    ```
 
    This will create custom resource deployments which you can get by running the following command.
