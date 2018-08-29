@@ -6,12 +6,14 @@ sidebar_label: Installation
 
 ------
 
-1. OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here](/docs/next/supportedplatforms.html)
+OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here](/docs/next/supportedplatforms.html)
 
-   On an existing Kubernetes cluster, as a cluster administrator, you can install OpenEBS in the following two ways.
+On an existing Kubernetes cluster, as a cluster administrator, you can install OpenEBS in the following two ways.
 
-   1. Using (stable/OpenEBS) helm charts
-   2. Using OpenEBS operator through kubectl  
+1. Using (stable/OpenEBS) [helm charts](/docs/next/installation.html#install-openebs-using-stable-helm-charts)
+2. Using OpenEBS operator through [kubectl](/docs/next/installation.html#install-openebs-using-kubectl)  
+
+ Currently 0.7 is supported only via the [OpenEBS operator/kubectl](docs/next/quickstartguide.html#using-openebs-operator-kubectl) option which is explained below.
 
 <a name="helm"></a>
 
