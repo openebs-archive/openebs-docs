@@ -31,9 +31,9 @@ cStor can be deployed in your Kubernetes cluster by performing the following ste
    ```
    kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/openebs-operator-0.7.0-RC1.yaml
    ```
-   OpenEBS pods are created under “*openebs*” namespace. By applying the above commands, Node Disk Manager, CAS Template, and default storage classes are created. 
+   OpenEBS pods are created under “*openebs*” namespace. By applying the above commands, Node Disk Manager, CAS Template and default Storage Classes are created. 
 
-   Node Disk Manager manages the disks associated to each node in the cluster. You can get the disk details by running the following command.
+   **Node Disk Manager** manages the disks associated to each node in the cluster. You can get the disk details by running the following command.
 
    ```
    kubectl get disk
@@ -56,13 +56,13 @@ cStor can be deployed in your Kubernetes cluster by performing the following ste
    sparse-ab505639a146687dfb62c4a49a05afb7   57m
    ```
 
-   CAS Template is an approach to provision persistent volumes that make use of CAS storage engine. The following command will help check the CAS Template components
+   **CAS Template** is an approach to provision persistent volumes that make use of CAS storage engine. The following command will help check the CAS Template components
 
    ```
    kubectl get cast -n openebs
    ```
 
-   It also installs the default cStor storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
+   It also installs the default cStor **Storage Class** which can be used in your pvc yaml file to to create Persistent Volume. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
 
    ```
    kubectl get sc
