@@ -8,9 +8,13 @@ sidebar_label: Changelog
 
 
 
-## Stable/Current Release
+## Current Release
 
-* [Version 0.6.0](https://github.com/openebs/openebs/releases/tag/v0.6) ([Release blog](https://blog.openebs.io/openebs-0-6-serves-ios-amidst-chaos-and-much-more-45c68eb59c6a))
+- [Version 0.7-RC2](https://github.com/openebs/openebs/releases/tag/v0.7-RC2) ([Release blog](https://blog.openebs.io/openebs-0-7-release-pushes-cstor-storage-engine-to-field-trials-1c41e6ad8c91))
+
+## Stable Release
+
+* [Version 0.6.0](https://github.com/openebs/openebs/releases/tag/v0.6)
 
 ## Older Releases
 
@@ -22,12 +26,6 @@ sidebar_label: Changelog
 * [Version 0.4.0](https://github.com/openebs/openebs/releases/tag/v0.4.0)
 * [Version 0.3](https://github.com/openebs/openebs/releases/tag/v0.3)
 * [Version 0.2](https://github.com/openebs/openebs/releases/tag/v0.2)
-
-
-
-
-
-
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
