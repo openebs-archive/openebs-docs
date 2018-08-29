@@ -6,7 +6,9 @@ sidebar_label: CAS Engines
 
 ------
 
-`Feature status: Pre-Alpha /Experimental. Users are advised to use this feature with caution.`
+
+`Feature status: Alpha / Experimental.`
+
 
 ## Overview of a Storage Engine
 
@@ -77,7 +79,24 @@ As shown above, storage engine details are to be decided during the creation of 
 
 ## Overview of CAS Template
 
-A CAS template is a customizable resource file (or a YAML file ) used by an operator to define the basic components of a storage engine. In kubernetes terminology it is a custom resource (CR). Operator typically builds several of these templates with various combinations of storage engines and storage pools. Currently, following properties can be specified in a CAS template CR. 
+A CAS template is a customizable resource file (or a YAML file ) used by an operator to define the basic components of a storage engine. OpenEBS control plane provides CAS templates as an approach to provision persistent volumes that make use of CAS storage engine. CAS Template (CAST) allows operators to specify the desired state of storage and also acts to converge towards this desired state which means creating and updating appropriate Kubernetes resources. CAS template based provisioning forms a part of Kubernetes PVC to PV state transition. Operator typically builds several of these templates with various combinations of storage engines and storage pools.
+
+OpenEBS dynamic storage provisioner along with maya api service works towards accomplishing the goal of provisioning CAS storage volume via CAS template. This storage volume is exposed as a PV object which is consumed by a Kubernetes application.
+
+
+The default CAS Template values are as follows:
+
+| Property        | Value              |
+| --------------- | ------------------ |
+| VolumeMonitor   | true               |
+| ControllerImage | openebs/jiva:0.5.0 |
+| ReplicaImage    | openebs/jiva:0.5.0 |
+| ReplicaCount    | 1                  |
+| StoragePool     | ssd                |
+
+Also these values will have Taint toleration, Eviction toleration, and Node-affinity toleration fields. You can customize the key-value pair of above tolerations based on the taints applied on the Nodes.
+
+Following is an example of CAS Template yaml file.
 
 ```
 apiVersion: openebs.io/v1alpha1

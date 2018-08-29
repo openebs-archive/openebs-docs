@@ -12,7 +12,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 1. As a prerequisite, check if open-iscsi is installed and running on kubelet. See [Steps for configuring and verifying open-iscsi](/docs/next/prerequisites.html#steps-for-configuring-and-verifying-open-iscsi).
 
-2. You can install OpenEBS either through stable helm chart or by through OpenEBS helm chart or by using OpenEBS operator/kubectl.
+2. You can install OpenEBS either through stable helm chart or by through OpenEBS helm chart or by using OpenEBS operator/kubectl.  Currently 0.7 is supported only via the [OpenEBS operator/kubectl](docs/next/quickstartguide.html#using-openebs-operator-kubectl) option which is explained below.
 
    ### Using a Stable Helm Chart:
 
@@ -36,47 +36,22 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
    ```
 
    ### Using OpenEBS Operator (kubectl):
-
-   As a **cluster admin**, execute the following single command on the Kubernetes shell.
-
-   ```
-   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
-   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
-   ```
    
+   You can now install OpenEBS either by using Jiva or cStor storage engines. For more information, see [Jiva](/docs/next/storageengine.html#jiva) and [cStor](/docs/next/storageengine.html#cstor) 
 
-3. **Optional:** Create a catalog of storage classes and publish them to your developers. A default storage class (*openebs-standard*) is added to the cluster when you install OpenEBS.
+   Set the context to **cluster-admin** and then execute all commands using kubectl. As a **cluster admin**, you can deploy jiva or cStor based on your requirements. For more information about deploying them, see [deploying jiva](/docs/next/deploycstor.html) and [deploying cStor](/docs/next/deploycstor.html).
+   
+3. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-standard* and *openebs-cstor-default-0.7.0*) are added to the cluster when you install OpenEBS.
 
 4. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/next/mayaonline.html) for better visibility, volume management, and integrated ChatOps experience with Slack.
 
 ## As an Application Developer:
 
-1. Create a PVC specification with the right storage class and use it in the application YAML file. An example PVC specification is as follows.
+1. Create a PVC specification with the right pvc name and use it in the application YAML file. Some sample application yaml files are available under https://github.com/openebs/openebs/tree/master/k8s/demo. 
 
-   ```
-   application yaml contents
-        
-         volumes:
-         - name: datadir
-           persistentVolumeClaim:
-             claimName: datadir
-     volumeClaimTemplates:
-     - metadata:
-         name: datadir
-       spec:
-         storageClassName: openebs-cockroachdb
-         accessModes:
-           - "ReadWriteOnce"
-         resources:
-           requests:
-             storage: 100G
-   ```
+2. Apply the yaml file using `kubectl apply -f` command. Verify that an OpenEBS volume is provisioned and bound to the application pod.
 
-  
-
-2. Apply the YAML file using `kubectl apply -f` command. Verify that an OpenEBS volume is provisioned and bound to the application pod.
-
-3. **Note:** Because OpenEBS is a [CAS](/docs/next/conceptscas.html), you will observe that new pods (one volume controller pod and as many volume replica PODs as the number of replicas configured in the storage class) are created.
+**Note:** Because OpenEBS is a [CAS](/docs/next/conceptscas.html), you will observe that new pods (one volume controller pod and as many volume replica PODs as the number of replicas configured in the storage class) are created.
 
 
 ### See Also:

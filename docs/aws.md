@@ -6,13 +6,11 @@ sidebar_label: AWS
 
 ------
 
-This section covers OpenEBS cluster installation in AWS. AWS has instance type which can be used for different types of use cases. Many of the instance types have EBS as storage for both root and general purposes. Some of the instance types may have instance store volume which  is a temporary storage type located on disks that are physically attached to a host machine.
+This section covers OpenEBS persistent storage solution using AWS instance store disks for applications running on Kubernetes clusters. Instance store disks provide high performance, but they are not guaranteed to be present in the node all the time which of course means that when the node is rescheduled you can lose the data they are storing. 
 
-### Instance Store Volume
+#### Instance Store
 
 Instance store is ideal for temporary storage of information that changes frequently, such as buffers, caches, scratch data, and other temporary content or for data that is replicated across a fleet of instances, such as a load-balanced pool of web servers. 
-
-### Instance Store Lifetime
 
 Instance Store volume's drawback is that the data in an instance store persists only during the lifetime of its associated instance. The data in the instance store may be lost due to the following:
 
@@ -20,9 +18,15 @@ Instance Store volume's drawback is that the data in an instance store persists 
 - Instance stops
 - Instance terminates
 
-## Why OpenEBS with Instance Store?
+## OpenEBS with AWS Instance Store
 
-Some instance types use NVMe or SATA-based solid state drives (SSD) to deliver high random I/O performance. This is a good option when you need storage with very low latency and do not need the data to persist when the instance terminates. You can also take advantage of fault-tolerant architectures. OpenEBS is the best option in this case for high availability of data along with advantages of using physical disks.
+Some instance types use NVMe or SATA-based solid state drives (SSD) to deliver high random I/O performance. This is a good option when you need storage with very low latency and do not need the data to persist when the instance terminates. You can also take advantage of fault-tolerant architectures. OpenEBS is an option for high availability of data combined with advantages of using physical disks.
+
+## How is replication done with OpenEBS?
+
+OpenEBS will have minimum 3 replicas to run OpenEBS cluster with high availability and if a node fails, OpenEBS will manage the data to be replicated to a new disk which will come up as part of ASG. In the meantime your workload is accessing the live data from one the replicas.
+
+![Stateful Applications using OpenEBS and instance stores](/docs/assets/OpenEBS_AWS.png)
 
 ## Prerequisites
 
@@ -245,29 +249,31 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     kubectl get pods -o wide
     ```
 
- Output similar to the following is displayed.
+     Output similar to the following is displayed.
 
     ```
     NAME                                                             READY     STATUS    RESTARTS   AGE       IP           NODE
-    percona-7f6bff67f6-cz47d                                         1/1       Running   0          1m        100.96.3.7   ip-172-20-40-26.us-west-2.compute.internal
+    percona-7f6bff67f6-cz47d                                         1/1       Running   0          1m        100.96.3.7   ip-172-20-		40-26.us-west-2.compute.internal
     pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-ctrl-84bcf764d6-269rj   2/2       Running   0          1m        100.96.1.4   ip-172-20-62-11.us-west-2.compute.internal
-    pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-rep-54b8f49ff8-bzjq4    1/1       Running   0          1m        100.96.1.5   ip-172-20-62-11.us-west-2.compute.internal
+    pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-rep-54b8f49ff8-bzjq4    1/1       Running   0          1m        	100.96.1.5   ip-172-20-62-11.us-west-2.compute.internal
     pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-rep-54b8f49ff8-lpz2k    1/1       Running   0          1m        100.96.2.8   ip-172-20-32-255.us-west-2.compute.internal
     pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-rep-54b8f49ff8-rqnr7    1/1       Running   0          1m        100.96.3.6   ip-172-20-40-26.us-west-2.compute.internal
     ```
 
+
 23. Get the status of PVC using the following command.
 
     ```
-    kubectl get pvc
+    kubectl get pvc 
     ```
 
- Output similar to the following is displayed.
+    Output similar to the following is displayed. 
 
     ```
     NAME              STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE
-    demo-vol1-claim   Bound     pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6   5G         RWO            openebs-percona   3m 
+    demo-vol1-claim   Bound     pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6   5G         RWO        openebs-percona   3m 
     ```
+
 
 24. Get the status of PV using the following command.
 
@@ -275,14 +281,15 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     kubectl get pv
     ```
 
- Output of the above command will be similar to the following.
+     Output of the above command will be similar to the following.
 
     ```
-    NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                     STORAGECLASS      REASON    AGE
-    pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6   5G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-percona             3m 
+    NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS  CLAIM                     STORAGECLASS      REASON    AGE
+    pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6   5G         RWO            Delete           Bound  default/demo-vol1-claim   openebs-percona             3m 
     ```
 
-<!-- Hotjar Tracking Code for https://docs.openebs.io -->
+    <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};

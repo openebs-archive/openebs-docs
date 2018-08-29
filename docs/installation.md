@@ -6,12 +6,14 @@ sidebar_label: Installation
 
 ------
 
-1. OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here](/docs/next/supportedplatforms.html)
+OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here](/docs/next/supportedplatforms.html)
 
-   On an existing Kubernetes cluster, as a cluster administrator, you can install OpenEBS in the following two ways.
+On an existing Kubernetes cluster, as a cluster administrator, you can install OpenEBS in the following two ways.
 
-   1. Using (stable/OpenEBS) helm charts
-   2. Using OpenEBS operator through kubectl  
+1. Using (stable/OpenEBS) [helm charts](/docs/next/installation.html#install-openebs-using-stable-helm-charts)
+2. Using OpenEBS operator through [kubectl](/docs/next/installation.html#install-openebs-using-kubectl)  
+
+ Currently 0.7 is supported only via the [OpenEBS operator/kubectl](docs/next/quickstartguide.html#using-openebs-operator-kubectl) option which is explained below.
 
 <a name="helm"></a>
 
@@ -76,30 +78,9 @@ Specify each parameter using the `--set key=value` argument to `helm install`.
 
 ![Installing OpenEBS with Operator](/docs/assets/operator.png)
 
-Set the context to **cluster-admin** and execute the below commands using kubectl.
+Set the context to **cluster-admin** and then execute all commands using kubectl.
 
-```
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
-```
-
-This operator installs the control plane components such as maya-apiserver, openebs-provisioner, openebs-snapshot-operator , and also deploys the required storage class templates.
-
-```
-$~:kubectl get pods -n openebs
-NAME                                         READY     STATUS    RESTARTS   AGE
-maya-apiserver-68c98fdb76-xhvxg              1/1       Running   0          1h
-openebs-provisioner-5569654c96-rkkhr         1/1       Running   0          1h
-openebs-snapshot-operator-5f7c4d9bd8-gs7g5   2/2       Running   0          1h
-```
-
-You can see the newly deployed storage classes using the following command.
-
-```
-kubectl get sc
-```
-
-As a next step, it is recommended to setup a catalog of storage classes for your application developers to use from. Learn more about setting up [OpenEBS storage classes here](/docs/next/setupstorageclasses.html).
+As a cluster admin, you can deploy jiva or cStor based on your requirements. For more information about deploying them, see [deploying jiva](/docs/next/deployjiva.html) and [deploying cStor](/docs/next/deploycstor.html).
 
 Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo).
 

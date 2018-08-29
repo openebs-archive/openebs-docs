@@ -34,7 +34,7 @@ Avoiding cloud vendor lock-in is the common goal for most users and enterprises.
 
 CAS containerizes the storage software and uses Kubernetes Custom Resource Definitions (CRDs) to represent the low-level storage resources, such as disks and storage pools. This model enables storage to be integrated into other cloud-native tools seamlessly. The storage resources can be provisioned, monitored, managed using cloud-native tools such as Prometheus, Grafana, Fluentd, Weavescope, Jaeger, and others.
 
-## The architecture of CAS on Kubernetes
+## CAS Architecture on Kubernetes
 
 ![CAS](/docs/assets/cas-arch.png)
 

@@ -6,7 +6,7 @@ sidebar_label: Snapshots
 
 ------
 
-`Feature status: Pre-Alpha /Experimental. Users are advised to use this feature with caution.`
+`Feature status: Alpha / Experimental.`
 
 ## What is a Snapshot?
 

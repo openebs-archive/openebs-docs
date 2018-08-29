@@ -18,7 +18,7 @@ The following prerequisites are required for installing OpenEBS.
 
 **Note:** 
 * If you face issues while setting up on-premise clusters, check your BIOS mode and enable the Intel virtualization acceleration key  and AMD-V virtualization hardware extensions.
-* Installing and configuring open-iscsi on Kubernetes will vary slightly depending on the platform and you can [find those instructions here](#iSCSIConfig). 
+* Installing and configuring open-iscsi on Kubernetes will vary slightly depending on the platform and you can find those instructions [here](#iSCSIConfig). 
 
 ### Kubernetes Storage Concepts
 
