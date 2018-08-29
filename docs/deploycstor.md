@@ -9,6 +9,11 @@ cStor provides storage scalability along with ease of deployment and usage. cSto
 
 Additionally, disk addition can be done from [Kubernetes docs](https://cloud.google.com/compute/docs/disks/add-persistent-disk). These disks can be used for creating the OpenEBS cStor pool by combining all the disks per node. You can scale the storage pool by adding more disks to the instance and in turn to the storage pool. Storage pools will be created in a striped manner.
 
+**Note:**
+
+1. cStor synchronizes data periodically to the disks. The application must send explicit 'sync' CDBs to commit the data to disks.
+2. cStor assumes that data written to a disk is persistent. Hence, write cache of disk must be disabled if it's cache is not backed by non-volatile memory.
+
 ## Deploying cStor Storage Engine 
 
 cStor can be deployed in your Kubernetes cluster by performing the following steps. Before installation, the [prerequisites](next/prerequisites.html) must be met on the Nodes. 
