@@ -2,7 +2,7 @@
   "docs": {
     "Getting Started": ["quickstartguide", "introduction","usingminikube", "gethelp"],
     "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "storageschema", "storagepolicies"],
-    "Setup": ["supportedplatforms", "prerequisites", "scheduler", "installation", "deployjiva", "deploycstor", "upgrade", "setupstoragepools", "castemplate", "setupstorageclasses", "setupstoragevolumes", "snapshots"],
+    "Setup": ["supportedplatforms", "prerequisites", "scheduler", "installation", "deployjiva", "deploycstor", "upgrade", "setupstoragepools", "setupstorageclasses", "setupstoragevolumes", "snapshots"],
     "Usecases": ["bluegreen", "cicd"],
     "Integrations": ["openshift", "stackpointcloud","aws", "ibmcloud", "rancher", "mayaonline"],
     "Databases": ["Cassandra", "CockroachDB", "Couchbase", "CrunchyPostgres", "Jenkins", "Jupyter", "Kafka", "MongoDB", "PerconaDB", "PerconaGalera", "RabbitMQ", "Redis"],
