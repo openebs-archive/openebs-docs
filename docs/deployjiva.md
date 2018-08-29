@@ -60,10 +60,11 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
    Following is an example output.
 
       NAME                        PROVISIONER                                                AGE
-      openebs-cstor-sparse        openebs.io/provisioner-iscsi                               1m
+      openebs-cstor-default-0.7.0 openebs.io/provisioner-iscsi				     		 14m
+      openebs-cstor-sparse        openebs.io/provisioner-iscsi                               14m
       openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   14m
       openebs-standard            openebs.io/provisioner-iscsi                               14m
-      standard (default)          kubernetes.io/gce-pd  
+      standard (default)          kubernetes.io/gce-pd  									14m
 
 2. Edit **openebs-config.yaml** to include the mounted disk path associated to each node in the cluster that you are using to create the OpenEBS Storage Pool. Change the *path* under *spec* section with the mounted directory created under each Node as below.
 
