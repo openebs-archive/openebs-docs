@@ -16,7 +16,7 @@ Additionally, disk addition can be done from [Kubernetes docs](https://cloud.goo
 
 ## Deploying cStor Storage Engine 
 
-cStor can be deployed in your Kubernetes cluster by performing the following steps. Before installation, the [prerequisites](next/prerequisites.html) must be met on the Nodes. 
+cStor can be deployed in your Kubernetes cluster by performing the following steps. Before installation, the [prerequisites](/docs/next/prerequisites.html) must be met on the Nodes. 
 
 1. Clone latest OpenEBS repository. You can do this by using the following commands.
 
@@ -62,7 +62,7 @@ cStor can be deployed in your Kubernetes cluster by performing the following ste
    kubectl get cast -n openebs
    ```
 
-   It also installs the default cStor storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
+   It also installs the default cStor storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
 
    ```
    kubectl get sc
