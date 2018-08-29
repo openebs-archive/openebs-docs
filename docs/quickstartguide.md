@@ -23,7 +23,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
    kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
    ```
 
-   For more details on installing OpenEBS using helm, see [install through helm](next/installation.html#helm).
+   For more details on installing OpenEBS using helm, see [install through helm](/docs/next/installation.html#helm).
 
    ### Using OpenEBS Helm Charts 
 
@@ -37,13 +37,13 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
    ### Using OpenEBS Operator (kubectl):
    
-   You can now install OpenEBS either by using Jiva or cStor storage engines. For more information, see [Jiva](next/storageengine.html#jiva) and [cStor](next/storageengine.html#cstor) 
+   You can now install OpenEBS either by using Jiva or cStor storage engines. For more information, see [Jiva](/docs/next/storageengine.html#jiva) and [cStor](/docs/next/storageengine.html#cstor) 
 
-   As a **cluster admin**, you can deploy jiva or cStor based on your requirements. For more information about deploying them, see [deploying jiva](next/deploycstor.html) and [deploying cStor](next/deploycstor.html).
+   As a **cluster admin**, you can deploy jiva or cStor based on your requirements. For more information about deploying them, see [deploying jiva](/docs/next/deploycstor.html) and [deploying cStor](/docs/next/deploycstor.html).
    
 3. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-standard* and *openebs-cstor-default-0.7.0*) are added to the cluster when you install OpenEBS.
 
-4. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](next/mayaonline.html) for better visibility, volume management, and integrated ChatOps experience with Slack.
+4. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/next/mayaonline.html) for better visibility, volume management, and integrated ChatOps experience with Slack.
 
 ## As an Application Developer:
 
