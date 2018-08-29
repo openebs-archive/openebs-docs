@@ -83,13 +83,13 @@ You must add the following entries to the corresponding storage class. In this e
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-    name: openebs-percona
+   name: openebs-percona
 provisioner: openebs.io/provisioner-iscsi
 parameters:
-    openebs.io/jiva-replica-count: "2"
-    openebs.io/capacity: "2G"
-    openebs.io/jiva-replica-image: "openebs/jiva:0.5.0"
-    openebs.io/storage-pool: "test-mntdir"  
+  openebs.io/storage-pool: "test-mntdir"
+  openebs.io/jiva-replica-count: "3"
+  openebs.io/volume-monitor: "true"
+  openebs.io/capacity: 5G  
 ```
 
 You must mention the storage class name in the *application.yaml* file. For example, *demo-percona-mysql-pvc.yaml* file for the percona application. 
