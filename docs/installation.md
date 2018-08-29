@@ -76,7 +76,7 @@ Specify each parameter using the `--set key=value` argument to `helm install`.
 
 ![Installing OpenEBS with Operator](/docs/assets/operator.png)
 
-Set the context to **cluster-admin** and execute the below commands using kubectl.
+Set the context to **cluster-admin** and then execute all commands using kubectl.
 
 As a cluster admin, you can deploy jiva or cStor based on your requirements. For more information about deploying them, see [deploying jiva](/docs/next/deployjiva.html) and [deploying cStor](/docs/next/deploycstor.html).
 
