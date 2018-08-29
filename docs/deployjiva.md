@@ -5,11 +5,11 @@ sidebar_label: Deploying Jiva
 ---
 ------
 
-OpenEBS can be used to create Storage Pool on a host disk or an externally mounted disk. This Storage Pool can be used to create Jiva volume which can be utilized to run applications. By default, Jiva volume will be deployed on host root disk. If you are using an external disk, see [storage pool](next/setupstoragepools.html) for more details about creating storage pool with external disk. 
+OpenEBS can be used to create Storage Pool on a host disk or an externally mounted disk. This Storage Pool can be used to create Jiva volume which can be utilized to run applications. By default, Jiva volume will be deployed on host root disk. If you are using an external disk, see [storage pool](/docs/next/setupstoragepools.html) for more details about creating storage pool with external disk. 
 
 ## Deploying Jiva Storage Engine
 
-Jiva can be deployed in your Kubernetes cluster by using the following procedure. Before installation, all [prerequisites](next/prerequisites.html) must be set on the Nodes. 
+Jiva can be deployed in your Kubernetes cluster by using the following procedure. Before installation, all [prerequisites](/docs/next/prerequisites.html) must be set on the Nodes. 
 
 1. Clone latest OpenEBS repository using the following command.
 
@@ -51,7 +51,7 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
       kubectl get cast -n openebs
       ```
 
-   Also, it installs the default Jiva storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
+   Also, it installs the default Jiva storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
 
       ```
       kubectl get sc
