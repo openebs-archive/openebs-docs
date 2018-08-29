@@ -62,7 +62,7 @@ cStor can be deployed in your Kubernetes cluster by performing the following ste
    kubectl get cast -n openebs
    ```
 
-   It also installs OpenEBS cStor default cstor storage class which can be used in your application yaml to run the application. You can get this by using the following command.
+   It also installs the default cStor storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
 
    ```
    kubectl get sc
