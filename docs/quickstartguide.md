@@ -39,7 +39,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
    
    You can now install OpenEBS either by using Jiva or cStor storage engines. For more information, see [Jiva](/docs/next/storageengine.html#jiva) and [cStor](/docs/next/storageengine.html#cstor) 
 
-   As a **cluster admin**, you can deploy jiva or cStor based on your requirements. For more information about deploying them, see [deploying jiva](/docs/next/deploycstor.html) and [deploying cStor](/docs/next/deploycstor.html).
+   Set the context to **cluster-admin** and then execute all commands using kubectl. As a **cluster admin**, you can deploy jiva or cStor based on your requirements. For more information about deploying them, see [deploying jiva](/docs/next/deploycstor.html) and [deploying cStor](/docs/next/deploycstor.html).
    
 3. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-standard* and *openebs-cstor-default-0.7.0*) are added to the cluster when you install OpenEBS.
 
@@ -47,7 +47,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 ## As an Application Developer:
 
-1. Create a PVC specification with the right storage class and use it in the application YAML file. Some sample application yaml files are available under https://github.com/openebs/openebs/tree/master/k8s/demo. 
+1. Create a PVC specification with the right pvc name and use it in the application YAML file. Some sample application yaml files are available under https://github.com/openebs/openebs/tree/master/k8s/demo. 
 
 2. Apply the yaml file using `kubectl apply -f` command. Verify that an OpenEBS volume is provisioned and bound to the application pod.
 
