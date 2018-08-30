@@ -8,13 +8,13 @@ sidebar_label: Prerequisites
 
 The following prerequisites are required for installing OpenEBS.
 
-1. A Kubernetes cluster with version >= 1.7.5 (OpenEBS requires CRD feature of Kubernetes)
+1. A Kubernetes cluster with version >= 1.9.7 (OpenEBS requires CRD feature of Kubernetes).
 
-2. open-iscsi package installed and configured on the Kubernetes cluster
+2. Open-iscsi package installed and configured on the Kubernetes cluster.
 
    **Note:** Do not install open-iscsi / iscsi-initiator-utils on host nodes if a kubelet container, for example, Rancher Container Engine (RKE) already has the package installed.
 
-3. kubectl or helm installed and ready to use
+3. kubectl or helm installed and ready to use. Make sure you run the `kubectl` commands with cluster admin context. The installation will involve create a new Service Account and assigned to OpenEBS components.
 
 **Note:** 
 * If you face issues while setting up on-premise clusters, check your BIOS mode and enable the Intel virtualization acceleration key  and AMD-V virtualization hardware extensions.
