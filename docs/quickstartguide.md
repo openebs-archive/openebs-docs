@@ -12,7 +12,9 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 1. As a prerequisite, check if open-iscsi is installed and running on kubelet. See [Steps for configuring and verifying open-iscsi](/docs/next/prerequisites.html#steps-for-configuring-and-verifying-open-iscsi).
 
-2. You can install OpenEBS either through stable helm chart or by through OpenEBS helm chart or by using OpenEBS operator/kubectl.  Currently 0.7 is supported only via the [OpenEBS operator/kubectl](docs/next/quickstartguide.html#using-openebs-operator-kubectl) option which is explained below.
+2. Kubernetes 1.9.7+ is installed
+
+3. You can install OpenEBS either through stable helm chart or by through OpenEBS helm chart or by using OpenEBS operator/kubectl.  Currently 0.7 is supported only via the [OpenEBS Operator/kubectl](docs/next/quickstartguide.html#using-openebs-operator-kubectl) option which is explained below.
 
    ### Using a Stable Helm Chart:
 
@@ -36,14 +38,14 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
    ```
 
    ### Using OpenEBS Operator (kubectl):
-   
-   You can now install OpenEBS either by using Jiva or cStor storage engines. For more information, see [Jiva](/docs/next/storageengine.html#jiva) and [cStor](/docs/next/storageengine.html#cstor) 
 
-   Set the context to **cluster-admin** and then execute all commands using kubectl. As a **cluster admin**, you can deploy jiva or cStor based on your requirements. For more information about deploying them, see [deploying jiva](/docs/next/deploycstor.html) and [deploying cStor](/docs/next/deploycstor.html).
-   
-3. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-standard* and *openebs-cstor-default-0.7.0*) are added to the cluster when you install OpenEBS.
+   You can now install OpenEBS either by using Jiva or cStor storage engines. For more information, see [Jiva](/docs/next/storageengine.html#jiva) and [cStor](/docs/next/storageengine.html#cstor).
 
-4. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/next/mayaonline.html) for better visibility, volume management, and integrated ChatOps experience with Slack.
+   Make sure you run the `kubectl` commands with cluster admin context. The installation will involve create a new Service Account and assigned to OpenEBS components. As a **cluster admin**, you can deploy jiva or cStor based on your requirements. For more information about deploying them, see [deploying jiva](/docs/next/deployjiva.html) and [deploying cStor](/docs/next/deploycstor.html).
+
+4. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-standard* and *openebs-cstor-default-0.7.0*) are added to the cluster when you install OpenEBS.
+
+5. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/next/mayaonline.html) for better visibility, volume management, and integrated ChatOps experience with Slack.
 
 ## As an Application Developer:
 
