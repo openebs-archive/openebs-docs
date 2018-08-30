@@ -16,7 +16,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 3. You can install OpenEBS either through stable helm chart or by through OpenEBS helm chart or by using OpenEBS operator/kubectl.  
 
-`**Note:** Currently 0.7 is supported only via the [OpenEBS Operator/kubectl](docs/next/quickstartguide.html#using-openebs-operator-kubectl) option as explained below.`
+**Note:** Currently 0.7 is supported only via the [OpenEBS Operator/kubectl](docs/next/quickstartguide.html#using-openebs-operator-kubectl) option as explained below.
 
    ### Using a Stable Helm Chart:
 
