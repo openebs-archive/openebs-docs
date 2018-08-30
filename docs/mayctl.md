@@ -30,12 +30,11 @@ For getting access to mayactl command line tool, you will have to login / execut
 
 ## Using mayactl
 
-1. Use mayactl help command for more details
+1. Use mayactl help command for more details.
 
    ```
    mayactl —help 
    ```
-
 
    **Example:**
 
