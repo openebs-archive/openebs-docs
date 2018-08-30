@@ -7,7 +7,7 @@ sidebar_label: Deploying cStor
 
 cStor provides storage scalability along with ease of deployment and usage. cStor can handle multiple disks of same size per Node and create different storage pools. These Storage Pools can be used to create cStor volumes which can be utilized to run applications. 
 
-Additionally, disk addition can be done from [Kubernetes docs](https://cloud.google.com/compute/docs/disks/add-persistent-disk). These disks can be used for creating the OpenEBS cStor pool by combining all the disks per node. You can scale the storage pool by adding more disks to the instance and in turn to the storage pool. Storage pools will be created in a striped manner.
+Additionally, you can add disks using the documentation available at [Kubernetes docs](https://cloud.google.com/compute/docs/disks/add-persistent-disk). These disks can be used for creating the OpenEBS cStor pool by combining all the disks per node. You can scale the storage pool by adding more disks to the instance and in turn to the storage pool. Storage pools will be created in a striped manner.
 
 **Note:**
 
@@ -18,14 +18,14 @@ Additionally, disk addition can be done from [Kubernetes docs](https://cloud.goo
 
 cStor can be deployed in your Kubernetes cluster by performing the following steps. Before installation, the [prerequisites](/docs/next/prerequisites.html) must be met on the Nodes. 
 
-1. Apply openebs-operator.yaml file to create OpenEBS control plane components. 
+1. Apply *openebs-operator.yaml* file to create OpenEBS control plane components. 
 
    ```
    kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0-RC2.yaml
    ```
-   OpenEBS pods are created under “*openebs*” namespace. Node Disk Manager,CAS Template and default Storage Classes are created as part of executing above command.
+   OpenEBS pods are created under “*openebs*” namespace. Node Disk Manager, CAS Template and default Storage Classes are created after executing the above command.
 
-   **Node Disk Manager** manages the disks associated to each node in the cluster. You can get the disk details by running the following command.
+   **Node Disk Manager** manages the disks associated with each node in the cluster. You can get the disk details by running the following command.
 
    ```
    kubectl get disk
@@ -48,13 +48,13 @@ cStor can be deployed in your Kubernetes cluster by performing the following ste
    sparse-ab505639a146687dfb62c4a49a05afb7   57m
    ```
 
-   **CAS Template** is an approach to provision persistent volumes that make use of CAS storage engine. The following command will help check the CAS Template components
+   **CAS Template** is an approach to provision persistent volumes that make use of CAS storage engine. The following command helps check the CAS Template components.
 
    ```
    kubectl get cast -n openebs
    ```
 
-   It also installs the default cStor **Storage Class** which can be used in your pvc yaml file to to create Persistent Volume. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
+   It also installs the default cStor **Storage Class** which can be used in your pvc yaml file to create Persistent Volume. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
 
    ```
    kubectl get sc
@@ -71,13 +71,13 @@ cStor can be deployed in your Kubernetes cluster by performing the following ste
    standard (default)            kubernetes.io/gce-pd                                       3h
    ```
 
-2. Get the openebs-config.yaml by executing below command
+2. Get the *openebs-config.yaml* by executing the following command.
 
    ```
    wget https://openebs.github.io/charts/openebs-config-0.7.0-RC2.yaml
    ```
 
-3. Edit **openebs-config-0.7.0-RC2.yaml** to include the disk details associated to each node in the cluster which you are using for creating the OpenEBS cStor Pool. Replace the disk names under *diskList* section, which you can get from running `kubectl get disks` command.
+3. Edit *openebs-config-0.7.0-RC2.yaml* file to include disk details associated to each node in the cluster which you are using for creating the OpenEBS cStor Pool. Replace the disk names under *diskList* section, which you can get from running `kubectl get disks` command.
 
    ```
    disks:
@@ -101,13 +101,13 @@ cStor can be deployed in your Kubernetes cluster by performing the following ste
           - disk-ef271a88c5aacfcc5b8601bcba9eeb10
    ```
 
-4. Apply the modified openebs-config.yaml by running the following command.
+4. Apply the modified *openebs-config.yaml* file by running the following command.
 
    ```
    kubectl apply -f openebs-config-0.7.0-RC2.yaml
    ```
 
-   Here, 2 additional disks per node are added and using the above command will create different storage pools using 2 disks per node in a striped manner. You can get storage pool details by running following command.
+   Here, 2 additional disks per node are added. Using the above command will create different storage pools using 2 disks per node in a striped manner. You can get the storage pool details by running following command.
 
    ```
    kubectl get sp -n openebs
@@ -125,16 +125,16 @@ cStor can be deployed in your Kubernetes cluster by performing the following ste
 
 5. You have now deployed OpenEBS cluster with cStor Engine with 3 different storage pools. It can create OpenEBS cStor volume on these Storage Pools. By default, OpenEBS cStor volume will be running with 3 replica count. 
 
-6. Get the sample PVC yaml which can be used to create OpenEBS cStor volume with default CAS Template values. The following command will help you get the sample pvc yaml file.
+6. Get the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values. The following command will help you get the sample pvc yaml file.
 
    ```
    git clone https://github.com/openebs/openebs.git
    cd openebs/k8s/demo/
    ```
 
-   This sample PVC yaml will use default storage class **openebs-cstor-default-0.7.0** created as part of **openebs-operator.yaml** installation.
+   This sample PVC yaml will use default storage class **openebs-cstor-default-0.7.0** created as part of *openebs-operator.yaml* installation.
 
-7. Apply the sample pvc yaml to create cStor volume using the following command.
+7. Apply the sample pvc yaml file to create cStor volume using the following command.
 
    ```
    kubectl apply -f pvc-standard-cstor-default.yaml
