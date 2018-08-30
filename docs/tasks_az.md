@@ -25,16 +25,19 @@ The OpenEBS administrator can choose to provide the scheduling configuration for
 
 1. **Clone OpenEBS Repository.**
 
-To get the latest OpenEBS repository use the following command.
+To get the *openebs-operator.yaml* use the following command.
 
 ```
-git clone https://github.com/openebs/openebs.git
-cd openebs/k8s
+wget https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
 ```
 
 2. **Deploying OpenEBS Cluster**
 
-Apply *openebs-operator.yaml* and apply your corresponding *storageclasses.yaml*. 
+Apply *openebs-operator.yaml* and apply your corresponding *storageclasses.yaml*. Some example storage classes for different applications are available by executing below command.
+
+```
+wget https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
+```
 
    **Note:** For StatefulSet applications, OpenEBS recommends using replica count as 1 within the corresponding storageclass yaml.
 
@@ -42,9 +45,14 @@ Apply *openebs-operator.yaml* and apply your corresponding *storageclasses.yaml*
 
 You can deploy Jiva replica pods in the stateful and StatefulSet applications. The following section describes deploying Jiva replica pod for both types of applications.  
 
-### Deploying Jiva Replica Pods for Stateful Applications
+### Deploying Jiva Replica Pods for StatefulSet Applications
 
-Stateful applications are those that are maintaining the data integrity at the storage level using OpenEBS. 
+StatefulSet applications are those that are maintaining the data integrity at the storage level using OpenEBS. Get some sample PVC yaml files available from OpenEBS repository by executing below command.
+
+```
+git clone https://github.com/openebs/openebs.git
+cd openebs/k8s/demo/
+```
 
 Add the following content in your application yaml under PVC in the *metadata:* section.
 
@@ -54,7 +62,7 @@ Add the following content in your application yaml under PVC in the *metadata:* 
     "volumeprovisioner.mapi.openebs.io/replica-topology-key-type": "zone"
 ```
 
-Example:
+**Example:**
 
 ```
 kind: PersistentVolumeClaim
