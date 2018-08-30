@@ -33,13 +33,19 @@ wget https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator
 
 2. **Deploying OpenEBS Cluster**
 
-Apply *openebs-operator.yaml* and apply your corresponding *storageclasses.yaml*. Some example storage classes for different applications are available by executing below command.
+Apply *openebs-operator.yaml* as follows
+
+```
+kubectl apply -f openebs-operator.yaml
+```
+
+Now,apply your corresponding *storageclasses.yaml*. Some example storage classes for different applications are available by executing below command.
 
 ```
 wget https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
 ```
 
-   **Note:** For StatefulSet applications, OpenEBS recommends using replica count as 1 within the corresponding storageclass yaml.
+ **Note:** For StatefulSet applications, OpenEBS recommends using replica count as 1 within the corresponding storageclass yaml.
 
 3. **Deploying Jiva Replica Across AZs**
 
