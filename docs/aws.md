@@ -187,7 +187,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 
     wget https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
 
-17. Edit *openebs-operator.yaml* and add the following entry. This will create storage pool on one of the local disks attached to the hosts. Refer [OpenEBS Storage Pools](docs/next/setupstoragepools.html) for more information.
+17. Edit *openebs-operator.yaml* and add the following entry. This will create storage pool on one of the local disks attached to the hosts. Refer [OpenEBS Storage Pools](/docs/next/setupstoragepools.html) for more information.
 
     ```
     ---
