@@ -18,7 +18,7 @@ OpenEBS deals with many types of Kubernetes pods in its life cycle. These can be
   - Jiva data plane 
     - Jiva storage target pod
     - Jiva storage replica pods
-  - cStor data plane `(available from 0.7 release)`
+  - cStor data plane
     - cStor storage target pod
     - cStor storage replica pods
 
