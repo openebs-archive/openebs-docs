@@ -249,7 +249,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     kubectl get pods -o wide
     ```
 
-     Output similar to the following is displayed.
+    Output similar to the following is displayed. 
 
     ```
     NAME                                                             READY     STATUS    RESTARTS   AGE       IP           NODE
@@ -267,7 +267,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     kubectl get pvc 
     ```
 
-    Output similar to the following is displayed. 
+    Output similar to the following is displayed.
 
     ```
     NAME              STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE
@@ -281,12 +281,14 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     kubectl get pv
     ```
 
-     Output of the above command will be similar to the following.
+    Output of the above command will be similar to the following.
 
     ```
     NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS  CLAIM                     STORAGECLASS      REASON    AGE
     pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6   5G         RWO            Delete           Bound  default/demo-vol1-claim   openebs-percona             3m 
     ```
+
+    ​
 
     <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
