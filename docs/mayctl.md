@@ -23,6 +23,7 @@ For getting access to mayactl command line tool, you will have to login / execut
    ```
    kubectl exec -it <maya-apiserver-podname> /bin/bash  -n openebs
    ```
+
    You will get access to the bash shell of maya-apiserver pod like shown below.
 
    `bash-4.3# ` 
@@ -35,60 +36,51 @@ For getting access to mayactl command line tool, you will have to login / execut
    mayactl —help 
    ```
 
-   
+
+   **Example:**
 
    ```
    bash-4.3#mayactl --help
    Maya means 'Magic' a tool for storage orchestration
-   
+      
    Usage:
-     mayactl [command]
-   
+   mayactl [command]
+      
    Available Commands:
-     help        Help about any command
-     snapshot    Provides operations related to a Volume snapshot
-     version     Prints version and other details relevant to maya
-     volume      Provides operations related to a Volume
+   help        Help about any command
+   snapshot    Provides operations related to a Volume snapshot
+   version     Prints version and other details relevant to maya
+   volume      Provides operations related to a Volume
    ```
 
 2. mayactl volume command is the most often used one. In 0.6 release `mayactl volume info` command is added
-
-    
 
    Volume command usage examples are shown below.
 
    ```
    # Create a Volume:
-   
-      $ mayactl volume create --volname <vol> --size <size>
-   
-    # List Volumes:
-   
-      $ mayactl volume list
-   
-    # Delete a Volume:
-   
-      $ mayactl volume delete --volname <vol>
-   
-    # Delete a Volume created in 'test' namespace:
-   
-      $ mayactl volume delete --volname <vol> --namespace test
-   
-    # Statistics of a Volume:
-   
-      $ mayactl volume stats --volname <vol>
-   
-    # Statistics of a Volume created in 'test' namespace:
-   
-      $ mayactl volume stats --volname <vol> --namespace test
-   
-    # Info of a Volume:
-   
-      $ mayactl volume info --volname <vol>
-   
-    # Info of a Volume created in 'test' namespace:
-   
-      $ mayactl volume info --volname <vol> --namespace test
+   $ mayactl volume create --volname <vol> --size <size>
+     
+   # List Volumes:
+   $ mayactl volume list
+      
+   # Delete a Volume:
+   $ mayactl volume delete --volname <vol>
+      
+   # Delete a Volume created in 'test' namespace:
+   $ mayactl volume delete --volname <vol> --namespace test
+      
+   # Statistics of a Volume:
+   $ mayactl volume stats --volname <vol>
+      
+   # Statistics of a Volume created in 'test' namespace:
+   $ mayactl volume stats --volname <vol> --namespace test
+      
+   # Info of a Volume:
+   $ mayactl volume info --volname <vol>
+
+   # Info of a Volume created in 'test' namespace:
+   $ mayactl volume info --volname <vol> --namespace test
    ```
 
    
@@ -97,23 +89,23 @@ For getting access to mayactl command line tool, you will have to login / execut
 
    ```
    Examples:
-     # Create a snapshot:
-       $ mayactl snapshot create --volname <vol> --snapname <snap>
+   # Create a snapshot:
+   $ mayactl snapshot create --volname <vol> --snapname <snap>
    
-     # Create a snapshot for a volume created in 'test' namespace
-       $ mayactl snapshot create --volname <vol> --snapname <snap> --namespace test
+   # Create a snapshot for a volume created in 'test' namespace
+   $ mayactl snapshot create --volname <vol> --snapname <snap> --namespace test
    
-     # Lists snapshot:
-       $ mayactl snapshot list --volname <vol>
+   # Lists snapshot:
+   $ mayactl snapshot list --volname <vol>
    
-     # Lists snapshots for a volume created in 'test' namespace
-       $ mayactl snapshot list --volname <vol> --namespace test
+   # Lists snapshots for a volume created in 'test' namespace
+   $ mayactl snapshot list --volname <vol> --namespace test
    
-     # Reverts a snapshot:
-       $ mayactl snapshot revert --volname <vol> --snapname <snap>
+   # Reverts a snapshot:
+   $ mayactl snapshot revert --volname <vol> --snapname <snap>
    
-     # Revert a snapshot for a volume created in 'test' namespace
-       $ mayactl snapshot revert --volname <vol> --snapname <snap> --namespace test
+   # Revert a snapshot for a volume created in 'test' namespace
+   $ mayactl snapshot revert --volname <vol> --snapname <snap> --namespace test
    
    Usage:
      mayactl snapshot [command]
@@ -123,8 +115,6 @@ For getting access to mayactl command line tool, you will have to login / execut
      list        Lists all the snapshots of a Volume
      revert      Reverts to specific snapshot of a Volume
    ```
-
-
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
