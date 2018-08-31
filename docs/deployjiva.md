@@ -5,7 +5,7 @@ sidebar_label: Deploying Jiva
 ---
 ------
 
-OpenEBS can be used to create Storage Pool on a host disk or an externally mounted disk. This Storage Pool can be used to create Jiva volume which can be utilized to run applications. By default, Jiva volume will be deployed on host root disk. If you are using an external disk, see [storage pool](/docs/next/setupstoragepools.html#configuring-a-storage-pool-on-openebs) for more details about creating a storage pool with an external disk. 
+OpenEBS can be used to create Storage Pool on a host disk or an externally mounted disk. This Storage Pool can be used to create Jiva volume which can be utilized to run applications. By default, Jiva volume will be deployed on host path. If you are using an external disk, see [storage pool](/docs/next/setupstoragepools.html#configuring-a-storage-pool-on-openebs) for more details about creating a storage pool with an external disk. 
 
 ## Deploying Jiva Storage Engine
 
@@ -13,45 +13,48 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
 
 1. Verify if the OpenEBS installation is complete. If not, go to [installation](/docs/next/installation.html).
 
-   OpenEBS pods are created under “*openebs*” namespace. CAS Template and default Storage Classes are created after installation.
+   OpenEBS pods are created under “*openebs*” namespace. CAS Template, default Storage Pool and default Storage Classes are created after installation.
 
-  CAS Template is an approach to provision persistent volumes that make use of CAS storage engine. The following command helps check the CAS Template components.
+   You can get the OpenEBS pods status by running following command
 
-  ```
-  kubectl get cast -n openebs
-  ```
+   ```
+   kubectl get pods -n openebs
+   ```
 
-  Also, it installs the default Jiva storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
+   CAS Template is an approach to provision persistent volumes that make use of CAS storage engine. The following command helps check the CAS Template components.
 
-  ```
-  kubectl get sc
-  ```
+   ```
+   kubectl get cast
+   ```
+
+   Also, it installs the default Jiva storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
+
+   ```
+   kubectl get sc
+   ```
 
    Following is an example output.
 
-      NAME                        PROVISIONER                                                AGE
-      openebs-cstor-default-0.7.0 openebs.io/provisioner-iscsi				     		 14m
-      openebs-cstor-sparse        openebs.io/provisioner-iscsi                               14m
-      openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   14m
-      openebs-standard            openebs.io/provisioner-iscsi                               14m
-      standard (default)          kubernetes.io/gce-pd  									14m
+   ```
+   NAME                        PROVISIONER                                                AGE
+   openebs-cstor-sparse        openebs.io/provisioner-iscsi                               5m
+   openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   5m
+   openebs-standard            openebs.io/provisioner-iscsi                               5m
+   standard (default)          kubernetes.io/gce-pd                                       22m
+   ```
 
-2. Create an **openebs-config.yaml** file in your node and paste the below yaml file to create a Storage Pool on your hosted path on the Node. Jiva storage pool will be created by default at *var/openebs* inside the hosted path on the nodes. 
+
+2.  OpenEBS installation will create Jiva storage pool also.It will be created by default on "/var/openebs" inside the hosted path on the nodes. 
+
+      You can get the storage pool details by running the following command. 
 
       ```
-      ---
-      apiVersion: openebs.io/v1alpha1
-      kind: StoragePool
-      metadata:
-        name: default
-        type: hostdir
-      spec:
-        path: "/var/openebs"
-      ---
+      kubectl get sp
       ```
-      If you would like to create a storage pool on an external disk which is mounted on the nodes, change the path mentioned in the above yaml file with the appropriate disk mounted path on the Nodes. 
 
-      If your external disk is mounted as */mnt/openebs_disk* in your node, change the path as below.
+      If you would like to create a storage pool on an external disk which is mounted on the nodes, create a  *openebs-config.yaml* file and add the below example yaml with changing the appropriate mounted disk path in your required node. 
+
+      For example,If your external disk is mounted as */mnt/openebs_disk* in your node, change the path as below.
 
       ```
       path: "/mnt/openebs_disk"
@@ -86,14 +89,11 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
       Following is an example output.
 
       ```
-      NAME                            AGE
-      cstor-pool-default-0.7.0-3xnj   2h
-      cstor-pool-default-0.7.0-t9n1   2h
-      cstor-pool-default-0.7.0-y5ql   2h
-      cstor-sparse-pool-41o7          13h
-      cstor-sparse-pool-5cpp          13h
-      cstor-sparse-pool-m1ff          13h
-      default                         13h
+      NAME                     AGE
+      cstor-sparse-pool-53tm   7m
+      cstor-sparse-pool-arc6   7m
+      cstor-sparse-pool-zvq6   7m
+      default                  7m
       ```
 
 5. You have now deployed OpenEBS cluster with Jiva Engine. It can create OpenEBS Jiva volume on default storage pool. By default, OpenEBS Jiva volume runs with 3 replica count. 
@@ -123,7 +123,7 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
 
       ```
       NAME              STATUS    VOLUME                               CAPACITY   ACCESS MODES   STORAGECLASS       AGE
-      demo-vol1-claim   Bound     default-demo-vol1-claim-3249598138   4G         RWO            openebs-standard   52s
+      demo-vol1-claim   Bound     default-demo-vol1-claim-3296087324   4G         RWO            openebs-standard   20s
       ```
 
       Get the Jiva pv details by running the following command.
@@ -136,7 +136,7 @@ Jiva can be deployed in your Kubernetes cluster by using the following procedure
 
       ```
       NAME                                 CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                     STORAGECLASS       REASON    AGE
-      default-demo-vol1-claim-3249598138   4G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-standard             45m
+      default-demo-vol1-claim-3296087324   4G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-standard             45s
       ```
 
 9. Use this pvc name in your application yaml to run your application using OpenEBS Jiva volume.
