@@ -11,13 +11,9 @@ OpenEBS can be used to create Storage Pool on a host disk or an externally mount
 
 Jiva can be deployed in your Kubernetes cluster by using the following procedure. Before installation, all [prerequisites](/docs/next/prerequisites.html) must be set on the Nodes. 
 
-1. Apply *openebs-operator.yaml* file to create OpenEBS control plane components. 
+1. Verify if the OpenEBS installation is complete. If not, go to [installation](/docs/next/installation.html).
 
-  ```
-  kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0-RC2.yaml
-  ```
-
-  OpenEBS pods are created under “*openebs*” namespace. CAS Template and default Storage Classes are created after executing the above command.
+   OpenEBS pods are created under “*openebs*” namespace. CAS Template and default Storage Classes are created after installation.
 
   CAS Template is an approach to provision persistent volumes that make use of CAS storage engine. The following command helps check the CAS Template components.
 
