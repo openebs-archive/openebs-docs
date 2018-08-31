@@ -81,33 +81,38 @@ spec:
 
 ## Scheduling a Pool on a Node
 
-If you want to schedule your pool on a particular node please follow [this](https://docs.openebs.io/docs/next/scheduler.html) procedure before applying the *openebs-operator.yaml* file.
+If you want to schedule your pool on a particular node please follow [this](https://docs.openebs.io/docs/next/scheduler.html) procedure before applying the *openebs-operator.yaml* file. Please refer [installation](/docs/next/installation.html#install-openebs-using-kubectl) to deploy OpenEBS cluster in your k8s environment which will create a default storage pool on the host path.Jiva volumes will be deployed inside this path only.
 
-You must add the following entries to the corresponding storage class. In this example, it is *openebs-storageclasses.yaml* file. Hence, you must add the storage pool name in the *openebs-percona* storage class as Percona application is used in the example.
+For example, if you want to run a Percona application in this storage pool, you must create a storage class yaml called as *openebs-storageclasses.yaml* by adding the storage pool name in the *openebs-percona* storage class as Percona application is used in the example. 
 
 ```
+---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-   name: openebs-percona
-provisioner: openebs.io/provisioner-iscsi
-parameters:
-  openebs.io/storage-pool: "test-mntdir"
-  openebs.io/jiva-replica-count: "3"
-  openebs.io/volume-monitor: "true"
-  openebs.io/capacity: 5G  
+  name: openebs-percona
+  annotations:
+    cas.openebs.io/config: |
+      - name: ControllerImage
+        value: openebs/jiva:0.7.0-RC2
+      - name: ReplicaImage
+        value: openebs/jiva:0.7.0-RC2
+      - name: VolumeMonitorImage
+        value: openebs/m-exporter:0.7.0-RC2
+      - name: ReplicaCount
+        value: "3"
+      - name: StoragePool
+        value: test-mntdir
 ```
-
-You must mention the storage class name in the *application.yaml* file. For example, *demo-percona-mysql-pvc.yaml* file for the percona application. 
 
 Run the following commands.
 
 ```
-kubectl apply -f openebs-operator.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0-RC2.yaml
 kubectl apply -f openebs-storageclasses.yaml
 ```
 
-Run the application using the following command.
+You must mention the storage class name in the *application.yaml* file. For example, *demo-percona-mysql-pvc.yaml* file for the percona application. Run the application using the following command.
 
 ```
 cd demo/percona
@@ -117,16 +122,6 @@ kubectl apply -f demo-percona-mysql-pvc.yaml
 The Percona application now runs inside the `test-mntdir` storage pool.
 
 Similarly, you can create a storage pool for different applications as per requirement.
-
-
-
-
-
-
-
-
-
-
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
