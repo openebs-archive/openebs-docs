@@ -16,22 +16,22 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 3. You can install OpenEBS either through stable helm chart or OpenEBS helm chart or by using OpenEBS operator/kubectl.  
 
-**Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS Operator/kubectl](docs/next/quickstartguide.html#using-openebs-operator-kubectl) option as explained below.
+   **Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS Operator/kubectl](/docs/next/quickstartguide.html#using-openebs-operator-kubectl) option as explained below.
 
-   ### Using a Stable Helm Chart:
+      ### Using a Stable Helm Chart:
 
    [Setup RBAC for helm tiller](/docs/next/installation.html#helm) and install the chart from Kubernetes stable and deploy the storage class templates.
 
    ```
    helm install  --namespace openebs --name openebs  -f https://openebs.github.io/charts/helm-values-0.6.0.yaml stable/openebs
-   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
+   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml  
    ```
 
    For more details on installing OpenEBS using helm, see [install through helm](/docs/next/installation.html#helm).
 
-   ### Using OpenEBS Helm Charts 
+      ### Using OpenEBS Helm Charts 
 
-   `(Will be deprecated in the coming releases)`
+    `(Will be deprecated in the coming releases)`
 
    ```
    helm repo add openebs-charts https://openebs.github.io/charts/
@@ -39,12 +39,11 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
    helm install openebs-charts/openebs
    ```
 
-   ### Using OpenEBS Operator (kubectl):
+      ### Using OpenEBS Operator (kubectl):
 
-  Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve creating a new Service Account and assigning to OpenEBS components. 
-  
-  For installing OpenEBS cluster, see [installation](/docs/next/installation.html)
+   Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve creating a new Service Account and assigning to OpenEBS components. 
 
+   For installing OpenEBS cluster, see [installation](/docs/next/installation.html)
 
 4. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-standard* and *openebs-cstor-sparse*) are added to the cluster when you install OpenEBS.
 
