@@ -14,7 +14,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 2. Kubernetes 1.9.7+ is installed
 
-3. You can install OpenEBS either through stable helm chart or by through OpenEBS helm chart or by using OpenEBS operator/kubectl.  
+3. You can install OpenEBS either through stable helm chart or OpenEBS helm chart or by using OpenEBS operator/kubectl.  
 
 **Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS Operator/kubectl](docs/next/quickstartguide.html#using-openebs-operator-kubectl) option as explained below.
 
@@ -41,11 +41,12 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
    ### Using OpenEBS Operator (kubectl):
 
-   You can now install OpenEBS either by using Jiva or cStor storage engines. For more information, see [Jiva](/docs/next/storageengine.html#jiva) and [cStor](/docs/next/storageengine.html#cstor).
+  Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve creating a new Service Account and assigning to OpenEBS components. 
+  
+  For installing OpenEBS cluster, see [installation](/docs/next/installation.html)
 
-   Make sure you run the `kubectl` commands with cluster admin context. The installation will involve create a new Service Account and assigned to OpenEBS components. As a **cluster admin**, you can deploy jiva or cStor based on your requirements. For more information about deploying them, see [deploying jiva](/docs/next/deployjiva.html) and [deploying cStor](/docs/next/deploycstor.html).
 
-4. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-standard* and *openebs-cstor-default-0.7.0*) are added to the cluster when you install OpenEBS.
+4. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-standard* and *openebs-cstor-sparse*) are added to the cluster when you install OpenEBS.
 
 5. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/next/mayaonline.html) for better visibility, volume management, and integrated ChatOps experience with Slack.
 
