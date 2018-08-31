@@ -1,7 +1,7 @@
 ---
 id: deploycstor
-title: Deploying cStor
-sidebar_label: Deploying cStor
+title: Provisioning cStor
+sidebar_label: Provisioning cStor
 ---
 ------
 
@@ -14,9 +14,9 @@ Additionally, you can add disks using the documentation available at [Kubernetes
 1. cStor synchronizes data periodically to the disks. The application must send explicit 'sync' CDBs to commit the data to disks.
 2. cStor assumes that data written to a disk is persistent. Hence, write cache of disk must be disabled if it's cache is not backed by non-volatile memory.
 
-## Deploying cStor Storage Engine 
+## Provisioning cStor Storage Engine 
 
-cStor can be deployed in your Kubernetes cluster by performing the following steps. Before installation, the [prerequisites](/docs/next/prerequisites.html) must be met on the Nodes. 
+cStor can be provisioned in your Kubernetes cluster by performing the following steps.
 
 1. Verify if the OpenEBS installation is complete. If not, go to [installation](/docs/next/installation.html).
 
