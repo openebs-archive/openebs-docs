@@ -18,13 +18,10 @@ Additionally, you can add disks using the documentation available at [Kubernetes
 
 cStor can be deployed in your Kubernetes cluster by performing the following steps. Before installation, the [prerequisites](/docs/next/prerequisites.html) must be met on the Nodes. 
 
-1. Apply *openebs-operator.yaml* file to create OpenEBS control plane components. 
+1. Verify if the OpenEBS installation is complete. If not, go to [installation](/docs/next/installation.html).
 
-   ```
-   kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0-RC2.yaml
-   ```
-   OpenEBS pods are created under “*openebs*” namespace. Node Disk Manager, CAS Template and default Storage Classes are created after executing the above command.
-
+   OpenEBS pods are created under “*openebs*” namespace. Node Disk Manager, CAS Template and default Storage Classes are created after installation.
+   
    **Node Disk Manager** manages the disks associated with each node in the cluster. You can get the disk details by running the following command.
 
    ```
