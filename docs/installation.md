@@ -13,7 +13,7 @@ On an existing Kubernetes cluster, as a cluster administrator, you can install O
 1. Using (stable/OpenEBS) [helm charts](/docs/next/installation.html#install-openebs-using-stable-helm-charts)
 2. Using OpenEBS operator through [kubectl](/docs/next/installation.html#install-openebs-using-kubectl)  
 
-**Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS operator/kubectl](docs/next/quickstartguide.html#using-openebs-operator-kubectl) option as explained below.
+**Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS operator/kubectl](/docs/next/installation.html#install-openebs-using-kubectl) option as explained below.
 
 <a name="helm"></a>
 
@@ -83,10 +83,10 @@ You can install OpenEBS cluster by running the following command.
 **Note:** Ensure that you have met the [prerequisites](/docs/next/installation.html) before installation.
 
 ```
-   kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0-RC2.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0-RC2.yaml
 ```
 
-OpenEBS control plane pods are created under “openebs” namespace. CAS Template and default Storage Classes are created after executing the above command. 
+OpenEBS control plane pods are created under “openebs” namespace. CAS Template,default Storage Pool and default Storage Classes are created after executing the above command. 
 
 You can now choose the storage engine to provision Jiva or cStor volumes. For more information about OpenEBS storage engines, see [Jiva](/docs/next/storageengine.html#jiva) and [cStor](/docs/next/storageengine.html#cstor).
 
