@@ -45,11 +45,11 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:ci
+        value: openebs/jiva:0.7.0-RC2
       - name: ReplicaImage
-        value: openebs/jiva:ci
+        value: openebs/jiva:0.7.0-RC2
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:ci
+        value: openebs/m-exporter:0.7.0-RC2
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
@@ -79,11 +79,11 @@ metadata:
    annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:ci
+        value: openebs/jiva:0.7.0-RC2
       - name: ReplicaImage
-        value: openebs/jiva:ci
+        value: openebs/jiva:0.7.0-RC2
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:ci
+        value: openebs/m-exporter:0.7.0-RC2
       - name: ReplicaCount
         value: "1"
       - name: StoragePool
@@ -104,7 +104,7 @@ metadata:
 provisioner: openebs.io/provisioner-iscsi
 
 ```
-  
+
 ### Storage Class for Provisioning cStor
 
 A new OpenEBS component called Storage Pool Claim (SPC) watcher has been introduced. This allows you to define a SPC name, for example `cstor-sparse-pool`. Pools will be created with the specified SPC name and the desired number of replcias specified in the `ReplicaCount`. The PVC that uses the storage class will create cStor volumes on the specified pools.
@@ -135,9 +135,9 @@ metadata:
 provisioner: openebs.io/provisioner-iscsi
 ---
 ```
+
   
-  
-  
+
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
    (function(h,o,t,j,a,r){
