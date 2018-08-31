@@ -1,15 +1,15 @@
 ---
 id: deployjiva
-title: Deploying Jiva
-sidebar_label: Deploying Jiva
+title: Provisioning Jiva
+sidebar_label: Provisioning Jiva
 ---
 ------
 
 OpenEBS can be used to create Storage Pool on a host disk or an externally mounted disk. This Storage Pool can be used to create Jiva volume which can be utilized to run applications. By default, Jiva volume will be deployed on host path. If you are using an external disk, see [storage pool](/docs/next/setupstoragepools.html#configuring-a-storage-pool-on-openebs) for more details about creating a storage pool with an external disk. 
 
-## Deploying Jiva Storage Engine
+## Provisioning Jiva Storage Engine
 
-Jiva can be deployed in your Kubernetes cluster by using the following procedure. Before installation, all [prerequisites](/docs/next/prerequisites.html) must be set on the Nodes. 
+Jiva can be provisioned in your Kubernetes cluster by using the following procedure. 
 
 1. Verify if the OpenEBS installation is complete. If not, go to [installation](/docs/next/installation.html).
 
