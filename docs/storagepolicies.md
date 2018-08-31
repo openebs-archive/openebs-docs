@@ -30,22 +30,22 @@ OpenEBS supports several types of Storage Policies such as the following.
 
 ## Replica Count Policy
 
-You can specify the jiva replica count using the *openebs.io/jiva-replica-count* property. In the following example, the jiva-replica-count is specified as 1. Hence, a single replica is created.
+You can specify the jiva replica count using the *value* for *ReplicaCount* property. In the following example, the jiva-replica-count is specified as 3. Hence, a three replicas are created.
 
 ```
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-    name: openebs-standalone
-provisioner: openebs.io/provisioner-iscsi
-parameters:
-    openebs.io/jiva-replica-count: "1"
-
+  name: openebs-standard
+  annotations:
+    cas.openebs.io/config: |
+      - name: ReplicaCount
+        value: "3"
 ```
 
 ## Replica Image Policy
 
-You can specify the jiva replica image using the *openebs.io/jiva-replica-image* property.
+You can specify the jiva replica image using *value* for *jiva-replica-image* property.
 
 **Note:**
 
@@ -55,32 +55,30 @@ Jiva replica image is a docker image. Following is a sample that makes use of re
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-    name: mysql
-provisioner: openebs.io/provisioner-iscsi
-parameters:
-    openebs.io/jiva-replica-count: "1"
-    openebs.io/capacity: "1G"
-    openebs.io/jiva-replica-image: "openebs/jiva:0.5.0"
-
+  name: openebs-standard
+  annotations:
+    cas.openebs.io/config: |
+      - name: ReplicaImage
+        value: openebs/jiva:0.7.0-RC2
 ```
 
 ## Controller Image Policy
 
-You can specify the jiva controller image using the *openebs.io/jiva-controller-image* property.
+You can specify the jiva controller image using the * *value* for *jiva-controller-image* property.
 
 **Note:**
 
 Jiva controller image is a docker image. Following is a sample setting.
 
 ```
+apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-    name: mysql
-provisioner: openebs.io/provisioner-iscsi
-parameters:
-    openebs.io/jiva-replica-count: "1"
-    openebs.io/capacity: "1G"
-    openebs.io/jiva-controller-image: "openebs/jiva:0.5.0"
+  name: openebs-standard
+  annotations:
+    cas.openebs.io/config: |
+      - name: ControllerImage
+        value: openebs/jiva:0.7.0-RC2
 
 ```
 
@@ -103,22 +101,19 @@ metadata:
     type: hostdir
 spec:
     path: "/mnt/openebs"
-
 ```
 
-This storage pool custom resource can now be used as follows.
+This storage pool custom resource can now be used as follows in the storage class.
 
 ```
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-    name: openebs-percona
-provisioner: openebs.io/provisioner-iscsi
-parameters:
-    openebs.io/jiva-replica-count: "2"
-    openebs.io/capacity: "2G"
-    openebs.io/jiva-replica-image: "openebs/jiva:0.5.0"
-    openebs.io/storage-pool: "sp-mntdir"
+  name: openebs-standard
+  annotations:
+    cas.openebs.io/config: |
+      - name: StoragePool
+        value: sp-mntdir
 
 ```
 
@@ -133,31 +128,36 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
    name: openebs-mongodb
-provisioner: openebs.io/provisioner-iscsi
-parameters:
-  openebs.io/storage-pool: "test-mntdir"
-  openebs.io/jiva-replica-count: "1"
-  openebs.io/volume-monitor: "true"
-  openebs.io/capacity: 5G
-  openebs.io/fstype: "xfs"
+   annotations:
+    cas.openebs.io/config: |
+      - name: ControllerImage
+        value: openebs/jiva:0.7.0-RC2
+      - name: ReplicaImage
+        value: openebs/jiva:0.7.0-RC2
+      - name: VolumeMonitorImage
+        value: openebs/m-exporter:0.7.0-RC2
+      - name: ReplicaCount
+        value: "1"
+      - name: StoragePool
+        value: default
+      - name: FSType
+        value: "xfs"
 ```
 
-## Volume Monitoring Policy
+## Volume Monitoring Image Policy
 
-You can specify the monitoring policy for a particular volume using *openebs.io/volume-monitor* property. The following Kubernetes storage class sample uses the Volume Monitoring policy.
+You can specify the monitoring image policy for a particular volume using *value* for *VolumeMonitorImage* property. The following Kubernetes storage class sample uses the Volume Monitoring policy. By default, volume monitor is enabled. 
 
 ```
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-    name: sc-percona-monitor
-provisioner: openebs.io/provisioner-iscsi
-parameters:
-    openebs.io/jiva-replica-image: "openebs/jiva:0.5.0"
-    openebs.io/volume-monitor: "true"
+  name: openebs-standard
+  annotations:
+    cas.openebs.io/config: |
+      - name: VolumeMonitorImage
+        value: openebs/m-exporter:0.7.0-RC2
 ```
-
-
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
