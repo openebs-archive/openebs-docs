@@ -25,7 +25,7 @@ The AKS cluster runs ubuntu 16.04 LTS with the kubelet running in a container (d
 
 This steps are provided in pre-requisite section, see [here](/docs/next/prerequisites.html#azure-cloud) 
 
-For more information, see  https://github.com/openebs/openebs/issues/1335.
+For more information, see [this](https://github.com/openebs/openebs/issues/1335).
 
 ## On Azure, OpenEBS installation fails
 
