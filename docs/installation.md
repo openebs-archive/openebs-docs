@@ -80,7 +80,7 @@ Specify each parameter using the `--set key=value` argument to `helm install`.
 
 You can install OpenEBS cluster by running the following command. 
 
-**Note:** Ensure that you have met the [prerequisites](/docs/next/installation.html) before installation.
+**Note:** Ensure that you have met the [prerequisites](/docs/next/prerequisites.html) before installation.
 
 ```
 kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0-RC2.yaml
