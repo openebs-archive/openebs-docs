@@ -133,7 +133,7 @@ Deleting OpenEBS Persistent Volume and Persistent Volume Claim did not change th
 
 ### Workaround:
 
-To reclaim the space currently, you must perform a manual delete `rm -rf` of the files in */var/openebs* (or whichever path the storage pool is created on). For more information, see https://github.com/openebs/openebs/issues/1436.
+To reclaim the space currently, you must perform a manual delete `rm -rf` of the files in */var/openebs* (or whichever path the storage pool is created on). For more information, see [this](https://github.com/openebs/openebs/issues/1436).
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
