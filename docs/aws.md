@@ -182,10 +182,15 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     ```
 
 16. SSH to Master Node and perform the following commands to clone OpenEBS yaml file and deploy.
+    
+    ```
+    wget
+    https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
+    ```
 
-    wget [openebs-operator.yaml](https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml)
-
-    wget [openebs-storageclasses.yaml](https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml)
+    ```
+    wget
+    https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml```
 
 17. Edit *openebs-operator.yaml* and add the following entry. This will create storage pool on one of the local disks attached to the hosts. Refer [OpenEBS Storage Pools](/docs/next/setupstoragepools.html) for more information.
 
