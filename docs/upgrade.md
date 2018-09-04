@@ -183,7 +183,7 @@ Repeat the above step of labellilng the node for all nodes where replicas are sc
 - Scenarios like PV1 replicas are on nodes n1, n2, and n3, whereas PV2 replicas are on nodes n2, n3, and n4.
 - This is a preliminary script only intended for use on volumes where data is backed-up.
 - Have the following link handy in case the volume gets into read-only state during the upgrade process.
-  https://docs.openebs.io/docs/next/readonlyvolumes.html
+  [readonlyvolumes.html](https://docs.openebs.io/docs/next/readonlyvolumes.html)
 - In the process of running the following steps, if you run into issues, you can always reach us on Slack.
 
 1. Select the PV that must be upgraded.

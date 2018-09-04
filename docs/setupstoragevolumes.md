@@ -36,8 +36,7 @@ OpenEBS Storage provides several features that can be customized for each volume
 
 OpenEBS comes with some pre-defined set of storage classes that can be readily used.
 
-Go to the following link for the pre-defined storage classes.
-https://github.com/openebs/openebs/blob/master/k8s/openebs-storageclasses.yaml
+Go to the following link for the pre-defined storage classes.[openebs-storageclasses.yaml](https://github.com/openebs/openebs/blob/master/k8s/openebs-storageclasses.yaml)
 
 
 It is also possible that a user can create a new custom storage class.
@@ -83,7 +82,7 @@ Note: Support for xfs file system has been introduced from 0.5.4 and onwards. In
 
 Follow the link below to understand how to deploy an application on the OpenEBS volume using xfs file system. Here, mongo-DB application is used as an example.
 
-https://github.com/openebs/openebs/issues/1446
+[deploy an application on the OpenEBS volume using xfs file system](https://github.com/openebs/openebs/issues/1446)
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

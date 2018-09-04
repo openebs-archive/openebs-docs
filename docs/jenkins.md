@@ -7,18 +7,16 @@ sidebar_label: Jenkins
 
 This section demonstrates the deployment of Jenkins as a pod in a Kubernetes cluster. You can spawn a Jenkins deployment which will use OpenEBS as its persistent storage.
 
-Deploying Jenkins as a Pod
---------------------------
+## Deploying Jenkins as a Pod
 
 Deploying Jenkins as a pod provides the following benefits.
 
--   Isolates different jobs from one another
--   Quickly cleans a job’s workspace.
--   Dynamically deploys or schedules jobs with Kubernetes pods
--   Allows increased resource utilization and efficiency
+- Isolates different jobs from one another
+- Quickly cleans a job’s workspace.
+- Dynamically deploys or schedules jobs with Kubernetes pods
+- Allows increased resource utilization and efficiency
 
-Deploying Jenkins Pod with Persistent Storage
----------------------------------------------
+## Deploying Jenkins Pod with Persistent Storage
 
 Before getting started, check the status of the cluster using the following command. 
 
@@ -39,7 +37,7 @@ openebs-provisioner-74cb999586-268k7           1/1       Running   0          6m
 openebs-snapshot-controller-6449b4cdbb-24fz4   2/2       Running   0          6m
 ```
 
-Download and apply the Jenkins YAML file from the OpenEBS repository using the following commands. 
+Download and apply the Jenkins YAML file from the OpenEBS repository using the following commands.
 
     git clone https://github.com/openebs/openebs
     cd openebs/k8s/demo/jenkins
@@ -55,7 +53,7 @@ Get the status of running pods using the following command.  Application Pod and
     pvc-e4bcafe4-791c-11e8-ae41-02b983f0a4db-rep-5547d6bcd-fjj7d    1/1       Running   0          30m
     pvc-e4bcafe4-791c-11e8-ae41-02b983f0a4db-rep-5547d6bcd-q4tm8    1/1       Running   0          30m
 
-Get the status of underlying persistent volumes used by Jenkins deployment using the following command. 
+Get the status of underlying persistent volumes used by Jenkins deployment using the following command.
 
     ubuntu@kubemaster-01:~/openebs/k8s/demo/jenkins$ kubectl get pvc
     NAME            STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
@@ -67,10 +65,9 @@ Get the status of Jenkins service using the following command.
     NAME                                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
     jenkins-svc                                         NodePort    10.109.111.160   <none>        80:30577/TCP        21m
     kubernetes                                          ClusterIP   10.96.0.1        <none>        443/TCP             1h
-    pvc-e4bcafe4-791c-11e8-ae41-02b983f0a4db-ctrl-svc   ClusterIP   10.106.18.214    <none>        3260/TCP,9501/TCP   21m                     
+    pvc-e4bcafe4-791c-11e8-ae41-02b983f0a4db-ctrl-svc   ClusterIP   10.106.18.214    <none>        3260/TCP,9501/TCP   21m
 
-Launching Jenkins
------------------
+## Launching Jenkins
 
 The Jenkins deployment YAML, creates a NodePort service type to make Jenkins available outside the cluster.
 
@@ -90,7 +87,7 @@ ubuntu@kubemaster-01:~/openebs/k8s/demo/jenkins$ kubectl describe svc jenkins-sv
 NodePort:                 <unset>  30577/TCP
 ```
 
-Open the <http://172.28.128.5:30577> URL in your browser.
+Open the [http://172.28.128.5:30577](http://172.28.128.5:30577) URL in your browser.
 
 **Note:**
 
@@ -108,7 +105,7 @@ Once you access the URL the Getting Started page is displayed. The following pro
 
     Note: Replace **jenkins-6bc67f99d7-l9p5h** with your jenkin pod name. 
 
-2.  Provide the **initialAdminPassword** in the *Unlock Jenkins* screen ..
+2. Provide the **initialAdminPassword** in the *Unlock Jenkins* screen ..
 
 3. Click **Continue**.
 

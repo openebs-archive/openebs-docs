@@ -134,9 +134,7 @@ Once all your pods are running run the below command.
 kubectl apply -f mongo-loadgen.yaml
 ```
 
-Now Mongo-DB is running . To run Mongo-DB with xfs file system please follow the steps mentioned in link below.
-
-https://github.com/openebs/openebs/issues/1446
+Now Mongo-DB is running . To run Mongo-DB with xfs file system please follow the steps mentioned [here](https://github.com/openebs/openebs/issues/1446).
 
 ### Verifying MongoDB Replication
 

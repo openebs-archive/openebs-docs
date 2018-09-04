@@ -94,7 +94,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 
 7. Change your instance image type and number of machines by executing corresponding commands. The exact command needed for your cluster will be shown at the end of the previous step. Following is an example.
 
-   **Example:**   
+   **Example:**
 
    Change your node configuration by executing as follows.
 
@@ -182,10 +182,15 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     ```
 
 16. SSH to Master Node and perform the following commands to clone OpenEBS yaml file and deploy.
+    
+    ```
+    wget
+    https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
+    ```
 
-    wget https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
-
-    wget https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
+    ```
+    wget
+    https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml```
 
 17. Edit *openebs-operator.yaml* and add the following entry. This will create storage pool on one of the local disks attached to the hosts. Refer [OpenEBS Storage Pools](/docs/next/setupstoragepools.html) for more information.
 
@@ -290,8 +295,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 
     ​
 
-    <!-- Hotjar Tracking Code for https://docs.openebs.io -->
-
+<!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
