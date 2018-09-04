@@ -51,7 +51,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 ## As an Application Developer:
 
-1. Create a PVC specification with the right pvc name and use it in the application YAML file. Some sample application yaml files are available under https://github.com/openebs/openebs/tree/master/k8s/demo. 
+1. Create a PVC specification with the right pvc name and use it in the application YAML file. Some sample application yaml files are available under [openebs-repository](https://github.com/openebs/openebs/tree/master/k8s/demo).
 
 2. Apply the yaml file using `kubectl apply -f` command. Verify that an OpenEBS volume is provisioned and bound to the application pod.
 
