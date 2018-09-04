@@ -6,27 +6,27 @@ sidebar_label: Storage Volumes
 
 ------
 
-**Storage Volumes**
+### Storage Volumes
 
 A Storage Class provides a way for administrators to describe the “classes” of storage they offer. Different classes may map to quality-of-service levels, backup policies, or to arbitrary policies determined by the cluster administrators. This concept is sometimes called “profiles” in other storage systems.
 
-**Setting Up Storage Class On OpenEBS**
+### Setting up a Storage Class on OpenEBS
 
-Once OpenEBS is installed on your Kubernetes cluster, you can start using it by specifying corresponding OpenEBS Storage Classes in your PVCs.
+Once OpenEBS is installed on your Kubernetes cluster, you can start using it by specifying the corresponding OpenEBS Storage Classes in your PVCs.
 
-Apply the openebs-operator.yaml file on the Kubernetes cluster using the following command. This creates the maya api-server and OpenEBS provisioner deployments.
+Apply the *openebs-operator.yaml* file on the Kubernetes cluster using the following command. This creates the maya api-server and OpenEBS provisioner deployments.
 
 ```
 kubectl apply -f openebs-operator.yaml
 ```
 
-Add the OpenEBS storage classes using the following command. This can be used by users to map a suitable storage profile for their applications in their respective persistent volume claims.
+Add the OpenEBS storage classes using the following command. You can use this to map a suitable storage profile for applications in your respective persistent volume claims.
 
 ```
 kubectl apply -f openebs-storageclasses.yaml
 ```
 
-OpenEBS Storage provides several features that can be customized for each volume. Some of features that could be customized per application are as follows:
+OpenEBS storage provides several features that can be customized for each volume. Some of the features that could be customized per application are as follows:
 
 - Number of replications
 - Zone or node affinity
@@ -36,10 +36,12 @@ OpenEBS Storage provides several features that can be customized for each volume
 
 OpenEBS comes with some pre-defined set of storage classes that can be readily used.
 
-Go to the following link for the pre-defined storage classes.[openebs-storageclasses.yaml](https://github.com/openebs/openebs/blob/master/k8s/openebs-storageclasses.yaml)
+Go to the following link for the pre-defined storage classes.
+
+[openebs-storageclasses.yaml](https://github.com/openebs/openebs/blob/master/k8s/openebs-storageclasses.yaml)
 
 
-It is also possible that a user can create a new custom storage class.
+It is also possible to create a new custom storage class.
 
 Defining a storage class supported by OpenEBS:
 
@@ -57,8 +59,6 @@ apiVersion: storage.k8s.io/v1
 
 
 ```
-
-
 
 By default, OpenEBS comes with ext4 file system. However, if you want to use xfs file system you can do so by adding the below entries in the openebs-storageclasses.yaml.
 
@@ -78,7 +78,7 @@ parameters:
   openebs.io/fstype: "xfs"
 ```
 
-Note: Support for xfs file system has been introduced from 0.5.4 and onwards. In order to change the file system you must have 0.5.4 or latest build. You must add `openebs.io/fstype: "xfs"` in the openebs-storageclasses.yaml.
+**Note:** Support for xfs file system has been introduced from 0.5.4 and onwards. In order to change the file system you must have 0.5.4 or latest build. You must add `openebs.io/fstype: "xfs"` in the openebs-storageclasses.yaml.
 
 Follow the link below to understand how to deploy an application on the OpenEBS volume using xfs file system. Here, mongo-DB application is used as an example.
 
