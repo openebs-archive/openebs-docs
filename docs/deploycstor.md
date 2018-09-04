@@ -110,8 +110,6 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
      maxPools: 3
      poolSpec:
        poolType: striped
-       cacheFile: /tmp/pool1.cache
-       overProvisioning: false
      # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
      #
      # `Disk` is a custom resource supported by OpenEBS with `node-disk-manager`
