@@ -65,7 +65,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    standard (default)          kubernetes.io/gce-pd                                       3h
    ```
 
-2. OpenEBS installation will create cStor sparse pool also by default on each node.It will be created by names as *cstor-spare-pool-<wxyz>*. These sparse pools are created on hosted disk of each node. You can get the default cStor pool names by using following command. 
+2. Installing OpenEBS creates cStor sparse pool by default on each node with a name such as *cstor-spare-pool-<wxyz>*. These sparse pools are created on the host disk of each node. You can get the default cStor pool names by using the following command. 
 
    ```
    kubectl get sp
@@ -81,9 +81,9 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    default                  1m
    ```
 
-   If you are using default cstor-sparse-pool, skip step 3 ,4 and 5. 
+   If you are using default cstor-sparse-pool, skip step 3, 4, and 5. 
 
-3. If you would like to create storage pool using external disks which are mounted on nodes , then create  a file called *openebs-config.yaml* in your master node and add below contents into the file. In this case, there are 2 disks per node is attached and creating  storage pool using these 2 disks per node as a striped manner. So a total of 6 external disks which is as result of 2 disks per node ,are mentioned in the below yaml file.
+3. If you would like to create a storage pool using external disks which are mounted on nodes, then create a file called *openebs-config.yaml* in your master node and add the following contents into the file. In this case, there are 2 disks per node attached and creates a storage pool using these 2 disks per node in a striped manner. Hence there are a total of 6 external disks i.e. 2 disks per node which are mentioned in the following yaml file.
 
    ```
    ---
