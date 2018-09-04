@@ -1,7 +1,7 @@
 ---
 id: tasks_az
 title: Deploying OpenEBS volumes across AZs on public clouds
-sidebar_label: Deploy acorss AZs 
+sidebar_label: Deploy across AZs 
 ---
 ------
 
