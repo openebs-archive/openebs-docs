@@ -63,7 +63,10 @@ For getting access to mayactl command line tool, you will have to login / execut
    ```
    # List Volumes:
    $ mayactl volume list
-      
+
+   # List Volumes created in 'test' namespace:
+   $ mayactl volume list --namespace test
+
    # Statistics of a Volume:
    $ mayactl volume stats --volname <vol>
       
