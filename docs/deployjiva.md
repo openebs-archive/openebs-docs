@@ -24,7 +24,7 @@ Jiva can be provisioned in your Kubernetes cluster by using the following proced
    CAS Template is an approach to provision persistent volumes that make use of CAS storage engine. The following command helps check the CAS Template components.
 
    ```
-   kubectl get cast
+   kubectl get cast -n openebs
    ```
 
    Also, it installs the default Jiva storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
