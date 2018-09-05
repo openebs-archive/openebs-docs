@@ -33,7 +33,7 @@ For getting access to mayactl command line tool, you will have to login / execut
 1. Use mayactl help command for more details.
 
    ```
-   mayactl help 
+   mayactl help
    ```
 
    **Example:**
