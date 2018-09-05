@@ -129,7 +129,9 @@ This will delete the application pod and the corresponding pvc associated to it.
 
 The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim.
 
+## Can I use the same PVC for multiple Pods?
 
+No. Jiva and cStor volumes are exposed via block storage using iSCSI. Currently only RWO is supported.
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->

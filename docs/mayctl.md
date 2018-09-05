@@ -16,9 +16,13 @@ For getting access to mayactl command line tool, you will have to login / execut
    ```
    kubectl get pods -n openebs | grep -i maya-apiserver
    ```
-   `maya-apiserver-68c98fdb76-xhvxg              1/1       Running   0          3m `
+   Following is an example output
 
-2. It is possible that there are multiple instances of maya-apiserver pods for scaling purposes. You can run mayactl in any one of them. Pick one of the pods for the below `exec` command
+   ```
+   maya-apiserver-68c98fdb76-xhvxg              1/1       Running   0          3m
+   ```
+
+2. It is possible that there are multiple instances of maya-apiserver pods for scaling purposes. You can run mayactl in any one of them. Pick one of the pods using ` kubectl exec` command . You can do as following way.
 
    ```
    kubectl exec -it <maya-apiserver-podname> /bin/bash  -n openebs
@@ -33,7 +37,7 @@ For getting access to mayactl command line tool, you will have to login / execut
 1. Use mayactl help command for more details.
 
    ```
-   mayactl —help 
+   mayactl --help
    ```
 
    **Example:**
@@ -57,18 +61,12 @@ For getting access to mayactl command line tool, you will have to login / execut
    Volume command usage examples are shown below.
 
    ```
-   # Create a Volume:
-   $ mayactl volume create --volname <vol> --size <size>
-     
    # List Volumes:
    $ mayactl volume list
-      
-   # Delete a Volume:
-   $ mayactl volume delete --volname <vol>
-      
-   # Delete a Volume created in 'test' namespace:
-   $ mayactl volume delete --volname <vol> --namespace test
-      
+
+   # List Volumes created in 'test' namespace:
+   $ mayactl volume list --namespace test
+
    # Statistics of a Volume:
    $ mayactl volume stats --volname <vol>
       
@@ -80,41 +78,60 @@ For getting access to mayactl command line tool, you will have to login / execut
 
    # Info of a Volume created in 'test' namespace:
    $ mayactl volume info --volname <vol> --namespace test
+
+   # Delete a Volume:
+   $ mayactl volume delete --volname <vol>
+      
+   # Delete a Volume created in 'test' namespace:
+   $ mayactl volume delete --volname <vol> --namespace test
    ```
 
-   
 
-3. `mayactl volume snapshot` command is used to manage the snapshots of a volume. Some examples of the usage are shown below. 
+   **Note:** `mayactl volume delete` command will delete corresponding OpenEBS pods and deployments. But it will not delete PVC and PV. These corresponding PVC and PV can be deleted by using usual `kubectl delete` commands. 
+
+3. You can get the mayactl related details by running following command
+
+   ```
+   mayactl version
+   ```
+
+   **Example:**
+
+   ```
+   # Get mayactl installed version
+   # mayactl version
+   ```
+
+4. `mayactl volume snapshot` command is used to manage the snapshots of a volume. Some examples of the usage are shown below. 
 
    ```
    Examples:
    # Create a snapshot:
    $ mayactl snapshot create --volname <vol> --snapname <snap>
-   
+
    # Create a snapshot for a volume created in 'test' namespace
    $ mayactl snapshot create --volname <vol> --snapname <snap> --namespace test
-   
+
    # Lists snapshot:
    $ mayactl snapshot list --volname <vol>
-   
+
    # Lists snapshots for a volume created in 'test' namespace
    $ mayactl snapshot list --volname <vol> --namespace test
-   
+
    # Reverts a snapshot:
    $ mayactl snapshot revert --volname <vol> --snapname <snap>
-   
+
    # Revert a snapshot for a volume created in 'test' namespace
    $ mayactl snapshot revert --volname <vol> --snapname <snap> --namespace test
-   
+
    Usage:
      mayactl snapshot [command]
-   
+
    Available Commands:
      create      Creates a new Snapshot
      list        Lists all the snapshots of a Volume
      revert      Reverts to specific snapshot of a Volume
    ```
-
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
