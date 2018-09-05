@@ -33,7 +33,7 @@ For getting access to mayactl command line tool, you will have to login / execut
 1. Use mayactl help command for more details.
 
    ```
-   mayactl —help 
+   mayactl help 
    ```
 
    **Example:**
@@ -57,17 +57,8 @@ For getting access to mayactl command line tool, you will have to login / execut
    Volume command usage examples are shown below.
 
    ```
-   # Create a Volume:
-   $ mayactl volume create --volname <vol> --size <size>
-     
    # List Volumes:
    $ mayactl volume list
-      
-   # Delete a Volume:
-   $ mayactl volume delete --volname <vol>
-      
-   # Delete a Volume created in 'test' namespace:
-   $ mayactl volume delete --volname <vol> --namespace test
       
    # Statistics of a Volume:
    $ mayactl volume stats --volname <vol>
@@ -80,35 +71,48 @@ For getting access to mayactl command line tool, you will have to login / execut
 
    # Info of a Volume created in 'test' namespace:
    $ mayactl volume info --volname <vol> --namespace test
+
+   # Delete a Volume:
+   $ mayactl volume delete --volname <vol>
+      
+   # Delete a Volume created in 'test' namespace:
+   $ mayactl volume delete --volname <vol> --namespace test
    ```
 
-   
 
-3. `mayactl volume snapshot` command is used to manage the snapshots of a volume. Some examples of the usage are shown below. 
+3. You can get the mayactl installed version by running following way
+
+   ```
+   Examples:
+   # Get mayactl installed version
+   # mayactl version
+   ```
+
+4. `mayactl volume snapshot` command is used to manage the snapshots of a volume. Some examples of the usage are shown below. 
 
    ```
    Examples:
    # Create a snapshot:
    $ mayactl snapshot create --volname <vol> --snapname <snap>
-   
+
    # Create a snapshot for a volume created in 'test' namespace
    $ mayactl snapshot create --volname <vol> --snapname <snap> --namespace test
-   
+
    # Lists snapshot:
    $ mayactl snapshot list --volname <vol>
-   
+
    # Lists snapshots for a volume created in 'test' namespace
    $ mayactl snapshot list --volname <vol> --namespace test
-   
+
    # Reverts a snapshot:
    $ mayactl snapshot revert --volname <vol> --snapname <snap>
-   
+
    # Revert a snapshot for a volume created in 'test' namespace
    $ mayactl snapshot revert --volname <vol> --snapname <snap> --namespace test
-   
+
    Usage:
      mayactl snapshot [command]
-   
+
    Available Commands:
      create      Creates a new Snapshot
      list        Lists all the snapshots of a Volume
