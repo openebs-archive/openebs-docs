@@ -16,9 +16,13 @@ For getting access to mayactl command line tool, you will have to login / execut
    ```
    kubectl get pods -n openebs | grep -i maya-apiserver
    ```
-   `maya-apiserver-68c98fdb76-xhvxg              1/1       Running   0          3m `
+   Following is an example output
 
-2. It is possible that there are multiple instances of maya-apiserver pods for scaling purposes. You can run mayactl in any one of them. Pick one of the pods for the below `exec` command
+   ```
+   maya-apiserver-68c98fdb76-xhvxg              1/1       Running   0          3m
+   ```
+
+2. It is possible that there are multiple instances of maya-apiserver pods for scaling purposes. You can run mayactl in any one of them. Pick one of the pods using ` kubectl exec` command . You can do as following way.
 
    ```
    kubectl exec -it <maya-apiserver-podname> /bin/bash  -n openebs
@@ -33,7 +37,7 @@ For getting access to mayactl command line tool, you will have to login / execut
 1. Use mayactl help command for more details.
 
    ```
-   mayactl help
+   mayactl --help
    ```
 
    **Example:**
@@ -80,10 +84,17 @@ For getting access to mayactl command line tool, you will have to login / execut
    ```
 
 
-3. You can get the mayactl installed version by running following way
+   **Note:** `mayactl volume delete` command will delete corresponding OpenEBS pods and deployments. But it will not delete PVC and PV. These corresponding PVC and PV can be deleted by using usual `kubectl delete` commands. 
+
+3. You can get the mayactl related details by running following command
 
    ```
-   Examples:
+   mayactl version
+   ```
+
+   **Example:**
+
+   ```
    # Get mayactl installed version
    # mayactl version
    ```
@@ -118,7 +129,6 @@ For getting access to mayactl command line tool, you will have to login / execut
      list        Lists all the snapshots of a Volume
      revert      Reverts to specific snapshot of a Volume
    ```
-
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
