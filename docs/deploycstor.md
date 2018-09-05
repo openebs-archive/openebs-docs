@@ -22,6 +22,12 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 
    OpenEBS pods are created under “*openebs*” namespace. Node Disk Manager, CAS Template and default Storage Classes are created after installation.
 
+   You can get the OpenEBS pods status by running following command
+
+   ```
+   kubectl get pods -n openebs
+   ```
+
    **Node Disk Manager** manages the disks associated with each node in the cluster. You can get the disk details by running the following command.
 
    ```
@@ -46,7 +52,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    **CAS Template** is an approach to provision persistent volumes that make use of CAS storage engine. The following command helps check the CAS Template components.
 
    ```
-   kubectl get cast 
+   kubectl get cast -n openebs
    ```
 
    It also installs the default cStor **Storage Class** which can be used in your pvc yaml file to create Persistent Volume. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
@@ -231,16 +237,16 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 
 10. Get the pv details by running the following command.
 
-    ```
-    kubectl get pv
-    ```
+   ```
+   kubectl get pv
+   ```
 
-    Following is an example output.
+   Following is an example output.
 
-    ```
-    NAME                                      CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS  CLAIM                           STORAGECLASS                  REASON    AGE
-    default-demo-cstor-vol1-claim-290751863   4G         RWO            Delete           Bound    default/demo-cstor-vol1-claim   openebs-cstor-default-0.7.0             31s
-    ```
+   ```
+   NAME                                      CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS  CLAIM                           STORAGECLASS                  REASON    AGE
+   default-demo-cstor-vol1-claim-290751863   4G         RWO            Delete           Bound    default/demo-cstor-vol1-claim   openebs-cstor-default-0.7.0             31s
+   ```
 
 11. Use this pvc name in your application yaml to run your application using OpenEBS cStor volume.
 
