@@ -186,7 +186,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 6. You have now deployed OpenEBS cluster with cStor Engine with 3 different storage pools. It can create OpenEBS cStor volume on these Storage Pools. By default, OpenEBS cStor volume will be running with 3 replica count.  Check cStor pools are created and their running status by following command
 
     ```
-     kubectl get pods  -n openebs
+     kubectl get pods -n openebs
     ```
 
     Following is an example output
