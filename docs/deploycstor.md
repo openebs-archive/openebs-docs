@@ -207,33 +207,21 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
     openebs-snapshot-operator-6dbcb558b4-2pwfp       2/2       Running   0          5m
     ```
 
-7. If you are using cStor Pool which is created using external disks, then get the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values. The following command will help you get the sample pvc yaml file.
-
-   ```
-   git clone https://github.com/openebs/openebs.git
-   cd openebs/k8s/demo/
-   ```
-
-   This sample PVC yaml will use default storage class *openebs-cstor-default-0.7.0* created as part of *openebs-operator.yaml* installation.
+7. If you are using cStor Pool which is created using external disks, then apply the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values. This sample PVC yaml will use default storage class *openebs-cstor-default-0.7.0* created as part of *openebs-config.yaml* installation.
 
 8. Apply the sample pvc yaml file to create cStor volume on cStor Pool created using external disks by following command.
 
    ```
-   kubectl apply -f pvc-standard-cstor-default.yaml
+   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-cstor-default.yaml
    ```
 
-9. If you are using cStor spare pool which is created on sparse disk, then get the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values. The following command will help you get the sample pvc yaml file.
+9. If you are using cStor spare pool which is created on sparse disk, then apply  the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values.  This sample PVC yaml will use default storage class *openebs-cstor-sparse* created as part of *openebs-operator.yaml* installation.
 
-
-    ```
-   git clone https://github.com/openebs/openebs.git
-   cd openebs/k8s/sample-pv-yamls/
-    ```
 
 10. Apply the sample pvc yaml file to create cStor volume on cStor sparse Pool using the following command.
 
    ```
-   kubectl apply -f pvc-cstor-sc-sparse-ns-default.yaml
+   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/sample-pv-yamls/pvc-cstor-sc-sparse-ns-default.yaml
    ```
 
 11. Get the pvc details by running the following command.
