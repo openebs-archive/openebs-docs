@@ -221,7 +221,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 10. Apply the sample pvc yaml file to create cStor volume on cStor sparse Pool using the following command.
 
    ```
-   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/sample-pv-yamls/pvc-standard-cstor-default.yaml
+   kubectl apply -f https://github.com/openebs/openebs/blob/master/k8s/demo/pvc-standard-cstor-default.yaml
    ```
 
 11. Get the pvc details by running the following command.
