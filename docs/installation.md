@@ -160,7 +160,7 @@ You can now choose the storage engine to provision Jiva or cStor volumes. For mo
 
 As a **cluster admin**, you can provision jiva or cStor based on your requirements. For more information about provisioning them, see [provisioning jiva](/docs/next/deployjiva.html) and [provisioning cStor](/docs/next/deploycstor.html).
 
-Once you complete provisioning the volumes, you can run the stateful application workloads. Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](/docs/openebs/k8s/demo).
+Once you complete provisioning the volumes, you can run the stateful application workloads. Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://github.com/openebs/openebs/tree/master/k8s/demo).
 
 ### See Also:
 
