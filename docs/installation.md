@@ -13,11 +13,11 @@ On an existing Kubernetes cluster, as a cluster administrator, you can install O
 1. Using (stable/OpenEBS) [helm charts](/docs/next/installation.html#install-openebs-using-stable-helm-charts)
 2. Using OpenEBS operator through [kubectl](/docs/next/installation.html#install-openebs-using-kubectl)  
 
-**Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS operator/kubectl](/docs/next/installation.html#install-openebs-using-kubectl) and [OpenEBS helm Charts](/docs/next/installation.html#using-openebs-helm-charts) .The steps for both methods are explained below.
+**Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS operator/kubectl](/docs/next/installation.html#install-openebs-using-kubectl) and [OpenEBS helm Charts](/docs/next/installation.html#install-openebs-using-openebs-helm-charts) .The steps for both methods are explained below.
 
 <a name="helm"></a>
 
-# Install OpenEBS using Helm Charts
+## Install OpenEBS using Helm Charts
 
 ![Installing OpenEBS using helm ](/docs/assets/helm.png)
 
@@ -136,9 +136,7 @@ The following table lists the configurable parameters of the OpenEBS chart and t
 
 Specify each parameter using the `--set key=value` argument to `helm install`.
 
-# Install OpenEBS using kubectl
-
-------
+## Install OpenEBS using kubectl
 
 ![Installing OpenEBS with Operator](/docs/assets/operator.png)
 
