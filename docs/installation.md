@@ -31,7 +31,7 @@ You can install OpenEBS using helm charts in two ways.
 
    This will help to install OpenBES using OpenEBS helm charts
 
-## Setup Helm & RBAC
+### Setup Helm & RBAC
 
 **Setup Helm** 
 
@@ -45,7 +45,7 @@ kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceac
 kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"spec": {"serviceAccountName": "tiller"}}}}'
 ```
 
-## Install OpenEBS using OpenEBS Helm Charts
+### Install OpenEBS using OpenEBS Helm Charts
 
 You have now set up helm and RBAC by following above [step](/docs/next/installation.html#setup-helm-rbac). Next,You should clone the latest OpenEBS repository. If you have cloned OpenEBS repository already,very that it is updated. 
 
@@ -80,7 +80,7 @@ helm install openebs-charts/openebs
 
 OpenEBS control plane pods are now created.CAS Template,default Storage Pool and default Storage Classes are created after executing the above command. Now select your storage engine to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
 
-## Install OpenEBS using Stable Helm Charts
+### Install OpenEBS using Stable Helm Charts
 
 Install OpenEBS  using the following commands into **openebs** namespace
 
@@ -89,7 +89,7 @@ helm install  --namespace openebs --name openebs  -f https://openebs.github.io/c
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
 ```
 
-## Default Values for Helm Chart Parameters
+### Default Values for Helm Chart Parameters
 
 The following table lists the configurable parameters of the OpenEBS chart and their default values.
 
