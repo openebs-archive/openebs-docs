@@ -47,7 +47,9 @@ kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"sp
 
 ## Install OpenEBS using OpenEBS Helm Charts
 
-You should clone the latest OpenEBS repo. If you have cloned repository already,very that it is updated. Latest OpenEBS repo can cloned and Latest version can be packaged using following commands.
+You have now set up helm and RBAC by following above [step](/docs/next/installation.html#setup-helm-rbac). Next,You should clone the latest OpenEBS repository. If you have cloned OpenEBS repository already,very that it is updated. 
+
+Latest OpenEBS repo can cloned and latest version can be packaged using following commands.
 
 ```
 git clone https://github.com/openebs/openebs.git
@@ -63,7 +65,7 @@ mv ../openebs-*.tgz ./docs
 helm repo index docs --url https://openebs.github.io/charts
 ```
 
-Add OpenEBS charts and update it  using following command
+Add OpenEBS charts and update it using following command
 
 ```
 helm repo add openebs-charts https://openebs.github.io/charts/
@@ -76,13 +78,7 @@ Now you are ready to install OpenEBS using helm using following command. OpenEBS
 helm install openebs-charts/openebs
 ```
 
-Now,OpenEBS control plane pods are created.CAS Template,default Storage Pool and default Storage Classes are created after executing the above command. 
-
-You can now choose the storage engine to provision Jiva or cStor volumes. For more information about OpenEBS storage engines, see [Jiva](/docs/next/storageengine.html#jiva) and [cStor](/docs/next/storageengine.html#cstor).
-
-As a **cluster admin**, you can provision jiva or cStor based on your requirements. For more information about provisioning them, see [provisioning jiva](/docs/next/deployjiva.html) and [provisioning cStor](/docs/next/deploycstor.html).
-
-Once you complete provisioning the volumes, you can run the stateful application workloads. Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://docs.openebs.io/docs/openebs/k8s/demo).
+OpenEBS control plane pods are now created.CAS Template,default Storage Pool and default Storage Classes are created after executing the above command. Now select your storage engine to provision OpenEBS volume from here.
 
 ## Install OpenEBS using Stable Helm Charts
 
@@ -136,6 +132,14 @@ The following table lists the configurable parameters of the OpenEBS chart and t
 
 Specify each parameter using the `--set key=value` argument to `helm install`.
 
+Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
+
+```
+helm install --name openebs -f values.yaml openebs-charts/openebs
+```
+
+You can get default values.yaml from [here](https://github.com/openebs/openebs/blob/master/k8s/charts/openebs/values.yaml).
+
 ## Install OpenEBS using kubectl
 
 ![Installing OpenEBS with Operator](/docs/assets/operator.png)
@@ -148,7 +152,9 @@ You can install OpenEBS cluster by running the following command.
 kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 ```
 
-OpenEBS control plane pods are created under “**openebs**” namespace. CAS Template,default Storage Pool and default Storage Classes are created after executing the above command. 
+OpenEBS control plane pods are created under “**openebs**” namespace. CAS Template,default Storage Pool and default Storage Classes are created after executing the above command.Now select your storage to provision OpenEBS volume from [here](/docs/next/installation.html#).
+
+## Select Your Storage Engine
 
 You can now choose the storage engine to provision Jiva or cStor volumes. For more information about OpenEBS storage engines, see [Jiva](/docs/next/storageengine.html#jiva) and [cStor](/docs/next/storageengine.html#cstor).
 
