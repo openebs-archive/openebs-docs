@@ -52,7 +52,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    **CAS Template** is an approach to provision persistent volumes that make use of CAS storage engine. The following command helps check the CAS Template components.
 
    ```
-   kubectl get cast -n openebs
+   kubectl get castemplate
    ```
 
    It also installs the default cStor **Storage Class** which can be used in your pvc yaml file to create Persistent Volume. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
@@ -65,13 +65,13 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 
    ```
    NAME                        PROVISIONER                                                AGE
-   openebs-cstor-sparse        openebs.io/provisioner-iscsi                               1h
-   openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   2m
-   openebs-standard            openebs.io/provisioner-iscsi                               2m
-   standard (default)          kubernetes.io/gce-pd                                       3h
+   openebs-cstor-sparse        openebs.io/provisioner-iscsi                               2h
+   openebs-jiva-default        openebs.io/provisioner-iscsi                               2h
+   openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   2h
+   standard (default)          kubernetes.io/gce-pd                                       2h
    ```
 
-2. Installing OpenEBS creates cStor sparse pool by default on each node with a name such as *cstor-spare-pool-<wxyz>*. These sparse pools are created on the host disk of each node. You can get the default cStor pool names by using the following command. 
+2. Installing OpenEBS creates cStor sparse pool by default on each node with a name such as *cstor-spare-pool-wxyz*. These sparse pools are created on the host disk of each node. You can get the default cStor pool names by using the following command. 
 
    ```
    kubectl get sp
@@ -96,7 +96,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    apiVersion: storage.k8s.io/v1
    kind: StorageClass
    metadata:
-     name: openebs-cstor-default-0.7.0
+     name: openebs-cstor-disk
      annotations:
        openebs.io/cas-type: cstor
        cas.openebs.io/config: |
@@ -186,7 +186,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 6. You have now deployed OpenEBS cluster with cStor Engine with 3 different storage pools. It can create OpenEBS cStor volume on these Storage Pools. By default, OpenEBS cStor volume will be running with 3 replica count.  Check cStor pools are created and their running status by following command
 
     ```
-     kubectl get pods -n openebs
+    kubectl get pods -n openebs
     ```
 
     Following is an example output
@@ -212,16 +212,16 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 8. Apply the sample pvc yaml file to create cStor volume on cStor Pool created using external disks by following command.
 
    ```
-   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-cstor-default.yaml
+   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-cstor-disk.yaml
    ```
 
-9. If you are using cStor spare pool which is created on sparse disk, then apply  the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values.  This sample PVC yaml will use default storage class *openebs-cstor-sparse* created as part of *openebs-operator.yaml* installation.
+9. If you are using cStor sparse pool which is created on sparse disk, then apply  the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values.  This sample PVC yaml will use default storage class *openebs-cstor-sparse* created as part of *openebs-operator.yaml* installation.
 
 
 10. Apply the sample pvc yaml file to create cStor volume on cStor sparse Pool using the following command.
 
    ```
-   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/sample-pv-yamls/pvc-cstor-sc-sparse-ns-default.yaml
+   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/sample-pv-yamls/pvc-standard-cstor-default.yaml
    ```
 
 11. Get the pvc details by running the following command.
@@ -230,11 +230,11 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
     kubectl get pvc
     ```
 
-    Following is an example output.
+    Following is an example output which is created as part of step 8.
 
     ```
     NAME                    STATUS    VOLUME                                    CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
-    demo-cstor-vol1-claim   Bound     default-demo-cstor-vol1-claim-290751863   4G         RWO    openebs-cstor-default-0.7.0   17s
+    demo-cstor-vol1-claim   Bound     default-demo-cstor-vol1-claim-290751863   4G            RWO    		openebs-cstor-disk   	      17s
     ```
 
 12. Get the pv details by running the following command.
@@ -247,7 +247,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 
    ```
    NAME                                      CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS  CLAIM                           STORAGECLASS                  REASON    AGE
-   default-demo-cstor-vol1-claim-290751863   4G         RWO            Delete           Bound    default/demo-cstor-vol1-claim   openebs-cstor-default-0.7.0             31s
+   default-demo-cstor-vol1-claim-290751863   4G         RWO            Delete           Bound    default/demo-cstor-vol1-claim   openebs-cstor-disk         		     31s
    ```
 
 13. Use this pvc name in your application yaml to run your application using OpenEBS cStor volume.
