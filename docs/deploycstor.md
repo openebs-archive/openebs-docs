@@ -38,15 +38,15 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 
    ```
    NAME                                      AGE
-   disk-184d99015253054c48c4aa3f17d137b1     2m
-   disk-2f6bced7ba9b2be230ca5138fd0b07f1     2m
-   disk-806d3e77dd2e38f188fdaf9c46020bdc     2m
-   disk-8b6fb58d0c4e0ff3ed74a5183556424d     2m
-   disk-bad1863742ce905e67978d082a721d61     2m
-   disk-d172a48ad8b0fb536b9984609b7ee653     2m
-   sparse-52222d74cbf29ed20a563fdb97195bf7   2m
-   sparse-54c305f78e51106beb48696434f194b5   2m
-   sparse-c4898b7e99b99f850968c99d0fe7bf52   2m
+   disk-184d99015253054c48c4aa3f17d137b1     5m
+   disk-2f6bced7ba9b2be230ca5138fd0b07f1     5m
+   disk-806d3e77dd2e38f188fdaf9c46020bdc     5m
+   disk-8b6fb58d0c4e0ff3ed74a5183556424d     5m
+   disk-bad1863742ce905e67978d082a721d61     5m
+   disk-d172a48ad8b0fb536b9984609b7ee653     5m
+   sparse-ba87c290cada443a16acd06a7e35edf6   5m
+   sparse-c91b608b053885bd1707fe743ecef216   5m
+   sparse-da7ab0d0a62240ef2ae3acbce024379e   5m
    ```
 
    **CAS Template** is an approach to provision persistent volumes that make use of CAS storage engine. The following command helps check the CAS Template components.
@@ -81,10 +81,10 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 
    ```
    NAME                     AGE
-   cstor-sparse-pool-5gfj   1m
-   cstor-sparse-pool-6bbe   1m
-   cstor-sparse-pool-kn4x   1m
-   default                  1m
+   cstor-sparse-pool-3dud   5m
+   cstor-sparse-pool-jip4   5m
+   cstor-sparse-pool-pag5   5m
+   default                  6m
    ```
 
    If you are using default cstor-sparse-pool, skip to step 9. 
@@ -148,14 +148,15 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    Following is an example.
 
    ```
-   disks:
+     disks:
        diskList:
-   	   - disk-184d99015253054c48c4aa3f17d137b1     	
-   	   - disk-2f6bced7ba9b2be230ca5138fd0b07f1     
-   	   - disk-806d3e77dd2e38f188fdaf9c46020bdc     
-   	   - disk-8b6fb58d0c4e0ff3ed74a5183556424d     
-   	   - disk-bad1863742ce905e67978d082a721d61     	
-   	   - disk-d172a48ad8b0fb536b9984609b7ee653
+   # Replace the following with actual disk CRs from your cluster from `kubectl get disks`
+          - disk-184d99015253054c48c4aa3f17d137b1
+          - disk-2f6bced7ba9b2be230ca5138fd0b07f1
+          - disk-806d3e77dd2e38f188fdaf9c46020bdc
+          - disk-8b6fb58d0c4e0ff3ed74a5183556424d
+          - disk-bad1863742ce905e67978d082a721d61
+          - disk-d172a48ad8b0fb536b9984609b7ee653
    ```
 
 5. Apply the modified *openebs-config.yaml* file by running the following command.
@@ -173,14 +174,14 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    Following is an example output.
 
    ```
-   NAME                            AGE
-   cstor-pool-default-0.7.0-n4tz   17s
-   cstor-pool-default-0.7.0-okk0   17s
-   cstor-pool-default-0.7.0-u6rf   17s
-   cstor-sparse-pool-5gfj          4m
-   cstor-sparse-pool-6bbe          4m
-   cstor-sparse-pool-kn4x          4m
-   default                         4m
+   NAME                     AGE
+   cstor-disk-0xlf          12s
+   cstor-disk-79pr          12s
+   cstor-disk-r2ho          12s
+   cstor-sparse-pool-3dud   10m
+   cstor-sparse-pool-jip4   10m
+   cstor-sparse-pool-pag5   10m
+   default                  10m
    ```
 
 6. You have now deployed OpenEBS cluster with cStor Engine with 3 different storage pools. It can create OpenEBS cStor volume on these Storage Pools. By default, OpenEBS cStor volume will be running with 3 replica count.  Check cStor pools are created and their running status by following command
@@ -234,8 +235,8 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
     Following is an example output which is created as part of step 8.
 
     ```
-    NAME                    STATUS    VOLUME                                    CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
-    demo-cstor-vol1-claim   Bound     default-demo-cstor-vol1-claim-290751863   4G            RWO    		openebs-cstor-disk   	      17s
+    NAME                         STATUS    VOLUME                                        CAPACITY   ACCESS MODES   STORAGECLASS         AGE
+    demo-cstor-disk-vol1-claim   Bound     default-demo-cstor-disk-vol1-claim-2386477986   	   4G         RWO            openebs-cstor-disk   12s
     ```
 
 12. Get the pv details by running the following command.
@@ -247,8 +248,8 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    Following is an example output.
 
    ```
-   NAME                                      CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS  CLAIM                           STORAGECLASS                  REASON    AGE
-   default-demo-cstor-vol1-claim-290751863   4G         RWO            Delete           Bound    default/demo-cstor-vol1-claim   openebs-cstor-disk         		     31s
+   NAME                                            CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                                STORAGECLASS         REASON    AGE
+   default-demo-cstor-disk-vol1-claim-2386477986   4G         RWO            Delete           Bound     default/demo-cstor-disk-vol1-claim   openebs-cstor-disk             33s
    ```
 
 13. Use this pvc name in your application yaml to run your application using OpenEBS cStor volume.
