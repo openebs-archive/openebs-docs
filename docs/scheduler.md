@@ -13,7 +13,7 @@ OpenEBS deals with many types of Kubernetes pods in its life cycle. These can be
 - **Control plane pods**
   - OpenEBS API Server
   - OpenEBS Provisioner
-  - OpenEBS Snapshot Controller
+  - OpenEBS Snapshot Promoter
   - OpenEBS Node Disk Manager
 - **Data plane pods**
   - Jiva data plane 
@@ -39,7 +39,7 @@ wget https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 
 ## Step 2
 
-Modify the configuration for scheduling pods in the *openebs-operator.yaml* file. You can either use NODE_SELECTOR or TAINTS method as follows:
+Modify the configuration for scheduling pods in the *openebs-operator.yaml* file. You can use NODE_SELECTOR method as follows:
 
 ### NODE_SELECTOR method (preferred) ([Why?](/docs/next/scheduler.html#selecting-between-node-selector-method-taint-method))
 
@@ -57,7 +57,7 @@ kubectl label nodes <node-name> openebs=controlnode
 
 You can modify the configuration for control plane pods as follows in the *openebs-operator.yaml* file. 
 
-For openebs-provisioner, under *spec:* section you can add as follows:
+For **openebs-provisioner**, under *spec:* section you can add as follows:
 
 ```
 nodeSelector:
@@ -87,7 +87,7 @@ spec:
       - name: openebs-provisioner
 ```
 
-For maya-apiserver, under *spec:* section you can add as follows:
+For **maya-apiserver**, under *spec:* section you can add as follows:
 ```
 nodeSelector:
         openebs: controlnode
@@ -116,7 +116,7 @@ spec:
       - name: maya-apiserver
 ```
 
-For openebs-snapshot-controller-apiserver, under *spec:* section you can add as follows:
+For **openebs-snapshot-promoter**, under *spec:* section you can add as follows:
 
 ```
 nodeSelector:
@@ -124,7 +124,7 @@ nodeSelector:
 ```
 **Example:**
 
-**Update the NODE_SELECTOR for openebs-snapshot-controller-apiserver**
+**Update the NODE_SELECTOR for openebs-snapshot-promoter**
 
 ```
 apiVersion: apps/v1beta1
@@ -148,7 +148,7 @@ spec:
         - name: snapshot-controller
 ```
 
-For OpenEBS NDM , under *spec:* section you can add as follows:
+For **openebs-ndm** , under *spec:* section you can add as follows:
 
 ```
 nodeSelector:
@@ -157,7 +157,7 @@ nodeSelector:
 
 **Example:**
 
-**Update the NODE_SELECTOR for Node Disk Manager**
+**Update the NODE_SELECTOR for openebs-ndm**
 
 ```
 apiVersion: extensions/v1beta1
@@ -185,6 +185,16 @@ spec:
         openebs: controlnode
       hostNetwork: true
 ```
+
+## Step 3
+
+Run the modified operator file to install OpenEBS and schedule the OpenEBS control plane pods on the appropriate nodes.
+
+```
+kubectl apply -f openebs-operator-0.7.0.yaml
+```
+
+## Step 4
 
 ### Scheduling data plane pods using NODE_SELECTOR
 
@@ -272,133 +282,7 @@ metadata:
     openebs.io/cas-type: jiva
 ```
 
-Now you have made provision to schedule data plane pods of Jiva volume in to labelled nodes.
-
-### Taint method
-
-#### Scheduling control plane pods using Taints
-
-**Taint all nodes in the cluster**
-
-Taint all nodes in the cluster with appropriate taint. In this example, we are using a 5 node cluster. 3 nodes will be used for storage and 2 nodes will be used for running applications. Taint used for storage nodes is `role=storage:NoSchedule` and for application nodes is `role=app:NoSchedule`.
-
-**Example:**
-
-**For Storage Nodes**
-
-```
-kubectl taint nodes <node name> role=storage:NoSchedule
-kubectl taint nodes <node name> role=storage:NoSchedule
-kubectl taint nodes <node name> role=storage:NoSchedule
-```
-
-**For Application Nodes**
-
-```
-kubectl taint nodes <node name> role=app:NoSchedule
-kubectl taint nodes <node name> role=app:NoSchedule
-```
-
-**Modify the configuration for control pods**
-
-You can modify the configuration for control plane pods as follows in the *openebs-operator.yaml* file.
-
-**Update the Taint policy for openebs-provisioner**
-
-```
-apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: openebs-provisioner
-  namespace: openebs
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        name: openebs-provisioner
-    spec:
-      serviceAccountName: openebs-maya-operator
-      tolerations:
-      - key: "role"
-        operator: "Equal"
-        value: "storage"
-        effect: "NoSchedule"
-```
-
-**Update the Taint policy for maya-apiserver**
-
-```
-apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: maya-apiserver
-  namespace: openebs
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        name: maya-apiserver
-    spec:
-      serviceAccountName: openebs-maya-operator
-      tolerations:
-      - key: "role"
-        operator: "Equal"
-        value: "storage"
-        effect: "NoSchedule"
-```
-
-**Update the Taint policy for openebs-snapshot-controller-apiserver**
-
-```
-apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: openebs-snapshot-operator
-  namespace: openebs
-spec:
-  replicas: 1
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        name: openebs-snapshot-operator
-    spec:
-      serviceAccountName: openebs-maya-operator
-      tolerations:
-      - key: "role"
-        operator: "Equal"
-        value: "storage"
-        effect: "NoSchedule"
-```
-
-#### Scheduling data plane pods using Taints
-
-You can modify the configuration for data plane pods as follows:
-
-**Update the Taint policy for storage target and storage replica**
-
-Add the following entries as an environmental variable under *maya-api server* deployment in the openebs-operator.yaml file. 
-
-```
--name: DEFAULT_CONTROLLER_NODE_TAINT_TOLERATION
- value: role=storage:NoSchedule
-
--name: DEFAULT_REPLICA_NODE_TAINT_TOLERATION
- value: role=storage:NoSchedule
-```
-
-## Step 3
-
-Run the operator file to install OpenEBS and schedule the OpenEBS control plane pods on the appropriate nodes.
-
-```
-kubectl apply -f openebs-operator-0.7.0.yaml
-```
-
-**Note:** Remember to put toleration in the application yaml before applying a corresponding application yaml file. This will schedule an application in the application node.
+Now you have made provision to schedule data plane pods of Jiva volume in to labelled nodes. As a **cluster admin**, you can provision jiva or cStor based on your requirements. For more information about provisioning them, see [provisioning jiva](/docs/next/deployjiva.html)and [provisioning cStor](/docs/next/deploycstor.html).
 
 # Selecting either NODE-SELECTOR or TAINT method 
 
