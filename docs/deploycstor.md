@@ -183,6 +183,22 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    cstor-sparse-pool-pag5   10m
    default                  10m
    ```
+   Also it will create Storage Class called *cstor-disk*. You can get the stodare class details by running below command.
+
+   ```
+   kubectl  get sc
+   ```
+
+   Following is an example output.
+
+   ```
+   NAME                        PROVISIONER                                                AGE
+   openebs-cstor-disk          openebs.io/provisioner-iscsi                               10m
+   openebs-cstor-sparse        openebs.io/provisioner-iscsi                               1h
+   openebs-jiva-default        openebs.io/provisioner-iscsi                               1h
+   openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   1h
+   standard (default)          kubernetes.io/gce-pd                                       2h
+   ```
 
 6. You have now deployed OpenEBS cluster with cStor Engine with 3 different storage pools. It can create OpenEBS cStor volume on these Storage Pools. By default, OpenEBS cStor volume will be running with 3 replica count.  Check cStor pools are created and their running status by following command
 
