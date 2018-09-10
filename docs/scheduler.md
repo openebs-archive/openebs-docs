@@ -13,7 +13,7 @@ OpenEBS deals with many types of Kubernetes pods in its life cycle. These can be
 - **Control plane pods**
   - OpenEBS API Server
   - OpenEBS Provisioner
-  - OpenEBS Snapshot Promoter
+  - OpenEBS Snapshot Operator
   - OpenEBS Node Disk Manager
 - **Data plane pods**
   - Jiva data plane 
@@ -116,7 +116,7 @@ spec:
       - name: maya-apiserver
 ```
 
-For **openebs-snapshot-promoter**, under *spec:* section you can add as follows:
+For **openebs-snapshot-operator**, under *spec:* section you can add as follows:
 
 ```
 nodeSelector:
@@ -124,7 +124,7 @@ nodeSelector:
 ```
 **Example:**
 
-**Update the NODE_SELECTOR for openebs-snapshot-promoter**
+**Update the NODE_SELECTOR for openebs-snapshot-operator**
 
 ```
 apiVersion: apps/v1beta1
@@ -198,7 +198,7 @@ kubectl apply -f openebs-operator-0.7.0.yaml
 
 ### Scheduling data plane pods using NODE_SELECTOR
 
-To schedule data plane pods as per the labeled node, your storage class has to be modified with adding required parameter with corresponding label.
+To schedule data plane pods as per the required labeled node, your storage class has to be modified with adding required parameter with corresponding label.
 
 You can modify the configuration for data plane pods as follows:
 
@@ -214,8 +214,6 @@ You have to add following environmental parameters in your storage class before 
   value: |-
       openebs: controlnode
 ```
-
-If you are using default Storage Class which is created as part of *openebs-operator-0.7.0.yaml* installation. So you have to modify your existing default Storage Class using following way.
 
 Get the Storage Class installed in your cluster by following command
 
@@ -233,7 +231,7 @@ openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-prom
 standard (default)          kubernetes.io/gce-pd                                       19m
 ```
 
-Select your needed storage class and edit it using kubectl command.
+If you are using default Storage Class which is created as part of *openebs-operator-0.7.0.yaml* installation then you have to modify your existing default Storage Class and edit it using *kubectl* command using following way.
 
 ```
 kubectl edit sc openebs-jiva-default
