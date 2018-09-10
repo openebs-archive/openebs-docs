@@ -14,6 +14,7 @@ OpenEBS deals with many types of Kubernetes pods in its life cycle. These can be
   - OpenEBS API Server
   - OpenEBS Provisioner
   - OpenEBS Snapshot Controller
+  - OpenEBS Node Disk Manager
 - **Data plane pods**
   - Jiva data plane 
     - Jiva storage target pod
@@ -32,7 +33,9 @@ The OpenEBS administrator can choose to provide the scheduling configuration for
 
 Download the *openebs-operator* file using the following command.
 
-`wget  https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml `
+```
+wget https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
+```
 
 ## Step 2
 
@@ -54,7 +57,7 @@ kubectl label nodes <node-name> openebs=controlnode
 
 You can modify the configuration for control plane pods as follows in the *openebs-operator.yaml* file. 
 
-For openebs-provisioner, under spec: section you can add as follows:
+For openebs-provisioner, under *spec:* section you can add as follows:
 
 ```
 nodeSelector:
@@ -80,10 +83,11 @@ spec:
       serviceAccountName: openebs-maya-operator
       nodeSelector:
         openebs: controlnode
-      containers:      
+      containers:
+      - name: openebs-provisioner
 ```
 
-For maya-apiserver, under spec: section you can add as follows:
+For maya-apiserver, under *spec:* section you can add as follows:
 ```
 nodeSelector:
         openebs: controlnode
@@ -109,9 +113,10 @@ spec:
       nodeSelector:
         openebs: controlnode
       containers:
+      - name: maya-apiserver
 ```
 
-For openebs-snapshot-controller-apiserver, under spec: section you can add as follows:
+For openebs-snapshot-controller-apiserver, under *spec:* section you can add as follows:
 
 ```
 nodeSelector:
@@ -140,61 +145,134 @@ spec:
       nodeSelector:
         openebs: controlnode
       containers:
+        - name: snapshot-controller
+```
+
+For OpenEBS NDM , under *spec:* section you can add as follows:
+
+```
+nodeSelector:
+        openebs: controlnode
+```
+
+**Example:**
+
+**Update the NODE_SELECTOR for Node Disk Manager**
+
+```
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: openebs-ndm
+  namespace: openebs
+spec:
+  template:
+    metadata:
+      labels:
+        name: openebs-ndm
+    spec:
+      # By default the node-disk-manager will be run on all kubernetes nodes
+      # If you would like to limit this to only some nodes, say the nodes
+      # that have storage attached, you could label those node and use
+      # nodeSelector.
+      #
+      # e.g. label the storage nodes with - "openebs.io/nodegroup"="storage-node"
+      # kubectl label node <node-name> "openebs.io/nodegroup"="storage-node"
+      #nodeSelector:
+      #  "openebs.io/nodegroup": "storage-node"
+      serviceAccountName: openebs-maya-operator
+      nodeSelector:
+        openebs: controlnode
+      hostNetwork: true
 ```
 
 ### Scheduling data plane pods using NODE_SELECTOR
+
+To schedule data plane pods as per the labeled node, your storage class has to be modified with adding required parameter with corresponding label.
 
 You can modify the configuration for data plane pods as follows:
 
 **Update the NODE_SELECTOR for storage target and storage replica**
 
-Add the following entries as an environmental variable under *maya-api server* deployment in the openebs-operator.yaml file. 
+You have to add following environmental parameters in your storage class before provisioning volume.
 
 ```
-- name: DEFAULT_CONTROLLER_NODE_SELECTOR
-          value: "openebs=controlnode"
-        - name: DEFAULT_REPLICA_NODE_SELECTOR
-          value: "openebs=controlnode"
+- name: TargetNodeSelector
+  value: |-
+      openebs: controlnode
+- name: ReplicaNodeSelector
+  value: |-
+      openebs: controlnode
+```
+
+If you are using default Storage Class which is created as part of *openebs-operator-0.7.0.yaml* installation. So you have to modify your existing default Storage Class using following way.
+
+Get the Storage Class installed in your cluster by following command
+
+```
+kubectl get sc
+```
+
+Following is an example output.
+
+```
+NAME                        PROVISIONER                                                AGE
+openebs-cstor-sparse        openebs.io/provisioner-iscsi                               6m
+openebs-jiva-default        openebs.io/provisioner-iscsi                               6m
+openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   6m
+standard (default)          kubernetes.io/gce-pd                                       19m
+```
+
+Select your needed storage class and edit it using kubectl command.
+
+```
+kubectl edit sc openebs-jiva-default
+```
+
+Then you can add following entries as an environmental variable in your storage class.  
+
+```
+- name: TargetNodeSelector
+  value: |-
+      openebs: controlnode
+- name: ReplicaNodeSelector
+  value: |-
+      openebs: controlnode
 ```
 
 **Example:**
 
 ```
- apiVersion: apps/v1beta1
-kind: Deployment
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
 metadata:
-  name: maya-apiserver
-  namespace: openebs
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        name: maya-apiserver
-    spec:
-      serviceAccountName: openebs-maya-operator
-      nodeSelector:
-        openebs: controlnode
-      containers:
-      - name: maya-apiserver
-        imagePullPolicy: Always
-        image: openebs/m-apiserver:0.6.0
-        ports:
-        - containerPort: 5656
-        env:
-        - name: OPENEBS_IO_JIVA_CONTROLLER_IMAGE
-          value: "openebs/jiva:0.6.0"
-        - name: OPENEBS_IO_JIVA_REPLICA_IMAGE
-          value: "openebs/jiva:0.6.0"
-        - name: OPENEBS_IO_VOLUME_MONITOR_IMAGE
-          value: "openebs/m-exporter:0.6.0"
-        - name: OPENEBS_IO_JIVA_REPLICA_COUNT
-          value: "3"
-        - name: DEFAULT_CONTROLLER_NODE_SELECTOR
-          value: "openebs=controlnode"
-        - name: DEFAULT_REPLICA_NODE_SELECTOR
-          value: "openebs=controlnode"
+  annotations:
+    cas.openebs.io/config: |
+      - name: ReplicaCount
+        value: "3"
+      - name: StoragePool
+        value: default
+      - name: TargetNodeSelector
+        value: |-
+            openebs: controlnode
+      - name: ReplicaNodeSelector
+        value: |-
+            openebs: controlnode
+      #- name: TargetResourceLimits
+      #  value: |-
+      #      memory: 1Gi
+      #      cpu: 100m
+      #- name: AuxResourceLimits
+      #  value: |-
+      #      memory: 0.5Gi
+      #      cpu: 50m
+      #- name: ReplicaResourceLimits
+      #  value: |-
+      #      memory: 2Gi
+    openebs.io/cas-type: jiva
 ```
+
+Now you have made provision to schedule data plane pods of Jiva volume in to labelled nodes.
 
 ### Taint method
 
@@ -317,7 +395,7 @@ Add the following entries as an environmental variable under *maya-api server* d
 Run the operator file to install OpenEBS and schedule the OpenEBS control plane pods on the appropriate nodes.
 
 ```
-kubectl apply -f openebs-operator.yaml
+kubectl apply -f openebs-operator-0.7.0.yaml
 ```
 
 **Note:** Remember to put toleration in the application yaml before applying a corresponding application yaml file. This will schedule an application in the application node.
