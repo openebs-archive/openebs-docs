@@ -209,19 +209,19 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
     Following is an example output
 
     ```
-    NAME                                             READY     STATUS    RESTARTS   AGE
-    cstor-pool-default-0.7.0-n4tz-5547d56d47-7pzh5   2/2       Running   0          54s
-    cstor-pool-default-0.7.0-okk0-56f6d48985-4zp8k   2/2       Running   0          54s
-    cstor-pool-default-0.7.0-u6rf-567f7fc48d-wp8dw   2/2       Running   0          54s
-    cstor-sparse-pool-5gfj-585854bc57-h4jx4          2/2       Running   0          5m
-    cstor-sparse-pool-6bbe-84896cc4df-qh27j          2/2       Running   0          5m
-    cstor-sparse-pool-kn4x-8497545d69-hd7sf          2/2       Running   0          5m
-    maya-apiserver-5c48dd4f74-bp2h4                  1/1       Running   0          5m
-    openebs-ndm-b6xs9                                1/1       Running   0          5m
-    openebs-ndm-jzmr7                                1/1       Running   0          5m
-    openebs-ndm-m8zxz                                1/1       Running   0          5m
-    openebs-provisioner-95c8cb5df-8wmq2              1/1       Running   0          5m
-    openebs-snapshot-operator-6dbcb558b4-2pwfp       2/2       Running   0          5m
+    NAME                                         READY     STATUS    RESTARTS   AGE
+    cstor-disk-0xlf-74f844cc66-tg8qv             2/2       Running   0          31s
+    cstor-disk-79pr-649bf7749d-m4b5w             2/2       Running   0          31s
+    cstor-disk-r2ho-5ffc787649-9dw7k             2/2       Running   0          31s
+    cstor-sparse-pool-3dud-5bd96595dc-xgbq7      2/2       Running   0          10m
+    cstor-sparse-pool-jip4-d955bd6c6-bz928       2/2       Running   0          10m
+    cstor-sparse-pool-pag5-7f49dc78d9-4mg9m      2/2       Running   0          10m
+    maya-apiserver-79449598d8-dps4p              1/1       Running   0          10m
+    openebs-ndm-6nmb8                            1/1       Running   0          10m
+    openebs-ndm-7zf5h                            1/1       Running   0          10m
+    openebs-ndm-hmrnr                            1/1       Running   0          10m
+    openebs-provisioner-78d5757698-84gnw         1/1       Running   0          10m
+    openebs-snapshot-operator-849f69b9bb-2vqwl   2/2       Running   0          10m\
     ```
 
 7. If you are using cStor Pool which is created using external disks, then apply the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values. This sample PVC yaml will use default storage class *openebs-cstor-default-0.7.0* created as part of *openebs-config.yaml* installation.
