@@ -101,7 +101,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
        openebs.io/cas-type: cstor
        cas.openebs.io/config: |
          - name: StoragePoolClaim
-           value: "cstor-pool-default-0.7.0"
+           value: "cstor-disk"
    provisioner: openebs.io/provisioner-iscsi
    ---
    #Use the following YAMLs to create a cStor Storage Pool.
@@ -109,9 +109,9 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    apiVersion: openebs.io/v1alpha1
    kind: StoragePoolClaim
    metadata:
-     name: cstor-pool-default-0.7.0
+     name: cstor-disk
    spec:
-     name: cstor-pool-default-0.7.0
+     name: cstor-disk
      type: disk
      maxPools: 3
      poolSpec:
@@ -212,8 +212,9 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 8. Apply the sample pvc yaml file to create cStor volume on cStor Pool created using external disks by following command.
 
    ```
-   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-cstor-disk.yaml
+   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/sample-pv-yamls/pvc-standard-cstor-disk.yaml
    ```
+   Goto Step 11 for checking the pvc running status.
 
 9. If you are using cStor sparse pool which is created on sparse disk, then apply  the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values.  This sample PVC yaml will use default storage class *openebs-cstor-sparse* created as part of *openebs-operator.yaml* installation.
 
@@ -221,7 +222,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 10. Apply the sample pvc yaml file to create cStor volume on cStor sparse Pool using the following command.
 
    ```
-   kubectl apply -f https://github.com/openebs/openebs/blob/master/k8s/demo/pvc-standard-cstor-default.yaml
+   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-cstor-default.yaml
    ```
 
 11. Get the pvc details by running the following command.
