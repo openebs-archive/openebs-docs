@@ -16,7 +16,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 3. You can install OpenEBS either through stable helm chart or OpenEBS helm chart or by using OpenEBS operator/kubectl.  
 
-   **Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS Operator/kubectl](/docs/next/quickstartguide.html#using-openebs-operator-kubectl) option as explained below.
+   **Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS operator/kubectl](/docs/next/installation.html#install-openebs-using-kubectl) and [OpenEBS helm Charts](/docs/next/installation.html#install-openebs-using-openebs-helm-charts) .
 
       ### Using a Stable Helm Chart:
 
@@ -31,8 +31,6 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
       ### Using OpenEBS Helm Charts 
 
-    `(Will be deprecated in the coming releases)`
-
    ```
    helm repo add openebs-charts https://openebs.github.io/charts/
    helm repo update
@@ -43,9 +41,9 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
    Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve creating a new Service Account and assigning to OpenEBS components. 
 
-   For installing OpenEBS cluster, see [installation](/docs/next/installation.html)
+   For installing OpenEBS cluster, see [installation](/docs/next/installation.html#install-openebs-using-kubectl)
 
-4. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-standard* and *openebs-cstor-sparse*) are added to the cluster when you install OpenEBS.
+4. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-jiva-default* and *openebs-cstor-sparse*) are added to the cluster when you install OpenEBS.
 
 5. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/next/mayaonline.html) for better visibility, volume management, and integrated ChatOps experience with Slack.
 

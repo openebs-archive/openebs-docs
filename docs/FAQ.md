@@ -92,11 +92,11 @@ Any stateful workload running on Kubernetes likely has been run on OpenEBS at le
 
 ## How does OpenEBS perform?
 
-OpenEBS has been engineered so that it does not require any changes to the containers on which it runs.  Similarly, Kubernetes itself does not require to be altered and no additional external orchestrator is required.  However, the workloads that need storage must be running on hosts that have iSCSI initiators, which is a default configuration in almost all operating systems.
+Performance tests on release v.0.5.2 shows acceptable performance, but additional efforts are ongoing to improve performance. OpenEBS will soon implement many changes to improve performance elsewhere in the stack and much more is coming via the cStor storage engine.
 
 ## What changes must be made to the containers on which OpenEBS runs?  
 
-Performance tests on release v.0.5.2 shows acceptable performance, but additional efforts are ongoing to improve performance. OpenEBS will soon implement many changes to improve performance elsewhere in the stack and much more is coming via the cStor storage engine.
+OpenEBS has been engineered so that it does not require any changes to the containers on which it runs.  Similarly, Kubernetes itself does not require to be altered and no additional external orchestrator is required.  However, the workloads that need storage must be running on hosts that have iSCSI initiators, which is a default configuration in almost all operating systems.
 
 ## What are the minimum requirements and supported container orchestrators?
 
