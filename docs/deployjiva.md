@@ -24,7 +24,7 @@ Jiva can be provisioned in your Kubernetes cluster by using the following proced
    CAS Template is an approach to provision persistent volumes that make use of CAS storage engine. The following command helps check the CAS Template components.
 
    ```
-   kubectl get cast
+   kubectl get castemplate
    ```
 
    Also, it installs the default Jiva storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
@@ -74,7 +74,7 @@ Jiva can be provisioned in your Kubernetes cluster by using the following proced
       ---
       ```
 
-4.  Apply the modified *openebs-config.yaml* file by using the following command.
+4. Apply the modified *openebs-config.yaml* file by using the following command.
 
       ```
       kubectl apply -f openebs-config.yaml
@@ -98,22 +98,15 @@ Jiva can be provisioned in your Kubernetes cluster by using the following proced
 
 6. You have now deployed OpenEBS cluster with Jiva Engine. It can create OpenEBS Jiva volume on default storage pool. By default, OpenEBS Jiva volume runs with 3 replica count. 
 
-7. Get the sample PVC yaml which can be used to create OpenEBS Jiva volume with default CAS Template values. The following command will help you get the sample pvc yaml file *pvc-standard-jiva-default.yaml*.
+7. Apply the sample pvc yaml file to create cStor volume on cStor sparse Pool using the following command.
 
       ```
-      git clone https://github.com/openebs/openebs.git
-      cd openebs/k8s/demo/
+      kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-jiva-default.yaml
       ```
 
-      This sample PVC yaml will use default storage class *openebs-jiva-default* created as part of *openebs-operator.yaml* installation.
+      This sample PVC yaml will use default storage class *openebs-jiva-default* storage class created as part of *openebs-operator.yaml* installation.
 
-8. Apply the sample pvc yaml to create Jiva volume using the following command.
-
-      ```
-      kubectl apply -f pvc-standard-jiva-default.yaml
-      ```
-
-9. Get the Jiva pvc details by running the following command.
+8. Get the Jiva pvc details by running the following command.
 
       ```
       kubectl get pvc
@@ -139,7 +132,7 @@ Jiva can be provisioned in your Kubernetes cluster by using the following proced
       default-demo-vol1-claim-473439503   4G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-jiva-default             7m
       ```
 
-10. Use this pvc name in your application yaml to run your application using OpenEBS Jiva volume.
+9. Use this pvc name in your application yaml to run your application using OpenEBS Jiva volume.
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
