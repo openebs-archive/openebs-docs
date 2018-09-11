@@ -10,7 +10,7 @@ sidebar_label: Changelog
 
 ## Current Release
 
-- [Version 0.7-RC2](https://github.com/openebs/openebs/releases/tag/v0.7-RC2) ([Release blog](https://blog.openebs.io/openebs-0-7-release-pushes-cstor-storage-engine-to-field-trials-1c41e6ad8c91))
+- [Version 0.7.0](https://github.com/openebs/openebs/releases/tag/v0.7) ([Release blog](https://blog.openebs.io/openebs-0-7-release-pushes-cstor-storage-engine-to-field-trials-1c41e6ad8c91))
 
 ## Stable Release
 
