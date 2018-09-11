@@ -17,7 +17,7 @@ Once OpenEBS is installed on your Kubernetes cluster, you can start using it by 
 Apply the openebs-operator.yaml file on the Kubernetes cluster using the following command. This creates the maya api-server and OpenEBS components which includes default storage classes.
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0-RC2.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 ```
 
 OpenEBS Storage provides several features that can be customized for each volume. Some of features that could be customized per application are as follows:
@@ -45,11 +45,11 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.7.0-RC2
+        value: openebs/jiva:0.7.0
       - name: ReplicaImage
-        value: openebs/jiva:0.7.0-RC2
+        value: openebs/jiva:0.7.0
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.7.0-RC2
+        value: openebs/m-exporter:0.7.0
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
@@ -79,11 +79,11 @@ metadata:
    annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.7.0-RC2
+        value: openebs/jiva:0.7.0
       - name: ReplicaImage
-        value: openebs/jiva:0.7.0-RC2
+        value: openebs/jiva:0.7.0
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.7.0-RC2
+        value: openebs/m-exporter:0.7.0
       - name: ReplicaCount
         value: "1"
       - name: StoragePool
