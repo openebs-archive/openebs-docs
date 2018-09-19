@@ -47,12 +47,12 @@ Modify the configuration for scheduling control plane pods such as OpenEBS API S
 
 **Label the required Nodes**
 
-Label the required nodes with an appropriate label. In the following command, the required nodes for storage are labelled as *node=openebs*.
+Label the required nodes with an appropriate label. In the following command, the required nodes for storage nodes are labelled as *node=openebs*.
 
 ```
 kubectl label nodes <node-name> node=openebs
 ```
-For application nodes labelled as node=appnode use the following command.
+For application nodes labelled as *node=appnode* use the following command.
 ```
 kubectl label nodes <node-name> node=appnode
 ```
