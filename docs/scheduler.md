@@ -52,7 +52,7 @@ Label the required nodes with an appropriate label. In the following command, th
 ```
 kubectl label nodes <node-name> node=openebs
 ```
-For application nodes,labelled as *node=appnode* as follows.
+For application nodes labelled as node=appnode use the following command.
 ```
 kubectl label nodes <node-name> node=appnode
 ```
@@ -207,7 +207,7 @@ You can modify the configuration for data plane pods as follows:
 
 **Update the NODE_SELECTOR for storage target and storage replica**
 
-You have to add following environmental parameters in your storage class before provisioning volume. You can provision OpenEBS storage target pod to your application deployed namespace. So that application pods can communicate with storage target pod easily.
+You must add the following environmental parameters in your storage class before provisioning volume. You can provision OpenEBS storage target pod to the nodes where application applications are deployed so that application pods can communicate easily with storage target pods.
 
 ```
 - name: TargetNodeSelector
