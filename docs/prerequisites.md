@@ -15,6 +15,7 @@ The following prerequisites are required for installing OpenEBS.
    **Note:** Do not install open-iscsi / iscsi-initiator-utils on host nodes if a kubelet container, for example, Rancher Container Engine (RKE) already has the package installed.
 
 3. kubectl or helm installed and ready to use. Make sure you run the `kubectl` commands with cluster admin context. The installation will involve create a new Service Account and assigned to OpenEBS components.
+4. If you are using centos as base OS for 0.7 OpenEBS installation, then you should disbale selinux to detect the OS disk by OpenEBS Node Disk Manager. You can disable selinux by following this command `setenforce 0`.
 
 **Note:** 
 * If you face issues while setting up on-premise clusters, check your BIOS mode and enable the Intel virtualization acceleration key  and AMD-V virtualization hardware extensions.
