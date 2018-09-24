@@ -94,11 +94,11 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.7.0-RC2
+        value: openebs/jiva:0.7.0
       - name: ReplicaImage
-        value: openebs/jiva:0.7.0-RC2
+        value: openebs/jiva:0.7.0
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.7.0-RC2
+        value: openebs/m-exporter:0.7.0
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
@@ -108,7 +108,7 @@ metadata:
 Run the following commands.
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0-RC2.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 kubectl apply -f openebs-storageclasses.yaml
 ```
 
