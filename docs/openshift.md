@@ -123,7 +123,8 @@ oc get pods
 ```
 
 ### Deploying OpenEBS Jiva using NodeSelector.
-By using the NodeSelector approach the OpenEBS Jiva can be also deployed. Suppose you have 5 nodes and you want to use 2 Nodes for Application and 3 Nodes for storage. This requirement can be achieved by using NodeSelector. The detailed have been mentioned in this link. [NodeSelector](/docs/next/scheduler.html)
+By using the NodeSelector approach the OpenEBS Jiva can be also deployed. Suppose you have 5 nodes and you want to use 2 nodes for application and 3 nodes for storage. This requirement can be achieved by using NodeSelector. The detailed have been mentioned in this link. [NodeSelector](/docs/next/scheduler.html)
+
 
 
 
