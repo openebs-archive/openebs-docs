@@ -110,7 +110,7 @@ oc get pv
 
 Use this pvc name in your application yaml to run your application using OpenEBS Jiva volume.
 
-**For Eg**: Once the changes are done in Perconna application yaml. It can be deployed by following command.
+**For Eg**: Once the changes are done in Percona application yaml. It can be deployed by following command.
 
 ```
 oc apply -f https://raw.githubusercontent.com/openebs/openebs/v0.7/k8s/demo/percona/percona-openebs-deployment.yaml
