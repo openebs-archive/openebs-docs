@@ -27,7 +27,9 @@ chown: changing ownership of '/var/lib/mysql/': Read-only file system
 
 ## How to recover from ReadOnly state ?	
 
-More details on the recovery steps are provided [here](https://docs.openebs.io/docs/next/tsgpvs.html#workaround-recovery). 
+OpenEBS jiva volumes, save the data in /var/openebs/pvc-id/.Ensure that all your replica pods are running on the same node where they were scheduled initially . After you verified, you can do the recovery steps. More details on the recovery steps are provided [here](https://docs.openebs.io/docs/next/tsgpvs.html#workaround-recovery). 
+
+If your are not pinned the replica volume to the k8s node where it got scheduled initially, then replicas could get scheduled onto a node where the data doesn't exist. In this case, you can do backup and recover data using the steps mentioned [here](https://github.com/kmova/bootstrap/tree/master/gke-openebs/jiva-recovery).
 
 ## Fixes in 0.6 release related to ReadOnly volumes
 
