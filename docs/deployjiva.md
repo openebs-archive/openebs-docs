@@ -98,7 +98,7 @@ Jiva can be provisioned in your Kubernetes cluster by using the following proced
 
 6. You have now deployed OpenEBS cluster with Jiva Engine. It can create OpenEBS Jiva volume on default storage pool. By default, OpenEBS Jiva volume runs with 3 replica count. 
 
-7. Apply the sample pvc yaml file to create cStor volume on cStor sparse Pool using the following command.
+7. Apply the sample pvc yaml file to create Jiva volume on cStor sparse Pool using the following command.
 
       ```
       kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-jiva-default.yaml
