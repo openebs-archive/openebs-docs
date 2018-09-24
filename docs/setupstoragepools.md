@@ -112,10 +112,57 @@ kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 kubectl apply -f openebs-storageclasses.yaml
 ```
 
-You must mention the storage class name in the *application.yaml* file. For example, *demo-percona-mysql-pvc.yaml* file for the percona application. Run the application using the following command.
+You must mention the storage class name in the *application.yaml* file. For example, *demo-percona-mysql-pvc.yaml* file for the percona application.
 
 ```
-cd demo/percona
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: percona
+  labels:
+    name: percona
+spec:
+  containers:
+  - resources:
+      limits:
+        cpu: 0.5
+    name: percona
+    image: percona
+    args:
+      - "--ignore-db-dir"
+      - "lost+found"
+    env:
+      - name: MYSQL_ROOT_PASSWORD
+        value: k8sDem0
+    ports:
+      - containerPort: 3306
+        name: percona
+    volumeMounts:
+    - mountPath: /var/lib/mysql
+      name: demo-vol1
+  volumes:
+  - name: demo-vol1
+    persistentVolumeClaim:
+      claimName: demo-vol1-claim
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: demo-vol1-claim
+spec:
+  storageClassName: openebs-percona
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5G
+```
+
+
+Run the application using the following command
+
+```
 kubectl apply -f demo-percona-mysql-pvc.yaml
 ```
 
