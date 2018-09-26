@@ -67,7 +67,7 @@ You can install OpenEBS cluster by running the following command on OpenShift ma
 oc apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 ```
 
-OpenEBS control plane pods are created under “openebs” namespace. CAS Template,default Storage Pool and default Storage Classes are created after executing the above command.
+OpenEBS control plane pods are created under “openebs” namespace. CAS Template, default Storage Pool and default Storage Classes are created after executing the above command.
 
 Verify that the OpenEBS operator services are created successfully and deployments are running using the following commands. Also, check whether the storage classes and storage pool are created successfully.
 
@@ -81,7 +81,7 @@ oc get sp
 
 ### Deploy a sample application with OpenEBS storage.
 
-Apply the sample pvc yaml file to create Jiva volume on cStor sparse Pool using the following command.
+Apply the sample pvc yaml file to create Jiva volume on cStor sparse pool using the following command.
 
 ```
 oc apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-jiva-default.yaml 
@@ -110,7 +110,7 @@ oc get pv
 
 Use this pvc name in your application yaml to run your application using OpenEBS Jiva volume.
 
-**Example:**: Once the changes are done in Percona application yaml. It can be deployed by following command.
+**Example:**: Once the changes are done in Percona application yaml, it can be deployed by using the following command.
 
 ```
 oc apply -f https://raw.githubusercontent.com/openebs/openebs/v0.7/k8s/demo/percona/percona-openebs-deployment.yaml
@@ -123,7 +123,7 @@ oc get pods
 ```
 
 ### Deploying OpenEBS Jiva using NodeSelector.
-By using the NodeSelector approach, OpenEBS Jiva can be also deployed. For example, if you have 5 nodes and you want to use 2 nodes for application and 3 nodes for storage. You can be achieve this using NodeSelector. Details are mentioned in this link [NodeSelector](/docs/next/scheduler.html).
+By using the NodeSelector approach, OpenEBS Jiva can be also deployed. For example, you have a setup where you have 5 nodes and you want to use 2 nodes for application and 3 nodes for storage. You can achieve this using NodeSelector. For more details, see [NodeSelector](/docs/next/scheduler.html).
 
 
 
