@@ -105,9 +105,12 @@ provisioner: openebs.io/provisioner-iscsi
 
 ```
 
+**Note:** Support for xfs file system has been introduced from 0.5.4 and onwards. In order to change the file system you must have 0.5.4 or latest build.
+
+
 ### Storage Class for Provisioning cStor
 
-A new OpenEBS component called Storage Pool Claim (SPC) watcher has been introduced. This allows you to define a SPC name, for example `cstor-sparse-pool`. Pools will be created with the specified SPC name and the desired number of replcias specified in the `ReplicaCount`. The PVC that uses the storage class will create cStor volumes on the specified pools.
+A new OpenEBS component called Storage Pool Claim (SPC) watcher has been introduced. This allows you to define an SPC name, for example,  `cstor-sparse-pool`. Pools will be created with the specified SPC name and the desired number of replicas specified in the `ReplicaCount`. The PVC that uses the storage class will create cStor volumes on the specified pools.
 
 The default cStor storage class is as follows:
 

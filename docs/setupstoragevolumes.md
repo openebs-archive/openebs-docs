@@ -8,25 +8,9 @@ sidebar_label: Storage Volumes
 
 ### Storage Volumes
 
-A Storage Class provides a way for administrators to describe the “classes” of storage they offer. Different classes may map to quality-of-service levels, backup policies, or to arbitrary policies determined by the cluster administrators. This concept is sometimes called “profiles” in other storage systems.
+An OpenEBS Volume comprises of Target and Replica component. There can be one or more Replicas. The Replica component accesses the underlying disk resources for storing the data. Target component is used by an application. Storage volumes must be persistent with the application.
 
-### Setting up a Storage Class on OpenEBS
-
-Once OpenEBS is installed on your Kubernetes cluster, you can start using it by specifying the corresponding OpenEBS Storage Classes in your PVCs.
-
-Apply the *openebs-operator.yaml* file on the Kubernetes cluster using the following command. This creates the maya api-server and OpenEBS provisioner deployments.
-
-```
-kubectl apply -f openebs-operator.yaml
-```
-
-Add the OpenEBS storage classes using the following command. You can use this to map a suitable storage profile for applications in your respective persistent volume claims.
-
-```
-kubectl apply -f openebs-storageclasses.yaml
-```
-
-OpenEBS storage provides several features that can be customized for each volume. Some of the features that could be customized per application are as follows:
+OpenEBS storage provides several features that can be customised for each volume. Some of the features that can be customised per application are as follows:
 
 - Number of replications
 - Zone or node affinity
@@ -34,55 +18,84 @@ OpenEBS storage provides several features that can be customized for each volume
 - Volume expansion policy
 - Replication policy
 
-OpenEBS comes with some pre-defined set of storage classes that can be readily used.
 
-Go to the following link for the pre-defined storage classes.
-
-[openebs-storageclasses.yaml](https://github.com/openebs/openebs/blob/master/k8s/openebs-storageclasses.yaml)
-
-
-It is also possible to create a new custom storage class.
-
-Defining a storage class supported by OpenEBS:
+There are two types of storage volumes in OpenEBS.
 
 ```
-apiVersion: storage.k8s.io/v1
-	kind: StorageClass 	#(Kind always should be StorageClass)
-	metadata:
-   	name: openebs-standalone 	#(Name of the StorageClass)
-	provisioner: openebs.io/provisioner-iscsi
-	parameters:
-  	openebs.io/storage-pool: "default"
-  	openebs.io/jiva-replica-count: "1" #(This value represents the  number of replicas of a StorageClass)
-  	openebs.io/volume-monitor: "true"
-  	openebs.io/capacity: 5G 	#(Capacity of the StorageClass)
-
-
+Jiva storage volume 
+Cstor storage volume
 ```
 
-By default, OpenEBS comes with ext4 file system. However, if you want to use xfs file system you can do so by adding the below entries in the openebs-storageclasses.yaml.
+
+### Jiva Storage Volume
+
+
+Jiva storage engine creates Jiva volume. By default, OpenEBS Jiva volume runs with 3 replicas.
+This sample PVC yaml uses storage class openebs-jiva-default created as part of openebs-operator.yaml installation.
+
+You can create the Jiva volume by using the following command.
 
 ```
-vi openebs/k8s/openebs-storageclasses.yaml
----
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-   name: openebs-mongodb
-provisioner: openebs.io/provisioner-iscsi
-parameters:
-  openebs.io/storage-pool: "test-mntdir"
-  openebs.io/jiva-replica-count: "1"
-  openebs.io/volume-monitor: "true"
-  openebs.io/capacity: 5G
-  openebs.io/fstype: "xfs"
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-jiva-default.yaml
 ```
 
-**Note:** Support for xfs file system has been introduced from 0.5.4 and onwards. In order to change the file system you must have 0.5.4 or latest build. You must add `openebs.io/fstype: "xfs"` in the openebs-storageclasses.yaml.
+Get the Jiva pvc details by running the following command.
 
-Follow the link below to understand how to deploy an application on the OpenEBS volume using xfs file system. Here, mongo-DB application is used as an example.
+```
+kubectl get pvc
+```
 
-[deploy an application on the OpenEBS volume using xfs file system](https://github.com/openebs/openebs/issues/1446)
+Get the Jiva pv details by running the following command.
+
+```
+kubectl get pv
+```
+
+This pvc name is used in application yaml to run application using OpenEBS Jiva volume.
+
+Jiva volume can also be created dynamically. you must change the storage class name to **openebs-jiva-default** from **openebs-standard** in the percona-openebs-deployment.yaml and then apply the yaml as mentioned below.
+
+```
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml
+kubectl apply -f percona-openebs-deployment.yaml
+```      
+
+### Cstor Storage Volume
+
+
+Cstor storage engine creates Cstor volume. By default, OpenEBS cStor volume will be running with 3 replicas. 
+This sample PVC yaml uses storage class openebs-cstor-sparse created as part of openebs-operator.yaml installation.
+
+You can create the Cstor volume by running the following command.
+
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-cstor-default.yaml
+```
+
+If you want to create cStor volume on cStor Pool created using external disks, you can find the details at [Cstor vol](/docs/next/deploycstor.html).
+
+
+Get the Cstor pvc details by running the following command.
+
+```
+kubectl get pvc
+```
+
+Get the Cstor pv details by running the following command.
+
+```
+kubectl get pv
+```
+
+This pvc name is used in the application yaml to run the application using OpenEBS cStor volume.
+
+Cstor volume can also be created dynamically. you must change the storage class name to **openebs-cstor-sparse** from **openebs-standard** in the percona-openebs-deployment.yaml and then apply the yaml as mentioned below.
+
+```
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml
+kubectl apply -f percona-openebs-deployment.yaml
+```
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
