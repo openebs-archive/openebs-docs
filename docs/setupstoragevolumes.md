@@ -8,7 +8,7 @@ sidebar_label: Storage Volumes
 
 ### Storage Volumes
 
-An OpenEBS Volume comprises of a Target and Replica component. There can be one or more Replicas. The Replica component accesses the underlying disk resources for storing the data. Target component is use by an application. Storage volumes must be persistent with the application.
+An OpenEBS Volume comprises of Target and Replica component. There can be one or more Replicas. The Replica component accesses the underlying disk resources for storing the data. Target component is used by an application. Storage volumes must be persistent with the application.
 
 OpenEBS storage provides several features that can be customised for each volume. Some of the features that can be customised per application are as follows:
 
@@ -53,7 +53,7 @@ kubectl get pv
 
 This pvc name is used in application yaml to run application using OpenEBS Jiva volume.
 
-Jiva volume can also be created dynamically. you need to change the storage class name to **openebs-jiva-default** from **openebs-standard** in the percona-openebs-deployment.yaml and then apply the yaml as mentioned below.
+Jiva volume can also be created dynamically. you must change the storage class name to **openebs-jiva-default** from **openebs-standard** in the percona-openebs-deployment.yaml and then apply the yaml as mentioned below.
 
 ```
 wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml
@@ -89,7 +89,7 @@ kubectl get pv
 
 This pvc name is used in the application yaml to run the application using OpenEBS cStor volume.
 
-Cstor volume can also be created dynamically. you need to change the storage class name to **openebs-cstor-sparse** from **openebs-standard** in the percona-openebs-deployment.yaml and then apply the yaml as mentioned below.
+Cstor volume can also be created dynamically. you must change the storage class name to **openebs-cstor-sparse** from **openebs-standard** in the percona-openebs-deployment.yaml and then apply the yaml as mentioned below.
 
 ```
 wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml
