@@ -47,12 +47,12 @@ Modify the configuration for scheduling control plane pods such as OpenEBS API S
 
 **Label the required Nodes**
 
-Label the required nodes with an appropriate label. In the following command, the required nodes for storage are labelled as *node=openebs*.
+Label the required nodes with an appropriate label. In the following command, the required nodes for storage nodes are labelled as *node=openebs*.
 
 ```
 kubectl label nodes <node-name> node=openebs
 ```
-For application nodes,labelled as *node=appnode* as follows. So that application pods can communicate with target pods easily.
+For application nodes labelled as *node=appnode* use the following command.
 ```
 kubectl label nodes <node-name> node=appnode
 ```
@@ -207,7 +207,7 @@ You can modify the configuration for data plane pods as follows:
 
 **Update the NODE_SELECTOR for storage target and storage replica**
 
-You have to add following environmental parameters in your storage class before provisioning volume. You can provision OpenEBS storage target pod to your application deployed namespace.
+You must add the following environmental parameters in your storage class before provisioning volume. You can provision OpenEBS storage target pod to the nodes where applications are deployed so that application pods can communicate easily with storage target pods.
 
 ```
 - name: TargetNodeSelector
