@@ -110,7 +110,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 ### Storage Class for Provisioning cStor
 
-A new OpenEBS component called Storage Pool Claim (SPC) watcher has been introduced. This allows you to define a SPC name, for example `cstor-sparse-pool`. Pools will be created with the specified SPC name and the desired number of replcias specified in the `ReplicaCount`. The PVC that uses the storage class will create cStor volumes on the specified pools.
+A new OpenEBS component called Storage Pool Claim (SPC) watcher has been introduced. This allows you to define a SPC name, for example,  `cstor-sparse-pool`. Pools will be created with the specified SPC name and the desired number of replcias specified in the `ReplicaCount`. The PVC that uses the storage class will create cStor volumes on the specified pools.
 
 The default cStor storage class is as follows:
 
