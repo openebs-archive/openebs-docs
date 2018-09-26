@@ -160,7 +160,7 @@ spec:
 ```
 
 
-Run the application using the following command
+Run the application using the following command.
 
 ```
 kubectl apply -f demo-percona-mysql-pvc.yaml
