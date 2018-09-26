@@ -87,7 +87,7 @@ Apply the sample pvc yaml file to create Jiva volume on cStor sparse Pool using 
 oc apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-jiva-default.yaml 
 ```
 
-This sample PVC yaml will use default storage class openebs-jiva-default storage class created as part of openebs-operator.yaml installation.
+This sample PVC yaml will use openebs-jiva-default storage class created as part of openebs-operator.yaml installation.
 
 Get the Jiva pvc details by running the following command.
 
@@ -110,7 +110,7 @@ oc get pv
 
 Use this pvc name in your application yaml to run your application using OpenEBS Jiva volume.
 
-**For Eg**: Once the changes are done in Percona application yaml. It can be deployed by following command.
+**Example:**: Once the changes are done in Percona application yaml. It can be deployed by following command.
 
 ```
 oc apply -f https://raw.githubusercontent.com/openebs/openebs/v0.7/k8s/demo/percona/percona-openebs-deployment.yaml
@@ -123,7 +123,7 @@ oc get pods
 ```
 
 ### Deploying OpenEBS Jiva using NodeSelector.
-By using the NodeSelector approach the OpenEBS Jiva can be also deployed. Suppose you have 5 nodes and you want to use 2 nodes for application and 3 nodes for storage. This requirement can be achieved by using NodeSelector. The detailed have been mentioned in this link. [NodeSelector](/docs/next/scheduler.html)
+By using the NodeSelector approach, OpenEBS Jiva can be also deployed. For example, if you have 5 nodes and you want to use 2 nodes for application and 3 nodes for storage. You can be achieve this using NodeSelector. Details are mentioned in this link[NodeSelector](/docs/next/scheduler.html).
 
 
 
