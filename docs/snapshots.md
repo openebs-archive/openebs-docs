@@ -78,7 +78,7 @@ metadata:
     snapshot.alpha.kubernetes.io/snapshot: snapshot-demo
 spec:
   storageClassName: snapshot-promoter
-  accessModes: ReadWriteOnce
+  accessModes: [ "ReadWriteOnce" ]
   resources:
     requests:
       storage: 5Gi
