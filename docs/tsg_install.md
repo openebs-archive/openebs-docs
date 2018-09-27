@@ -60,6 +60,27 @@ iscsiadm version 2.0-874
 
 To resolve this issue, do not install `open-iscsi / iscsi-initiator-utils` on the host nodes when using the Rancher Container Engine (RKE).
 
+## How can I select disks for creating storage pool using cStor?
+
+With the latest OpenEBS 7.0 release, the following disk types/paths are excluded by NDM which identifies the disks to create cStor pools on nodes.
+```
+loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-
+```
+You can also customize by adding more disk types associated with your nodes. For example, used disks, unwanted disks and so on. This must be done in the 'openebs-operator-0.7.0.yaml' file that you downloaded before installation. Add the device path in `openebs-ndm-config` under ConfigMap in the `openebs-operator.yaml` file as follows.
+```
+"exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"
+```
+Example:
+```
+ {
+          "key": "path-filter",
+          "name": "path filter",
+          "state": "true",
+          "include":"",
+          "exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"
+        }
+```
+
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
 

@@ -59,40 +59,61 @@ oc adm policy add-scc-to-user hostaccess admin --as:system:admin
 - Disable selinux (via `setenforce 0`) to ensure the same (disable on all OpenShift nodes).
 - Edit the restricted scc to use `runAsUser: type: RunAsAny` (the replica pod runs with root user).
 
-### Install OpenEBS
+### Install OpenEBS on Jiva
 
-Download the latest OpenEBS operator files and sample application specifications on the OpenShift-Master machine using the following commands.
-
-```
-git clone https://github.com/openebs/openebs.git 
-cd openebs/k8s
-```
-
-Apply the openebs-operator on the OpenShift cluster using the following commands.
+You can install OpenEBS cluster by running the following command on OpenShift master.
 
 ```
-oc apply -f openebs-operator.yaml 
-oc apply -f openebs-storageclasses.yaml
+oc apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 ```
 
-Verify that the OpenEBS operator services are created successfully and deployments are running using the following commands. Also, check whether the storage classes are created successfully.
+OpenEBS control plane pods are created under “openebs” namespace. CAS Template, default Storage Pool and default Storage Classes are created after executing the above command.
+
+Verify that the OpenEBS operator services are created successfully and deployments are running using the following commands. Also, check whether the storage classes and storage pool are created successfully.
 
 ```
 oc get deployments -n openebs
 oc get sa -n openebs
 oc get clusterrole openebs-maya-operator
 oc get sc
+oc get sp
 ```
 
 ### Deploy a sample application with OpenEBS storage.
 
-Use OpenEBS as persistent storage for a Percona deployment by selecting the openebs-percona storageclass in the persistent volume claim. A sample is available in the openebs git repository (which was cloned in the previous steps).
-
-Apply the following Percona deployment yaml using the following commands.
+Apply the sample pvc yaml file to create Jiva volume on cStor sparse pool using the following command.
 
 ```
-cd demo/percona 
-oc apply -f demo-percona-mysql-pvc.yaml
+oc apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-jiva-default.yaml 
+```
+
+This sample PVC yaml will use openebs-jiva-default storage class created as part of openebs-operator.yaml installation.
+
+Get the Jiva pvc details by running the following command.
+
+```
+oc get pvc
+```
+
+Following is an example output.
+
+```
+NAME              STATUS    VOLUME                              CAPACITY   ACCESS MODES   STORAGECLASS           AGE
+demo-vol1-claim   Bound     default-demo-vol1-claim-473439503   4G         RWO            openebs-jiva-default   2m
+```
+
+Get the Jiva pv details by running the following command.
+
+```
+oc get pv
+```
+
+Use this pvc name in your application yaml to run your application using OpenEBS Jiva volume.
+
+**Example:**: Once the changes are done in Percona application yaml, it can be deployed by using the following command.
+
+```
+oc apply -f https://raw.githubusercontent.com/openebs/openebs/v0.7/k8s/demo/percona/percona-openebs-deployment.yaml
 ```
 
 Verify that the deployment runs successfully using the following commands.
@@ -100,6 +121,10 @@ Verify that the deployment runs successfully using the following commands.
 ```
 oc get pods
 ```
+
+### Deploying OpenEBS Jiva using NodeSelector.
+By using the NodeSelector approach, OpenEBS Jiva can be also deployed. For example, you have a setup where you have 5 nodes and you want to use 2 nodes for application and 3 nodes for storage. You can achieve this using NodeSelector. For more details, see [NodeSelector](/docs/next/scheduler.html).
+
 
 
 

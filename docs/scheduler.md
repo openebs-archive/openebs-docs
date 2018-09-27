@@ -14,8 +14,8 @@ OpenEBS deals with many types of Kubernetes pods in its life cycle. These can be
   - OpenEBS API Server
   - OpenEBS Provisioner
   - OpenEBS Snapshot Operator
-  - OpenEBS Node Disk Manager
 - **Data plane pods**
+  - OpenEBS Node Disk Manager
   - Jiva data plane 
     - Jiva storage target pod
     - Jiva storage replica pods
@@ -23,7 +23,7 @@ OpenEBS deals with many types of Kubernetes pods in its life cycle. These can be
     - cStor storage target pod
     - cStor storage replica pods
 
-Control plane pods are scheduled while installing OpenEBS and Data plane pods are scheduled during volume provisioning. 
+Control plane pods and one data plane pod are scheduled while installing OpenEBS and other Data plane pods are scheduled during volume provisioning. 
 
 # Before OpenEBS Installation
 
@@ -39,7 +39,7 @@ wget https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 
 ## Step 2
 
-Modify the configuration for scheduling pods in the *openebs-operator.yaml* file. You can use NODE_SELECTOR method as follows:
+Modify the configuration for scheduling control plane pods such as OpenEBS API Server, OpenEBS Provisioner,OpenEBS Snapshot Operator and data plane pod such as OpenEBS Node Disk Manager in the *openebs-operator.yaml* file. You can use NODE_SELECTOR method as follows:
 
 ### NODE_SELECTOR method (preferred) ([Why?](/docs/next/scheduler.html#selecting-between-node-selector-method-taint-method))
 
@@ -47,21 +47,24 @@ Modify the configuration for scheduling pods in the *openebs-operator.yaml* file
 
 **Label the required Nodes**
 
-Label the required nodes with an appropriate label. In the following command, the required nodes are labelled as *openebs=controlnode*.
+Label the required nodes with an appropriate label. In the following command, the required nodes for storage nodes are labelled as *node=openebs*.
 
 ```
-kubectl label nodes <node-name> openebs=controlnode
+kubectl label nodes <node-name> node=openebs
 ```
-
+For application nodes labelled as *node=appnode* use the following command.
+```
+kubectl label nodes <node-name> node=appnode
+```
 **Modify the configuration control pods** 
 
-You can modify the configuration for control plane pods as follows in the *openebs-operator.yaml* file. 
+You can modify the configuration for control plane pods and data plane pod like NDM as follows in the *openebs-operator.yaml* file. 
 
 For **openebs-provisioner**, under *spec:* section you can add as follows:
 
 ```
 nodeSelector:
-        openebs: controlnode
+        node: openebs
 ```
 **Example:**
 
@@ -82,7 +85,7 @@ spec:
     spec:
       serviceAccountName: openebs-maya-operator
       nodeSelector:
-        openebs: controlnode
+        node: openebs
       containers:
       - name: openebs-provisioner
 ```
@@ -90,7 +93,7 @@ spec:
 For **maya-apiserver**, under *spec:* section you can add as follows:
 ```
 nodeSelector:
-        openebs: controlnode
+        node: openebs
 ```
 **Example:**
 
@@ -111,7 +114,7 @@ spec:
     spec:
       serviceAccountName: openebs-maya-operator
       nodeSelector:
-        openebs: controlnode
+        node: openebs
       containers:
       - name: maya-apiserver
 ```
@@ -120,7 +123,7 @@ For **openebs-snapshot-operator**, under *spec:* section you can add as follows:
 
 ```
 nodeSelector:
-        openebs: controlnode
+        node: openebs
 ```
 **Example:**
 
@@ -143,7 +146,7 @@ spec:
     spec:
       serviceAccountName: openebs-maya-operator
       nodeSelector:
-        openebs: controlnode
+        node: openebs
       containers:
         - name: snapshot-controller
 ```
@@ -152,7 +155,7 @@ For **openebs-ndm** , under *spec:* section you can add as follows:
 
 ```
 nodeSelector:
-        openebs: controlnode
+        node: openebs
 ```
 
 **Example:**
@@ -182,13 +185,13 @@ spec:
       #  "openebs.io/nodegroup": "storage-node"
       serviceAccountName: openebs-maya-operator
       nodeSelector:
-        openebs: controlnode
+        node: openebs
       hostNetwork: true
 ```
 
 ## Step 3
 
-Run the modified operator file to install OpenEBS and schedule the OpenEBS control plane pods on the appropriate nodes.
+Run the modified operator file to install OpenEBS and schedule the OpenEBS control plane pods and data plane pod on the appropriate nodes.
 
 ```
 kubectl apply -f openebs-operator-0.7.0.yaml
@@ -196,23 +199,23 @@ kubectl apply -f openebs-operator-0.7.0.yaml
 
 ## Step 4
 
-### Scheduling data plane pods using NODE_SELECTOR
+### Scheduling other data plane pods using NODE_SELECTOR
 
-To schedule data plane pods as per the required labeled node, your storage class has to be modified with adding required parameter with corresponding label.
+To schedule data plane pods such as storage target and storage replica on the required labeled node, your storage class has to be modified by adding required parameters with corresponding node label.
 
 You can modify the configuration for data plane pods as follows:
 
 **Update the NODE_SELECTOR for storage target and storage replica**
 
-You have to add following environmental parameters in your storage class before provisioning volume.
+You must add the following environmental parameters in your storage class before provisioning volume. You can provision OpenEBS storage target pod to the nodes where applications are deployed so that application pods can communicate easily with storage target pods.
 
 ```
 - name: TargetNodeSelector
   value: |-
-      openebs: controlnode
+      node: appnode
 - name: ReplicaNodeSelector
   value: |-
-      openebs: controlnode
+      node: openebs
 ```
 
 Get the Storage Class installed in your cluster by following command
@@ -242,10 +245,10 @@ Then you can add following entries as an environmental variable in your storage 
 ```
 - name: TargetNodeSelector
   value: |-
-      openebs: controlnode
+      node: appnode
 - name: ReplicaNodeSelector
   value: |-
-      openebs: controlnode
+      node: openebs
 ```
 
 **Example:**
@@ -262,10 +265,10 @@ metadata:
         value: default
       - name: TargetNodeSelector
         value: |-
-            openebs: controlnode
+            node: appnode
       - name: ReplicaNodeSelector
         value: |-
-            openebs: controlnode
+            node: openebs
       #- name: TargetResourceLimits
       #  value: |-
       #      memory: 1Gi

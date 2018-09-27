@@ -17,7 +17,7 @@ Once OpenEBS is installed on your Kubernetes cluster, you can start using it by 
 Apply the openebs-operator.yaml file on the Kubernetes cluster using the following command. This creates the maya api-server and OpenEBS components which includes default storage classes.
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0-RC2.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 ```
 
 OpenEBS Storage provides several features that can be customized for each volume. Some of features that could be customized per application are as follows:
@@ -45,11 +45,11 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.7.0-RC2
+        value: openebs/jiva:0.7.0
       - name: ReplicaImage
-        value: openebs/jiva:0.7.0-RC2
+        value: openebs/jiva:0.7.0
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.7.0-RC2
+        value: openebs/m-exporter:0.7.0
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
@@ -79,11 +79,11 @@ metadata:
    annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.7.0-RC2
+        value: openebs/jiva:0.7.0
       - name: ReplicaImage
-        value: openebs/jiva:0.7.0-RC2
+        value: openebs/jiva:0.7.0
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.7.0-RC2
+        value: openebs/m-exporter:0.7.0
       - name: ReplicaCount
         value: "1"
       - name: StoragePool
@@ -105,9 +105,12 @@ provisioner: openebs.io/provisioner-iscsi
 
 ```
 
+**Note:** Support for xfs file system has been introduced from 0.5.4 and onwards. In order to change the file system you must have 0.5.4 or latest build.
+
+
 ### Storage Class for Provisioning cStor
 
-A new OpenEBS component called Storage Pool Claim (SPC) watcher has been introduced. This allows you to define a SPC name, for example `cstor-sparse-pool`. Pools will be created with the specified SPC name and the desired number of replcias specified in the `ReplicaCount`. The PVC that uses the storage class will create cStor volumes on the specified pools.
+A new OpenEBS component called Storage Pool Claim (SPC) watcher has been introduced. This allows you to define an SPC name, for example,  `cstor-sparse-pool`. Pools will be created with the specified SPC name and the desired number of replicas specified in the `ReplicaCount`. The PVC that uses the storage class will create cStor volumes on the specified pools.
 
 The default cStor storage class is as follows:
 
