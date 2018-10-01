@@ -183,7 +183,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    cstor-sparse-pool-pag5   10m
    default                  10m
    ```
-   Also it will create Storage Class called *cstor-disk*. You can get the stodare class details by running below command.
+   Also it will create Storage Class called *cstor-disk*. You can get the storage class details by running following command.
 
    ```
    kubectl  get sc
