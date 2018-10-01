@@ -6,7 +6,7 @@ sidebar_label: Upgrade
 
 ------
 
-# UPGRADE FROM OPENEBS 0.6.0 TO 0.7.0
+# Upgrade from OpenEBS 0.6.0 TO 0.7.0
 
 ## Overview
 
