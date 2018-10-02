@@ -8,7 +8,7 @@ sidebar_label: Collecting Logs
 
 
 
-### Overview of OpenEBS Logger 
+### Overview of OpenEBS Logger
 
 Logger is a Kubernetes job which can be run on a cluster to extract pod logs and cluster information. It helps in troubleshoot/debugging activities. Logger runs the logger container *openebs/logger* and it is recommended to run for a specific duration to capture logs while attempting to reproduce issues.
 
@@ -38,7 +38,7 @@ Logger requires the *kubeconfig* file mounted as a configmap (passed to stern bi
 
 The following procedure helps you run Logger.
 
-1. In the logger job's command, edit the logging duration (-d) and pod regex (-r) to specify which pods' logs should be captured and for how long. 
+1. In the logger job's command, edit the logging duration (-d) and pod regex (-r) to specify which pods' logs should be captured and for how long.
 
    For example, in the  `./logger.sh -d 5 -r maya,openebs,pvc;` command, the logs for pods starting with literals "maya", "openebs" and "pvc" are captured for a period of 5 minutes.
 

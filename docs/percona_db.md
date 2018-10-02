@@ -54,7 +54,7 @@ Run the load generation job using the following command.
 Viewing Performance and Storage Consumption Statistics Using mayactl
 --------------------------------------------------------------------
 
-Performance and capacity usage statistics on the OpenEBS storage volume can be viewed by executing the following *mayactl* command inside the maya-apiserver pod. 
+Performance and capacity usage statistics on the OpenEBS storage volume can be viewed by executing the following *mayactl* command inside the maya-apiserver pod.
 
 Start an interactive bash console for the maya-apiserver container using the following command.
 
@@ -76,19 +76,19 @@ Get the performance and capacity usage statistics using the *volume stats* comma
      Volume  : pvc-016e9a68-71c1-11e7-9fea-000c298ff5fc
      Portal  : 10.109.70.220:3260
      Size    : 5G
-    
+
           Replica|   Status|   DataUpdateIndex|
                  |         |                  |
         10.36.0.3|   Online|              4341|
         10.44.0.2|   Online|              4340|
-    
+
     ------------ Performance Stats ----------
-    
+
        r/s|   w/s|   r(MB/s)|   w(MB/s)|   rLat(ms)|   wLat(ms)|   rBlk(KB)|   wBlk(KB)|
          0|    14|     0.000|    14.000|      0.000|     71.325|          0|       1024|
-    
+
     ------------ Capacity Stats -------------
-       Logical(GB)|   Used(GB)| 
+       Logical(GB)|   Used(GB)|
           0.074219|   0.000000|
 
 The above command can be invoked using the *watch* command by providing a desired interval to continuously monitor statistics.

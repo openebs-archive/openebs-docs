@@ -82,7 +82,7 @@ The default CAS template is now deployed in your k8s cluster. This template can 
 | ReplicaCount    | 1                  |
 | StoragePool     | ssd                |
 
-Also these values will have Taint toleration, Eviction toleration, and Node-affinity toleration fields. You can customize the key-value pair of above tolerations based on the taints applied on the Nodes. 
+Also these values will have Taint toleration, Eviction toleration, and Node-affinity toleration fields. You can customize the key-value pair of above tolerations based on the taints applied on the Nodes.
 
 ### Deploy a Test CAST volume
 

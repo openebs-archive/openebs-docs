@@ -17,7 +17,7 @@ CrunchyData provides cloud agnostic PostgreSQL container technology that is desi
 Prerequisite
 ------------
 
-A fully configured, preferably, multi-node Kubernetes cluster configured with the OpenEBS operator and OpenEBS storage classes. 
+A fully configured, preferably, multi-node Kubernetes cluster configured with the OpenEBS operator and OpenEBS storage classes.
 
     test@Master:~/crunchy-postgres$ kubectl get pods
     NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -29,7 +29,7 @@ Deploying the Crunchy-Postgres StatefulSet with OpenEBS Storage
 
 The StatefulSet specification JSONs are available at *OpenEBS/k8s/demo/crunchy-postgres*.
 
-The number of replicas in the StatefulSet can be modified in the *set.json* file. The following example uses two replicas, which includes one master and one slave. The Postgres pods are configured as primary/master or as replica/slave by a startup script which decides the role based on ordinality assigned to the pod. 
+The number of replicas in the StatefulSet can be modified in the *set.json* file. The following example uses two replicas, which includes one master and one slave. The Postgres pods are configured as primary/master or as replica/slave by a startup script which decides the role based on ordinality assigned to the pod.
 
     {
       "apiVersion": "apps/v1beta1",
@@ -48,7 +48,7 @@ The number of replicas in the StatefulSet can be modified in the *set.json* file
           },
     :
 
-Run the following commands. 
+Run the following commands.
 
     test@Master:~$ cd openebs/k8s/demo/crunchy-postgres/
 
@@ -62,7 +62,7 @@ Run the following commands.
     -rwxrwxr-x 1 test test 1403 Nov 14 16:27 run.sh
     -rw-rw-r-- 1 test test 1292 Nov 14 16:27 README.md
     -rwxrwxr-x 1 test test  799 Nov 14 16:27 cleanup.sh
-    
+
     test@Master:~/crunchy-postgres$ ./run.sh
     +++ dirname ./run.sh
     ++ cd .
@@ -86,7 +86,7 @@ Verify that all the OpenEBS persistent volumes are created and that the Crunchy-
     test@Master:~/crunchy-postgres$ kubectl get statefulsets
         NAME      DESIRED   CURRENT   AGE
         pgset     2         2         15m
-    
+
         test@Master:~/crunchy-postgres$ kubectl get pods
         NAME                                                             READY     STATUS    RESTARTS   AGE
         maya-apiserver-2245240594-ktfs2                                  1/1       Running   0          3h
@@ -99,7 +99,7 @@ Verify that all the OpenEBS persistent volumes are created and that the Crunchy-
         pvc-1e96a86b-c948-11e7-a157-000c298ff5fc-ctrl-2773298268-x3dlb   1/1       Running   0          3m
         pvc-1e96a86b-c948-11e7-a157-000c298ff5fc-rep-723453814-hpkw3     1/1       Running   0          3m
         pvc-1e96a86b-c948-11e7-a157-000c298ff5fc-rep-723453814-tpjqm     1/1       Running   0          3m
-    
+
         test@Master:~/crunchy-postgres$ kubectl get svc
         NAME                                                CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
         kubernetes                                          10.96.0.1        <none>        443/TCP             4h
@@ -133,14 +133,14 @@ You can verify the deployment using the following procedure.
 1. Install the PostgreSQL-Client
 --------------------------------
 
-Install the PostgreSQL CLient Utility (psql) on any of the Kubernetes machines to perform database operations from the command line. 
+Install the PostgreSQL CLient Utility (psql) on any of the Kubernetes machines to perform database operations from the command line.
 
     sudo apt-get install postgresql-client
 
 2. Verify Cluster Replication Status on Crunchy-Postgres Cluster
 ----------------------------------------------------------------
 
-Identify the IP Address of the primary (pgset-0) pod or the service (pgset-primary) and execute the following query: 
+Identify the IP Address of the primary (pgset-0) pod or the service (pgset-primary) and execute the following query:
 
 ```
 test@Master:~$ kubectl describe pod pgset-0 | grep IP
@@ -159,7 +159,7 @@ The replica should be registered for *asynchronous* replication.
 3. Create a Table with Test Content on the Default Database
 -----------------------------------------------------------
 
-The following queries should be executed on the primary pod. 
+The following queries should be executed on the primary pod.
 
     test@Master:~$ psql -h 10.47.0.3 -U testuser postgres -c 'create table foo(id int)'
     Password for user testuser:
@@ -175,7 +175,7 @@ Identify the IP Address of the replica (pgset-1) pod or the service (pgset-repli
 
     test@Master:~$ kubectl describe pod pgset-1 | grep IP
     IP:             10.44.0.6
-    
+
     test@Master:~$ psql -h 10.44.0.6 -U testuser postgres -c 'table foo'
     Password for user testuser:
     id
@@ -193,7 +193,7 @@ Attempt to create a new table on the replica, and verify that the creation is un
 
     test@Master:~$ psql -h 10.44.0.6 -U testuser postgres -c 'create table bar(id int)'
     Password for user testuser:
-    ERROR:  cannot execute CREATE TABLE in a read-only transaction 
+    ERROR:  cannot execute CREATE TABLE in a read-only transaction
 
 References
 ----------

@@ -10,7 +10,6 @@ OpenEBS supports upgrade to 0.6 version only from 0.5.3 and 0.5.4.
 
 For older verions, upgrade to either 0.5.3 or 0.5.4 before upgrading to 0.6. For steps to upgrade to 0.5.3 or 0.5.4, [click](https://v05-docs.openebs.io/) here.
 
-
 1. Upgrade the OpenEBS operator.
 
 2. Upgrade the OpenEBS volumes that were created with older OpenEBS operator.
@@ -30,6 +29,7 @@ kubectl delete -f openebs-operator.yaml
 ```
 
 The output must be displayed as follows.
+
 ```
 serviceaccount "openebs-maya-operator" deleted
 clusterrole "openebs-maya-operator" deleted
@@ -49,6 +49,7 @@ kubectl delete -f openebs-storageclasses.yaml
 ```
 
 The output must be similar to the following.
+
 ```
 storageclass "openebs-standalone" deleted
 storageclass "openebs-percona" deleted
@@ -140,9 +141,9 @@ helm upgrade -f https://openebs.github.io/charts/helm-values-0.6.0.yaml <release
 
 Before proceeding with the upgrade, you must update your custom helm chart or YAML with 0.6 release tags and changes made in the values/templates.
 
-Use the following as reference for the changes made in 0.6: 
+Use the following as reference for the changes made in 0.6:
 
-- stable/openebs [PR#6768](https://github.com/helm/charts/pull/6768) or 
+- stable/openebs [PR#6768](https://github.com/helm/charts/pull/6768) or
 - openebs-charts [PR#1646](https://github.com/openebs/openebs/pull/1646)
 
 After updating the YAML or helm chart values, you can use the steps mentioned above to upgrade the OpenEBS operator depending upon your type of installation.
@@ -172,14 +173,14 @@ As part of upgrade, OpenEBS recommends that you label the nodes where the replic
 kubectl label nodes gke-kmova-helm-default-pool-d8b227cc-6wqr "openebs-pv"="openebs-storage"
 ```
 
-Note that the key `openebs-pv` is fixed. However you can use any value in place of `openebs-storage`. This value will be taken as a parameter in the upgrade script below. 
+Note that the key `openebs-pv` is fixed. However you can use any value in place of `openebs-storage`. This value will be taken as a parameter in the upgrade script below.
 
-Repeat the above step of labellilng the node for all nodes where replicas are scheduled. Assumption is that all the PV replicas are scheduled on the same set of 3 nodes. 
+Repeat the above step of labellilng the node for all nodes where replicas are scheduled. Assumption is that all the PV replicas are scheduled on the same set of 3 nodes.
 
 
 **Limitations:**
 
-- Must handle cases where there are a mix of PVs with 1 and 3 replicas or 
+- Must handle cases where there are a mix of PVs with 1 and 3 replicas or
 - Scenarios like PV1 replicas are on nodes n1, n2, and n3, whereas PV2 replicas are on nodes n2, n3, and n4.
 - This is a preliminary script only intended for use on volumes where data is backed-up.
 - Have the following link handy in case the volume gets into read-only state during the upgrade process.
@@ -190,16 +191,16 @@ Repeat the above step of labellilng the node for all nodes where replicas are sc
 
 2. Use the following command to get the PV.
 
-```
-kubectl get pv
-```
+   ```
+   kubectl get pv
+   ```
 
 3. Upgrade the PV that you want to upgrade by using the following command.
 
-```
-./oebs_update.sh pvc-48fb36a2-947f-11e8-b1f3-42010a800004 openebs-storage
+   ```
+   ./oebs_update.sh pvc-48fb36a2-947f-11e8-b1f3-42010a800004 openebs-storage
 
-```
+   ```
 
 
 

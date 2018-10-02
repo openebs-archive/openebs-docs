@@ -28,9 +28,9 @@ OpenEBS Storage provides several features that can be customized for each volume
 - Volume expansion policy
 - Replication policy
 
-OpenEBS comes with some pre-defined set of storage classes that can be readily used. They help in provisioning Jiva and cStor. 
+OpenEBS comes with some pre-defined set of storage classes that can be readily used. They help in provisioning Jiva and cStor.
 
-The default storage classes are as follows. 
+The default storage classes are as follows.
 
 ### Storage Class for Provisioning Jiva
 
@@ -107,7 +107,6 @@ provisioner: openebs.io/provisioner-iscsi
 
 **Note:** Support for xfs file system has been introduced from 0.5.4 and onwards. In order to change the file system you must have 0.5.4 or latest build.
 
-
 ### Storage Class for Provisioning cStor
 
 A new OpenEBS component called Storage Pool Claim (SPC) watcher has been introduced. This allows you to define an SPC name, for example,  `cstor-sparse-pool`. Pools will be created with the specified SPC name and the desired number of replicas specified in the `ReplicaCount`. The PVC that uses the storage class will create cStor volumes on the specified pools.
@@ -139,7 +138,7 @@ provisioner: openebs.io/provisioner-iscsi
 ---
 ```
 
-  
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

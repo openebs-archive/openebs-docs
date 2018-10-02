@@ -5,7 +5,7 @@ sidebar_label: mayactl
 ---
 ------
 
-`mayactl` is the command line tool for interacting with OpenEBS volumes. `mayactl` is not used/required while provisioning or managing the OpenEBS volumes, but it is currently used while debugging and troubleshooting. 
+`mayactl` is the command line tool for interacting with OpenEBS volumes. `mayactl` is not used/required while provisioning or managing the OpenEBS volumes, but it is currently used while debugging and troubleshooting.
 
 For getting access to mayactl command line tool, you will have to login / execute into the maya-apiserver pod on Kubernetes. The steps are outlined below.
 
@@ -30,7 +30,7 @@ For getting access to mayactl command line tool, you will have to login / execut
 
    You will get access to the bash shell of maya-apiserver pod like shown below.
 
-   `bash-4.3# ` 
+   `bash-4.3# `
 
 ## Using mayactl
 
@@ -45,10 +45,10 @@ For getting access to mayactl command line tool, you will have to login / execut
    ```
    bash-4.3#mayactl --help
    Maya means 'Magic' a tool for storage orchestration
-      
+
    Usage:
    mayactl [command]
-      
+
    Available Commands:
    help        Help about any command
    snapshot    Provides operations related to a Volume snapshot
@@ -69,10 +69,10 @@ For getting access to mayactl command line tool, you will have to login / execut
 
    # Statistics of a Volume:
    $ mayactl volume stats --volname <vol>
-      
+
    # Statistics of a Volume created in 'test' namespace:
    $ mayactl volume stats --volname <vol> --namespace test
-      
+
    # Info of a Volume:
    $ mayactl volume info --volname <vol>
 
@@ -81,13 +81,12 @@ For getting access to mayactl command line tool, you will have to login / execut
 
    # Delete a Volume:
    $ mayactl volume delete --volname <vol>
-      
+
    # Delete a Volume created in 'test' namespace:
    $ mayactl volume delete --volname <vol> --namespace test
    ```
 
-
-   **Note:** `mayactl volume delete` command will delete corresponding OpenEBS pods and deployments. But it will not delete PVC and PV. These corresponding PVC and PV can be deleted by using usual `kubectl delete` commands. 
+   **Note:** `mayactl volume delete` command will delete corresponding OpenEBS pods and deployments. But it will not delete PVC and PV. These corresponding PVC and PV can be deleted by using usual `kubectl delete` commands.
 
 3. You can get the mayactl related details by running following command
 
@@ -102,7 +101,7 @@ For getting access to mayactl command line tool, you will have to login / execut
    # mayactl version
    ```
 
-4. `mayactl volume snapshot` command is used to manage the snapshots of a volume. Some examples of the usage are shown below. 
+4. `mayactl volume snapshot` command is used to manage the snapshots of a volume. Some examples of the usage are shown below.
 
    ```
    Examples:

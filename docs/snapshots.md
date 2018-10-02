@@ -14,10 +14,10 @@ A storage snapshot is a set of reference markers for data at a particular point 
 
 OpenEBS operator will deploy following components during *openebs-operator-0.7.0.yaml* installation.
 
-1. A snapshot-controller 
-2. a snapshot-provisioner 
+1. A snapshot-controller
+2. a snapshot-provisioner
 
-A snapshot-controller, when it starts, will create a CRD for `VolumeSnapshot` and `VolumeSnapshotData` custom resources. It will also watch for `VolumeSnapshotresources` and take snapshots of the volumes based on the referred snapshot plugin. 
+A snapshot-controller, when it starts, will create a CRD for `VolumeSnapshot` and `VolumeSnapshotData` custom resources. It will also watch for `VolumeSnapshotresources` and take snapshots of the volumes based on the referred snapshot plugin.
 
 A snapshot-provisioner will be used to restore a snapshot as a new Persistent Volume(PV) via dynamic provisioning.
 
@@ -61,11 +61,11 @@ NAME            AGE
 snapshot-demo   48s
 ```
 
-## Cloning and Restoring a Snapshot 
+## Cloning and Restoring a Snapshot
 
-After creating a snapshot, you can restore it to a new PVC. For creating new PVC using this snapshot, it need different *storageclass* to be used. There will be a default storage class called **openebs-snapshot-promoter** will create during the installation of *openebs-operator-0.7.0.yaml*. 
+After creating a snapshot, you can restore it to a new PVC. For creating new PVC using this snapshot, it need different *storageclass* to be used. There will be a default storage class called **openebs-snapshot-promoter** will create during the installation of *openebs-operator-0.7.0.yaml*.
 
-So, this will create a PVC referencing to this default  *storageclass* for dynamically provisioning new PV. 
+So, this will create a PVC referencing to this default  *storageclass* for dynamically provisioning new PV.
 
 A *storageclass*  for creating new PVC from snapshot can be defined as in the following example. Here, the provisioner field defines which provisioner should be used and what parameters should be passed to that provisioner when dynamic provisioning is invoked.
 
@@ -120,7 +120,7 @@ demo-snap-vol-claim   Bound     pvc-87a7b6b0-b67a-11e8-b7c2-42010a800213   5Gi  
 demo-vol1-claim       Bound     default-demo-vol1-claim-1246175738         5G         RWO            	openebs-jiva-default        3h
 ```
 
-If you are running any application, you can  mount the **demo-snap-vol-claim** PersistentVolumeClaim into a new application pod to get the contents at the point of snapshot has taken. While deploying the new application pod with this new restored PVC, you have to edit the application deployment yaml and mention the restored PersistentVolumeClaim name, volume name, and volume mount accordingly.  
+If you are running any application, you can  mount the **demo-snap-vol-claim** PersistentVolumeClaim into a new application pod to get the contents at the point of snapshot has taken. While deploying the new application pod with this new restored PVC, you have to edit the application deployment yaml and mention the restored PersistentVolumeClaim name, volume name, and volume mount accordingly.
 
 ## Deleting a Snapshot
 
@@ -130,7 +130,7 @@ You can delete a snapshot that you have created which will also delete the corre
 kubectl delete -f snapshot.yaml
 ```
 
-This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` you have already provisioned using the snapshot. On the other hand, deleting any `PersistentVolumeClaims` or `PersistentVolumes` that you have used to take a snapshot or have been provisioned using a snapshot will not delete the snapshot from the OpenEBS backend. You have to delete them manually. 
+This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` you have already provisioned using the snapshot. On the other hand, deleting any `PersistentVolumeClaims` or `PersistentVolumes` that you have used to take a snapshot or have been provisioned using a snapshot will not delete the snapshot from the OpenEBS backend. You have to delete them manually.
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->

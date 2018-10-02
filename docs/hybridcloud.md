@@ -13,11 +13,11 @@ Hybrid cloud is a cloud computing environment that uses a mix of on-premises, pr
 ## Problems
 
 - Cloud vendor lock-inProblems with EBS detach/attach/mount process
-- Difficult to manage scale-out storage solutions on private cloud 
+- Difficult to manage scale-out storage solutions on private cloud
 
 ## OpenEBS solution
 
-OpenEBS can help to manage cloud lock-in. When you write your data to OpenEBS you write to an open source, highly flexible data management layer that allows you to manage your exposure to each cloud or data center. OpenEBS works on AWS on top of EBS, Google Cloud, Microsoft Azure, Digital Ocean, on-premises baremetal Kubernetes deployments, Red Hat OpenShift, IBM Cloud Private and many others to improve resiliency, to limit lock-in, and for better integration with Kubernetes. 
+OpenEBS can help to manage cloud lock-in. When you write your data to OpenEBS you write to an open source, highly flexible data management layer that allows you to manage your exposure to each cloud or data center. OpenEBS works on AWS on top of EBS, Google Cloud, Microsoft Azure, Digital Ocean, on-premises baremetal Kubernetes deployments, Red Hat OpenShift, IBM Cloud Private and many others to improve resiliency, to limit lock-in, and for better integration with Kubernetes.
 
 
 

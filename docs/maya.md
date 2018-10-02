@@ -18,7 +18,6 @@ The above components are collectively referred to as Maya.  For more details abo
 
 `Note: Some of the above components such as NDM are available only from release 0.6 onwards`
 
-
 ## MayaOnline
 
 [MayaOnline](https://docs.mayaonline.io) is the SaaS service for connecting OpenEBS clusters to provide a cross-cloud control plane. MayaOnline provides a permanent free tier to the OpenEBS community.

@@ -8,13 +8,11 @@ sidebar_label: Big Data
 
 ## Problem statement
 
-Big Data workloads such as Cassandra, ElasticSearch and Hadoop require stable and predictable performance. Rebuilding times can impact the performance of cluster. Data processing workloads also need to be able to scale up compute independently and quickly on demand. 
+Big Data workloads such as Cassandra, ElasticSearch and Hadoop require stable and predictable performance. Rebuilding times can impact the performance of cluster. Data processing workloads also need to be able to scale up compute independently and quickly on demand.
 
 - Wait time of volume provisioning
 - Supporting high performance workloads
 - Long recovery and rebuild time of a fail node
-
-
 
 ## OpenEBS solution
 

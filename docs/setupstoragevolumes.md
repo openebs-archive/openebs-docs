@@ -18,17 +18,14 @@ OpenEBS storage provides several features that can be customised for each volume
 - Volume expansion policy
 - Replication policy
 
-
 There are two types of storage volumes in OpenEBS.
 
 ```
-Jiva storage volume 
+Jiva storage volume
 Cstor storage volume
 ```
 
-
 ### Jiva Storage Volume
-
 
 Jiva storage engine creates Jiva volume. By default, OpenEBS Jiva volume runs with 3 replicas.
 This sample PVC yaml uses storage class openebs-jiva-default created as part of openebs-operator.yaml installation.
@@ -58,12 +55,11 @@ Jiva volume can also be created dynamically. you must change the storage class n
 ```
 wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml
 kubectl apply -f percona-openebs-deployment.yaml
-```      
+```
 
 ### Cstor Storage Volume
 
-
-Cstor storage engine creates Cstor volume. By default, OpenEBS cStor volume will be running with 3 replicas. 
+Cstor storage engine creates Cstor volume. By default, OpenEBS cStor volume will be running with 3 replicas.
 This sample PVC yaml uses storage class openebs-cstor-sparse created as part of openebs-operator.yaml installation.
 
 You can create the Cstor volume by running the following command.

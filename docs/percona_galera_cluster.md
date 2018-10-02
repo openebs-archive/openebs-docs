@@ -17,7 +17,7 @@ Percona XtraDB Cluster is an active/active highly available and scalable open so
 - A cluster service YAML which can be used for client connections (pxc-cluster)
 - The node deployment and service specification YAMLs to setup a 3-node replication cluster (pxc-node)
 
-The image used in these pods is *capttofu/percona\_xtradb\_cluster\_5\_6:beta*. When deployment is 
+The image used in these pods is *capttofu/percona\_xtradb\_cluster\_5\_6:beta*. When deployment is
 created, following activities occur in the given order.
 
 - The Percona Xtradb containers start
@@ -31,7 +31,7 @@ For the prerequisites and running OpenEBS Operator, see Running OpenEBS Operator
 
 ## Deploying the Percona Galera Cluster with OpenEBS Storage
 
-The deployment specification YAMLs are available at *OpenEBS/k8s/demo/galera-xtradb-cluster/deployments*. 
+The deployment specification YAMLs are available at *OpenEBS/k8s/demo/galera-xtradb-cluster/deployments*.
 
 Verify k8s cluster is running fine.
 
@@ -61,7 +61,7 @@ git clone https://github.com/openebs/openebs.git
 cd openebs/k8s/demo//galera-xtradb-cluster/deployments/
 ```
 
-Run the following commands in the given order. 
+Run the following commands in the given order.
 
 ```
 kubectl apply -f pxc-cluster-service.yaml
@@ -83,8 +83,9 @@ Wait until the pxc-node2.yaml is processed and repeat the step with pxc-node3 .
 kubectl apply -f pxc-node3.yaml
 ```
 
-Verify that all the replicas are up and running using the following command. :
+Verify that all the replicas are up and running using the following command:
 
+    ```
     ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl get pods
     NAME                                                             READY     STATUS    RESTARTS   AGE
     pvc-4e2ef5e4-7f81-11e8-9f2f-02b983f0a4db-ctrl-7fd86b86d-j9j62    2/2       Running   0          8m
@@ -102,6 +103,7 @@ Verify that all the replicas are up and running using the following command. :
     pxc-node1-688f987789-rmvds                                       1/1       Running   0          8m
     pxc-node2-7f64f4cfd4-gt8sh                                       1/1       Running   0          5m
     pxc-node3-65ddfd699-xj4kc                                        1/1       Running   0          3m
+    ```
 
 ## Deployment Guidelines
 
@@ -115,7 +117,7 @@ Verify that all the replicas are up and running using the following command. :
 
   `ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl exec -it pxc-node1-688f987789-rmvds /bin/bash`
 
-* Enter to mysql db and root user password for db is  ***c-krit***. 
+* Enter to mysql db and root user password for db is  ***c-krit***.
 
   ```
   root@pxc-node1-688f987789-rmvds:/# mysql -uroot -p -h pxc-cluster;
@@ -134,9 +136,9 @@ Verify that all the replicas are up and running using the following command. :
   Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
   ```
 
-* Check the replication cluster size on any of the nodes using the following command. 
+* Check the replication cluster size on any of the nodes using the following command.
 
-```
+    ```
     mysql> show status like 'wsrep_cluster_size';
     +--------------------+-------+
     | Variable_name      | Value |
@@ -144,7 +146,7 @@ Verify that all the replicas are up and running using the following command. :
     | wsrep_cluster_size | 3     |
     +--------------------+-------+
     1 row in set (0.01 sec)
-```
+    ```
 
 * On the pxc-node1, create a test database with some content using the following commands. You have already entered into node1 using first step.
 
@@ -184,7 +186,7 @@ Verify that all the replicas are up and running using the following command. :
 
     ​
 
-* Verify that this data is synchronized on the other nodes, for example, node2, using the following command.  
+* Verify that this data is synchronized on the other nodes, for example, node2, using the following command.
 
     ```
     ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl exec -it pxc-node2-7f64f4cfd4-gt8sh /bin/bash
@@ -237,7 +239,7 @@ Verify that all the replicas are up and running using the following command. :
 
     ​
 
-* Verify the multi-master capability of the cluster, by writing additional tables into the database using the following command. Use a node other than node1, for example node3. 
+* Verify the multi-master capability of the cluster, by writing additional tables into the database using the following command. Use a node other than node1, for example node3.
 
     ```
     ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl exec -it pxc-node3-65ddfd699-xj4kc /bin/bash

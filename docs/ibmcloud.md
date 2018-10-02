@@ -6,7 +6,7 @@ sidebar_label: IBMCloud
 
 ------
 
-In this section, we are describing about configuring **OpenEBS** as a **persistent storage** option and deploying a stateful workload (MongoDB) using OpenEBS storage classes in **IBM Cloud Private (ICP)** . 
+In this section, we are describing about configuring **OpenEBS** as a **persistent storage** option and deploying a stateful workload (MongoDB) using OpenEBS storage classes in **IBM Cloud Private (ICP)**.
 
 ### **Prerequisites**
 
@@ -21,7 +21,6 @@ In this section, we are describing about configuring **OpenEBS** as a **persiste
 - IBM Cloud Private 2.1
 
 - [OpenEBS](https://github.com/openebs/openebs)
-
 
 ### **Install IBM Cloud Private**
 
