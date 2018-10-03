@@ -6,7 +6,7 @@ sidebar_label: Upgrade
 
 ------
 
-# Upgrade from OpenEBS 0.6.0 TO 0.7.0
+# Upgrade from OpenEBS 0.6.0 to 0.7.0
 
 ## Overview
 
@@ -21,7 +21,7 @@ For older verions, OpenEBS supports upgrade to 0.6 version only from 0.5.3 and 0
 
 - *OpenEBS Operator : Refers to maya-apiserver and openebs-provisioner along with respective services, service account, roles, rolebindings*
 - *OpenEBS Volume: The Jiva controller and replica pods*
-- *All steps described in this document need to be performed on the Kubernetes master or from a machine that has access to Kubernetes master*
+- *All steps described in this document must be performed on the Kubernetes master or from a machine that has access to Kubernetes master*
 
 ## Step 1: Upgrade the OpenEBS Operator
 
@@ -126,7 +126,7 @@ NAME                                       CAPACITY   ACCESS MODES   RECLAIM POL
 pvc-48fb36a2-947f-11e8-b1f3-42010a800004   5G         RWO            Delete           Bound     percona-test/demo-vol1-claim   openebs-percona             8m
 ```
 
-### Upgrade the PV that must be upgraded. 
+### Upgrade the PV that must be Upgraded 
 
 ```
 ./oebs_update.sh pvc-48fb36a2-947f-11e8-b1f3-42010a800004 openebs-storage
