@@ -144,7 +144,7 @@ The following procedure helps recovering data in the scenario where replicas get
 
 ### Step 1: Run a sample application that generates some data. 
 
-For this example, I ran a busybox pod that saves hostname and date into the mounted OpenEBS volume. 
+In the following example, executing the busybox.yaml file brings up the busybox pod that saves hostname and date into the mounted OpenEBS volume. 
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/busybox.yaml
@@ -156,7 +156,7 @@ Note the following details:
 - PV id `kubectl get pv` (say _source-pv-id_ ). 
 - nodes on which PV replica pods are running `kubectl get pods -o wide | grep source-pv-id` (say _replica-hostname_). 
 
-Delete the busybox pod  using the `kubectl delete -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/busybox.yaml` command. Note that the data folders will remain on the nodes even though the pod and pvs are deleted.
+Delete the busybox pod  using the `kubectl delete -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/busybox.yaml` command. Note that the data folders will remain on the nodes even though the pod and PVs are deleted.
 
 
 ### Step 2: Setup a Recovery PVC
