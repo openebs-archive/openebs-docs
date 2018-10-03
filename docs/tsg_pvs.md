@@ -189,6 +189,7 @@ After the patch is applied, you will notice that the replica pod is restarted on
 
  Execute the following commands.
  
+```
 a. ssh into the node  (_replica-hostname_)
 b. cd /var/openebs/recovery-pv-id/ (/var/openebs if you are using default pool.)
 c. `sudo rm -rf *`
@@ -196,6 +197,7 @@ d. copy contents from earlier volume (/var/openebs/source-pv-id  or from remote 
 e. You will see *peer.details*, *revision.counter*, *volume.meta* and a bunch of *.img* and *.meta* files. 
 f. edit peer.details to set ReplicaCount=1
 g. exit
+```
 
 ### Step 5: Restart the Volume Pods 
 
