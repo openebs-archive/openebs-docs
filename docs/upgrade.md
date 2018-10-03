@@ -6,202 +6,135 @@ sidebar_label: Upgrade
 
 ------
 
-OpenEBS supports upgrade to 0.6 version only from 0.5.3 and 0.5.4.
+# Upgrade from OpenEBS 0.6.0 to 0.7.0
 
-For older verions, upgrade to either 0.5.3 or 0.5.4 before upgrading to 0.6. For steps to upgrade to 0.5.3 or 0.5.4, [click](https://v05-docs.openebs.io/) here.
+## Overview
 
+This document describes the steps for upgrading OpenEBS from 0.6.0 to 0.7.0. Upgrading OpenEBS is a two step process. 
+- *Step 1* - Upgrade the OpenEBS Operator 
+- *Step 2* - Upgrade the OpenEBS Volumes that were created with older OpenEBS Operator (0.6.0) 
 
-1. Upgrade the OpenEBS operator.
+**Note:**
+For older verions, OpenEBS supports upgrade to 0.6 version only from 0.5.3 and 0.5.4. For steps to upgrade to 0.6.0, [click](https://v06-docs.openebs.io/docs/next/upgrade.html) here.
 
-2. Upgrade the OpenEBS volumes that were created with older OpenEBS operator.
+### Terminology
 
-Upgrading OpenEBS Operator depends on how OpenEBS was installed (using kubectl or helm). Based on the type of installation select one of the following.
+- *OpenEBS Operator : Refers to maya-apiserver and openebs-provisioner along with respective services, service account, roles, rolebindings*
+- *OpenEBS Volume: The Jiva controller and replica pods*
+- *All steps described in this document must be performed on the Kubernetes master or from a machine that has access to Kubernetes master*
 
-**Step-1 Upgrade OpenEBS Operator**
+## Step 1: Upgrade the OpenEBS Operator
 
-**Upgrade Using Kubectl** (OpenEBS was installed by kubectl using the openebs-operator.yaml file)
+OpenEBS 0.7.0 has made the following significant changes to the OpenEBS Operator (aka OpenEBS control plane components):
+- A new provisioning and policy enforcement engine. This introduces formatting changes as it expects the volume policies to be present as annotations in storage class as opposed to `parameters` or `environment variables`.
+- OpenEBS will install default jiva storage pool (named `default`) and storage class (named `openebs-jiva-default`). If these names conflict with your existing storage pool or storage classes, rename and re-apply your storage classes.
+- Integrated with OpenEBS NDM project. A new Daemonset will be launched to discover the block devices attached to the nodes.
 
-**Note:** The following sample steps will work only if you have installed OpenEBS without modifying the default values.
+### Download the Upgrade Scripts
 
-Delete the older openebs-operator and storage classes. Use the following command to delete the old openebs-operator file.
+Either `git clone` or download the following files to your work directory. 
+https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.6.0-0.7.0
+- `patch-strategy-recreate.json`
+- `replica.patch.tpl.yml`
+- `controller.patch.tpl.yml`
+- `oebs_update.sh`
+- `pre_upgrade.sh`
 
-```
-kubectl delete -f openebs-operator.yaml
-```
+### Prerequisites
 
-The output must be displayed as follows.
-```
-serviceaccount "openebs-maya-operator" deleted
-clusterrole "openebs-maya-operator" deleted
-clusterrolebinding "openebs-maya-operator" deleted
-deployment "maya-apiserver" deleted
-service "maya-apiserver-service" deleted
-deployment "openebs-provisioner" deleted
-customresourcedefinition "storagepoolclaims.openebs.io" deleted
-customresourcedefinition "storagepools.openebs.io" deleted
-storageclass "openebs-standard" deleted
-```
-
-Delete the storage classes using the following command.
-
-```
-kubectl delete -f openebs-storageclasses.yaml
-```
-
-The output must be similar to the following.
-```
-storageclass "openebs-standalone" deleted
-storageclass "openebs-percona" deleted
-storageclass "openebs-jupyter" deleted
-storageclass "openebs-mongodb" deleted
-storageclass "openebs-cassandra" deleted
-storageclass "openebs-redis" deleted
-storageclass "openebs-kafka" deleted
-storageclass "openebs-zk" deleted
-storageclass "openebs-es-data-sc" deleted
-```
-
-Wait for the objects to be deleted. You can verify the same using the following command.
+Before upgrading the OpenEBS Operator, check if you are using a storage pool named `default` which will conflict with default jiva pool installed with OpenEBS 0.7.0:
 
 ```
-kubectl get deploy
+./pre_upgrade.sh <openebs-namespace>
 ```
 
-You can now install the 0.6 operator using following command.
+### Upgrade volume Policies in Existing Storage Classes
+
+Use the following command to upgrade the storage class volume policies. Move from parameters to annotations. This script will only update the following volume policies:
+
+- `openebs.io/replica-count`
+- `openebs.io/storage-pool`
+- `openebs.io/volume-monitor`
+
+The remaining policies will fallback to their default values. 
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
+./upgrade_sc.sh
 ```
 
-The output must be similar to the following.
+Alternatively, you can skip this step and re-apply your storage classes as per the 0.7.0 volume policy specification. 
+
+**Note: Storage classes must be updated prior to provisioning any new volumes with 0.7.0.**
+
+### Upgrading OpenEBS Operator CRDs and Deployments
+
+The upgrade steps vary depending on the way OpenEBS was installed. Select one of the following:
+
+#### Install/Upgrade using kubectl (using openebs-operator.yaml )
+
+**The sample steps below will work if you have installed openebs without modifying the default values in the *openebs-operator.yaml* file. If you have customized it for your cluster, you must download the 0.7.0 *openebs-operator.yaml* file and cutomize it again.**
 
 ```
-namespace "openebs" created
-serviceaccount "openebs-maya-operator" created
-clusterrole "openebs-maya-operator" created
-clusterrolebinding "openebs-maya-operator" created
-deployment "maya-apiserver" created
-service "maya-apiserver-service" created
-deployment "openebs-provisioner" created
-deployment "openebs-snapshot-operator" created
-customresourcedefinition "storagepoolclaims.openebs.io" created
-customresourcedefinition "storagepools.openebs.io" created
-storageclass "openebs-standard" created
-storageclass "openebs-snapshot-promoter" created
-customresourcedefinition "volumepolicies.openebs.io" created
+# Starting with OpenEBS 0.6, all the components are installed in namespace `openebs`
+# as opposed to `default` namespace in earlier releases.
+
+kubectl delete -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
+
+#Wait for the objects to delete. Check if they are deleted using the `kubectl get deploy` command.
+
+#Upgrade to 0.7 OpenEBS Operator
+
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 ```
 
-You must deploy the 0.6 storage classes using the following command.
+#### Install/Upgrade using helm chart (using stable/openebs, openebs-charts repo, etc.) 
 
-```
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
-```
+**The following procedure will work if you have installed OpenEBS with default values provided by stable/openebs helm chart.**
 
-The output must be similar to the following.
+- Run `helm ls` to get the OpenEBS release name. 
+- Upgrade using `helm upgrade -f https://openebs.github.io/charts/helm-values-0.7.0.yaml <release-name> stable/openebs`
 
-```
-storageclass "openebs-standalone" created
-storageclass "openebs-percona" created
-storageclass "openebs-jupyter" created
-storageclass "openebs-mongodb" created
-storageclass "openebs-cassandra" created
-storageclass "openebs-redis" created
-storageclass "openebs-kafka" created
-storageclass "openebs-zk" created
-storageclass "openebs-es-data-sc" created
-```
+#### Using Customized Operator YAML or Helm Chart.
 
-**Upgrade Using Helm** ( OpenEBS was installed by helm chart)
+As a first step, you must update your custom helm chart or YAML with 0.7 release tags and changes made in the values/templates. 
 
-**Note:** The following sample steps will work if you have installed OpenEBS with default values provided by stable/openebs helm chart.
+You can use the following as reference to know about the changes in 0.7. 
+- openebs-charts [PR#1878](https://github.com/openebs/openebs/pull/1878).
 
-Run the following command to view the release name.
+After updating the YAML or helm chart or helm chart values, you can use the above procedures to upgrade the OpenEBS Operator
 
-```
-helm ls
-```
+## Step 2: Upgrade the OpenEBS Volumes
 
-The output is similar to the following.
+Even after the OpenEBS Operator has been upgraded to 0.7, the volumes will continue to work with older versions. Each volumes should be upgraded (one at a time) to 0.7, using the following procedure. 
 
-```
-NAME    REVISION        UPDATED                         STATUS          CHART           NAMESPACE
-openebs 1               Fri Aug  3 14:50:11 2018        DEPLOYED        openebs-0.5.3   openebs
-```
+*Note:Upgrade functionality is still under active development. It is highly recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, ensure you have taken a backup of the data before starting the following upgrade procedure.*
 
-Here the release name is openebs.
+Limitations:
+- This is a preliminary script only intended for using on volumes where data has been backed up.
+- Please have the following link handy in case the volume gets into read-only during upgrade. 
+  https://docs.openebs.io/docs/next/readonlyvolumes.html
+- Automatic rollback option is not provided. To rollback, you must update the controller, exporter, and replica pod images to the   previous version.
+- In the process of running the following procedure, if you run into issues, you can always reach us on Slack.
 
-Upgarde using the following command. You have to replace <release-name> with your actual release name.
-
-```
-helm upgrade -f https://openebs.github.io/charts/helm-values-0.6.0.yaml <release-name> stable/openebs
-```
-
-**Using customized operator YAML or helm chart**
-
-Before proceeding with the upgrade, you must update your custom helm chart or YAML with 0.6 release tags and changes made in the values/templates.
-
-Use the following as reference for the changes made in 0.6: 
-
-- stable/openebs [PR#6768](https://github.com/helm/charts/pull/6768) or 
-- openebs-charts [PR#1646](https://github.com/openebs/openebs/pull/1646)
-
-After updating the YAML or helm chart values, you can use the steps mentioned above to upgrade the OpenEBS operator depending upon your type of installation.
-
-**Step-2 Upgrade OpenEBS (old volumes) created with 0.5.3 or 0.5.4**
-
-Even after the OpenEBS operator has been upgraded to 0.6, the old volumes will continue to work with 0.5.3 or 0.5.4. Each of the volumes should be upgraded (one at a time) to 0.6, using the steps provided below.
-
-**Note:** There has been a change in the way OpenEBS Controller Pods communicate with the Replica Pods. Hence, it is recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, ensure that you have taken a backup of the data before starting the following upgrade procedure.
-
-**Download the Upgrade Scripts**
-
-You can get the requied scripts to your working directory using the following commands.
-
-```
-wget https://raw.githubusercontent.com/kmova/openebs/599e062a2251d2c16bca59aeac4a7ed77e445e6e/k8s/upgrades/0.5.x-0.6.0/controller.patch.tpl.yml
-wget https://raw.githubusercontent.com/kmova/openebs/599e062a2251d2c16bca59aeac4a7ed77e445e6e/k8s/upgrades/0.5.x-0.6.0/oebs_update.sh
-wget https://raw.githubusercontent.com/kmova/openebs/599e062a2251d2c16bca59aeac4a7ed77e445e6e/k8s/upgrades/0.5.x-0.6.0/patch-strategy-recreate.json
-wget https://raw.githubusercontent.com/kmova/openebs/599e062a2251d2c16bca59aeac4a7ed77e445e6e/k8s/upgrades/0.5.x-0.6.0/replica.patch.tpl.yml
-```
-
-In 0.5.x releases, when a replica is shutdown, it gets rescheduled to another available node in the cluster and starts copying the data from other replicas. This is not a desired behaviour during upgrades as it creates new replicas due to rolling-upgrade. To pin the replicas or force them to the nodes where the data is already present, starting with 0.6, OpenEBS uses the concept of NodeSelector and Tolerations that ensures replicas are not moved on node while deleting pod.
-
-As part of upgrade, OpenEBS recommends that you label the nodes where the replica pods are scheduled as follows.
-
-```
-kubectl label nodes gke-kmova-helm-default-pool-d8b227cc-6wqr "openebs-pv"="openebs-storage"
-```
-
-Note that the key `openebs-pv` is fixed. However you can use any value in place of `openebs-storage`. This value will be taken as a parameter in the upgrade script below. 
-
-Repeat the above step of labellilng the node for all nodes where replicas are scheduled. Assumption is that all the PV replicas are scheduled on the same set of 3 nodes. 
-
-
-**Limitations:**
-
-- Must handle cases where there are a mix of PVs with 1 and 3 replicas or 
-- Scenarios like PV1 replicas are on nodes n1, n2, and n3, whereas PV2 replicas are on nodes n2, n3, and n4.
-- This is a preliminary script only intended for use on volumes where data is backed-up.
-- Have the following link handy in case the volume gets into read-only state during the upgrade process.
-  [readonlyvolumes.html](https://docs.openebs.io/docs/next/readonlyvolumes.html)
-- In the process of running the following steps, if you run into issues, you can always reach us on Slack.
-
-1. Select the PV that must be upgraded.
-
-2. Use the following command to get the PV.
 
 ```
 kubectl get pv
 ```
 
-3. Upgrade the PV that you want to upgrade by using the following command.
+```
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                          STORAGECLASS      REASON    AGE
+pvc-48fb36a2-947f-11e8-b1f3-42010a800004   5G         RWO            Delete           Bound     percona-test/demo-vol1-claim   openebs-percona             8m
+```
+
+### Upgrade the PV 
+
+ Upgrade the PV that you want to upgrade using the following command.
 
 ```
 ./oebs_update.sh pvc-48fb36a2-947f-11e8-b1f3-42010a800004 openebs-storage
-
 ```
 
-
+**Note:** You can use any value(string) in place of openebs-storage. This value will be taken as a parameter in the upgrade script.
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
