@@ -126,7 +126,9 @@ NAME                                       CAPACITY   ACCESS MODES   RECLAIM POL
 pvc-48fb36a2-947f-11e8-b1f3-42010a800004   5G         RWO            Delete           Bound     percona-test/demo-vol1-claim   openebs-percona             8m
 ```
 
-### Upgrade the PV that must be Upgraded 
+### Upgrade the PV 
+
+ Upgrade the PV that you want to upgrade using the following command.
 
 ```
 ./oebs_update.sh pvc-48fb36a2-947f-11e8-b1f3-42010a800004 openebs-storage
