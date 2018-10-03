@@ -179,6 +179,7 @@ Replace **replica hostname** in patch-replica-dep-nodename.json with the _replic
 
 ```
 wget https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/patch-replica-dep-nodename.json
+
 kubectl patch deploy -n <replica-replica-ns> <recovery-replica-deploy>  -p "$(cat patch-replica-dep-nodename.json)"
 ```
 
