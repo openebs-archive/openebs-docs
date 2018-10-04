@@ -152,6 +152,11 @@ nav.toc .toggleNav .navGroup.navGroupActive {
     background: #fff;
 }
 
+/* Right side menu */
+nav.onPageNav > ul.toc-headings > li > a {
+    font-weight: bold;
+}
+
 /*Doc body*/
 .mainContainer {
     background: #fff;
