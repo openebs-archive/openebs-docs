@@ -155,7 +155,7 @@ OpenEBS supports pool creation and management through the use of Storage Pools (
 
 After pools are created, next step for Eve is to create CAS templates in such a way that
 
-- SASPool1, and SASPool1 are created using JIVA storage engine
+- SASPool1, and SASPool2 are created using JIVA storage engine
 - SSDPool1, SSDPool2 and SSDPool3 are created using cStor storage engine
 
 Apart from selecting storage engines appropriately, Eve has two challenges related to Kubernetes scheduling. 
