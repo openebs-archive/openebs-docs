@@ -5,7 +5,7 @@ More on the Docusaurus can be found here: https://docusaurus.io/docs/en/installa
 
 
 ## For Developers
-At first fork the repository
+At first fork the repository.
 
 ### Install nodejs
 
