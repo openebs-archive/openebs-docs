@@ -5,6 +5,7 @@ More on the Docusaurus can be found here: https://docusaurus.io/docs/en/installa
 
 
 ## For Developers
+At first fork the repository
 
 ### Install nodejs
 
@@ -58,4 +59,4 @@ The following procedure lists the tasks from the time you select an issue to pub
 
 5. After you submit your pull request and is approved by atleast one member, it goes for `Travis CI` integration. Your pull request is checked and if it exits with code 0 in all the cases, then its considered as passed and good for merging. If it fails, then identify the errors and work on it and resubmit the pull request. You can use the commands mentioned in point 4.
 
-6. The maintainers can then merge your pull request. Congrats on your contribution to the OpenEBS-docs code-base.
+6. The maintainers can then merge your pull request. Congrats and Thank you on your contribution to the OpenEBS-docs code-base.
