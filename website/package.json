@@ -10,5 +10,9 @@
   },
   "devDependencies": {
     "docusaurus": "^1.0.12"
+  },
+  "dependencies": {
+    "cryptiles": "^4.1.2",
+    "macaddress": "^0.2.9"
   }
 }
