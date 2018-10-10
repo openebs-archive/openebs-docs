@@ -1,6 +1,6 @@
 # OpenEBS-docs
 
-OpenEBS docs is the documentation repository for OpenEBS documentation. This is using Docusaurus as a documentation framework. It's easy to use and write documentation using Docusaurus, which uses markdown.
+OpenEBS-docs is the documentation repository for OpenEBS documentation. This is using Docusaurus as a documentation framework. It's easy to use and write documentation using Docusaurus, which uses markdown.
 More on the Docusaurus can be found here: https://docusaurus.io/docs/en/installation.html
 
 
@@ -42,7 +42,7 @@ cd openebs-docs/website
 
 openebs-docs/website$ npm start
 ```
-Above step will start server on the localhost:3000
+Above step will start server on the localhost:3000.
 
 ### How OpenEBS-docs get published?
 
