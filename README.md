@@ -1,6 +1,6 @@
 # OpenEBS-docs
 
-OpenEBS docs is the documentation repository for OpenEBS documentation. This is using Docusaurus as a documentation framework. It's easy to use and write documentation using Docusaurus, which uses markdown.
+OpenEBS-docs is the documentation repository for OpenEBS documentation. This is using Docusaurus as a documentation framework. It's easy to use and write documentation using Docusaurus, which uses markdown.
 More on the Docusaurus can be found here: https://docusaurus.io/docs/en/installation.html
 
 
@@ -46,7 +46,7 @@ Above step will start server on the localhost:3000
 
 ### How OpenEBS-docs get published?
 
-The following procedure lists the tasks from the time you select an issue to publishing the document.
+The following procedure lists the tasks from the time you select an issue to publishing the document:
 
 1. Go through the [issues](https://github.com/openebs/openebs-docs/issues/) and select an issue you want to work on.
 
