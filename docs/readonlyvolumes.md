@@ -49,7 +49,7 @@ To avoid the data loss situation, this behavior is change in 0.6 release. Now, i
 
 For example, consider a Jiva volume with three replicas: 
 
-- Losing one replica will not affect the RW status of the volume, both the the remaining replicas will continue to be in RW mode
+- Losing one replica will not affect the RW status of the volume, both the remaining replicas will continue to be in RW mode
 - Losing second replica will mark the third replica as RO and the volume will also become RO
 
 
