@@ -125,12 +125,14 @@ footer .sitemap .nav-home {
 
 /* Side bar*/
 nav.toc .toggleNav {
-    background: #fff;
+    background: #f5f7fa;
     padding: 3%;
 }
 
 nav.toc .toggleNav ul li a {
     color: #282828;
+    font-size: 14px;
+    padding-left: 10px;
 }
 nav.toc .toggleNav .navGroup h3 {
     font-weight: 600;
@@ -138,18 +140,21 @@ nav.toc .toggleNav .navGroup h3 {
 }
 nav.toc .toggleNav ul li.navListItemActive {
     background: #f1584d;
-    color: #fff;
+    color: #f5f7fa;
 }
 nav.toc .toggleNav ul li a.navItemActive{
-    color: #ffffff;
+    color: #f5f7fa;    
 }
 nav.toc .toggleNav .navGroup.navGroupActive h3 {
-    background:#fff;
+    background:#f5f7fa;
     color:#f1584d;
+    font-size: 15px;
+    text-transform: uppercase;
 }
 
 nav.toc .toggleNav .navGroup.navGroupActive {
-    background: #fff;
+    background: #f5f7fa;
+    padding: '20px 0';
 }
 
 /* Right side menu */
