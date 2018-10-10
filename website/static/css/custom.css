@@ -132,6 +132,7 @@ nav.toc .toggleNav {
 nav.toc .toggleNav ul li a {
     color: #282828;
     font-size: 14px;
+    padding-left: 10px;
 }
 nav.toc .toggleNav .navGroup h3 {
     font-weight: 600;
