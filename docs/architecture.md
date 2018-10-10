@@ -100,17 +100,11 @@ The Jiva storage engine is developed with Rancher's LongHorn and gotgt as the ba
 
 ### cStor
 
-`Note: This storage engine is available from version 0.6 release onwards`
-
 cStor is a high performing storage engine built with proven building blocks of storage components such as "BSD based Multi-threaded iSCSI protocol stack that is still serving hundreds of installations" and DMU layer of user space ZFS. cStor gives provable data integrity, CoW based snapshots and more. Common use cases include larger environments using snapshots and clones as a part of a test, deploy and operate pipelines; for example clones are often used with DBs running on OpenEBS in staging pipelines.  More details on cStor architecture are [written here](/data/next/storageengine.html).
 
 ## Node Disk Manager<a name="NDM"></a>
 
 ------
-
-```
-Note: This storage engine is available from version 0.6 release onwards
-```
 
 Node Disk Manager (NDM) fills a gap in the chain of tools required for managing persistent storage for stateful applications using Kubernetes. DevOps architects in the container era must serve the infrastructure needs of applications and of application developers in an automated way that delivers reslience and consistency across environments. These requirements mean that the storage stack must itself be extremely flexible so that Kubernetes and other software in the cloud native ecosystem can easily use this stack. The NDM plays a foundational role in the storage stack for Kubernetes by unifying disparate disks and by providing the capability to pool them in part by identifying them as a Kubernetes object.  Also, NDM discovers, provisions, monitors, and manages the underlying disks in such a way that Kubernetes PV provisioners such as  OpenEBS and other storage systems and Prometheus can manage the disk subsystems. 
 

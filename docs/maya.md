@@ -16,8 +16,6 @@ The control plane of OpenEBS is generally referred to as Maya. The control plane
 
 The above components are collectively referred to as Maya.  For more details about the control plane components, see [the architecture section](/docs/next/architecture.html#control-plane).
 
-`Note: Some of the above components such as NDM are available only from release 0.6 onwards`
-
 
 ## MayaOnline
 

@@ -31,6 +31,7 @@ const siteConfig = {
   users,
   onPageNav: 'separate',
   editUrl: 'https://github.com/openebs/openebs-docs/edit/staging/docs/',
+  createIssueUrl: 'https://github.com/openebs/openebs/issues/new/',
   /* path to images for header/footer */
   headerIcon: 'img/openebs-logo.svg',
   favicon: 'img/favicon.ico',
