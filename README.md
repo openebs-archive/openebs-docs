@@ -6,30 +6,30 @@ More on the Docusaurus can be found here: https://docusaurus.io/docs/en/installa
 
 ## For Developers
 
-### Install nodejs
+### Install Node.js
 
-```
+```bash
 sudo apt-get install python-software-properties
 curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 
 ```
 
-### To get the latest nodejs package
+### To get the latest Node.js package
 
-```
+```bash
 sudo apt-get install -y nodejs
 ```
 
 
 ### Install yarn
-```
+```bash
 npm install -g yarn
 
 ```
 
 ### Clone openebs-docs
 
-```
+```bash
 git clone https://github.com/openebs/openebs-docs.git
 
 cd openebs-docs
@@ -37,14 +37,14 @@ cd openebs-docs
 
 ### Start server
 
-```
+```bash
 cd openebs-docs/website
 
 openebs-docs/website$ npm start
 ```
-Above step will start server on the localhost:3000
+Above step will start server on the `localhost:3000`
 
-### How OpenEBS-docs get published?
+### How OpenEBS-docs get published ?
 
 The following procedure lists the tasks from the time you select an issue to publishing the document.
 
