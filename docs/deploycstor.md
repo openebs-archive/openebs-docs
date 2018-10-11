@@ -221,7 +221,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
     openebs-ndm-7zf5h                            1/1       Running   0          10m
     openebs-ndm-hmrnr                            1/1       Running   0          10m
     openebs-provisioner-78d5757698-84gnw         1/1       Running   0          10m
-    openebs-snapshot-operator-849f69b9bb-2vqwl   2/2       Running   0          10m\
+    openebs-snapshot-operator-849f69b9bb-2vqwl   2/2       Running   0          10m
     ```
 
 7. If you are using cStor Pool which is created using external disks, then apply the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values. This sample PVC yaml will use default storage class *openebs-cstor-default-0.7.0* created as part of *openebs-config.yaml* installation.
