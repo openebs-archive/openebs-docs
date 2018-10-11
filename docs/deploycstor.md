@@ -18,7 +18,7 @@ Additionally, you can add disks using the documentation available at [Kubernetes
 
 cStor can be provisioned in your Kubernetes cluster by performing the following steps.
 
-1. Verify if the OpenEBS installation is complete. If not, go to [installation](/docs/next/installation.html).
+1. Verify if the OpenEBS installation is complete. If not, go to [installation](installation.md).
 
    OpenEBS pods are created under “*openebs*” namespace. Node Disk Manager, CAS Template and default Storage Classes are created after installation.
 
@@ -55,7 +55,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    kubectl get castemplate
    ```
 
-   It also installs the default cStor **Storage Class** which can be used in your pvc yaml file to create Persistent Volume. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
+   It also installs the default cStor **Storage Class** which can be used in your pvc yaml file to create Persistent Volume. For more information about sample storage classes used for different applications, see [storage classes](setupstorageclasses.md). You can get the storage classes that are already applied by using the following command.
 
    ```
    kubectl get sc
