@@ -40,8 +40,8 @@ One assumption that is made for B/G to work properly is that software and databa
 
 ## Blue Green deployment issues with stateful applications
 
-- Blue Green strategy is the preferred practice for live upgrades. In the cloud native environments, stateful applications need support of underlying storage infrastructure to carry out the B/G upgrade strategy. Below are few of the challenges faced today in K8S environments 
-  - The storage solutions may not be complete cloud native. Though the legacy applications may have been moved to the micro services model, the storage solutions may not have been integrated completed to work seamlessly with Kubernetes. This makes the DevOps teams to continue to follow the legacy practices for storage during the upgrade of stateful applications.
+- Blue Green strategy is the preferred practice for live upgrades. In the cloud native environments, stateful applications need support of underlying storage infrastructure to carry out the B/G upgrade strategy. Below are a few of the challenges faced today in K8S environments 
+  - The storage solutions may not be fully cloud native. Though the legacy applications may have been moved to the micro services model, the storage solutions may not have been integrated completed to work seamlessly with Kubernetes. This makes the DevOps teams to continue to follow the legacy practices for storage during the upgrade of stateful applications.
   - Taking snapshots and making clones of persistent volumes has to be easy and efficient for the Blue Green strategy to work
 
 ## OpenEBS solution
@@ -85,7 +85,7 @@ All type of Stateful Apps can make use of the snapshot and clone an integral par
 
 ## Example BG NoDB with OpenEBS:
 
-For databases like Bolt DB, that do not provide replication and are intended for single node installations.Database is exposed as a Service (i.e, the Apps consume the database using a named service)Database (v1) is removed from Service and a Clone of the Volume (Vol2) is created from (Vol1). A new version of Database (v2) is launched using Vol2 and is attached to the service. On immediate failure, the service is reverted back to Database (v1) with Vol1 since no data passed through. For rollback at  later time, say the new version of Database wasn’t tested on actual data and needs to revert back to Database (v1). A new clone volume Vol3 is created from Vol2 and attached to Database (v1). 
+For databases like Bolt DB, that do not provide replication and are intended for single node installations. Database is exposed as a Service (i.e, the Apps consume the database using a named service)Database (v1) is removed from Service and a Clone of the Volume (Vol2) is created from (Vol1). A new version of Database (v2) is launched using Vol2 and is attached to the service. On immediate failure, the service is reverted back to Database (v1) with Vol1 since no data passed through. For rollback at a later stage, say the new version of Database wasn’t tested on actual data and needs to revert back to Database (v1). A new clone volume Vol3 is created from Vol2 and attached to Database (v1). 
 
 ![BG No DB Using OpenEBS](/docs/assets/bg-nodb.png)
 
@@ -99,13 +99,13 @@ Examples are either Cassandra or MySQL with master-slave or RabbitMQ with Federa
 
 ## Summary:
 
-While most storage systems also provide the Snapshot, Clone and Replication constructs, OpenEBS extends these capabilities by - 
+While most storage systems provide the Snapshot, Clone and Replication constructs, OpenEBS extends these capabilities by - 
 
 Providing Granular Volumes per Application vs other storages that share the same system/container for multiple volumes. OpenEBS has a Low Blast Radius, if not none!
 
 That data by being granular is also made very portable!
 
-OpenEBS supports Blue/Green Deployment (aka Seamless Upgrades). For example, upgrading of the storage controller doesn’t impact all the stateful workloads running on the OpenEBS storage. In other words, not all storage workloads need to be upgraded at once. 
+OpenEBS supports Blue/Green Deployment (aka Seamless Upgrades). For example, upgrading the storage controller doesn’t impact all the stateful workloads running on the OpenEBS storage. In other words, not all storage workloads need to be upgraded at once. 
 
 
 
