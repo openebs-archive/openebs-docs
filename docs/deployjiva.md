@@ -11,7 +11,7 @@ OpenEBS can be used to create Storage Pool on a host disk or an externally mount
 
 Jiva can be provisioned in your Kubernetes cluster by using the following procedure. 
 
-1. Verify if the OpenEBS installation is complete. If not, go to [installation](/docs/next/installation.html).
+1. Verify if the OpenEBS installation is complete. If not, go to [installation](installation.md).
 
    OpenEBS pods are created under “*openebs*” namespace. CAS Template, default Storage Pool and default Storage Classes are created after installation.
 
@@ -27,7 +27,7 @@ Jiva can be provisioned in your Kubernetes cluster by using the following proced
    kubectl get castemplate
    ```
 
-   Also, it installs the default Jiva storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
+   Also, it installs the default Jiva storage class which can be used in your application yaml to run the application. For more information about sample storage classes used for different applications, see [storage classes](setupstorageclasses.md). You can get the storage classes that are already applied by using the following command.
 
    ```
    kubectl get sc
