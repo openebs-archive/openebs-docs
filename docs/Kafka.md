@@ -23,7 +23,7 @@ devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl apply -f 04-kafka-config.yml
 devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl apply -f 05-service-kafka.yml
 devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl apply -f 06-kafka-statefulset.yml
 ```
-Running the above commands creates 3 node zookeeper ensemble and a 3 node Kafka cluster which uses OpenEBS volumes.
+Running the above commands creates 3 node Zookeeper ensemble and a 3 node Kafka cluster which uses OpenEBS volumes.
 
 **Note :** Kafka is a distributed system that uses Zookeeper to track status of Kafka cluster nodes. 
 
@@ -93,7 +93,7 @@ zk        3         3         6h
 
 ### Verifying Zookeeper
 
-To verify the Zookeeper ensemle, use the following procedure.
+To verify the Zookeeper ensemble, use the following procedure.
 
 ```
 devops@ubuntu:~ /openebs/k8s/demo/kafka$ kubectl exec -n kafka -it zk-0 -- /opt/zookeeper/bin/zkCli.sh create /foo bar
