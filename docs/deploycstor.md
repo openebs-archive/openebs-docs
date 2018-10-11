@@ -17,8 +17,8 @@ Additionally, you can add disks using the documentation available at [Kubernetes
 ## Provisioning cStor Storage Engine 
 
 cStor can be provisioned in your Kubernetes cluster by performing the following steps.
-
-1. Verify if the OpenEBS installation is complete. If not, go to [installation](/docs/next/installation.html).
+ 
+1. Verify if the OpenEBS installation is complete. If not, go to [installation](installation.md).
 
    OpenEBS pods are created under “*openebs*” namespace. Node Disk Manager, CAS Template and default Storage Classes are created after installation.
 
@@ -55,7 +55,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    kubectl get castemplate
    ```
 
-   It also installs the default cStor **Storage Class** which can be used in your pvc yaml file to create Persistent Volume. For more information about sample storage classes used for different applications, see [storage classes](/docs/next/setupstorageclasses.html). You can get the storage classes that are already applied by using the following command.
+   It also installs the default cStor **Storage Class** which can be used in your pvc yaml file to create Persistent Volume. For more information about sample storage classes used for different applications, see [storage classes](setupstorageclasses.md). You can get the storage classes that are already applied by using the following command.
 
    ```
    kubectl get sc
@@ -221,7 +221,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
     openebs-ndm-7zf5h                            1/1       Running   0          10m
     openebs-ndm-hmrnr                            1/1       Running   0          10m
     openebs-provisioner-78d5757698-84gnw         1/1       Running   0          10m
-    openebs-snapshot-operator-849f69b9bb-2vqwl   2/2       Running   0          10m\
+    openebs-snapshot-operator-849f69b9bb-2vqwl   2/2       Running   0          10m
     ```
 
 7. If you are using cStor Pool which is created using external disks, then apply the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values. This sample PVC yaml will use default storage class *openebs-cstor-default-0.7.0* created as part of *openebs-config.yaml* installation.
