@@ -17,7 +17,7 @@ Additionally, you can add disks using the documentation available at [Kubernetes
 ## Provisioning cStor Storage Engine 
 
 cStor can be provisioned in your Kubernetes cluster by performing the following steps.
-
+ 
 1. Verify if the OpenEBS installation is complete. If not, go to [installation](installation.md).
 
    OpenEBS pods are created under “*openebs*” namespace. Node Disk Manager, CAS Template and default Storage Classes are created after installation.
