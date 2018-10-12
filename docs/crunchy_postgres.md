@@ -199,7 +199,7 @@ References
 ----------
 
 The k8s spec files are based on the files provided by [CrunchyData
-StatefulSet with Dynamic Provisioner](https://github.com/CrunchyData/crunchy-containers/tree/master/examples/kube/statefulset-dyn).
+StatefulSet with Dynamic Provisioner](https://github.com/CrunchyData/crunchy-containers/tree/pvc/examples/kube/statefulset-dyn).
 
 Kubernetes Blog for running [Clustered PostgreSQL using StatefulSet](https://kubernetes.io/blog/2017/02/postgresql-clusters-kubernetes-statefulsets/).
 
