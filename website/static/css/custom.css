@@ -199,7 +199,7 @@ pre code {
 
     .fixedHeaderContainer header img {
         width: 108px;
-        height: auto;
+        height: 50px;
     }
     .fixedHeaderContainer header h2{
         color: #fff;
@@ -211,7 +211,7 @@ pre code {
 
     .fixedHeaderContainer header img {
         width: 141px;
-        height: auto;
+        height: 50px;
     }
     .fixedHeaderContainer header h2{
         color: #fff;
