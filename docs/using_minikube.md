@@ -98,7 +98,7 @@ On your Ubuntu host, do the following.
 
 ### Verifying that Minikube is Configured
 
-Check that minikube is configured and is using the following command.
+Check that minikube is configured using the following command.
 
     ```
     minikube status
