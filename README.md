@@ -46,7 +46,7 @@ Above step will start server on the localhost:3000
 
 ### How OpenEBS-docs get published?
 
-The following procedure lists the tasks from the time you select an issue to publishing the document:
+The following procedure lists the tasks from the time you select an issue to publishing the document.
 
 1. Go through the [issues](https://github.com/openebs/openebs-docs/issues/) and select an issue you want to work on.
 
