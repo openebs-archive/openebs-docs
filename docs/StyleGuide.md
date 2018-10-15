@@ -61,8 +61,7 @@ http://github.com | Specify just the URL name to directly access the website. He
 
 
  
-Prerequisite
-Prerequisite/s:
+Prerequisites:
 ------------
 
 See Also:  Heading 3
