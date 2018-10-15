@@ -60,7 +60,7 @@ It is not very efficient to rebuild replicas from scratch. We can improve rebuil
 
 ### cStor
 
-cStor storage engine has separate container image files for storage controller and storage replica. Docker images for controller is at https://hub.docker.com/r/openebs/cstor-controller/ and for replica is at https://hub.docker.com/r/openebs/cstor-pool/. cStor is a high performing storage engine built with proven building blocks of storage components. Access protocol iSCSI stack is a linux ported  BSD based Multi-threaded iSCSI protocol stack originally developed at CloudByte. This iSCSI is field tested at thousands of installations for many years". The storage block layer is the DMU layer of user space ZFS inherited from the proven OpenSolaris stack. With these proven building blocks, cStor engine is highly reliable for storing and protecting enterprise data. 
+cStor storage engine has separate container image files for storage controller and storage replica. Docker images for controller is at https://hub.docker.com/r/openebs/cstor-istgt/ and for replica is at https://hub.docker.com/r/openebs/cstor-pool/. cStor is a high performing storage engine built with proven building blocks of storage components. Access protocol iSCSI stack is a linux ported  BSD based Multi-threaded iSCSI protocol stack originally developed at CloudByte. This iSCSI is field tested at thousands of installations for many years". The storage block layer is the DMU layer of user space ZFS inherited from the proven OpenSolaris stack. With these proven building blocks, cStor engine is highly reliable for storing and protecting enterprise data. 
 
 ![cStor storage engine of OpenEBS](/docs/assets/cStor.png)
 
