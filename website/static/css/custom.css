@@ -100,6 +100,10 @@ footer .sitemap .nav-home {
 
 /* NAV bar */
 
+.fixedHeaderContainer header img#logo {
+    height: 100%;
+    margin-right: 10px;
+}
 .fixedHeaderContainer header img {
     height: 60%;
     margin-right: 10px;
