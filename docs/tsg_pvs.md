@@ -214,7 +214,24 @@ kubectl apply -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-op
 
 You can also exec into this application to check the content, retrieve the files, or use the application to check the content. 
 
+## Jiva repliac pods consuming high memory utilisation and warnings in the logs
 
+Where OpenEBS older versions,Jiva replica pods are consuming high memory and showing following error messages in all replica pods happens in every minute 
+
+```
+time="2018-07-20T15:39:56Z" level=info msg="New connection from: 10.32.3.18:39608"
+time="2018-07-20T15:39:56Z" level=error msg="Failed to read: Wrong API version received: 0xc4200f7d18"
+```
+### Troubleshooting the issue:
+
+The above problem could be due to prometheus monitoring tool is trying to connect to all Jiva replica pods on 9503. By default, prometheus montioring tool polls all ports defined by all pods. In OpenEBS, Jiva controller is exporting the volume metric.  
+
+### Workaround:
+
+Set the below annotation to false in all the replica pods 
+```
+prometheus.io/scrape:"false" 
+```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
