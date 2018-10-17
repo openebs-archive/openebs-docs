@@ -133,6 +133,10 @@ The default retention is the same used by K8s. For dynamically provisioned Persi
 
 No. Jiva and cStor volumes are exposed via block storage using iSCSI. Currently only RWO is supported.
 
+## Why ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ are showing in different size?
+
+The ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ will start showing different sizes when there are replica node restarts and internal snapshots are created for syncing replicas.
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
