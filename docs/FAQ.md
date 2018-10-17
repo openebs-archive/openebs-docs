@@ -133,6 +133,29 @@ The default retention is the same used by K8s. For dynamically provisioned Persi
 
 No. Jiva and cStor volumes are exposed via block storage using iSCSI. Currently only RWO is supported.
 
+## Warning messages during launching PVC
+
+If following warning messages is seen during launching an application, then this messages can be ignored. This messages are seen only during the initial launch of the application pod and is it getting cleared on the next attempt.
+
+```
+  Type     Reason                  Age                 From                     Message
+  ----     ------                  ----                ----                     -------
+  Warning  FailedScheduling        17m (x13 over 18m)  default-scheduler        pod has unbound immediate PersistentVolumeClaims (repeated 3 times)
+  Normal   Scheduled               17m                 default-scheduler        Successfully assigned default/percona-c96f89bd5-mg84d to md-node4
+  Normal   SuccessfulAttachVolume  17m                 attachdetach-controller  AttachVolume.Attach succeeded for volume "default-demo-vol1-claim-182762788"
+  Warning  FailedMount             84s (x9 over 16m)   kubelet, md-node4        MountVolume.WaitForAttach failed for volume "default-demo-vol1-claim-182762788" : failed to get any path for iscsi disk, last err seen:
+iscsi: failed to sendtargets to portal 10.111.29.153:3260 output: iscsiadm: connect to 10.111.29.153 timed out
+iscsiadm: connect to 10.111.29.153 timed out
+iscsiadm: connect to 10.111.29.153 timed out
+iscsiadm: connect to 10.111.29.153 timed out
+iscsiadm: connect to 10.111.29.153 timed out
+iscsiadm: connect to 10.111.29.153 timed out
+iscsiadm: connection login retries (reopen_max) 5 exceeded
+iscsiadm: No portals found
+, err exit status 21
+```
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
