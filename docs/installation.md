@@ -10,8 +10,9 @@ OpenEBS is tested on various platforms. Refer to the platform versions and assoc
 
 On an existing Kubernetes cluster, as a cluster administrator, you can install OpenEBS in the following two ways.
 
-1. Using (stable/OpenEBS) [helm charts](/docs/next/installation.html#install-openebs-using-helm-charts)
-2. Using OpenEBS operator through [kubectl](/docs/next/installation.html#install-openebs-using-kubectl)  
+              1. Using (stable/OpenEBS) [helm charts](/docs/next/installation.html#install-openebs-using-helm-charts)
+
+              2. Using OpenEBS operator through [kubectl](/docs/next/installation.html#install-openebs-using-kubectl)  
 
 **Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS operator/kubectl](/docs/next/installation.html#install-openebs-using-kubectl) and [OpenEBS helm Charts](/docs/next/installation.html#install-openebs-using-openebs-helm-charts) .The steps for both methods are explained below.
 
@@ -35,7 +36,7 @@ You can install OpenEBS using helm charts in two ways.
 
 **Setup Helm** 
 
-You should have [configured helm](https://docs.helm.sh/using_helm/#from-script) on your Kubernetes cluster as a prerequisite. 
+You should have the [configured helm](https://docs.helm.sh/using_helm/#from-script) on your Kubernetes cluster as a prerequisite. 
 
 **Setup RBAC for Tiller before Installing OpenEBS Chart**
 
@@ -47,9 +48,9 @@ kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"sp
 
 ### Install OpenEBS using OpenEBS Helm Charts
 
-You have now set up helm and RBAC by following above [step](/docs/next/installation.html#setup-helm-rbac). Next,You should clone the latest OpenEBS repository. If you have cloned OpenEBS repository already,very that it is updated. 
+You have now set up helm and RBAC by following above [step](/docs/next/installation.html#setup-helm-rbac). Next,You should clone the latest OpenEBS repository. If you have cloned OpenEBS repository already,then it is updated. 
 
-Latest OpenEBS repo can cloned and latest version can be packaged using following commands.
+Latest OpenEBS repo can be cloned and latest version can be packaged using following commands.
 
 ```
 git clone https://github.com/openebs/openebs.git
@@ -65,7 +66,7 @@ mv ../openebs-*.tgz ./docs
 helm repo index docs --url https://openebs.github.io/charts
 ```
 
-Add OpenEBS charts and update it using following command
+Add OpenEBS charts and update it using the following command
 
 ```
 helm repo add openebs-charts https://openebs.github.io/charts/
@@ -78,7 +79,7 @@ Now you are ready to install OpenEBS using helm using following command. OpenEBS
 helm install openebs-charts/openebs
 ```
 
-OpenEBS control plane pods are now created.CAS Template,default Storage Pool and default Storage Classes are created after executing the above command. Now select your storage engine to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
+OpenEBS control plane pods are now created .CAS Template,default Storage Pool and default Storage Classes are created after executing the above command. Now select your storage engine to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
 
 ### Install OpenEBS using Stable Helm Charts
 
@@ -152,7 +153,7 @@ You can install OpenEBS cluster by running the following command.
 kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 ```
 
-OpenEBS control plane pods are created under “**openebs**” namespace. CAS Template,default Storage Pool and default Storage Classes are created after executing the above command.Now select your storage to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
+OpenEBS control plane pods are created under “**openebs**” namespace .CAS Template,default Storage Pool and default Storage Classes are created after executing the above command . Now select your storage to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
 
 ## Select Your Storage Engine
 
