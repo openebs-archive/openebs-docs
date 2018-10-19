@@ -13,13 +13,13 @@ On an existing Kubernetes cluster, as a cluster administrator, you can install O
 1. Using (stable/OpenEBS) [helm charts](/docs/next/installation.html#install-openebs-using-helm-charts)
 2. Using OpenEBS operator through [kubectl](/docs/next/installation.html#install-openebs-using-kubectl)  
 
-**Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS operator/kubectl](/docs/next/installation.html#install-openebs-using-kubectl) and [OpenEBS helm Charts](/docs/next/installation.html#install-openebs-using-openebs-helm-charts) .The steps for both methods are explained below.
+**Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS operator/kubectl](/docs/next/installation.html#install-openebs-using-kubectl) and [OpenEBS helm Charts](/docs/next/installation.html#install-openebs-using-openebs-helm-charts). The steps for both methods are explained below.
 
 <a name="helm"></a>
 
 ## Install OpenEBS using Helm Charts
 
-![Installing OpenEBS using helm ](/docs/assets/helm.png)
+![Installing OpenEBS using helm](/docs/assets/helm.png)
 
 You can install OpenEBS using helm charts in two ways.
 
@@ -29,7 +29,7 @@ You can install OpenEBS using helm charts in two ways.
 
 2. Using [OpenEBS Helm Charts](/docs/next/installation.html#install-openebs-using-openebs-helm-charts)
 
-   This will help to install OpenBES using OpenEBS helm charts
+   This will help to install OpenEBS using OpenEBS helm charts
 
 ### Setup Helm & RBAC
 
@@ -47,7 +47,7 @@ kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"sp
 
 ### Install OpenEBS using OpenEBS Helm Charts
 
-You have now set up helm and RBAC by following above [step](/docs/next/installation.html#setup-helm-rbac). Next,You should clone the latest OpenEBS repository. If you have cloned OpenEBS repository already,very that it is updated. 
+You have now set up helm and RBAC by following above [step](/docs/next/installation.html#setup-helm-rbac). Next,You should clone the latest OpenEBS repository. If you have cloned OpenEBS repository already, verify that it is updated. 
 
 Latest OpenEBS repo can cloned and latest version can be packaged using following commands.
 
@@ -56,7 +56,7 @@ git clone https://github.com/openebs/openebs.git
 helm package openebs/k8s/charts/openebs
 ```
 
-This will create a *tgz* file.This file will be used in following execution.Update new OpenEBS chart using following commands.
+This will create a *tgz* file.This file will be used in following execution. Update new OpenEBS chart using following commands.
 
 ```
 git clone https://github.com/openebs/charts.git
@@ -78,7 +78,7 @@ Now you are ready to install OpenEBS using helm using following command. OpenEBS
 helm install openebs-charts/openebs
 ```
 
-OpenEBS control plane pods are now created.CAS Template,default Storage Pool and default Storage Classes are created after executing the above command. Now select your storage engine to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
+OpenEBS control plane pods are now created. CAS Template, default Storage Pool and default Storage Classes are created after executing the above command. Now select your storage engine to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
 
 ### Install OpenEBS using Stable Helm Charts
 
@@ -152,7 +152,7 @@ You can install OpenEBS cluster by running the following command.
 kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 ```
 
-OpenEBS control plane pods are created under “**openebs**” namespace. CAS Template,default Storage Pool and default Storage Classes are created after executing the above command.Now select your storage to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
+OpenEBS control plane pods are created under “**openebs**” namespace. CAS Template, default Storage Pool and default Storage Classes are created after executing the above command. Now select your storage to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
 
 ## Select Your Storage Engine
 
@@ -176,12 +176,15 @@ Once you complete provisioning the volumes, you can run the stateful application
 
 
 <script>
-   (function(h,o,t,j,a,r){
-       h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-       h._hjSettings={hjid:785693,hjsv:6};
-       a=o.getElementsByTagName('head')[0];
-       r=o.createElement('script');r.async=1;
-       r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+   (function(h,o,t,j,a,r) {
+       h.hj = h.hj || function() { 
+         (h.hj.q = h.hj.q || []).push(arguments)
+       };
+       h._hjSettings = {hjid:785693, hjsv:6};
+       a = o.getElementsByTagName('head')[0];
+       r = o.createElement('script');
+       r.async=1;
+       r.src = t + h._hjSettings.hjid + j+h._hjSettings.hjsv;
        a.appendChild(r);
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
