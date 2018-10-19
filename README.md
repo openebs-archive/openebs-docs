@@ -40,7 +40,7 @@ cd openebs-docs
 ```
 cd openebs-docs/website
 
-openebs-docs/website$ npm start
+npm start
 ```
 Above step will start server on the localhost:3000
 
