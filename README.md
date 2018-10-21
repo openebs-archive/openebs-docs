@@ -9,6 +9,7 @@ More on the Docusaurus can be found here: https://docusaurus.io/docs/en/installa
 ### Install nodejs
 
 ```
+sudo apt-get install nodejs
 sudo apt-get install python-software-properties
 curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 
