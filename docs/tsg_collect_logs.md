@@ -8,9 +8,9 @@ sidebar_label: Collecting Logs
 
 
 
-### Overview of OpenEBS Logger 
+### Overview of OpenEBS Logger
 
-Logger is a Kubernetes job which can be run on a cluster to extract pod logs and cluster information. It helps in troubleshoot/debugging activities. Logger runs the logger container *openebs/logger* and it is recommended to run for a specific duration to capture logs while attempting to reproduce issues.
+Logger is a Kubernetes job which can be run on a cluster to extract pod logs and cluster information. It helps in troubleshooting/debugging activities. Logger runs the logger container *openebs/logger* and it is recommended to run for a specific duration to capture logs while attempting to reproduce issues.
 
 ### Benefits
 
@@ -38,7 +38,7 @@ Logger requires the *kubeconfig* file mounted as a configmap (passed to stern bi
 
 The following procedure helps you run Logger.
 
-1. In the logger job's command, edit the logging duration (-d) and pod regex (-r) to specify which pods' logs should be captured and for how long. 
+1. In the logger job's command, edit the logging duration (-d) and pod regex (-r) to specify which pods' logs should be captured and for how long.
 
    For example, in the  `./logger.sh -d 5 -r maya,openebs,pvc;` command, the logs for pods starting with literals "maya", "openebs" and "pvc" are captured for a period of 5 minutes.
 
@@ -50,7 +50,7 @@ The following procedure helps you run Logger.
 
 4. The logs thus collected are placed in a logbundle (tarball) in */mnt* directory of the node in which the debug pod was scheduled.
 
-5. Logs will be available in the node in which the debug pod/logger is scheduled when you run  a `kubectl get pod -o wide` command.
+5. Logs will be available in the node in which the debug pod/logger is scheduled when you run a `kubectl get pod -o wide` command.
 
 6. Attach this log support bundle while raising issues on the OpenEBS repository.
 
@@ -63,12 +63,12 @@ The following procedure helps you run Logger.
 
 ```
    (function(h,o,t,j,a,r){
-   		h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-   		h._hjSettings={hjid:785693,hjsv:6};
-   		a=o.getElementsByTagName('head')[0];
-   		r=o.createElement('script');r.async=1;
-   		r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-   		a.appendChild(r);
+           h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+           h._hjSettings={hjid:785693,hjsv:6};
+           a=o.getElementsByTagName('head')[0];
+           r=o.createElement('script');r.async=1;
+           r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+           a.appendChild(r);
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 ```
 

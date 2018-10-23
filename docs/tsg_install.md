@@ -21,9 +21,9 @@ pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-rep-578b5bcc6b-5758m   1/1       Runnin
 pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-rep-578b5bcc6b-zkhn8   1/1       Running             0          32m
 ```
 
-The AKS cluster runs ubuntu 16.04 LTS with the kubelet running in a container (debian-jessie 8). The kubelet logs show the absence of the iSCSI initiator. Hence, the volume is not attached to the node. Configuring kubelet to run with iSCSI utils should fix this issue. 
+The AKS cluster runs ubuntu 16.04 LTS with the kubelet running in a container (debian-jessie 8). The kubelet logs show the absence of the iSCSI initiator. Hence, the volume is not attached to the node. Configuring kubelet to run with iSCSI utils should fix this issue.
 
-This steps are provided in pre-requisite section, see [here](/docs/next/prerequisites.html#azure-cloud) 
+These steps are provided in the pre-requisite section, see [here](/docs/next/prerequisites.html#azure-cloud)
 
 For more information, see [this](https://github.com/openebs/openebs/issues/1335).
 
@@ -60,7 +60,7 @@ iscsiadm version 2.0-874
 
 To resolve this issue, do not install `open-iscsi / iscsi-initiator-utils` on the host nodes when using the Rancher Container Engine (RKE).
 
-## How can I select disks for creating storage pool using cStor?
+## How can I select disks for creating a storage pool using cStor?
 
 With the latest OpenEBS 7.0 release, the following disk types/paths are excluded by NDM which identifies the disks to create cStor pools on nodes.
 ```
@@ -79,7 +79,7 @@ Example:
           "include":"",
           "exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"
         }
-```
+
 ## Why does OpenEBS provisioner pod restart continuously?
 
 The following output displays the pod status of all namespaces in which the OpenEBS provisioner is restarting continuously.
@@ -104,7 +104,7 @@ openebs       openebs-provisioner-776846bbff-rqfzr         0/1       CrashLoopBa
 openebs       openebs-snapshot-operator-5b5f97dd7f-np79k   0/2       CrashLoopBackOff   32         1h        192.168.167.130   node
 ```
 
-###Troubleshotting
+###Troubleshooting
 Perform the following steps to verify if the issue is due to a misconfiguration while installing the network component.
 
   1. Check if your network related pods are running fine. 
@@ -112,18 +112,44 @@ Perform the following steps to verify if the issue is due to a misconfiguration 
   3. Use the latest version of network provider images.
   4. Try other network components such as Calico, kube-router etc. if you are not using any of these.
   
+=======
+
+## How to Uninstall OpenEBS Version 0.7?
+
+The recommended steps to uninstall are as follows:
+ - Delete all the OpenEBS PVCs that were created.
+ - Delete all the SPCs (in case of cStor).
+ - Ensure that no volume or pool pods are pending in terminating state by using `kubectl get pods -n <openebs namespace>` command.
+ - Delete OpenEBS using the `helm purge or kubectl delete` command.
+
+Uninstalling OpenEBS does not automatically delete the CRDs that were created. If you would like to completely remove the CRDs and the associated objects, run the following commands:
+
+```
+kubectl delete crd castemplates.openebs.io
+kubectl delete crd cstorpools.openebs.io
+kubectl delete crd cstorvolumereplicas.openebs.io
+kubectl delete crd cstorvolumes.openebs.io
+kubectl delete crd runtasks.openebs.io
+kubectl delete crd storagepoolclaims.openebs.io
+kubectl delete crd storagepools.openebs.io
+kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
+kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
+```
+ 
+
+
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
 
 
 ```
    (function(h,o,t,j,a,r){
-   		h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-   		h._hjSettings={hjid:785693,hjsv:6};
-   		a=o.getElementsByTagName('head')[0];
-   		r=o.createElement('script');r.async=1;
-   		r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-   		a.appendChild(r);
+           h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+           h._hjSettings={hjid:785693,hjsv:6};
+           a=o.getElementsByTagName('head')[0];
+           r=o.createElement('script');r.async=1;
+           r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+           a.appendChild(r);
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 ```
 
