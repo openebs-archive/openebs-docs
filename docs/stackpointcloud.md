@@ -32,22 +32,22 @@ A user will be created as seen in the following image. Note down the user's **Ac
 
 Now, the user account is created in AWS and you can go to **stackpoint.io** for creating cluster and installing OpenEBS.
 
-**Note:** If you have already created a k8s cluster using stackpoint, you can [Import OpenEBS Helm Charts](#ImportHelmCharts). 
+**Note:** If you have already created a k8s cluster using stackpoint, you can [Import OpenEBS Helm Charts](#ImportHelmCharts).
 
 ### **Configure K8s Cluster**
 
 
-Go to **Your Clusters** section in **stackpoint.io** and click **Add a Cluster now**. Select **AWS** and the Cloud provider. Go to next page. 
+Go to **Your Clusters** section in **stackpoint.io** and click **Add a Cluster now**. Select **AWS** and the Cloud provider. Go to next page.
 
 ![image](/docs/assets/platform_stackpoint.png)
 
-Add your AWS credentials such as **Access Key ID** and **Secret Access Key** and click **Create**. You can then edit your Node configuration details. The recommended configuration is One Master Node and 3 Worker Nodes. 
+Add your AWS credentials such as **Access Key ID** and **Secret Access Key** and click **Create**. You can then edit your Node configuration details. The recommended configuration is One Master Node and 3 Worker Nodes.
 
 
 ![img](/docs/assets/provider_stackpoint.png)
 
 
-Click **Distribution** and choose **Ubuntu16.04 LTS**. 
+Click **Distribution** and choose **Ubuntu16.04 LTS**.
 
 
 ![image](/docs/assets/ubuntu_stackpoint.png)
@@ -55,7 +55,7 @@ Click **Distribution** and choose **Ubuntu16.04 LTS**.
 
 Click on **Submit** to create your cluster. This should take around 5–8 minutes to bring up one Master and three Worker Kubernetes Cluster.
 
- 
+
 
 ### **Import OpenEBS Helm Charts** <a name="ImportHelmCharts"></a>
 
@@ -129,7 +129,7 @@ The above command deploys storage class templates. You can run your workloads wi
 
 To confirm, click **K8s Dashboard.** This will bring up your Kubernetes Dashboard UI in a new window. You should be able to find the **openebs-standard** option under **StorageClasses**.
 
- 
+
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->

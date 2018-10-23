@@ -9,20 +9,20 @@ sidebar_label: CAS Engines
 
 ## Overview of a Storage Engine
 
-OpenEBS follows CAS architecture, where in each storage volume is provided with it's own storage controller and replica pods. A storage engine refers to the software functionality that is associated with a storage volume. A storage engine usually has one controller pod and multiple replication pods. Storage engines can be hardened to optimize a given workload for either with a feature set or for performance. 
+OpenEBS follows CAS architecture, where, in each storage volume is provided with its own storage controller and replica pods. A storage engine refers to the software functionality that is associated with a storage volume. A storage engine usually has one controller pod and multiple replication pods. Storage engines can be hardened to optimize a given workload for either with a feature set or for performance.
 
-Operators or administrators typically choose a storage engine with a specific software version and build optimized volume templates that are fine tuned with type of underlying disks, resiliency, number of replicas, set of nodes participating in the Kubernetes cluster. Users can then choose an optimal volume template at the time of volume provisioning, thus providing the maximum flexibility in running the optimum software and storage combination for all the storage volumes on a given Kubernetes cluster.
+Operators or administrators typically choose a storage engine with a specific software version and build optimized volume templates that are fine-tuned with the type of underlying disks, resiliency, number of replicas, set of nodes participating in the Kubernetes cluster. Users can then choose an optimal volume template at the time of volume provisioning, thus providing the maximum flexibility in running the optimum software and storage combination for all the storage volumes on a given Kubernetes cluster.
 
 ## Types of Storage Engines
 
-OpenEBS provides two types of storage engines. 
+OpenEBS provides two types of storage engines.
 
 1. Jiva (Recommended engine and reliable)
-2. cStor 
+2. cStor
 
 ### Jiva
 
-Jiva has a single container image for both controller and replica. Docker image is available at https://hub.docker.com/r/openebs/jiva/ .  Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs entirely in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation. It supports  thin provisioning, snapshotting, cloning of storage volumes.
+Jiva has a single container image for both controller and replica. Docker image is available at https://hub.docker.com/r/openebs/jiva/ .  Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs entirely in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation. It supports thin provisioning, snapshotting, cloning of storage volumes.
 
 ![Jiva storage engine of OpenEBS](/docs/assets/jiva.png)
 
@@ -34,7 +34,7 @@ The following content is directly taken from Rancher's LongHorn [announcement do
 
 ------
 
-Jiva replicas are built using Linux sparse files, which support thin provisioning. Jiva does not maintain additional metadata to indicate which blocks are used. The block size is 4K. When you take a snapshot, you create a differencing disk. As the number of snapshots grows, the differencing disk chain could get quite long. To improve read performance, Jiva therefore maintains a read index that records which differencing disk holds valid data for each 4K block. In the following figure, the volume has eight blocks. The read index has eight entries and is filled up lazily as read operation takes place. A write operation resets the read index, causing it to point to the live data. ![Longhorn read index](http://cdn.rancher.com/wp-content/uploads/2017/04/14095610/Longhorn-blog-3.png)
+Jiva replicas are built using Linux sparse files, which support thin provisioning. Jiva does not maintain additional metadata to indicate which blocks are used. The block size is 4K. When you take a snapshot, you create a differencing disk. As the number of snapshots grows, the differencing disk chain could get quite long. To improve read performance, Jiva, therefore, maintains a read index that records which differencing disk holds valid data for each 4K block. In the following figure, the volume has eight blocks. The read index has eight entries and is filled up lazily as read operation takes place. A write operation resets the read index, causing it to point to the live data. ![Longhorn read index](http://cdn.rancher.com/wp-content/uploads/2017/04/14095610/Longhorn-blog-3.png)
 
 
 
@@ -60,17 +60,17 @@ It is not very efficient to rebuild replicas from scratch. We can improve rebuil
 
 ### cStor
 
-cStor storage engine has separate container image files for storage controller and storage replica. Docker images for controller is at https://hub.docker.com/r/openebs/cstor-istgt/ and for replica is at https://hub.docker.com/r/openebs/cstor-pool/. cStor is a high performing storage engine built with proven building blocks of storage components. Access protocol iSCSI stack is a linux ported  BSD based Multi-threaded iSCSI protocol stack originally developed at CloudByte. This iSCSI is field tested at thousands of installations for many years". The storage block layer is the DMU layer of user space ZFS inherited from the proven OpenSolaris stack. With these proven building blocks, cStor engine is highly reliable for storing and protecting enterprise data. 
+cStor storage engine has separate container image files for storage controller and storage replica. Docker images for controller is at https://hub.docker.com/r/openebs/cstor-istgt/ and for replica is at https://hub.docker.com/r/openebs/cstor-pool/. cStor is a high performing storage engine built with proven building blocks of storage components. Access protocol iSCSI stack is a linux ported  BSD based Multi-threaded iSCSI protocol stack originally developed at CloudByte. This iSCSI is field tested at thousands of installations for many years". The storage block layer is the DMU layer of user space ZFS inherited from the proven OpenSolaris stack. With these proven building blocks, cStor engine is highly reliable for storing and protecting enterprise data.
 
 ![cStor storage engine of OpenEBS](/docs/assets/cStor.png)
 
 ## Choosing a Storage Engine
 
-Developer does not directly choose a storage engine, but chooses a pre-defined storage class. Operator or Adminstrator constructs a storage class that refers to a CAS template containing the type of storage engine. 
+Developer does not directly choose a storage engine, but chooses a pre-defined storage class. Operator or Administrator constructs a storage class that refers to a CAS template containing the type of storage engine.
 
 ![Choosing a storage engine](/docs/assets/cas-template.png)
 
-As shown above, storage engine details are to be decided during the creation of a CAS template. 
+As shown above, storage engine details are to be decided during the creation of a CAS template.
 
 ## Overview of CAS Template
 
@@ -111,31 +111,31 @@ spec:  
   - name: Monitoring    
     enabled: "true"  
 run:    
-  tasks:    ... 
+  tasks:    ...
 ```
 
 ## Use Case
 
 ### Persistent Storage Requirements
 
-Alice and Joe are developers of two different applications in a fintech enterprise, where the company is moving their DevOps from a legacy model to micro services model with Kubernetes as the orchestrating engine. Both the applications are stateful in nature and need persistent storage, but the persistent storage needs of these two applications differ vastly. 
+Alice and Joe are developers of two different applications in a fintech enterprise, where the company is moving their DevOps from a legacy model to micro services model with Kubernetes as the orchestrating engine. Both the applications are stateful in nature and need persistent storage, but the persistent storage needs of these two applications differ vastly.
 
 - Alice's application uses MongoDB and has high capacity and performance requirements. For testing the application during development, Alice wishes to test the changes with real data in the database and also expects the data is stored in a volume with enterprise grade reliability.
-- Joe's application uses MySQL to store simple configuration data, the size of which is expected to be in the order of few Giga Bytes. The performance expectations on the persistent volume of this application is moderate. 
+- Joe's application uses MySQL to store simple configuration data, the size of which is expected to be in the order of few Giga Bytes. The performance expectations on the persistent volume of this application is moderate.
 
-Both of them expect their DevOps administrator to provide a suitable storage class to choose from and do not want to learn indepth details about how persistent storage volumes are being provisioned, or how they are managed. 
+Both of them expect their DevOps administrator to provide a suitable storage class to choose from and do not want to learn in-depth details about how persistent storage volumes are being provisioned, or how they are managed.
 
-Eve is one of the DevOps admins in the company. Eve is reponsible for designing and managing the storage infrastructure needs. 
+Eve is one of the DevOps admins in the company. Eve is responsible for designing and managing the storage infrastructure needs.
 
 ### Infrastructure Setup
 
 DevOps team manages a single Kubernetes cluster, which is currently scaled to 32 nodes. They have planned to provide different classes of persistent storage tiers to their developers.
 
 - SAS disks based storage for moderate performance needs
-- SSD based storage for high performance needs
+- SSD based storage for high-performance needs
 - In each of these tiers, they decided to offer varying degrees of resiliency by varying the number of copies of data
 
-They have provisioned 12 SAS disks of 1TB each in each of the nodes from 1 to 4 and 12 SSDs of 1TB each in each of the nodes from 11 to 19. 
+They have provisioned 12 SAS disks of 1TB each in each of the nodes from 1 to 4 and 12 SSDs of 1TB each in each of the nodes from 11 to 19.
 
 ### Creating Pools
 
@@ -149,7 +149,7 @@ Eve planned the storage pools in the following way.
 | SSDPool2 | N12, N13, N14          | 3                    | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
 | SSDPool3 | N15, N16, N17,N18, N19 | 5                    | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
 
-OpenEBS supports pool creation and management through the use of Storage Pools (SP) and Storage Pool Claims (SPC). The SPC YAML manifests are maintained by operators for versioning. 
+OpenEBS supports pool creation and management through the use of Storage Pools (SP) and Storage Pool Claims (SPC). The SPC YAML manifests are maintained by operators for versioning.
 
 ### Creating CAS Templates
 
@@ -158,9 +158,9 @@ After pools are created, next step for Eve is to create CAS templates in such a 
 - SASPool1, and SASPool2 are created using JIVA storage engine
 - SSDPool1, SSDPool2 and SSDPool3 are created using cStor storage engine
 
-Apart from selecting storage engines appropriately, Eve has two challenges related to Kubernetes scheduling. 
+Apart from selecting storage engines appropriately, Eve has two challenges related to Kubernetes scheduling.
 
-1. **Replica pod and node affinity challenge:** Ensure that the volume pods meant to be associated with a given pool are scheduled by Kubernetes only on the nodes having those pools. For example volume pods of SASPool2 are scheduled on Nodes N2, N3 and N4 and not on any other nodes. This is achieved by appropriate volume pods taint toleration configuration in the CAS templates and on the nodes.
+1. **Replica pod and node affinity challenge:** Ensure that the volume pods meant to be associated with a given pool are scheduled by Kubernetes only on the nodes having those pools. For example, volume pods of SASPool2 are scheduled on Nodes N2, N3 and N4 and not on any other nodes. This is achieved by appropriate volume pods taint toleration configuration in the CAS templates and on the nodes.
 2. **Controller pod and application pod affinity challenge:** Ensure that the OpenEBS controller pod (either Jiva or cStor) is scheduled as much as possible on the same node as the application pod (in this use case example, MongoDB or MySQL). This is achieved by configuring node affinity in the volume pods in the CAS templates.
 
 Eve creates five new CAS template files and creates corresponding Kubernetes CRs. Two example template YAML files are shown below.
@@ -221,7 +221,7 @@ spec:  
         values:
         - some-node-label-value
 run:    
-  tasks:    ... 
+  tasks:    ...
 ```
 
 **CAS template 2 (CAS-CR-SSDPool2.yaml)**
@@ -280,7 +280,7 @@ spec:  
         values:
         - some-node-label-value
 run:    
-  tasks:    ... 
+  tasks:    ...
 ```
 
 Eve creates 6 CRs with the above manifests.
@@ -347,7 +347,7 @@ spec:  
       storage: 50Gi
 ```
 
-Initial work for the DevOps operators is shown in the above use case example. Developers get started with the volume provisioning. Day2 operations related to persistent storage typlically include taking snapshot of data, restoration from the snapshots, monitoring the health of pools and stateful applications, data migration. [MayaOnline](https://www.mayaonline.io) is useful for many of these day2 storage operations.
+Initial work for the DevOps operators is shown in the above use case example. Developers get started with the volume provisioning. Day2 operations related to persistent storage typically include taking a snapshot of data, restoration from the snapshots, monitoring the health of pools and stateful applications, data migration. [MayaOnline](https://www.mayaonline.io) is useful for many of these day2 storage operations.
 
 
 ### See Also:

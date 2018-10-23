@@ -21,9 +21,9 @@ pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-rep-578b5bcc6b-5758m   1/1       Runnin
 pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-rep-578b5bcc6b-zkhn8   1/1       Running             0          32m
 ```
 
-The AKS cluster runs ubuntu 16.04 LTS with the kubelet running in a container (debian-jessie 8). The kubelet logs show the absence of the iSCSI initiator. Hence, the volume is not attached to the node. Configuring kubelet to run with iSCSI utils should fix this issue. 
+The AKS cluster runs ubuntu 16.04 LTS with the kubelet running in a container (debian-jessie 8). The kubelet logs show the absence of the iSCSI initiator. Hence, the volume is not attached to the node. Configuring kubelet to run with iSCSI utils should fix this issue.
 
-This steps are provided in pre-requisite section, see [here](/docs/next/prerequisites.html#azure-cloud) 
+These steps are provided in the pre-requisite section, see [here](/docs/next/prerequisites.html#azure-cloud)
 
 For more information, see [this](https://github.com/openebs/openebs/issues/1335).
 
@@ -60,7 +60,7 @@ iscsiadm version 2.0-874
 
 To resolve this issue, do not install `open-iscsi / iscsi-initiator-utils` on the host nodes when using the Rancher Container Engine (RKE).
 
-## How can I select disks for creating storage pool using cStor?
+## How can I select disks for creating a storage pool using cStor?
 
 With the latest OpenEBS 7.0 release, the following disk types/paths are excluded by NDM which identifies the disks to create cStor pools on nodes.
 ```
@@ -87,12 +87,12 @@ Example:
 
 ```
    (function(h,o,t,j,a,r){
-   		h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-   		h._hjSettings={hjid:785693,hjsv:6};
-   		a=o.getElementsByTagName('head')[0];
-   		r=o.createElement('script');r.async=1;
-   		r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-   		a.appendChild(r);
+           h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+           h._hjSettings={hjid:785693,hjsv:6};
+           a=o.getElementsByTagName('head')[0];
+           r=o.createElement('script');r.async=1;
+           r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+           a.appendChild(r);
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 ```
 
