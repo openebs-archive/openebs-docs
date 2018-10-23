@@ -108,7 +108,7 @@ openebs       openebs-snapshot-operator-5b5f97dd7f-np79k   0/2       CrashLoopBa
 Do following to verify this could be due to some misconfiguration in network component installation.
 
   1. Check your network related pods are running fine. 
-  2. Check OpenEBS provisioner HTTPS requests are not reaching the apiserver
+  2. Check OpenEBS provisioner HTTPS requests are reaching on the apiserver
   3. Use latest version of network provider images.
   4. Try other netowrk components such as Calico,kube-router etc. if you are not using any of these ones.
   
