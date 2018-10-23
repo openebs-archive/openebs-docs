@@ -80,7 +80,38 @@ Example:
           "exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"
         }
 ```
+## Why OpenEBS provisioner pod is continuously restaring ?
 
+Following will be the output of pods status of all namespaces in which OpenEBS provisioner will continously restarting.
+
+```
+NAMESPACE     NAME                                         READY     STATUS             RESTARTS   AGE       IP                NODE
+default       percona                                      0/1       Pending            0          36m       <none>            <none>
+kube-system   calico-etcd-tl4td                            1/1       Running            0          1h        192.168.56.65     master
+kube-system   calico-kube-controllers-84fd4db7cd-jz9wt     1/1       Running            0          1h        192.168.56.65     master
+kube-system   calico-node-5rqdl                            2/2       Running            0          1h        192.168.56.65     master
+kube-system   calico-node-zt95x                            2/2       Running            0          1h        192.168.56.66     node
+kube-system   coredns-78fcdf6894-2plxb                     1/1       Running            0          1h        192.168.219.65    master
+kube-system   coredns-78fcdf6894-gcjj7                     1/1       Running            0          1h        192.168.219.66    master
+kube-system   etcd-master                                  1/1       Running            0          1h        192.168.56.65     master
+kube-system   kube-apiserver-master                        1/1       Running            0          1h        192.168.56.65     master
+kube-system   kube-controller-manager-master               1/1       Running            0          1h        192.168.56.65     master
+kube-system   kube-proxy-9t98s                             1/1       Running            0          1h        192.168.56.65     master
+kube-system   kube-proxy-mwk9f                             1/1       Running            0          1h        192.168.56.66     node
+kube-system   kube-scheduler-master                        1/1       Running            0          1h        192.168.56.65     master
+openebs       maya-apiserver-5598cf68ff-tndgm              1/1       Running            0          1h        192.168.167.131   node
+openebs       openebs-provisioner-776846bbff-rqfzr         0/1       CrashLoopBackOff   16         1h        192.168.167.129   node
+openebs       openebs-snapshot-operator-5b5f97dd7f-np79k   0/2       CrashLoopBackOff   32         1h        192.168.167.130   node
+```
+
+###Troubleshotting
+Do following to verify this could be due to some misconfiguration in network component installation.
+
+  1. Check your network related pods are running fine. 
+  2. Check OpenEBS provisioner HTTPS requests are not reaching the apiserver
+  3. Use latest version of network provider images.
+  4. Try other netowrk components such as Calico,kube-router etc. if you are not using any of these ones.
+  
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
 
