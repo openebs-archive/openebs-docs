@@ -212,7 +212,7 @@ You can either launch the source application or a recovery application that now 
 kubectl apply -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/busybox-recover.yaml
 ```
 
-You can also exec into this application to check the content, retrieve the files, or use the application to check the content. 
+You can also execute into this application to check the content, retrieve the files, or use the application to check the content. 
 
 ## Jiva repliac pods consuming high memory utilisation and warnings in the logs
 
