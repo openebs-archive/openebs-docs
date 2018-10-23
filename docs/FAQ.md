@@ -135,7 +135,7 @@ No. Jiva and cStor volumes are exposed via block storage using iSCSI. Currently 
 
 ## Why ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ are showing in different size?
 
-The ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ will start showing different sizes when there are replica node restarts and internal snapshots are created for syncing replicas.
+The ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ will start showing different sizes when there are replica node restarts and internal snapshots are created for synchronizing replicas.
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
