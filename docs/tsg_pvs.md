@@ -72,14 +72,14 @@ This issue is due to failed application operations in the container. Typically t
 
   4. Un-mount the stale iscsi device mounts on the application node. Typically, these devices are mounted in the `/var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/<target-portal:iqn>-lun-0`  path.
   
-```
-Example:
-umount /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.39.241.26:
-3260-iqn.2016-09.com.openebs.jiva:mongo-jiva-mongo-persistent-storage-mongo-0-3481266901-lun-0
+ ```
+ Example:
+ umount /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.39.241.26:
+ 3260-iqn.2016-09.com.openebs.jiva:mongo-jiva-mongo-persistent-storage-mongo-0-3481266901-lun-0
 
-umount /var/lib/kubelet/pods/ae74da97-c852-11e8-a219-42010af000b6/volumes/kuber
-netes.io~iscsi/mongo-jiva-mongo-persistent-storage-mongo-0-3481266901
-```
+ umount /var/lib/kubelet/pods/ae74da97-c852-11e8-a219-42010af000b6/volumes/kuber
+ netes.io~iscsi/mongo-jiva-mongo-persistent-storage-mongo-0-3481266901
+ ```
 
   5. Identify whether the iSCSI session is re-established after failure. This can be verified using `iscsiadm -m session`, with the device mapping established using `iscsiadm -m session -P 3` and `fdisk -l`. **Note:** Sometimes, it has been observed that there are stale device nodes (scsi device names) present on the Kubernetes node. Unless the logs confirm that a re-login has occurred once the system issues were resolved, it is recommended to perform the following step after doing a purge/logout of the existing session using `iscsiadm -m node -T <iqn> -u`.
 
