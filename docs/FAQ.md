@@ -131,11 +131,11 @@ The default retention is the same used by K8s. For dynamically provisioned Persi
 
 ## Can I use the same PVC for multiple Pods?
 
-No. Jiva and cStor volumes are exposed via block storage using iSCSI. Currently only RWO is supported.
+Jiva and cStor volumes are not exposed via block storage using iSCSI. Currently only RWO is supported.
 
-## Warning messages during launching PVC
+## Warning Messages while Launching PVC
 
-If following warning messages is seen during launching an application, then this messages can be ignored. This messages are seen only during the initial launch of the application pod and is it getting cleared on the next attempt.
+If the following warning messages are displayed while launching an application, you can ignore these messages. These message are displayed only while launching an application pod initially and gets cleared on the subsequent attempt.
 
 ```
   Type     Reason                  Age                 From                     Message
