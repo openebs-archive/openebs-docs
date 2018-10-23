@@ -156,6 +156,10 @@ iscsiadm: No portals found
 ```
 
 
+## Why ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ are showing in different size?
+
+The ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ will start showing different sizes when there are replica node restarts and internal snapshots are created for synchronizing replicas.
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
