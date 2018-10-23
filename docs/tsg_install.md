@@ -81,6 +81,29 @@ Example:
         }
 ```
 
+## How to uninstall OpenEBS version 0.7?
+
+The recommended steps to uninstall are as follows:
+ - Delete all the OpenEBS PVCs that were created.
+ - Delete all the SPCs (in case of cStor).
+ - Ensure that no volume or pool pods are pending in terminating state `kubectl get pods -n <openebs namespace>`
+ - Delete the openebs either via `helm purge or kubectl delete`
+
+Uninstalling the OpenEBS doesn't automatically delete the CRDs that were created. If you would like to completely remove the CRDs and the associated objects, run the following commands:
+
+```
+kubectl delete crd castemplates.openebs.io
+kubectl delete crd cstorpools.openebs.io
+kubectl delete crd cstorvolumereplicas.openebs.io
+kubectl delete crd cstorvolumes.openebs.io
+kubectl delete crd runtasks.openebs.io
+kubectl delete crd storagepoolclaims.openebs.io
+kubectl delete crd storagepools.openebs.io
+kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
+kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
+```
+ 
+
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
 
