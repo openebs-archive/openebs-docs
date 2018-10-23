@@ -228,7 +228,7 @@ The above problem could be due to prometheus monitoring tool is trying to connec
 
 ### Workaround:
 
-Set the below annotation to false in all the replica pods 
+Set the following annotation to false in all the replica pods.
 ```
 prometheus.io/scrape:"false" 
 ```
