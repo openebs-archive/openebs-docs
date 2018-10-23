@@ -80,9 +80,9 @@ Example:
           "exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"
         }
 ```
-## Why OpenEBS provisioner pod is continuously restaring ?
+## Why does OpenEBS provisioner pod restart continuously?
 
-Following will be the output of pods status of all namespaces in which OpenEBS provisioner will continously restarting.
+The following output displays the pod status of all namespaces in which the OpenEBS provisioner is restarting continuously.
 
 ```
 NAMESPACE     NAME                                         READY     STATUS             RESTARTS   AGE       IP                NODE
@@ -105,12 +105,12 @@ openebs       openebs-snapshot-operator-5b5f97dd7f-np79k   0/2       CrashLoopBa
 ```
 
 ###Troubleshotting
-Do following to verify this could be due to some misconfiguration in network component installation.
+Perform the following steps to verify if the issue is due to a misconfiguration while installing the network component.
 
-  1. Check your network related pods are running fine. 
-  2. Check OpenEBS provisioner HTTPS requests are reaching on the apiserver
-  3. Use latest version of network provider images.
-  4. Try other netowrk components such as Calico,kube-router etc. if you are not using any of these ones.
+  1. Check if your network related pods are running fine. 
+  2. Check if OpenEBS provisioner HTTPS requests are reaching the apiserver
+  3. Use the latest version of network provider images.
+  4. Try other network components such as Calico, kube-router etc. if you are not using any of these.
   
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
