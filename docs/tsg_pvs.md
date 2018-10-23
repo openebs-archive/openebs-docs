@@ -214,9 +214,9 @@ kubectl apply -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-op
 
 You can also execute into this application to check the content, retrieve the files, or use the application to check the content. 
 
-## Jiva repliac pods consuming high memory utilisation and warnings in the logs
+## Jiva replica pods consume high memory utilisation and warnings in the logs
 
-Where OpenEBS older versions,Jiva replica pods are consuming high memory and showing following error messages in all replica pods happens in every minute 
+In OpenEBS older version,Jiva replica pods are consuming high memory and displays following error messages in all replica pods. This occurs every minute. 
 
 ```
 time="2018-07-20T15:39:56Z" level=info msg="New connection from: 10.32.3.18:39608"
