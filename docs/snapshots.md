@@ -63,7 +63,7 @@ snapshot-demo   48s
 
 ## Cloning and Restoring a Snapshot
 
-After creating a snapshot, you can restore it to a new PVC. For creating new PVC using this snapshot, it needs different *storageclass* to be used. There will be a default storage class called **openebs-snapshot-promoter** will create during the installation of *openebs-operator-0.7.0.yaml*.
+After creating a snapshot, you can restore it to a new PVC. For creating new PVC using this snapshot, it needs a different *storageclass* to be used. There will be a default storage class called **openebs-snapshot-promoter** will create during the installation of *openebs-operator-0.7.0.yaml*.
 
 So, this will create a PVC referencing to this default  *storageclass* for dynamically provisioning new PV.
 
@@ -90,7 +90,7 @@ You can have your own storage class defined or you can use default storageclass 
 wget https://raw.githubusercontent.com/openebs/external-storage/release/openebs/ci/snapshot/snapshot_claim.yaml
 ```
 
-You can edit this *snapshot_claim.yaml* with required name for new PVC. Once you have done with modification of the file, apply the file using the following command.
+You can edit this *snapshot_claim.yaml* with required name for new PVC. Once you are done with modification of the file, apply the file using the following command.
 
 ```
 kubectl apply -f snapshot_claim.yaml <namespace>
@@ -120,7 +120,7 @@ demo-snap-vol-claim   Bound     pvc-87a7b6b0-b67a-11e8-b7c2-42010a800213   5Gi  
 demo-vol1-claim       Bound     default-demo-vol1-claim-1246175738         5G         RWO                openebs-jiva-default        3h
 ```
 
-If you are running any application, you can mount the **demo-snap-vol-claim** PersistentVolumeClaim into a new application pod to get the contents at the point of snapshot has taken. While deploying the new application pod with this new restored PVC, you have to edit the application deployment yaml and mention the restored PersistentVolumeClaim name, volume name, and volume mount accordingly.  
+If you are running any application, you can mount the **demo-snap-vol-claim** PersistentVolumeClaim into a new application pod to get the contents at the point the snapshot was taken. While deploying the new application pod with this new restored PVC, you have to edit the application deployment yaml and mention the restored PersistentVolumeClaim name, volume name, and volume mount accordingly.  
 
 ## Deleting a Snapshot
 
