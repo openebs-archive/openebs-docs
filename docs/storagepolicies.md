@@ -30,7 +30,7 @@ OpenEBS supports several types of Storage Policies such as the following.
 
 ## Replica Count Policy
 
-You can specify the jiva replica count using the *value* for *ReplicaCount* property. In the following example, the jiva-replica-count is specified as 3. Hence, a three replicas are created.
+You can specify the jiva replica count using the *value* for *ReplicaCount* property. In the following example, the jiva-replica-count is specified as 3. Hence, three replicas are created.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -117,7 +117,7 @@ metadata:
 
 ```
 
-## Storage Class Policy 
+## Storage Class Policy
 
 You can specify a storage class policy where you can specify the capacity and file system type. By default, OpenEBS comes with ext4 file system. However, you can also use the xfs file system.
 
@@ -146,7 +146,7 @@ metadata:
 
 ## Volume Monitoring Image Policy
 
-You can specify the monitoring image policy for a particular volume using *value* for *VolumeMonitorImage* property. The following Kubernetes storage class sample uses the Volume Monitoring policy. By default, volume monitor is enabled. 
+You can specify the monitoring image policy for a particular volume using *value* for *VolumeMonitorImage* property. The following Kubernetes storage class sample uses the Volume Monitoring policy. By default, volume monitor is enabled.
 
 ```
 apiVersion: storage.k8s.io/v1
