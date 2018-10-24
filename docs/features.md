@@ -30,7 +30,7 @@ Containerization of storage software and dedicating such controller for each vol
 
 Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by using Kubernetes constructs. Using OpenEBS, nodes in the Kubernetes cluster can be horizontally scaled without worrying about managing persistent storage needs of stateful applications. The storage needs (capacity planning, performance planning, and volume managment) of a cluster can easily be automated using the volume and pool policies of OpenEBS. 
 
-## Kubernestes Integrated Snapshots and Clones
+## Kubernetes Integrated Snapshots and Clones
 
 OpenEBS implements the Kubernetes snapshot provisioner specification. Taking snapshots of a given volume and creating clones from a given snapshot are native to Kubernetes. 
 

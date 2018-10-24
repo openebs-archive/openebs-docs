@@ -1,5 +1,10 @@
 # OpenEBS-docs
 
+[![Open Issues](https://img.shields.io/github/issues/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/issues)
+[![Open Pull Requests](https://img.shields.io/github/issues-pr/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/pulls)
+[![Commit Activity (Year)](https://img.shields.io/github/commit-activity/y/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/commits)
+[![Contributors](https://img.shields.io/github/contributors/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/graphs/contributors)
+
 OpenEBS docs is the documentation repository for OpenEBS documentation. This is using Docusaurus as a documentation framework. It's easy to use and write documentation using Docusaurus, which uses markdown.
 More on the Docusaurus can be found here: https://docusaurus.io/docs/en/installation.html
 
@@ -40,7 +45,7 @@ cd openebs-docs
 ```
 cd openebs-docs/website
 
-openebs-docs/website$ npm start
+npm start
 ```
 Above step will start server on the localhost:3000
 

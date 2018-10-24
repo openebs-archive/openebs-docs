@@ -23,8 +23,8 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
    [Setup RBAC for helm tiller](/docs/next/installation.html#helm) and install the chart from Kubernetes stable and deploy the storage class templates.
 
    ```
-   helm install  --namespace openebs --name openebs  -f https://openebs.github.io/charts/helm-values-0.6.0.yaml stable/openebs
-   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml  
+   helm install  --namespace openebs --name openebs  -f https://openebs.github.io/charts/helm-values-0.7.0.yaml stable/openebs
+   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.7/k8s/openebs-storageclasses.yaml  
    ```
 
    For more details on installing OpenEBS using helm, see [install through helm](/docs/next/installation.html#helm).
