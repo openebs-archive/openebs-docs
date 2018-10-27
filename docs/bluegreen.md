@@ -1,4 +1,4 @@
----
+﻿---
 id: bluegreen
 title: OpenEBS use case - Blue Green deployments
 sidebar_label: Blue/Green strategy
@@ -30,7 +30,7 @@ An example of a B-G strategy is shown below.
 One assumption that is made for B/G to work properly is that software and database schema changes are designed to be backward compatible.  The sequence of steps in B/G strategy will be similar to what is outlined below
 
 - Green Deployment is brought up with the newer version.  
-- If there is a database, the replication is setup between Blue DB -> Green DB.  
+- If there is a database, the replication is set up between Blue DB -> Green DB.  
 - If there is no DB, then Blue Volume -> Green Volume replication should be enabled.  
 - Take snapshots are taken on the Blue volume.  
 - DB Schema changes are applied on the Green Volume.  
