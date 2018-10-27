@@ -17,9 +17,7 @@ window.addEventListener('load', function() {
   }
 
   function addButtons(codeBlockSelector, btn) {
-    document.querySelectorAll(codeBlockSelector).forEach(function(code) {
-      code.parentNode.appendChild(btn.cloneNode(true));
-    });
+    document.querySelectorAll(codeBlockSelector).forEach(code => code.parentNode.appendChild(btn.cloneNode(true)));
   }
 
   const copyIcon =
@@ -40,7 +38,7 @@ window.addEventListener('load', function() {
     event.clearSelection();
     const textEl = event.trigger.querySelector('.btnIcon__label');
     textEl.textContent = 'Copied';
-    setTimeout(function() {
+    setTimeout(() => {
       textEl.textContent = 'Copy';
     }, 2000);
   });
