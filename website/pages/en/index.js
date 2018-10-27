@@ -26,16 +26,14 @@ function pageUrl(page, language) {
   return siteConfig.baseUrl + (language ? language + '/' : '') + page;
 }
 
-class Button extends React.Component {
-  render() {
-    return (
-      <div className="pluginWrapper buttonWrapper">
-        <a className="button" href={this.props.href} target={this.props.target}>
-          {this.props.children}
-        </a>
-      </div>
-    );
-  }
+function Button(props) {
+  return (
+    <div className="pluginWrapper buttonWrapper">
+      <a className="button" href={props.href} target={props.target}>
+        {props.children}
+      </a>
+    </div>
+  );
 }
 
 Button.defaultProps = {
@@ -50,13 +48,13 @@ const SplashContainer = props => (
   </div>
 );
 
-const Logo = props => (
+const Logo = ({img_src}) => (
   <div className="projectLogo">
-    <img src={props.img_src} />
+    <img src={img_src} />
   </div>
 );
 
-const ProjectTitle = props => (
+const ProjectTitle = () => (
   <h2 className="projectTitle">
     {siteConfig.title}
     <small>{siteConfig.tagline}</small>
@@ -71,23 +69,21 @@ const PromoSection = props => (
   </div>
 );
 
-class HomeSplash extends React.Component {
-  render() {
-    let language = this.props.language || '';
-    return (
-      <SplashContainer>
-        <Logo img_src={imgUrl('docusaurus.svg')} />
-        <div className="inner">
-          <ProjectTitle />
-          <PromoSection>
-            <Button href="#try">Try It Out</Button>
-            <Button href={docUrl('doc1.html', language)}>Example Link</Button>
-            <Button href={docUrl('doc2.html', language)}>Example Link 2</Button>
-          </PromoSection>
-        </div>
-      </SplashContainer>
-    );
-  }
+function HomeSplash(props) {
+  let language = props.language || '';
+  return (
+    <SplashContainer>
+      <Logo img_src={imgUrl('docusaurus.svg')} />
+      <div className="inner">
+        <ProjectTitle />
+        <PromoSection>
+          <Button href="#try">Try It Out</Button>
+          <Button href={docUrl('doc1.html', language)}>Example Link</Button>
+          <Button href={docUrl('doc2.html', language)}>Example Link 2</Button>
+        </PromoSection>
+      </div>
+    </SplashContainer>
+  );
 }
 
 const Block = props => (
@@ -99,7 +95,7 @@ const Block = props => (
   </Container>
 );
 
-const Features = props => (
+const Features = () => (
   <Block layout="fourColumn">
     {[
       {
@@ -118,7 +114,7 @@ const Features = props => (
   </Block>
 );
 
-const FeatureCallout = props => (
+const FeatureCallout = () => (
   <div
     className="productShowcaseSection paddingBottom"
     style={{textAlign: 'center'}}>
@@ -127,7 +123,7 @@ const FeatureCallout = props => (
   </div>
 );
 
-const LearnHow = props => (
+const LearnHow = () => (
   <Block background="light">
     {[
       {
@@ -140,7 +136,7 @@ const LearnHow = props => (
   </Block>
 );
 
-const TryOut = props => (
+const TryOut = () => (
   <Block id="try">
     {[
       {
@@ -153,7 +149,7 @@ const TryOut = props => (
   </Block>
 );
 
-const Description = props => (
+const Description = () => (
   <Block background="dark">
     {[
       {
@@ -166,7 +162,7 @@ const Description = props => (
   </Block>
 );
 
-const Showcase = props => {
+const Showcase = ({language}) => {
   if ((siteConfig.users || []).length === 0) {
     return null;
   }
@@ -188,7 +184,7 @@ const Showcase = props => {
       <p>This project is used by all these people</p>
       <div className="logos">{showcase}</div>
       <div className="more-users">
-        <a className="button" href={pageUrl('users.html', props.language)}>
+        <a className="button" href={pageUrl('users.html', language)}>
           More {siteConfig.title} Users
         </a>
       </div>
@@ -196,24 +192,22 @@ const Showcase = props => {
   );
 };
 
-class Index extends React.Component {
-  render() {
-    let language = this.props.language || '';
+function Index(props) {
+  let language = props.language || '';
 
-    return (
-      <div>
-        <HomeSplash language={language} />
-        <div className="mainContainer">
-          <Features />
-          <FeatureCallout />
-          <LearnHow />
-          <TryOut />
-          <Description />
-          <Showcase language={language} />
-        </div>
+  return (
+    <div>
+      <HomeSplash language={language} />
+      <div className="mainContainer">
+        <Features />
+        <FeatureCallout />
+        <LearnHow />
+        <TryOut />
+        <Description />
+        <Showcase language={language} />
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 module.exports = Index;
