@@ -17,9 +17,7 @@ window.addEventListener('load', function() {
   }
 
   function addButtons(codeBlockSelector, btn) {
-    document.querySelectorAll(codeBlockSelector).forEach(function(code) {
-      code.parentNode.appendChild(btn.cloneNode(true));
-    });
+    document.querySelectorAll(codeBlockSelector).forEach(code => code.parentNode.appendChild(btn.cloneNode(true)));
   }
 
   const copyIcon =
@@ -31,18 +29,14 @@ window.addEventListener('load', function() {
   );
 
   const clipboard = new ClipboardJS('.btnClipboard', {
-    target: function(trigger) {
-      return trigger.parentNode.querySelector('code');
-    },
+    target: (trigger) => trigger.parentNode.querySelector('code')
   });
 
   clipboard.on('success', function(event) {
     event.clearSelection();
     const textEl = event.trigger.querySelector('.btnIcon__label');
     textEl.textContent = 'Copied';
-    setTimeout(function() {
-      textEl.textContent = 'Copy';
-    }, 2000);
+    setTimeout(() => textEl.textContent = 'Copy', 2000);
   });
 });
 

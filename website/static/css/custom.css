@@ -2,6 +2,7 @@
 
 @media (max-width: 375px) {
   .logo {
+    display: -webkit-flex;
     display: flex;
   }
 }
@@ -51,7 +52,7 @@ body{
 }
 .mainContainer .wrapper .post .postHeader h1 {
     font-size: 220%;
-    padding: 0 0 30;
+    padding: 0 0 30px;
 }
 .mainContainer .wrapper .post h1, .mainContainer .wrapper .post h2 {
     font-weight: 400;
@@ -250,8 +251,8 @@ table tr th {
 input#search_input_react 
 {
   background-color: #ffffff;
-  font-weight:400;
-  height:35;
+  font-weight: 400;
+  height: 35px;
 }
 input#search_input_react:focus, input#search_input_react:active {
     color: #555;
@@ -289,7 +290,7 @@ and (max-device-width : 720px) {
 
 /* ReDoc doesn't change outer page styles */
 .redoc-body{
-    margin: 0px;
+    margin: 0;
 }
 /**
  * Disable request-type badges, see https://github.com/Rebilly/ReDoc/issues/61
