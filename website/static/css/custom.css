@@ -102,11 +102,11 @@ footer .sitemap .nav-home {
 
 .fixedHeaderContainer header img#logo {
     height: 100%;
-    margin-right: 10px;
+    margin-right: 3px;
 }
 .fixedHeaderContainer header img {
     height: 60%;
-    margin-right: 10px;
+    margin-right: 3px;
 }
 
 .fixedHeaderContainer header h2 {
@@ -200,7 +200,9 @@ pre code {
 }
 
 @media (max-width: 375px) {
-
+    .fixedHeaderContainer header img#logo {
+        width: 20px;
+    }
     .fixedHeaderContainer header img {
         width: 108px;
         height: auto;
@@ -216,6 +218,9 @@ pre code {
     .fixedHeaderContainer header img {
         width: 141px;
         height: auto;
+    }
+    .fixedHeaderContainer header img#logo {
+        width: 30px;
     }
     .fixedHeaderContainer header h2{
         color: #fff;
