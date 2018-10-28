@@ -16,7 +16,7 @@ We at OpenEBS strive to make OpenEBS simple to use using Kubernetes as much as p
 
 ## How is data protected? What happens when a host, client workload, or a data center fails?
 
-Kubernetes provides many ways to enable resilience. OpenEBS leverages these wherever possible.  For example, say the IO container that has the iSCSI target fails. Well, it is spun back up by Kubernetes. The same applies to the underlying replica containers, where the data is actually stored. They are spun back up by Kubernetes. Now, the point of replicas is to ensure that when one or more of these replicas are being respun and then repopulated in the background by OpenEBS, the client applications still runs.  OpenEBS takes a simple approach to ensuring that multiple replicas can be accessed by an IO controller using a configurable quorum or the minimum number of replica requirements. In addition, our new cStor checks for silent data corruption and in some cases can fix it in the background.  Silent data corruption, unfortunately, can occur from poorly engineered hardware and from other underlying conditions including those that your cloud provider is unlikely to report or identify.  
+Kubernetes provides many ways to enable resilience. OpenEBS leverages these wherever possible.  For example, say the IO container that has the iSCSI target fails. Well, it is spun back up by Kubernetes. The same applies to the underlying replica containers, where the data is actually stored. They are spun back up by Kubernetes. Now, the point of replicas is to ensure that when one or more of these replicas are being respun and then repopulated in the background by OpenEBS, the client applications still run.  OpenEBS takes a simple approach to ensuring that multiple replicas can be accessed by an IO controller using a configurable quorum or the minimum number of replica requirements. In addition, our new cStor checks for silent data corruption and in some cases can fix it in the background.  Silent data corruption, unfortunately, can occur from poorly engineered hardware and from other underlying conditions including those that your cloud provider is unlikely to report or identify.  
 
 ## How does OpenEBS provide high availability for stateful workloads?
 
@@ -30,7 +30,7 @@ An OpenEBS Jiva volume is a controller deployed during OpenEBS installation. Vol
 
   *  **What happens when a K8s node that hosts OpenEBS volume controller goes offline?**
 
-     The controller is automatically re-scheduled as a new Kubernetes pod. Policies are in place that ensures faster rescheduling. If Kubernetes node is unavailable, the controller gets scheduled on one of the available nodes.
+     The controller is automatically re-scheduled as a new Kubernetes pod. Policies are in place that ensures faster rescheduling. If the Kubernetes node is unavailable, the controller gets scheduled on one of the available nodes.
 
   *  **What happens when an OpenEBS volume replica pod crashes?** 
 
@@ -82,7 +82,7 @@ If you have a Kubernetes environment, you can deploy OpenEBS using the following
 
 `kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml`
 
-You can then begin running a workload against OpenEBS. There are large and growing number of workloads that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. You can join the Slack channel at: https://openebs-community.slack.com.
+You can then begin running a workload against OpenEBS. There is large and growing number of workloads that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. You can join the Slack channel at: https://openebs-community.slack.com.
 
 Register at MayaOnline.io to receive free monitoring and a single view of stateful workloads of your Kubernetes environment. MayaOnline incorporates customized versions of Prometheus for monitoring, Grafana for metrics visualization and Scope to see the overall environment, and our MuleBot for ChatOps integration and more.  
 
@@ -92,7 +92,7 @@ Any stateful workload running on Kubernetes likely has been run on OpenEBS at le
 
 ## How does OpenEBS perform?
 
-Performance tests on release v.0.5.2 shows acceptable performance, but additional efforts are ongoing to improve performance. OpenEBS will soon implement many changes to improve performance elsewhere in the stack and much more is coming via the cStor storage engine.
+Performance tests on release v.0.5.2 show acceptable performance, but additional efforts are ongoing to improve performance. OpenEBS will soon implement many changes to improve performance elsewhere in the stack and much more is coming via the cStor storage engine.
 
 ## What changes must be made to the containers on which OpenEBS runs?  
 
@@ -102,7 +102,7 @@ OpenEBS has been engineered so that it does not require any changes to the conta
 
 OpenEBS is currently tightly integrated into Kubernetes. Support for Docker Swarm is something OpenEBS is looking at in future releases.
 
-The system requirements depend on the number of volumes being provisioned and can horizontally scale with the number of nodes in the Kubernetes cluster. The OpenEBS control plane comprises of minimum two pods i.e. apiserver and dynamic provisioner. You can run these using 2GB RAM and 2 CPUs. 
+The system requirements depend on the number of volumes being provisioned and can horizontally scale with the number of nodes in the Kubernetes cluster. The OpenEBS control plane comprises of minimum two pods, i.e. apiserver and dynamic provisioner. You can run these using 2GB RAM and 2 CPUs. 
 
 Each volume will spin up IO controller and replica pods. Each of these will require 1GB RAM and 0.5 CPU by default.
 
@@ -117,13 +117,13 @@ There are at least four common reasons for running OpenEBS on Amazon EBS that ar
   *  **Expansion and inclusion of NVMe:**  OpenEBS allows users to add additional capacity without experiencing downtime.  This online addition of capacity can include NVMe and SSD instances from cloud providers or deployed in physical servers.  This means that as performance requirements increase, or decrease, you can use Kubernetes via storage policies to instruct OpenEBS to change capacity accordingly. 
   *  **Other enterprise capabilities:**  OpenEBS adds other capabilities such as extremely efficient snapshots and clones as well as forthcoming capabilities such as encryption.  Snapshots and clones facilitate much more efficient CI/CD workflows as zero space copies of databases and other stateful workloads can be used in these and other workflows, improving these without incurring additional storage space or administrative effort.  The snapshot capabilities can also be used for replication.  As of February 2018 these replication capabilities are under development.
                                                  
-## How do you destroy demo applications from k8s cluster?
+## How do you destroy demo applications from the k8s cluster?
 
 Goto your application yaml file located in your kube master and apply the yaml as in the following command.
 
 `kubectl delete -f <application yaml>`
 
-This will delete the application pod and the corresponding pvc associated to it.
+This will delete the application pod and the corresponding pvc associated with it.
 
 ## What is the default OpenEBS retention policy?
 
@@ -131,11 +131,11 @@ The default retention is the same used by K8s. For dynamically provisioned Persi
 
 ## Can I use the same PVC for multiple Pods?
 
-Jiva and cStor volumes are not exposed via block storage using iSCSI. Currently only RWO is supported.
+Jiva and cStor volumes are not exposed via block storage using iSCSI. Currently, only RWO is supported.
 
 ## Warning Messages while Launching PVC
 
-If the following warning messages are displayed while launching an application, you can ignore these messages. These message are displayed only while launching an application pod initially and gets cleared on the subsequent attempt.
+If the following warning messages are displayed while launching an application, you can ignore these messages. These messages are displayed only while launching an application pod initially and gets cleared on the subsequent attempt.
 
 ```
   Type     Reason                  Age                 From                     Message
