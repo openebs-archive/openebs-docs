@@ -135,7 +135,6 @@ kubectl apply -f snapshot.yaml
 This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` you have already provisioned using the snapshot. On the other hand, deleting any `PersistentVolumeClaims` or `PersistentVolumes` that you have used to take a snapshot or have been provisioned using a snapshot will not delete the snapshot from the OpenEBS backend. You have to delete them manually. 
 
 
-
 ```
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
