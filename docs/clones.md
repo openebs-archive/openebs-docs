@@ -136,7 +136,7 @@ This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` you hav
 
 
 
-
+```
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
    (function(h,o,t,j,a,r){
@@ -148,3 +148,4 @@ This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` you hav
        a.appendChild(r);
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
+```
