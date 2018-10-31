@@ -24,7 +24,7 @@ OpenEBS is tested on the following platforms.
 
 [RedHat MiniShift](#OpenShift) (Versions 1.10.0+)
 
-**Note:** For Bare metal, you must install Ubuntu and follow the procedure [here](https://github.com/openebs/openebs-docs/blob/v0.5.3/docs/on_premise_solutions.md).
+**Note:** For Bare metal, you must install Ubuntu and follow the procedure [here](/docs/next/onpremise.html).
 
 <a name="NativeK8s"></a>
 

@@ -49,7 +49,7 @@ kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"sp
 
 You have now set up helm and RBAC by following above [step](/docs/next/installation.html#setup-helm-rbac). Next,You should clone the latest OpenEBS repository. If you have cloned OpenEBS repository already, verify that it is updated.
 
-Latest OpenEBS repo can cloned and latest version can be packaged using following commands.
+Latest OpenEBS repo can cloned and latest version can be packaged using following commands:
 
 ```
 git clone https://github.com/openebs/openebs.git

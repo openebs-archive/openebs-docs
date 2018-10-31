@@ -143,11 +143,11 @@ Eve planned the storage pools in the following way.
 
 | POOL     | Nodes                  | Expected data copies | Configuration                                             |
 | -------- | ---------------------- | -------------------- | --------------------------------------------------------- |
-| SASPool1 | N1                     | 1                    | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
-| SASPool2 | N2, N3, N4             | 3                    | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
-| SSDPool1 | N11                    | 1                    | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
-| SSDPool2 | N12, N13, N14          | 3                    | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
-| SSDPool3 | N15, N16, N17,N18, N19 | 5                    | 5 disks on each node (4+1 RaidZ1), remaining unconfigured |
+| SASPool1 | N1                     | 1                    | 10 disks on each node (1+1 Mirror), remaining unconfigured |
+| SASPool2 | N2, N3, N4             | 3                    | 5 disks on each node (Striped), remaining unconfigured |
+| SSDPool1 | N11                    | 1                    | 10 disks on each node (1+1 Mirror), remaining unconfigured |
+| SSDPool2 | N12, N13, N14          | 3                    | 5 disks on each node (Striped), remaining unconfigured |
+| SSDPool3 | N15, N16, N17,N18, N19 | 5                    | 5 disks on each node (Striped), remaining unconfigured |
 
 OpenEBS supports pool creation and management through the use of Storage Pools (SP) and Storage Pool Claims (SPC). The SPC YAML manifests are maintained by operators for versioning.
 

@@ -15,7 +15,7 @@ This document describes the steps for upgrading OpenEBS from 0.6.0 to 0.7.0. Upg
 - *Step 2* - Upgrade the OpenEBS Volumes that were created with older OpenEBS Operator (0.6.0)
 
 **Note:**
-For older verions, OpenEBS supports upgrade to 0.6 version only from 0.5.3 and 0.5.4. For steps to upgrade to 0.6.0, [click](https://v06-docs.openebs.io/docs/next/upgrade.html) here.
+For older versions, OpenEBS supports upgrade to 0.6 version only from 0.5.3 and 0.5.4. For steps to upgrade to 0.6.0, [click](https://v06-docs.openebs.io/docs/next/upgrade.html) here.
 
 ### Terminology
 
@@ -56,7 +56,7 @@ Use the following command to upgrade the storage class volume policies. Move fro
 - `openebs.io/storage-pool`
 - `openebs.io/volume-monitor`
 
-The remaining policies will fallback to their default values.
+The remaining policies will fall back to their default values.
 
 ```
 ./upgrade_sc.sh
@@ -105,13 +105,13 @@ After updating the YAML or helm chart or helm chart values, you can use the abov
 
 ## Step 2: Upgrade the OpenEBS Volumes
 
-Even after the OpenEBS Operator has been upgraded to 0.7, the volumes will continue to work with older versions. Each volumes should be upgraded (one at a time) to 0.7, using the following procedure.
+Even after the OpenEBS Operator has been upgraded to 0.7, the volumes will continue to work with older versions. Each volume should be upgraded (one at a time) to 0.7, using the following procedure.
 
 *Note: Upgrade functionality is still under active development. It is highly recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, ensure you have taken a backup of the data before starting the following upgrade procedure.*
 
 Limitations:
 - This is a preliminary script only intended for use on volumes where data has been backed up.
-- Please have the following link handy in case the volume gets into read-only during the upgrade.
+- Please have the following link handy in case the volume gets into read-only during an upgrade.
   https://docs.openebs.io/docs/next/readonlyvolumes.html
 - Automatic rollback option is not provided. To rollback, you must update the controller, exporter, and replica pod images to the previous version.
 - In the process of running the following procedure, if you run into issues, you can always reach us on Slack.
