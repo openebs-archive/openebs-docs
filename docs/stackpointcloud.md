@@ -38,7 +38,7 @@ Now, the user account is created in AWS and you can go to **stackpoint.io** for 
 
 Go to **Your Clusters** section in **stackpoint.io** and click **Add a Cluster now**. Select **AWS** and the Cloud provider. Go to next page.
 
-![img](/docs/assets/platform_stackpoint.png)
+![image](/docs/assets/platform_stackpoint.png)
 
 Add your AWS credentials such as **Access Key ID** and **Secret Access Key** and click **Create**. You can then edit your Node configuration details. The recommended configuration is One Master Node and 3 Worker Nodes.
 
@@ -46,7 +46,7 @@ Add your AWS credentials such as **Access Key ID** and **Secret Access Key** and
 
 Click **Distribution** and choose **Ubuntu16.04 LTS**.
 
-![img](/docs/assets/ubuntu_stackpoint.png)
+![image](/docs/assets/ubuntu_stackpoint.png)
 
 Click on **Submit** to create your cluster. This should take around 5–8 minutes to bring up one Master and three Worker Kubernetes Cluster.
 

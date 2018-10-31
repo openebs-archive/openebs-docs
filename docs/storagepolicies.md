@@ -30,7 +30,7 @@ OpenEBS supports several types of Storage Policies such as the following.
 
 ## Replica Count Policy
 
-You can specify the jiva replica count using the *value* for *ReplicaCount* property. In the following example, the jiva-replica-count is specified as 3. Hence, a three replicas are created.
+You can specify the jiva replica count using the *value* for *ReplicaCount* property. In the following example, the jiva-replica-count is specified as 3. Hence, three replicas are created.
 
 ```
 apiVersion: storage.k8s.io/v1

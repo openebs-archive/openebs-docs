@@ -131,7 +131,34 @@ The default retention is the same used by K8s. For dynamically provisioned Persi
 
 ## Can I use the same PVC for multiple Pods?
 
-No. Jiva and cStor volumes are exposed via block storage using iSCSI. Currently only RWO is supported.
+Jiva and cStor volumes are not exposed via block storage using iSCSI. Currently only RWO is supported.
+
+## Warning Messages while Launching PVC
+
+If the following warning messages are displayed while launching an application, you can ignore these messages. These message are displayed only while launching an application pod initially and gets cleared on the subsequent attempt.
+
+```
+  Type     Reason                  Age                 From                     Message
+  ----     ------                  ----                ----                     -------
+  Warning  FailedScheduling        17m (x13 over 18m)  default-scheduler        pod has unbound immediate PersistentVolumeClaims (repeated 3 times)
+  Normal   Scheduled               17m                 default-scheduler        Successfully assigned default/percona-c96f89bd5-mg84d to md-node4
+  Normal   SuccessfulAttachVolume  17m                 attachdetach-controller  AttachVolume.Attach succeeded for volume "default-demo-vol1-claim-182762788"
+  Warning  FailedMount             84s (x9 over 16m)   kubelet, md-node4        MountVolume.WaitForAttach failed for volume "default-demo-vol1-claim-182762788" : failed to get any path for iscsi disk, last err seen:
+iscsi: failed to sendtargets to portal 10.111.29.153:3260 output: iscsiadm: connect to 10.111.29.153 timed out
+iscsiadm: connect to 10.111.29.153 timed out
+iscsiadm: connect to 10.111.29.153 timed out
+iscsiadm: connect to 10.111.29.153 timed out
+iscsiadm: connect to 10.111.29.153 timed out
+iscsiadm: connect to 10.111.29.153 timed out
+iscsiadm: connection login retries (reopen_max) 5 exceeded
+iscsiadm: No portals found
+, err exit status 21
+```
+
+
+## Why ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ are showing in different size?
+
+The ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ will start showing different sizes when there are replica node restarts and internal snapshots are created for synchronizing replicas.
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->

@@ -6,7 +6,7 @@ sidebar_label: Persistent Volumes
 
 ------
 
-This section captures steps to troubleshoot and resolve some errors faced while using OpenEBS Persistent Volumes (PVs). The procedures and commands used in this document are mostly generic and are applicable on any common Linux platform/Kubernetes environment.
+This section captures steps to troubleshoot and resolve some errors faced while using OpenEBS Persistent Volumes (PVs). The procedures and commands used in this document are mostly generic and are applicable to any common Linux platform/Kubernetes environment.
 
 ## Application pod is stuck in ContainerCreating state after deployment
 
@@ -47,7 +47,7 @@ This issue is due to failed application operations in the container. Typically t
 ### Troubleshooting the issue:
 
 - Perform a `kubectl exec -it <app>` bash (or any available shell) on the application pod and attempt writes on the volume mount. The volume mount can be obtained either from the application specification ("volumeMounts" in container spec) or by performing a `df -h` command in the controller shell (the OpenEBS iSCSI device will be mapped to the volume mount).
-- The writes can be a attempted using a simple command like `echo abc > t.out` on the mount. If the writes fail with *Read-only file system errors*, it means the iSCSI connections to the OpenEBS volumes are lost. You can confirm by checking the node's system logs including iscsid, kernel (syslog) and the kubectl logs (`journalctl -xe, kubelet.log`).
+- The writes can be attempted using a simple command like `echo abc > t.out` on the mount. If the writes fail with *Read-only file system errors*, it means the iSCSI connections to the OpenEBS volumes are lost. You can confirm by checking the node's system logs including iscsid, kernel (syslog) and the kubectl logs (`journalctl -xe, kubelet.log`).
 - iSCSI connections usually fail due to the following.
   - flaky networks (can be confirmed by ping RTTs, packet loss etc.) or failed networks between -
     - OpenEBS PV controller and replica pods
@@ -67,13 +67,22 @@ This issue is due to failed application operations in the container. Typically t
 
   2. Ensure that the OpenEBS volume controller and replica pods are running successfully with all replicas in *RW mode*. Use the command `curl GET http://<ctrl ip>:9501/v1/replicas | grep createTypes`  to confirm.
 
-  3. If any one of the replicas are still in RO mode, wait for the synchronization to complete. If all the replicas are in RO mode (this may occur when all replicas re-register into the controller within short intervals), you must restart the OpenEBS volume controller using the `kubectl delete pod <pvc-ctrl>`  command . Since it is a Kubernetes deployment, the controller pod is restarted successfully. Once done, verify that all replicas transition into *RW mode*.
+  3. If anyone of the replicas are still in RO mode, wait for the synchronization to complete. If all the replicas are in RO mode (this may occur when all replicas re-register into the controller within short intervals), you must restart the OpenEBS volume controller using the `kubectl delete pod <pvc-ctrl>`  command . Since it is a Kubernetes deployment, the controller pod is restarted successfully. Once done, verify that all replicas transition into *RW mode*.
 
   4. Un-mount the stale iscsi device mounts on the application node. Typically, these devices are mounted in the `/var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/<target-portal:iqn>-lun-0`  path.
+  
+ ```
+ Example:
+ umount /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.39.241.26:
+ 3260-iqn.2016-09.com.openebs.jiva:mongo-jiva-mongo-persistent-storage-mongo-0-3481266901-lun-0
 
-  5. Identify whether the iSCSI session is re-established after failure. This can be verified using `iscsiadm -m session`, with the device mapping established using `iscsiadm -m session -P 3` and `fdisk -l`. **Note:** Sometimes, it has been observed that there are stale device nodes (scsi device names) present on the Kubernetes node. Unless the logs confirm that a re-login has occurred once the system issues were resolved, it is recommended to perform the following step after doing a purge/logout of the existing session using `iscsiadm -m node -T <iqn> -u`.
+ umount /var/lib/kubelet/pods/ae74da97-c852-11e8-a219-42010af000b6/volumes/kuber
+ netes.io~iscsi/mongo-jiva-mongo-persistent-storage-mongo-0-3481266901
+ ```
 
-  6. If the device is not logged in again, ensure that the network issues/failed nodes/failed replicas are resolved, device is discovered, and session is re-established. This can be achieved using the commands `iscsiadm -m discovery -t st -p <ctrl svc IP>:3260` and `iscsiadm -m node -T <iqn> -l` respectively.
+  5. Identify whether the iSCSI session is re-established after failure. This can be verified using `iscsiadm -m session`, with the device mapping established using `iscsiadm -m session -P 3` and `fdisk -l`. **Note:** Sometimes, it is observed that there are stale device nodes (scsi device names) present on the Kubernetes node. Unless the logs confirm that a re-login has occurred after the system issues were resolved, it is recommended to perform the following step after doing a purge/logout of the existing session using `iscsiadm -m node -T <iqn> -u`.
+
+  6. If the device is not logged in again, ensure that the network issues/failed nodes/failed replicas are resolved, the device is discovered, and the session is re-established. This can be achieved using the commands `iscsiadm -m discovery -t st -p <ctrl svc IP>:3260` and `iscsiadm -m node -T <iqn> -l` respectively.
 
   7. Identify the new SCSI device name corresponding to the iSCSI session (the device name may or may not be the same as before).
 
@@ -104,7 +113,7 @@ This can be checked by performing a `df -h` or `mount` command inside the applic
 
 ## Stale data seen post application pod reschedule on other nodes
 
-- Sometimes, stale application data is seen on the OpenEBS volume mounts after application pod reschedule. Typically, these applications are Kubernetes deployments, with the reschedule to other nodes occurring due to rolling updates.
+- Sometimes, stale application data is seen on the OpenEBS volume mounts after application pod reschedules. Typically, these applications are Kubernetes deployments, with the reschedule to other nodes occurring due to rolling updates.
 - This occurs due to the iSCSI volume mounts and sessions staying alive/persisting on the nodes even after the pod terminates. This behavior is observed on some versions of GKE clusters (1.7.x).
 - Ideally, the kubelet (iSCSI volume plugin) should bring down mounts and iscsi sessions once the application has been deleted on the node. If not, it can result in data being read off the node's page (mount) cache whenever the application is re-scheduled onto it, even though the volume is being updated while on a different node.
 
@@ -141,19 +150,19 @@ This document contains notes on how to recover data from a backed up replica fil
 
 The following procedure helps recovering data in the scenario where replicas get scheduled on nodes where data does not exist.
 
-### Step 1: Run a sample application that generates some data. 
+### Step 1: Run a sample application that generates some data.
 
-In the following example, executing the busybox.yaml file brings up the busybox pod that saves hostname and date into the mounted OpenEBS volume. 
+In the following example, executing the busybox.yaml file brings up the busybox pod that saves hostname and date into the mounted OpenEBS volume.
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/busybox.yaml
 ```
 
-Wait for the busybox application to run and exec into it to check if data is generated. You can add some additional content if required. 
+Wait for the busybox application to run and exec into it to check if data is generated. You can add some additional content if required.
 
 Note the following details:
-- PV id `kubectl get pv` (say _source-pv-id_ ). 
-- nodes on which PV replica pods are running `kubectl get pods -o wide | grep source-pv-id` (say _replica-hostname_). 
+- PV id `kubectl get pv` (say _source-pv-id_ ).
+- nodes on which PV replica pods are running `kubectl get pods -o wide | grep source-pv-id` (say _replica-hostname_).
 
 Delete the busybox pod  using the `kubectl delete -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/busybox.yaml` command. Note that the data folders will remain on the nodes even though the pod and PVs are deleted.
 
@@ -167,14 +176,14 @@ kubectl apply -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-op
 ```
 
 Note the following details:
-- PV id `kubectl get pv` (say _recovery-pv-id_ ). 
-- PV replica deployment name `kubectl get deploy | grep recovery-pv-id` (say _recovery-replica-deploy_ ). 
+- PV id `kubectl get pv` (say _recovery-pv-id_ ).
+- PV replica deployment name `kubectl get deploy | grep recovery-pv-id` (say _recovery-replica-deploy_ ).
 - Recovery PVC  namespace, if you have changed it to something other than default. (say _recovery-replica-ns_).
 
 
 ### Step 3: Patch the Recovery PV Replica to stick to the _replica-hostname_
 
-Replace **replica hostname** in patch-replica-dep-nodename.json with the _replica-hostname_ that was obtained in **Step 1**. It is the node where source/backed up replica data is available. If the backup data is available on a remote machine, you can set the hostname to the current node where Replica is running. 
+Replace **replica hostname** in patch-replica-dep-nodename.json with the _replica-hostname_ that was obtained in **Step 1**. It is the node where source/backed up replica data is available. If the backup data is available on a remote machine, you can set the hostname to the current node where Replica is running.
 
 ```
 wget https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/patch-replica-dep-nodename.json
@@ -182,36 +191,36 @@ wget https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-r
 kubectl patch deploy -n <replica-replica-ns> <recovery-replica-deploy>  -p "$(cat patch-replica-dep-nodename.json)"
 ```
 
-After the patch is applied, you will notice that the replica pod is restarted on the hostname specified. Since this replica deployment is patched, you will see an orphaned replica set `kubectl get rs`. You can go ahead and delete it. 
+After the patch is applied, you will notice that the replica pod is restarted on the hostname specified. Since this replica deployment is patched, you will see an orphaned replica set `kubectl get rs`. You can go ahead and delete it.
 
 ### Step 4: Copy the backup data into Recovery Replica
 
  Execute the following commands.
- 
+
 ```
 a. ssh into the node  (_replica-hostname_)
 b. cd /var/openebs/recovery-pv-id/ (/var/openebs if you are using default pool.)
 c. sudo rm -rf *
 d. copy contents from earlier volume (/var/openebs/source-pv-id  or from remote server) into /var/openebs/recovery-pv-id/
-e. You will see *peer.details*, *revision.counter*, *volume.meta* and a bunch of *.img* and *.meta* files. 
+e. You will see *peer.details*, *revision.counter*, *volume.meta* and a bunch of *.img* and *.meta* files.
 f. edit peer.details to set ReplicaCount=1
 g. exit
 ```
 
-### Step 5: Restart the Volume Pods 
+### Step 5: Restart the Volume Pods
 
 - `kubectl delete replica-pod`. Note that it gets rescheduled on the same node (_replica-hostname_).
 - `kubectl delete controller-pod`. Wait for these pods to get back to running state.
 
 ### Step 6: Use the recovery volume to retrieve the data.
 
-You can either launch the source application or a recovery application that now makes use of this recovery volume. In this example, using the busybox-recovery pod displays the file content which is the same as the one generated by the source application.. 
+You can either launch the source application or a recovery application that now makes use of this recovery volume. In this example, using the busybox-recovery pod displays the file content which is the same as the one generated by the source application.
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/busybox-recover.yaml
 ```
 
-You can also exec into this application to check the content, retrieve the files, or use the application to check the content. 
+You can also exec into this application to check the content, retrieve the files, or use the application to check the content.
 
 
 
@@ -221,12 +230,12 @@ You can also exec into this application to check the content, retrieve the files
 
 ```
    (function(h,o,t,j,a,r){
-   		h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-   		h._hjSettings={hjid:785693,hjsv:6};
-   		a=o.getElementsByTagName('head')[0];
-   		r=o.createElement('script');r.async=1;
-   		r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-   		a.appendChild(r);
+           h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+           h._hjSettings={hjid:785693,hjsv:6};
+           a=o.getElementsByTagName('head')[0];
+           r=o.createElement('script');r.async=1;
+           r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+           a.appendChild(r);
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 ```
 

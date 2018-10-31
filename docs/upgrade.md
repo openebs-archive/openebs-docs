@@ -11,8 +11,8 @@ sidebar_label: Upgrade
 ## Overview
 
 This document describes the steps for upgrading OpenEBS from 0.6.0 to 0.7.0. Upgrading OpenEBS is a two step process.
-- *Step 1* - Upgrade the OpenEBS Operator.
-- *Step 2* - Upgrade the OpenEBS Volumes that were created with older OpenEBS Operator (0.6.0).
+- *Step 1* - Upgrade the OpenEBS Operator
+- *Step 2* - Upgrade the OpenEBS Volumes that were created with older OpenEBS Operator (0.6.0)
 
 **Note:**
 For older verions, OpenEBS supports upgrade to 0.6 version only from 0.5.3 and 0.5.4. For steps to upgrade to 0.6.0, [click](https://v06-docs.openebs.io/docs/next/upgrade.html) here.
@@ -32,13 +32,13 @@ OpenEBS 0.7.0 has made the following significant changes to the OpenEBS Operator
 
 ### Download the Upgrade Scripts
 
-Either `git clone` or download the following files to your work directory
-https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.6.0-0.7.0:
-- `patch-strategy-recreate.json`,
-- `replica.patch.tpl.yml`,
-- `controller.patch.tpl.yml`,
-- `oebs_update.sh`,
-- `pre_upgrade.sh`.
+Either `git clone` or download the following files to your work directory.
+https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.6.0-0.7.0
+- `patch-strategy-recreate.json`
+- `replica.patch.tpl.yml`
+- `controller.patch.tpl.yml`
+- `oebs_update.sh`
+- `pre_upgrade.sh`
 
 ### Prerequisites
 
@@ -72,7 +72,7 @@ The upgrade steps vary depending on the way OpenEBS was installed. Select one of
 
 #### Install/Upgrade using kubectl (using openebs-operator.yaml)
 
-**The sample steps below will work if you have installed openebs without modifying the default values in the *openebs-operator.yaml* file. If you have customized it for your cluster, you must download the 0.7.0 *openebs-operator.yaml* file and cutomize it again.**
+**The sample steps below will work if you have installed openebs without modifying the default values in the *openebs-operator.yaml* file. If you have customized it for your cluster, you must download the 0.7.0 *openebs-operator.yaml* file and customize it again.**
 
 ```
 # Starting with OpenEBS 0.6, all the components are installed in namespace `openebs`
@@ -98,7 +98,7 @@ kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 
 As a first step, you must update your custom helm chart or YAML with 0.7 release tags and changes made in the values/templates.
 
-You can use the following as reference to know about the changes in 0.7.
+You can use the following as a reference to know about the changes in 0.7.
 - openebs-charts [PR#1878](https://github.com/openebs/openebs/pull/1878).
 
 After updating the YAML or helm chart or helm chart values, you can use the above procedures to upgrade the OpenEBS Operator.
@@ -107,13 +107,13 @@ After updating the YAML or helm chart or helm chart values, you can use the abov
 
 Even after the OpenEBS Operator has been upgraded to 0.7, the volumes will continue to work with older versions. Each volumes should be upgraded (one at a time) to 0.7, using the following procedure.
 
-*Note:Upgrade functionality is still under active development. It is highly recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, ensure you have taken a backup of the data before starting the following upgrade procedure.*
+*Note: Upgrade functionality is still under active development. It is highly recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, ensure you have taken a backup of the data before starting the following upgrade procedure.*
 
 Limitations:
-- This is a preliminary script only intended for using on volumes where data has been backed up.
-- Please have the following link handy in case the volume gets into read-only during upgrade
+- This is a preliminary script only intended for use on volumes where data has been backed up.
+- Please have the following link handy in case the volume gets into read-only during the upgrade.
   https://docs.openebs.io/docs/next/readonlyvolumes.html
-- Automatic rollback option is not provided. To rollback, you must update the controller, exporter, and replica pod images to the   previous version.
+- Automatic rollback option is not provided. To rollback, you must update the controller, exporter, and replica pod images to the previous version.
 - In the process of running the following procedure, if you run into issues, you can always reach us on Slack.
 
 ```

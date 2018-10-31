@@ -65,7 +65,7 @@ The corresponding deployment now displays that the Jiva replica count has increa
 
 ### Verifying if Expanded Replica is Running
 
-Get the number of running pods using following command.
+Get the number of running pods using the following command.
 
 ```
 kubectl get pods
@@ -84,7 +84,7 @@ pvc-564ae713-95fb-11e8-8754-42010a8000df-rep-688cc58bbf-rbxnw    1/1       Runni
 
 ## Decreasing Number of Jiva Replicas
 
-The following procedure must be performed for decreasing number of Jiva replicas. You can decrease the Jiva replica online, if the current replica count is 3 or more. OpenEBS recommends you to perform the change with no load on the volume if current replica count is 2.
+The following procedure must be performed for a decreasing number of Jiva replicas. You can decrease the Jiva replica online, if the current replica count is 3 or more. OpenEBS recommends you to perform the change with no load on the volume if current replica count is 2.
 
 Perform the following steps 1 to 4 from master.
 
@@ -151,7 +151,7 @@ kubectl get pods -n openebs
 
 5. SSH to all Nodes where the OpenEBS volume is mounted.
 
-6. Go to the directory where required volume is mounted.
+6. Go to the directory where the required volume is mounted.
 
    ```
    cd /mnt/openebs_xvdd/<pvc_name>
@@ -171,7 +171,7 @@ kubectl get pods -n openebs
 
 8. Repeat steps 6 and 7 in other Nodes where OpenEBS volume is mounted.
 
-   Perform the following operations from master Node.
+   Perform the following operations from the master Node.
 
 9. Decrease replica count by reducing one count using the following command.
 
@@ -221,7 +221,7 @@ kubectl get pods -n openebs
     deployment "pvc-339754eb-9add-11e8-a167-067880c021ee-ctrl" edited
     ```
 
-12. After this change, new replica set for controller will be deployed and you must clean up the old controller replica set. Get the replica set using the following command.
+12. After this change, new replica set for the controller will be deployed and you must clean up the old controller replica set. Get the replica set using the following command.
 
     ```
     kubectl get rs
@@ -487,7 +487,7 @@ To know about node selector, see [scheduler](/docs/next/scheduler.html) section.
 
 **Modifying the application yaml**
 
-For scheduling application on required nodes, you must have labelled the nodes appropriately. For example, the nodes are labelled as `openebs: controlnode`. The same label must be added in the application yaml file. For example, in the mongo-statefulset.yml file, under spec section you can add the following.
+For scheduling application on required nodes, you must have labelled the nodes appropriately. For example, the nodes are labelled as `openebs: controlnode`. The same label must be added in the application yaml file. For example, in the mongo-statefulset.yml file, under spec section, you can add the following.
 
     ```
     nodeSelector:

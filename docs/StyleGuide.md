@@ -48,7 +48,7 @@ Example:
 
 Syntax | Description
 ------------ | -------------
-![image](/docs/assets/das-nas-cas.png) | Include the path where the image is location in the round brackets.
+![image](/docs/assets/das-nas-cas.png) | Include the path where the image is located in the round brackets.
 
 
 ### Links

@@ -1,7 +1,7 @@
 ---
 id: tasks_az
 title: Deploying OpenEBS volumes across AZs on public clouds
-sidebar_label: Deploy acorss AZs
+sidebar_label: Deploy across AZs
 ---
 ------
 
@@ -39,7 +39,7 @@ Apply *openebs-operator.yaml* as follows
 kubectl apply -f openebs-operator.yaml
 ```
 
-Now,apply your corresponding *storageclasses.yaml*. Some example storage classes for different applications are available by executing below command.
+Now, apply your corresponding *storageclasses.yaml*. Some example storage classes for different applications are available by executing below command.
 
 ```
 wget https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
