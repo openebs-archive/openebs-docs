@@ -15,7 +15,7 @@ This document describes the steps for upgrading OpenEBS from 0.6.0 to 0.7.0. Upg
 - *Step 2* - Upgrade the OpenEBS Volumes that were created with older OpenEBS Operator (0.6.0)
 
 **Note:**
-For older verions, OpenEBS supports upgrade to 0.6 version only from 0.5.3 and 0.5.4. For steps to upgrade to 0.6.0, [click](https://v06-docs.openebs.io/docs/next/upgrade.html) here.
+For older versions, OpenEBS supports upgrade to 0.6 version only from 0.5.3 and 0.5.4. For steps to upgrade to 0.6.0, [click](https://v06-docs.openebs.io/docs/next/upgrade.html) here.
 
 ### Terminology
 
