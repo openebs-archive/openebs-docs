@@ -512,7 +512,7 @@ If the following warning messages are displayed while launching an application, 
 
 ## How does OpenEBS perform?
 
-Performance tests on release v.0.5.2 shows acceptable performance, but additional efforts are ongoing to improve performance. OpenEBS will soon implement many changes to improve performance elsewhere in the stack and much more is coming via the cStor storage engine.
+Performance tests on release v.0.5.2 show acceptable performance, but additional efforts are ongoing to improve performance. OpenEBS will soon implement many changes to improve performance elsewhere in the stack and much more is coming via the cStor storage engine.
 
 ## What changes must be made to the containers on which OpenEBS runs?  
 
@@ -747,13 +747,13 @@ There are at least four common reasons for running OpenEBS on Amazon EBS that ar
   *  **Expansion and inclusion of NVMe:**  OpenEBS allows users to add additional capacity without experiencing downtime.  This online addition of capacity can include NVMe and SSD instances from cloud providers or deployed in physical servers.  This means that as performance requirements increase, or decrease, you can use Kubernetes via storage policies to instruct OpenEBS to change capacity accordingly. 
   *  **Other enterprise capabilities:**  OpenEBS adds other capabilities such as extremely efficient snapshots and clones as well as forthcoming capabilities such as encryption.  Snapshots and clones facilitate much more efficient CI/CD workflows as zero space copies of databases and other stateful workloads can be used in these and other workflows, improving these without incurring additional storage space or administrative effort.  The snapshot capabilities can also be used for replication.  As of February 2018 these replication capabilities are under development.
                                                  
-## How do you destroy demo applications from k8s cluster?
+## How do you destroy demo applications from the k8s cluster?
 
 Goto your application yaml file located in your kube master and apply the yaml as in the following command.
 
 `kubectl delete -f <application yaml>`
 
-This will delete the application pod and the corresponding pvc associated to it.
+This will delete the application pod and the corresponding pvc associated with it.
 
 ## What is the default OpenEBS retention policy?
 
@@ -761,11 +761,11 @@ The default retention is the same used by K8s. For dynamically provisioned Persi
 
 ## Can I use the same PVC for multiple Pods?
 
-Jiva and cStor volumes are not exposed via block storage using iSCSI. Currently only RWO is supported.
+Jiva and cStor volumes are not exposed via block storage using iSCSI. Currently, only RWO is supported.
 
 ## Warning Messages while Launching PVC
 
-If the following warning messages are displayed while launching an application, you can ignore these messages. These message are displayed only while launching an application pod initially and gets cleared on the subsequent attempt.
+If the following warning messages are displayed while launching an application, you can ignore these messages. These messages are displayed only while launching an application pod initially and gets cleared on the subsequent attempt.
 
 ```
   Type     Reason                  Age                 From                     Message
