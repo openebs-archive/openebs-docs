@@ -6,7 +6,7 @@ sidebar_label: IBMCloud
 
 ------
 
-In this section, we are describing about configuring **OpenEBS** as a **persistent storage** option and deploying a stateful workload (MongoDB) using OpenEBS storage classes in **IBM Cloud Private (ICP)** . 
+In this section, we describe how to configure **OpenEBS** as a **persistent storage** option and deploying a stateful workload (MongoDB) using OpenEBS storage classes in **IBM Cloud Private (ICP)**.
 
 ### **Prerequisites**
 
@@ -61,11 +61,11 @@ Follow instructions from [Introduction to IBM Cloud Private](http://containerize
 
    ![img](https://cdn-images-1.medium.com/max/800/0*qfLs4pg_3TE1PbCB.png)
 
-8. Click **Install**. When finished click **View Helm Release.**![img](https://cdn-images-1.medium.com/max/800/0*raLyHiJeZ0hC_BAk.png)
+8. Click **Install**. When finished click **View Helm Release**.![img](https://cdn-images-1.medium.com/max/800/0*raLyHiJeZ0hC_BAk.png)
 
 9. On the Helm Release page, you can see the status of OpenEBS, deployment, and available **Storage Classes**.![img](https://cdn-images-1.medium.com/max/800/0*-gCAd374s2jXY3AP.jpg)
 
-Now,OpenEBS is installed on IBMPrivateCloud. You are ready to run any stateful application on OpenEBS. Let’s try to deploy a stateful app on OpenEBS.  Next section will help you on it.
+Now, OpenEBS is installed on IBM Cloud Private. You are ready to run any stateful application on OpenEBS. Let’s try to deploy a stateful app on OpenEBS. Next section will help you with it.
 
 ### **Install MongoDB on OpenEBS**
 
@@ -83,11 +83,11 @@ Now,OpenEBS is installed on IBMPrivateCloud. You are ready to run any stateful a
 
 3. Go to **Workloads/Helm Releases** and select your MongoDB release. Under the **PersistentVolumeClaim** table you are going to see the volume claim and OpenEBS storage class.![img](https://cdn-images-1.medium.com/max/800/0*PNNp0nDxsZXzYwIH.png)
 
-4. f you go to the **Workloads/Deployments** page, you can find the storage controller and two volume replicas (as configured) running.![img](https://cdn-images-1.medium.com/max/800/0*pD7rHAX_D8_cxcfl.png)
+4. If you go to the **Workloads/Deployments** page, you can find the storage controller and two volume replicas (as configured) running.![img](https://cdn-images-1.medium.com/max/800/0*pD7rHAX_D8_cxcfl.png)
 
 5. Confirm that replicas are running on separate nodes. Click on the PVC name ending with **rep** (Example: pvc-23025190-c516–11e7-b45e-e8fd90000064-rep). Scroll down, and you will see that pods are running on separate hosts. ![img](https://cdn-images-1.medium.com/max/800/0*pD7rHAX_D8_cxcfl.png)
 
-    You have successfully deployed a stateful application on a persistent block storage presented by OpenEBS.
+    You have now successfully deployed a stateful application on a persistent block storage presented by OpenEBS.
 
 
 
