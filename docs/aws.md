@@ -20,11 +20,11 @@ Instance Store volume's drawback is that the data in an instance store persists 
 
 ## OpenEBS with AWS Instance Store
 
-Some instance types use NVMe or SATA-based solid state drives (SSD) to deliver high random I/O performance. This is a good option when you need storage with very low latency and do not need the data to persist when the instance terminates. You can also take advantage of fault-tolerant architectures. OpenEBS is an option for high availability of data combined with advantages of using physical disks.
+Some instance types use NVMe or SATA-based solid state drives (SSD) to deliver high random I/O performance. This is a good option when you need storage with very low latency and do not need the data to persist when the instance terminates. You can also take advantage of fault-tolerant architectures. OpenEBS is an option for high availability of data combined with the advantages of using physical disks.
 
 ## How is replication done with OpenEBS?
 
-OpenEBS will have minimum 3 replicas to run OpenEBS cluster with high availability and if a node fails, OpenEBS will manage the data to be replicated to a new disk which will come up as part of ASG. In the meantime your workload is accessing the live data from one the replicas.
+OpenEBS will have minimum 3 replicas to run OpenEBS cluster with high availability and if a node fails, OpenEBS will manage the data to be replicated to a new disk which will come up as part of ASG. In the meantime, your workload is accessing the live data from one the replicas.
 
 ![Stateful Applications using OpenEBS and instance stores](/docs/assets/OpenEBS_AWS.png)
 
@@ -38,7 +38,7 @@ OpenEBS will have minimum 3 replicas to run OpenEBS cluster with high availabili
 
 ## Installing OpenEBS Cluster in AWS
 
-Use local ubuntu 16.04 machine from where you can login to AWS with appropriate user credentials and creating cluster from it.
+Use local ubuntu 16.04 machine from where you can login to AWS with appropriate user credentials and creating a cluster from it.
 
 **Perform following operations from AWS management console**
 
@@ -63,16 +63,16 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
    aws s3 mb s3://<bucket_name> 
    ```
 
-4. Export the s3 bucket details using following command.
+4. Export the s3 bucket details using the following command.
 
    ```
    export KOPS_STATE_STORE=s3://<bucket_name>
    ```
 
-5. Create the cluster using following command.
+5. Create the cluster across different zones using following command.
 
    ```
-   kops create cluster --name=<cluster_name>.k8s.local --vpc=<vpc_id> --zones=<zone_name>
+   kops create cluster --name=<cluster_name>.k8s.local --vpc=<vpc_id> --zones==<zone1_name>,<zone2_name>,<zone3_name>
    ```
 
    This will create a cluster in the mentioned zone in your region provided as part of AWS configuration.
@@ -86,11 +86,11 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
    Suggestions:
 
    - list clusters with: kops get cluster
-   - edit this cluster with: kops edit cluster ranjith.k8s.local
+   - edit this cluster with : kops edit cluster ranjith.k8s.local
    - edit your node instance group: kops edit ig --name=ranjith.k8s.local nodes
    - edit your master instance group: kops edit ig --name=ranjith.k8s.local master-us-west-2a
 
-   Finally configure your cluster with: kops update cluster name.k8s.local --yes
+   Finally, configure your cluster with: kops update cluster name.k8s.local --yes
 
 7. Change your instance image type and number of machines by executing corresponding commands. The exact command needed for your cluster will be shown at the end of the previous step. Following is an example.
 
@@ -122,7 +122,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 
   **Example:**
 
-  ![EC2_instance_PublicIP](/docs/assets/insatnce_with_public_ip.PNG)
+  ![EC2_instance_PublicIP](/docs/assets/instance_with_public_ip.PNG)
 
 11. Go to **Launch Configuration** section in the EC2 page and take a *copy of Launch configuration* for nodes. Select the configuration for Node group and click on Actions pane.
 
@@ -168,7 +168,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     ssh -i ~/.ssh/id_rsa admin@<public_ip>
     ```
 
-15. SSH to all the Nodes where OpenEBS will be installed and perform the following commands to install iSCSI packages and auto mounting of local disk during reboot.
+15. SSH to all the Nodes where OpenEBS will be installed and perform the following commands to install iSCSI packages ,unmount local ssd disks and auto mounting of local disks to the given mountpoint  during reboot.
 
     ```
     sudo apt-get update
@@ -182,105 +182,81 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     ```
 
 16. SSH to Master Node and perform the following commands to clone OpenEBS yaml file and deploy.
-    
-    ```
-    wget
-    https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
-    ```
 
     ```
-    wget
-    https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml```
+    kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
+    ```
 
-17. Edit *openebs-operator.yaml* and add the following entry. This will create storage pool on one of the local disks attached to the hosts. Refer [OpenEBS Storage Pools](/docs/next/setupstoragepools.html) for more information.
+17. Create a storage pool on an external disk which is mounted on the nodes. To create a storage pool, create a file called “openebs-config.yaml” file in your master node and add the below example YAML with changing the appropriate mounted disk path.
+
+    For example,If your external disk is mounted as "/mnt/openebs_xvdd" in your nodes, change the path as below.
+
+    ```
+    path: “/mnt/openebs_xvdd”
+    ```
+
+    Example yaml file:
 
     ```
     ---
     apiVersion: openebs.io/v1alpha1
     kind: StoragePool
     metadata:
-        name: jivaawspool
-        type: hostdir
+      name: default
+      type: hostdir
     spec:
-        path: "/mnt/openebs_xvdd"
+      path: "/mnt/openebs_xvdd"
     ---
     ```
 
-18. Edit *openebs-storageclasses.yaml* by adding the following entry in your corresponding storage class.
+18.  Apply the modified *openebs-config.yaml* file by using the following command.
 
     ```
-    openebs.io/storage-pool: "jivaawspool"
+    kubectl apply -f openebs-config.yaml
     ```
 
-    **Example:** 
+    This will create a storage pool called “default” on selected disk.
+
+19. Now storage pool is created on the Nodes as per your requirement. You can get the storage pool details by running the following command.
 
     ```
-    apiVersion: storage.k8s.io/v1
-    kind: StorageClass
-    metadata:
-       name: openebs-percona
-    provisioner: openebs.io/provisioner-iscsi
-    parameters:
-      openebs.io/storage-pool: "default"
-      openebs.io/jiva-replica-count: "3"
-      openebs.io/volume-monitor: "true"
-      openebs.io/capacity: 5G
-      openebs.io/storage-pool: "jivaawspool"
+    kubectl get sp
     ```
 
-19. Apply openebs-operator.yaml by executing the following command.
+20. Now you are configured OpenEBS Jiva storage engine which will create OpenEBS Jiva volume on the storage pool created on local SSD disk.
 
-    ```
-    kubectl apply -f openebs-operator.yaml
-    ```
-
-20. Apply openebs-storageclasses.yaml by executing the following command.
-
-    ```
-    kubectl apply -f openebs-storageclasses.yaml
-    ```
-
-21. Deploy your application yaml which will be created on the local disk.
+21. Deploy your application yaml which will be created on the local disk. Get the percona deploymnet YAML file using following command
 
     Example:
+
+    ```
+    wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml
+    ```
+
+22. Edit the downloaded “percona-openebs-deployment.yaml” and do the following changes.
+
+    Under "PersistentVolumeClaim" section,change the “storageClassName” to “openebs-jiva-default” from ”openebs-standard”.
+
+23. Save the modified changes and apply the YAML as follows.
 
     ```
     kubectl apply -f percona-openebs-deployment.yaml
     ```
 
-22. To check the status of application and Jiva Pods, use the following command.
+24. This will create a PVC and PV in mentioned size. You can get the PVC status by running the following command.
 
     ```
-    kubectl get pods -o wide
+    kubectl get pvc
     ```
 
-    Output similar to the following is displayed. 
+    Following is an example output.
 
     ```
-    NAME                                                             READY     STATUS    RESTARTS   AGE       IP           NODE
-    percona-7f6bff67f6-cz47d                                         1/1       Running   0          1m        100.96.3.7   ip-172-20-		40-26.us-west-2.compute.internal
-    pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-ctrl-84bcf764d6-269rj   2/2       Running   0          1m        100.96.1.4   ip-172-20-62-11.us-west-2.compute.internal
-    pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-rep-54b8f49ff8-bzjq4    1/1       Running   0          1m        	100.96.1.5   ip-172-20-62-11.us-west-2.compute.internal
-    pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-rep-54b8f49ff8-lpz2k    1/1       Running   0          1m        100.96.2.8   ip-172-20-32-255.us-west-2.compute.internal
-    pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6-rep-54b8f49ff8-rqnr7    1/1       Running   0          1m        100.96.3.6   ip-172-20-40-26.us-west-2.compute.internal
+    NAME 			STATUS VOLUME 							  CAPACITY ACCESS MODES STORAGECLASS 		AGE
+    demo-vol1-claim Bound  default-demo-vol1-claim-2300073071 5G 	   RWO 			openebs-jiva-default 11m
     ```
 
-
-23. Get the status of PVC using the following command.
-
-    ```
-    kubectl get pvc 
-    ```
-
-    Output similar to the following is displayed.
-
-    ```
-    NAME              STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE
-    demo-vol1-claim   Bound     pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6   5G         RWO        openebs-percona   3m 
-    ```
-
-
-24. Get the status of PV using the following command.
+25. Get the status of PV using the following command.
 
     ```
     kubectl get pv
@@ -289,11 +265,26 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     Output of the above command will be similar to the following.
 
     ```
-    NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS  CLAIM                     STORAGECLASS      REASON    AGE
-    pvc-ef813ecc-9c8d-11e8-bdcc-0641dc4592b6   5G         RWO            Delete           Bound  default/demo-vol1-claim   openebs-percona             3m 
+    NAME                                 CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                     STORAGECLASS           REASON    AGE
+    default-demo-vol1-claim-1171753629   5G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-jiva-default             17s
     ```
 
-    ​
+26. Now, your Percona application pod will be running along with three Jiva volume replica and One Jiva Controller pod. You can get the running pod status by running the following command:
+
+    ```
+    kubectl get pods -o wide
+    ```
+
+    Output similar to the following is displayed. 
+
+    ```
+    NAME                                                      READY     STATUS    RESTARTS   AGE       IP           NODE
+    default-demo-vol1-claim-1171753629-ctrl-5fb888f54-jzxsw   2/2       Running   0          1m        100.96.2.8   ip-10-0-55-5.us-west-2.compute.internal
+    default-demo-vol1-claim-1171753629-rep-78767568b6-gcqtd   1/1       Running   0          1m        100.96.2.9   ip-10-0-55-5.us-west-2.compute.internal
+    default-demo-vol1-claim-1171753629-rep-78767568b6-lw4dl   1/1       Running   0          1m        100.96.1.7   ip-10-0-91-227.us-west-2.compute.internal
+    default-demo-vol1-claim-1171753629-rep-78767568b6-zlfl9   1/1       Running   0          1m        100.96.3.7   ip-10-0-100-78.us-west-2.compute.internal
+    percona-7f6bff67f6-dnrbr                                  1/1       Running   0          1m        100.96.1.8   ip-10-0-91-227.us-west-2.compute.internal
+    ```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

@@ -4,12 +4,12 @@
 
 ## Markdown Syntax used at CloudByte
 
-### Text 
+### Text
 
 Syntax | Description
 ------------ | -------------
 \*text\*  | Use before and after text for the text to appear in italics. Used to describe filenames, book titles, periodicals, and other materials. It is the equivalent of the HTML "cite" element. For example: \*\*text**
-\`\`\`code text \`\`\` | Use ```before and after text for code samples, commands, and command output 
+\`\`\`code text \`\`\` | Use ```before and after text for code samples, commands, and command output
 \# | Heading 1
 \#\#  | Heading 2 - Appear in the right pane TOC
 \#\#\#  |  Heading 3 - Appear in the right pane TOC
@@ -28,15 +28,15 @@ Syntax | Description
 Syntax | Description
 ------------ | -------------
 \*  | Use * space followed by text for unordered list.
-1 |  Use number, full stop and a space followed by text for ordered list. 
+1 |  Use number, full stop and a space followed by text for ordered list.
 
 
-Example: 
+Example:
 * text
 * text
   * sub text  
-  * sub text 
-  
+  * sub text
+
 
 1. Item 1
 2. Item 2
@@ -48,7 +48,7 @@ Example:
 
 Syntax | Description
 ------------ | -------------
-![image](/docs/assets/das-nas-cas.png) | Include the path where the image is location in the round brackets.
+![image](/docs/assets/das-nas-cas.png) | Include the path where the image is located in the round brackets.
 
 
 ### Links
@@ -60,7 +60,7 @@ http://github.com | Specify just the URL name to directly access the website. He
 
 
 
- 
+
 Prerequisite
 Prerequisite/s:
 ------------

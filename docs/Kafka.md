@@ -25,7 +25,7 @@ devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl apply -f 06-kafka-statefulset.ym
 ```
 Running the above commands creates 3 node zookeeper ensemble and a 3 node Kafka cluster which uses OpenEBS volumes.
 
-**Note :** Kafka is a distributed system that uses Zookeeper to track status of Kafka cluster nodes. 
+**Note:** Kafka is a distributed system that uses Zookeeper to track the status of Kafka cluster nodes. 
 
 Check if the Kafka pods are running by running the following command.
 ```
@@ -93,7 +93,7 @@ zk        3         3         6h
 
 ### Verifying Zookeeper
 
-To verify the Zookeeper ensemle, use the following procedure.
+To verify the Zookeeper ensemble, use the following procedure.
 
 ```
 devops@ubuntu:~ /openebs/k8s/demo/kafka$ kubectl exec -n kafka -it zk-0 -- /opt/zookeeper/bin/zkCli.sh create /foo bar
@@ -163,7 +163,7 @@ Topic:openEBS   PartitionCount:3        ReplicationFactor:3     Configs:
 Running the above command describes the topic. The first line displays a summary of all the partitions. Each additional line displays information about the partition. 
 
 - "leader" is the node responsible for all reads and writes for the given partition. Each node will be the leader for a randomly selected portion of the partitions.
-- "replicas" is the list of nodes that replicates the log for this partition regardless of whether they are the leader or if they are currently alive.
+- "replicas" is the list of nodes that replicate the log for this partition regardless of whether they are the leader or if they are currently alive.
 - "isr" is the set of "in-sync" replicas. This is the subset of the replicas list that is currently alive and caught-up to the leader.
 
 #### Sending messages
