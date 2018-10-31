@@ -33,7 +33,8 @@ const siteConfig = {
   editUrl: 'https://github.com/openebs/openebs-docs/edit/staging/docs/',
   createIssueUrl: 'https://github.com/openebs/openebs/issues/new/',
   /* path to images for header/footer */
-  headerIcon: 'img/openebs-logo.svg',
+  headerIcon: 'img/OpenEBS-logo.svg',
+  headerText: 'img/openebs-docs-logo.svg',
   favicon: 'img/favicon.ico',
   /* colors for website */
   colors: {
