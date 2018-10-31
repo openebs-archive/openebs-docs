@@ -105,7 +105,7 @@ footer .sitemap .nav-home {
     margin-right: 3px;
 }
 .fixedHeaderContainer header img {
-    height: 60%;
+    height: 50%;
     margin-right: 3px;
 }
 
@@ -281,13 +281,13 @@ and (max-device-width : 720px) {
     .ver-link {
       cursor: pointer;
       color: #fff;
-      margin-right: 150px;
-      margin-top: 10px;
+      margin-right: 160px;
+      margin-top: 11px;
     }
 
     p {
       line-height: 1;
-      font-size: 12px;
+      font-size: 14px;
     }
 }
 
