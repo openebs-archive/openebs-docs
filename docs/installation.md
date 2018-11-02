@@ -6,7 +6,7 @@ sidebar_label: Installation
 
 ---
 
-OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here](/docs/next/supportedplatforms.html)
+OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here](/docs/next/supportedplatforms.html).
 
 On an existing Kubernetes cluster, as a cluster administrator, you can install OpenEBS in the following two ways.
 
@@ -47,7 +47,7 @@ kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"sp
 
 ### Install OpenEBS using OpenEBS Helm Charts
 
-You have now set up helm and RBAC by following above [step](/docs/next/installation.html#setup-helm-rbac). Next,You should clone the latest OpenEBS repository. If you have cloned OpenEBS repository already, verify that it is updated.
+You have now set up helm and RBAC by following above [step](/docs/next/installation.html#setup-helm-rbac). Next, you should clone the latest OpenEBS repository. If you have cloned OpenEBS repository already, verify that it is updated.
 
 Latest OpenEBS repo can cloned and latest version can be packaged using following commands.
 

@@ -34,7 +34,7 @@ Syntax | Description
 Example:
 * text
 * text
-  * sub text  
+  * sub text
   * sub text
 
 

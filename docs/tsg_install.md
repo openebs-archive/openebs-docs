@@ -23,7 +23,7 @@ pvc-febcc15e-25d7-11e8-92c2-0a58ac1f1190-rep-578b5bcc6b-zkhn8   1/1       Runnin
 
 The AKS cluster runs ubuntu 16.04 LTS with the kubelet running in a container (debian-jessie 8). The kubelet logs show the absence of the iSCSI initiator. Hence, the volume is not attached to the node. Configuring kubelet to run with iSCSI utils should fix this issue.
 
-These steps are provided in the pre-requisite section, see [here](/docs/next/prerequisites.html#azure-cloud)
+These steps are provided in the pre-requisite section, see [here](/docs/next/prerequisites.html#azure-cloud).
 
 For more information, see [this](https://github.com/openebs/openebs/issues/1335).
 
@@ -63,14 +63,19 @@ To resolve this issue, do not install `open-iscsi / iscsi-initiator-utils` on th
 ## How can I select disks for creating a storage pool using cStor?
 
 With the latest OpenEBS 7.0 release, the following disk types/paths are excluded by NDM which identifies the disks to create cStor pools on nodes.
+
 ```
 loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-
 ```
+
 You can also customize by adding more disk types associated with your nodes. For example, used disks, unwanted disks and so on. This must be done in the 'openebs-operator-0.7.0.yaml' file that you downloaded before installation. Add the device path in `openebs-ndm-config` under ConfigMap in the `openebs-operator.yaml` file as follows.
+
 ```
 "exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"
 ```
+
 Example:
+
 ```
  {
           "key": "path-filter",

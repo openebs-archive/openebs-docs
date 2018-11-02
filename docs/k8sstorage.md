@@ -6,9 +6,7 @@ sidebar_label: Kubernetes Storage
 
 ------
 
-Kubernetes is an open-source system for automating deployment, scaling, and management of containerized applications. It groups containers that make up an application into logical units for easy management and discovery.  Via Kubernetes small groups can manage their own environments, support a DevOps and SRE like approach to building and running software  
-
-
+Kubernetes is an open-source system for automating deployment, scaling, and management of containerized applications. It groups containers that make up an application into logical units for easy management and discovery.  Via Kubernetes small groups can manage their own environments, support a DevOps and SRE like approach to building and running software.
 
 ## Problems
 

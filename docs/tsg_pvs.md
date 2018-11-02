@@ -8,7 +8,7 @@ sidebar_label: Persistent Volumes
 
 This section captures steps to troubleshoot and resolve some errors faced while using OpenEBS Persistent Volumes (PVs). The procedures and commands used in this document are mostly generic and are applicable to any common Linux platform/Kubernetes environment.
 
-## Application pod is stuck in ContainerCreating state after deployment  
+## Application pod is stuck in ContainerCreating state after deployment
 
 ### Troubleshooting the issue and Workaround:
 
@@ -17,6 +17,7 @@ This section captures steps to troubleshoot and resolve some errors faced while 
 - If the error message *executable not found in $PATH* is found, check whether the iSCSI initiator utils are installed on the node/kubelet container (rancherOS, coreOS). If not, install the same and retry deployment.
 
 - If the warning message *FailedMount: Unable to mount volumes for pod <>: timeout expired waiting for volumes to attach/mount* is persisting use the following procedure.
+
   1. Check whether the Persistent Volume Claim/Persistent Volume (PVC/PV) are created successfully and the OpenEBS controller and replica pods are running. These can be verified using the `kubectl get pvc,pv` and `kubectl get pods` command.
 
   2. If the OpenEBS volume pods are not created, and the PVC is in pending state, check whether the storageclass referenced by the application PVC is available/installed. This can be confirmed using the `kubectl get sc` command. If this storageclass is not created, or improperly created without the appropriate attributes, recreate the same and re-deploy the application.
@@ -34,7 +35,6 @@ This section captures steps to troubleshoot and resolve some errors faced while 
   4. If the PV is created and OpenEBS pods are running, use the `iscsiadm -m` session command on the node (where the pod is scheduled) to identify whether the OpenEBS iSCSI volume has been attached/logged-into. If not, verify network connectivity between the nodes.
 
   5. If the session is present, identify the SCSI device associated with the session using the command `iscsiadm -m session -P 3`. Once it is confirmed that the iSCSI device is available (check the output of `fdisk -l` for the mapped SCSI device), check the kubelet and system logs including the iscsid and kernel (syslog) for information on the state of this iSCSI device. If inconsistencies are observed, execute the filesyscheck on the device `fsck -y /dev/sd<>`. This will mount the volume to the node.
-
 
 - In OpenShift deployments, you can face this issue with the OpenEBS replica pods continuously restarting, that is, they are in crashLoopBackOff state. This is due to the default "restricted" security context settings. Edit the following settings using `oc edit scc restricted` to get the application pod running.
   - *allowHostDirVolumePlugin: true*
@@ -54,7 +54,6 @@ This issue is due to failed application operations in the container. Typically t
     - Application and controller pods
   - Node failures
   - OpenEBS volume replica crashes or restarts due to software bugs
-
 
 - In all the above cases, loss of the device for a period greater than the node iSCSI initiator timeout causes the volumes to be re-mounted as RO.
 
@@ -93,7 +92,7 @@ This issue is due to failed application operations in the container. Typically t
 
      While this step may not be necessary most times (as the application is already undergoing periodic restarts as part of the CrashLoop cycle), it can be performed if the application pod's next restart is scheduled with an exponential back-off delay.
 
-**Notes:**  
+**Notes:**
 
 1. The above procedure works for applications that are either pods or deployments/statefulsets. In case of the latter, the application pod can be restarted
 (i.e., deleted) after step-4 (iscsi logout) as the deployment/statefulset controller will take care of rescheduling the application on a same/different node with the volume.

@@ -18,13 +18,9 @@ Although we think hyperconverged is a better way to provide storage for cloud-na
 
 Utilizing old infrastructure where storage and compute are not equally available on every node. Running workloads on blade servers where no local storage is available. Environment where storage has to be controlled by storage admins. Stateless workload heavy environment, where stateless and stateful workloads have to  flood around the same nodes
 
-
-
 ## OpenEBS can be configured to use storage on specific Kubernetes nodes
 
-
-
-OpenEBS deployments are configured in a yaml files, and deployment are managed by Kubernetes itself. That’s why we call it Container Attached Storage (CAS). If you have certain nodes that have disks attached aka Storage Nodes, OpenEBS Volume Replica Pods can be scheduled on these Storage Nodes only. In Kubernetes, taints allow a node to repel a set of pods. Taints and tolerations work together to ensure that pods are not scheduled onto inappropriate nodes. [Here](https://blog.openebs.io/how-do-i-configure-openebs-to-use-storage-on-specific-kubernetes-nodes-361e3e842a78) are the instructions to use Kubernetes “taints & tolerations” feature to use storage on specific Kubernetes nodes. You can also use nodeAffinity to achieve similar result by following the instructions [here](https://blog.openebs.io/how-do-i-pin-the-openebs-replica-pod-s-to-the-kubernetes-nodes-where-they-were-scheduled-2ba42e3015df). 
+OpenEBS deployments are configured in a yaml files, and deployment are managed by Kubernetes itself. That’s why we call it Container Attached Storage (CAS). If you have certain nodes that have disks attached aka Storage Nodes, OpenEBS Volume Replica Pods can be scheduled on these Storage Nodes only. In Kubernetes, taints allow a node to repel a set of pods. Taints and tolerations work together to ensure that pods are not scheduled onto inappropriate nodes. [Here](https://blog.openebs.io/how-do-i-configure-openebs-to-use-storage-on-specific-kubernetes-nodes-361e3e842a78) are the instructions to use Kubernetes “taints & tolerations” feature to use storage on specific Kubernetes nodes. You can also use nodeAffinity to achieve similar result by following the instructions [here](https://blog.openebs.io/how-do-i-pin-the-openebs-replica-pod-s-to-the-kubernetes-nodes-where-they-were-scheduled-2ba42e3015df).
 
 
 

@@ -6,11 +6,11 @@ sidebar_label: AWS
 
 ------
 
-This section covers OpenEBS persistent storage solution using AWS instance store disks for applications running on Kubernetes clusters. Instance store disks provide high performance, but they are not guaranteed to be present in the node all the time which of course means that when the node is rescheduled you can lose the data they are storing. 
+This section covers OpenEBS persistent storage solution using AWS instance store disks for applications running on Kubernetes clusters. Instance store disks provide high performance, but they are not guaranteed to be present in the node all the time which of course means that when the node is rescheduled you can lose the data they are storing.
 
 #### Instance Store
 
-Instance store is ideal for temporary storage of information that changes frequently, such as buffers, caches, scratch data, and other temporary content or for data that is replicated across a fleet of instances, such as a load-balanced pool of web servers. 
+Instance store is ideal for temporary storage of information that changes frequently, such as buffers, caches, scratch data, and other temporary content or for data that is replicated across a fleet of instances, such as a load-balanced pool of web servers.
 
 Instance Store volume's drawback is that the data in an instance store persists only during the lifetime of its associated instance. The data in the instance store may be lost due to the following:
 
@@ -42,7 +42,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 
 **Perform following operations from AWS management console**
 
-1. Create VPC and Internet gateway. 
+1. Create VPC and Internet gateway.
 2. Associate this VPC with the Internet Gateway.
 
 **Perform the following procedure from your local ubuntu machine**
@@ -52,7 +52,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 2. Configure with your AWS account by executing the following command.
 
    ```
-   aws configure 
+   aws configure
    ```
 
    **Note:** You have to specify your AWS Access Key, Secret Access Key, Default region name, and Default output format for keeping the configuration details.
@@ -60,7 +60,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 3. Create a S3 bucket to store your cluster configuration details as follows.
 
    ```
-   aws s3 mb s3://<bucket_name> 
+   aws s3 mb s3://<bucket_name>
    ```
 
 4. Export the s3 bucket details using following command.
@@ -105,7 +105,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
    Change your master instance type and number of machines by executing as follows.
 
    ```
-   kops edit ig --name=<cluster_name>.k8s.local master-<zone_name> 
+   kops edit ig --name=<cluster_name>.k8s.local master-<zone_name>
    ```
 
    **Note:** We used c3.xlarge as instance type for both Master and Nodes. Number nodes used is 3.

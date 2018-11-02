@@ -5,11 +5,11 @@ sidebar_label: Provisioning Jiva
 ---
 ------
 
-OpenEBS can be used to create Storage Pool on a host disk or an externally mounted disk. This Storage Pool can be used to create Jiva volume which can be utilized to run applications. By default, Jiva volume will be deployed on host path. If you are using an external disk, see [storage pool](/docs/next/setupstoragepools.html#configuring-a-storage-pool-on-openebs) for more details about creating a storage pool with an external disk. 
+OpenEBS can be used to create Storage Pool on a host disk or an externally mounted disk. This Storage Pool can be used to create Jiva volume which can be utilized to run applications. By default, Jiva volume will be deployed on host path. If you are using an external disk, see [storage pool](/docs/next/setupstoragepools.html#configuring-a-storage-pool-on-openebs) for more details about creating a storage pool with an external disk.
 
 ## Provisioning Jiva Storage Engine
 
-Jiva can be provisioned in your Kubernetes cluster by using the following procedure. 
+Jiva can be provisioned in your Kubernetes cluster by using the following procedure.
 
 1. Verify if the OpenEBS installation is complete. If not, go to [installation](/docs/next/installation.html).
 
@@ -43,16 +43,15 @@ Jiva can be provisioned in your Kubernetes cluster by using the following proced
    standard (default)          kubernetes.io/gce-pd                                       29m
    ```
 
+2. OpenEBS installation will create Jiva storage pool also.It will be created by default on "/var/openebs" inside the hosted path on the nodes.
 
-2. OpenEBS installation will create Jiva storage pool also.It will be created by default on "/var/openebs" inside the hosted path on the nodes. 
-
-      You can get the storage pool details by running the following command. 
+      You can get the storage pool details by running the following command.
 
       ```
       kubectl get sp
       ```
 
-3. If you would like to create a storage pool on an external disk which is mounted on the nodes, create a  *openebs-config.yaml* file and add the below example yaml with changing the appropriate mounted disk path in your required node. 
+3. If you would like to create a storage pool on an external disk which is mounted on the nodes, create a  *openebs-config.yaml* file and add the below example yaml with changing the appropriate mounted disk path in your required node.
 
       For example,If your external disk is mounted as */mnt/openebs_disk* in your node, change the path as below. Goto Step 4 if you would like to create storage pool on external disk. Otherwise, goto Step5 to consume default storage pool.
 
@@ -80,7 +79,7 @@ Jiva can be provisioned in your Kubernetes cluster by using the following proced
       kubectl apply -f openebs-config.yaml
       ```
 
-5. The storage pool is now created on the Node as per your requirement. You can get the storage pool details by running the following command. 
+5. The storage pool is now created on the Node as per your requirement. You can get the storage pool details by running the following command.
 
       ```
       kubectl get sp
@@ -96,7 +95,7 @@ Jiva can be provisioned in your Kubernetes cluster by using the following proced
       default                  7m
       ```
 
-6. You have now deployed OpenEBS cluster with Jiva Engine. It can create OpenEBS Jiva volume on default storage pool. By default, OpenEBS Jiva volume runs with 3 replicas. 
+6. You have now deployed OpenEBS cluster with Jiva Engine. It can create OpenEBS Jiva volume on default storage pool. By default, OpenEBS Jiva volume runs with 3 replicas.
 
 7. Apply the sample pvc yaml file to create Jiva volume using the following command.
 

@@ -107,7 +107,7 @@ kubectl get pods -n openebs
   kubectl exec -it maya-apiserver-dc8f6bf4d-ldl6b bash -n openebs
   ```
 
-- Get the volume list and enter the required volume name in the next step.  
+- Get the volume list and enter the required volume name in the next step.
 
   ```
   mayactl volume list
@@ -165,7 +165,7 @@ kubectl get pods -n openebs
 
 7. Edit the file **peer.details** with *ReplicaCount":<one number less>*
 
-   `{"ReplicaCount":2,"QuorumReplicaCount":0}`  
+   `{"ReplicaCount":2,"QuorumReplicaCount":0}`
 
    **Note:** Previously ReplicaCount was 3 and it is now modified to 2. Also, there should be only one count change from the existing replica number.
 
@@ -320,44 +320,60 @@ Get the status and access mode of each replica from both the Nodes. Some access 
 
 Create the custom namespace if it is not existing in your cluster using the following command.
 
+    ```
     kubectl create namespace <custom_namespace_name>
+    ```
 
 **Example:**
 
+    ```
     kubectl create namespace app
+    ```
 
 Deploy your pvc yaml using the custom namespace using the following command.
 
+    ```
     kubectl apply -f <pvc_yaml> -n <custom_namespace_name>
+    ```
 
 **Example:**
 
+    ```
     kubectl apply -f percona-openebs-deployment.yaml -n app
+    ```
 
 The OpenEBS Jiva Pods and application will be created in the same custom namespace. You can check using the following command.
 
+    ```
     kubectl get pods -n app
+    ```
 
 The following output will be displayed.
 
+    ```
     NAME                                                             READY     STATUS    RESTARTS   AGE
     percona-7f6bff67f6-hw4ml                                         1/1       Running   0          1m
     pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-ctrl-6b598f7c6c-46dvx   2/2       Running   0          1m
     pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-rep-7c66dd6b84-7mh4m    1/1       Running   0          1m
     pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-rep-7c66dd6b84-xkc85    1/1       Running   0          1m
     pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc-rep-7c66dd6b84-zw6vl    1/1       Running   0          1m
+    ```
 
 Check the pvc status by using the following command with custom namespace.
 
+    ```
     kubectl get pvc -n app
+    ```
 
 The following output is displayed.
 
+    ```
     demo-vol1-claim   Bound     pvc-579a6a9a-9bc9-11e8-a48f-0667b9b343dc   5G         RWO            openebs-percona   39s
+    ```
 
 ## Expanding Jiva Storage Volumes
 
-You can resize/expand the OpenEBS volume using the following procedure.                                                     
+You can resize/expand the OpenEBS volume using the following procedure.
 
 1. Obtain iSCSI target and disk details using the following command.
 
@@ -365,10 +381,9 @@ You can resize/expand the OpenEBS volume using the following procedure.
   iscsiadm -m session -P 3
   Target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 (non-flash)
           Current Portal: 10.106.254.221:3260,1
-          Persistent Portal: 10.106.254.221:3260,1                  
+          Persistent Portal: 10.106.254.221:3260,1
           Attached scsi disk sdb          State: running
   ```
-
 
 2. Check the mount path on disk sdb using the following command.
 
@@ -378,7 +393,6 @@ You can resize/expand the OpenEBS volume using the following procedure.
   /dev/sdb on /var/lib/kubelet/pods/8de04c10-64a3-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 type ext4 (rw,relatime,data=ordered)
   ```
 
-
 3. Unmount the file system using the following command.
 
   ```
@@ -386,14 +400,13 @@ You can resize/expand the OpenEBS volume using the following procedure.
   umount /var/lib/kubelet/pods/8de04c10-64a3-11e8-994b000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2
   ```
 
-
 4. Logout from the iSCSI target using the following command.
 
-```
-iscsiadm -m node -u
-Logging out of session [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260]
-Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful
-```
+  ```
+  iscsiadm -m node -u
+  Logging out of session [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260]
+  Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful
+  ```
 
 5. Get the volume ID using the following command.
 
@@ -403,7 +416,6 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
   {"data":[{"actions":{"revert":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=revert","shutdown":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=shutdown","snapshot":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=snapshot"},"id":"**cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==**","links":{"self":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg=="},"name":"pvc-8de2f9e7-64a3-11e8-994b000c2959d9a2","replicaCount":1,"type":"volume"}],"links":{"self":"http://10.106.254.221:9501/v1/volumes"},"resourceType":"volume","type":"collection"}
   ```
 
-
 6. Modify the volume capacity using the following command.
 
   ```
@@ -411,7 +423,6 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
 
   curl -H "Content-Type: application/json" -X POST -d '{"name":"pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2","size":"7G"}' http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=resize
   ```
-
 
 7. Restart the replicas. You must delete all the replicas of a pod using a single command. In the example given below, Percona is running with a single replica.
 
@@ -429,44 +440,43 @@ Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-9
     pod "pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq" deleted
 
   ```
+
 8. Log in to the target using the following commands.
 
-```
- iscsiadm -m discovery -t st -p 10.106.254.221:326
-  10.106.254.221:3260,1 iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2
+  ```
+   iscsiadm -m discovery -t st -p 10.106.254.221:326
+    10.106.254.221:3260,1 iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2
 
-  iscsiadm -m node -T iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 -p 10.106.254.221:3260 -l
-  Logging in to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] (multiple)
-  Login to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful.
-```
+    iscsiadm -m node -T iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 -p 10.106.254.221:3260 -l
+    Logging in to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] (multiple)
+    Login to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful.
+  ```
 
 9. Check the file system consistency using the following command. sdc is the device after logging.
 
-```
-e2fsck -f /dev/sdc
-```
+  ```
+  e2fsck -f /dev/sdc
+  ```
 
 10. Expand the file system using the following command.
 
-```
- resize2fs /dev/sdc
-```
+  ```
+   resize2fs /dev/sdc
+  ```
 
 11. Mount the file system using the following command.
 
-```
-mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.99.197.30:3260-iqn.2016-09.com.openebs.jiva:pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2-lun-0
+  ```
+  mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.99.197.30:3260-iqn.2016-09.com.openebs.jiva:pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2-lun-0
 
-mount /dev/sdc /var/lib/kubelet/pods/3d71c842-6893-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2
-```
-
+  mount /dev/sdc /var/lib/kubelet/pods/3d71c842-6893-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2
+  ```
 
 12. Restart the application pod using the following command.
 
-```
-kubectl delete pod percona-b98f87dbd-nqssn
-```
-
+  ```
+  kubectl delete pod percona-b98f87dbd-nqssn
+  ```
 
 13. Application pod must be in running state and you can use the resized volume.
 
@@ -479,13 +489,16 @@ To know about node selector, see [scheduler](/docs/next/scheduler.html) section.
 
 For scheduling application on required nodes, you must have labelled the nodes appropriately. For example, the nodes are labelled as `openebs: controlnode`. The same label must be added in the application yaml file. For example, in the mongo-statefulset.yml file, under spec section, you can add the following.
 
+    ```
     nodeSelector:
        openebs: controlnode
+    ```
 
 **Example:**
 
 Following is a mongo statefulset application yaml file with the above entry added.
 
+    ```
     ---
     apiVersion: apps/v1beta1
     kind: StatefulSet
@@ -504,6 +517,7 @@ Following is a mongo statefulset application yaml file with the above entry adde
          nodeSelector:
             openebs: controlnode
          containers:
+    ```
 
 
 

@@ -22,7 +22,6 @@ In this section, we describe how to configure **OpenEBS** as a **persistent stor
 
 - [OpenEBS](https://github.com/openebs/openebs)
 
-
 ### **Install IBM Cloud Private**
 
 Follow instructions from [Introduction to IBM Cloud Private](http://containerized.me/introduction-to-ibm-cloud-private/) to deploy a multi-node ICP cluster.

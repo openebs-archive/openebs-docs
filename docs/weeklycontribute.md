@@ -10,9 +10,7 @@ Weekly contributor webinars are held on every Thursday 9:30 PM PST (Friday at 10
 
 Weekly webinar notes are managed using a [Google document](https://docs.google.com/presentation/d/12xfUKxjKpC-Vm6hSuJ7IFUNAQ3ZCVKJkPqoorDLBzQE/edit#slide=id.g357b4d5d33_0_0)
 
-
-
-## Slides and recordings of the past contributor meetings	
+## Slides and recordings of the past contributor meetings
 
 |       Date       | Topics Discussed                                             | Resources                                                    |
 | :--------------: | ------------------------------------------------------------ | ------------------------------------------------------------ |

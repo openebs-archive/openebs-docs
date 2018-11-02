@@ -6,14 +6,13 @@ sidebar_label: OpenShift
 
 ------
 
-This section captures steps to troubleshoot and resolve some errors faced while using OpenShift. 
+This section captures steps to troubleshoot and resolve some errors faced while using OpenShift.
 
 The following issue is covered in this section.
 
 [multipath.conf file claims all SCSI devices](#OpenShiftMultipath)
 
-
-## Issue: 
+## Issue:
 
 ### A multipath.conf file without either find_multipaths or a manual blacklist claims all SCSI devices. <a name="OpenShiftMultipath"></a>
 
