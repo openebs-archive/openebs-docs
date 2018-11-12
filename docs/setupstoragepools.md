@@ -31,11 +31,11 @@ gcloud compute instances attach-disk <Node Name> --disk disk1 --zone us-central1
 
 ## Configuring a Storage Pool on OpenEBS using Jiva
 
-Using Jiva, you can create storage pool on hosted path or an external disk. You can add single external disk such as GPD,local disk,etc to your Nodes as mentioned in the above [section](/docs/next/setupstoragepools.html#creating-and-attaching-a-disk-on-gke-node).
-To utilize an external disk, you must create a storage pool on the node where you have attached the disk. Use the following command to login to the node from master. Replace `< Node Name>` with your actual node nmae and `< Zone Of Your Node >` with the actual zone.
+Using Jiva, you can create storage pool on hosted path or an external disk. You can add single external disk such as GPD,local disk,etc. to your Nodes as mentioned in the above [section](/docs/next/setupstoragepools.html#creating-and-attaching-a-disk-on-gke-node).
+To utilize an external disk, you must create a storage pool on the node where you have attached the disk. Use the following command to login to the node from master. Replace `<Node Name>` with your actual node name and `<Zone Of Your Node>` with the actual zone.
 
 ```
-gcloud compute ssh < Node Name > --zone=< Zone Of Your Node >
+gcloud compute ssh <Node Name> --zone=<Zone Of Your Node>
 ```
 
 To create a storage pool you must first mount the external disk to all required nodes in the cluster.
@@ -165,7 +165,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 ## Scheduling a Pool on a Node
 
-If you want to schedule your pool on a particular node please follow [this](https://docs.openebs.io/docs/next/scheduler.html) procedure before applying the *openebs-operator.yaml* file. Please refer [installation](/docs/next/installation.html#install-openebs-using-kubectl) to deploy OpenEBS cluster in your k8s environment which will create a default storage pool on the host path.Jiva volumes will be deployed inside this path only.
+If you want to schedule your pool on a particular node please follow [this](https://docs.openebs.io/docs/next/scheduler.html) procedure before applying the *openebs-operator.yaml* file. Please refer [installation](/docs/next/installation.html#install-openebs-using-kubectl) to deploy OpenEBS cluster in your k8s environment which will create a default storage pool on the host path. Jiva volumes will be deployed inside this path only.
 
 For example, if you want to run a Percona application in this storage pool, you must create a storage class yaml called as *openebs-storageclasses.yaml* by adding the storage pool name in the *openebs-percona* storage class as Percona application is used in the example. 
 
