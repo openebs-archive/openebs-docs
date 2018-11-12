@@ -12,7 +12,9 @@ Storage pools are capacity aggregated from disparate physical storage resources 
 
 Pools can be provisioned to include any amount of capacity and use any combination of physical storage space in a storage area network (SAN).
 
-Using the custom resource feature of Kubernetes you can mount an external disk from any SAN, GPT, or DAS and create a volume on top of the external disk.
+Using the custom resource feature of Kubernetes you can mount an external disk from any SAN, GPT, or DAS and create a volume on top of the external disk/disks.
+
+OpenEBS allows you to create storage pool using cStor and Jiva Storage Engines. Jiva will create storgae pool on single external disk but cStor can create storage pool using multiple disks attached to a Node.
 
 ## Creating and Attaching a Disk on GKE Node
 
@@ -27,8 +29,9 @@ Attach the disk to the node. Use the following command to attach the disk to a p
 gcloud compute instances attach-disk <Node Name> --disk disk1 --zone us-central1-a
 ```
 
-## Configuring a Storage Pool on OpenEBS
+## Configuring a Storage Pool on OpenEBS using Jiva
 
+Using Jiva, you can create storage pool on hosted path or an external disk. You can add single external disk such as GPD,local disk,etc to your Nodes as mentioned in the above [section](/docs/next/setupstoragepools.html#creating-and-attaching-a-disk-on-gke-node).
 To utilize an external disk, you must create a storage pool on the node where you have attached the disk. Use the following command to login to the node from master. Replace `< Node Name>` with your actual node nmae and `< Zone Of Your Node >` with the actual zone.
 
 ```
@@ -78,6 +81,87 @@ spec:
 ```
 
 **Note:** Change the path with your mounted path if it is not your default mount path. Also, remember your pool name. In this example, the pool name is *test-mntdir*. 
+
+## Configuring a Storage Pool on OpenEBS using cStor
+
+cStor provides storage scalability along with ease of deployment and usage. cStor can handle multiple disks of same size per Node and create different storage pools. These Storage Pools can be used to create cStor volumes which can be utilized to run applications.
+
+Additionally, you can add disks using the documentation available at [Kubernetes docs](https://github.com/openebs/openebs-docs/blob/staging/docs/deploycstor.md). These disks can be used for creating the OpenEBS cStor pool by combining all the disks per node. You can scale the storage pool by adding more disks to the instance and in turn to the storage pool. Storage pools will be created in a striped manner.
+
+cStor pool can be created on openEBS cluster once you have installed OpenEBS 0.7 version. You can create storage pool by manual and auto pool creation method. 
+In manual method, you can select the disks and use it in the below yaml file which will create cStor pool using these selected disks.
+You can create a yaml file named *openebs-config.yaml* and add below contents to it. 
+```
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-cstor-disk
+  annotations:
+    openebs.io/cas-type: cstor
+    cas.openebs.io/config: |
+      - name: StoragePoolClaim
+        value: "cstor-disk"
+provisioner: openebs.io/provisioner-iscsi
+---
+#Use the following YAMLs to create a cStor Storage Pool.
+# and associated storage class.
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+spec:
+  name: cstor-disk
+  type: disk
+  maxPools: 3
+  poolSpec:
+    poolType: striped
+  # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
+  #
+  # `Disk` is a custom resource supported by OpenEBS with `node-disk-manager`
+  # as the disk operator
+# Replace the following with actual disk CRs from your cluster `kubectl get disks`
+# Uncomment the below lines after updating the actual disk names.
+  disks:
+    diskList:
+# Replace the following with actual disk CRs from your cluster from `kubectl get disks`
+#       - disk-184d99015253054c48c4aa3f17d137b1
+#       - disk-2f6bced7ba9b2be230ca5138fd0b07f1
+#       - disk-806d3e77dd2e38f188fdaf9c46020bdc
+#       - disk-8b6fb58d0c4e0ff3ed74a5183556424d
+#       - disk-bad1863742ce905e67978d082a721d61
+#       - disk-d172a48ad8b0fb536b9984609b7ee653
+---
+```
+Edit *openebs-config.yaml* file to include disk details associated to each node in the cluster which you are using for creating the OpenEBS cStor Pool. Replace the disk names under diskList section, which you can get from running kubectl get disks command. Once it is modified, you can apply the yaml.
+
+In auto pool creation method, you don't have to select the disks and it will create a cStor pool using the disks detected by [Node Disk Manager](/docs/next/architecture.html#cstor). You can create a yaml file named *openebs-config.yaml* and add below contents to it and then apply the yaml.
+
+```
+---
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+spec:
+  name: cstor-disk
+  type: disk
+  maxPools: 3
+  poolSpec:
+    poolType: striped
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-cstor-disk
+  annotations:
+    openebs.io/cas-type: cstor
+    cas.openebs.io/config: |
+      - name: StoragePoolClaim
+        value: "cstor-disk"
+provisioner: openebs.io/provisioner-iscsi
+---
+```
 
 ## Scheduling a Pool on a Node
 
