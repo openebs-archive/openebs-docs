@@ -20,7 +20,7 @@ This section provides detailed instructions which allow you to perform the follo
    Use OpenEBS as persistent storage for the MongoDB StatefulSet by selecting an OpenEBS storage class in the persistent volume claim. A sample MongoDB SatefulSet yaml (with container attributes and pvc
    details) is available in the OpenEBS git repository.
 
-   The number of replicas in the StatefulSet can be modified as required. The following example uses three replicas. The replica count can be edited in the StatefulSet specification.
+   The number of replicas in the StatefulSet can be modified as required. The following example uses three replicas. The replica count can be edited in the StatefulSet specification. 
 
        apiVersion: apps/v1beta1
         kind: StatefulSet
@@ -40,15 +40,16 @@ This section provides detailed instructions which allow you to perform the follo
 
    ```
    test@Master:~$ kubectl apply -f mongo-statefulset.yml
-
+   
    service "mongo" created
-
+   
    statefulset "mongo" created
    ```
 
-Verify that MongoDB replicas, mongo headless service and OpenEBS persistent volumes comprising of the controller and replica pods are successfully deployed and are in *Running* state.
+   
 
-    ```
+Verify that MongoDB replicas, mongo headless service and OpenEBS persistent volumes comprising of the controller and replica pods are successfully deployed and are in *Running* state. 
+
     test@Master:~$ kubectl get pods
     NAME                                                             READY     STATUS    RESTARTS   AGE
     maya-apiserver-1089964587-x5q15                                  1/1       Running   0          8m
@@ -65,7 +66,7 @@ Verify that MongoDB replicas, mongo headless service and OpenEBS persistent volu
     pvc-3a9ca1ec-bad7-11e7-869d-000c298ff5fc-ctrl-2347166037-vsc2t   1/1       Running   0          1m
     pvc-3a9ca1ec-bad7-11e7-869d-000c298ff5fc-rep-849715916-3w1c7     1/1       Running   0          1m
     pvc-3a9ca1ec-bad7-11e7-869d-000c298ff5fc-rep-849715916-f2f3p     1/1       Running   0          1m
-
+    
     test@Master:~$ kubectl get svc
     NAME                                                CLUSTER-IP       EXTERNAL-IP PORT(S)             AGE
     kubernetes                                          10.96.0.1        <none>      443/TCP             19h
@@ -74,7 +75,6 @@ Verify that MongoDB replicas, mongo headless service and OpenEBS persistent volu
     pvc-0d39583c-bad7-11e7-869d-000c298ff5fc-ctrl-svc   10.105.60.71     <none>      3260/TCP,9501/TCP   3m
     pvc-21da76b6-bad7-11e7-869d-000c298ff5fc-ctrl-svc   10.105.178.143   <none>      3260/TCP,9501/TCP   2m
     pvc-3a9ca1ec-bad7-11e7-869d-000c298ff5fc-ctrl-svc   10.110.104.42    <none>      3260/TCP,9501/TCP   1m
-    ```
 
 **Note:**
 
@@ -111,6 +111,8 @@ It may take some time for the pods to start as the images must be pulled and ins
 vi mongo-loadgen.yaml
 ```
 
+
+
 > --mongo-url='mongodb://mongo-0.mongo'
 
 Now run the below commands.
@@ -125,6 +127,7 @@ To check the pod status rum the below command.
 kubectl get pods
 ```
 
+
 Once all your pods are running run the below command.
 
 ```
@@ -135,12 +138,12 @@ Now Mongo-DB is running . To run Mongo-DB with xfs file system please follow the
 
 ### Verifying MongoDB Replication
 
-- Log in to the primary instance of the MongoDB S through the in-built Mongo shell and verify that the **sbtest** test database is created by Sysbench in the previous procedure.
+- Log in to the primary instance of the MongoDB S through the in-built Mongo shell and verify that the **sbtest** test database is created by Sysbench in the previous procedure. 
 
-    ```
+
     test@Master:~$ kubectl exec -it mongo-0 /bin/bash
     root@mongo-0:/# mongo
-
+    
     MongoDB shell version v3.4.9
     connecting to: mongodb://127.0.0.1:27017
     MongoDB server version: 3.4.9
@@ -149,105 +152,104 @@ Now Mongo-DB is running . To run Mongo-DB with xfs file system please follow the
     admin   0.000GB
     local   0.006GB
     sbtest  0.001GB
-    ```
 
-* Run the replication status command on the master/primary instance of  the S. In the output, verify that the values (timestamps) for **optimeDate** on both members are similar.
+* Run the replication status command on the master/primary instance of  the S. In the output, verify that the values (timestamps) for **optimeDate** on both members are similar. 
 
   ```
   rs0:PRIMARY> rs.status()
 
   {
 
-  "set" : "rs0",
+  "set" : "rs0", 
 
   "date" : ISODate("2017-10-23T07:26:36.679Z"),
 
-  "myState" : 1,
+  "myState" : 1, 
 
-  "term" : NumberLong(1),
+  "term" : NumberLong(1), 
 
-  "heartbeatIntervalMillis" : NumberLong(2000),
+  "heartbeatIntervalMillis" : NumberLong(2000), 
 
-  "optimes" : {
-  "lastCommittedOpTime" : {
-  		"ts" : Timestamp(1508743595, 51),
-  		"t" : NumberLong(1)
+  "optimes" : { 
+  "lastCommittedOpTime" : { 
+  		"ts" : Timestamp(1508743595, 51), 
+  		"t" : NumberLong(1) 
+  }, 
+  "appliedOpTime": { 
+  	"ts" : Timestamp(1508743596, 40), 
+  	"t" : NumberLong(1) 
   },
-  "appliedOpTime": {
-  	"ts" : Timestamp(1508743596, 40),
-  	"t" : NumberLong(1)
-  },
-  "durableOpTime" : {
-  	"ts" : Timestamp(1508743595, 71),
-  	"t" : NumberLong(1)
-  }
-  },
+  "durableOpTime" : { 
+  	"ts" : Timestamp(1508743595, 71), 
+  	"t" : NumberLong(1) 
+  } 
+  }, 
 
-  "members" : [
-  {
-  	"_id" : 0,
-  	"name" : "10.44.0.3:27017",
+  "members" : [ 
+  { 
+  	"_id" : 0, 
+  	"name" : "10.44.0.3:27017", 
+  	"health" : 1, 
+  	"state" : 1, 
+  	"stateStr" : "PRIMARY", 
+  	"uptime" : 243903, 
+  	"optime" : { 
+  		"ts" : Timestamp(1508743596, 40), 
+  		 "t" : NumberLong(1) 
+  	}, 
+  	"optimeDate" : ISODate("2017-10-23T07:26:36Z"), 
+  	"electionTime" : Timestamp(1508499738, 2), 
+  	"electionDate" : ISODate("2017-10-20T11:42:18Z"), 
+  	"configVersion" : 5, 
+  	"self" : true 
+  }, 
+  { 
+  	"_id" : 1, 
+  	"name" : "10.36.0.6:27017", 
   	"health" : 1,
-  	"state" : 1,
-  	"stateStr" : "PRIMARY",
-  	"uptime" : 243903,
-  	"optime" : {
-  		"ts" : Timestamp(1508743596, 40),
-  		 "t" : NumberLong(1)
-  	},
-  	"optimeDate" : ISODate("2017-10-23T07:26:36Z"),
-  	"electionTime" : Timestamp(1508499738, 2),
-  	"electionDate" : ISODate("2017-10-20T11:42:18Z"),
-  	"configVersion" : 5,
-  	"self" : true
+  	"state" : 2, 
+  	"stateStr" : "SECONDARY", 
+  	"uptime" : 243756, 
+  	"optime" : { 
+  		"ts" : Timestamp(1508743595, 51), 
+  		"t" : NumberLong(1) 
   },
-  {
-  	"_id" : 1,
-  	"name" : "10.36.0.6:27017",
-  	"health" : 1,
-  	"state" : 2,
-  	"stateStr" : "SECONDARY",
-  	"uptime" : 243756,
-  	"optime" : {
-  		"ts" : Timestamp(1508743595, 51),
-  		"t" : NumberLong(1)
-  },
-  "optimeDurable" : {
-  	"ts" : Timestamp(1508743595, 34),
-  	"t" : NumberLong(1)
-  },
+  "optimeDurable" : { 
+  	"ts" : Timestamp(1508743595, 34), 
+  	"t" : NumberLong(1) 
+  }, 
   "optimeDate" : ISODate("2017-10-23T07:26:35Z"),
   "optimeDurableDate" : ISODate("2017-10-23T07:26:35Z"),
   "lastHeartbeat" : ISODate("2017-10-23T07:26:35.534Z"),
   "lastHeartbeatRecv" : ISODate("2017-10-23T07:26:34.894Z"),
-  "pingMs" : NumberLong(6),
+  "pingMs" : NumberLong(6), 
   "syncingTo" : "10.44.0.3:27017",
-  "configVersion" : 5
-  },
-  {
-  	"_id" : 2,
+  "configVersion" : 5 
+  }, 
+  { 
+  	"_id" : 2, 
   	"name" : "10.44.0.7:27017",
-  	"health" : 1,
-  	"state" : 2,
-  	"stateStr" : "SECONDARY",
-  	"uptime" : 243700,
-  	"optime" : {
-  		"ts" : Timestamp(1508743595, 104),
-  		"t" : NumberLong(1)
-  	},
-  	"optimeDurable" : {
-  		"ts" : Timestamp(1508743595, 34),
-  		"t" : NumberLong(1)
-  	},
-  	"optimeDate" : ISODate("2017-10-23T07:26:35Z"),
-  	"optimeDurableDate" : ISODate("2017-10-23T07:26:35Z"),
-  	"lastHeartbeat" : ISODate("2017-10-23T07:26:35.949Z"),
-  	"lastHeartbeatRecv" : ISODate("2017-10-23T07:26:35.949Z"),
+  	"health" : 1, 
+  	"state" : 2, 
+  	"stateStr" : "SECONDARY", 
+  	"uptime" : 243700, 
+  	"optime" : { 
+  		"ts" : Timestamp(1508743595, 104), 
+  		"t" : NumberLong(1) 
+  	}, 
+  	"optimeDurable" : { 
+  		"ts" : Timestamp(1508743595, 34), 
+  		"t" : NumberLong(1) 
+  	}, 
+  	"optimeDate" : ISODate("2017-10-23T07:26:35Z"), 
+  	"optimeDurableDate" : ISODate("2017-10-23T07:26:35Z"), 
+  	"lastHeartbeat" : ISODate("2017-10-23T07:26:35.949Z"), 
+  	"lastHeartbeatRecv" : ISODate("2017-10-23T07:26:35.949Z"), 
   	"pingMs" : NumberLong(0),
-  	"syncingTo" : "10.44.0.3:27017",
-  	"configVersion" : 5
-  	}
-  ],
+  	"syncingTo" : "10.44.0.3:27017", 
+  	"configVersion" : 5 
+  	} 
+  ], 
   "ok" : 1
   }
   ```
@@ -256,19 +258,15 @@ Now Mongo-DB is running . To run Mongo-DB with xfs file system please follow the
 
 **Note:**
 
-By default, the databases cannot be viewed on the secondary instance through the show dbs command, unless we set the slave context.
+By default, the databases cannot be viewed on the secondary instance through the show dbs command, unless we set the slave context. 
 
-    ```
     rs0:SECONDARY> rs.slaveOk()
     rs0:SECONDARY> show dbs
     admin   0.000GB
     local   0.005GB
     sbtest  0.001GB
-    ```
+* The time lag between the MongoDB instances can be found using the following command, which can be executed on either instance. 
 
-* The time lag between the MongoDB instances can be found using the following command, which can be executed on either instance.
-
-    ```
     rs0:SECONDARY> rs.printSlaveReplicationInfo()
     source: 10.36.0.6:27017
          syncedTo: Mon Oct 23 2017 07:28:27 GMT+0000 (UTC)
@@ -276,7 +274,6 @@ By default, the databases cannot be viewed on the secondary instance through the
     source: 10.44.0.7:27017
          syncedTo: Mon Oct 23 2017 07:28:27 GMT+0000 (UTC)
          0 secs (0 hrs) behind the primary
-    ```
 
 * The way the PVCs are associated with a deployment in a StatefulSet are different and don't follow the same process as a Deployment. The StatefulSet internally creates the PVC objects. Also currently a delete Statefulset doesn't delete the corresponding PVCs created.
 

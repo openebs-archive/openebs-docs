@@ -9,9 +9,9 @@ Using Vagrant
 
 ## Setting Up OpenEBS with Kubernetes on a Local Machine
 
-The following procedure helps you setup and use OpenEBS on a local machine.
+The following procedure helps you setup and use OpenEBS on a local machine:
 
-### Prerequisites
+### Prerequisites:
 
 -   Vagrant (\>=1.9.1)
 -   VirtualBox (\>=5.1)
@@ -32,20 +32,20 @@ Install a Vagrant Box either by downloading the vagrant file or by cloning the r
 
 ### Installing a Vagrant Box by Downloading the Vagrantfile
 
-1.  Create a demo directory for example, k8s-demo using the following command.
+1.  Create a demo directory for example, k8s-demo using the following command. 
 
     ```
      mkdir k8s-demo
     ```
 
-2.  Download OpenEBS Vagrant file using the following command.
+2.  Download OpenEBS Vagrant file using the following command. 
 
     ```
     cd k8s-demo $ wget
     https://raw.githubusercontent.com/openebs/openebs/master/k8s/vagrant/1.7.5/Vagrantfile
     ```
 
-3.  Bring up k8s Cluster.
+3.  Bring up k8s Cluster. 
 
     ```
     vagrant up
@@ -68,14 +68,14 @@ Install a Vagrant Box either by downloading the vagrant file or by cloning the r
     cd openebs/k8s
     ```
 
--   Run OpenEBS Operator using the following command.
+-   Run OpenEBS Operator using the following command. 
 
     ```
     kubectl apply -f
     openebs-operator.yaml
     ```
 
--   Add OpenEBS related storage classes using the following command, that can then be used by developers or applications.
+-   Add OpenEBS related storage classes using the following command, that can then be used by developers or applications. 
 
     ```
     kubectl apply -f
@@ -86,7 +86,7 @@ Install a Vagrant Box either by downloading the vagrant file or by cloning the r
 
 To use OpenEBS as persistent storage for your stateful workloads, set the PVC storage class to OpenEBS storage class.
 
-Get the list of storage classes using the following command. Choose the storage class that best suits your application.
+Get the list of storage classes using the following command. Choose the storage class that best suits your application. 
 
 ```
 kubectl get sc
@@ -94,13 +94,13 @@ kubectl get sc
 
 ### Installing a Vagrant Box by Cloning the Repository
 
-1.  Clone the OpenEBS repository using the following command.
+1.  Clone the OpenEBS repository using the following command. 
 
     ```
     git clone http://github.com/openebs/openebs.git
     ```
 
-2.  Bring up k8s Cluster.
+2.  Bring up k8s Cluster. 
 
     ```
     cd openebs/k8s/vagrant/1.7.5
@@ -128,7 +128,7 @@ Verify that you have the following software installed on your machine.
 
 ### Creating and Editing a Vagrantfile for CentOS
 
-Run the following commands to create a Vagrantfile for CentOS.
+Run the following commands to create a Vagrantfile for CentOS. 
 
 ```
 host-machine:~/mkdir k8s-demo host-machine:~/cd k8s-demo
@@ -138,7 +138,7 @@ host-machine:~/k8s-demo$ vagrant init centos/7
 A Vagrantfile has been placed in this directory. You are now ready to vagrant up your first
 virtual environment! Please read the comments in the Vagrantfile as well as documentation on vagrantup.com for more information on using Vagrant.
 
-Edit the generated Vagrantfile similar to the following:
+Edit the generated Vagrantfile similar to the following: 
 
 ```
 # -- mode: ruby -- # vi: set ft=ruby :
@@ -175,17 +175,17 @@ This environment represents multiple VMs. The VMs are all listed above with thei
 
 ## Bringing up Vagrant VMs
 
-Use *vagrant up* command to bring up the VMs.
+Use *vagrant up* command to bring up the VMs. 
 
 ```
 vagrant up
 ```
 
-Verify the state of Vagrant VMs using the following command. The output displayed is similar to the following:
+Verify the state of Vagrant VMs using the following command. The output displayed is similar to the following: 
 
 ```
 vagrant status Current machine states:
-master running (VirtualBox) worker-01 running (VirtualBox)
+master running (VirtualBox) worker-01 running (VirtualBox) 
 worker-02 running (VirtualBox)
 This environment represents multiple VMs. The VMs are all listed above with their current state. For more information about a specific VM, run vagrant status NAME.
 ```
@@ -193,7 +193,7 @@ This environment represents multiple VMs. The VMs are all listed above with thei
 ### Before you Begin
 
 -   SSH into each Vagrant VM and perform the following steps:
-    -   Update the /etc/hosts file. Your hosts file will be similar to the following:
+    -   Update the /etc/hosts file. Your hosts file will be similar to the following: 
 
         ```
         For Master /etc/hosts:
@@ -206,19 +206,19 @@ This environment represents multiple VMs. The VMs are all listed above with thei
         172.28.128.33 worker-02 worker-02 127.0.0.1 localhost
         ```
 
-    -   Update the /etc/resolv.conf file. Your resolv.conf file will look similar to the following:
+    -   Update the /etc/resolv.conf file. Your resolv.conf file will look similar to the following: 
 
         ```
         # Generated by NetworkManager search domain.name nameserver 8.8.8.8
         ```
 
-    -   Disable Swap - you must disable swap for kubelet to work properly (for Kubernetes 1.8 and above).
+    -   Disable Swap - you must disable swap for kubelet to work properly (for Kubernetes 1.8 and above). 
 
         ```
         [vagrant@master~]$ sudo swapoff -a
         ```
 
-    -   Comment out lines containing "swap" in /etc/fstab with swap disabled.
+    -   Comment out lines containing "swap" in /etc/fstab with swap disabled. 
 
         ```
         sudo vi /etc/fstab # #
@@ -234,52 +234,57 @@ This environment represents multiple VMs. The VMs are all listed above with thei
 
     -   On each of your vagrant machines, install Docker. Refer to the official Docker installation guides.
 
-    -   Once the docker installation is complete, execute the below command to enable and start the docker service.
+    -   Once the docker installation is complete, execute the below command to enable and start the docker service. 
 
         ```
         sudo systemctl enable docker && sudo systemctl start docker
         ```
 
-    -   Setup Kubernetes repo details for installing Kubernetes binaries.
+    -   Setup Kubernetes repo details for installing Kubernetes binaries. 
 
         ```
         sudo tee -a /etc/yum.repos.d/kubernetes.repo <<EOF >/dev/null [kubernetes] name=Kubernetes
-        baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-        enabled=1 gpgcheck=1 repo_gpgcheck=1
+        baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64 
+        enabled=1 gpgcheck=1 repo_gpgcheck=1 
         gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
         https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
         EOF
         ```
 
-    -   Disable SELinux - you have to do this until SELinux support is improved in the kubelet.
+    -   Disable SELinux - you have to do this until SELinux support is improved in the kubelet. 
 
         ```
         # Disable SELinux by running setenforce 0 # This is required to allow containers to access the host filesystem required by the pod networks. sudo
         setenforce 0
         ```
 
-    -   Ensure the iptables flag in sysctl configuration is set to 1.
+    -   Ensure the iptables flag in sysctl configuration is set to 1. 
 
         ```
         sudo tee -a /etc/sysctl.d/k8s.conf <<EOF >/dev/null
         net.bridge.bridge-nf-call-ip6tables = 1
         net.bridge.bridge-nf-call-iptables = 1 EOF
+
         ```
 
-    -   Reload the system configuration.
+    -   Reload the system configuration. 
 
         ```
         sudo sysctl --system
         ```
 
-    -   Install kubeadm, kubelet, and kubectl.
+    -   Install kubeadm, kubelet, and kubectl. 
 
         ```
         sudo yum install -y
         kubelet-1.8.5-0 kubeadm-1.8.5-0 kubectl-1.8.5-0
         ```
 
-    -   Ensure the --cgroup-driver kubelet flag is set to the same value as Docker.
+    -   Ensure the --cgroup-driver kubelet flag is set to the same value as Docker. 
+
+        ```
+
+        ```
 
     -   Execute the below step to enable and start the kubelet service.
 
@@ -295,7 +300,7 @@ This environment represents multiple VMs. The VMs are all listed above with thei
 -   Perform the following operations on the **Master Node**.
     -   Install wget. :: sudo yum install -y wget
 
-    -   Download and configure the JSON parser jq.
+    -   Download and configure the JSON parser jq. 
 
         ```
         wget -O jq
@@ -303,14 +308,14 @@ This environment represents multiple VMs. The VMs are all listed above with thei
         chmod +x ./jq sudo mv jq /usr/bin
         ```
 
-    -   Initialize your master.
+    -   Initialize your master. 
 
         ```
         sudo kubeadm init
         --apiserver-advertise-address=<vagrant_vm_ipaddress>
         ```
 
-    -   Configure the Kubernetes configuration.
+    -   Configure the Kubernetes configuration. 
 
         ```
         mkdir -p $HOME/.kube
@@ -318,7 +323,7 @@ This environment represents multiple VMs. The VMs are all listed above with thei
         chown $(id -u):$(id -g) $HOME/.kube/config
         ```
 
-    -   Patch kube-proxy for CNI Networks.
+    -   Patch kube-proxy for CNI Networks. 
 
         ```
         kubectl -n kube-system get
@@ -329,17 +334,15 @@ This environment represents multiple VMs. The VMs are all listed above with thei
          && kubectl -n kube-system delete pods -l 'k8s-app=kube-proxy'
         ```
 
-    -   Install Pod Network - Weave
+    -   Install Pod Network - Weave 
 
         ```
         export kubever=$(kubectl version
         | base64 | tr -d 'n') kubectl apply -f
         "https://cloud.weave.works/k8s/net?k8s-version=$kubever"
         ```
-
 -   Perform the following operations on the **Worker Nodes**.
-
-    -   Join the cluster
+    -   Join the cluster 
 
         ```
         sudo kubeadm join --token <token>
@@ -353,7 +356,7 @@ This environment represents multiple VMs. The VMs are all listed above with thei
         sudo yum install -y iscsi-initiator-utils
         ```
 
-    -   Execute the below command to enable and start the iscsid service.
+    -   Execute the below command to enable and start the iscsid service. 
 
         ```
         sudo systemctl enable iscsid && sudo systemctl start
@@ -364,26 +367,26 @@ This environment represents multiple VMs. The VMs are all listed above with thei
 
 ### Setting Up OpenEBS Volume Provisioner
 
--   Download the *openebs-operator.yaml* and *openebs-storageclasses.yaml* on the Kubernetes Master.
+-   Download the *openebs-operator.yaml* and *openebs-storageclasses.yaml* on the Kubernetes Master. 
 
     ```
     wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml
     wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
     ```
 
--   Apply the *openebs-operator.yaml* file on the Kubernetes cluster. This creates the maya api-server and OpenEBS provisioner deployments.
+-   Apply the *openebs-operator.yaml* file on the Kubernetes cluster. This creates the maya api-server and OpenEBS provisioner deployments. 
 
     ```
     kubectl apply -f openebs-operator.yaml
     ```
 
--   Add the OpenEBS storage classes using the following command. This can be used by users to map a suitable storage profile for their applications in their respective persistent volume claims.
+-   Add the OpenEBS storage classes using the following command. This can be used by users to map a suitable storage profile for their applications in their respective persistent volume claims. 
 
     ```
     kubectl apply -f openebs-storageclasses.yaml
     ```
 
--   Check whether the deployments are running successfully using the following commands.
+-   Check whether the deployments are running successfully using the following commands. 
 
     ```
     kubectl get deployments
@@ -391,15 +394,15 @@ This environment represents multiple VMs. The VMs are all listed above with thei
     2m openebs-provisioner 1 1 1 1 2m
     ```
 
--   Check whether the pods are running successfully using the following commands.
+-   Check whether the pods are running successfully using the following commands. 
 
     ```
-    kubectl get pods NAME READY
+    kubectl get pods NAME READY 
     STATUS RESTARTS AGE maya-apiserver-1633167387-5ss2w 1/1 Running 0
     24s openebs-provisioner-1174174075-f2ss6 1/1 Running 0 23s
     ```
 
--   Check whether the storage classes are applied successfully using the following commands.
+-   Check whether the storage classes are applied successfully using the following commands. 
 
     ```
     kubectl get sc NAME
@@ -469,9 +472,8 @@ The recommended configuration for the VM host is as follows:
 
 ## Download
 
-Setup the local working directory where the ansible code will be downloaded. Perform a git clone of the OpenEBS repository, and navigate to e2e/ansible.
+Setup the local working directory where the ansible code will be downloaded. Perform a git clone of the OpenEBS repository, and navigate to e2e/ansible. 
 
-    ```
     git clone https://github.com/openebs/openebs.git
     ls
     openebs
@@ -490,7 +492,6 @@ Setup the local working directory where the ansible code will be downloaded. Per
     -rw-rw-r--  1 testuser testuser  1864 Jun  5 09:29 run-tests.yml
     -rw-rw-r--  1 testuser testuser   379 Jun  5 09:29 setup-openebs.yml
     -rw-rw-r--  1 testuser testuser  4221 Jun  5 09:29 Vagrantfile
-    ```
 
 ## Setup Environment for OpenEBS Installation
 
@@ -500,16 +501,16 @@ Setup the local working directory where the ansible code will be downloaded. Per
 -   Edit the *inventory/machines.in* file to place the latest HostCode, IP, username variable, password variable for all the machines setup. For more details on editing *machines.in*, see the [Inventory README](https://github.com/openebs/openebs/blob/master/e2e/ansible/inventory/README.md).
 
 -   Edit the global variables file *inventory/group\_vars/all.yml* to reflect the desired storage volume properties and network CIDR that will be used by the maya api server to allot the IP for the volume containers. Also update the ansible run-time properties to reflect the machine type (is\_vagrant), whether the playbook execution needs to be recorded using the Ansible Run Analysis framework (setup\_ara), whether slack notifications are needed (in case they are required, a \$SLACK\_TOKEN env variable needs to be setup. The token is usually the last part of the slack webhook URL which is user generated) and so on.
--   (Optional) Execute the setup\_ara playbook to install the ARA notification plugins and custom modules. This step will cause changes to the ansible configuration file *ansible.cfg* (though a backup will be taken at the time of execution in case you need to revert). A web URL is provided as a playbook run message at the end of the ara setup procedure, which can be used to track all the playbook run details after this point.
+-   (Optional) Execute the setup\_ara playbook to install the ARA notification plugins and custom modules. This step will cause changes to the ansible configuration file *ansible.cfg* (though a backup will be taken at the time of execution in case you need to revert). A web URL is provided as a playbook run message at the end of the ara setup procedure, which can be used to track all the playbook run details after this point. 
 
          ansible-playbook setup-ara.yml
 
 -   Note that the above playbook must be run separately and not as part of any the *master* playbook run as the changes to ansible default configuration may fail to take effect dynamically
--   Execute the prerequisites ansible playbook to generate the ansible inventory, that is, *hosts* file from the data provided in the *machines.in* file.
+-   Execute the prerequisites ansible playbook to generate the ansible inventory, that is, *hosts* file from the data provided in the *machines.in* file. 
 
          ansible-playbook pre-requisites.yml
 
--   Verify generation of the hosts file in the *openebs/e2e/ansible/inventory* directory. Check the *host-status.log* in the same location for details on the inventory file generation in case of any issues.
+-   Verify generation of the hosts file in the *openebs/e2e/ansible/inventory* directory. Check the *host-status.log* in the same location for details on the inventory file generation in case of any issues. 
 
         testuser@OpenEBSClient:~/openebs/e2e/ansible/inventory$ ls -ltr hosts
         -rw-rw-r-- 1 testuser testuser 1482 Jun  5 10:00 hosts
@@ -526,7 +527,7 @@ The subsequent section explains the installation procedure.
     Applications can consume storage by specifying a persistent volume claim which uses openebs-storage class.
 
 -   Setup the Kubernetes cluster using the setup-kubernetes playbook, followed by the setup-openebs playbook to deploy the OpenEBS pods. Internally, this runs the hyperconverged ansible role which executes the openebs-operator and integrates openebs-storage classes into the Kubernetes cluster.
--   Execute the setup-kubernetes ansible playbook to create the Kubernetes cluster followed by the setup-openebs playbook. These playbooks install the requisite dependencies on the machines, update the configuration files on the boxes and sets up Kubernetes cluster.
+-   Execute the setup-kubernetes ansible playbook to create the Kubernetes cluster followed by the setup-openebs playbook. These playbooks install the requisite dependencies on the machines, update the configuration files on the boxes and sets up Kubernetes cluster. 
 
             ansible-playbook setup-kubernetes.yml
 
@@ -540,21 +541,21 @@ The subsequent section explains the installation procedure.
             kubehost02   Ready     2d        v1.6.3
             kubemaster   Ready     2d        v1.6.3
 
--   Verify that the Kubernetes cluster is running using the kubectl get nodes command.
+-   Verify that the Kubernetes cluster is running using the kubectl get nodes command. 
 
         kubectl get deployments
         NAME                  DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
         maya-apiserver        1         1         1            1           4h
         openebs-provisioner   1         1         1            1           4h
-
+        
 -   Verify that the maya-apiserver and openebs-provisioner are deployed successfully on the Kubernetes cluster.
-
-        kubectl get pods
+        
+        kubectl get pods 
         NAME                                   READY     STATUS    RESTARTS   AGE
         maya-apiserver-1633167387-v4sf1        1/1       Running   0          4h
         openebs-provisioner-1174174075-n989p   1/1       Running   0          4h
 
--   Verify that the OpenEBS storage classes are created successfully.
+-   Verify that the OpenEBS storage classes are created successfully. 
 
         kubectl get sc
         NAME              TYPE
@@ -566,11 +567,11 @@ The subsequent section explains the installation procedure.
 
 -   Test the OpenEBS setup installed using the above procedure by deploying a sample application pod.
 -   *run-hyperconverged-tests.yml* can be used to run tests.
--   By default, all tests are commented in the above playbooks. Uncomment the desired test and execute the playbook. In the example below, a percona mysql DB is deployed on a hyperconverged installation.
+-   By default, all tests are commented in the above playbooks. Uncomment the desired test and execute the playbook. In the example below, a percona mysql DB is deployed on a hyperconverged installation. 
 
         ansible-playbook run-hyperconverged-tests.yml
 
--   Verify that the pods are deployed on the Kubernetes nodes along with OpenEBS storage pods created as per the storage-class in the persistent volume claim, by executing the following command on the Kubernetes master.
+-   Verify that the pods are deployed on the Kubernetes nodes along with OpenEBS storage pods created as per the storage-class in the persistent volume claim, by executing the following command on the Kubernetes master. 
 
         kubectl get pods
         NAME                                                            READY     STATUS    RESTARTS   AGE
@@ -581,21 +582,21 @@ The subsequent section explains the installation procedure.
         pvc-4644787a-5b1f-11e7-bf1c-000c298ff5fc-rep-871457607-l392p    1/1       Running   0          2m
         pvc-4644787a-5b1f-11e7-bf1c-000c298ff5fc-rep-871457607-n9m73    1/1       Running   0          2m
 
--   For more details about the pod, execute the `kubectl describe pod <pod name>` command.
+-   For more details about the pod, execute the `kubectl describe pod <pod name>` command. 
 
--   The storage volume that is the persistent volume associated with the persistent volume claim, can be viewed using the *volume list *command in the maya-apiserver pod.
+-   The storage volume that is the persistent volume associated with the persistent volume claim, can be viewed using the *volume list *command in the maya-apiserver pod. 
 
         kubectl exec maya-apiserver-1633167387-v4sf1 -c maya-apiserver -- maya volume list
         Name                                      Status
         pvc-a2a6d71f-5b21-11e7-bf1c-000c298ff5fc  Running
 
--   Verify that the storage volume is receiving input/output by checking the increments to *DataUpdateIndex* in the output of the volume stats command issued in the maya-apiserver pod. Some additional performance statistics are also available in the command output.
+-   Verify that the storage volume is receiving input/output by checking the increments to *DataUpdateIndex* in the output of the volume stats command issued in the maya-apiserver pod. Some additional performance statistics are also available in the command output. 
 
         kubectl exec maya-apiserver-1633167387-v4sf1 -c maya-apiserver -- maya volume stats pvc-a2a6d71f-5b21-11e7-bf1c-000c298ff5fc
-        ------------------------------------
+        ------------------------------------ 
         IQN:iqn.2016-09.com.openebs.jiva:pvc-a2a6d71f-5b21-11e7-bf1c-000c298ff5fc
-        Volume: pvc-a2a6d71f-5b21-11e7-bf1c-000c298ff5fc
-        Portal:10.104.223.35:3260
+        Volume: pvc-a2a6d71f-5b21-11e7-bf1c-000c298ff5fc 
+        Portal:10.104.223.35:3260 
         Size: 5G
         Replica Status DataUpdateIndex 10.36.0.2 Online 2857 10.44.0.3
         Online 2857 ------------------------------------ r/s| w/s|

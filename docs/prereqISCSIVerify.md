@@ -1,14 +1,14 @@
 ---
 id: open-iSCSI
 title: Verify open-iscsi status
-sidebar_label: prereqISCSIVerify
+sidebar_label: prereqISCSIVerify 
 ---
 
 ------
 
 ## Verify open-iscsi status on Kublet
 
-The open-iscsi initiator packages depends on your host OS or in kublet container. You can follow the following steps for installation / verification of open-iscsi package.  In case you are using GKE, use the host machine as ubuntu.
+The open-iscsi initiator packages depends on your host OS or in kublet container. You can follow the following steps for installation / verification of open-iscsi package.  In case you are using GKE, use the host machine as ubuntu. 
 
 **On Ubuntu**
 
@@ -24,7 +24,7 @@ sudo cat /etc/iscsi/initiatorname.iscsi
 sudo service open-iscsi status
 ```
 
-If iSCSI is not installed on your host, install open-iscsi package by following below commands.
+If iSCSI is not installed on your host, install open-iscsi package by following below commands. 
 
 ```
 sudo apt-get update
@@ -38,7 +38,7 @@ sudo apt-get install open-iscsi
 sudo service open-iscsi restart
 ```
 
-You can verify the installation as mentioned in the section verify that iSCSI is configured.
+You can verify the installation as mentioned in the section verify that iSCSI is configured. 
 
 **On Centos**
 
@@ -54,13 +54,13 @@ vi /etc/iscsi/initiatorname.iscsi
 systemctl status iscsi.service
 ```
 
-If iSCSI is not installed on your host, install open iscsi-initiator-utils RPM package by following the below commands.
+If iSCSI is not installed on your host, install open iscsi-initiator-utils RPM package by following the below commands. 
 
 ```
 yum install iscsi-initiator-utils -y
 ```
 
- You can verify the installation as mentioned in the section verify that iSCSI is configured.
+ You can verify the installation as mentioned in the section verify that iSCSI is configured. 
 
 **On Azure**
 
@@ -77,7 +77,7 @@ azureuser@aks-nodepool1-46849391-1:~$
 Obtain the container ID of the hyperkube kubelet on each node by running the following command.
 
 ```
-azureuser@aks-nodepool1-46849391-1:~$ sudo docker ps | grep "hyperkube kubele"
+azureuser@aks-nodepool1-46849391-1:~$ sudo docker ps | grep "hyperkube kubele" 
 3aab0f9a48e2    k8s-gcrio.azureedge.net/hyperkube-amd64:v1.8.7   "/hyperkube kubele..."   48 minutes ago      Up 48 minutes                           eager_einstein
 ```
 
@@ -98,7 +98,9 @@ azureuser@aks-nodepool1-46849391-1:~$ sudo docker exec -it 3aab0f9a48e2 bash
 # exit
 ```
 
-You can verify the installation as mentioned in the section verify that iSCSI is configured.
+You can verify the installation as mentioned in the section verify that iSCSI is configured. 
+
+
 
 Note**: Install and configure iSCSI in all the Kubernetes cluster nodes by following the above procedure.
 

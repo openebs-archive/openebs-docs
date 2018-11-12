@@ -6,14 +6,14 @@ sidebar_label: Installation
 
 ---
 
-OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here](/docs/next/supportedplatforms.html).
+OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here](/docs/next/supportedplatforms.html)
 
 On an existing Kubernetes cluster, as a cluster administrator, you can install OpenEBS in the following two ways.
 
 1. Using (stable/OpenEBS) [helm charts](/docs/next/installation.html#install-openebs-using-helm-charts)
 2. Using OpenEBS operator through [kubectl](/docs/next/installation.html#install-openebs-using-kubectl)
 
-**Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS operator/kubectl](/docs/next/installation.html#install-openebs-using-kubectl) and [OpenEBS helm Charts](/docs/next/installation.html#install-openebs-using-openebs-helm-charts) .The steps for both methods are explained below.
+**Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS operator/kubectl](/docs/next/installation.html#install-openebs-using-kubectl) and [OpenEBS helm Charts](/docs/next/installation.html#install-openebs-using-openebs-helm-charts). The steps for both methods are explained below.
 
 <a name="helm"></a>
 
@@ -25,13 +25,13 @@ You can install OpenEBS using helm charts in two ways.
 
 1. Using [Stable Helm Charts](/docs/next/installation.html#install-openebs-using-stable-helm-charts)
 
-   This will help to install OpenEBS using [Kubernetes stable helm charts](https://github.com/kubernetes/charts/tree/master/stable).
+   This will help in installing OpenEBS using [Kubernetes stable helm charts](https://github.com/kubernetes/charts/tree/master/stable).
 
 2. Using [OpenEBS Helm Charts](/docs/next/installation.html#install-openebs-using-openebs-helm-charts)
 
-   This will help to install OpenEBS using OpenEBS helm charts.
+   This will help in installing OpenEBS using OpenEBS helm charts.
 
-### Setup Helm & RBAC
+### Setup Helm and RBAC
 
 **Setup Helm**
 
@@ -47,16 +47,16 @@ kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"sp
 
 ### Install OpenEBS using OpenEBS Helm Charts
 
-You have now set up helm and RBAC by following above [step](/docs/next/installation.html#setup-helm-rbac). Next, you should clone the latest OpenEBS repository. If you have cloned OpenEBS repository already, verify that it is updated.
+You have now set up helm and RBAC by following the above [step](/docs/next/installation.html#setup-helm-rbac). Next, you must clone the latest OpenEBS repository. If you have already cloned the OpenEBS repository, verify that it is updated.
 
-Latest OpenEBS repo can cloned and latest version can be packaged using following commands.
+The latest OpenEBS repository can be cloned and latest version can be packaged using following commands:
 
 ```
 git clone https://github.com/openebs/openebs.git
 helm package openebs/k8s/charts/openebs
 ```
 
-This will create a _.tgz_ file. This file will be used in following execution. Update new OpenEBS chart using following commands.
+This will create a _.tgz_ file. This file will be used to execute the following. Update the new OpenEBS chart using the following commands.
 
 ```
 git clone https://github.com/openebs/charts.git
@@ -65,28 +65,29 @@ mv ../openebs-*.tgz ./docs
 helm repo index docs --url https://openebs.github.io/charts
 ```
 
-Add OpenEBS charts and update it using following commands.
+Add OpenEBS charts and update it using the following commands.
 
 ```
 helm repo add openebs-charts https://openebs.github.io/charts/
 helm repo update
 ```
 
-Now you are ready to install OpenEBS using helm using following command. OpenEBS will install in "**default**" namespace.
+You are now ready to install OpenEBS using helm. Run the following command. OpenEBS will install in the "**default**" namespace.
 
 ```
 helm install openebs-charts/openebs
 ```
 
-OpenEBS control plane pods are now created. CAS Template, default Storage Pool and default Storage Classes are created after executing the above command. Now select your storage engine to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
+OpenEBS control plane pods are now created. CAS Template, default Storage Pool, and default Storage Classes are created after executing the above command. Select your storage engine to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
 
 ### Install OpenEBS using Stable Helm Charts
 
 Install OpenEBS using the following commands into **openebs** namespace.
 
 ```
-helm install  --namespace openebs --name openebs  -f https://openebs.github.io/charts/helm-values-0.6.0.yaml stable/openebs
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storageclasses.yaml
+helm repo update
+helm install  --namespace openebs --name openebs stable/openebs
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.7/k8s/openebs-storageclasses.yaml
 ```
 
 ### Default Values for Helm Chart Parameters
@@ -98,18 +99,18 @@ The following table lists the configurable parameters of the OpenEBS chart and t
 | `rbac.create`                           | Enable RBAC Resources                        | `true`                                    |
 | `image.pullPolicy`                      | Container pull policy                        | `IfNotPresent`                            |
 | `apiserver.image`                       | Docker Image for API Server                  | `openebs/m-apiserver`                     |
-| `apiserver.imageTag`                    | Docker Image Tag for API Server              | `0.7.0`                                   |
+| `apiserver.imageTag`                    | Docker Image Tag for API Server              | `0.7.1`                                   |
 | `apiserver.replicas`                    | Number of API Server Replicas                | `1`                                       |
 | `provisioner.image`                     | Docker Image for Provisioner                 | `openebs/openebs-k8s-provisioner`         |
-| `provisioner.imageTag`                  | Docker Image Tag for Provisioner             | `0.7.0`                                   |
+| `provisioner.imageTag`                  | Docker Image Tag for Provisioner             | `0.7.1`                                   |
 | `provisioner.replicas`                  | Number of Provisioner Replicas               | `1`                                       |
 | `snapshotOperator.provisioner.image`    | Docker Image for Snapshot Provisioner        | `openebs/snapshot-provisioner`            |
-| `snapshotOperator.provisioner.imageTag` | Docker Image Tag for Snapshot Provisioner    | `0.7.0`                                   |
+| `snapshotOperator.provisioner.imageTag` | Docker Image Tag for Snapshot Provisioner    | `0.7.1`                                   |
 | `snapshotOperator.controller.image`     | Docker Image for Snapshot Controller         | `openebs/snapshot-controller`             |
-| `snapshotOperator.controller.imageTag`  | Docker Image Tag for Snapshot Controller     | `0.7.0`                                   |
+| `snapshotOperator.controller.imageTag`  | Docker Image Tag for Snapshot Controller     | `0.7.1`                                   |
 | `snapshotOperator.replicas`             | Number of Snapshot Operator Replicas         | `1`                                       |
 | `ndm.image`                             | Docker Image for Node Disk Manager           | `openebs/openebs/node-disk-manager-amd64` |
-| `ndm.imageTag`                          | Docker Image Tag for Node Disk Manager       | `v0.1.0`                                  |
+| `ndm.imageTag`                          | Docker Image Tag for Node Disk Manager       | `v0.2.0`                                  |
 | `ndm.sparse.enabled`                    | Create Sparse files and cStor Sparse Pool    | `true`                                    |
 | `ndm.sparse.path`                       | Directory where Sparse files are created     | `/var/openebs/sparse`                     |
 | `ndm.sparse.size`                       | Size of the sparse file in bytes             | `10737418240`                             |
@@ -117,18 +118,18 @@ The following table lists the configurable parameters of the OpenEBS chart and t
 | `ndm.sparse.filters.excludeVendors`     | Exclude devices with specified vendor        | `CLOUDBYT,OpenEBS`                        |
 | `ndm.sparse.filters.excludePaths`       | Exclude devices with specified path patterns | `loop,fd0,sr0,/dev/ram,/dev/dm-`          |
 | `jiva.image`                            | Docker Image for Jiva                        | `openebs/jiva`                            |
-| `jiva.imageTag`                         | Docker Image Tag for Jiva                    | `0.7.0`                                   |
+| `jiva.imageTag`                         | Docker Image Tag for Jiva                    | `0.7.1`                                   |
 | `jiva.replicas`                         | Number of Jiva Replicas                      | `3`                                       |
 | `cstor.pool.image`                      | Docker Image for cStor Pool                  | `openebs/cstor-pool`                      |
-| `cstor.pool.imageTag`                   | Docker Image Tag for cStor Pool              | `0.7.0`                                   |
+| `cstor.pool.imageTag`                   | Docker Image Tag for cStor Pool              | `0.7.1`                                   |
 | `cstor.poolMgmt.image`                  | Docker Image for cStor Pool Management       | `openebs/cstor-pool-mgmt`                 |
-| `cstor.poolMgmt.imageTag`               | Docker Image Tag for cStor Pool Management   | `0.7.0`                                   |
+| `cstor.poolMgmt.imageTag`               | Docker Image Tag for cStor Pool Management   | `0.7.1`                                   |
 | `cstor.target.image`                    | Docker Image for cStor Target                | `openebs/cstor-target`                    |
-| `cstor.target.imageTag`                 | Docker Image Tag for cStor Target            | `0.7.0`                                   |
+| `cstor.target.imageTag`                 | Docker Image Tag for cStor Target            | `0.7.1`                                   |
 | `cstor.volumeMgmt.image`                | Docker Image for cStor Volume Management     | `openebs/cstor-volume-mgmt`               |
-| `cstor.volumeMgmt.imageTag`             | Docker Image Tag for cStor Volume Management | `0.7.0`                                   |
+| `cstor.volumeMgmt.imageTag`             | Docker Image Tag for cStor Volume Management | `0.7.1`                                   |
 | `policies.monitoring.image`             | Docker Image for Prometheus Exporter         | `openebs/m-exporter`                      |
-| `policies.monitoring.imageTag`          | Docker Image Tag for Prometheus Exporter     | `0.7.0`                                   |
+| `policies.monitoring.imageTag`          | Docker Image Tag for Prometheus Exporter     | `0.7.1`                                   |
 
 Specify each parameter using the `--set key=value` argument to `helm install`.
 

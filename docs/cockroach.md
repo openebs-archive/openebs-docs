@@ -23,7 +23,7 @@ Deploying CockroachDB as a StatefulSet provides the following benefits.
 Deploying CockroachDB with Persistent Storage
 ---------------------------------------------
 
-Before starting, check the status of the cluster using the following command.
+Before starting, check the status of the cluster using the following command. 
 
     ubuntu@kubemaster-01:~$ kubectl get nodes
     NAME            STATUS    ROLES     AGE       VERSION
@@ -43,7 +43,7 @@ openebs-snapshot-controller-6449b4cdcc-34fx4   2/2       Running   0          4m
 ```
 
 Do ssh to kubemaster and download and apply the CockroachDB YAMLs from the OpenEBS repository
-using the following commands.
+using the following commands. 
 
     git clone https://github.com/openebs/openebs.git
     cd openebs/k8s/demo/cockroachDB/
@@ -54,7 +54,7 @@ kubectl apply -f cockroachdb-sts.yaml
 kubectl apply -f cockroachdb-svc.yaml
 ```
 
-Get the status of running pods using the following command.
+Get the status of running pods using the following command. 
 
     ubuntu@kubemaster-01:~/openebs/k8s/demo/cockroachDB$ kubectl get pods
     NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -74,14 +74,14 @@ Get the status of running pods using the following command.
     pvc-78d2841a-79f1-11e8-bc7b-02b983f0a4db-rep-769cd58f5-kmz4h     1/1       Running   0          23m
     pvc-78d2841a-79f1-11e8-bc7b-02b983f0a4db-rep-769cd58f5-nd5mj     1/1       Running   0          23m
 
-Get the status of running StatefulSet using the following command.
+Get the status of running StatefulSet using the following command. 
 
     ubuntu@kubemaster-01:~/openebs/k8s/demo/cockroachDB$ kubectl get statefulset
     NAME          DESIRED   CURRENT   AGE
     cockroachdb   3         3         25m
 
 Get the status of underlying persistent volume used by CockroachDB
-StatefulSet using the following command.
+StatefulSet using the following command. 
 
     ubuntu@kubemaster-01:~/openebs/k8s/demo/cockroachDB$ kubectl get pvc
     NAME                    STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS          AGE
@@ -99,7 +99,7 @@ pvc-40e2c0ce-79f1-11e8-bc7b-02b983f0a4db   10G        RWO            Delete     
 pvc-78d2841a-79f1-11e8-bc7b-02b983f0a4db   10G        RWO            Delete           Bound     default/datadir-cockroachdb-1   openebs-cockroachdb             23m
 ```
 
-Get the status of the services using the following command.
+Get the status of the services using the following command. 
 
     ubuntu@kubemaster-01:~/openebs/k8s/demo/cockroachDB$ kubectl get svc
     NAME                                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)              AGE
@@ -116,13 +116,13 @@ Testing your Database
 ### Using the built-in SQL Client
 
 ​1. Launch a temporary interactive pod and start the built-in SQL client
-inside it using the following command.
+inside it using the following command. 
 
 ```
 kubectl run cockroachdb -it --image=cockroachdb/cockroach --rm --restart=Never -- sql --insecure --host=cockroachdb-public
 ```
 
-2. Run some basic CockroachDB SQL statements as follows:
+2. Run some basic CockroachDB SQL statements as follows: 
 
 ```
     > CREATE DATABASE bank;
@@ -154,23 +154,23 @@ cd openebs/k8s/demo/cockroachDB/
 kubectl apply -f cockroachdb-lg.yaml
 ```
 
-2. Get the status of the job using the following command.
+2. Get the status of the job using the following command. 
 
 ```
-ubuntu@kubemaster:~kubectl get jobs
+ubuntu@kubemaster:~kubectl get jobs 
 NAME DESIRED SUCCESSFUL AGE
 cockroachdb-lg 1 0 2m
 ```
 
 This is a Kubernetes Job YAML. It creates a database named test with a table named kv containing random k:v pairs. The Kubernetes Job will run for a duration of 5 minutes, which is a configurable value in the YAML.
 
-3.  Launch a temporary interactive pod and start the built-in SQL client inside it using the following command.
+3.  Launch a temporary interactive pod and start the built-in SQL client inside it using the following command. 
 
 ```
 ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --rm --restart=Never -- sql --insecure --host=cockroachdb-public
 ```
 
-6. Set the default database as test and display the contents of the kv table as follows:
+6. Set the default database as test and display the contents of the kv table as follows: 
 
 ```
     > SHOW DATABASES;
@@ -184,14 +184,14 @@ ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --r
     | test               |
     +--------------------+
     (5 rows)
-
+    
     Time: 7.084556ms
-
+    
     > SET DATABASE=test;
     SET
-
+    
     Time: 6.169867ms
-
+    
     test> SELECT * FROM test.kv LIMIT 10;
     +----------------------+--------+
     |          k           |   v    |
@@ -208,9 +208,9 @@ ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --r
     | -9220587135773113226 | "\x94" |
     +----------------------+--------+
     (10 rows)
-
+    
     Time: 98.004199ms
-
+    
     test> SELECT COUNT(*) FROM test.kv;
     +----------+
     | count(*) |
@@ -218,11 +218,11 @@ ubuntu@kubemaster:~kubectl run cockroachdb -it --image=cockroachdb/cockroach --r
     |    59814 |
     +----------+
     (1 row)
-
+    
     Time: 438.68592ms
 ```
 
-​7. Exit the SQL shell using the following command.
+​7. Exit the SQL shell using the following command. 
 
 ```
 >\q

@@ -6,13 +6,13 @@ sidebar_label: Resources
 
 ------
 
-This page gives references to important blogs, interesting video tutorials of OpenEBS.
+This page gives references to important blogs, interesting video tutorials of OpenEBS. 
 
-### OpenEBS Blogs
+### OpenEBS Blogs 
 
 [Pinning the OpenEBS Replica Pod(s) to the Kubernetes Nodes where they were scheduled](https://blog.openebs.io/how-do-i-pin-the-openebs-replica-pod-s-to-the-kubernetes-nodes-where-they-were-scheduled-2ba42e3015df)
 
- [Configuring OpenEBS to use storage on specific Kubernetes nodes](https://blog.openebs.io/how-do-i-configure-openebs-to-use-storage-on-specific-kubernetes-nodes-361e3e842a78)
+ [Configuring OpenEBS to use storage on specific Kubernetes nodes](https://blog.openebs.io/how-do-i-configure-openebs-to-use-storage-on-specific-kubernetes-nodes-361e3e842a78) 
 
 [Achieving native hyper convergence in Kubernetes](https://blog.openebs.io/achieving-native-hyper-convergence-in-kubernetes-cb93e0bcf5d3)
 
@@ -27,6 +27,8 @@ This page gives references to important blogs, interesting video tutorials of Op
 [In 2018: IT dreams deferred finally achieved?](https://blog.openebs.io/in-2018-it-dreams-deferred-finally-achieved-d061d9352e2c)
 
 [Austin KubeCon — Persistent Storage Round-up and Looking beyond!](https://blog.openebs.io/austin-kubecon-persistent-storage-round-up-and-looking-beyond-d6a29b581f17)
+
+
 
 ### OpenEBS Video tutorials
 

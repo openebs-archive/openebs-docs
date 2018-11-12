@@ -15,13 +15,13 @@ This document describes the steps for upgrading OpenEBS from 0.6.0 to 0.7.0. Upg
 - *Step 2* - Upgrade the OpenEBS Volumes that were created with older OpenEBS Operator (0.6.0)
 
 **Note:**
-For older verions, OpenEBS supports upgrade to 0.6 version only from 0.5.3 and 0.5.4. For steps to upgrade to 0.6.0, [click](https://v06-docs.openebs.io/docs/next/upgrade.html) here.
+For older versions, OpenEBS supports upgrade to 0.6 version only from 0.5.3 and 0.5.4. For steps to upgrade to 0.6.0, [click](https://v06-docs.openebs.io/docs/next/upgrade.html) here.
 
 ### Terminology
 
-- *OpenEBS Operator : Refers to maya-apiserver and openebs-provisioner along with respective services, service account, roles, rolebindings*.
-- *OpenEBS Volume: The Jiva controller and replica pods*.
-- *All steps described in this document must be performed on the Kubernetes master or from a machine that has access to Kubernetes master*.
+- *OpenEBS Operator : Refers to maya-apiserver and openebs-provisioner along with respective services, service account, roles, rolebindings*
+- *OpenEBS Volume: The Jiva controller and replica pods*
+- *All steps described in this document must be performed on the Kubernetes master or from a machine that has access to Kubernetes master*
 
 ## Step 1: Upgrade the OpenEBS Operator
 
@@ -48,7 +48,7 @@ Before upgrading the OpenEBS Operator, check if you are using a storage pool nam
 ./pre_upgrade.sh <openebs-namespace>
 ```
 
-### Upgrade Volume Policies in Existing Storage Classes
+### Upgrade volume Policies in Existing Storage Classes
 
 Use the following command to upgrade the storage class volume policies. Move from parameters to annotations. This script will only update the following volume policies:
 
@@ -56,7 +56,7 @@ Use the following command to upgrade the storage class volume policies. Move fro
 - `openebs.io/storage-pool`
 - `openebs.io/volume-monitor`
 
-The remaining policies will fallback to their default values.
+The remaining policies will fall back to their default values.
 
 ```
 ./upgrade_sc.sh
@@ -70,7 +70,7 @@ Alternatively, you can skip this step and re-apply your storage classes as per t
 
 The upgrade steps vary depending on the way OpenEBS was installed. Select one of the following:
 
-#### Install/Upgrade using kubectl (using openebs-operator.yaml)
+#### Install/Upgrade using kubectl (using openebs-operator.yaml )
 
 **The sample steps below will work if you have installed openebs without modifying the default values in the *openebs-operator.yaml* file. If you have customized it for your cluster, you must download the 0.7.0 *openebs-operator.yaml* file and customize it again.**
 
@@ -80,9 +80,9 @@ The upgrade steps vary depending on the way OpenEBS was installed. Select one of
 
 kubectl delete -f https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-operator.yaml
 
-# Wait for the objects to delete. Check if they are deleted using the `kubectl get deploy` command.
+#Wait for the objects to delete. Check if they are deleted using the `kubectl get deploy` command.
 
-# Upgrade to 0.7 OpenEBS Operator
+#Upgrade to 0.7 OpenEBS Operator
 
 kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 ```
@@ -92,7 +92,7 @@ kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 **The following procedure will work if you have installed OpenEBS with default values provided by stable/openebs helm chart.**
 
 - Run `helm ls` to get the OpenEBS release name.
-- Upgrade using `helm upgrade -f https://openebs.github.io/charts/helm-values-0.7.0.yaml <release-name> stable/openebs`.
+- Upgrade using `helm upgrade -f https://openebs.github.io/charts/helm-values-0.7.0.yaml <release-name> stable/openebs`
 
 #### Using Customized Operator YAML or Helm Chart.
 
@@ -101,20 +101,21 @@ As a first step, you must update your custom helm chart or YAML with 0.7 release
 You can use the following as a reference to know about the changes in 0.7.
 - openebs-charts [PR#1878](https://github.com/openebs/openebs/pull/1878).
 
-After updating the YAML or helm chart or helm chart values, you can use the above procedures to upgrade the OpenEBS Operator.
+After updating the YAML or helm chart or helm chart values, you can use the above procedures to upgrade the OpenEBS Operator
 
 ## Step 2: Upgrade the OpenEBS Volumes
 
-Even after the OpenEBS Operator has been upgraded to 0.7, the volumes will continue to work with older versions. Each volumes should be upgraded (one at a time) to 0.7, using the following procedure.
+Even after the OpenEBS Operator has been upgraded to 0.7, the volumes will continue to work with older versions. Each volume should be upgraded (one at a time) to 0.7, using the following procedure.
 
 *Note: Upgrade functionality is still under active development. It is highly recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, ensure you have taken a backup of the data before starting the following upgrade procedure.*
 
 Limitations:
 - This is a preliminary script only intended for use on volumes where data has been backed up.
-- Please have the following link handy in case the volume gets into read-only during the upgrade.
+- Please have the following link handy in case the volume gets into read-only during an upgrade.
   https://docs.openebs.io/docs/next/readonlyvolumes.html
 - Automatic rollback option is not provided. To rollback, you must update the controller, exporter, and replica pod images to the previous version.
 - In the process of running the following procedure, if you run into issues, you can always reach us on Slack.
+
 
 ```
 kubectl get pv
@@ -127,7 +128,7 @@ pvc-48fb36a2-947f-11e8-b1f3-42010a800004   5G         RWO            Delete     
 
 ### Upgrade the PV
 
-Upgrade the PV that you want to upgrade using the following command.
+ Upgrade the PV that you want to upgrade using the following command.
 
 ```
 ./oebs_update.sh pvc-48fb36a2-947f-11e8-b1f3-42010a800004 openebs-storage

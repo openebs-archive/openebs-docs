@@ -5,9 +5,9 @@ sidebar_label: Clones
 ---
 
 ------
-## Cloning and Restoring a Snapshot
+## Cloning and Restoring a Snapshot 
 
-After creating a snapshot, you can restore it to a new Persitent Volume Claim. To do this you must create a special StorageClass implemented by snapshot-provisioner. We will then create a PersistentVolumeClaim referencing this StorageClass for dynamically provisioning new PersistentVolume. An annotation on the PersistentVolumeClaim will inform snapshot-provisioner on where to find the information it needs to deal with the OpenEBS Apiserver to restore the snapshot.
+After creating a snapshot, you can restore it to a new Persitent Volume Claim. To do this you must create a special StorageClass implemented by snapshot-provisioner. We will then create a PersistentVolumeClaim referencing this StorageClass for dynamically provisioning new PersistentVolume. An annotation on the PersistentVolumeClaim will inform snapshot-provisioner on where to find the information it needs to deal with the OpenEBS Apiserver to restore the snapshot. 
 
 A StorageClass can be defined as below. Here the provisioner field defines which provisioner should be used and what parameters should be passed to that provisioner when dynamic provisioning is invoked.
 
@@ -122,7 +122,7 @@ spec:
 $ kubectl apply -f percona-openebs-deployment-2.yaml
 ```
 
-After percona-snapshot pod is in running state we can check the integrity of files which were created earlier before taking the snapshot.
+After percona-snapshot pod is in running state we can check the integrity of files which were created earlier before taking the snapshot. 
 
 ## Deleting a Snapshot
 
@@ -132,7 +132,7 @@ You can delete snapshot you have taken which will also delete the corresponding 
 kubectl apply -f snapshot.yaml
 ```
 
-This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` you have already provisioned using the snapshot. On the other hand, deleting any `PersistentVolumeClaims` or `PersistentVolumes` that you have used to take a snapshot or have been provisioned using a snapshot will not delete the snapshot from the OpenEBS backend. You have to delete them manually.
+This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` you have already provisioned using the snapshot. On the other hand, deleting any `PersistentVolumeClaims` or `PersistentVolumes` that you have used to take a snapshot or have been provisioned using a snapshot will not delete the snapshot from the OpenEBS backend. You have to delete them manually. 
 
 
 

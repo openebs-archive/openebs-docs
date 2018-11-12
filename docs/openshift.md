@@ -12,7 +12,7 @@ This section helps you to install OpenEBS on OpenShift. If you are new to OpenSh
 
 * [Quick Reference](https://github.com/openebs/openebs/blob/cfb97d2b407612ebdb8fd1eae48e28b6a3ad248f/k8s/openshift/byo/baremetal/README.md)
 
-Once the OpenShift cluster is ready, you can proceed with installing OpenEBS packages. The procedure is slightly different when compared to other platforms. OpenShift uses commands that are not regular Kubernetes commands.
+Once the OpenShift cluster is ready, you can proceed with installing OpenEBS packages. The procedure is slightly different when compared to other platforms. OpenShift uses commands that are not regular Kubernetes commands. 
 
 To install OpenEBS in an OpenShift environment, you need to set role/permission and make a few changes to the commands mentioned in the *Installation* section. The following procedure allows you to setup OpenEBS.
 
@@ -84,7 +84,7 @@ oc get sp
 Apply the sample pvc yaml file to create Jiva volume on cStor sparse pool using the following command.
 
 ```
-oc apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-jiva-default.yaml
+oc apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-jiva-default.yaml 
 ```
 
 This sample PVC yaml will use openebs-jiva-default storage class created as part of openebs-operator.yaml installation.
@@ -125,7 +125,10 @@ oc get pods
 ### Deploying OpenEBS Jiva using NodeSelector.
 By using the NodeSelector approach, OpenEBS Jiva can be also deployed. For example, you have a setup where you have 5 nodes and you want to use 2 nodes for application and 3 nodes for storage. You can achieve this using NodeSelector. For more details, see [NodeSelector](/docs/next/scheduler.html).
 
-### Using OpenEBS on Containerized OpenShift
+
+
+
+### Using OpenEBS on Containerized OpenShift 
 
 This section helps you to install OpenEBS on containerized OpenShift. If you are new to OpenShift, you can follow the links listed below.
 

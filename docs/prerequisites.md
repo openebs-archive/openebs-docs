@@ -16,9 +16,9 @@ The following prerequisites are required for installing OpenEBS.
 
 3. kubectl or helm installed and ready to use. Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve creating a new Service Account that is assigned to OpenEBS components.
 4. If you are using CentOS as base OS for 0.7 OpenEBS installation, then you should disable selinux for OpenEBS Node Disk Manager to detect the OS disk. You can disable selinux by using the `setenforce 0` command.
-**Note:**
+**Note:** 
 * If you face issues while setting up on-premise clusters, check your BIOS mode and enable the Intel virtualization acceleration key  and AMD-V virtualization hardware extensions.
-* Installing and configuring open-iscsi on Kubernetes will vary slightly depending on the platform and you can find those instructions [here](#iSCSIConfig).
+* Installing and configuring open-iscsi on Kubernetes will vary slightly depending on the platform and you can find those instructions [here](#iSCSIConfig). 
 
 ### Kubernetes Storage Concepts
 
@@ -30,13 +30,13 @@ To understand how to use OpenEBS with Kubernetes, you must familiarize yourself 
 
 <a name="iSCSIConfig"></a>
 
-## Steps for Configuring and Verifying open-iscsi
+## Steps for Configuring and Verifying open-iscsi 
 
 The open-iscsi initiator packages depend on your host operating system or kubelet container. Use the following procedure for installing/verifying open-iscsi package.
 
 ### GKE
 
-With GKE, you must create a Kubernetes cluster with the host machine as Ubuntu.  Ubuntu host on GKE comes with iSCSI configured.
+With GKE, you must create a Kubernetes cluster with the host machine as Ubuntu.  Ubuntu host on GKE comes with iSCSI configured. 
 
 You may need an admin-context if you are installing OpenEBS without helm. Use the following command to set the admin-context.
 
@@ -56,7 +56,7 @@ sudo cat /etc/iscsi/initiatorname.iscsi
 sudo service open-iscsi status
 ```
 
-If an iSCSI initiator is not available on your host, install open-iscsi package by running the following commands.
+If an iSCSI initiator is not available on your host, install open-iscsi package by running the following commands. 
 
 ```
 sudo apt-get update
@@ -82,19 +82,19 @@ vi /etc/iscsi/initiatorname.iscsi
 systemctl status iscsi.service
 ```
 
-If an iSCSI initiator is not available on your host, install open iscsi-initiator-utils RPM package by running the following command.
+If an iSCSI initiator is not available on your host, install open iscsi-initiator-utils RPM package by running the following command. 
 
 ```
 yum install iscsi-initiator-utils -y
 ```
 
-You can verify the installation using the procedure mentioned above.
+You can verify the installation using the procedure mentioned above. 
 
 <a name="Azure"></a>
 
 ### Azure Cloud
 
-#### Configuring open-iscsi
+#### Configuring open-iscsi  
 
 On Azure cloud, you need to verify if the open-iscsi package is installed on the kubelet. To validate, you can connect to the nodes through SSH using their public IP addresses by running the following command.
 
@@ -108,7 +108,7 @@ ssh azureuser@40.xx.yyy.221
 Obtain the container ID of the hyperkube kubelet on each node by running the following command.
 
 ```
-sudo docker ps | grep "hyperkube kubele"
+sudo docker ps | grep "hyperkube kubele" 
 3aab0f9a48e2    k8s-gcrio.azureedge.net/hyperkube-amd64:v1.8.7   "/hyperkube kubele..."   48 minutes ago      Up 48 minutes                           eager_einstein
 ```
 

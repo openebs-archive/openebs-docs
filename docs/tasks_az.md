@@ -49,7 +49,7 @@ wget https://raw.githubusercontent.com/openebs/openebs/v0.6/k8s/openebs-storagec
 
 3. **Deploying Jiva Replica Across AZs**
 
-You can deploy Jiva replica pods in the stateful and StatefulSet applications. The following section describes deploying Jiva replica pod for both types of applications.
+You can deploy Jiva replica pods in the stateful and StatefulSet applications. The following section describes deploying Jiva replica pod for both types of applications.  
 
 ### Deploying Jiva Replica Pods for StatefulSet Applications
 

@@ -22,7 +22,7 @@ OpenEBS provides two types of storage engines.
 
 ### Jiva
 
-Jiva has a single container image for both controller and replica. Docker image is available at https://hub.docker.com/r/openebs/jiva/. Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs entirely in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation. It supports thin provisioning, snapshotting, cloning of storage volumes.
+Jiva has a single container image for both controller and replica. Docker image is available at https://hub.docker.com/r/openebs/jiva/ .  Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs entirely in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation. It supports thin provisioning, snapshotting, cloning of storage volumes.
 
 ![Jiva storage engine of OpenEBS](/docs/assets/jiva.png)
 
@@ -34,9 +34,9 @@ The following content is directly taken from Rancher's LongHorn [announcement do
 
 ------
 
-Jiva replicas are built using Linux sparse files, which support thin provisioning. Jiva does not maintain additional metadata to indicate which blocks are used. The block size is 4K. When you take a snapshot, you create a differencing disk. As the number of snapshots grows, the differencing disk chain could get quite long. To improve read performance, Jiva, therefore, maintains a read index that records which differencing disk holds valid data for each 4K block. In the following figure, the volume has eight blocks. The read index has eight entries and is filled up lazily as read operation takes place. A write operation resets the read index, causing it to point to the live data.
+Jiva replicas are built using Linux sparse files, which support thin provisioning. Jiva does not maintain additional metadata to indicate which blocks are used. The block size is 4K. When you take a snapshot, you create a differencing disk. As the number of snapshots grows, the differencing disk chain could get quite long. To improve read performance, Jiva, therefore, maintains a read index that records which differencing disk holds valid data for each 4K block. In the following figure, the volume has eight blocks. The read index has eight entries and is filled up lazily as read operation takes place. A write operation resets the read index, causing it to point to the live data. ![Longhorn read index](http://cdn.rancher.com/wp-content/uploads/2017/04/14095610/Longhorn-blog-3.png)
 
-![Longhorn read index](http://cdn.rancher.com/wp-content/uploads/2017/04/14095610/Longhorn-blog-3.png)
+
 
 The read index is kept in memory and consumes one byte for each 4K block. The byte-sized read index means you can take as many as 254 snapshots for each volume. The read index consumes a certain amount of in-memory data structure for each replica. A 1TB volume, for example, consumes 256MB of in-memory read index. We will potentially consider placing the read index in memory-mapped files in the future.
 
@@ -78,6 +78,7 @@ A CAS template is a customizable resource file (or a YAML file ) used by an oper
 
 OpenEBS dynamic storage provisioner along with maya api service works towards accomplishing the goal of provisioning CAS storage volume via CAS template. This storage volume is exposed as a PV object which is consumed by a Kubernetes application.
 
+
 The default CAS Template values are as follows:
 
 | Property        | Value              |
@@ -95,21 +96,21 @@ Following is an example of CAS Template yaml file.
 ```
 apiVersion: openebs.io/v1alpha1
 kind: CASTemplate
-metadata:
+metadata:  
   name: openebs-jiva-v0.6.0-with-3-ssd-replica-v0.1
-spec:
-  defaultConfig:
-  - name: ControllerImage
-    value: "openebs/jiva:0.6.0"
-  - name: ReplicaImage
-    value: "openebs/jiva:0.6.0"
-  - name: ReplicaCount
-    value: "3"
-  - name: StoragePool
-    value: "default"
-  - name: Monitoring
-    enabled: "true"
-run:
+spec:  
+  defaultConfig:  
+  - name: ControllerImage    
+    value: "openebs/jiva:0.6.0"  
+  - name: ReplicaImage    
+    value: "openebs/jiva:0.6.0"  
+  - name: ReplicaCount    
+    value: "3"  
+  - name: StoragePool    
+    value: "default"  
+  - name: Monitoring    
+    enabled: "true"  
+run:    
   tasks:    ...
 ```
 
@@ -169,20 +170,20 @@ Eve creates five new CAS template files and creates corresponding Kubernetes CRs
 ```
 apiVersion: openebs.io/v1alpha1
 kind: CASTemplate
-metadata:
+metadata:  
   name: openebs-saspool1-jiva-v0.6.0-with-3-replica-v0.1
-spec:
-  defaultConfig:
-  - name: ControllerImage
-    value: "openebs/jiva:0.6.0"
-  - name: ReplicaImage
-    value: "openebs/jiva:0.6.0"
-  - name: ReplicaCount
-    value: "3"
-  - name: SASPOOL1
-    value: "default"
-  - name: Monitoring
-    enabled: "true"
+spec:  
+  defaultConfig:  
+  - name: ControllerImage    
+    value: "openebs/jiva:0.6.0"  
+  - name: ReplicaImage    
+    value: "openebs/jiva:0.6.0"  
+  - name: ReplicaCount    
+    value: "3"  
+  - name: SASPOOL1    
+    value: "default"  
+  - name: Monitoring    
+    enabled: "true"  
   - name: TaintTolerations
     value: |-
       t1:
@@ -219,7 +220,7 @@ spec:
         operator: In
         values:
         - some-node-label-value
-run:
+run:    
   tasks:    ...
 ```
 
@@ -228,20 +229,20 @@ run:
 ```
 apiVersion: openebs.io/v1alpha1
 kind: CASTemplate
-metadata:
+metadata:  
   name: openebs-ssdpool1-jiva-v0.6.0-with-3-replica-v0.1
-spec:
-  defaultConfig:
-  - name: ControllerImage
-    value: "openebs/jiva:0.6.0"
-  - name: ReplicaImage
-    value: "openebs/jiva:0.6.0"
-  - name: ReplicaCount
-    value: "3"
-  - name: SSDPOOL1
-    value: "default"
-  - name: Monitoring
-    enabled: "true"
+spec:  
+  defaultConfig:  
+  - name: ControllerImage    
+    value: "openebs/jiva:0.6.0"  
+  - name: ReplicaImage    
+    value: "openebs/jiva:0.6.0"  
+  - name: ReplicaCount    
+    value: "3"  
+  - name: SSDPOOL1    
+    value: "default"  
+  - name: Monitoring    
+    enabled: "true"  
   - name: TaintTolerations
     value: |-
       t1:
@@ -278,7 +279,7 @@ spec:
         operator: In
         values:
         - some-node-label-value
-run:
+run:    
   tasks:    ...
 ```
 
@@ -301,8 +302,8 @@ Example of storage class : **SC-high-perf-high-resilience**
 ```
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
-metadata:
-  name: SC-high-perf-high-resilience
+metadata:  
+  name: SC-high-perf-high-resilience  
   annotations:
     cas.openebs.io/template: openebs-ssdpool2-jiva-v0.6.0-with-3-replica-v0.1
 provisioner: openebs.io/provisioner-iscsi
@@ -323,12 +324,12 @@ Alice's PVC **alice-mongodb-vol** for MongoDB looks like the following.
 ```
 kind: PersistentVolumeClaim
 apiVersion: v1
-metadata:
-  name: alice-mongodb-vol
-spec:
-  storageClassName: SC-high-perf-high-resilience
-  resources:
-    requests:
+metadata:  
+  name: alice-mongodb-vol  
+spec:  
+  storageClassName: SC-high-perf-high-resilience   
+  resources:    
+    requests:      
       storage: 200Gi
 ```
 
@@ -337,16 +338,17 @@ Joe's PVC **joe-mysql-vol** for MySQL looks like the following.
 ```
 kind: PersistentVolumeClaim
 apiVersion: v1
-metadata:
-  name: joe-mysql-vol
-spec:
-  storageClassName: SC-low-perf-high-resilience
-  resources:
-    requests:
+metadata:  
+  name: joe-mysql-vol  
+spec:  
+  storageClassName: SC-low-perf-high-resilience   
+  resources:    
+    requests:      
       storage: 50Gi
 ```
 
 Initial work for the DevOps operators is shown in the above use case example. Developers get started with the volume provisioning. Day2 operations related to persistent storage typically include taking a snapshot of data, restoration from the snapshots, monitoring the health of pools and stateful applications, data migration. [MayaOnline](https://www.mayaonline.io) is useful for many of these day2 storage operations.
+
 
 ### See Also:
 

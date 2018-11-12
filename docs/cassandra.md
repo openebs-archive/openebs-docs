@@ -15,7 +15,7 @@ Apache Cassandra is a free and open-source distributed NoSQL database management
 Prerequisite
 ------------
 
-A fully configured (preferably, multi-node) Kubernetes cluster configured with the OpenEBS operator and OpenEBS storage classes.
+A fully configured (preferably, multi-node) Kubernetes cluster configured with the OpenEBS operator and OpenEBS storage classes. 
 
     test@Master:~$ kubectl get pods
     NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -28,7 +28,7 @@ Deploying the Cassandra StatefulSet with OpenEBS Storage
 The StatefulSet specification YAMLs are available at *OpenEBS/k8s/demo/cassandra*.
 
 You can modify the number of replicas in the StatefulSet as required.
-The following example uses two replicas.
+The following example uses two replicas. 
 
     apiVersion: apps/v1beta1
     kind: StatefulSet
@@ -46,16 +46,16 @@ The following example uses two replicas.
        metadata:
           labels:
             app: cassandra
-    :
+    :   
 
-Run the following commands.
+Run the following commands. 
 
     test@Master:~$ cd openebs/k8s/demo/cassandra
     test@Master:~/openebs/k8s/demo/cassandra$ ls -ltr
     total 8
     -rw-rw-r-- 1 karthik karthik  165 Oct 30 12:19 cassandra-service.yaml
-    -rw-rw-r-- 1 karthik karthik 2382 Nov 11 14:09 cassandra-statefulset.yaml
-
+    -rw-rw-r-- 1 karthik karthik 2382 Nov 11 14:09 cassandra-statefulset.yaml	
+    
     test@Master:~/openebs/k8s/demo/cassandra$ kubectl apply -f cassandra-service.yaml
     service "cassandra" configured
 
@@ -64,7 +64,7 @@ test@Master:~/openebs/k8s/demo/cassandra$ kubectl apply -f cassandra-statefulset
 statefulset "cassandra" created
 ```
 
-Verify that all the OpenEBS persistent volumes are created and the Cassandra headless service and replicas are running.
+Verify that all the OpenEBS persistent volumes are created and the Cassandra headless service and replicas are running. 
 
     test@Master:~/openebs/k8s/demo/cassandra$ kubectl get pods
     NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -104,9 +104,9 @@ You can verify the deployment starting from listing the functional replicas to c
 
 Cqlsh is a Python based utility that enables you to execute Cassandra Query Language (CQL). CQL is a declarative language that enables users to query Cassandra using semantics similar to SQL.
 
-Install the python-minimal and python-pip apt packages (if not available) and perform a pip install of Csqlsh using the following commands.
+Install the python-minimal and python-pip apt packages (if not available) and perform a pip install of Csqlsh using the following commands. 
 
-    sudo apt-get install -y python-minimal python-pip
+    sudo apt-get install -y python-minimal python-pip 
     pip install cqlsh
 
 **Note:**
@@ -162,7 +162,7 @@ A status of "UN" implies Up and Normal. The "Owns" column suggests the data dist
     id                                   | name    | hwtype | model
     ---------------------------------------+---------+--------+----------
     5132b130-ae79-11e4-ab27-0800200c9a66 | TestBox | Server | DellR820
-    (1 rows)
+    (1 rows) 
     ```
 
 -   Flush the data to ensure it is written to a disk from the memtable (memory) using the following command.
@@ -172,21 +172,21 @@ A status of "UN" implies Up and Normal. The "Owns" column suggests the data dist
     ```
 
 4. Delete the Test Keyspace
-- Verify the masterless nature of Cassandra StatefulSet by deleting the keyspace from another replica, in this example, Cassandra-1.
+- Verify the masterless nature of Cassandra StatefulSet by deleting the keyspace from another replica, in this example, Cassandra-1. 
 
 
     test@Master:~$ cqlsh 10.36.0.6 9042 --cqlversion="3.4.2"
     cqlsh> use hardware;
     cqlsh:hardware> select * from Inventory;
-
+    
     id                                   | name    | hwtype | model
     --------------------------------------+---------+--------+----------
     5132b130-ae79-11e4-ab27-0800200c9a66 | TestBox | Server | DellR820
-
+    
     (1 rows)
-
+    
     cqlsh> drop keyspace hardware;
-- Verify that the keyspace is deleted successfully using the following command.
+- Verify that the keyspace is deleted successfully using the following command. 
 
 
     cqlsh> describe keyspaces

@@ -20,11 +20,11 @@ Following are some of the Operator tasks.
 
 ## How do I auto-detect cluster capabilities and verify if pre-requisites are met? #641
 
-## Change all instances of kubeminion to kubenode under Vagrant installation. #732
+## Change all instances of kubeminion to kubenode under Vagrant installation #732
 
 ## How do I update ansible K8s roles to perform on-premise setup on CoreOS cluster? #1148
 
-## How do I list MySQL storage operations performed by Database Administrators? #1160
+## How do I list MySQL storage operations performed by Database Administrators #1160
 
 
 
@@ -33,27 +33,27 @@ Following are some of the Operator tasks.
 
 # USER TASKS??
 
-## Installing OpenEBS on CoreOS with Kubernetes. #163
+## Installing OpenEBS on CoreOS with Kubernetes? #163
 
-## Setting up OpenEBS on Digital Ocean. #261
+## Setting up OpenEBS on Digital Ocean #261
 
-## Pre-Requisites not mentioned accurately. #492
+## Pre-Requisites not mentioned accurately #492
 
 ## How do I deploy EFK with OpenEBS? #827
 
 ## How do I deploy Kafka with OpenEBS? #828
 
-## How do I deploy OpenEBS on IBM Cloud? #833
+## How do I deploy OpenEBS on IBM Cloud #833
 
 ## How do I deploy OpenEBS on Linode Cloud? #834
 
 ## How do I share files between pods using WordPress? #849
 
-## Storage Operations in MySQL. #850
+## Storage Operations in MySQL? #850
 
-## Improve application documentation to include steps to scale and perform failovers, i.e how to scale the pods/replicas, Pod and Node failover? #855
+## Improve application documentation to include steps to scale and perform failovers i.e How to scale the pods/replicas, Pod and Node failover #855
 
-## How do I deploy OpenEBS with Kubernetes on CentOS running on GCE? #1098
+## How do I deploy OpenEBS with Kubernetes on CentOS running on GCE #1098
 
 ## How do I setup OpenEBS on containerized OpenShift cluster? #1134
 
@@ -61,7 +61,7 @@ Following are some of the Operator tasks.
 
 ## How do I setup OpenEBS on Kubernetes Cluster managed by Rancher Agent? #1147
 
-## How do I Install OpenEBS using helm charts? #1150
+## How do I Install OpenEBS using helm charts. #1150
 
 
 

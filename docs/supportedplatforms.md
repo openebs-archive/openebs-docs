@@ -18,7 +18,7 @@ OpenEBS is tested on the following platforms.
 
 [AWS](#AWS) (Kubernetes built using EC2)
 
-[IBM Cloud Private](#IBM) (Versions 1.2.0, 2.1.0, 2.1.0.1, 2.1.0.2)
+[IBM Cloud Private](#IBM) (Versions 1.2.0, 2.1.0, 2.1.0.1, 2.1.0.2) 
 
 [RedHat OpenShift](#OpenShift) (Versions 3.7, 3.8)
 
@@ -32,7 +32,7 @@ OpenEBS is tested on the following platforms.
 
 ## Native Kubernetes and MiniKube
 
-As a prerequisite, OpenEBS requires Kubernetes CRD capabilities and hence Kubernetes versions 1.7.5+ are suitable.
+As a prerequisite, OpenEBS requires Kubernetes CRD capabilities and hence Kubernetes versions 1.7.5+ are suitable. 
 
 **Note:** Container runtime such as Docker must be installed/available.
 
@@ -76,7 +76,7 @@ OpenEBS is tested with IBM Private Cloud version 2.1. For details about how to i
 
 ## RedHat OpenShift and RedHat MiniShift
 
-OpenShift installation may require some changes to the installation procedure.  You need to use *oc* instead of *kubecltl*.  Detailed explanation is available at [Integration of OpenEBS with OpenShift](/docs/next/openshift.html).
+OpenShift installation may require some changes to the installation procedure.  You need to use *oc* instead of *kubecltl*.  Detailed explanation is available at [Integration of OpenEBS with OpenShift](/docs/next/openshift.html). 
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->

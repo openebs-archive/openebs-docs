@@ -25,10 +25,9 @@ devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl apply -f 06-kafka-statefulset.ym
 ```
 Running the above commands creates 3 node zookeeper ensemble and a 3 node Kafka cluster which uses OpenEBS volumes.
 
-**Note :** Kafka is a distributed system that uses Zookeeper to track status of Kafka cluster nodes.
+**Note:** Kafka is a distributed system that uses Zookeeper to track the status of Kafka cluster nodes. 
 
 Check if the Kafka pods are running by running the following command.
-
 ```
 devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl get -n kafka pods
 NAME                                                             READY     STATUS    RESTARTS   AGE
@@ -69,7 +68,6 @@ datadir-zk-0   Bound     pvc-ced395d9-179c-11e8-9948-42010a800208   2G         R
 datadir-zk-1   Bound     pvc-f94a635f-179c-11e8-9948-42010a800208   2G         RWO            openebs-zk      6h
 datadir-zk-2   Bound     pvc-29b2a134-179d-11e8-9948-42010a800208   2G         RWO            openebs-zk      6h
 ```
-
 Check the status of the Kafka service by running the following command.
 
 ```
@@ -84,7 +82,6 @@ pvc-e2d08251-179c-11e8-9948-42010a800208-ctrl-svc   ClusterIP   10.19.249.153   
 pvc-f94a635f-179c-11e8-9948-42010a800208-ctrl-svc   ClusterIP   10.19.250.218   <none>        3260/TCP,9501/TCP   6h
 zk-headless                                         ClusterIP   None            <none>        2888/TCP,3888/TCP   6h
 ```
-
 Check the statefulsets by running the following command.
 
 ```
@@ -96,7 +93,7 @@ zk        3         3         6h
 
 ### Verifying Zookeeper
 
-To verify the Zookeeper ensemle, use the following procedure.
+To verify the Zookeeper ensemble, use the following procedure.
 
 ```
 devops@ubuntu:~ /openebs/k8s/demo/kafka$ kubectl exec -n kafka -it zk-0 -- /opt/zookeeper/bin/zkCli.sh create /foo bar
@@ -135,8 +132,8 @@ Verify if Kafka cluster is running by sending messages from one cluster to the o
 devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl exec -n kafka -it kafka-0 -- bash
 root@kafka-0:/opt/kafka#
 ```
-
 Let us create a topic named "OpenEBS" with three partitions and three replicas.
+
 
 ```
 root@kafka-0:/opt/kafka# bin/kafka-topics.sh --zookeeper zk-headless.kafka.svc.cluster.local:2181 --create --if-not-exists --topic OpenEBS-maya --partitions 3 --replication-factor 3
@@ -152,7 +149,7 @@ root@kafka-0:/opt/kafka# bin/kafka-topics.sh --list --zookeeper zk-headless.kafk
 OpenEBS
 ```
 
-Describe the topic that you created by running the following command.
+Describe the topic that you created by running the following command. 
 
 ```
 root@kafka-0:/opt/kafka# bin/kafka-topics.sh --describe --zookeeper zk-headless.kafka.svc.cluster.local:2181 --topic openEBS
@@ -163,10 +160,10 @@ Topic:openEBS   PartitionCount:3        ReplicationFactor:3     Configs:
         Topic: openEBS        Partition: 2    Leader: 2       Replicas: 2,0,1 Isr: 2,0,1
 ```
 
-Running the above command describes the topic. The first line displays a summary of all the partitions. Each additional line displays information about the partition.
+Running the above command describes the topic. The first line displays a summary of all the partitions. Each additional line displays information about the partition. 
 
 - "leader" is the node responsible for all reads and writes for the given partition. Each node will be the leader for a randomly selected portion of the partitions.
-- "replicas" is the list of nodes that replicates the log for this partition regardless of whether they are the leader or if they are currently alive.
+- "replicas" is the list of nodes that replicate the log for this partition regardless of whether they are the leader or if they are currently alive.
 - "isr" is the set of "in-sync" replicas. This is the subset of the replicas list that is currently alive and caught-up to the leader.
 
 #### Sending messages

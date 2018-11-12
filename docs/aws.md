@@ -6,11 +6,11 @@ sidebar_label: AWS
 
 ------
 
-This section covers OpenEBS persistent storage solution using AWS instance store disks for applications running on Kubernetes clusters. Instance store disks provide high performance, but they are not guaranteed to be present in the node all the time which of course means that when the node is rescheduled you can lose the data they are storing.
+This section covers OpenEBS persistent storage solution using AWS instance store disks for applications running on Kubernetes clusters. Instance store disks provide high performance, but they are not guaranteed to be present in the node all the time which of course means that when the node is rescheduled you can lose the data they are storing. 
 
 #### Instance Store
 
-Instance store is ideal for temporary storage of information that changes frequently, such as buffers, caches, scratch data, and other temporary content or for data that is replicated across a fleet of instances, such as a load-balanced pool of web servers.
+Instance store is ideal for temporary storage of information that changes frequently, such as buffers, caches, scratch data, and other temporary content or for data that is replicated across a fleet of instances, such as a load-balanced pool of web servers. 
 
 Instance Store volume's drawback is that the data in an instance store persists only during the lifetime of its associated instance. The data in the instance store may be lost due to the following:
 
@@ -20,11 +20,11 @@ Instance Store volume's drawback is that the data in an instance store persists 
 
 ## OpenEBS with AWS Instance Store
 
-Some instance types use NVMe or SATA-based solid state drives (SSD) to deliver high random I/O performance. This is a good option when you need storage with very low latency and do not need the data to persist when the instance terminates. You can also take advantage of fault-tolerant architectures. OpenEBS is an option for high availability of data combined with advantages of using physical disks.
+Some instance types use NVMe or SATA-based solid state drives (SSD) to deliver high random I/O performance. This is a good option when you need storage with very low latency and do not need the data to persist when the instance terminates. You can also take advantage of fault-tolerant architectures. OpenEBS is an option for high availability of data combined with the advantages of using physical disks.
 
 ## How is replication done with OpenEBS?
 
-OpenEBS will have minimum 3 replicas to run OpenEBS cluster with high availability and if a node fails, OpenEBS will manage the data to be replicated to a new disk which will come up as part of ASG. In the meantime your workload is accessing the live data from one the replicas.
+OpenEBS will have minimum 3 replicas to run OpenEBS cluster with high availability and if a node fails, OpenEBS will manage the data to be replicated to a new disk which will come up as part of ASG. In the meantime, your workload is accessing the live data from one the replicas.
 
 ![Stateful Applications using OpenEBS and instance stores](/docs/assets/OpenEBS_AWS.png)
 
@@ -38,11 +38,11 @@ OpenEBS will have minimum 3 replicas to run OpenEBS cluster with high availabili
 
 ## Installing OpenEBS Cluster in AWS
 
-Use local ubuntu 16.04 machine from where you can login to AWS with appropriate user credentials and creating cluster from it.
+Use local ubuntu 16.04 machine from where you can login to AWS with appropriate user credentials and creating a cluster from it.
 
 **Perform following operations from AWS management console**
 
-1. Create VPC and Internet gateway.
+1. Create VPC and Internet gateway. 
 2. Associate this VPC with the Internet Gateway.
 
 **Perform the following procedure from your local ubuntu machine**
@@ -52,7 +52,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 2. Configure with your AWS account by executing the following command.
 
    ```
-   aws configure
+   aws configure 
    ```
 
    **Note:** You have to specify your AWS Access Key, Secret Access Key, Default region name, and Default output format for keeping the configuration details.
@@ -60,10 +60,10 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 3. Create a S3 bucket to store your cluster configuration details as follows.
 
    ```
-   aws s3 mb s3://<bucket_name>
+   aws s3 mb s3://<bucket_name> 
    ```
 
-4. Export the s3 bucket details using following command.
+4. Export the s3 bucket details using the following command.
 
    ```
    export KOPS_STATE_STORE=s3://<bucket_name>
@@ -86,11 +86,11 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
    Suggestions:
 
    - list clusters with: kops get cluster
-   - edit this cluster with: kops edit cluster ranjith.k8s.local
+   - edit this cluster with : kops edit cluster ranjith.k8s.local
    - edit your node instance group: kops edit ig --name=ranjith.k8s.local nodes
    - edit your master instance group: kops edit ig --name=ranjith.k8s.local master-us-west-2a
 
-   Finally configure your cluster with: kops update cluster name.k8s.local --yes
+   Finally, configure your cluster with: kops update cluster name.k8s.local --yes
 
 7. Change your instance image type and number of machines by executing corresponding commands. The exact command needed for your cluster will be shown at the end of the previous step. Following is an example.
 
@@ -105,7 +105,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
    Change your master instance type and number of machines by executing as follows.
 
    ```
-   kops edit ig --name=<cluster_name>.k8s.local master-<zone_name>
+   kops edit ig --name=<cluster_name>.k8s.local master-<zone_name> 
    ```
 
    **Note:** We used c3.xlarge as instance type for both Master and Nodes. Number nodes used is 3.

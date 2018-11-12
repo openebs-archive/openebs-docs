@@ -1,19 +1,16 @@
 ---
 id: tsgiscsi
-title: iSCSI
+title: iSCSI 
 sidebar_label: iSCSI
 ---
 
 ------
 
-## Issue
-
+## Issue:
 **iSCSI login works from the host/node, but when you login from within the container, it fails.**
 
-## Troubleshooting the issue and Workaround
-
+## Troubleshooting the issue and Workaround:
 **If the following error occurs when you are trying to login from kubelet, then the issue is because of the difference in versions between the kubelet and the node.**
-
 ```
 root@worker3:/# iscsiadm -m discovery -t st -p 10.43.21.74:3260
 10.43.21.74:3260,1 iqn.2016-09.com.openebs.jiva:pvc-641131af-75e2-11e8-990b-9600000c0999
@@ -23,25 +20,19 @@ iscsiadm: Could not login to [iface: default, target: iqn.2016-09.com.openebs.ji
 iscsiadm: initiator reported error (12 - iSCSI driver not found. Please make sure it is loaded, and retry the operation)
 iscsiadm: Could not log into all portals
 ```
-
 **You can use the following command to verify the issue.**
-
 ```
 root@worker1 ~ # iscsiadm -V
 iscsiadm version 2.0-873
 root@worker1 ~ # sudo docker exec kubelet iscsiadm -V
 iscsiadm version 2.0-874
 ```
-
 **Remove iscsi from the host/node by using the following command.**
-
 ```
 service iscsid stop
 sudo apt remove open-iscsi
 ```
-
 **The above command only removes iSCSI from the node, but iSCSI inside the kubelet will be running. Verify using the following command.**
-
 ```
 root@worker1 ~ # iscsiadm -V
 -bash: /usr/bin/iscsiadm: No such file or directory

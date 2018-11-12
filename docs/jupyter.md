@@ -5,7 +5,8 @@ sidebar_label: Jupyter
 ---
 ------
 
-This section provides detailed instructions on how to run a jupyter pod on OpenEBS storage in a Kubernetes cluster and uses a *jupyter ui editor* to generate load in order to illustrate input/output traffic on the storage.
+This section provides detailed instructions on how to run a jupyter pod on OpenEBS storage in a Kubernetes cluster and uses a *jupyter ui editor* to generate load in order to illustrate input/output traffic on
+the storage.
 
 Run Jupyter Pod with OpenEBS Storage
 ------------------------------------
@@ -13,19 +14,19 @@ Run Jupyter Pod with OpenEBS Storage
 Use OpenEBS as persistent storage for the jupyter pod by selecting an OpenEBS storage class in the persistent volume claim. A sample jupyter pod yaml (with container attributes and pvc details) is available in the OpenEBS git repository (which was cloned in the previous steps).
 
 ```
-name@Master:~$ cat demo-jupyter-openebs.yaml
-..
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: jupyter-data-vol-claim
-spec:
+name@Master:~$ cat demo-jupyter-openebs.yaml 
+.. 
+kind: PersistentVolumeClaim 
+apiVersion: v1 
+metadata: 
+  name: jupyter-data-vol-claim 
+spec: 
   storageClassName: openebs-jupyter
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5G
+  accessModes: 
+    - ReadWriteOnce 
+  resources: 
+    requests: 
+      storage: 5G 
 ..
 ```
 

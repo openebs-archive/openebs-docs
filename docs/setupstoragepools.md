@@ -21,7 +21,6 @@ To create a GPD on a GKE cluster run the following command on master node. In th
 ```
 gcloud compute disks create disk1 --size 100GB --type pd-standard  --zone us-central1-a
 ```
-
 Attach the disk to the node. Use the following command to attach the disk to a particular node. Replace `<Node Name>` with your actual node name. Here disk1 is the name of the disk created earlier.
 
 ```
@@ -66,25 +65,25 @@ Mount the disk on your OpenEBS cluster.
 sudo mount /dev/sdb /mnt/openebs_disk
 ```
 
-Add the following entries in the *openebs-operator.yaml* file.
+Add the following entries in the *openebs-operator.yaml* file. 
 
 ```
 apiVersion: openebs.io/v1alpha1
 kind: StoragePool
 metadata:
-	name: test-mntdir
+	name: test-mntdir 			 
 	type: hostdir
 spec:
-	path: "/mnt/openebs_disk"
+	path: "/mnt/openebs_disk"      
 ```
 
-**Note:** Change the path with your mounted path if it is not your default mount path. Also, remember your pool name. In this example, the pool name is *test-mntdir*.
+**Note:** Change the path with your mounted path if it is not your default mount path. Also, remember your pool name. In this example, the pool name is *test-mntdir*. 
 
 ## Scheduling a Pool on a Node
 
 If you want to schedule your pool on a particular node please follow [this](https://docs.openebs.io/docs/next/scheduler.html) procedure before applying the *openebs-operator.yaml* file. Please refer [installation](/docs/next/installation.html#install-openebs-using-kubectl) to deploy OpenEBS cluster in your k8s environment which will create a default storage pool on the host path.Jiva volumes will be deployed inside this path only.
 
-For example, if you want to run a Percona application in this storage pool, you must create a storage class yaml called as *openebs-storageclasses.yaml* by adding the storage pool name in the *openebs-percona* storage class as Percona application is used in the example.
+For example, if you want to run a Percona application in this storage pool, you must create a storage class yaml called as *openebs-storageclasses.yaml* by adding the storage pool name in the *openebs-percona* storage class as Percona application is used in the example. 
 
 ```
 ---
@@ -159,6 +158,7 @@ spec:
     requests:
       storage: 5G
 ```
+
 
 Run the application using the following command.
 

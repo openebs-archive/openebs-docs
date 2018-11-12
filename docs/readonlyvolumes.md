@@ -25,9 +25,9 @@ chown: changing ownership of '/var/lib/mysql/mysql': Read-only file system
 chown: changing ownership of '/var/lib/mysql/': Read-only file system
 ```
 
-## How to recover from ReadOnly state ?
+## How to recover from ReadOnly state ?	
 
-Ensure that all your replica pods are running on the same node where they were scheduled initially . Once verified, you can perform the recovery steps. More details on the recovery steps are provided [here](https://docs.openebs.io/docs/next/tsgpvs.html#workaround-recovery).
+Ensure that all your replica pods are running on the same node where they were scheduled initially . Once verified, you can perform the recovery steps. More details on the recovery steps are provided [here](https://docs.openebs.io/docs/next/tsgpvs.html#workaround-recovery). 
 
 If you have not pinned the replica volume to the k8s node where it was scheduled initially, the replicas could get scheduled onto a node where the data does not exist. In this case, you can backup and recover data using the steps mentioned [here](https://github.com/kmova/bootstrap/tree/master/gke-openebs/jiva-recovery).
 
@@ -43,20 +43,22 @@ If you have not pinned the replica volume to the k8s node where it was scheduled
 
 ## Replica WO/RO behavior is changed in 0.6 release
 
-0.6 release also brings in a new change in the way replicas are made available to the application when in degraded mode. In 0.5.4 or earlier, if minimum quorum disks are not available, the available replicas were marked write only (WO) and the volume will continue to be available in WO mode for the application pod. With Jiva volume rebuild design, this could result in data loss situation if the replica that is in WO mode is permanently lost for some reason.
+0.6 release also brings in a new change in the way replicas are made available to the application when in degraded mode. In 0.5.4 or earlier, if minimum quorum disks are not available, the available replicas were marked write only (WO) and the volume will continue to be available in WO mode for the application pod. With Jiva volume rebuild design, this could result in data loss situation if the replica that is in WO mode is permanently lost for some reason. 
 
-To avoid the data loss situation, this behavior is change in 0.6 release. Now, if the minimum number of replicas are not available for quorum, the current replicas are marked read only (RO).
+To avoid the data loss situation, this behavior is change in 0.6 release. Now, if the minimum number of replicas are not available for quorum, the current replicas are marked read only (RO). 
 
-For example, consider a Jiva volume with three replicas:
+For example, consider a Jiva volume with three replicas: 
 
-- Losing one replica will not affect the RW status of the volume, both the the remaining replicas will continue to be in RW mode
+- Losing one replica will not affect the RW status of the volume, both the remaining replicas will continue to be in RW mode
 - Losing second replica will mark the third replica as RO and the volume will also become RO
+
+
 
 ## What to look for in the Roadmap related to volume readonly issues?
 
 Some issues are still in open state such as [openebs#1612](https://github.com/openebs/openebs/issues/1612) . Future releases such as 0.7 will have fixes to these issue which will reduces the conditions under which volumes can go into read only mode.
 
-
+ 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

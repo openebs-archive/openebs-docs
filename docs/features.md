@@ -16,11 +16,11 @@ Avoiding vendor/cloud lock-in is the common goal for most of the users and enter
 
 ## Simplified installation
 
-[Installing](/docs/next/installation.html) OpenEBS on a Kubernetes cluster is very simple and straight forward. Installation is achieved through the OpenEBS operator or by using helm charts.
+[Installing](/docs/next/installation.html) OpenEBS on a Kubernetes cluster is very simple and straight forward. Installation is achieved through the OpenEBS operator or by using helm charts.    
 
-## Enterprise Grade Replication and Data Protection
+## Enterprise Grade Replication and Data Protection 
 
-OpenEBS supports synchronous replication for high availability and asynchronous replication through incremental snapshots for data protection.
+OpenEBS supports synchronous replication for high availability and asynchronous replication through incremental snapshots for data protection. 
 
 ## Granular Volume Policies
 
@@ -28,11 +28,11 @@ Containerization of storage software and dedicating such controller for each vol
 
 ## Enables Hyperconvergence on Kubernetes
 
-Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by using Kubernetes constructs. Using OpenEBS, nodes in the Kubernetes cluster can be horizontally scaled without worrying about managing persistent storage needs of stateful applications. The storage needs (capacity planning, performance planning, and volume managment) of a cluster can easily be automated using the volume and pool policies of OpenEBS.
+Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by using Kubernetes constructs. Using OpenEBS, nodes in the Kubernetes cluster can be horizontally scaled without worrying about managing persistent storage needs of stateful applications. The storage needs (capacity planning, performance planning, and volume managment) of a cluster can easily be automated using the volume and pool policies of OpenEBS. 
 
 ## Kubernetes Integrated Snapshots and Clones
 
-OpenEBS implements the Kubernetes snapshot provisioner specification. Taking snapshots of a given volume and creating clones from a given snapshot are native to Kubernetes.
+OpenEBS implements the Kubernetes snapshot provisioner specification. Taking snapshots of a given volume and creating clones from a given snapshot are native to Kubernetes. 
 
 ## No Blast Radius
 
@@ -48,7 +48,7 @@ Node Disk Manager components, volume pods, and other persistent storage structur
 
 ## Configurable Storage Engines
 
-OpenEBS provides two storage engines - Jiva and cStor. Architecturally, both provide containerized volumes and features and performance capabilities vary. Users can choose either Jiva or cStor by configuring a policy parameter. The volume parameter in a storage class decides which storage engine to use.
+OpenEBS provides two storage engines - Jiva and cStor. Architecturally, both provide containerized volumes and features and performance capabilities vary. Users can choose either Jiva or cStor by configuring a policy parameter. The volume parameter in a storage class decides which storage engine to use. 
 
 ## Free Tier Access to MayaOnline
 
