@@ -223,7 +223,9 @@ kubectl apply -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-op
 
 You can also exec into this application to check the content, retrieve the files, or use the application to check the content.
 
+## Application pod is not able to mount the cStor volume in OpenEBS 0.7
 
+In OpenEBS 0.7, unit for mentiong size in PVC should be using "G". Till OpenEBS 0.7 version, it can be used both "G" and "Gi" as unit for mentioning size. Once you change the size in PVC as per the recommended way, your application pod will run by consuming cStor volume. 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
