@@ -558,6 +558,9 @@ iscsiadm: No portals found
 
 The ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ will start showing different sizes when there are replica node restarts and internal snapshots are created for synchronizing replicas.
 
+## What could be the disk mount status on Node for provisioning OpenEBS volume?
+
+OpenEBS have cureently two storage Engine,Jiva and cStor which can used to provision volume. Jiva requires the disk to be mounted (i.e., attached, formatted with a fs & mounted) and cStor can consume disks that are attached (are visible to OS as SCSI devices) by creating a pool with these disks.
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
