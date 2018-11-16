@@ -72,7 +72,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 5. Create the cluster across different zones using following command.
 
    ```
-   kops create cluster --name=<cluster_name>.k8s.local --vpc=<vpc_id> --zones==<zone1_name>,<zone2_name>,<zone3_name>
+   kops create cluster --name=<cluster_name>.k8s.local --vpc=<vpc_id> --zones=<zone1_name>,<zone2_name>,<zone3_name>
    ```
 
    This will create a cluster in the mentioned zone in your region provided as part of AWS configuration.
