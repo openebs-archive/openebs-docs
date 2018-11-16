@@ -79,6 +79,7 @@ Example:
           "include":"",
           "exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"
         }
+```
 
 ## Why does OpenEBS provisioner pod restart continuously?
 
@@ -136,7 +137,14 @@ kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
 kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
 ```
  
-
+ ## On Centos 7.5,While trying openebs 0.7,getting below error in the node-disk-manager pod.
+ 
+ ```
+ container_linux.go:247: starting container process caused "process_linux.go:359: container init caused \"rootfs_linux.go:53: mounting \\\"/proc/1/mounts\\\" to rootfs \\\"/mnt/docker/devicemapper/mnt/c6102aa3daf7ff291b1595fd6a9bf1367fd6d013498cc0a36442d9de4b968f3d/rootfs\\\" at \\\"/mnt/docker/devicemapper/mnt/c6102aa3daf7ff291b1595fd6a9bf1367fd6d013498cc0a36442d9de4b968f3d/rootfs/host/mounts\\\" caused \\\"permission denied\\\"\""
+ ```
+ ### Troubleshooting
+ 
+The hosts mount file is being attached to the ndm pod is to detect if the discovered disk is an OS disk. If selinux is enabled, this mount file cannot be able to attach by ndm. Try to disable selinux by  `setenforce 0` , which will allow to detect the disks.
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
