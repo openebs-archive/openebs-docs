@@ -5,47 +5,45 @@
 [![Commit Activity (Year)](https://img.shields.io/github/commit-activity/y/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/commits)
 [![Contributors](https://img.shields.io/github/contributors/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/graphs/contributors)
 
-OpenEBS docs is the documentation repository for OpenEBS documentation. This is using Docusaurus as a documentation framework. It's easy to use and write documentation using Docusaurus, which uses markdown.
-More on the Docusaurus can be found here: https://docusaurus.io/docs/en/installation.html
-
+openebs-docs is the repository for the official OpenEBS documentation. This is using Docusaurus as a documentation framework. It's easy to use and write documentation using Docusaurus, which uses markdown markup language.
+Additional details on the Docusaurus project can be found [here](https://docusaurus.io/docs/en/installation.html).
 
 ## For Developers
 
-### Install nodejs
+### Install Node.js
 
-```
+```bash
 sudo apt-get install python-software-properties
 curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
-
 ```
 
-### To get the latest nodejs package
+### Get the latest Node.js package
 
-```
+```bash
 sudo apt-get install -y nodejs
 ```
 
-### Install yarn
-```
+### Install Yarn
+
+```bash
 npm install -g yarn
 ```
 
-### Clone openebs-docs
+### Clone openebs-docs repository
 
-```
+```bash
 git clone https://github.com/openebs/openebs-docs.git
-
 cd openebs-docs
 ```
 
-### Start server
+### Start the server
 
-```
+```bash
 cd openebs-docs/website
-
 npm start
 ```
-The above step will start a server on the localhost:3000
+
+The above step will start a server on the `localhost:3000`
 
 ### How OpenEBS-docs get published?
 
@@ -64,4 +62,5 @@ The following procedure lists the tasks from the time you select an issue to pub
 6. The maintainers can then merge your pull request. Congrats on your contribution to the OpenEBS-docs code-base.
 
 ### License
+
 The project is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text. 
