@@ -225,7 +225,7 @@ You can also execute into this application to check the content, retrieve the fi
 
 ## Application pod is not able to mount the cStor volume in OpenEBS 0.7
 
-In OpenEBS 0.7, unit for mentiong size in PVC should be using "G". Till OpenEBS 0.7 version, it can be used both "G" and "Gi" as unit for mentioning size. Once you change the size in PVC as per the recommended way, your application pod will run by consuming cStor volume. 
+In OpenEBS 0.7, unit for mentioning size in PVC should be using "G". Till OpenEBS 0.7 version, it can be used both "G" and "Gi" as the unit for mentioning size. Once you change the size in PVC as per the recommended way, your application pod will run by consuming cStor volume. 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
