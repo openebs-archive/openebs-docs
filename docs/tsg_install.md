@@ -136,7 +136,7 @@ kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
 kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
 ```
  
-## cStor pool creation failing on cetos when there are partitions on the disk 
+## cStor pool creation failing on Cetos when there are partitions on the disk 
 
 cStor pool creation failing with the following error message:
 
@@ -170,7 +170,7 @@ sdc           8:32   0 232.9G  0 disk
  ###Troubleshooting
  
  1. Clear the partition on the partioned disk.
- 2. Run following command on the host machine to check any LVM handler on the device
+ 2. Run the following command on the host machine to check any LVM handler on the device
     ```
     sudo dmsetup info -Ccore@k8worker01 ~ $ sudo dmsetup info -C
     Name             Maj Min Stat Open Targ Event  UUID                                                                 
@@ -179,7 +179,7 @@ sdc           8:32   0 232.9G  0 disk
     centos-swap      254   1 L--w    0    1      0 LVM-1kqWMeQWqH3qTsiHhYw3ygAzOvpfDL58UIVFhLkzvE1mk7uCy2nePlktBHfTuTYF
     centos-root      254   3 L--w    0    1      0 LVM-1kqWMeQWqH3qTsiHhYw3ygAzOvpfDL58WULaIYm0X7QmrwQaWYxz1hTwzWocAwYJ
     ```
-    If above command returns following kind of output, then you should remove the handler on the device.
+    If the above command displays output similar to the following, you must remove the handler on the device.
     ```
     sudo dmsetup remove centos-home
     sudo dmsetup remove centos-swap
