@@ -137,7 +137,7 @@ kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
 kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
 ```
  
- ## On Centos 7.5,While trying openebs 0.7,getting below error in the node-disk-manager pod.
+ ## While running OpenEBS v0.7 on Centos 7.5 getting below error in the node-disk-manager pod.
  
  ```
  container_linux.go:247: starting container process caused "process_linux.go:359: container init caused \"rootfs_linux.go:53: mounting \\\"/proc/1/mounts\\\" to rootfs \\\"/mnt/docker/devicemapper/mnt/c6102aa3daf7ff291b1595fd6a9bf1367fd6d013498cc0a36442d9de4b968f3d/rootfs\\\" at \\\"/mnt/docker/devicemapper/mnt/c6102aa3daf7ff291b1595fd6a9bf1367fd6d013498cc0a36442d9de4b968f3d/rootfs/host/mounts\\\" caused \\\"permission denied\\\"\""
