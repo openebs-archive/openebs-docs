@@ -136,7 +136,7 @@ kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
 kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
 ```
  
-## cStor pool creation failing on Cetos when there are partitions on the disk 
+## cStor pool creation fails on Cetos when there are partitions on the disk 
 
 cStor pool creation failing with the following error message:
 
