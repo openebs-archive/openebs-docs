@@ -16,19 +16,23 @@ Storage policies can be created, updated, and deleted in a running OpenEBS clust
 
 ## Adding a Custom Storage Policy to an OpenEBS Cluster
 
-Storage policies are meant to be created per team, workload, storage controller, and so on that fits your requirement. Since OpenEBS storage controllers (i.e. jiva or cStor) run from within a container, a custom storage policy can be created and set against a particular storage controller instance that meets the demands of the application (which consumes the storage exposed from the storage controller instance). You can now define policies based on the type of application at the storageclass level. Following are some of the properties that can be customized at the default level in the *openebs-storageclasses.yaml* file.
+Storage policies are meant to be created per team, workload, storage controller, and so on that fits your requirement. Since OpenEBS storage controllers (i.e. jiva or cStor) run from within a container, a custom storage policy can be created and set against a particular storage controller instance that meets the demands of the application (which consumes the storage exposed from the storage controller instance). You can now define policies based on the type of application at the storageclass level. Following are some of the properties that can be customized at the default level on the StorageClass.
 
-## Types of Storage Policies
+Jiva and cStor has its own specific storage policies which can be defined in the StorageClass. Based on your chosen storage engine, you can set the paramaters and create new StorageClass specification. Following section describes the types of Storage Policies supported for both Jiva and cStor
 
-OpenEBS supports several types of Storage Policies such as the following.
+## Types of Storage Policies for Jiva
 
-- openebs.io/jiva-replica-count
-- openebs.io/jiva-replica-image
-- openebs.io/jiva-controller-image
-- openebs.io/storage-pool
-- openebs.io/volume-monitor
+OpenEBS supports several types of Storage Policies for Jiva volume such as the following.
 
-## Replica Count Policy
+- cas.openebs.io/ReplicaCount
+- cas.openebs.io/ReplicaImage
+- cas.openebs.io/ControllerImage
+- cas.openebs.io/StoragePool
+- cas.openebs.io/VolumeMonitor
+- cas.openebs.io/VolumeMonitorImage
+- cas.openebs.io/RetainReplicaData
+
+### Replica Count Policy
 
 You can specify the jiva replica count using the *value* for *ReplicaCount* property. In the following example, the jiva-replica-count is specified as 3. Hence, three replicas are created.
 
@@ -36,16 +40,17 @@ You can specify the jiva replica count using the *value* for *ReplicaCount* prop
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: openebs-standard
+  name: openebs-jiva-default
   annotations:
     cas.openebs.io/config: |
-      - name: ReplicaCount
-        value: "3"
+       - name: ReplicaCount
+         value: "3"
+
 ```
 
-## Replica Image Policy
+### Replica Image Policy
 
-You can specify the jiva replica image using *value* for *jiva-replica-image* property.
+You can specify the jiva replica image using *value* for *ReplicaImage* property.
 
 **Note:**
 
@@ -55,16 +60,16 @@ Jiva replica image is a docker image. Following is a sample that makes use of re
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: openebs-standard
+  name: openebs-jiva-default
   annotations:
     cas.openebs.io/config: |
       - name: ReplicaImage
-        value: openebs/jiva:0.7.0-RC2
+        value: quay.io/openebs/jiva:v0.7.x-ci
 ```
 
-## Controller Image Policy
+### Controller Image Policy
 
-You can specify the jiva controller image using the * *value* for *jiva-controller-image* property.
+You can specify the jiva controller image using the * *value* for *ControllerImage* property.
 
 **Note:**
 
@@ -74,15 +79,35 @@ Jiva controller image is a docker image. Following is a sample setting.
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: openebs-standard
+  name: openebs-jiva-default
   annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.7.0-RC2
+        value: quay.io/openebs/jiva:v0.7.x-ci
 
 ```
 
-## Storage Pool Policy
+### Volume Monitor Policy
+
+You can specify the jiva volume monitor feautire which can be set using *value* for *VolumeMonitor* property.
+
+**Note:**
+
+Jiva Volume Monitor is a docker image. Following is a sample that makes use of Volume monitor setting policy.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-jiva-default
+  annotations:
+    cas.openebs.io/config: |
+      - enabled: "true"
+        name: VolumeMonitor
+```
+
+
+### Storage Pool Policy
 
 A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on any of the following.
 
@@ -97,7 +122,7 @@ You must define the storage pool as a Kubernetes Custom Resource (CR) before usi
 apiVersion: openebs.io/v1alpha1
 kind: StoragePool
 metadata:
-    name: sp-mntdir
+    name: default
     type: hostdir
 spec:
     path: "/mnt/openebs"
@@ -109,15 +134,15 @@ This storage pool custom resource can now be used as follows in the storage clas
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: openebs-standard
+  name: openebs-jiva-default
   annotations:
     cas.openebs.io/config: |
       - name: StoragePool
-        value: sp-mntdir
+        value: default
 
 ```
 
-## Storage Class Policy
+### Storage Class Policy
 
 You can specify a storage class policy where you can specify the capacity and file system type. By default, OpenEBS comes with ext4 file system. However, you can also use the xfs file system.
 
@@ -131,11 +156,11 @@ metadata:
    annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.7.0-RC2
+        value: quay.io/openebs/jiva:v0.7.x-ci
       - name: ReplicaImage
-        value: openebs/jiva:0.7.0-RC2
+        value: quay.io/openebs/jiva:v0.7.x-ci
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.7.0-RC2
+        value: quay.io/openebs/m-exporter:v0.7.x-ci
       - name: ReplicaCount
         value: "1"
       - name: StoragePool
@@ -144,7 +169,7 @@ metadata:
         value: "xfs"
 ```
 
-## Volume Monitoring Image Policy
+### Volume Monitoring Image Policy
 
 You can specify the monitoring image policy for a particular volume using *value* for *VolumeMonitorImage* property. The following Kubernetes storage class sample uses the Volume Monitoring policy. By default, volume monitor is enabled.
 
@@ -152,11 +177,162 @@ You can specify the monitoring image policy for a particular volume using *value
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: openebs-standard
+  name: openebs-jiva-default
   annotations:
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.7.0-RC2
+        value: quay.io/openebs/m-exporter:v0.7.x-ci
+```
+
+### Volume Space Reclaim Policy
+
+Support for a storage policy that can disable the Jiva Volume Space reclaim.You can specify the jiva volume space reclaim feature setting using the *value* for *RetainReplicaData* property. In the following example, the jiva volume space reclaim feature is enabled as true. Hence, retain the volume data post PVC deletion.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-jiva-default
+  annotations:
+    cas.openebs.io/config: |
+      - name: RetainReplicaData
+        enabled: true   
+```
+
+## Types of Storage Policies for cStor
+
+OpenEBS supports several types of Storage Policies for cStor volume such as the following.
+
+- cas.openebs.io/ReplicaCount
+- cas.openebs.io/VolumeControllerImage
+- cas.openebs.io/VolumeTargetImage
+- cas.openebs.io/StoragePoolClaim
+- cas.openebs.io/VolumeMonitor
+- cas.openebs.io/VolumeMonitorImage
+- cas.openebs.io/RetainReplicaData
+- cas.openebs.io/FSType
+
+### Replica Count Policy
+
+You can specify the cStor Pool replica count using the *value* for *ReplicaCount* property. In the following example, the ReplicaCount is specified as 3. Hence, three replicas for storage pool will be created.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: ReplicaCount
+        value: "3"
+    openebs.io/cas-type: cstor
+```
+
+### Volume Controller Image Policy
+
+You can specify the cStor Volume Controller Image using the *value* for *VolumeControllerImage* property. This will help to choose the volume management image.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: VolumeControllerImage
+        value: quay.io/openebs/cstor-volume-mgmt:v0.7.x-ci
+    openebs.io/cas-type: cstor
+```
+
+### Volume Target Image Policy
+
+You can specify the cStor Target Image using the *value* for *VolumeTargetImage* property. This will help to choose the cStor istgt target image.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: VolumeTargetImage
+        value:quay.io/openebs/cstor-istgt:v0.7.x-ci
+    openebs.io/cas-type: cstor
+```
+
+### Storage Pool Claim Policy
+
+You can specify the cStor Pool Claim name using the *value* for *StoragePoolClaim* property. This will help to choose cStor storage pool name where OpenEBS volume will create. Following is the default StorageClass template where cStor volume will create on default cStor Sparse Pool.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
+    openebs.io/cas-type: cstor
+```
+
+### Volume Monitor Policy
+
+You can specify the cStor volume monitor feature which can be set using *value* for *VolumeMonitor* property.  By default, volume monitor is enabled.
+
+**Note:**
+
+cStor Volume Monitor is a docker image. Following is a sample that makes use of Volume monitor setting policy.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - enabled: "true"
+        name: VolumeMonitor
+    openebs.io/cas-type: cstor
+```
+
+### Volume Monitoring Image Policy
+
+You can specify the monitoring image policy for a particular volume using *value* for *VolumeMonitorImage* property. The following sample storage class uses the Volume Monitor Image policy.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: VolumeMonitorImage
+        value: quay.io/openebs/m-exporter:v0.7.x-ci
+    openebs.io/cas-type: cstor
+```
+
+### Volume File System Type Policy
+
+You can specify the file system type for the cStor volume where application will consue the storage using *value* for *FSType*. The following is the sample storage class. Currently OpenEBS support ext4 as the default file system and it also support XFS.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: FSType
+        value: ext4
+    openebs.io/cas-type: cstor
+```
+
+### Volume Space Reclaim Policy
+
+Support for a storage policy that can disable the cStor Volume Space reclaim.You can specify the cStor volume space reclaim feature setting using the *value* for *RetainReplicaData* property. In the following example, the cStor volume space reclaim feature is enabled as true. Hence, retain the volume data post PVC deletion.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: RetainReplicaData
+        enabled: true   
 ```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
