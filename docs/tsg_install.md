@@ -64,7 +64,7 @@ To resolve this issue, do not install `open-iscsi / iscsi-initiator-utils` on th
 service iscsid stop
 sudo apt remove open-iscsi
 ```
-The above step may remove the `iscsi_tcp` probe parameter after rebooting. Hence if `lsmod | grep iscsi` output doesn’t have `iscsi_tcp` parameter,then you must perform the following steps.
+The above step may remove the `iscsi_tcp` probe parameter after rebooting. Hence if `lsmod | grep iscsi` output does not have `iscsi_tcp` parameter, then you must perform the following steps.
 ```
 modprobe iscsi_tcp
 ```
