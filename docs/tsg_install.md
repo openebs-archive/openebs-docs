@@ -57,8 +57,17 @@ iscsiadm version 6.2.0.874-7
 [root@node-34622 ~]# docker exec kubelet iscsiadm -V
 iscsiadm version 2.0-874
 ```
-
-To resolve this issue, do not install `open-iscsi / iscsi-initiator-utils` on the host nodes when using the Rancher Container Engine (RKE).
+If output returns iscsiadm version for both commands, then you have to remove iscsi from the node. OpenEBS target will use the iscsi inside the kubelet. 
+To resolve this issue, do not install `open-iscsi / iscsi-initiator-utils` on the host nodes when using the Rancher Container Engine (RKE). Run the following commands to remove iscsi packages from the node if it already installed on your Ubuntu host. You can use the similar commands based on your host OS.
+```
+service iscsid stop
+sudo apt remove open-iscsi
+```
+The above step may remove the iscsi_tcp probe and hence after a reboot. So if `lsmod | grep iscsi` output doesn’t have `iscsi_tcp`,then you need to follow below steps to load the iscsi_tcp module.
+```
+modprobe iscsi_tcp
+```
+**Note:** For more detailed steps, read the [blog](https://blog.openebs.io/running-openebs-on-custom-rancher-cluster-98ecd52b5961)
 
 ## How can I select disks for creating a storage pool using cStor?
 
