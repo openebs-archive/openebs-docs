@@ -14,31 +14,22 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 2. Kubernetes 1.9.7+ is installed
 
-3. You can install OpenEBS either through stable helm chart or OpenEBS helm chart or by using OpenEBS operator/kubectl.  
+3. You can install OpenEBS either through stable helm chart or by using OpenEBS operator/kubectl.  
 
-   **Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS operator/kubectl](/docs/next/installation.html#install-openebs-using-kubectl) and [OpenEBS helm Charts](/docs/next/installation.html#install-openebs-using-openebs-helm-charts) .
-
+  
       ### Using a Stable Helm Chart:
 
    [Setup RBAC for helm tiller](/docs/next/installation.html#helm) and install the chart from Kubernetes stable and deploy the storage class templates.
 
    ```
    helm repo update
-   helm install  --namespace openebs --name openebs stable/openebs
-   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.7/k8s/openebs-storageclasses.yaml  
+   helm install  --namespace openebs --name openebs stable/openebs  
    ```
 
    For more details on installing OpenEBS using helm, see [install through helm](/docs/next/installation.html#helm).
 
-      ### Using OpenEBS Helm Charts 
-
-   ```
-   helm repo add openebs-charts https://openebs.github.io/charts/
-   helm repo update
-   helm install openebs-charts/openebs
-   ```
-
-      ### Using OpenEBS Operator (kubectl):
+    
+    ### Using OpenEBS Operator (kubectl):
 
    Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve creating a new Service Account and assigning to OpenEBS components. 
 
