@@ -182,22 +182,21 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.7.0
+        value: openebs/jiva:0.7.2
       - name: ReplicaImage
-        value: openebs/jiva:0.7.0
+        value: openebs/jiva:0.7.2
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.7.0
+        value: openebs/m-exporter:0.7.2
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
-        value: test-mntdir
+        value: default
 ```
 
 Run the following commands.
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
-kubectl apply -f openebs-storageclasses.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.2.yaml
 ```
 
 You must mention the storage class name in the *application.yaml* file. For example, *demo-percona-mysql-pvc.yaml* file for the percona application.
@@ -254,7 +253,7 @@ Run the application using the following command.
 kubectl apply -f demo-percona-mysql-pvc.yaml
 ```
 
-The Percona application now runs inside the `test-mntdir` storage pool.
+The Percona application now runs inside the `default` storage pool.
 
 Similarly, you can create a storage pool for different applications as per requirement.
 
