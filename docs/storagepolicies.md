@@ -16,9 +16,9 @@ Storage policies can be created, updated, and deleted in a running OpenEBS clust
 
 ## Adding a Custom Storage Policy to an OpenEBS Cluster
 
-Storage policies are meant to be created per team, workload, storage controller, and so on that fits your requirement. Since OpenEBS storage controllers (i.e. jiva or cStor) run from within a container, a custom storage policy can be created and set against a particular storage controller instance that meets the demands of the application (which consumes the storage exposed from the storage controller instance). You can now define policies based on the type of application at the storageclass level. Following are some of the properties that can be customized at the default level on the StorageClass.
+Storage policies are meant to be created per team, workload, storage controller, and so on that fits your requirement. Since OpenEBS storage controllers (i.e. jiva or cStor) run from within a container, a custom storage policy can be created and set against a particular storage controller instance that meets the demands of the application (which consumes the storage exposed from the storage controller instance). You can now define policies based on the type of application at the StorageClass level. Following are some of the properties that can be customized at the default level on the StorageClass.
 
-Jiva and cStor has its own specific storage policies which can be defined in the StorageClass. Based on your chosen storage engine, you can set the paramaters and create new StorageClass specification. Following section describes the types of Storage Policies supported for both Jiva and cStor
+Jiva and cStor has its own specific storage policies which can be defined in the StorageClass. Based on the storage engine you have chosen, you can set the paramaters and create a new StorageClass specification. Following section describes the types of Storage Policies supported for both Jiva and cStor.
 
 ## Types of Storage Policies for Jiva
 
@@ -34,7 +34,7 @@ OpenEBS supports several types of Storage Policies for Jiva volume such as the f
 
 ### Replica Count Policy
 
-You can specify the jiva replica count using the *value* for *ReplicaCount* property. In the following example, the jiva-replica-count is specified as 3. Hence, three replicas are created.
+You can specify the Jiva replica count using the *value* for *ReplicaCount* property. In the following example, the jiva-replica-count is specified as 3. Hence, three replicas are created.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -89,7 +89,7 @@ metadata:
 
 ### Volume Monitor Policy
 
-You can specify the jiva volume monitor feautire which can be set using *value* for *VolumeMonitor* property.
+You can specify the jiva volume monitor feature which can be set using *value* for *VolumeMonitor* property.
 
 **Note:**
 
@@ -186,7 +186,7 @@ metadata:
 
 ### Volume Space Reclaim Policy
 
-Support for a storage policy that can disable the Jiva Volume Space reclaim.You can specify the jiva volume space reclaim feature setting using the *value* for *RetainReplicaData* property. In the following example, the jiva volume space reclaim feature is enabled as true. Hence, retain the volume data post PVC deletion.
+Support for a storage policy that can disable the Jiva Volume Space reclaim. You can specify the jiva volume space reclaim feature setting using the *value* for *RetainReplicaData* property. In the following example, the jiva volume space reclaim feature is enabled as true. Hence, retain the volume data post PVC deletion.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -229,7 +229,7 @@ metadata:
 
 ### Volume Controller Image Policy
 
-You can specify the cStor Volume Controller Image using the *value* for *VolumeControllerImage* property. This will help to choose the volume management image.
+You can specify the cStor Volume Controller Image using the *value* for *VolumeControllerImage* property. This will help you choose the volume management image.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -244,7 +244,7 @@ metadata:
 
 ### Volume Target Image Policy
 
-You can specify the cStor Target Image using the *value* for *VolumeTargetImage* property. This will help to choose the cStor istgt target image.
+You can specify the cStor Target Image using the *value* for *VolumeTargetImage* property. This will help you choose the cStor istgt target image.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -259,7 +259,7 @@ metadata:
 
 ### Storage Pool Claim Policy
 
-You can specify the cStor Pool Claim name using the *value* for *StoragePoolClaim* property. This will help to choose cStor storage pool name where OpenEBS volume will create. Following is the default StorageClass template where cStor volume will create on default cStor Sparse Pool.
+You can specify the cStor Pool Claim name using the *value* for *StoragePoolClaim* property. This will help you choose cStor storage pool name where OpenEBS volume will be created. Following is the default StorageClass template where cStor volume will be created on default cStor Sparse Pool.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -274,7 +274,7 @@ metadata:
 
 ### Volume Monitor Policy
 
-You can specify the cStor volume monitor feature which can be set using *value* for *VolumeMonitor* property.  By default, volume monitor is enabled.
+You can specify the cStor volume monitor feature which can be set using *value* for the *VolumeMonitor* property.  By default, volume monitor is enabled.
 
 **Note:**
 
@@ -308,7 +308,7 @@ metadata:
 
 ### Volume File System Type Policy
 
-You can specify the file system type for the cStor volume where application will consue the storage using *value* for *FSType*. The following is the sample storage class. Currently OpenEBS support ext4 as the default file system and it also support XFS.
+You can specify the file system type for the cStor volume where application will consue the storage using *value* for *FSType*. The following is the sample storage class. Currently OpenEBS support ext4 as the default file system and it also supports XFS as filesystem.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -323,7 +323,7 @@ metadata:
 
 ### Volume Space Reclaim Policy
 
-Support for a storage policy that can disable the cStor Volume Space reclaim.You can specify the cStor volume space reclaim feature setting using the *value* for *RetainReplicaData* property. In the following example, the cStor volume space reclaim feature is enabled as true. Hence, retain the volume data post PVC deletion.
+OpenEBS supports a storage policy that can disable the cStor Volume Space reclaim. You can specify the cStor volume space reclaim feature setting using the *value* for the *RetainReplicaData* property. In the following example, the cStor volume space reclaim feature is enabled as true. Hence, it retains the volume data after deleting the PVC.
 
 ```
 apiVersion: storage.k8s.io/v1
