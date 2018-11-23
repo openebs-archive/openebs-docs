@@ -10,7 +10,7 @@ OpenEBS is tested on various platforms. Refer to the platform versions and assoc
 
 On an existing Kubernetes cluster, as a cluster administrator, you can install latest version of  OpenEBS in the following two ways.
 
-1. Using (stable) [helm charts](/docs/next/installation.html#install-openebs-using-helm-charts)
+1. Using Stable [helm charts](/docs/next/installation.html#install-openebs-using-helm-charts)
 2. Using OpenEBS operator through [kubectl](/docs/next/installation.html#install-openebs-using-kubectl)
 
 The latest OpenEBS version 0.7.2 installation steps for both methods are explained below.
