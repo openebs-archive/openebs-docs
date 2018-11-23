@@ -6,14 +6,14 @@ sidebar_label: Installation
 
 ---
 
-OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here](/docs/next/supportedplatforms.html)
+OpenEBS is tested on various platforms. Refer to the platform versions and associated special instructions [here].(/docs/next/supportedplatforms.html)
 
-On an existing Kubernetes cluster, as a cluster administrator, you can install latest OpenEBS in the following two ways.
+On an existing Kubernetes cluster, as a cluster administrator, you can install latest version of  OpenEBS in the following two ways.
 
 1. Using (stable) [helm charts](/docs/next/installation.html#install-openebs-using-helm-charts)
 2. Using OpenEBS operator through [kubectl](/docs/next/installation.html#install-openebs-using-kubectl)
 
-Latest OpenEBS version 0.7.2 installation steps for both methods are explained below.
+The latest OpenEBS version 0.7.2 installation steps for both methods are explained below.
 
 <a name="helm"></a>
 
@@ -37,14 +37,14 @@ kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"sp
 
 ### Install OpenEBS using Stable Helm Charts
 
-You can install OpenEBS using helm charts using [Stable Helm Charts](/docs/next/installation.html#install-openebs-using-stable-helm-charts) which will use [Kubernetes stable helm charts](https://github.com/kubernetes/charts/tree/master/stable). Install OpenEBS using the following commands into **openebs** namespace.
+You can install OpenEBS using helm charts using [Stable Helm Charts](/docs/next/installation.html#install-openebs-using-stable-helm-charts) which will use [Kubernetes stable helm charts](https://github.com/kubernetes/charts/tree/master/stable). Install OpenEBS using the following commands in the **openebs** namespace.
 
 ```
 helm repo update
 helm install  --namespace openebs --name openebs stable/openebs
 ```
 
-OpenEBS control plane pods are now created. CAS Template, default Storage Pool, and default Storage Classes are created after executing the above command. Select your storage engine to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
+OpenEBS control plane pods are now created. CAS Template,default Storage Pool,and default Storage Classes are created after executing the above command. Now,select the storage engine to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
 
 
 ### Default Values for Helm Chart Parameters
