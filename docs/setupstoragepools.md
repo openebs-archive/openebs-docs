@@ -190,7 +190,7 @@ metadata:
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
-        value: default
+        value: test-mntdir
 ```
 
 Run the following commands.
@@ -253,7 +253,7 @@ Run the application using the following command.
 kubectl apply -f demo-percona-mysql-pvc.yaml
 ```
 
-The Percona application now runs inside the `default` storage pool.
+The Percona application now runs inside the `test-mntdir` storage pool.
 
 Similarly, you can create a storage pool for different applications as per requirement.
 
