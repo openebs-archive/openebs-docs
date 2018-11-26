@@ -135,7 +135,7 @@ The default retention is the same used by K8s. For dynamically provisioned Persi
 
 ## Can I use the same PVC for multiple Pods?
 
-Jiva and cStor volumes are not exposed via block storage using iSCSI. Currently only RWO is supported.
+Jiva and cStor volumes are exposed via block storage using iSCSI. Currently, only RWO is supported.
 
 ## Warning Messages while Launching PVC
 
@@ -143,31 +143,31 @@ If the following warning messages are displayed while launching an application, 
 
 The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.
 
-## How do you destroy demo applications from k8s cluster?
-
-Goto your application yaml file located in your kube master and apply the yaml as in the following command.
-
-`kubectl delete -f <application yaml>`
-
-This will delete the application pod and the corresponding pvc associated with it.
-
-## What is the default OpenEBS retention policy?
-
-The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim.
-
-## Can I use the same PVC for multiple Pods?
-
-Jiva and cStor volumes are not exposed via block storage using iSCSI. Currently only RWO is supported.
-
-**Warning Messages while Launching PVC**
-
-If the following warning messages are displayed while launching an application, you can ignore these messages. These messages are displayed only while launching an application pod initially and gets cleared on the subsequent attempt.netes likely has been run on OpenEBS at least once.  Common workloads include Prometheus and FluentD  and other stateful workloads used to manage Kubernetes itself. Jenkins, all flavors of databases including even in some cases NoSQL databases, and object storage are all widely deployed.  
-
 ## Why ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ are showing in different size?
 
 The ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ will start showing different sizes when there are replica node restarts and internal snapshots are created for synchronizing replicas.
 
+## How to delete OpenEBS 0.7 clusters gracefully?
 
+The recommended steps to uninstall are:
+
+* Delete all the OpenEBS PVCs that were created.
+* Delete all the SPCs (in case of cStor).
+* Ensure that no volume or pool pods are pending in terminating state by running `kubectl get pods -n <openebs namespace>`.
+* Delete the openebs either via `helm purge` or `kubectl delete ns openebs'
+
+Uninstalling the OpenEBS doesn't automatically delete the CRDs that were created. If you would like to complete remove the CRDs and the associated objects, run the following commands:
+```
+kubectl delete crd castemplates.openebs.io
+kubectl delete crd cstorpools.openebs.io
+kubectl delete crd cstorvolumereplicas.openebs.io
+kubectl delete crd cstorvolumes.openebs.io
+kubectl delete crd runtasks.openebs.io
+kubectl delete crd storagepoolclaims.openebs.io
+kubectl delete crd storagepools.openebs.io
+kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
+kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
+```
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
    (function(h,o,t,j,a,r){
