@@ -90,7 +90,8 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    If you are using default cstor-sparse-pool, skip to step 9. 
 
 3. If you would like to create a storage pool using external disks which are mounted on nodes, you can create storage pool either manually or by auto pool method.
-   In manual method, you have to select the disks which will be used for cStor pool creation in the sample ymal file provided in      Step4. You can create a file called *openebs-config.yaml* in your master node and add the following contents into the file. In this case, there are 2 disks per node attached which creates a storage pool per node in a striped manner. Hence there are a total of 6 external disks i.e. 2 disks per node which are mentioned in the following yaml file.  Go to Step4 to edit the *openebs-config.yaml* to include the required disks for cStor Pool creation.
+  
+  In manual method, you have to select the disks which will be used for cStor pool creation in the sample ymal file provided in      Step4. You can create a file called *openebs-config.yaml* in your master node and add the following contents into the file. In this case, there are 2 disks per node attached which creates a storage pool per node in a striped manner. Hence there are a total of 6 external disks i.e. 2 disks per node which are mentioned in the following yaml file.  Go to Step4 to edit the *openebs-config.yaml* to include the required disks for cStor Pool creation.
 
    ```
    ---
