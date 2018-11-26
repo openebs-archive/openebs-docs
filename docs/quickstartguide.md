@@ -35,9 +35,9 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
    This will install OpenEBS cluster in openebs namespace. For more details on installing OpenEBS using helm, see [install through helm](/docs/next/installation.html#helm).
 
    
-    ### Using OpenEBS Operator (kubectl):
-
-      Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve creating a new Service Account and assigning it to OpenEBS components. 
+     ### Using OpenEBS Operator (kubectl):
+     
+     Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve creating a new Service Account and assigning it to OpenEBS components. 
 
      For installing OpenEBS cluster, see [installation](/docs/next/installation.html#install-openebs-using-kubectl)
 
