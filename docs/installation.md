@@ -41,7 +41,7 @@ You can install OpenEBS using helm charts using [Stable Helm Charts](/docs/next/
 
 ```
 helm repo update
-helm install  --namespace openebs --name openebs stable/openebs
+helm install --namespace openebs --name openebs stable/openebs
 ```
 
 OpenEBS control plane pods are now created. CAS Template,default Storage Pool,and default Storage Classes are created after executing the above command. Now,select the storage engine to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
