@@ -82,14 +82,14 @@ You can also customize by adding more disk types associated with your nodes. For
 ```
 Example:
 ```
- {
+       {
           "key": "path-filter",
           "name": "path filter",
           "state": "true",
           "include":"",
           "exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"
         }
-
+```
 ## Why does OpenEBS provisioner pod restart continuously?
 
 The following output displays the pod status of all namespaces in which the OpenEBS provisioner is restarting continuously.
@@ -114,7 +114,8 @@ openebs       openebs-provisioner-776846bbff-rqfzr         0/1       CrashLoopBa
 openebs       openebs-snapshot-operator-5b5f97dd7f-np79k   0/2       CrashLoopBackOff   32         1h        192.168.167.130   node
 ```
 
-###Troubleshooting
+### Troubleshooting
+
 Perform the following steps to verify if the issue is due to a misconfiguration while installing the network component.
 
   1. Check if your network related pods are running fine. 
