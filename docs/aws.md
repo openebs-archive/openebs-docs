@@ -209,14 +209,14 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     ---
     ```
 
-18.  Apply the modified *openebs-config.yaml* file by using the following command.
+18. Apply the modified *openebs-config.yaml* file by using the following command.
 
     ```
     kubectl apply -f openebs-config.yaml
+    
     ```
-
     This will create a storage pool called “default” on selected disk.
-
+    
 19. Now storage pool is created on the Nodes as per your requirement. You can get the storage pool details by running the following command.
 
     ```
