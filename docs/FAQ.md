@@ -154,7 +154,7 @@ The recommended steps to uninstall are:
 * Delete all the OpenEBS PVCs that were created.
 * Delete all the SPCs (in case of cStor).
 * Ensure that no volume or pool pods are pending in terminating state by running `kubectl get pods -n <openebs namespace>`.
-* Delete the openebs either via `helm purge` or `kubectl delete ns openebs'
+* Delete the openebs either via `helm purge` or `kubectl delete ns openebs`
 
 Uninstalling the OpenEBS doesn't automatically delete the CRDs that were created. If you would like to complete remove the CRDs and the associated objects, run the following commands:
 ```
