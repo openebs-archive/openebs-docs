@@ -184,7 +184,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 16. SSH to Master Node and perform the following commands to clone OpenEBS yaml file and deploy.
 
     ```
-    kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
+    kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.2.yaml
     ```
 
 17. Create a storage pool on an external disk which is mounted on the nodes. To create a storage pool, create a file called “openebs-config.yaml” file in your master node and add the below example YAML with changing the appropriate mounted disk path.
