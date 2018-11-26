@@ -22,7 +22,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 5. If you are using CentOS as base OS for 0.7 OpenEBS installation, then you must disable selinux for OpenEBS Node Disk Manager to detect the OS disk. You can disable selinux by using the setenforce 0 command.
    
-      ### Using a Stable Helm Chart
+    ### Using a Stable Helm Chart
 
    [Setup RBAC for helm tiller](/docs/next/installation.html#helm) and install the chart from Kubernetes stable helm repo  using the following commands.
 
@@ -34,15 +34,15 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
    This will install OpenEBS cluster in **openebs** namespace. For more details on installing OpenEBS using helm, see [install through helm](/docs/next/installation.html#helm).
 
    
-      ### Using OpenEBS Operator (kubectl):
+     ### Using OpenEBS Operator (kubectl):
 
-   Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve creating a new Service Account and assigning it to OpenEBS components. 
+     Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve creating a new Service Account and assigning it to OpenEBS components. 
 
-   For installing OpenEBS cluster, see [installation](/docs/next/installation.html#install-openebs-using-kubectl)
+     For installing OpenEBS cluster, see [installation](/docs/next/installation.html#install-openebs-using-kubectl)
 
-4. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-jiva-default* and *openebs-cstor-sparse*) are added to the cluster when you install OpenEBS.
+6. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-jiva-default* and *openebs-cstor-sparse*) are added to the cluster when you install OpenEBS.
 
-5. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/next/mayaonline.html) for better visibility, volume management, and integrated ChatOps experience with Slack.
+7. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/next/mayaonline.html) for better visibility, volume management, and integrated ChatOps experience with Slack.
 
 ## As an Application Developer:
 
