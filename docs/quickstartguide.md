@@ -10,8 +10,9 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 ## As a Kubernetes Operator/Administrator:
 
-1. As a prerequisite, check if open-iscsi is installed and running on kubelet. See [Steps for configuring and verifying open-iscsi](/docs/next/prerequisites.html#steps-for-configuring-and-verifying-open-iscsi).
-  **Note:** Do not install open-iscsi / iscsi-initiator-utils on host nodes if a kubelet container, for example, Rancher Container Engine (RKE) already has the package installed. See [Troubleshooting](https://staging-docs.openebs.io/docs/next/tsg_install.html#on-rancher-application-pods-are-not-running-when-openebs-volumes-are-provisioned) section for detailed information.
+1. As a prerequisite, check if open-iscsi is installed and running on kubelet. See [Steps for configuring and verifying open-iscsi](/docs/next/prerequisites.html#steps-for-configuring-and-verifying-open-iscsi). 
+
+**Note:** Do not install open-iscsi / iscsi-initiator-utils on host nodes if a kubelet container, for example, Rancher Container Engine (RKE) already has the package installed. See [Troubleshooting](https://staging-docs.openebs.io/docs/next/tsg_install.html#on-rancher-application-pods-are-not-running-when-openebs-volumes-are-provisioned) section for detailed information.
 
 2. Kubernetes 1.9.7+ installed
 
