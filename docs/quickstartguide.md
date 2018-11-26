@@ -11,13 +11,15 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 ## As a Kubernetes Operator/Administrator:
 
 1. As a prerequisite, check if open-iscsi is installed and running on kubelet. See [Steps for configuring and verifying open-iscsi](/docs/next/prerequisites.html#steps-for-configuring-and-verifying-open-iscsi).
+  **Note:** Do not install open-iscsi / iscsi-initiator-utils on host nodes if a kubelet container, for example, Rancher Container Engine (RKE) already has the package installed. See [Troubleshooting](https://staging-docs.openebs.io/docs/next/tsg_install.html#on-rancher-application-pods-are-not-running-when-openebs-volumes-are-provisioned) section for detailed information.
 
 2. Kubernetes 1.9.7+ installed
 
-3. You can install OpenEBS either through stable helm chart or OpenEBS helm chart or by using OpenEBS operator/kubectl.  
+3. kubectl or helm installed and ready to use. Ensure that you run the kubectl commands with cluster admin context. 
 
-   **Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS operator/kubectl](/docs/next/installation.html#install-openebs-using-kubectl) and [OpenEBS helm Charts](/docs/next/installation.html#install-openebs-using-openebs-helm-charts) .
+4. You can install OpenEBS either through stable helm chart or OpenEBS helm chart or by using OpenEBS operator/kubectl.  
 
+5. If you are using CentOS as base OS for 0.7 OpenEBS installation, then you must disable selinux for OpenEBS Node Disk Manager to detect the OS disk. You can disable selinux by using the setenforce 0 command.
       ### Using a Stable Helm Chart
 
    [Setup RBAC for helm tiller](/docs/next/installation.html#helm) and install the chart from Kubernetes stable helm repo and deploy the storage class templates.
