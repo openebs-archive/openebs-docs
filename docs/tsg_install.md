@@ -123,8 +123,6 @@ Perform the following steps to verify if the issue is due to a misconfiguration 
   3. Use the latest version of network provider images.
   4. Try other network components such as Calico, kube-router etc. if you are not using any of these.
   
-=======
-
 ## How to Uninstall OpenEBS Version 0.7?
 
 The recommended steps to uninstall are as follows:
