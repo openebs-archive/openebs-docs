@@ -173,7 +173,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 #### **Limitations**:
 
-1. For Striped pool, it will take only one disk per Node even if Node have multiple disks.
+1. For Striped pool, it will take only one disk per Node even Node have multiple disks.
 2. For Mirrored pool, it must have only 2 disks attached per Node.
 
 ## Scheduling a Pool on a Node
