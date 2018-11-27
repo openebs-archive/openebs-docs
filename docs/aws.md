@@ -72,7 +72,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 5. Create the cluster across different zones using following command.
 
    ```
-   kops create cluster --name=<cluster_name>.k8s.local --vpc=<vpc_id> --zones==<zone1_name>,<zone2_name>,<zone3_name>
+   kops create cluster --name=<cluster_name>.k8s.local --vpc=<vpc_id> --zones=<zone1_name>,<zone2_name>,<zone3_name>
    ```
 
    This will create a cluster in the mentioned zone in your region provided as part of AWS configuration.
@@ -184,7 +184,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 16. SSH to Master Node and perform the following commands to clone OpenEBS yaml file and deploy.
 
     ```
-    kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
+    kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.2.yaml
     ```
 
 17. Create a storage pool on an external disk which is mounted on the nodes. To create a storage pool, create a file called “openebs-config.yaml” file in your master node and add the below example YAML with changing the appropriate mounted disk path.
@@ -209,14 +209,14 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     ---
     ```
 
-18.  Apply the modified *openebs-config.yaml* file by using the following command.
+18. Apply the modified *openebs-config.yaml* file by using the following command.
 
     ```
     kubectl apply -f openebs-config.yaml
+    
     ```
-
     This will create a storage pool called “default” on selected disk.
-
+    
 19. Now storage pool is created on the Nodes as per your requirement. You can get the storage pool details by running the following command.
 
     ```

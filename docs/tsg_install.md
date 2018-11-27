@@ -48,8 +48,9 @@ pvc-adb79406-8e3e-11e8-a06a-001c42c2325f-rep-696b599894-gq4z6    1/1       Runni
 pvc-adb79406-8e3e-11e8-a06a-001c42c2325f-rep-696b599894-hwx52    1/1       Running             0          8m
 pvc-adb79406-8e3e-11e8-a06a-001c42c2325f-rep-696b599894-vs97n    1/1       Running             0          8m
 ```
+**Troubleshooting**
 
-iSCSI package is installed on both Host and rke kubelet.
+iSCSI package is installed on both Host and RKE kubelet.
 
 ```
 [root@node-34622 ~]# iscsiadm -V
@@ -57,12 +58,21 @@ iscsiadm version 6.2.0.874-7
 [root@node-34622 ~]# docker exec kubelet iscsiadm -V
 iscsiadm version 2.0-874
 ```
-
-To resolve this issue, do not install `open-iscsi / iscsi-initiator-utils` on the host nodes when using the Rancher Container Engine (RKE).
+If output returns iscsiadm version for both commands, then you have to remove iSCSI from the node. OpenEBS target will use iSCSI inside the kubelet. 
+To resolve this issue, do not install `open-iscsi / iscsi-initiator-utils` on the host nodes when using the Rancher Container Engine (RKE). Run the following commands to remove iSCSI packages from the node if it is already installed on your Ubuntu host. You can use similar commands based on your host OS.
+```
+service iscsid stop
+sudo apt remove open-iscsi
+```
+The above step may remove the `iscsi_tcp` probe parameter after rebooting. Hence if `lsmod | grep iscsi` output does not have `iscsi_tcp` parameter, then you must perform the following steps.
+```
+modprobe iscsi_tcp
+```
+**Note:** For detailed steps, read the [blog](https://blog.openebs.io/running-openebs-on-custom-rancher-cluster-98ecd52b5961)
 
 ## How can I select disks for creating a storage pool using cStor?
 
-With the latest OpenEBS 7.0 release, the following disk types/paths are excluded by NDM which identifies the disks to create cStor pools on nodes.
+From the OpenEBS 7.0 release, the following disk types/paths are excluded by NDM which identifies the disks to create cStor pools on nodes.
 ```
 loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-
 ```
@@ -72,14 +82,14 @@ You can also customize by adding more disk types associated with your nodes. For
 ```
 Example:
 ```
- {
+       {
           "key": "path-filter",
           "name": "path filter",
           "state": "true",
           "include":"",
           "exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"
         }
-
+```
 ## Why does OpenEBS provisioner pod restart continuously?
 
 The following output displays the pod status of all namespaces in which the OpenEBS provisioner is restarting continuously.
@@ -104,7 +114,8 @@ openebs       openebs-provisioner-776846bbff-rqfzr         0/1       CrashLoopBa
 openebs       openebs-snapshot-operator-5b5f97dd7f-np79k   0/2       CrashLoopBackOff   32         1h        192.168.167.130   node
 ```
 
-###Troubleshooting
+### Troubleshooting
+
 Perform the following steps to verify if the issue is due to a misconfiguration while installing the network component.
 
   1. Check if your network related pods are running fine. 
@@ -112,8 +123,6 @@ Perform the following steps to verify if the issue is due to a misconfiguration 
   3. Use the latest version of network provider images.
   4. Try other network components such as Calico, kube-router etc. if you are not using any of these.
   
-=======
-
 ## How to Uninstall OpenEBS Version 0.7?
 
 The recommended steps to uninstall are as follows:

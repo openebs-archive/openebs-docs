@@ -17,7 +17,7 @@ Once OpenEBS is installed on your Kubernetes cluster, you can start using it by 
 Apply the openebs-operator.yaml file on the Kubernetes cluster using the following command. This creates the maya api-server and OpenEBS components which includes default storage classes.
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.2.yaml
 ```
 
 OpenEBS Storage provides several features that can be customized for each volume. Some of features that could be customized per application are as follows:
@@ -43,13 +43,14 @@ kind: StorageClass
 metadata:
   name: openebs-standard
   annotations:
+    openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.7.0
+        value: openebs/jiva:0.7.2
       - name: ReplicaImage
-        value: openebs/jiva:0.7.0
+        value: openebs/jiva:0.7.2
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.7.0
+        value: openebs/m-exporter:0.7.2
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
@@ -66,6 +67,7 @@ metadata:
       #  value: |-
       #      memory: 2Gi
 provisioner: openebs.io/provisioner-iscsi
+reclaimPolicy: Delete
 ```
 
 OpenEBS supports both ext4 and xfs file systems. By default, it comes with ext4 file system for the mounted volumes. Some applications require using the xfs file system. The policy to specify xfs as the file system, you must add `openebs.io/fstype: "xfs"` under section `annotations:`. Following is a sample storage class for MongoDb application.
@@ -77,13 +79,14 @@ kind: StorageClass
 metadata:
    name: openebs-mongodb
    annotations:
+   	openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.7.0
+        value: openebs/jiva:0.7.2
       - name: ReplicaImage
-        value: openebs/jiva:0.7.0
+        value: openebs/jiva:0.7.2
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.7.0
+        value: openebs/m-exporter:0.7.2
       - name: ReplicaCount
         value: "1"
       - name: StoragePool
@@ -102,7 +105,7 @@ metadata:
       #  value: |-
       #      memory: 2Gi
 provisioner: openebs.io/provisioner-iscsi
-
+reclaimPolicy: Delete
 ```
 
 **Note:** Support for xfs file system has been introduced from 0.5.4 and onwards. In order to change the file system you must have 0.5.4 or latest build.

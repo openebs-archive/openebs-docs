@@ -10,43 +10,38 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 ## As a Kubernetes Operator/Administrator:
 
-1. As a prerequisite, check if open-iscsi is installed and running on kubelet. See [Steps for configuring and verifying open-iscsi](/docs/next/prerequisites.html#steps-for-configuring-and-verifying-open-iscsi).
+1. As a prerequisite, check if open-iscsi is installed and running on kubelet. See [Steps for configuring and verifying open-iscsi](/docs/next/prerequisites.html#steps-for-configuring-and-verifying-open-iscsi). 
 
-2. Kubernetes 1.9.7+ is installed
+      **Note:** Do not install open-iscsi / iscsi-initiator-utils on host nodes if a kubelet container, for example, Rancher Container Engine (RKE) already has the package installed. See [Troubleshooting](https://staging-docs.openebs.io/docs/next/tsg_install.html#on-rancher-application-pods-are-not-running-when-openebs-volumes-are-provisioned) section for detailed information.
 
-3. You can install OpenEBS either through stable helm chart or OpenEBS helm chart or by using OpenEBS operator/kubectl.  
+2. Kubernetes 1.9.7+ installed
 
-   **Note:** Currently OpenEBS version 0.7 is supported only via the [OpenEBS operator/kubectl](/docs/next/installation.html#install-openebs-using-kubectl) and [OpenEBS helm Charts](/docs/next/installation.html#install-openebs-using-openebs-helm-charts) .
+3. kubectl or helm installed and ready to use. Ensure that you run the kubectl commands with cluster admin context. 
 
-      ### Using a Stable Helm Chart:
+4. You can install OpenEBS either through stable helm chart or by using OpenEBS operator/kubectl.  
 
-   [Setup RBAC for helm tiller](/docs/next/installation.html#helm) and install the chart from Kubernetes stable and deploy the storage class templates.
+5. If you are using CentOS as base OS for 0.7 OpenEBS installation, then you must *disable selinux* for OpenEBS Node Disk Manager to detect the OS disk. You can *disable selinux* by using the `setenforce 0` command.
 
-   ```
-   helm repo update
-   helm install  --namespace openebs --name openebs stable/openebs
-   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/v0.7/k8s/openebs-storageclasses.yaml  
-   ```
+    ### Using a Stable Helm Chart
 
-   For more details on installing OpenEBS using helm, see [install through helm](/docs/next/installation.html#helm).
+    [Setup RBAC for helm tiller](/docs/next/installation.html#helm) and install the chart from Kubernetes stable helm repo  using the following commands.
 
-      ### Using OpenEBS Helm Charts 
+    ```
+    helm repo update
+    helm install --namespace openebs --name openebs stable/openebs
+    ```
 
-   ```
-   helm repo add openebs-charts https://openebs.github.io/charts/
-   helm repo update
-   helm install openebs-charts/openebs
-   ```
+    This will install OpenEBS cluster in **openebs** namespace. For more details on installing OpenEBS using helm, see [install through helm](/docs/next/installation.html#helm).
 
-      ### Using OpenEBS Operator (kubectl):
+     ### Using OpenEBS Operator (kubectl):
 
-   Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve creating a new Service Account and assigning to OpenEBS components. 
+​	Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve 		creating a new Service Account and assigning it to OpenEBS components. 
 
-   For installing OpenEBS cluster, see [installation](/docs/next/installation.html#install-openebs-using-kubectl)
+​	 For installing OpenEBS cluster, see [installation](/docs/next/installation.html#install-openebs-using-kubectl)
 
-4. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-jiva-default* and *openebs-cstor-sparse*) are added to the cluster when you install OpenEBS.
+6. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-jiva-default* and *openebs-cstor-sparse*) are added to the cluster when you install OpenEBS.
 
-5. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/next/mayaonline.html) for better visibility, volume management, and integrated ChatOps experience with Slack.
+7. **Optional:** An OpenEBS enabled cluster can be imported into [mayaonline.io](/docs/next/mayaonline.html) for better visibility, volume management, and integrated ChatOps experience with Slack.
 
 ## As an Application Developer:
 

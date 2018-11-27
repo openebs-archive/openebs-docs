@@ -12,10 +12,10 @@ sidebar_label: Snapshots
 
 A storage snapshot is a set of reference markers for data at a particular point in time. A snapshot acts as a detailed table of contents, providing you with accessible copies of data that you can roll back to.
 
-OpenEBS operator will deploy following components during *openebs-operator-0.7.0.yaml* installation.
+OpenEBS operator will deploy following components during *openebs-operator-0.7.2.yaml* installation.
 
 1. A snapshot-controller
-2. a snapshot-provisioner
+2. A snapshot-provisioner
 
 A snapshot-controller, when it starts, will create a CRD for `VolumeSnapshot` and `VolumeSnapshotData` custom resources. It will also watch for `VolumeSnapshotresources` and take snapshots of the volumes based on the referred snapshot plugin.
 
@@ -34,17 +34,17 @@ kubectl get pvc -n <namespace>
 Following is an example output.
 
 ```
-NAME              STATUS    VOLUME                               CAPACITY   ACCESS MODES   STORAGECLASS           AGE
-demo-vol1-claim   Bound     default-demo-vol1-claim-1246175738   5G         RWO            openebs-jiva-default   2h
+NAME              STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS           AGE
+demo-vol1-claim   Bound     pvc-01f7d743-f229-11e8-aee9-42010a800145   4G         RWO            openebs-jiva-default   2m
 ```
 
 Download the *snapshot.yaml* to create snapshot of the corresponding PVC
 
 ```
-wget https://raw.githubusercontent.com/openebs/external-storage/release/openebs/ci/snapshot/snapshot.yaml
+wget https://raw.githubusercontent.com/openebs/external-storage/release/openebs/ci/snapshot/jiva/snapshot.yaml
 ```
 
-Edit the *snapshot.yaml* with your corresponding PVC name which you are going to take snapshot. You can also edit the snapshot name. In this example, it will take the snapshot of PVC called `demo-vol1-claim` and snapshot name as `snapshot-demo`
+Edit the *snapshot.yaml* with your corresponding PVC name which you are going to take snapshot. You can also edit the snapshot name. In this example, it will take the snapshot of PVC called `demo-vol1-claim` and snapshot name as `snapshot-demo-jiva`
 
 After modifying the *snapshot.yaml*, apply the *snapshot.yaml* using the following command.
 
@@ -57,37 +57,50 @@ kubectl apply -f snapshot.yaml <namespace>
 Following is an example output of the above command.
 
 ```
-NAME            AGE
-snapshot-demo   48s
+volumesnapshot.volumesnapshot.external-storage.k8s.io/snapshot-demo-jiva created
+```
+
+To get to know the status of snapshot, you can use the following command
+
+```
+kubectl get volumesnapshotdata
+```
+
+Output of the above command will be similar to the following.
+
+```
+NAME                                                       AGE
+k8s-volume-snapshot-6acfb054-f22a-11e8-8239-0a580a4c000e   2m
 ```
 
 ## Cloning and Restoring a Snapshot
 
-After creating a snapshot, you can restore it to a new PVC. For creating new PVC using this snapshot, it needs different *storageclass* to be used. There will be a default storage class called **openebs-snapshot-promoter** will create during the installation of *openebs-operator-0.7.0.yaml*.
+After creating a snapshot, you can restore it to a new PVC. For creating new PVC using this snapshot, it needs different *storageclass* to be used. There will be a default storage class called **openebs-snapshot-promoter** will create during the installation of *openebs-operator-0.7.2.yaml*
 
 So, this will create a PVC referencing to this default  *storageclass* for dynamically provisioning new PV.
 
-A *storageclass*  for creating new PVC from snapshot can be defined as in the following example. Here, the provisioner field defines which provisioner should be used and what parameters should be passed to that provisioner when dynamic provisioning is invoked.
+A *storageclass*  for creating new PVC from snapshot can be defined as in the following example. Here, the provisioner field defines which provisioner should be used and what parameters should be passed to that provisioner when dynamic provisioning is invoked. Following is the sample *snapshot_claim.yaml* file.
 
 ```
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: demo-snap-vol-claim
+  name: demo-snap-vol-claim-jiva
+  namespace: default
   annotations:
-    snapshot.alpha.kubernetes.io/snapshot: snapshot-demo
+    snapshot.alpha.kubernetes.io/snapshot: snapshot-demo-jiva
 spec:
-  storageClassName: snapshot-promoter
+  storageClassName: openebs-snapshot-promoter
   accessModes: [ "ReadWriteOnce" ]
   resources:
     requests:
-      storage: 5Gi
+      storage: 4Gi
 ```
 
-You can have your own storage class defined or you can use default storageclass . You can use the following command to download *snapshot_claim.yaml* which will be used to create new PVC from snapshot.
+You can have your own storage class defined or you can use default storageclass . You can use the following command to download *snapshot_claim.yaml* which can be customized and use for creating a new PVC from snapshot.
 
 ```
-wget https://raw.githubusercontent.com/openebs/external-storage/release/openebs/ci/snapshot/snapshot_claim.yaml
+wget https://raw.githubusercontent.com/openebs/external-storage/release/openebs/ci/snapshot/jiva/snapshot_claim.yaml
 ```
 
 You can edit this *snapshot_claim.yaml* with required name for new PVC. Once you have done with modification of the file, apply the file using the following command.
@@ -101,7 +114,7 @@ kubectl apply -f snapshot_claim.yaml <namespace>
 This example yaml have the new PVC name as *demo-snap-vol-claim*.  Following is an example output of above command.
 
 ```
-persistentvolumeclaim "demo-snap-vol-claim" created
+persistentvolumeclaim/demo-snap-vol-claim-jiva created
 ```
 
 You can check the PVC details by running the following command.
@@ -115,9 +128,9 @@ kubectl get pvc <namespace>
 Following is an example output of above command.
 
 ```
-NAME                  STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                AGE
-demo-snap-vol-claim   Bound     pvc-87a7b6b0-b67a-11e8-b7c2-42010a800213   5Gi        RWO                openebs-snapshot-promoter   2m
-demo-vol1-claim       Bound     default-demo-vol1-claim-1246175738         5G         RWO                openebs-jiva-default        3h
+NAME                       STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                AGE
+demo-snap-vol-claim-jiva   Bound     pvc-58c73bfd-f22c-11e8-aee9-42010a800145   4Gi        RWO            openebs-snapshot-promoter   42s
+demo-vol1-claim            Bound     pvc-01f7d743-f229-11e8-aee9-42010a800145   4G         RWO            openebs-jiva-default        24m
 ```
 
 If you are running any application, you can mount the **demo-snap-vol-claim** PersistentVolumeClaim into a new application pod to get the contents at the point of snapshot has taken. While deploying the new application pod with this new restored PVC, you have to edit the application deployment yaml and mention the restored PersistentVolumeClaim name, volume name, and volume mount accordingly.  

@@ -16,6 +16,13 @@ Weekly webinar notes are managed using a [Google document](https://docs.google.c
 
 |       Date       | Topics Discussed                                             | Resources                                                    |
 | :--------------: | ------------------------------------------------------------ | ------------------------------------------------------------ |
+|   16 Nov 2018    | Replication and rebuilding in cStor                          | [Slides](https://www.slideshare.net/OpenEBS/replication-and-rebuild-in-cstor) / [Session](https://www.youtube.com/watch?v=81lXYT1uSSU) |
+|   09 Nov 2018    | Snapshot of cStor volume                                     | [Session](https://www.youtube.com/watch?v=i8E9CtNzmak)       |
+|   05 Oct 2018    | - Prometheus for OpenEBS <br />- Introduction to cStor replica | [Prometheus Slides](https://www.slideshare.net/OpenEBS/openebs-for-prometheus-weekly-contributors-meet-5th-october-2018) / [Prometheus Session](https://www.youtube.com/watch?v=fefLmDZe2Bw) <br />[cStor Slides](https://www.slideshare.net/OpenEBS/introduction-to-cstor-replica-contributors-meet-5th-oct-2018) / [cStor Session](https://www.youtube.com/watch?v=QK0VORSK8QA) |
+|   28 Sep 2018    | Running OpenEBS on GPDs                                      | [Slides](https://www.slideshare.net/OpenEBS/running-openebs-on-gpds-weekly-contributors-meet-28th-sep-2018) / [Session](https://www.youtube.com/watch?v=F_blq1ssXpI) |
+|   21 Sep 2018    | Latest developments in litmus and Thoughts on Heptio 's Ark  | [Litmus slides](https://www.slideshare.net/OpenEBS/litmus-project-updates-openebs-contributors-meet-21st-sept-2018) /  [Heptio's ark slides](https://www.slideshare.net/OpenEBS/thoughts-on-heptios-ark-contributors-meet-21st-sept-2018)  / [Session](https://www.youtube.com/watch?v=D4mFboCTfj8) |
+|   14 Sep 2018    | Volume Policies in OpenEBS 0.7                               | [Slides](https://www.slideshare.net/OpenEBS/volume-policies-in-openebs-07) / [Session](https://www.youtube.com/watch?v=iSPALa21KgM) |
+|   07 Sep 2018    | OpenEBS 0.7 Release Notes Walkthrough                        | [Session](https://www.youtube.com/watch?v=oEhTbqN4bU8)       |
 |   17 Aug 2018    | Jiva code walkthrough                                        | [Session](https://www.youtube.com/watch?v=kQTY6quS3a0&t=)    |
 |   10 Aug 2018    | NDM Support in Weave Scope                                   | [Session](https://www.youtube.com/watch?v=A84gRbm06Hs)       |
 |    3 Aug 2018    | Demo of cStor and IO Setup                                   | [Session](https://www.youtube.com/watch?v=C_TPkCve4CU)       |
