@@ -152,9 +152,9 @@ metadata:
 
 ```
 
-### Storage Class Policy
+### Volume File System Type Policy
 
-You can specify a storage class policy where you can specify the capacity and file system type. By default, OpenEBS comes with ext4 file system. However, you can also use the xfs file system.
+You can specify a storage class policy where you can specify the file system type. By default, OpenEBS comes with ext4 file system. However, you can also use the xfs file system.
 
 Following is a sample setting.
 
@@ -166,16 +166,6 @@ metadata:
    annotations:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
-      - name: ControllerImage
-        value: quay.io/openebs/jiva:0.7.2
-      - name: ReplicaImage
-        value: quay.io/openebs/jiva:0.7.2
-      - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:0.7.2
-      - name: ReplicaCount
-        value: "1"
-      - name: StoragePool
-        value: default
       - name: FSType
         value: "xfs"
 ```
@@ -227,8 +217,6 @@ metadata:
             node: appnode
 ```
 
-
-
 ### ReplicaNodeSelector Policy
 
 You can specify the *ReplicaNodeSelector* where replica pods has to be scheduled using the *value* for *ReplicaNodeSelector* . In following sample storage class  yaml, `node: openebs` is the node label.
@@ -243,8 +231,6 @@ metadata:
         value: |-
             node: openebs
 ```
-
-
 
 ### TargetResourceLimits Policy
 
@@ -308,7 +294,6 @@ OpenEBS supports several types of Storage Policies for cStor volume such as the 
 - FSType
 
 - TargetNodeSelector
-- ReplicaNodeSelector
 - TargetResourceLimits
 - AuxResourceLimits
 - ReplicaResourceLimits
@@ -420,6 +405,21 @@ metadata:
       - name: FSType
         value: ext4
     openebs.io/cas-type: cstor
+```
+
+### TargetNodeSelector Policy
+
+You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: apnode `is the node label.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: TargetNodeSelector
+        value: |-
+            node: appnode
 ```
 
 ### TargetResourceLimits Policy
