@@ -64,7 +64,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: ReplicaImage
-        value: quay.io/openebs/jiva:v0.7.x-ci
+        value: quay.io/openebs/m-apiserver:0.7.2
 ```
 
 ### Controller Image Policy
@@ -83,7 +83,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: quay.io/openebs/jiva:v0.7.x-ci
+        value: quay.io/openebs/jiva:0.7.2
 
 ```
 
@@ -156,11 +156,11 @@ metadata:
    annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: quay.io/openebs/jiva:v0.7.x-ci
+        value: quay.io/openebs/jiva:0.7.2
       - name: ReplicaImage
-        value: quay.io/openebs/jiva:v0.7.x-ci
+        value: quay.io/openebs/jiva:0.7.2
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:v0.7.x-ci
+        value: quay.io/openebs/m-exporter:0.7.2
       - name: ReplicaCount
         value: "1"
       - name: StoragePool
@@ -181,7 +181,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:v0.7.x-ci
+        value: quay.io/openebs/m-exporter:0.7.2
 ```
 
 ### Volume Space Reclaim Policy
@@ -209,7 +209,6 @@ OpenEBS supports several types of Storage Policies for cStor volume such as the 
 - cas.openebs.io/StoragePoolClaim
 - cas.openebs.io/VolumeMonitor
 - cas.openebs.io/VolumeMonitorImage
-- cas.openebs.io/RetainReplicaData
 - cas.openebs.io/FSType
 
 ### Replica Count Policy
@@ -238,7 +237,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeControllerImage
-        value: quay.io/openebs/cstor-volume-mgmt:v0.7.x-ci
+        value: quay.io/openebs/cstor-volume-mgmt:0.7.2
     openebs.io/cas-type: cstor
 ```
 
@@ -253,7 +252,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeTargetImage
-        value:quay.io/openebs/cstor-istgt:v0.7.x-ci
+        value:quay.io/openebs/cstor-istgt:0.7.2
     openebs.io/cas-type: cstor
 ```
 
@@ -302,7 +301,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:v0.7.x-ci
+        value: quay.io/openebs/m-exporter:0.7.2
     openebs.io/cas-type: cstor
 ```
 
@@ -321,21 +320,8 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-### Volume Space Reclaim Policy
-
-OpenEBS supports a storage policy that can disable the cStor Volume Space reclaim. You can specify the cStor volume space reclaim feature setting using the *value* for the *RetainReplicaData* property. In the following example, the cStor volume space reclaim feature is enabled as true. Hence, it retains the volume data after deleting the PVC.
-
-```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  annotations:
-    cas.openebs.io/config: |
-      - name: RetainReplicaData
-        enabled: true   
-```
-
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
