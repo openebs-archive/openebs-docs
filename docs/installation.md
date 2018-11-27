@@ -20,7 +20,7 @@ The latest OpenEBS version 0.7.2 installation steps for both methods are explain
 ## Install OpenEBS using Helm Charts
 
 ![Installing OpenEBS using helm ](/docs/assets/helm.png)
-   
+
 ### Setup Helm and RBAC
 
 **Setup Helm**
@@ -38,6 +38,8 @@ kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"sp
 ### Install OpenEBS using Stable Helm Charts
 
 You can install OpenEBS using helm charts using [Stable Helm Charts](/docs/next/installation.html#install-openebs-using-stable-helm-charts) which will use [Kubernetes stable helm charts](https://github.com/kubernetes/charts/tree/master/stable). Install OpenEBS using the following commands in the **openebs** namespace.
+
+**Note:** Ensure that you have met the [prerequisites](/docs/next/prerequisites.html) before installation.
 
 ```
 helm repo update
@@ -93,10 +95,10 @@ Specify each parameter using the `--set key=value` argument to `helm install`.
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```
-helm install --name openebs -f values.yaml openebs-charts/openebs
+helm install --namespace openebs --name openebs stable/openebs
 ```
 
-You can get default values.yaml from [here](https://github.com/openebs/openebs/blob/master/k8s/charts/openebs/values.yaml).
+You can get default values.yaml from [here](https://github.com/helm/charts/blob/master/stable/openebs/values.yaml ).
 
 ## Install OpenEBS using kubectl
 
