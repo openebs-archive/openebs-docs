@@ -95,7 +95,7 @@ Specify each parameter using the `--set key=value` argument to `helm install`.
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```
-helm install --namespace openebs --name openebs stable/openebs
+helm install -f values.yaml --namespace openebs --name openebs stable/openebs
 ```
 
 You can get default values.yaml from [here](https://github.com/helm/charts/blob/master/stable/openebs/values.yaml ).
