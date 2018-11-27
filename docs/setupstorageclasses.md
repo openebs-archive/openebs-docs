@@ -43,6 +43,7 @@ kind: StorageClass
 metadata:
   name: openebs-standard
   annotations:
+    openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
         value: openebs/jiva:0.7.2
@@ -66,6 +67,7 @@ metadata:
       #  value: |-
       #      memory: 2Gi
 provisioner: openebs.io/provisioner-iscsi
+reclaimPolicy: Delete
 ```
 
 OpenEBS supports both ext4 and xfs file systems. By default, it comes with ext4 file system for the mounted volumes. Some applications require using the xfs file system. The policy to specify xfs as the file system, you must add `openebs.io/fstype: "xfs"` under section `annotations:`. Following is a sample storage class for MongoDb application.
@@ -77,6 +79,7 @@ kind: StorageClass
 metadata:
    name: openebs-mongodb
    annotations:
+   	openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
         value: openebs/jiva:0.7.2
@@ -102,7 +105,7 @@ metadata:
       #  value: |-
       #      memory: 2Gi
 provisioner: openebs.io/provisioner-iscsi
-
+reclaimPolicy: Delete
 ```
 
 **Note:** Support for xfs file system has been introduced from 0.5.4 and onwards. In order to change the file system you must have 0.5.4 or latest build.
