@@ -24,13 +24,18 @@ Jiva and cStor has its own specific storage policies which can be defined in the
 
 OpenEBS supports several types of Storage Policies for Jiva volume such as the following.
 
-- cas.openebs.io/ReplicaCount
-- cas.openebs.io/ReplicaImage
-- cas.openebs.io/ControllerImage
-- cas.openebs.io/StoragePool
-- cas.openebs.io/VolumeMonitor
-- cas.openebs.io/VolumeMonitorImage
-- cas.openebs.io/RetainReplicaData
+- ReplicaCount
+- ReplicaImage
+- ControllerImage
+- StoragePool
+- VolumeMonitor
+- VolumeMonitorImage
+- RetainReplicaData
+- TargetNodeSelector
+- ReplicaNodeSelector
+- TargetResourceLimits
+- AuxResourceLimits
+- ReplicaResourceLimits
 
 ### Replica Count Policy
 
@@ -42,6 +47,7 @@ kind: StorageClass
 metadata:
   name: openebs-jiva-default
   annotations:
+    openebs.io/cas-type: jiva
     cas.openebs.io/config: |
        - name: ReplicaCount
          value: "3"
@@ -62,6 +68,7 @@ kind: StorageClass
 metadata:
   name: openebs-jiva-default
   annotations:
+    openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ReplicaImage
         value: quay.io/openebs/m-apiserver:0.7.2
@@ -69,7 +76,7 @@ metadata:
 
 ### Controller Image Policy
 
-You can specify the jiva controller image using the * *value* for *ControllerImage* property.
+You can specify the jiva controller image using the *value* for *ControllerImage* property.
 
 **Note:**
 
@@ -81,6 +88,7 @@ kind: StorageClass
 metadata:
   name: openebs-jiva-default
   annotations:
+    openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
         value: quay.io/openebs/jiva:0.7.2
@@ -101,6 +109,7 @@ kind: StorageClass
 metadata:
   name: openebs-jiva-default
   annotations:
+    openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - enabled: "true"
         name: VolumeMonitor
@@ -136,6 +145,7 @@ kind: StorageClass
 metadata:
   name: openebs-jiva-default
   annotations:
+    openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: StoragePool
         value: default
@@ -154,6 +164,7 @@ kind: StorageClass
 metadata:
    name: openebs-mongodb
    annotations:
+    openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
         value: quay.io/openebs/jiva:0.7.2
@@ -179,6 +190,7 @@ kind: StorageClass
 metadata:
   name: openebs-jiva-default
   annotations:
+    openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
         value: quay.io/openebs/m-exporter:0.7.2
@@ -194,22 +206,112 @@ kind: StorageClass
 metadata:
   name: openebs-jiva-default
   annotations:
+    openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: RetainReplicaData
         enabled: true   
 ```
 
+### TargetNodeSelector Policy
+
+You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: apnode `is the node label.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: TargetNodeSelector
+        value: |-
+            node: appnode
+```
+
+
+
+### ReplicaNodeSelector Policy
+
+You can specify the *ReplicaNodeSelector* where replica pods has to be scheduled using the *value* for *ReplicaNodeSelector* . In following sample storage class  yaml, `node: openebs` is the node label.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: ReplicaNodeSelector
+        value: |-
+            node: openebs
+```
+
+
+
+### TargetResourceLimits Policy
+
+You can specify the *TargetResourceLimits* to restrict the memory and cpu usage of target pod within the given limit  using the *value* for *TargetResourceLimits* .
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: TargetResourceLimits
+        value: |-
+            memory: 1Gi
+            cpu: 100m
+```
+
+### AuxResourceLimits Policy
+
+You can specify the *AuxResourceLimits* which allow you to set limits on side cars. 
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: TargetResourceLimits
+        value: |-
+            memory: 0.5Gi
+            cpu: 50m
+```
+
+### ReplicaResourceLimits Policy
+
+You can specify the *ReplicaResourceLimits* to restrict the memory usage of replica pod within the given limit  using the *value* for *ReplicaResourceLimits*.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: ReplicaResourceLimits
+        value: |-
+            memory: 2Gi
+```
+
+
+
 ## Types of Storage Policies for cStor
 
 OpenEBS supports several types of Storage Policies for cStor volume such as the following.
 
-- cas.openebs.io/ReplicaCount
-- cas.openebs.io/VolumeControllerImage
-- cas.openebs.io/VolumeTargetImage
-- cas.openebs.io/StoragePoolClaim
-- cas.openebs.io/VolumeMonitor
-- cas.openebs.io/VolumeMonitorImage
-- cas.openebs.io/FSType
+- ReplicaCount
+- VolumeControllerImage
+- VolumeTargetImage
+- StoragePoolClaim
+- VolumeMonitor
+- VolumeMonitorImage
+- FSType
+
+- TargetNodeSelector
+- ReplicaNodeSelector
+- TargetResourceLimits
+- AuxResourceLimits
+- ReplicaResourceLimits
 
 ### Replica Count Policy
 
@@ -318,6 +420,53 @@ metadata:
       - name: FSType
         value: ext4
     openebs.io/cas-type: cstor
+```
+
+### TargetResourceLimits Policy
+
+You can specify the *TargetResourceLimits* to restrict the memory and cpu usage of target pod within the given limit  using the *value* for *TargetResourceLimits* .
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: TargetResourceLimits
+        value: |-
+            memory: 1Gi
+            cpu: 100m
+```
+
+### AuxResourceLimits Policy
+
+You can specify the *AuxResourceLimits* which allow you to set limits on side cars. 
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: TargetResourceLimits
+        value: |-
+            memory: 0.5Gi
+            cpu: 50m
+```
+
+### ReplicaResourceLimits Policy
+
+You can specify the *ReplicaResourceLimits* to restrict the memory usage of replica pod within the given limit  using the *value* for *ReplicaResourceLimits*.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: ReplicaResourceLimits
+        value: |-
+            memory: 2Gi
 ```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
