@@ -91,8 +91,10 @@ You can create cStor pools on OpenEBS clusters once you have installed OpenEBS 0
 
 ### By Using Manual Method
 
-In manual method, you can select the disks and use it in the below yaml file which will create cStor pool using these selected disks.
+In manual method, you can select the required disks and use it in the below yaml file which will create cStor pool using these selected disks.
+
 You can create a yaml file named *openebs-config.yaml* and add below contents to it. 
+
 ```
 ---
 apiVersion: storage.k8s.io/v1
@@ -115,7 +117,6 @@ metadata:
 spec:
   name: cstor-disk
   type: disk
-  maxPools: 3
   poolSpec:
     poolType: striped
   # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
@@ -151,6 +152,7 @@ spec:
   name: cstor-disk
   type: disk
   maxPools: 3
+  minPools: 3
   poolSpec:
     poolType: striped
 ---
@@ -166,6 +168,13 @@ metadata:
 provisioner: openebs.io/provisioner-iscsi
 ---
 ```
+
+**Note:** You can specify maximum and minimum number of cStor pool in the above yaml file. If there is no *minPools* specified, it will create Single cStor pool by default. 
+
+#### **Limitations**:
+
+1. For Striped pool, it will take only one disk per Node even if Node have multiple disks.
+2. For Mirrored pool, it must have only 2 disks attached per Node.
 
 ## Scheduling a Pool on a Node
 
