@@ -21,17 +21,14 @@ OpenEBS storage provides several features that can be customised for each volume
 
 There are two types of storage volumes in OpenEBS.
 
-```
-Jiva storage volume 
-Cstor storage volume
-```
+1. Jiva storage volume 
+2. Cstor storage volume
 
 
 ### Jiva Storage Volume
 
-
 Jiva storage engine creates Jiva volume. By default, OpenEBS Jiva volume runs with 3 replicas.
-This sample PVC yaml uses storage class openebs-jiva-default created as part of openebs-operator.yaml installation.
+This sample PVC yaml uses storage class **openebs-jiva-default** created as part of **openebs-operator** YAML installation.
 
 You can create the Jiva volume by using the following command.
 
@@ -53,35 +50,41 @@ kubectl get pv
 
 This pvc name is used in application yaml to run application using OpenEBS Jiva volume.
 
-Jiva volume can also be created dynamically. you must change the storage class name to **openebs-jiva-default** from **openebs-standard** in the percona-openebs-deployment.yaml and then apply the yaml as mentioned below.
+Get the percona deployment YAML using following command.
 
 ```
 wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml
+```
+
+Edit the downloaded file by changing the storage class name to **openebs-jiva-default** from **openebs-standard**.
+
+Apply the modified YAML to create the Jiva Volume using following command.
+
+```
 kubectl apply -f percona-openebs-deployment.yaml
-```      
+```
 
 ### Cstor Storage Volume
 
+cStor storage engine creates cStor volume. By default, OpenEBS cStor volume will be running with 3 replicas. 
+This sample PVC yaml uses storage class **openebs-cstor-sparse** created as part of **openebs-operator** YAML installation.
 
-Cstor storage engine creates Cstor volume. By default, OpenEBS cStor volume will be running with 3 replicas. 
-This sample PVC yaml uses storage class openebs-cstor-sparse created as part of openebs-operator.yaml installation.
-
-You can create the Cstor volume by running the following command.
+You can create the cStor volume by running the following command.
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-cstor-default.yaml
 ```
 
-If you want to create cStor volume on cStor Pool created using external disks, you can find the details at [Cstor vol](/docs/next/deploycstor.html).
+If you want to create cStor volume on cStor Pool created using external disks, you can find the details [here](/docs/next/deploycstor.html).
 
 
-Get the Cstor pvc details by running the following command.
+Get the cStor pvc details by running the following command.
 
 ```
 kubectl get pvc
 ```
 
-Get the Cstor pv details by running the following command.
+Get the cStor pv details by running the following command.
 
 ```
 kubectl get pv
@@ -89,15 +92,22 @@ kubectl get pv
 
 This pvc name is used in the application yaml to run the application using OpenEBS cStor volume.
 
-Cstor volume can also be created dynamically. you must change the storage class name to **openebs-cstor-sparse** from **openebs-standard** in the percona-openebs-deployment.yaml and then apply the yaml as mentioned below.
+cStor volume can also be created dynamically. You can get the application yaml file using following command.
 
 ```
 wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml
+```
+
+Edit the downloaded file by changing the storage class name to **openebs-cstor-sparse** from **openebs-standard**.
+
+Apply the modified YAML to create the cStor Volume using following command.
+
+```
 kubectl apply -f percona-openebs-deployment.yaml
 ```
 
-
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
