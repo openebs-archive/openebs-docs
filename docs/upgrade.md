@@ -37,12 +37,10 @@ You can either `git clone` or download the upgrade scripts.
 mkdir upgrade-openebs
 cd upgrade-openebs
 git clone https://github.com/openebs/openebs.git
-cd openebs/k8s/upgrade/0.6.0-0.7.0/
+cd openebs/k8s/upgrade/0.6.0-0.7.0/Or
 ```
 
-Or
-
-Download the following files to your work directory from <https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.6.0-0.7.0>
+Else you can download the following files to your work directory from <https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.6.0-0.7.0>
 
 - `patch-strategy-recreate.json`
 - `jiva-replica-patch.tpl.json`
@@ -118,7 +116,7 @@ Download the following files to your work directory from <https://github.com/ope
     provisioner: openebs.io/provisioner-iscsi
     ```
 
-  **Important Note: StorageClasses have to be updated prior to provisioning any new volumes with 0.7.0.**
+  **Important Note:** StorageClasses have to be updated prior to provisioning any new volumes with 0.7.0.
 
 ## Step 1: Upgrade the OpenEBS Operator
 
@@ -129,7 +127,7 @@ OpenEBS 0.7.0 has made the following significant changes to the OpenEBS Operator
 
 The upgrade steps vary depending on the way OpenEBS was installed. You can upgrade your OpenEBS cluster if you have already deployed your cluster using one of the following approach.
 
-1. Using `kubectl`
+1. Using kubectl
 2. Using helm
 
 Select one of the following:
@@ -163,12 +161,13 @@ The following procedure will work if you have installed OpenEBS with default val
 
 #### Using Customized Operator YAML or Helm Chart.
 
-As a first step, you must update your custom helm chart or YAML with 0.7 release tags and changes made in the values/templates.
+If you are using customized Operator YAML or Helm Chart which has used for OpenEBS installation using helm method, then you must update your custom helm chart or YAML with 0.7 release tags and changes made in the values/templates.
+
+After updating the YAML or helm chart or helm chart values, you can use the [above procedures](https://staging-docs.openebs.io/docs/next/upgrade.html#install-upgrade-using-table-openebs-helm-chart) to upgrade the OpenEBS Operator
 
 You can use the following as a reference to know about the changes in 0.7.
-- openebs-charts [PR#1878](https://github.com/openebs/openebs/pull/1878).
 
-After updating the YAML or helm chart or helm chart values, you can use the above procedures to upgrade the OpenEBS Operator
+- openebs-charts [PR#1878](https://github.com/openebs/openebs/pull/1878).
 
 ## Step 2: Upgrade the OpenEBS Volumes
 
