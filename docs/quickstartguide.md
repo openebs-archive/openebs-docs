@@ -35,9 +35,17 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
      ### Using OpenEBS Operator (kubectl):
 
-​	Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve 		creating a new Service Account and assigning it to OpenEBS components. 
+    You can install OpenEBS cluster by running the following command.
 
-​	 For installing OpenEBS cluster, see [installation](/docs/next/installation.html#install-openebs-using-kubectl)
+    **Note:** Ensure that you have met the [prerequisites](/docs/next/prerequisites.html) before installation.
+
+    ```
+    kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.2.yaml
+    ```
+
+    The installation will involve creating a new Service Account and assigning it to OpenEBS components. 
+
+    For detailed information about installing OpenEBS cluster, see [install using kubectl](/docs/next/installation.html#install-openebs-using-kubectl)
 
 6. **Optional:** Create a catalog of storage classes and publish them to your developers. Two default storage classes (*openebs-jiva-default* and *openebs-cstor-sparse*) are added to the cluster when you install OpenEBS.
 
