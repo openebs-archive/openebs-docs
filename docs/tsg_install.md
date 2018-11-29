@@ -145,8 +145,55 @@ kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
 kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
 ```
  
+## Creating cStor pool fails on CentOS when there are partitions on the disk
 
+Creating cStor pool fails with the following error message:
 
+```
+E0920 14:51:17.474702       8 pool.go:78] Unable to create pool: /dev/disk/by-id/ata-WDC_WD2500BPVT-00JJ
+```
+
+sdb and sdc are used for pool.
+
+```
+core@k8worker02 ~ $ lsblk
+NAME        MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
+sda           8:0    0 111.8G  0 disk
+|-sda1        8:1    0   128M  0 part  /boot
+|-sda2        8:2    0     2M  0 part
+|-sda3        8:3    0     1G  0 part
+| `-usr     254:0    0  1016M  1 crypt /usr
+|-sda4        8:4    0     1G  0 part
+|-sda6        8:6    0   128M  0 part  /usr/share/oem
+|-sda7        8:7    0    64M  0 part
+`-sda9        8:9    0 109.5G  0 part  /
+sdb           8:16   0 111.8G  0 disk
+sdc           8:32   0 232.9G  0 disk
+|-sdc1        8:33   0     1G  0 part
+`-sdc2        8:34   0 231.9G  0 part
+ |-cl-swap 254:1    0   7.8G  0 lvm
+ |-cl-home 254:2    0 174.1G  0 lvm
+ `-cl-root 254:3    0    50G  0 lvm
+ ```
+ 
+ ### Troubleshooting
+ 
+ 1. Clear the partition on the partioned disk.
+ 2. Run the following command on the host machine to check any LVM handler on the device
+    ```
+    sudo dmsetup info -Ccore@k8worker01 ~ $ sudo dmsetup info -C
+    Name             Maj Min Stat Open Targ Event  UUID                                                                 
+    usr              254   0 L--r    1    1      0 CRYPT-VERITY-959135d6b3894b3b8125503de238d5c4-usr                   
+    centos-home      254   2 L--w    0    1      0 LVM-1kqWMeQWqH3qTsiHhYw3ygAzOvpfDL58dDmziWBI0panwOGRq2rp9PjpmE6qdf1V
+    centos-swap      254   1 L--w    0    1      0 LVM-1kqWMeQWqH3qTsiHhYw3ygAzOvpfDL58UIVFhLkzvE1mk7uCy2nePlktBHfTuTYF
+    centos-root      254   3 L--w    0    1      0 LVM-1kqWMeQWqH3qTsiHhYw3ygAzOvpfDL58WULaIYm0X7QmrwQaWYxz1hTwzWocAwYJ
+    ```
+    If the above command displays output similar to the following, you must remove the handler on the device.
+    ```
+    sudo dmsetup remove centos-home
+    sudo dmsetup remove centos-swap
+    sudo dmsetup remove centos-root
+    ```
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
 
