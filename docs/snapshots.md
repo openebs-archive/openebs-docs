@@ -46,8 +46,6 @@ wget https://raw.githubusercontent.com/openebs/external-storage/release/openebs/
 
 Edit the *snapshot.yaml* with your corresponding PVC name which you are going to take snapshot. You can also edit the snapshot name. In this example, it will take the snapshot of PVC called `demo-vol1-claim` and snapshot name as `snapshot-demo-jiva`.
 
-**Note:** Size of Source PVC and snapshot PVC must be equal. You can give the same size of source PVC in the snapshot.yaml before applying the same.
-
 After modifying the *snapshot.yaml*, apply the *snapshot.yaml* using the following command.
 
 ```
@@ -62,7 +60,20 @@ Following is an example output of the above command.
 volumesnapshot.volumesnapshot.external-storage.k8s.io/snapshot-demo-jiva created
 ```
 
-To get to know the status of snapshot, you can use the following command
+To get to know the details of snapshot, you can use following command.
+
+```
+kubectl get volumesnapshot
+```
+
+Output of the above command will be similar to the following.
+
+```
+NAME                 AGE
+snapshot-demo-jiva   37m
+```
+
+To get to know the status of snapshot data, you can use the following command
 
 ```
 kubectl get volumesnapshotdata
@@ -111,7 +122,10 @@ You can edit this *snapshot_claim.yaml* with required name for new PVC. Once you
 kubectl apply -f snapshot_claim.yaml <namespace>
 ```
 
-**Note:** If you are deploying in default namespace,you don't have to explicitly put the default namespace.
+**Note:** 
+
+1. Size of Source PVC and snapshot PVC must be equal. You must give the same size of source PVC in the *snapshot_claim.yaml* before applying the same.
+2. If you are deploying in default namespace,you don't have to explicitly put the default namespace.
 
 This example yaml have the new PVC name as *demo-snap-vol-claim*.  Following is an example output of above command.
 
