@@ -44,7 +44,9 @@ Download the *snapshot.yaml* to create snapshot of the corresponding PVC
 wget https://raw.githubusercontent.com/openebs/external-storage/release/openebs/ci/snapshot/jiva/snapshot.yaml
 ```
 
-Edit the *snapshot.yaml* with your corresponding PVC name which you are going to take snapshot. You can also edit the snapshot name. In this example, it will take the snapshot of PVC called `demo-vol1-claim` and snapshot name as `snapshot-demo-jiva`
+Edit the *snapshot.yaml* with your corresponding PVC name which you are going to take snapshot. You can also edit the snapshot name. In this example, it will take the snapshot of PVC called `demo-vol1-claim` and snapshot name as `snapshot-demo-jiva`.
+
+**Note:** Size of Source PVC and snapshot PVC must be equal. You can give the same size of source PVC in the snapshot.yaml before applying the same.
 
 After modifying the *snapshot.yaml*, apply the *snapshot.yaml* using the following command.
 
