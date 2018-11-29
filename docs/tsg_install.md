@@ -136,9 +136,9 @@ kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
 kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
 ```
  
-## cStor pool creation fails on Cetos when there are partitions on the disk 
+## Creating cStor pool fails on CentOS when there are partitions on the disk
 
-cStor pool creation failing with the following error message:
+Creating cStor pool fails with the following error message:
 
 ```
 E0920 14:51:17.474702       8 pool.go:78] Unable to create pool: /dev/disk/by-id/ata-WDC_WD2500BPVT-00JJ
@@ -167,7 +167,7 @@ sdc           8:32   0 232.9G  0 disk
  `-cl-root 254:3    0    50G  0 lvm
  ```
  
- ###Troubleshooting
+ ### Troubleshooting
  
  1. Clear the partition on the partioned disk.
  2. Run the following command on the host machine to check any LVM handler on the device
