@@ -420,6 +420,7 @@ metadata:
       - name: TargetNodeSelector
         value: |-
             node: appnode
+    openebs.io/cas-type: cstor
 ```
 
 ### TargetResourceLimits Policy
@@ -436,6 +437,7 @@ metadata:
         value: |-
             memory: 1Gi
             cpu: 100m
+    openebs.io/cas-type: cstor
 ```
 
 ### AuxResourceLimits Policy
@@ -452,6 +454,7 @@ metadata:
         value: |-
             memory: 0.5Gi
             cpu: 50m
+    openebs.io/cas-type: cstor
 ```
 
 ### ReplicaResourceLimits Policy
@@ -467,6 +470,7 @@ metadata:
       - name: ReplicaResourceLimits
         value: |-
             memory: 2Gi
+    openebs.io/cas-type: cstor
 ```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
