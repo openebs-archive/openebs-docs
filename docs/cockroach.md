@@ -23,7 +23,7 @@ Deploying CockroachDB as a StatefulSet provides the following benefits.
 Deploying CockroachDB with Persistent Storage
 ---------------------------------------------
 
-Before starting, check the status of the cluster using the following command. 
+We are using OpenEBS cStor storage engine for running  CockroachDB. Before starting, check the status of the cluster using the following command. 
 
 ```
 kubectl get nodes
@@ -63,11 +63,11 @@ openebs-snapshot-operator-bb5697c8d-qlglr   2/2       Running   0          6m
 Get the default StorageClasses installed during the OpenEBS operator installation. You ca run the following command to get the StorageClass details.
 
 ```
-NAME                        PROVISIONER                                                AGE
-openebs-cstor-sparse        openebs.io/provisioner-iscsi                               15h
-openebs-jiva-default        openebs.io/provisioner-iscsi                               15h
-openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   15h
-standard (default)          kubernetes.io/gce-pd                                       15h
+NAME                        PROVISIONER                                             AGE
+openebs-cstor-sparse        openebs.io/provisioner-iscsi                            15h
+openebs-jiva-default        openebs.io/provisioner-iscsi                            15h
+openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter15h
+standard (default)          kubernetes.io/gce-pd                                    15h
 ```
 
 You can apply the CockroachDB YAMLs from the OpenEBS repository using the following commands. 
