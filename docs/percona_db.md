@@ -63,7 +63,7 @@ Start an interactive bash console for the maya-apiserver container using the fol
 Lookup the storage volume name using the *volume list* command
 
     name@Master:~$ kubectl exec -it maya-apiserver-1633167387-5ss2w /bin/bash
-
+    
     root@maya-apiserver-1633167387-5ss2w:/# maya volume list
     Name                                      Status
     pvc-016e9a68-71c1-11e7-9fea-000c298ff5fc  Running
@@ -91,11 +91,8 @@ Get the performance and capacity usage statistics using the *volume stats* comma
        Logical(GB)|   Used(GB)| 
           0.074219|   0.000000|
 
-The above command can be invoked using the *watch* command by providing a desired interval to continuously monitor statistics.
-
-    watch -n 1 maya volume stats pvc-016e9a68-71c1-11e7-9fea-000c298ff5fc
-
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
