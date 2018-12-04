@@ -69,17 +69,13 @@ openebs-provisioner-b9fb58d6d-tdpx7         1/1       Running   0          3h
 openebs-snapshot-operator-bb5697c8d-qlglr   2/2       Running   0          3h
 ```
 
-Run the following commands in the given order. 
+Run the following command to install Percoan Galera services. 
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/galera-xtradb-cluster/deployments/pxc-cluster-service.yaml
 ```
 
-```
-kubectl apply -f pxc-node1.yaml
-```
-
-Download the following files from OpenEBS repo and change the storageClassName from *openebs-jiva-default* to *openebs-cstor-sparse*. 
+Download the following files from OpenEBS repo and change the **storageClassName** under **PersistentVolumeClaim** -> ***spec*** from *openebs-jiva-default* to *openebs-cstor-sparse*. 
 
 ```
 wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/galera-xtradb-cluster/deployments/pxc-node1.yaml
