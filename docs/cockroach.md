@@ -60,7 +60,13 @@ openebs-snapshot-operator-bb5697c8d-qlglr   2/2       Running   0          6m
 
 ```
 
-Get the default StorageClasses installed during the OpenEBS operator installation. You ca run the following command to get the StorageClass details.
+Get the default StorageClasses installed during the OpenEBS operator installation. You can run the following command to get the StorageClass details.
+
+```
+kubectl get sc
+```
+
+Output of above command will be similar to the following.
 
 ```
 NAME                        PROVISIONER                                             AGE
@@ -69,8 +75,6 @@ openebs-jiva-default        openebs.io/provisioner-iscsi                        
 openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter15h
 standard (default)          kubernetes.io/gce-pd                                    15h
 ```
-
-You can apply the CockroachDB YAMLs from the OpenEBS repository using the following commands. 
 
 Create a YAML file named *cockroachdb-sts.yaml* and copy the following sample YAML of cockroach DB to the created file.
 
