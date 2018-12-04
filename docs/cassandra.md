@@ -5,7 +5,7 @@ sidebar_label: Cassandra
 ---
 ------
 
-This page provides detailed instructions to run a Cassandra StatefulSet with OpenEBS storage and perform some simple database operations to verify successful deployment.
+This page provides detailed instructions to run a Cassandra StatefulSet with OpenEBS cStor storage engine and perform some simple database operations to verify successful deployment.
 
 About Cassandra
 ---------------
@@ -15,40 +15,135 @@ Apache Cassandra is a free and open-source distributed NoSQL database management
 Prerequisite
 ------------
 
-A fully configured (preferably, multi-node) Kubernetes cluster configured with the OpenEBS operator and OpenEBS storage classes. 
+We are using OpenEBS cStor storage engine for running  Cassandra StatefulSet. Before starting, check the status of the cluster using the following command. 
 
-    test@Master:~$ kubectl get pods
-    NAME                                                             READY     STATUS    RESTARTS   AGE
-    maya-apiserver-3416621614-g6tmq                                  1/1       Running   1          8d
-    openebs-provisioner-4230626287-503dv                             1/1       Running   1          8d
+```
+kubectl get nodes
+```
+
+The following output shows the status of the nodes in the cluster
+
+```
+NAME                                         STATUS    ROLES     AGE       VERSION
+gke-ranjith-080-default-pool-8d4e3480-b50p   Ready     <none>    22h       v1.9.7-gke.11
+gke-ranjith-080-default-pool-8d4e3480-qsvn   Ready     <none>    22h       v1.9.7-gke.11
+gke-ranjith-080-default-pool-8d4e3480-rb03   Ready     <none>    22h       v1.9.7-gke.11
+```
+
+Also make sure that you have deployed OpenEBS in your cluster. If not deployed, you can install from [here](https://docs.openebs.io/docs/next/quickstartguide.html).
+
+You can check the status of OpenEBS pods by running following command.
+
+```
+kubectl get pod -n openebs
+```
+
+Output of above command will be similar to the following.
+
+```
+NAME                                                              READY     STATUS        RESTARTS   AGE
+cstor-sparse-pool-k0b1-5877cfdf6d-pb8n5                           2/2       Running       0          5h
+cstor-sparse-pool-z8sr-668f5d9b75-z9547                           2/2       Running       0          5h
+cstor-sparse-pool-znj9-6b84f659db-hwzvn                           2/2       Running       0          5h
+maya-apiserver-7bc857bb44-qpjr4                                   1/1       Running       0          5h
+openebs-ndm-9949m                                                 1/1       Running       0          5h
+openebs-ndm-pnm25                                                 1/1       Running       0          5h
+openebs-ndm-stkjp                                                 1/1       Running       0          5h
+openebs-provisioner-b9fb58d6d-tdpx7                               1/1       Running       0          5h
+openebs-snapshot-operator-bb5697c8d-qlglr                         2/2       Running       0          5h
+```
 
 Deploying the Cassandra StatefulSet with OpenEBS Storage
 --------------------------------------------------------
 
-The StatefulSet specification YAMLs are available at *OpenEBS/k8s/demo/cassandra*.
+You can create a storage class YAML named *openebs-cstor-sparse-cassandra.yaml* and copy the following content to it. This YAML will create the storage class to be used for creating cStor Volume where Cassandra application will run.
 
-You can modify the number of replicas in the StatefulSet as required.
-The following example uses two replicas. 
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-cstor-sparse-cassandra
+  annotations:
+    openebs.io/cas-type: cstor
+    cas.openebs.io/config: |
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
+      - name: ReplicaCount
+        value: "1"
+     #- name: TargetResourceLimits
+      #  value: |-
+      #      memory: 1Gi
+      #      cpu: 200m
+      #- name: AuxResourceLimits
+      #  value: |-
+      #      memory: 0.5Gi
+      #      cpu: 50m
+provisioner: openebs.io/provisioner-iscsi
+```
 
-    apiVersion: apps/v1beta1
-    kind: StatefulSet
-    metadata:
-      name: cassandra
-      labels:
-        app: cassandra
+Once you have copied the content, you can apply the *openebs-cstor-sparse-cassandra.yaml* using the following command.
+
+```
+kubectl apply -f openebs-cstor-sparse-cassandra.yaml
+```
+
+Output of above command will be similar to the following.
+
+```
+storageclass.storage.k8s.io/openebs-cstor-sparse-cassandra created
+```
+
+You can check the status of the StorageClasses using the following command.
+
+```
+kubectl get sc
+```
+
+Output of above command will be similar to the following.
+
+```
+NAME                             PROVISIONER                                                AGE
+openebs-cstor-sparse             openebs.io/provisioner-iscsi                               1d
+openebs-cstor-sparse-cassandra   openebs.io/provisioner-iscsi                               4s
+openebs-jiva-default             openebs.io/provisioner-iscsi                               1d
+openebs-snapshot-promoter        volumesnapshot.external-storage.k8s.io/snapshot-promoter   1d
+standard (default)               kubernetes.io/gce-pd                                       1d
+```
+
+Download the following file from OpenEBS repo and change the **volume.beta.kubernetes.io/storage-class** under **volumeClaimTemplates** -> ***metadata*** -> **annotations** from *openebs-jiva-default* to *openebs-cstor-sparse-cassandra*. 
+
+```
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cassandra/cassandra-statefulset.yaml
+```
+
+**Example:**
+
+Following is the snippet on which you have to change the storage-class.
+
+```
+  volumeClaimTemplates:
+  - metadata:
+      name: cassandra-data
+      annotations:
+        volume.beta.kubernetes.io/storage-class: openebs-cstor-sparse-cassandra
     spec:
-      serviceName: cassandra
-      replicas: 2
-     selector:
-        matchLabels:
-          app: cassandra
-      template:
-       metadata:
-          labels:
-            app: cassandra
-    :   
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5G
+```
 
-Run the following commands. 
+After the modification on the downloaded file, you can run following commands to install the Percona galera DB application on cStor volume.
+
+Run the following command to install Cassandra services.
+
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cassandra/cassandra-service.yaml
+```
+
+
+
+
 
     test@Master:~$ cd openebs/k8s/demo/cassandra
     test@Master:~/openebs/k8s/demo/cassandra$ ls -ltr
