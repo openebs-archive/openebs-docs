@@ -31,41 +31,63 @@ For the prerequisites and running OpenEBS Operator, see Running OpenEBS Operator
 
 ## Deploying the Percona Galera Cluster with OpenEBS Storage
 
-The deployment specification YAMLs are available at *OpenEBS/k8s/demo/galera-xtradb-cluster/deployments*. 
-
-Verify k8s cluster is running fine.
+We are using OpenEBS cStor storage engine for running Percona Galera Clsuter. Before starting, check the status of the cluster using the following command. 
 
 ```
-ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl get nodes
-NAME            STATUS    ROLES     AGE       VERSION
-kubemaster-01   Ready     master    6h        v1.9.4
-kubeminion-01   Ready     <none>    6h        v1.9.4
-kubeminion-02   Ready     <none>    6h        v1.9.4
-kubeminion-03   Ready     <none>    6h        v1.9.4
+kubectl get nodes
 ```
 
-Verify OpenEBS pods are running fine with below command
+The following output shows the status of the nodes in the cluster.
 
 ```
-ubuntu@kubemaster-01:~$ kubectl get pods -n openebs
-NAME                                           READY     STATUS    RESTARTS   AGE
-maya-apiserver-84fd4f776d-sq5sf                1/1       Running   0          20m
-openebs-provisioner-74cb999586-fr9kf           1/1       Running   0         20m
-openebs-snapshot-controller-6449b4cdbb-5n2qk   2/2       Running   0          20m
+NAME                                         STATUS    ROLES     AGE       VERSION
+gke-ranjith-080-default-pool-8d4e3480-b50p   Ready     <none>    1d        v1.9.7-gke.11
+gke-ranjith-080-default-pool-8d4e3480-qsvn   Ready     <none>    1d        v1.9.7-gke.11
+gke-ranjith-080-default-pool-8d4e3480-rb03   Ready     <none>    1d        v1.9.7-gke.11
 ```
 
-Clone latest OpenEBS repo and deploy your gallera application with OpenEBS.
+Also make sure that you have deployed OpenEBS in your cluster. If not deployed, you can install from [here](https://docs.openebs.io/docs/next/quickstartguide.html).
+
+You can check the status of OpenEBS pods by running following command.
 
 ```
-git clone https://github.com/openebs/openebs.git
-cd openebs/k8s/demo//galera-xtradb-cluster/deployments/
+kubectl get pod -n openebs
+```
+
+Output of above command will be similar to the following.
+
+```
+NAME                                        READY     STATUS    RESTARTS   AGE
+cstor-sparse-pool-k0b1-5877cfdf6d-pb8n5     2/2       Running   0          3h
+cstor-sparse-pool-z8sr-668f5d9b75-z9547     2/2       Running   0          3h
+cstor-sparse-pool-znj9-6b84f659db-hwzvn     2/2       Running   0          3h
+maya-apiserver-7bc857bb44-qpjr4             1/1       Running   0          3h
+openebs-ndm-9949m                           1/1       Running   0          3h
+openebs-ndm-pnm25                           1/1       Running   0          3h
+openebs-ndm-stkjp                           1/1       Running   0          3h
+openebs-provisioner-b9fb58d6d-tdpx7         1/1       Running   0          3h
+openebs-snapshot-operator-bb5697c8d-qlglr   2/2       Running   0          3h
 ```
 
 Run the following commands in the given order. 
 
 ```
-kubectl apply -f pxc-cluster-service.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/galera-xtradb-cluster/deployments/pxc-cluster-service.yaml
 ```
+
+```
+kubectl apply -f pxc-node1.yaml
+```
+
+Download the following files from OpenEBS repo and change the storageClassName from *openebs-jiva-default* to *openebs-cstor-sparse*. 
+
+```
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/galera-xtradb-cluster/deployments/pxc-node1.yaml
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/galera-xtradb-cluster/deployments/pxc-node2.yaml
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/galera-xtradb-cluster/deployments/pxc-node3.yaml
+```
+
+After the modification on the downloaded files, you can run following commands to install the Percona galera DB application on cStor volume.
 
 ```
 kubectl apply -f pxc-node1.yaml
@@ -83,25 +105,43 @@ Wait until the pxc-node2.yaml is processed and repeat the step with pxc-node3 .
 kubectl apply -f pxc-node3.yaml
 ```
 
-Verify that all the replicas are up and running using the following command. :
+Get the status of OpenEBS cStor running pods using the following command. 
 
-    ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl get pods
-    NAME                                                             READY     STATUS    RESTARTS   AGE
-    pvc-4e2ef5e4-7f81-11e8-9f2f-02b983f0a4db-ctrl-7fd86b86d-j9j62    2/2       Running   0          8m
-    pvc-4e2ef5e4-7f81-11e8-9f2f-02b983f0a4db-rep-5f7664d5c7-5g98x    1/1       Running   0          8m
-    pvc-4e2ef5e4-7f81-11e8-9f2f-02b983f0a4db-rep-5f7664d5c7-cv9r4    1/1       Running   0          8m
-    pvc-4e2ef5e4-7f81-11e8-9f2f-02b983f0a4db-rep-5f7664d5c7-mv8nf    1/1       Running   0          8m
-    pvc-b975e7cd-7f81-11e8-9f2f-02b983f0a4db-ctrl-68d7c9c478-pdd4w   2/2       Running   0          5m
-    pvc-b975e7cd-7f81-11e8-9f2f-02b983f0a4db-rep-897675dc5-gmk5l     1/1       Running   0          5m
-    pvc-b975e7cd-7f81-11e8-9f2f-02b983f0a4db-rep-897675dc5-hlksk     1/1       Running   0          5m
-    pvc-b975e7cd-7f81-11e8-9f2f-02b983f0a4db-rep-897675dc5-jv9fn     1/1       Running   0          5m
-    pvc-ebb3b0f7-7f81-11e8-9f2f-02b983f0a4db-ctrl-6b5ddddd88-srv42   2/2       Running   0          3m
-    pvc-ebb3b0f7-7f81-11e8-9f2f-02b983f0a4db-rep-7c6784b7bd-2gntx    1/1       Running   0          3m
-    pvc-ebb3b0f7-7f81-11e8-9f2f-02b983f0a4db-rep-7c6784b7bd-kxpp2    1/1       Running   0          3m
-    pvc-ebb3b0f7-7f81-11e8-9f2f-02b983f0a4db-rep-7c6784b7bd-pxl6q    1/1       Running   0          3m
-    pxc-node1-688f987789-rmvds                                       1/1       Running   0          8m
-    pxc-node2-7f64f4cfd4-gt8sh                                       1/1       Running   0          5m
-    pxc-node3-65ddfd699-xj4kc                                        1/1       Running   0          3m
+```
+kubectl get pods -n openebs
+```
+
+Output of above command will be similar to the following. In the following output, it will list the cStor target pod since this application uses default cStor StorageClass;*openebs-cstor-sparse* ,so it will contain 3 cStor target pods.
+
+    NAME                                                              READY     STATUS    RESTARTS   AGE
+    cstor-sparse-pool-k0b1-5877cfdf6d-pb8n5                           2/2       Running   0          4h
+    cstor-sparse-pool-z8sr-668f5d9b75-z9547                           2/2       Running   0          4h
+    cstor-sparse-pool-znj9-6b84f659db-hwzvn                           2/2       Running   0          4h
+    maya-apiserver-7bc857bb44-qpjr4                                   1/1       Running   0          4h
+    openebs-ndm-9949m                                                 1/1       Running   0          4h
+    openebs-ndm-pnm25                                                 1/1       Running   0          4h
+    openebs-ndm-stkjp                                                 1/1       Running   0          4h
+    openebs-provisioner-b9fb58d6d-tdpx7                               1/1       Running   0          4h
+    openebs-snapshot-operator-bb5697c8d-qlglr                         2/2       Running   0          4h
+    pvc-3fc3477a-f7ad-11e8-9883-42010a8000b7-target-65f9c49dc725xgf   3/3       Running   0          8m
+    pvc-79f9051d-f7ac-11e8-9883-42010a8000b7-target-b47f7fdb7-kplwh   3/3       Running   0          13m
+    pvc-f1c0ef41-f7ab-11e8-9883-42010a8000b7-target-78fd89c875jwpxx   3/3       Running   0          17m
+
+Get the status of percona galera DB running pods using the following command. 
+
+```
+kubectl get pods
+```
+
+Output of above command will be similar to the following.
+
+```
+NAME                         READY     STATUS    RESTARTS   AGE
+pxc-node1-688f987789-9tvz5   1/1       Running   0          18m
+pxc-node2-7f64f4cfd4-qrsz8   1/1       Running   0          15m
+pxc-node3-65ddfd699-nk62z    1/1       Running   0          9m
+
+```
 
 ## Deployment Guidelines
 
@@ -113,7 +153,15 @@ Verify that all the replicas are up and running using the following command. :
 
 * Login to the database from any one of the node pod. It can be done by following command.
 
-  `ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl exec -it pxc-node1-688f987789-rmvds /bin/bash`
+  ```
+  kubctl exec -it <percona galera DB pod> /bin/bash
+  ```
+
+  **Example:**
+
+  ```
+   kubectl exec -it pxc-node1-688f987789-9tvz5 /bin/bash
+  ```
 
 * Enter to mysql db and root user password for db is  ***c-krit***. 
 
@@ -123,41 +171,41 @@ Verify that all the replicas are up and running using the following command. :
   Welcome to the MySQL monitor.  Commands end with ; or \g.
   Your MySQL connection id is 6
   Server version: 5.6.24-72.2-56-log Percona XtraDB Cluster (GPL), Release rel72.2, Revision 43abf03, WSREP version 25.11, wsrep_25.11
-
+  
   Copyright (c) 2009-2015 Percona LLC and/or its affiliates
   Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
-
+  
   Oracle is a registered trademark of Oracle Corporation and/or its
   affiliates. Other names may be trademarks of their respective
   owners.
-
+  
   Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
   ```
 
 * Check the replication cluster size on any of the nodes using the following command. 
 
-```
-    mysql> show status like 'wsrep_cluster_size';
-    +--------------------+-------+
-    | Variable_name      | Value |
-    +--------------------+-------+
-    | wsrep_cluster_size | 3     |
-    +--------------------+-------+
-    1 row in set (0.01 sec)
-```
+  ```
+   mysql> show status like 'wsrep_cluster_size';
+      +--------------------+-------+
+      | Variable_name      | Value |
+      +--------------------+-------+
+      | wsrep_cluster_size | 3     |
+      +--------------------+-------+
+      1 row in set (0.01 sec)
+  ```
 
-* On the pxc-node1, create a test database with some content using the following commands. You have already entered into node1 using first step.
+* Currently you are inside node1. You can  create a test database with some content using the following mysql commands. 
 
     ```
     mysql> create database testdb;
     Query OK, 1 row affected (0.10 sec)
-
+    
     mysql> use testdb;
     Database changed
-
+    
     mysql> CREATE TABLE Hardware (Name VARCHAR(20),HWtype VARCHAR(20),Model VARCHAR(20));
     Query OK, 0 rows affected (0.11 sec)
-
+    
     mysql> show tables;
     +------------------+
     | Tables_in_testdb |
@@ -165,31 +213,33 @@ Verify that all the replicas are up and running using the following command. :
     | Hardware         |
     +------------------+
     1 row in set (0.00 sec)
-
+    
     mysql> INSERT INTO Hardware (Name,HWtype,Model) VALUES ('TestBox','Server','DellR820');
     Query OK, 1 row affected (0.06 sec)
-
+    
     mysql> select * from Hardware;
-
+    
     +---------+--------+----------+
     | Name    | HWtype | Model    |
     +---------+--------+----------+
     | TestBox | Server | DellR820 |
     +---------+--------+----------+
     1 row in set (0.00 sec)
-
+    
     mysql> exit
     Bye
     ```
 
-    ​
-
-* Verify that this data is synchronized on the other nodes, for example, node2, using the following command.  
+* Verify that this data is synchronized on the other nodes, for example, node2, using the following command. 
 
     ```
-    ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl exec -it pxc-node2-7f64f4cfd4-gt8sh /bin/bash
+    kubectl exec -it pxc-node2-7f64f4cfd4-qrsz8 /bin/bash
+    ```
 
-    root@pxc-node2-7f64f4cfd4-gt8sh:/# mysql -uroot -p -h pxc-cluster;
+    Now you are inside the node2 pod.
+
+    ```
+    root@pxc-node2-7f64f4cfd4-qrsz8:/# mysql -uroot -p -h pxc-cluster;
     Enter password:
     Welcome to the MySQL monitor.  Commands end with ; or \g.
     Your MySQL connection id is 7
@@ -200,7 +250,7 @@ Verify that all the replicas are up and running using the following command. :
     affiliates. Other names may be trademarks of their respective
     owners.
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
+    
     mysql> show status like 'wsrep_cluster_size';
     +--------------------+-------+
     | Variable_name      | Value |
@@ -208,7 +258,7 @@ Verify that all the replicas are up and running using the following command. :
     | wsrep_cluster_size | 3     |
     +--------------------+-------+
     1 row in set (0.01 sec)
-
+    
     mysql> show databases;
     +--------------------+
     | Database           |
@@ -220,12 +270,12 @@ Verify that all the replicas are up and running using the following command. :
     | testdb             |
     +--------------------+
     5 rows in set (0.01 sec)
-
+    
     mysql> use testdb;
     Reading table information for completion of table and column names
     You can turn off this feature to get a quicker startup with -A
     Database changed
-
+    
     mysql> select * from Hardware;
     +---------+--------+----------+
     | Name    | HWtype | Model    |
@@ -233,15 +283,94 @@ Verify that all the replicas are up and running using the following command. :
     | TestBox | Server | DellR820 |
     +---------+--------+----------+
     1 row in set (0.00 sec)
+    
+    mysql> exit
+    Bye
     ```
 
-    ​
-
-* Verify the multi-master capability of the cluster, by writing additional tables into the database using the following command. Use a node other than node1, for example node3. 
+* Verify the multi-master capability of the cluster, by writing additional tables into the database using the following command. Use a node other than node1, for example node3.  You can login to node3 pod using the following command.
 
     ```
+    kubectl exec -it pxc-node3-65ddfd699-nk62z /bin/bash
+    ```
+
+    Now you are inside the Node3 pod. You can perform following mysql command to verify your database.
+
+    ```
+    root@pxc-node3-65ddfd699-nk62z:/# mysql -uroot -p -h pxc-cluster;
+    Enter password:
+    Welcome to the MySQL monitor.  Commands end with ; or \g.
+    Your MySQL connection id is 5
+    Server version: 5.6.24-72.2-56-log Percona XtraDB Cluster (GPL), Release rel72.2, Revision 43abf03, WSREP version 25.11, wsrep_25.11
+    
+    Copyright (c) 2009-2015 Percona LLC and/or its affiliates
+    Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
+    
+    Oracle is a registered trademark of Oracle Corporation and/or its
+    affiliates. Other names may be trademarks of their respective
+    owners.
+    
+    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+    
+    mysql>
+    mysql>  show databases;
+    +--------------------+
+    | Database           |
+    +--------------------+
+    | information_schema |
+    | mysql              |
+    | performance_schema |
+    | test               |
+    | testdb             |
+    +--------------------+
+    5 rows in set (0.00 sec)
+    
+    mysql> show status like 'wsrep_cluster_size';
+    +--------------------+-------+
+    | Variable_name      | Value |
+    +--------------------+-------+
+    | wsrep_cluster_size | 3     |
+    +--------------------+-------+
+    1 row in set (0.00 sec)
+    
+    mysql> use testdb;
+    Reading table information for completion of table and column names
+    You can turn off this feature to get a quicker startup with -A
+    
+    Database changed
+    mysql>  select * from Hardware;
+    +---------+--------+----------+
+    | Name    | HWtype | Model    |
+    +---------+--------+----------+
+    | TestBox | Server | DellR820 |
+    +---------+--------+----------+
+    1 row in set (0.00 sec)
+    
+    mysql> INSERT INTO Hardware (Name,HWtype,Model) VALUES ('ProdBox','Server','DellR720');
+    Query OK, 1 row affected (0.06 sec)
+    
+    mysql> select * from Hardware;
+    +---------+--------+----------+
+    | Name    | HWtype | Model    |
+    +---------+--------+----------+
+    | TestBox | Server | DellR820 |
+    | ProdBox | Server | DellR720 |
+    +---------+--------+----------+
+    2 rows in set (0.00 sec)
+    
+    mysql> exit
+    Bye
+    ```
+
+* ```
+    kubectl exec -it pxc-node2-7f64f4cfd4-qrsz8 /bin/bash
+    ```
+
+    Now you are inside the Node2 pode.
+
+* ```
     ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl exec -it pxc-node3-65ddfd699-xj4kc /bin/bash
-
+    
     root@pxc-node3-65ddfd699-xj4kc:/# mysql -uroot -p -h pxc-cluster;
     Enter password:
     Welcome to the MySQL monitor.  Commands end with ; or \g.
@@ -253,13 +382,13 @@ Verify that all the replicas are up and running using the following command. :
     affiliates. Other names may be trademarks of their respective
     owners.
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
+    
     mysql> use testdb;
     Database changed
-
+    
     mysql> INSERT INTO Hardware (Name,HWtype,Model) VALUES ('ProdBox','Server','DellR720');
     Query OK, 1 row affected (0.10 sec)
-
+    
     mysql> select * from Hardware;
     +---------+--------+----------+
     | Name    | HWtype | Model    |
@@ -268,7 +397,7 @@ Verify that all the replicas are up and running using the following command. :
     | ProdBox | Server | DellR720 |
     +---------+--------+----------+
     2 rows in set (0.00 sec)
-
+    
     mysql> exit
     Bye
     ```
