@@ -17,64 +17,150 @@ This section provides detailed instructions which allow you to perform the follo
 
 2. ### Deploy Mongo-StatefulSet with OpenEBS Storage
 
+   We are using OpenEBS cStor storage engine for running  CockroachDB. Before starting, check the status of the cluster using the following command. 
+
+   ```
+   kubectl get nodes
+   ```
+
+   The following output shows the status of the nodes in the cluster
+
+   ```
+   NAME                                                  STATUS    ROLES     AGE       VERSION
+   gke-doc-update-cluster-c-default-pool-59cb533c-hw5s   Ready     <none>    18h       v1.11.3-gke.18
+   gke-doc-update-cluster-c-default-pool-59cb533c-knfl   Ready     <none>    18h       v1.11.3-gke.18
+   gke-doc-update-cluster-c-default-pool-59cb533c-pnjk   Ready     <none>    18h       v1.11.3-gke.18
+   ```
+
    Use OpenEBS as persistent storage for the MongoDB StatefulSet by selecting an OpenEBS storage class in the persistent volume claim. A sample MongoDB SatefulSet yaml (with container attributes and pvc
    details) is available in the OpenEBS git repository.
 
-   The number of replicas in the StatefulSet can be modified as required. The following example uses three replicas. The replica count can be edited in the StatefulSet specification. 
+   Get the default StorageClasses installed during the OpenEBS operator installation. You can run the following command to get the StorageClass details.
 
-       apiVersion: apps/v1beta1
-        kind: StatefulSet
-        metadata:
-         name: mongo
-        spec:
-         serviceName: "mongo"
-         replicas: 3
-         template:
-       metadata:
-         labels:
-           role: mongo
-           environment: test
-          .
-          .
+   ```
+   kubectl get sc
+   ```
+
+   Output of above command will be similar to the following.
+
+   ```
+   NAME                      PROVISIONER                                         AGE
+   openebs-cstor-sparse      openebs.io/provisioner-iscsi                        18h
+   openebs-jiva-default      openebs.io/provisioner-iscsi                        18h
+   openebs-snapshot-promoter volumesnapshot.external-storage.k8s.io/snapshot-promoter  18h
+   standard (default)        kubernetes.io/gce-pd                                18h
+   ```
+
+   Create a YAML file named *mongo-statefulset.yaml* and copy the following sample YAML of cockroach DB to the created file.
+
+   ```
+   # Create a StorageClass suited for Mongo StatefulSet
+   # Since Mongo takes care of replication, one replica will suffice
+   # Can be configured with Anti affinity topology key of hostname (default)
+   #  or across zone.
+   ---
+   apiVersion: storage.k8s.io/v1
+   kind: StorageClass
+   metadata:
+     name: openebs-cstor-sparse
+     annotations:
+       cas.openebs.io/config: |
+         - name: ReplicaCount
+           value: "1"
+         - name: StoragePoolClaim
+           value: "cstor-sparse-pool"
+         - name: FSType
+           value: "xfs"
+         #- name: ReplicaAntiAffinityTopoKey
+         #  value: failure-domain.beta.kubernetes.io/zone
+   provisioner: openebs.io/provisioner-iscsi
+   ---
+   # Headless service for stable DNS entries of StatefulSet members.
+   apiVersion: v1
+   kind: Service
+   metadata:
+    name: mongo
+    labels:
+      name: mongo
+   spec:
+    ports:
+    - port: 27017
+      targetPort: 27017
+    clusterIP: None
+    selector:
+      role: mongo
+   ---
+   apiVersion: apps/v1beta1
+   kind: StatefulSet
+   metadata:
+    name: mongo
+   spec:
+    serviceName: "mongo"
+    replicas: 3
+    template:
+      metadata:
+        labels:
+          role: mongo
+          environment: test
+          #This label will be used by openebs to place in replica
+          # pod anti-affinity to make sure data of different mongo
+          # instances are not co-located on the same node
+          openebs.io/replica-anti-affinity: vehicle-db
+      spec:
+        terminationGracePeriodSeconds: 10
+        containers:
+          - name: mongo
+            image: mongo
+            command:
+              - mongod
+              - "--replSet"
+              - rs0
+              - "--smallfiles"
+              - "--noprealloc"
+              - "--bind_ip_all"
+            ports:
+              - containerPort: 27017
+            volumeMounts:
+              - name: mongo-persistent-storage
+                mountPath: /data/db
+          - name: mongo-sidecar
+            image: cvallance/mongo-k8s-sidecar
+            env:
+              - name: MONGO_SIDECAR_POD_LABELS
+                value: "role=mongo,environment=test"
+    volumeClaimTemplates:
+    - metadata:
+        name: mongo-persistent-storage
+      spec:
+        storageClassName: openebs-cstor-sparse
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5G
+   ```
+
    Apply the mongo-statefulset.yml using the following commands.
 
    ```
-   test@Master:~$ kubectl apply -f mongo-statefulset.yml
-   
+   kubectl apply -f mongo-statefulset.yml
+   storageclass.storage.k8s.io "openebs-cstor-sparse" configured
    service "mongo" created
-   
-   statefulset "mongo" created
+   statefulset.apps "mongo" created
    ```
 
-   
 
 Verify that MongoDB replicas, mongo headless service and OpenEBS persistent volumes comprising of the controller and replica pods are successfully deployed and are in *Running* state. 
 
-    test@Master:~$ kubectl get pods
-    NAME                                                             READY     STATUS    RESTARTS   AGE
-    maya-apiserver-1089964587-x5q15                                  1/1       Running   0          8m
-    mongo-0                                                          2/2       Running   0          2m
-    mongo-1                                                          2/2       Running   0          2m
-    mongo-2                                                          2/2       Running   0          1m
-    openebs-provisioner-1149663462-5pdcq                             1/1       Running   0          8m
-    pvc-0d39583c-bad7-11e7-869d-000c298ff5fc-ctrl-4109100951-v2ndc   1/1       Running   0          2m
-    pvc-0d39583c-bad7-11e7-869d-000c298ff5fc-rep-1655873671-50f8z    1/1       Running   0          2m
-    pvc-0d39583c-bad7-11e7-869d-000c298ff5fc-rep-1655873671-ctp0q    1/1       Running   0          2m
-    pvc-21da76b6-bad7-11e7-869d-000c298ff5fc-ctrl-2618026111-z5hzt   1/1       Running   0          2m
-    pvc-21da76b6-bad7-11e7-869d-000c298ff5fc-rep-187343257-9w46n     1/1       Running   0          2m
-    pvc-21da76b6-bad7-11e7-869d-000c298ff5fc-rep-187343257-sd5hl     1/1       Running   0          2m
-    pvc-3a9ca1ec-bad7-11e7-869d-000c298ff5fc-ctrl-2347166037-vsc2t   1/1       Running   0          1m
-    pvc-3a9ca1ec-bad7-11e7-869d-000c298ff5fc-rep-849715916-3w1c7     1/1       Running   0          1m
-    pvc-3a9ca1ec-bad7-11e7-869d-000c298ff5fc-rep-849715916-f2f3p     1/1       Running   0          1m
-    
-    test@Master:~$ kubectl get svc
-    NAME                                                CLUSTER-IP       EXTERNAL-IP PORT(S)             AGE
-    kubernetes                                          10.96.0.1        <none>      443/TCP             19h
-    maya-apiserver-service                              10.103.216.160   <none>      5656/TCP            8m
-    mongo                                               None             <none>      27017/TCP           3m
-    pvc-0d39583c-bad7-11e7-869d-000c298ff5fc-ctrl-svc   10.105.60.71     <none>      3260/TCP,9501/TCP   3m
-    pvc-21da76b6-bad7-11e7-869d-000c298ff5fc-ctrl-svc   10.105.178.143   <none>      3260/TCP,9501/TCP   2m
-    pvc-3a9ca1ec-bad7-11e7-869d-000c298ff5fc-ctrl-svc   10.110.104.42    <none>      3260/TCP,9501/TCP   1m
+    kubectl get pods
+    NAME                  READY     STATUS    RESTARTS   AGE
+    mongo-0               2/2       Running   0          10m
+    mongo-1               2/2       Running   0          7m
+    mongo-2               2/2       Running   0          4m
+    kubectl get svc
+    NAME         TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)     AGE
+    kubernetes   ClusterIP   10.83.240.1   <none>        443/TCP     20h
+    mongo        ClusterIP   None          <none>        27017/TCP   1h
 
 **Note:**
 
@@ -125,6 +211,11 @@ To check the pod status rum the below command.
 
 ```
 kubectl get pods
+NAME                  READY     STATUS      RESTARTS   AGE
+mongo-0               2/2       Running     0          33m
+mongo-1               2/2       Running     0          30m
+mongo-2               2/2       Running     0          27m
+
 ```
 
 
@@ -132,6 +223,7 @@ Once all your pods are running run the below command.
 
 ```
 kubectl apply -f mongo-loadgen.yaml
+job.batch "mongo-loadgen" created
 ```
 
 Now Mongo-DB is running . To run Mongo-DB with xfs file system please follow the steps mentioned [here](https://github.com/openebs/openebs/issues/1446).
@@ -269,11 +361,11 @@ By default, the databases cannot be viewed on the secondary instance through the
 
     rs0:SECONDARY> rs.printSlaveReplicationInfo()
     source: 10.36.0.6:27017
-         syncedTo: Mon Oct 23 2017 07:28:27 GMT+0000 (UTC)
-         0 secs (0 hrs) behind the primary
+    ​     syncedTo: Mon Oct 23 2017 07:28:27 GMT+0000 (UTC)
+    ​     0 secs (0 hrs) behind the primary
     source: 10.44.0.7:27017
-         syncedTo: Mon Oct 23 2017 07:28:27 GMT+0000 (UTC)
-         0 secs (0 hrs) behind the primary
+    ​     syncedTo: Mon Oct 23 2017 07:28:27 GMT+0000 (UTC)
+    ​     0 secs (0 hrs) behind the primary
 
 * The way the PVCs are associated with a deployment in a StatefulSet are different and don't follow the same process as a Deployment. The StatefulSet internally creates the PVC objects. Also currently a delete Statefulset doesn't delete the corresponding PVCs created.
 
