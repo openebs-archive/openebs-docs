@@ -197,14 +197,13 @@ pvc-c524e6da-f851-11e8-9883-42010a8000b7-target-7875677cd6nskks   3/3       Runn
 
 Get the status of running StatefulSets using the following command. 
 
-    ubuntu@kubemaster:~$ kubectl get statefulset
+    kubectl get statefulset
 
 Output of above command will be similar to the following.
 
 ```
 NAME        DESIRED   CURRENT   AGE
 couchbase   2         2         33m
-
 ```
 
 Get the status of underlying persistent volume used by Couchbase StatefulSet using the following command. 
