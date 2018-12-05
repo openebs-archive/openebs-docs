@@ -110,7 +110,13 @@ openebs-snapshot-promoter        volumesnapshot.external-storage.k8s.io/snapshot
 standard (default)               kubernetes.io/gce-pd                                       1d
 ```
 
-Download the following file from OpenEBS repo and change the **volume.beta.kubernetes.io/storage-class** under **volumeClaimTemplates** -> ***metadata*** -> **annotations** from *openebs-jiva-default* to *openebs-cstor-sparse-cassandra*. 
+Run the following command to install Cassandra services.
+
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cassandra/cassandra-service.yaml
+```
+
+Download the following YAML from OpenEBS repo and change the **volume.beta.kubernetes.io/storage-class** under **volumeClaimTemplates** -> ***metadata*** -> **annotations** from *openebs-jiva-default* to *openebs-cstor-sparse-cassandra*. 
 
 ```
 wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cassandra/cassandra-statefulset.yaml
@@ -135,159 +141,194 @@ Following is the snippet on which you have to change the storage-class.
 
 After the modification on the downloaded file, you can run following commands to install the Percona galera DB application on cStor volume.
 
-Run the following command to install Cassandra services.
-
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cassandra/cassandra-service.yaml
+kubectl apply -f cassandra-statefulset.yaml
 ```
 
-
-
-
-
-    test@Master:~$ cd openebs/k8s/demo/cassandra
-    test@Master:~/openebs/k8s/demo/cassandra$ ls -ltr
-    total 8
-    -rw-rw-r-- 1 karthik karthik  165 Oct 30 12:19 cassandra-service.yaml
-    -rw-rw-r-- 1 karthik karthik 2382 Nov 11 14:09 cassandra-statefulset.yaml	
-    
-    test@Master:~/openebs/k8s/demo/cassandra$ kubectl apply -f cassandra-service.yaml
-    service "cassandra" configured
+You can check the status of cassandra application pod running status using following command.
 
 ```
-test@Master:~/openebs/k8s/demo/cassandra$ kubectl apply -f cassandra-statefulset.yaml
-statefulset "cassandra" created
+kubectl get pods
 ```
 
-Verify that all the OpenEBS persistent volumes are created and the Cassandra headless service and replicas are running. 
-
-    test@Master:~/openebs/k8s/demo/cassandra$ kubectl get pods
-    NAME                                                             READY     STATUS    RESTARTS   AGE
-    cassandra-0                                                      1/1       Running   0          4h
-    cassandra-1                                                      1/1       Running   0          4h
-    maya-apiserver-3416621614-g6tmq                                  1/1       Running   1          8d
-    openebs-provisioner-4230626287-503dv                             1/1       Running   1          8d
-    pvc-1c16536c-c6bc-11e7-a0eb-000c298ff5fc-ctrl-599202565-2kdff    1/1       Running   0          4h
-    pvc-1c16536c-c6bc-11e7-a0eb-000c298ff5fc-rep-3068892500-22ccd    1/1       Running   0          4h
-    pvc-1c16536c-c6bc-11e7-a0eb-000c298ff5fc-rep-3068892500-lhwdw    1/1       Running   0          4h
-    pvc-e7d18817-c6bb-11e7-a0eb-000c298ff5fc-ctrl-1103031005-8vv82   1/1       Running   0          4h
-    pvc-e7d18817-c6bb-11e7-a0eb-000c298ff5fc-rep-3006965094-cntx5    1/1       Running   0          4h
-    pvc-e7d18817-c6bb-11e7-a0eb-000c298ff5fc-rep-3006965094-mhsjt    1/1       Running   0          4h
+Output of above command will be similar to the following.
 
 ```
-test@Master:~/openebs/k8s/demo/cassandra$ kubectl get svc
-NAME                                                CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
-cassandra                                           None             <none>        9042/TCP            5h
-kubernetes                                          10.96.0.1        <none>        443/TCP             14d
-maya-apiserver-service                              10.102.92.217    <none>        5656/TCP            14d
-pvc-1c16536c-c6bc-11e7-a0eb-000c298ff5fc-ctrl-svc   10.107.177.156   <none>        3260/TCP,9501/TCP   4h
-pvc-e7d18817-c6bb-11e7-a0eb-000c298ff5fc-ctrl-svc   10.108.47.234    <none>        3260/TCP,9501/TCP   4h
+NAME          READY     STATUS    RESTARTS   AGE
+cassandra-0   1/1       Running   0          13h
+cassandra-1   1/1       Running   0          13h
+cassandra-2   1/1       Running   0          13h
 ```
 
+You can check the status of OpenEBS  pod running status using following command.
 
+```
+kubectl get pods -n openebs
+```
 
-**Note:**
+The StorageClass *openebs-cstor-sparse-cassandra*, that you have created have replica count as "1", so each cStor Pool contain one cStor volume. Each cStor volume are communicated to one cStor target controller. Following output shows that there are 3 cStor target pods are running.
 
-It may take some time for the pods to start as the images must be pulled and instantiated. This is also dependent on the network speed.
+```
+NAME                                                              READY     STATUS    RESTARTS   AGE
+cstor-sparse-pool-k0b1-5877cfdf6d-pb8n5                           2/2       Running   0          20h
+cstor-sparse-pool-z8sr-668f5d9b75-z9547                           2/2       Running   0          20h
+cstor-sparse-pool-znj9-6b84f659db-hwzvn                           2/2       Running   0          20h
+maya-apiserver-7bc857bb44-qpjr4                                   1/1       Running   0          20h
+openebs-ndm-9949m                                                 1/1       Running   0          20h
+openebs-ndm-pnm25                                                 1/1       Running   0          20h
+openebs-ndm-stkjp                                                 1/1       Running   0          20h
+openebs-provisioner-b9fb58d6d-tdpx7                               1/1       Running   0          20h
+openebs-snapshot-operator-bb5697c8d-qlglr                         2/2       Running   0          20h
+pvc-42fe1e26-f7c0-11e8-9883-42010a8000b7-target-bdf454cdc-bmkdc   3/3       Running   0          13h
+pvc-bbe5219c-f7bf-11e8-9883-42010a8000b7-target-6bbd68689-pzz2f   3/3       Running   0          13h
+pvc-cba00d86-f7c0-11e8-9883-42010a8000b7-target-fcccf588b-48hml   3/3       Running   0          13h
+```
+
+Verify that all the OpenEBS persistent volumes are created using the following command.
+
+```
+kubectl get pvc
+```
+
+Output of above command will be similar to the following.
+
+```
+NAME                         STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                     AGE
+cassandra-data-cassandra-0   Bound     pvc-bbe5219c-f7bf-11e8-9883-42010a8000b7   5G         RWO            openebs-cstor-sparse-cassandra   14h
+cassandra-data-cassandra-1   Bound     pvc-42fe1e26-f7c0-11e8-9883-42010a8000b7   5G         RWO            openebs-cstor-sparse-cassandra   14h
+cassandra-data-cassandra-2   Bound     pvc-cba00d86-f7c0-11e8-9883-42010a8000b7   5G         RWO            openebs-cstor-sparse-cassandra   14h
+```
+
+Verify that all the Cassandra headless service are running using the following command. 
+
+```
+kubectl get svc
+```
+
+Output of above command will be similar to the following.
+
+```
+NAME          TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+cassandra     ClusterIP   None           <none>        9042/TCP   14h
+kubernetes    ClusterIP   10.79.240.1    <none>        443/TCP    1d
+```
 
 Verifying Successful Cassandra Deployment
 -----------------------------------------
 
 You can verify the deployment starting from listing the functional replicas to creating and deleting test data in the Cassandra database.
 
-### 1. Install the Cqlsh Utility
+1. ### Install the Cqlsh Utility
 
-Cqlsh is a Python based utility that enables you to execute Cassandra Query Language (CQL). CQL is a declarative language that enables users to query Cassandra using semantics similar to SQL.
+   Cqlsh is a Python based utility that enables you to execute Cassandra Query Language (CQL). CQL is a 	declarative language that enables users to query Cassandra using semantics similar to SQL.
 
-Install the python-minimal and python-pip apt packages (if not available) and perform a pip install of Csqlsh using the following commands. 
+   Install the python-minimal and python-pip apt packages (if not available) and perform a pip install of Csqlsh using the following commands. 
 
-    sudo apt-get install -y python-minimal python-pip 
-    pip install cqlsh
+   ```
+   sudo apt-get install -y python-minimal python-pip 
+   pip install cqlsh
+   ```
 
-**Note:**
+   **Note:**
 
-Installing Csqlsh may take a few minutes (typically, the cassandra-driver package takes time to download and setup).
+   Installing Csqlsh may take a few minutes (typically, the cassandra-driver package takes time to download and setup).
 
-### 2. Verify Replica Status on Cassandra
+2. ### Verify Replica Status on Cassandra
 
-```
-test@Master:~$ kubectl exec cassandra-0 -- nodetool status
-Datacenter: DC1-K8Demo
-======================
-Status=Up/Down
-|/ State=Normal/Leaving/Joining/Moving
---  Address    Load       Tokens       Owns (effective)  Host ID                               Rack
-UN  10.36.0.6  103.83 KiB  32           100.0%           e013c19d-9c6f-49cd-838e-c69eb310f88e  Rack1-K8Demo
-UN  10.44.0.3  83.1 KiB    32           100.0%           1d2e3b79-4b0b-4bf9-b435-fcfa8be8a603  Rack1-K8Demo
-```
+   Run the following command to login to one of the Cassandra application pod.
 
+   ```
+   kubectl exec cassandra-0 -- nodetool status
+   ```
 
+   Output of above command will be similar to the following.
 
-A status of "UN" implies Up and Normal. The "Owns" column suggests the data distribution percentage for the content placed into the Cassandra keyspaces. In the current example, a replica count of 2 is chosen due to which the data is evenly distributed and copies are maintained.
+   ```
+   Datacenter: DC1-K8Demo
+   ======================
+   Status=Up/Down
+   |/ State=Normal/Leaving/Joining/Moving
+   --  Address     Load       Tokens       Owns (effective)  Host ID                               Rack
+   UN  10.76.1.28  119.68 KiB  32           68.3%             ca4361b5-196a-4a38-bcc5-f832cc9b52ec  Rack1-K8Demo
+   UN  10.76.0.30  154.01 KiB  32           54.0%             30627eb3-5e74-4471-b34a-269156bd8e81  Rack1-K8Demo
+   UN  10.76.2.35  155.37 KiB  32           77.7%             63d0ee91-cc7c-4ebb-8a8c-2f6d9697133c  Rack1-K8Demo
+   ```
 
-### 3. Create a Test Keyspace with Tables
+   A status of "UN" implies Up and Normal. The "Owns" column suggests the data distribution percentage for  the content placed into the Cassandra keyspaces. In the current example, a replica count of 2 is chosen due  to which the data is evenly distributed and copies are maintained.
 
-- Identify the IP Address of any of the Cassandra replicas, for example, Cassandra-0. This is available from the output of the nodetool status command executed in the previous step.
+3. ### Create a Test Keyspace with Tables
 
--   Login to the CQL shell using the Cqlsh utility using the following command.
+   - Identify the IP Address of any of the Cassandra replicas, for example, Cassandra-0. This is available from the output of the nodetool status command executed in the previous step.
 
-    ```
-    test@Master:~$ cqlsh 10.44.0.3 9042 --cqlversion="3.4.2"
-    Connected to K8Demo at 10.44.0.3:9042.
-    [cqlsh 5.0.1 | Cassandra 3.9 | CQL spec 3.4.2 | Native protocol v4]
-    Use HELP for help.
-    cqlsh>
-    ```
+   - Login to the CQL shell using the Cqlsh utility using the following command.
 
--   Create a keyspace with replication factor 2 using the following commands.
+     ```
+     cqlsh 10.76.1.28 9042 --cqlversion="3.4.2"
+     Connected to K8Demo at 10.76.1.28:9042.
+     [cqlsh 5.0.1 | Cassandra 3.9 | CQL spec 3.4.2 | Native protocol v4]
+     Use HELP for help.
+     cqlsh>
+     ```
 
-    ```
-    cqlsh> create keyspace hardware with replication = { 'class' : 'SimpleStrategy' , 'replication_factor' : 2 };
-    cqlsh> describe keyspaces;
-    system_schema  system_auth  system  hardware  system_distributed  system_traces
-    ```
+   - Create a keyspace with replication factor 2 using the following commands.
 
--   Create a table with test content and view the data using the following commands.
+     ```
+     cqlsh> create keyspace hardware with replication = { 'class' : 'SimpleStrategy' , 'replication_factor' : 2 };
+     cqlsh> describe keyspaces;
+     system_schema  system_auth  system  hardware  system_distributed  system_traces
+     ```
 
-    ```
-    cqlsh> use hardware;
-    cqlsh:hardware> create table inventory (id uuid,Name text,HWtype text,Model text,PRIMARY KEY ((id), Name));
-    cqlsh:hardware> insert into inventory (id, Name, HWType, Model) values (5132b130-ae79-11e4-ab27-0800200c9a66, 'TestBox', 'Server', 'DellR820');
-    cqlsh:hardware> select * from inventory;
-    id                                   | name    | hwtype | model
-    ---------------------------------------+---------+--------+----------
-    5132b130-ae79-11e4-ab27-0800200c9a66 | TestBox | Server | DellR820
-    (1 rows) 
-    ```
+   - Create a table with test content and view the data using the following commands.
 
--   Flush the data to ensure it is written to a disk from the memtable (memory) using the following command.
+     ```
+     cqlsh> use hardware;
+     cqlsh:hardware> create table inventory (id uuid,Name text,HWtype text,Model text,PRIMARY KEY ((id), Name));
+     cqlsh:hardware> insert into inventory (id, Name, HWType, Model) values (5132b130-ae79-11e4-ab27-0800200c9a66, 'TestBox', 'Server', 'DellR820');
+     cqlsh:hardware> select * from inventory;
+     id                                   | name    | hwtype | model
+     ---------------------------------------+---------+--------+----------
+     5132b130-ae79-11e4-ab27-0800200c9a66 | TestBox | Server | DellR820
+     (1 rows) 
+     ```
 
-    ```
-    test@Master:$ kubectl exec cassandra-0 -- nodetool flush hardware
-    ```
+   - Flush the data to ensure it is written to a disk from the memtable (memory) using the following command.
 
-4. Delete the Test Keyspace
-- Verify the masterless nature of Cassandra StatefulSet by deleting the keyspace from another replica, in this example, Cassandra-1. 
+     ```
+     kubectl exec cassandra-0 -- nodetool flush hardware
+     ```
 
+4. ### Delete the Test Keyspace
 
-    test@Master:~$ cqlsh 10.36.0.6 9042 --cqlversion="3.4.2"
-    cqlsh> use hardware;
-    cqlsh:hardware> select * from Inventory;
-    
-    id                                   | name    | hwtype | model
-    --------------------------------------+---------+--------+----------
-    5132b130-ae79-11e4-ab27-0800200c9a66 | TestBox | Server | DellR820
-    
-    (1 rows)
-    
-    cqlsh> drop keyspace hardware;
-- Verify that the keyspace is deleted successfully using the following command. 
+   Verify the masterless nature of Cassandra StatefulSet by deleting the keyspace from another replica, in this example, Cassandra-1. 
 
+   ```
+   cqlsh 10.36.0.6 9042 --cqlversion="3.4.2"
+   ```
 
-    cqlsh> describe keyspaces
-    system_traces  system_schema  system_auth  system  system_distributed
+   Output of above command will be similar to the following.
 
-<!-- Hotjar Tracking Code for https://docs.openebs.io -->
+   ```
+   cqlsh> use hardware;
+   cqlsh:hardware> select * from Inventory;
+   
+   id                                   | name    | hwtype | model
+   --------------------------------------+---------+--------+----------
+   5132b130-ae79-11e4-ab27-0800200c9a66 | TestBox | Server | DellR820
+   
+   (1 rows)
+   
+   cqlsh> drop keyspace hardware;
+   ```
+
+   Verify that the keyspace is deleted successfully using the following command. 
+
+   ```
+   cqlsh> describe keyspaces
+   system_traces  system_schema  system_auth  system  system_distributed
+   ```
+
+   <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
