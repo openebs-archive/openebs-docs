@@ -7,21 +7,69 @@ sidebar_label: Kafka
 
 ### Deploying Kafka as a StatefulSet
 
-This section provides detailed instructions on how to run a Kafka application with OpenEBS as a persistent storage in a Kubernetes cluster. A sample Kafka pod yaml (with container attributes and pvc details) is available in the OpenEBS git repository (which was cloned in the previous steps). To deploy Kafka run the following commands.
+This section provides detailed instructions on how to run a Kafka application with OpenEBS as a persistent storage in a Kubernetes cluster. 
+
+In this example, OpenEBS cStor storage engine is used for running Kafka StatefulSet application. Before starting, check the status of the cluster using the following command. 
 
 ```
-devops@ubuntu:~$ cd /openebs/k8s/demo/kafka/
-devops@ubuntu:~/openebs/k8s/demo/kafka$ ls
-01-openebs-sc.yml  02-namespace.yml  03-zookeeper.yaml  04-kafka-config.yml  05-service-kafka.yml  06-kafka-statefulset.yml  README.md
+kubectl get nodes
 ```
 
+The following output shows the status of the nodes in the cluster.
+
 ```
-devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl apply -f 01-openebs-sc.yml
-devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl apply -f 02-namespace.yaml
-devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl apply -f 03-zookeeper.yaml
-devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl apply -f 04-kafka-config.yml
-devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl apply -f 05-service-kafka.yml
-devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl apply -f 06-kafka-statefulset.yml
+gke-ranjith-080-default-pool-8d4e3480-b50p   Ready     <none>    2d        v1.9.7-gke.11
+gke-ranjith-080-default-pool-8d4e3480-qsvn   Ready     <none>    2d        v1.9.7-gke.11
+gke-ranjith-080-default-pool-8d4e3480-rb03   Ready     <none>    2d        v1.9.7-gke.11
+```
+
+Also make sure that you have deployed OpenEBS in your cluster. If not deployed, you can install from [here](https://docs.openebs.io/docs/next/quickstartguide.html).
+
+You can check the status of OpenEBS pods by running following command.
+
+```
+kubectl get pod -n openebs
+```
+
+Output of above command will be similar to the following.
+
+```
+NAME                                        READY     STATUS    RESTARTS   AGE
+cstor-sparse-pool-l8oc-75464957d5-p4m4n     2/2       Running   0          2h
+cstor-sparse-pool-m7ld-87db7797c-hbsv2      2/2       Running   0          2h
+cstor-sparse-pool-md1e-944849559-7pjcf      2/2       Running   0          2h
+maya-apiserver-7bc857bb44-9w7hx             1/1       Running   0          2h
+openebs-ndm-gfk85                           1/1       Running   0          2h
+openebs-ndm-h4rt6                           1/1       Running   0          2h
+openebs-ndm-pxjcb                           1/1       Running   0          2h
+openebs-provisioner-b9fb58d6d-t475j         1/1       Running   0          2h
+openebs-snapshot-operator-bb5697c8d-7jfqd   2/2       Running   0          2h
+```
+
+Download the following files from OpenEBS repo to the Kubernetes master node.
+
+```
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/kafka/02-namespace.yml
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/kafka/03-zookeeper.yaml
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/kafka/04-kafka-config.yml
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/kafka/05-service-kafka.yml
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/kafka/06-kafka-statefulset.yml
+```
+
+Edit **03-zookeeper.yaml** by changing the **storageClassName** under **volumeClaimTemplates**-> spec from *openebs-jiva-default* to *openebs-cstor-sparse*. 
+
+Similarly, edit **06-kafka-statefulset.yml** by changing **storageClassName** under **volumeClaimTemplates**-> spec from *openebs-jiva-default* to *openebs-cstor-sparse*. 
+
+A sample Kafka pod yaml (with container attributes and pvc details) is available in the OpenEBS git repository. Download the following files from OpenEBS repo and change the **storageClassName** under **PersistentVolumeClaim** -> ***spec*** from *openebs-jiva-default* to *openebs-cstor-sparse*. 
+
+After the modification on the required downloaded files, you can run following commands to install the Kafka application on cStor volume.
+
+```
+ kubectl apply -f 02-namespace.yml
+ kubectl apply -f 03-zookeeper.yml
+ kubectl apply -f 04-kafka-config.yml
+ kubectl apply -f 05-service-kafka.yml
+ kubectl apply -f 06-kafka-statefulset.yml
 ```
 Running the above commands creates 3 node zookeeper ensemble and a 3 node Kafka cluster which uses OpenEBS volumes.
 
@@ -29,33 +77,16 @@ Running the above commands creates 3 node zookeeper ensemble and a 3 node Kafka 
 
 Check if the Kafka pods are running by running the following command.
 ```
-devops@ubuntu:~/openebs/k8s/demo/kafka$ kubectl get -n kafka pods
-NAME                                                             READY     STATUS    RESTARTS   AGE
-kafka-0                                                          1/1       Running   5          6h
-kafka-1                                                          1/1       Running   0          5h
-kafka-2                                                          1/1       Running   0          5h
-pvc-29b2a134-179d-11e8-9948-42010a800208-ctrl-2824373524-wzqdp   2/2       Running   0          5h
-pvc-29b2a134-179d-11e8-9948-42010a800208-rep-803385243-23cds     1/1       Running   0          5h
-pvc-29b2a134-179d-11e8-9948-42010a800208-rep-803385243-q6dm3     1/1       Running   0          5h
-pvc-85073cda-179d-11e8-9948-42010a800208-ctrl-3152127162-llmmp   2/2       Running   0          5h
-pvc-85073cda-179d-11e8-9948-42010a800208-rep-2480231569-p1hz3    1/1       Running   0          5h
-pvc-85073cda-179d-11e8-9948-42010a800208-rep-2480231569-th7b8    1/1       Running   0          5h
-pvc-b008e3bc-179d-11e8-9948-42010a800208-ctrl-1053962892-sxxs0   2/2       Running   0          5h
-pvc-b008e3bc-179d-11e8-9948-42010a800208-rep-3323576397-20lb0    1/1       Running   0          5h
-pvc-b008e3bc-179d-11e8-9948-42010a800208-rep-3323576397-rsj76    1/1       Running   0          5h
-pvc-ced395d9-179c-11e8-9948-42010a800208-ctrl-2951074883-stfdx   2/2       Running   0          6h
-pvc-ced395d9-179c-11e8-9948-42010a800208-rep-2064343649-2rqd8    1/1       Running   0          6h
-pvc-ced395d9-179c-11e8-9948-42010a800208-rep-2064343649-kd2b3    1/1       Running   0          6h
-pvc-e2d08251-179c-11e8-9948-42010a800208-ctrl-518588840-9jpd9    2/2       Running   0          6h
-pvc-e2d08251-179c-11e8-9948-42010a800208-rep-3201701998-4g646    1/1       Running   0          6h
-pvc-e2d08251-179c-11e8-9948-42010a800208-rep-3201701998-62v3l    1/1       Running   0          6h
-pvc-f94a635f-179c-11e8-9948-42010a800208-ctrl-1699233169-s8zhb   2/2       Running   0          6h
-pvc-f94a635f-179c-11e8-9948-42010a800208-rep-2854395777-bq0sz    1/1       Running   0          6h
-pvc-f94a635f-179c-11e8-9948-42010a800208-rep-2854395777-kk1vb    1/1       Running   0          6h
-zk-0                                                             1/1       Running   0          6h
-zk-1                                                             1/1       Running   0          6h
-zk-2                                                             1/1       Running   0          5h
+kubectl get -n kafka pods
 ```
+Output of above command will be similar to the following.
+
+```
+
+```
+
+
+
 To obtain the status of underlying persistent volumes used by Kafka, run the following command.
 
 ```
