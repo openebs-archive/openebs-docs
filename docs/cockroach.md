@@ -306,31 +306,31 @@ Testing your Database
 
 1. Launch a temporary interactive pod and start the built-in SQL client inside it using the following command. 
 
-```
-kubectl run cockroachdb -it --image=cockroachdb/cockroach --rm --restart=Never -- sql --insecure --host=cockroachdb-public
-```
+   ```
+   kubectl run cockroachdb -it --image=cockroachdb/cockroach --rm --restart=Never -- sql --insecure --host=cockroachdb-public
+   ```
 
 2. Run some basic CockroachDB SQL statements as follows: 
 
-```
-    > CREATE DATABASE bank;
-    > CREATE TABLE bank.accounts (id INT PRIMARY KEY, balance DECIMAL);
-    > INSERT INTO bank.accounts VALUES (1, 1000.50);
-    > SELECT * FROM bank.accounts;
+   ```
+     > CREATE DATABASE bank;
+       > CREATE TABLE bank.accounts (id INT PRIMARY KEY, balance DECIMAL);
+       > INSERT INTO bank.accounts VALUES (1, 1000.50);
+       > SELECT * FROM bank.accounts;
+   
+       +----+---------+
+       | id | balance |
+       +----+---------+
+       |  1 |  1000.5 |
+       +----+---------+
+       (1 row)
+   ```
 
-    +----+---------+
-    | id | balance |
-    +----+---------+
-    |  1 |  1000.5 |
-    +----+---------+
-    (1 row)
-```
+3. Exit the SQL shell using the following command.
 
-​3. Exit the SQL shell using the following command.
-
-```
-    >\q
-```
+   ```
+   >\q
+   ```
 
 Using a Load Generator
 ----------------------
