@@ -358,19 +358,19 @@ pxc-node3-65ddfd699-nk62z    1/1       Running   0          9m
     Bye
     ```
 
-* ```
+* Verify that this data is synchronized on the other nodes, for example, node2, using the following command. 
+
+    ```
     kubectl exec -it pxc-node2-7f64f4cfd4-qrsz8 /bin/bash
     ```
 
     Now you are inside the Node2 pode.
 
-* ```
-    ubuntu@kubemaster-01:~/openebs/k8s/demo/galera-xtradb-cluster/deployments$ kubectl exec -it pxc-node3-65ddfd699-xj4kc /bin/bash
-    
-    root@pxc-node3-65ddfd699-xj4kc:/# mysql -uroot -p -h pxc-cluster;
+    ```
+    root@pxc-node2-7f64f4cfd4-qrsz8:/# mysql -uroot -p -h pxc-cluster;
     Enter password:
     Welcome to the MySQL monitor.  Commands end with ; or \g.
-    Your MySQL connection id is 12
+    Your MySQL connection id is 7
     Server version: 5.6.24-72.2-56-log Percona XtraDB Cluster (GPL), Release rel72.2, Revision 43abf03, WSREP version 25.11, wsrep_25.11
     Copyright (c) 2009-2015 Percona LLC and/or its affiliates
     Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
@@ -397,6 +397,8 @@ pxc-node3-65ddfd699-nk62z    1/1       Running   0          9m
     mysql> exit
     Bye
     ```
+
+
 
     ​
 
