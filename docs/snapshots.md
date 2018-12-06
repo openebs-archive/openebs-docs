@@ -12,7 +12,7 @@ sidebar_label: Snapshots
 
 A storage snapshot is a set of reference markers for data at a particular point in time. A snapshot acts as a detailed table of contents, providing you with accessible copies of data that you can roll back to.
 
-OpenEBS operator will deploy following components during *openebs-operator-0.7.2.yaml* installation.
+OpenEBS operator will deploy following components during *openebs-operator* installation.
 
 1. A snapshot-controller
 2. A snapshot-provisioner
@@ -95,7 +95,7 @@ k8s-volume-snapshot-6acfb054-f22a-11e8-8239-0a580a4c000e   2m
 
 ### Cloning and Restoring a Snapshot
 
-After creating a snapshot, you can restore it to a new PVC. For creating new PVC using the created snapshot, it needs different *storageclass* to be used. There will be a default storage class called **openebs-snapshot-promoter** will be created during the installation of *openebs-operator-0.7.2.yaml*
+After creating a snapshot, you can restore it to a new PVC. For creating new PVC using the created snapshot, it needs different *storageclass* to be used. There will be a default storage class called **openebs-snapshot-promoter** will be created during the installation of *openebs-operator*
 
 So, this will create a PVC referencing to this default  *storageclass* for dynamically provisioning new PV.
 
@@ -242,7 +242,7 @@ k8s-volume-snapshot-73c5486f-f6d0-11e8-b04d-0a580a4c0208   44s
 
 ### Cloning and Restoring a Snapshot
 
-After creating a snapshot, you can restore it to a new PVC. For creating new PVC using the created snapshot, it needs different *storageclass* to be used. There will be a default storage class called **openebs-snapshot-promoter** will be created during the installation of *openebs-operator-0.7.2.yaml*
+After creating a snapshot, you can restore it to a new PVC. For creating new PVC using the created snapshot, it needs different *storageclass* to be used. There will be a default storage class called **openebs-snapshot-promoter** will be created during the installation of *openebs-operator*
 
 So, this will create a PVC referencing to this default  *storageclass* for dynamically provisioning new PV.
 

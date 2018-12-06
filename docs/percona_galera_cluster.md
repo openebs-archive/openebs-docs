@@ -162,7 +162,7 @@ pxc-node3-65ddfd699-nk62z    1/1       Running   0          9m
 * Enter to mysql db and root user password for db is  ***c-krit***. 
 
   ```
-  root@pxc-node1-688f987789-rmvds:/# mysql -uroot -p -h pxc-cluster;
+  root@pxc-node1-688f987789-9tvz5:/# mysql -uroot -p -h pxc-cluster;
   Enter password:
   Welcome to the MySQL monitor.  Commands end with ; or \g.
   Your MySQL connection id is 6
@@ -397,10 +397,6 @@ pxc-node3-65ddfd699-nk62z    1/1       Running   0          9m
     mysql> exit
     Bye
     ```
-
-
-
-    ​
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
