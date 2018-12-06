@@ -41,8 +41,6 @@ You can check the status of OpenEBS pods by running following command.
 kubectl get pods -n openebs
 ```
 
-
-
 Output of above command will be similar to the following.
 
 ```
@@ -116,6 +114,11 @@ Once you have copied the above content to *cockroachdb-sts.yaml*l, you can run t
 
 ```
 kubectl apply -f jenkins.yaml
+```
+
+Output similar to following can be observed for the above command
+
+```
 persistentvolumeclaim "jenkins-claim" created
 deployment.extensions "jenkins" created
 service "jenkins-svc" created
@@ -134,20 +137,34 @@ NAME                      READY     STATUS    RESTARTS   AGE
 jenkins-9cd8ff666-hlhpb   1/1       Running   0          21m
 ```
 
-
-
 Get the status of underlying persistent volumes used by Jenkins deployment using the following command.
 
-    kubectl get pvc
-    NAME            STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS           AGE
-    jenkins-claim   Bound     pvc-e7c4eee3-f925-11e8-a3dd-42010a8001bf   5G         RWO            openebs-cstor-sparse   27s
+```
+kubectl get pvc
+```
+
+Observed output will be similar to following.
+
+```
+NAME            STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS           AGE
+jenkins-claim   Bound     pvc-e7c4eee3-f925-11e8-a3dd-42010a8001bf   5G         RWO            openebs-cstor-sparse   27s
+```
 
 Get the status of Jenkins service using the following command. 
 
-    kubectl get svc
-    NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-    jenkins-svc   NodePort    10.35.246.129   <none>        80:30900/TCP   18m
-    kubernetes    ClusterIP   10.35.240.1     <none>        443/TCP        1h
+```
+kubectl get svc
+```
+
+Following output should be observed for the above command.
+
+```
+NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+jenkins-svc   NodePort    10.35.246.129   <none>        80:30900/TCP   18m
+kubernetes    ClusterIP   10.35.240.1     <none>        443/TCP        1h
+```
+
+
 
 ## Launching Jenkins
 
@@ -159,19 +176,31 @@ The we have used gke environment for this cluster. If your setup is created vagr
 
 Get the node IP address that is running the Jenkins pod using the following command. 
 
-    kubectl describe pod jenkins-6bc67f99d7-r6hw7 | grep Node:
-    Node:           kubeminion-02/172.28.128.5
+```
+kubectl describe pod jenkins-6bc67f99d7-r6hw7 | grep Node:
+```
+
+Output will be similar to following.
+
+```
+Node:           kubeminion-02/172.28.128.5
+```
 
 For gke the above output will be similar to below.
 
 ```
-kubectl describe pod jenkins-9cd8ff666-hlhpb | grep Node:                                Node:               gke-doc-update-chandan-default-pool-80bd877e-50r3/10.128.0.4
+Node:               gke-doc-update-chandan-default-pool-80bd877e-50r3/10.128.0.4
 ```
 
 Here 10.128.0.4 is the internal IP of the gke node. You can get the external IP of the gke node using the following command.
 
 ```
 gcloud compute instances list 
+```
+
+Output of the above command will be similar to following output.
+
+```
 gke-doc-update-chandan-default-pool-80bd877e-50r3    us-central1-a  custom (1 vCPU, 6.00 GiB)                10.128.0.4   35.202.82.200    RUNNING
 gke-doc-update-chandan-default-pool-80bd877e-5jqh    us-central1-a  custom (1 vCPU, 6.00 GiB)                10.128.0.7   35.239.98.223    RUNNING
 gke-doc-update-chandan-default-pool-80bd877e-jhc9    us-central1-a  custom (1 vCPU, 6.00 GiB)                10.128.0.3   35.238.235.184   RUNNING
@@ -181,6 +210,11 @@ gke-doc-update-chandan-default-pool-80bd877e-jhc9    us-central1-a  custom (1 vC
 
 ```
 kubectl describe svc jenkins-svc | grep NodePort:
+```
+
+Following output will be observed
+
+```
 NodePort:                 <unset>  30900/TCP
 ```
 
