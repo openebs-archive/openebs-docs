@@ -75,13 +75,13 @@ openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-prom
 standard (default)          kubernetes.io/gce-pd                                    15h
 ```
 
-Download the Redis YAML file from the OpenEBS repository using the following command. 
+Download the Redis YML file from the OpenEBS repository using the following command. 
 
 ```
 wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/redis/redis-statefulset.yml
 ```
 
-Chane the storage-class to **openebs-cstor-sparse** from openebs-jiva-default in redis-statefulset.yml
+Change the storage-class to **openebs-cstor-sparse** from openebs-jiva-default in redis-statefulset.yml
 
 ```
   volumeClaimTemplates:
@@ -96,7 +96,7 @@ Chane the storage-class to **openebs-cstor-sparse** from openebs-jiva-default in
           storage: 5G
 ```          
           
-Apply the Redis YAML file using the following command.
+Apply the modified Redis YML file using the following command.
 
 ```
 kubectl apply -f redis-statefulset.yml
@@ -169,7 +169,7 @@ datadir-rd-1   Bound     pvc-bb07a130-f91e-11e8-97c6-42010a80022c   5G         R
 datadir-rd-2   Bound     pvc-2b5f2c11-f91f-11e8-97c6-42010a80022c   5G         RWO            openebs-cstor-sparse   1h
 ```
 
-Get the status of persistent volumes using following command. Here replica count is 3 . So 3 PVs will be created.
+Get the status of persistent volumes using the following command. Here replica count is 3 . So 3 PVs will be created.
 
 ```
 kubectl get pv
@@ -229,9 +229,9 @@ Retrieve value of the key from a Redis slave using the following command.
 
 ```
 kubectl exec rd-2 -- /opt/redis/redis-cli -h rd-0.redis GET replicated:test
-true
 ```
 
+If the output of the above command is **true** then the replication is in sync.
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
