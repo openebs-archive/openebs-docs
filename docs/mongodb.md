@@ -144,23 +144,34 @@ This section provides detailed instructions which allow you to perform the follo
 
    ```
    kubectl apply -f mongo-statefulset.yml
-   storageclass.storage.k8s.io "openebs-cstor-sparse" configured
-   service "mongo" created
-   statefulset.apps "mongo" created
    ```
 
+   Output will be similar to following one.
+
+   ```
+   	storageclass.storage.k8s.io "openebs-cstor-sparse" configured
+   	service "mongo" created
+   	statefulset.apps "mongo" created		
+   ```
 
 Verify that MongoDB replicas, mongo headless service and OpenEBS persistent volumes comprising of the controller and replica pods are successfully deployed and are in *Running* state. 
 
-    kubectl get pods
-    NAME                  READY     STATUS    RESTARTS   AGE
-    mongo-0               2/2       Running   0          10m
-    mongo-1               2/2       Running   0          7m
-    mongo-2               2/2       Running   0          4m
-    kubectl get svc
-    NAME         TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)     AGE
-    kubernetes   ClusterIP   10.83.240.1   <none>        443/TCP     20h
-    mongo        ClusterIP   None          <none>        27017/TCP   1h
+```
+kubectl get pods
+```
+
+Output will be similar to below one.
+
+```
+NAME                  READY     STATUS    RESTARTS   AGE
+mongo-0               2/2       Running   0          10m
+mongo-1               2/2       Running   0          7m
+mongo-2               2/2       Running   0          4m
+kubectl get svc
+NAME         TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)     AGE
+kubernetes   ClusterIP   10.83.240.1   <none>        443/TCP     20h
+mongo        ClusterIP   None          <none>        27017/TCP   1h
+```
 
 **Note:**
 
@@ -207,15 +218,19 @@ Now run the below commands.
 kubectl apply -f mongo-statefulset.yml
 ```
 
-To check the pod status rum the below command.
+To check the pod status run the below command.
 
 ```
 kubectl get pods
+```
+
+Observed output will be similar to following.
+
+```
 NAME                  READY     STATUS      RESTARTS   AGE
 mongo-0               2/2       Running     0          33m
 mongo-1               2/2       Running     0          30m
 mongo-2               2/2       Running     0          27m
-
 ```
 
 
@@ -223,6 +238,11 @@ Once all your pods are running run the below command.
 
 ```
 kubectl apply -f mongo-loadgen.yaml
+```
+
+Output will be similar to below one.
+
+```
 job.batch "mongo-loadgen" created
 ```
 
@@ -232,18 +252,27 @@ Now Mongo-DB is running . To run Mongo-DB with xfs file system please follow the
 
 - Log in to the primary instance of the MongoDB S through the in-built Mongo shell and verify that the **sbtest** test database is created by Sysbench in the previous procedure. 
 
+kubectl exec -it mongo-0 /bin/bash
+Use the below command to check MongoDb status.
 
-    test@Master:~$ kubectl exec -it mongo-0 /bin/bash
-    root@mongo-0:/# mongo
-    
-    MongoDB shell version v3.4.9
-    connecting to: mongodb://127.0.0.1:27017
-    MongoDB server version: 3.4.9
-    :
-    rs0:PRIMARY> show dbs
-    admin   0.000GB
-    local   0.006GB
-    sbtest  0.001GB
+```
+mongo
+```
+
+Output observed will be similar to below one.
+
+```
+MongoDB shell version v3.4.9
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.4.9
+:
+rs0:PRIMARY> show dbs
+admin   0.000GB
+local   0.006GB
+sbtest  0.001GB
+```
+
+
 
 * Run the replication status command on the master/primary instance of  the S. In the output, verify that the values (timestamps) for **optimeDate** on both members are similar. 
 
