@@ -135,7 +135,7 @@ The RabbitMQ deployment YAML, creates a NodePort service type to make RabbitMQ a
    gke-ranjith-080-default-pool-1c852599-tgfv   Ready     <none>    4h        v1.9.7-gke.11   10.128.0.26   35.232.97.32     Ubuntu 16.04.5 LTS   4.15.0-1017-gcp   docker://17.3.2
    ```
 
-2. In the above example, RabbitMQ is running on the all the 3 Nodes. So, you can take any of the Node. For Example, take the first Node External IP address 35.170.55.32 from the listed output. 
+2. In the above example, RabbitMQ is running on the all the 3 Nodes. So, you can take any of the Node. For Example, take the first Node External IP address 35.202.55.171  from the listed output. 
 
 2. Get the port number from the RabbitMQ service using the following command.
 
