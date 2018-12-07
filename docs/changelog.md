@@ -10,7 +10,7 @@ sidebar_label: Changelog
 
 ## Current Release
 
-- [Version 0.8.0](https://github.com/openebs/openebs/releases/tag/0.8)
+- [Version 0.8.0](https://github.com/openebs/openebs/releases/tag/0.8) ([Release blog](https://blog.openebs.io/openebs-0-8-release-allows-you-to-snapshot-and-clone-cstor-volumes-ebe09612f8b1))
 
 ## Stable Release
 
@@ -18,7 +18,7 @@ sidebar_label: Changelog
 
 ## Older Releases
 
-* [Version 0.7.0](https://github.com/openebs/openebs/releases/tag/v0.7) ([Release blog](https://blog.openebs.io/openebs-0-7-release-pushes-cstor-storage-engine-to-field-trials-1c41e6ad8c91))
+* [Version 0.7.0](https://github.com/openebs/openebs/releases/tag/v0.7) 
 * [Version 0.6.0](https://github.com/openebs/openebs/releases/tag/v0.6)
 * [Version 0.5.4](https://github.com/openebs/openebs/releases/tag/v0.5.4)
 * [Version 0.5.3](https://github.com/openebs/openebs/releases/tag/v0.5.3)
