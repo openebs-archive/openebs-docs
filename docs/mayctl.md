@@ -167,6 +167,33 @@ pvc-c7f9b9a2-f6d9-11e8-9883-42010a8000b7-rep-76f8ff8db5-w6dwv     RW            
 pvc-c7f9b9a2-f6d9-11e8-9883-42010a8000b7-rep-76f8ff8db5-xmcq8     RW              running     10.76.1.9      gke-ranjith-080-default-pool-8d4e3480-b50p
 ```
 
+The following is an example output of statistics of cStor volume.
+
+```
+/ # mayactl volume stats --volname pvc-511632a0-fa0a-11e8-b091-42010a800143 -n openebs
+
+Portal Details :
+---------------
+IQN     :   iqn.2016-09.com.openebs.cstor:pvc-511632a0-fa0a-11e8-b091-42010a800143
+Volume  :   pvc-511632a0-fa0a-11e8-b091-42010a800143
+Portal  :   localhost
+Size    :   5.000000
+
+Performance Stats :
+--------------------
+r/s      w/s      r(MB/s)      w(MB/s)      rLat(ms)      wLat(ms)
+----     ----     --------     --------     ---------     ---------
+0        2022     0.000        1.991        0.000         267.145
+
+Capacity Stats :
+---------------
+LOGICAL(GB)      USED(GB)
+------------     ---------
+0.000            0.178
+```
+
+
+
 ### mayactl for OpenEBS Storage Pools
 
 OpenEBS storage pool command usage examples are shown below.
