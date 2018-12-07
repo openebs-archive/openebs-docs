@@ -41,12 +41,8 @@ openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-prom
 standard (default)          kubernetes.io/gce-pd                                       6h
 ```
 
-
-
 Use OpenEBS as persistent storage for the percona pod by selecting an OpenEBS storage class in the
 persistent volume claim. Create a YAML file named *percona-mysql.yaml* and copy the following sample YAML to the created file.
-
-
 
 ```
 ---
@@ -158,11 +154,11 @@ spec:
       - name: sql-loadgen
         image: openebs/tests-mysql-client
         command: ["/bin/bash"]
-        args: ["-c", "timelimit -t 300 sh MySQLLoadGenerate.sh 10.47.250.49 > /dev/null 2>&1; exit 0"]
+        args: ["-c", "timelimit -t 300 sh MySQLLoadGenerate.sh 10.80.1.7 > /dev/null 2>&1; exit 0"]
         tty: true 
 ```
 
-Edit the following line in sql-loadgen job yaml to pass the desired load duration and percona pod IP as arguments. In this example, the job performs sql queries on pod with IP address 10.80.1.7 for 300s.
+Edit the following line in *sql-loadgen.yaml* to pass the desired load duration and percona pod IP as arguments. In this example, the job performs sql queries on pod with IP address **10.80.1.7** for **300sec**.
 
     args: ["-c", "timelimit -t 300 sh MySQLLoadGenerate.sh 10.80.1.7 > /dev/null 2>&1; exit 0"]
 
@@ -205,7 +201,7 @@ pvc-1e5df1da-f95c-11e8-bd75-42010a800229-target-59b84ff4f8cmkpn   3/3       Runn
 
 Start an interactive bash console for the maya-apiserver container using the following command.
 
-    kubectl exec -it maya-apiserver-1633167387-5ss2w /bin/bash
+    kubectl exec -it maya-apiserver-5565f79ddc-2bjjq /bin/bash
 
 Lookup the storage volume name using the *volume list* command
 
