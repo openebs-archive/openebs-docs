@@ -134,55 +134,21 @@ When kubectl is configured, the above kubectl commands will display an output si
 
 ## Setting up OpenEBS
 
-Download the latest OpenEBS Operator files using the following commands.
+You can install OpenEBS cluster by running the following command.
 
-    git clone https://github.com/openebs/openebs.git
-    cd openebs/k8s
-    kubectl apply -f openebs-operator.yaml
+    kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
 
-**Note:** By default, OpenEBS launches OpenEBS Volumes with two replicas. To setup one replica, as is the case with single-node Kubernetes cluster, specify the environment variable *OPENEBS\_IO\_JIVA\_REPLICA\_COUNT=1*.
-If your OpenEBS version is \< 0.5.0, you must use DEFAULT\_REPLICA\_COUNT environment variable instead of OPENEBS\_IO\_JIVA\_REPLICA\_COUNT.
-
-The maya-apiserver section in the following openebs-operator.yaml snippet shows you how to update it.
-
-    ---
-    apiVersion: apps/v1beta1
-    kind: Deployment
-    metadata:
-      name: maya-apiserver
-      namespace: default
-    spec:
-      replicas: 1
-      template:
-        metadata:
-          labels:
-            name: maya-apiserver
-        spec:
-          serviceAccountName: openebs-maya-operator
-          containers:
-          - name: maya-apiserver
-            imagePullPolicy: Always
-            image: openebs/m-apiserver:0.3-RC4
-            ports:
-            - containerPort: 5656
-            env:
-            - name: OPENEBS_IO_JIVA_REPLICA_COUNT
-              value: "1"
-    ---
-
-Add OpenEBS related storage classes, that can then be used by developers and applications using the following command.
-
-    kubectl apply -f openebs-storageclasses.yaml
+OpenEBS control plane pods are created under “**openebs**” namespace. CAS Template,default Storage Pools of both storage engine and default Storage Classes are created after executing the above command.
 
 ### Running Stateful Applications with OpenEBS Storage
 
-To use OpenEBS as persistent storage for your stateful workloads, set the storage class in the Persistent Volume Claim (PVC) of your application to one of the OpenEBS storage class.
+To use OpenEBS as persistent storage for your stateful workloads, set the storage class in the Persistent Volume Claim (PVC) of your application to one of the OpenEBS storage class. 
 
 Get a list of storage classes using the following command and select the storage class that best suits your application.
 
     kubectl get sc
 
-Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](openebs/k8s/demo).
+Now select your storage to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine). Some sample YAML files for stateful workloads using OpenEBS are provided in the [openebs/k8s/demo](https://github.com/openebs/openebs/tree/master/k8s/demo).
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

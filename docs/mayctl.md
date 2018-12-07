@@ -19,7 +19,7 @@ For getting access to mayactl command line tool, you will have to login / execut
    Following is an example output
 
    ```
-   maya-apiserver-68c98fdb76-xhvxg              1/1       Running   0          3m
+   maya-apiserver-7bc857bb44-wm2g4              1/1       Running   0          4h
    ```
 
 2. It is possible that there are multiple instances of maya-apiserver pods for scaling purposes. You can run mayactl in any one of them. Pick one of the pods using ` kubectl exec` command . You can do as following way.
@@ -34,106 +34,250 @@ For getting access to mayactl command line tool, you will have to login / execut
 
 ## Using mayactl
 
-1. Use mayactl help command for more details.
+Once you are inside the maya -apiserver,use mayactl help command for more details.
 
-   ```
-   mayactl --help
-   ```
+```
+mayactl --help
+```
 
-   **Example:**
+**Example:**
 
-   ```
-   bash-4.3#mayactl --help
-   Maya means 'Magic' a tool for storage orchestration
-      
-   Usage:
-   mayactl [command]
-      
-   Available Commands:
-   help        Help about any command
-   snapshot    Provides operations related to a Volume snapshot
-   version     Prints version and other details relevant to maya
-   volume      Provides operations related to a Volume
-   ```
+```
+/ # mayactl --help
+Maya means 'Magic' a tool for storage orchestration
 
-2. mayactl volume command is the most often used one. In 0.6 release `mayactl volume info` command is added
+Usage:
+  mayactl [command]
 
-   Volume command usage examples are shown below.
+Available Commands:
+  completion  Outputs shell completion code for the specified shell (bash or zsh)
+  help        Help about any command
+  pool        Provides operations related to a storage pool
+  version     Prints version and other details relevant to maya
+  volume      Provides operations related to a Volume
+```
 
-   ```
-   # List Volumes:
+### mayactl for OpenEBS Storage Volume
+
+OpenEBS storage volume command usage examples are shown below.
+
+```
+/ # mayactl volume
+
+The following commands helps in operating a Volume such as create, list, and so on.
+
+Usage: mayactl volume <subcommand> [options] [args]
+
+Examples:
+ # List Volumes:
    $ mayactl volume list
 
-   # List Volumes created in 'test' namespace:
-   $ mayactl volume list --namespace test
-
-   # Statistics of a Volume:
+ # Statistics of a Volume:
    $ mayactl volume stats --volname <vol>
-      
-   # Statistics of a Volume created in 'test' namespace:
+
+ # Statistics of a Volume created in 'test' namespace:
    $ mayactl volume stats --volname <vol> --namespace test
-      
-   # Info of a Volume:
-   $ mayactl volume info --volname <vol>
 
-   # Info of a Volume created in 'test' namespace:
-   $ mayactl volume info --volname <vol> --namespace test
+ # Info of a Volume:
+   $ mayactl volume describe --volname <vol>
 
-   # Delete a Volume:
+ # Info of a Volume created in 'test' namespace:
+   $ mayactl volume describe --volname <vol> --namespace test
+
+ # Delete a Volume:
    $ mayactl volume delete --volname <vol>
-      
-   # Delete a Volume created in 'test' namespace:
+
+ # Delete a Volume created in 'test' namespace:
    $ mayactl volume delete --volname <vol> --namespace test
-   ```
+
+Usage:
+  mayactl volume [command]
+
+Available Commands:
+  delete      Deletes a Volume
+  describe    Displays Openebs Volume information
+  list        Displays status information about Volume(s)
+  stats       Displays the runtime statisics of Volume
+```
+
+**Example:**
+
+The following command shows the list all the OpenEBS volumes including both Jiva and cStor.
+
+```
+/ # mayactl volume list
+Namespace  Name                                      Status   Type   Capacity
+
+---
+
+default    pvc-c7f9b9a2-f6d9-11e8-9883-42010a8000b7  Running  jiva   4G
+openebs    pvc-743678ac-f6cf-11e8-9883-42010a8000b7  Running  cstor  4G
+openebs    pvc-e5116635-f6d6-11e8-9883-42010a8000b7  Running  cstor  4G
+```
+
+The following is an example output of description of cstor volume.
+
+```
+/ # mayactl volume describe --volname pvc-743678ac-f6cf-11e8-9883-42010a8000b7
+
+Portal Details :
+
+IQN               :   iqn.2016-09.com.openebs.cstor:pvc-743678ac-f6cf-11e8-9883-42010a8000b7
+Volume            :   pvc-743678ac-f6cf-11e8-9883-42010a8000b7
+Portal            :   10.79.240.103:3260
+Size              :   4G
+Controller Status :   running,running,running
+Controller Node   :   gke-ranjith-080-default-pool-8d4e3480-qsvn
+Replica Count     :   3
+
+Replica Details :
+
+NAME                                                                STATUS      POOL NAME                  NODE
+
+---
+
+pvc-743678ac-f6cf-11e8-9883-42010a8000b7-cstor-sparse-pool-h8gl     Running     cstor-sparse-pool-h8gl     gke-ranjith-080-default-pool-8d4e3480-b50p
+pvc-743678ac-f6cf-11e8-9883-42010a8000b7-cstor-sparse-pool-s7rs     Running     cstor-sparse-pool-s7rs     gke-ranjith-080-default-pool-8d4e3480-rb03
+pvc-743678ac-f6cf-11e8-9883-42010a8000b7-cstor-sparse-pool-wt1u     Running     cstor-sparse-pool-wt1u     gke-ranjith-080-default-pool-8d4e3480-qsvn
+```
+
+The following is an example output of description of Jiva volume.
+
+```
+/ # mayactl volume describe --volname pvc-c7f9b9a2-f6d9-11e8-9883-42010a8000b7
+
+Portal Details :
+
+IQN               :   iqn.2016-09.com.openebs.jiva:pvc-c7f9b9a2-f6d9-11e8-9883-42010a8000b7
+Volume            :   pvc-c7f9b9a2-f6d9-11e8-9883-42010a8000b7
+Portal            :   10.79.246.86:3260
+Size              :   4G
+Controller Status :   running,running
+Controller Node   :   gke-ranjith-080-default-pool-8d4e3480-rb03
+Replica Count     :   3
+
+Replica Details :
+
+NAME                                                              ACCESSMODE      STATUS      IP             NODE
+
+---
+
+pvc-c7f9b9a2-f6d9-11e8-9883-42010a8000b7-rep-76f8ff8db5-k596j     RW              running     10.76.0.8      gke-ranjith-080-default-pool-8d4e3480-rb03
+pvc-c7f9b9a2-f6d9-11e8-9883-42010a8000b7-rep-76f8ff8db5-w6dwv     RW              running     10.76.2.13     gke-ranjith-080-default-pool-8d4e3480-qsvn
+pvc-c7f9b9a2-f6d9-11e8-9883-42010a8000b7-rep-76f8ff8db5-xmcq8     RW              running     10.76.1.9      gke-ranjith-080-default-pool-8d4e3480-b50p
+```
+
+The following is an example output of statistics of cStor volume.
+
+```
+/ # mayactl volume stats --volname pvc-511632a0-fa0a-11e8-b091-42010a800143 -n openebs
+
+Portal Details :
+---------------
+IQN     :   iqn.2016-09.com.openebs.cstor:pvc-511632a0-fa0a-11e8-b091-42010a800143
+Volume  :   pvc-511632a0-fa0a-11e8-b091-42010a800143
+Portal  :   localhost
+Size    :   5.000000
+
+Performance Stats :
+--------------------
+r/s      w/s      r(MB/s)      w(MB/s)      rLat(ms)      wLat(ms)
+----     ----     --------     --------     ---------     ---------
+0        2022     0.000        1.991        0.000         267.145
+
+Capacity Stats :
+---------------
+LOGICAL(GB)      USED(GB)
+------------     ---------
+0.000            0.178
+```
 
 
-   **Note:** `mayactl volume delete` command will delete corresponding OpenEBS pods and deployments. But it will not delete PVC and PV. These corresponding PVC and PV can be deleted by using usual `kubectl delete` commands. 
 
-3. You can get the mayactl related details by running following command
+### mayactl for OpenEBS Storage Pools
 
-   ```
-   mayactl version
-   ```
+OpenEBS storage pool command usage examples are shown below.
 
-   **Example:**
+```
+/ # mayactl pool
 
-   ```
-   # Get mayactl installed version
-   # mayactl version
-   ```
+Command provides operations related to a storage pools.
 
-4. `mayactl volume snapshot` command is used to manage the snapshots of a volume. Some examples of the usage are shown below. 
+Usage: mayactl pool <subcommand> [options] [args]
 
-   ```
-   Examples:
-   # Create a snapshot:
-   $ mayactl snapshot create --volname <vol> --snapname <snap>
+Examples:
+  # Lists pool:
+    $ mayactl pool list
 
-   # Create a snapshot for a volume created in 'test' namespace
-   $ mayactl snapshot create --volname <vol> --snapname <snap> --namespace test
+Usage:
+  mayactl pool [command]
 
-   # Lists snapshot:
-   $ mayactl snapshot list --volname <vol>
+Available Commands:
+  describe    Describes the pools
+  list        Lists all the pools
 
-   # Lists snapshots for a volume created in 'test' namespace
-   $ mayactl snapshot list --volname <vol> --namespace test
 
-   # Reverts a snapshot:
-   $ mayactl snapshot revert --volname <vol> --snapname <snap>
+```
 
-   # Revert a snapshot for a volume created in 'test' namespace
-   $ mayactl snapshot revert --volname <vol> --snapname <snap> --namespace test
+**Example:**
 
-   Usage:
-     mayactl snapshot [command]
+The following command shows the list all the OpenEBS cStor Pools.
 
-   Available Commands:
-     create      Creates a new Snapshot
-     list        Lists all the snapshots of a Volume
-     revert      Reverts to specific snapshot of a Volume
-   ```
+```
+/ # mayactl pool list
+
+POOL NAME                  NODE NAME                                      POOL TYPE
+---------                  ---------                                      ---------
+cstor-sparse-pool-h8gl     gke-ranjith-080-default-pool-8d4e3480-b50p     striped
+cstor-sparse-pool-s7rs     gke-ranjith-080-default-pool-8d4e3480-rb03     striped
+cstor-sparse-pool-wt1u     gke-ranjith-080-default-pool-8d4e3480-qsvn     striped
+
+```
+
+The following is an example output of description of cstor pool.
+
+```
+/ # mayactl pool describe --poolname cstor-sparse-pool-h8gl
+
+Pool Details :
+--------------
+Storage Pool Name  : cstor-sparse-pool-h8gl
+Node Name          : gke-ranjith-080-default-pool-8d4e3480-b50p
+CAS Template Used  : cstor-pool-create-default-0.8.0
+CAS Type           : cstor
+StoragePoolClaim   : cstor-sparse-pool
+UID                : 9f9ae3fc-f6cd-11e8-9883-42010a8000b7
+Pool Type          : striped
+Over Provisioning  : false
+
+Disk List :
+-----------
+sparse-59357cb2a1a5e0c8b5a5ac5ed3d7e050
+```
+
+### mayactl version
+
+You can get the installed mayactl version by using the following command. This will show the OpenEBS released version also.
+
+```
+mayactl version
+```
+
+ **Examples:**
+
+```
+/ # mayactl version
+Version: 0.8.0-unreleased
+Git commit: 87d14b636ad24db973403d5d8acdd65aa4ba4357
+GO Version: go1.11.2
+GO ARCH: amd64
+GO OS: linux
+m-apiserver url:  http://10.76.2.6:5656
+m-apiserver status:  running
+```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};

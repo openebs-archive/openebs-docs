@@ -22,71 +22,214 @@ Deploying Couchbase as a StatefulSet provides the following benefits.
 Deploying Couchbase with Persistent Storage
 -------------------------------------------
 
-Before getting started, check the status of the cluster using the
-following command. 
+We are using OpenEBS cStor storage engine for running  Couchbase. Before starting, check the status of the cluster using the following command. 
 
-    ubuntu@kubemaster:~kubectl get nodes
-    NAME            STATUS    AGE       VERSION
-    kubemaster      Ready     3d        v1.8.2
-    kubeminion-01   Ready     3d        v1.8.2
-    kubeminion-02   Ready     3d        v1.8.2
+```
+kubectl get nodes
+```
 
-Download and apply the Couchbase YAML from OpenEBS repository using the
-following command. 
+The following output shows the status of the nodes in the cluster.
 
-    ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/couchbase/couchbase-statefulset.yml
-    ubuntu@kubemaster:~wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/couchbase/couchbase-service.yml
+```
+NAME                                         STATUS    ROLES     AGE       VERSION
+gke-ranjith-080-default-pool-8d4e3480-b50p   Ready     <none>    1d        v1.9.7-gke.11
+gke-ranjith-080-default-pool-8d4e3480-qsvn   Ready     <none>    1d        v1.9.7-gke.11
+gke-ranjith-080-default-pool-8d4e3480-rb03   Ready     <none>    1d        v1.9.7-gke.11
+```
 
-    ubuntu@kubemaster:~kubectl apply -f couchbase-statefulset.yml
-    ubuntu@kubemaster:~kubectl apply -f couchbase-service.yml
+Also make sure that you have deployed OpenEBS in your cluster. If not deployed, you can install from [here](https://docs.openebs.io/docs/next/quickstartguide.html).
 
-Get the status of running pods using the following command. 
+You can check the status of OpenEBS pods by running following command.
 
-    ubuntu@kubemaster:~$ kubectl get pods --all-namespaces
-    NAMESPACE     NAME                                                             READY     STATUS    RESTARTS   AGE
-    default       couchbase-0                                                      1/1       Running   0          11h
-    default       couchbase-1                                                      1/1       Running   0          11h
-    default       maya-apiserver-6fc5b4d59c-mg9k2                                  1/1       Running   0          3d
-    default       openebs-provisioner-6d9b78696d-h647b                             1/1       Running   0          3d
-    default       pvc-16210b06-c7ba-11e7-892e-000c29119159-ctrl-78db5f845b-v7w5s   1/1       Running   0          11h
-    default       pvc-16210b06-c7ba-11e7-892e-000c29119159-rep-94d9844df-78zsm     1/1       Running   0          11h
-    default       pvc-16210b06-c7ba-11e7-892e-000c29119159-rep-94d9844df-rh4xs     1/1       Running   0          11h
-    default       pvc-40e1b64f-c7ba-11e7-892e-000c29119159-ctrl-c54b6969b-75mjj    1/1       Running   0          11h
-    default       pvc-40e1b64f-c7ba-11e7-892e-000c29119159-rep-6cd4655d87-6rgvm    1/1       Running   0          11h
-    default       pvc-40e1b64f-c7ba-11e7-892e-000c29119159-rep-6cd4655d87-h7w9x    1/1       Running   0          11h
-    kube-system   etcd-o-master01                                                  1/1       Running   0          3d
-    kube-system   kube-apiserver-o-master01                                        1/1       Running   0          3d
-    kube-system   kube-controller-manager-o-master01                               1/1       Running   0          3d
-    kube-system   kube-dns-545bc4bfd4-m4ngc                                        3/3       Running   0          3d
-    kube-system   kube-proxy-4ml5l                                                 1/1       Running   0          3d
-    kube-system   kube-proxy-7jlpf                                                 1/1       Running   0          3d
-    kube-system   kube-proxy-cxkpc                                                 1/1       Running   0          3d
-    kube-system   kube-scheduler-o-master01                                        1/1       Running   0          3d
-    kube-system   weave-net-ctfk4                                                  2/2       Running   0          3d
-    kube-system   weave-net-dwszp                                                  2/2       Running   0          3d
-    kube-system   weave-net-pzbb7          
+```
+kubectl get pod -n openebs
+```
+
+Output of above command will be similar to the following.
+
+```
+NAME                                        READY     STATUS    RESTARTS   AGE
+cstor-sparse-pool-dh5u-6c798fff44-w9rrg     2/2       Running   0          1m
+cstor-sparse-pool-hc30-6dcbfd59dd-t82g8     2/2       Running   0          1m
+cstor-sparse-pool-l8pz-cbb88cc8-8hnrn       2/2       Running   0          1m
+maya-apiserver-7bc857bb44-6vljb             1/1       Running   0          1m
+openebs-ndm-b2sc5                           1/1       Running   0          1m
+openebs-ndm-wws22                           1/1       Running   0          1m
+openebs-ndm-x2lnx                           1/1       Running   0          1m
+openebs-provisioner-b9fb58d6d-94plj         1/1       Running   0          1m
+openebs-snapshot-operator-bb5697c8d-wdgmd   2/2       Running   0          1m
+```
+
+You can create a storage class YAML named *openebs-cstor-sparse-couchbase.yaml* and copy the following content to it. This YAML will create the storage class to be used for creating cStor Volume where Couchbase server will run.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-cstor-sparse-couchbase
+  annotations:
+    openebs.io/cas-type: cstor
+    cas.openebs.io/config: |
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
+      - name: ReplicaCount
+        value: "1"
+     #- name: TargetResourceLimits
+      #  value: |-
+      #      memory: 1Gi
+      #      cpu: 200m
+      #- name: AuxResourceLimits
+      #  value: |-
+      #      memory: 0.5Gi
+      #      cpu: 50m
+provisioner: openebs.io/provisioner-iscsi
+```
+
+Once you have copied the content, you can apply the *openebs-cstor-sparse-couchbase.yaml* using the following command.
+
+```
+kubectl apply -f openebs-cstor-sparse-couchbase.yaml
+```
+
+This will create the StorageClass named *openebs-cstor-sparse-couchbase*. You can get the details of StorageClass installed in your cluster using the following command.
+
+```
+kubectl get sc
+```
+
+Output of above command will be similar to the following.
+
+```
+NAME                             PROVISIONER                                                AGE
+openebs-cstor-sparse             openebs.io/provisioner-iscsi                               1d
+openebs-cstor-sparse-couchbase   openebs.io/provisioner-iscsi                               1m
+openebs-jiva-default             openebs.io/provisioner-iscsi                               1d
+openebs-snapshot-promoter        volumesnapshot.external-storage.k8s.io/snapshot-promoter   1d
+```
+
+Run the following command to install Couchbase services.
+
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/couchbase/couchbase-service.yml
+```
+
+Create a YAML file named *couchbase-statefulset.yml* and copy the following sample YAML of Couchbase to the created file. In this YAML, openebs-cstor-sparse-couchbase is used the StorageClass. 
+
+```
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: couchbase
+spec:
+  serviceName: "couchbase"
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: couchbase
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+      - name: couchbase
+        image: saturnism/couchbase:k8s-petset
+        ports:
+        - containerPort: 8091
+        volumeMounts:
+        - name: couchbase-data
+          mountPath: /opt/couchbase/var
+        env:
+          - name: COUCHBASE_MASTER
+            value: "couchbase-0.couchbase.default.svc.cluster.local"
+          - name: AUTO_REBALANCE
+            value: "false"
+  volumeClaimTemplates:
+  - metadata:
+      name: couchbase-data
+      annotations:
+        volume.beta.kubernetes.io/storage-class: openebs-cstor-sparse-couchbase
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5G
+```
+
+Now you can apply couchbase-statefulset.yml by running the following command. This will make  Couchbase server application running on cStor volume.
+
+    kubectl apply -f couchbase-statefulset.yml
+
+You can check the status of cassandra application pod running status using following command.
+
+```
+kubectl get pods
+```
+
+Output of above command will be similar to the following.
+
+```
+NAME          READY     STATUS    RESTARTS   AGE
+couchbase-0   1/1       Running   0          33m
+couchbase-1   1/1       Running   0          30m
+```
+
+You can check the status of OpenEBS  pod running status using following command.
+
+```
+kubectl get pods -n openebs
+```
+
+The StorageClass *openebs-cstor-sparse-couchbase*, that you have created have replica count as "1", so each cStor Pool contain one cStor volume. cStor volumes are communicated to one cStor target controller. Following output shows that there are 3 cStor target pods are running on each node.
+
+```
+NAME                                                              READY     STATUS    RESTARTS   AGE
+cstor-sparse-pool-dh5u-6c798fff44-w9rrg                           2/2       Running   0          47m
+cstor-sparse-pool-hc30-6dcbfd59dd-t82g8                           2/2       Running   0          47m
+cstor-sparse-pool-l8pz-cbb88cc8-8hnrn                             2/2       Running   0          47m
+maya-apiserver-7bc857bb44-6vljb                                   1/1       Running   0          48m
+openebs-ndm-b2sc5                                                 1/1       Running   0          48m
+openebs-ndm-wws22                                                 1/1       Running   0          48m
+openebs-ndm-x2lnx                                                 1/1       Running   0          48m
+openebs-provisioner-b9fb58d6d-94plj                               1/1       Running   0          48m
+openebs-snapshot-operator-bb5697c8d-wdgmd                         2/2       Running   0          48m
+pvc-3257e0c2-f852-11e8-9883-42010a8000b7-target-845c8d44544jsqs   3/3       Running   0          30m
+pvc-c524e6da-f851-11e8-9883-42010a8000b7-target-7875677cd6nskks   3/3       Running   0          33m
+```
 
 Get the status of running StatefulSets using the following command. 
 
-    ubuntu@kubemaster:~$ kubectl get statefulset
-    NAME        DESIRED   CURRENT   AGE
-    couchbase   2         2         11h
+    kubectl get statefulset
+
+Output of above command will be similar to the following.
+
+```
+NAME        DESIRED   CURRENT   AGE
+couchbase   2         2         33m
+```
 
 Get the status of underlying persistent volume used by Couchbase StatefulSet using the following command. 
 
-    ubuntu@kubemaster:~$ kubectl get pvc
-    NAME                         STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
-    couchbase-data-couchbase-0   Bound     pvc-16210b06-c7ba-11e7-892e-000c29119159   5G         RWO            openebs-standard   11h
-    couchbase-data-couchbase-1   Bound     pvc-40e1b64f-c7ba-11e7-892e-000c29119159   5G         RWO            openebs-standard   11h
+    kubectl get pvc
+
+Output of above command will be similar to the following.
+
+```
+NAME                         STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                     AGE
+couchbase-data-couchbase-0   Bound     pvc-c524e6da-f851-11e8-9883-42010a8000b7   5G         RWO            openebs-cstor-sparse-couchbase   34m
+couchbase-data-couchbase-1   Bound     pvc-3257e0c2-f852-11e8-9883-42010a8000b7   5G         RWO            openebs-cstor-sparse-couchbase   31m
+```
 
 Get the status of the services using the following command. 
 
-    ubuntu@kubemaster:~kubectl get svc
-    ME                                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
-    couchbase                                           ClusterIP   None             <none>        8091/TCP            11h
-    couchbase-ui                                        NodePort    10.103.161.153   <none>        8091:30438/TCP      11h
-    kubernetes                                          ClusterIP   10.96.0.1        <none>        443/TCP             3d
-    maya-apiserver-service                              ClusterIP   10.111.26.252    <none>        5656/TCP            3d
+    kubectl get svc
+
+Output of above command will be similar to the following.
+
+```
+NAME           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+couchbase      ClusterIP   None            <none>        8091/TCP         35m
+couchbase-ui   NodePort    10.79.244.140   <none>        8091:31066/TCP   35m
+kubernetes     ClusterIP   10.79.240.1     <none>        443/TCP          1d
+```
 
 Launching Couchbase as a Server
 -------------------------------
@@ -95,39 +238,54 @@ The Couchbase service YAML, creates a NodePort service type for making the Couch
 
 Get the node which is running the Couchbase server using the following command. 
 
-    ubuntu@kubemaster:~kubectl describe pod couchbase-0 | grep Node:
-    Node:       kubeminion-02/20.10.29.203
+    kubectl describe pod couchbase-0 | grep Node:
+
+Output of above command will be similar to the following.
+
+```
+Node:           gke-ranjith-080-default-pool-8d4e3480-rb03/10.128.0.38
+```
 
 Get the node's External IP Address which is running the Couchbase server using the following command.
 
 ```
-root@prabhat-virtual-machine:~/openebs/k8s/demo/couchbase# kubectl get nodes -o wide
-NAME            STATUS    ROLES     AGE       VERSION         EXTERNAL-IP      OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME
-kubeminion-01   Ready     <none>    4h        v1.10.4-gke.0   35.192.216.68    Ubuntu 16.04.4 LTS   4.13.0-1015-gcp   docker://17.3.2
-kubeminion-02   Ready     <none>    4h        v1.10.4-gke.0   35.224.182.169   Ubuntu 16.04.4 LTS   4.13.0-1015-gcp   docker://17.3.2
+kubectl get nodes -o wide
+```
+
+Output of above command will be similar to the following.
+
+```
+NAME                                         STATUS    ROLES     AGE       VERSION         INTERNAL-IP   EXTERNAL-IP      OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME
+gke-ranjith-080-default-pool-8d4e3480-b50p   Ready     <none>    1d        v1.9.7-gke.11   10.128.0.45   35.226.27.47     Ubuntu 16.04.5 LTS   4.15.0-1017-gcp   docker://17.3.2
+gke-ranjith-080-default-pool-8d4e3480-qsvn   Ready     <none>    1d        v1.9.7-gke.11   10.128.0.43   35.239.82.64     Ubuntu 16.04.5 LTS   4.15.0-1017-gcp   docker://17.3.2
+gke-ranjith-080-default-pool-8d4e3480-rb03   Ready     <none>    1d        v1.9.7-gke.11   10.128.0.38   35.188.181.146   Ubuntu 16.04.5 LTS   4.15.0-1017-gcp   docker://17.3.2
 ```
 
 Get the port number from the Couchbase UI service using the following command. :
 
-    ubuntu@kubemaster:~ kubectl describe svc couchbase-ui | grep NodePort:
-    NodePort:       couchbase  30438/TCP
+    kubectl describe svc couchbase-ui | grep NodePort:
 
-Go to the <http://35.224.182.169:30438> URL from your browser and perform the following procedure from the UI.
+Output of above command will be similar to the following.
+
+```
+NodePort:                 couchbase  31066/TCP
+```
+
+Go to the <http://35.188.181.146:31066> URL from your browser and perform the following procedure from the UI.
 
 **Note:**
 
 -   For Google Cloud Users, create Firewall Rules to perform tasks using Couchbase UI.
 -   The NodePort is dynamically allocated and may vary in a different deployment.
 
-1.  In the Couchbase Console, enter your credentials in the **Username** and **Password** fields and click **Sign In**. You can now see the console.[The default Username is Administrator and Password is password. Enter the credentials to see the console.]
+1.  In the Couchbase Console, enter your credentials in the **Username** and **Password** fields and click **Sign In**. You can now see the console.[The default Username is *Administrator* and Password is *password*. Enter the credentials to see the console.]
 2.  Click **Server Nodes** to see the number of Couchbase nodes that are part of the cluster. As expected, it displays only one node.
 3.  Click **Data Buckets** to see a sample bucket that was created as part of the image.
 
 You can now start using Couchbase.
 
-
-
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};

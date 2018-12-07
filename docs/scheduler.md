@@ -34,7 +34,7 @@ The OpenEBS administrator can choose to provide the scheduling configuration for
 Download the *openebs-operator* file using the following command.
 
 ```
-wget https://openebs.github.io/charts/openebs-operator-0.7.2.yaml
+wget https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
 ```
 
 ## Step 2
@@ -194,7 +194,7 @@ spec:
 Run the modified operator file to install OpenEBS and schedule the OpenEBS control plane pods and data plane pod on the appropriate nodes.
 
 ```
-kubectl apply -f openebs-operator-0.7.2.yaml
+kubectl apply -f openebs-operator-0.8.0.yaml
 ```
 
 ## Step 4

@@ -36,6 +36,7 @@ OpenEBS supports several types of Storage Policies for Jiva volume such as the f
 - TargetResourceLimits
 - AuxResourceLimits
 - ReplicaResourceLimits
+- Target Affinity
 
 ### Replica Count Policy
 
@@ -71,7 +72,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ReplicaImage
-        value: quay.io/openebs/m-apiserver:0.7.2
+        value: quay.io/openebs/m-apiserver:0.8.0
 ```
 
 ### Controller Image Policy
@@ -91,7 +92,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: quay.io/openebs/jiva:0.7.2
+        value: quay.io/openebs/jiva:0.8.0
 
 ```
 
@@ -183,7 +184,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:0.7.2
+        value: quay.io/openebs/m-exporter:0.8.0
 ```
 
 ### Volume Space Reclaim Policy
@@ -279,7 +280,41 @@ metadata:
             memory: 2Gi
 ```
 
+### Target Affinity Policy
 
+The StatefulSet workloads access the OpenEBS storage volume  by connecting to the Volume Target Pod. This policy can be used to co-locate volume target pod on the same node as workload.
+
+- This feature makes use of the Kubernetes Pod Affinity feature that is dependent on the Pod labels. User will need to add the following label to both Application and PVC.
+
+  ```
+  labels:
+    openebs.io/target-affinity: <application-unique-label>
+  ```
+
+- You can specify the Target Affinity in both application and OpenEBS PVC using the following way
+
+  For Application Pod, it will be similar to the following
+
+  ```
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: fio-jiva
+    labels:
+      name: fio-jiva
+      openebs.io/target-affinity: fio-jiva
+  ```
+
+  For OpenEBS PVC, it will be similar to the following.
+
+  ```
+  kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: fio-jiva-claim
+    labels:
+      openebs.io/target-affinity: fio-jiva
+  ```
 
 ## Types of Storage Policies for cStor
 
@@ -292,11 +327,12 @@ OpenEBS supports several types of Storage Policies for cStor volume such as the 
 - VolumeMonitor
 - VolumeMonitorImage
 - FSType
-
 - TargetNodeSelector
 - TargetResourceLimits
 - AuxResourceLimits
 - ReplicaResourceLimits
+- Target Affinity
+- Target Namespace
 
 ### Replica Count Policy
 
@@ -324,7 +360,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeControllerImage
-        value: quay.io/openebs/cstor-volume-mgmt:0.7.2
+        value: quay.io/openebs/cstor-volume-mgmt:0.8.0
     openebs.io/cas-type: cstor
 ```
 
@@ -339,7 +375,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeTargetImage
-        value:quay.io/openebs/cstor-istgt:0.7.2
+        value:quay.io/openebs/cstor-istgt:0.8.0
     openebs.io/cas-type: cstor
 ```
 
@@ -388,7 +424,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:0.7.2
+        value: quay.io/openebs/m-exporter:0.8.0
     openebs.io/cas-type: cstor
 ```
 
@@ -420,6 +456,7 @@ metadata:
       - name: TargetNodeSelector
         value: |-
             node: appnode
+    openebs.io/cas-type: cstor
 ```
 
 ### TargetResourceLimits Policy
@@ -436,6 +473,7 @@ metadata:
         value: |-
             memory: 1Gi
             cpu: 100m
+    openebs.io/cas-type: cstor
 ```
 
 ### AuxResourceLimits Policy
@@ -452,6 +490,7 @@ metadata:
         value: |-
             memory: 0.5Gi
             cpu: 50m
+    openebs.io/cas-type: cstor
 ```
 
 ### ReplicaResourceLimits Policy
@@ -467,7 +506,59 @@ metadata:
       - name: ReplicaResourceLimits
         value: |-
             memory: 2Gi
+    openebs.io/cas-type: cstor
 ```
+
+### Target Affinity Policy
+
+The StatefulSet workloads access the OpenEBS storage volume  by connecting to the Volume Target Pod. This policy can be used to co-locate volume target pod on the same node as workload.
+
+- This feature makes use of the Kubernetes Pod Affinity feature that is dependent on the Pod labels. User will need to add the following label to both Application and PVC.
+
+  ```
+  labels:
+    openebs.io/target-affinity: <application-unique-label>
+  ```
+
+- You can specify the Target Affinity in both application and OpenEBS PVC using the following way
+
+  For Application Pod, it will be similar to the following
+
+  ```
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: fio-jiva
+    labels:
+      name: fio-jiva
+      openebs.io/target-affinity: fio-jiva
+  ```
+
+  For OpenEBS PVC, it will be similar to the following.
+
+  ```
+  kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: fio-cstor-claim
+    labels:
+      openebs.io/target-affinity: fio-jiva
+  ```
+
+### Target Namespace
+
+By default, the cStor target pods are scheduled in a dedicated OpenEBS namespace. The target pod also is provided with openebs service account so that it can access the Kubernetes Custom Resource called `CStorVolume` and `Events`.
+This policy, allows the Cluster administrator to specify if the Volume Target pods should be deployed in the namespace of the workloads itself. This can help with setting the limits on the resources on the target pods, based on the namespace in which they are deployed.
+To use this policy, the Cluster administrator could either use the existing OpeNEBS service account or create a new service account with limited access and provide it in the StorageClass as follows:
+
+```
+annotations:
+    cas.openebs.io/config: |
+      - name: PVCServiceAccountName
+        value: "user-service-account"  
+```
+
+The sample service account can be found [here](https://github.com/openebs/openebs/blob/master/k8s/ci/maya/volume/cstor/service-account.yaml).
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
