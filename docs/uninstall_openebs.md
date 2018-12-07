@@ -6,7 +6,7 @@ sidebar_label: Uninstall OpenEBS
 
 ------
 
-This section is to describe about the graceful deletion/uninstall of your OpenEBS cluster. OpenEBS cluster has two different storage engine,Jiva and cStor. The deletion for the data from this disk after this operation is different for both of these storage Engine. 
+This section is to describe about the graceful deletion/uninstall of your OpenEBS cluster. OpenEBS cluster has two different storage engine,Jiva and cStor. The deletion for the data from the disks which are being used, after this operation is different for both of these storage Engine. 
 
 ## Uninstall OpenEBS Gracefully
 
