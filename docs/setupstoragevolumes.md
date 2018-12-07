@@ -14,7 +14,6 @@ OpenEBS storage provides several features that can be customised for each volume
 
 - Number of replications
 - Zone or node affinity
-- Snapshot scheduling
 - Volume expansion policy
 - Replication policy
 

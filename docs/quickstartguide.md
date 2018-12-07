@@ -40,7 +40,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
     **Note:** Ensure that you have met the [prerequisites](/docs/next/prerequisites.html) before installation.
 
     ```
-    kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.2.yaml
+    kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
     ```
 
     The installation will involve creating a new Service Account and assigning it to OpenEBS components. 

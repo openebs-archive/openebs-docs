@@ -191,11 +191,11 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.7.2
+        value: openebs/jiva:0.8.0
       - name: ReplicaImage
-        value: openebs/jiva:0.7.2
+        value: openebs/jiva:0.8.0
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.7.2
+        value: openebs/m-exporter:0.8.0
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
@@ -205,7 +205,7 @@ metadata:
 Run the following commands.
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.2.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
 ```
 
 You must mention the storage class name in the *application.yaml* file. For example, *demo-percona-mysql-pvc.yaml* file for the percona application.

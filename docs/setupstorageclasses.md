@@ -17,7 +17,7 @@ Once OpenEBS is installed on your Kubernetes cluster, you can start using it by 
 Apply the openebs-operator.yaml file on the Kubernetes cluster using the following command. This creates the maya api-server and OpenEBS components which includes default storage classes.
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.2.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
 ```
 
 OpenEBS Storage provides several features that can be customized for each volume. Some of features that could be customized per application are as follows:
@@ -34,23 +34,23 @@ The default storage classes are as follows.
 
 ### Storage Class for Provisioning Jiva
 
-Starting with OpenEBS 0.7, the volume policies must be specified under the `annotations` > `openebs.io/config:`.
+Starting with OpenEBS 0.7, the volume policies must be specified under the `annotations` > `openebs.io/config:`. The default Jiva storage class is as follows:
 
 ```
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: openebs-standard
+  name: openebs-jiva-default
   annotations:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.7.2
+        value: openebs/jiva:0.8.0
       - name: ReplicaImage
-        value: openebs/jiva:0.7.2
+        value: openebs/jiva:0.8.0
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.7.2
+        value: openebs/m-exporter:0.8.0
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
@@ -82,11 +82,11 @@ metadata:
    	openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.7.2
+        value: openebs/jiva:0.8.0
       - name: ReplicaImage
-        value: openebs/jiva:0.7.2
+        value: openebs/jiva:0.8.0
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.7.2
+        value: openebs/m-exporter:0.8.0
       - name: ReplicaCount
         value: "1"
       - name: StoragePool
@@ -122,7 +122,7 @@ The default cStor storage class is as follows:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: openebs-cstor-sparse-auto
+  name: openebs-cstor-sparse
   annotations:
     openebs.io/cas-type: cstor
     cas.openebs.io/config: |
@@ -141,8 +141,6 @@ metadata:
 provisioner: openebs.io/provisioner-iscsi
 ---
 ```
-
-  
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
