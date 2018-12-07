@@ -147,27 +147,6 @@ The OpenEBS architecture is an example of Container Attached Storage (CAS). Thes
 
 The ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ will start showing different sizes when there are replica node restarts and internal snapshots are created for synchronizing replicas.
 
-## How to delete OpenEBS 0.7 clusters gracefully?
-
-The recommended steps to uninstall are:
-
-* Delete all the OpenEBS PVCs that were created.
-* Delete all the SPCs (in case of cStor).
-* Ensure that no volume or pool pods are pending in terminating state by running `kubectl get pods -n <openebs namespace>`.
-* Delete the openebs either via `helm purge` or `kubectl delete ns openebs`
-
-Uninstalling the OpenEBS doesn't automatically delete the CRDs that were created. If you would like to complete remove the CRDs and the associated objects, run the following commands:
-```
-kubectl delete crd castemplates.openebs.io
-kubectl delete crd cstorpools.openebs.io
-kubectl delete crd cstorvolumereplicas.openebs.io
-kubectl delete crd cstorvolumes.openebs.io
-kubectl delete crd runtasks.openebs.io
-kubectl delete crd storagepoolclaims.openebs.io
-kubectl delete crd storagepools.openebs.io
-kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
-kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
-```
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
    (function(h,o,t,j,a,r){
