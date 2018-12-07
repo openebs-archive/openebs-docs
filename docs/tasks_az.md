@@ -28,7 +28,7 @@ The OpenEBS administrator can choose to provide the scheduling configuration for
 To get the *openebs-operator.yaml* use the following command.
 
 ```
-wget https://openebs.github.io/charts/openebs-operator-0.7.2.yaml
+wget https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
 ```
 
 2. **Deploying OpenEBS Cluster**
@@ -36,7 +36,7 @@ wget https://openebs.github.io/charts/openebs-operator-0.7.2.yaml
 Apply *openebs-operator.yaml* as follows
 
 ```
-kubectl apply -f openebs-operator-0.7.2.yaml
+kubectl apply -f openebs-operator-0.8.0.yaml
 ```
 
 The above command will create default storage classes for Jiva named openebs-jiva-default which will have replica count as 3.

@@ -184,7 +184,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 16. SSH to Master Node and perform the following commands to clone OpenEBS yaml file and deploy.
 
     ```
-    kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.2.yaml
+    kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
     ```
 
 17. Create a storage pool on an external disk which is mounted on the nodes. To create a storage pool, create a file called “openebs-config.yaml” file in your master node and add the below example YAML with changing the appropriate mounted disk path.
@@ -216,7 +216,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     
     ```
     This will create a storage pool called “default” on selected disk.
-    
+
 19. Now storage pool is created on the Nodes as per your requirement. You can get the storage pool details by running the following command.
 
     ```
@@ -225,25 +225,13 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
 
 20. Now you are configured OpenEBS Jiva storage engine which will create OpenEBS Jiva volume on the storage pool created on local SSD disk.
 
-21. Deploy your application yaml which will be created on the local disk. Get the percona deploymnet YAML file using following command
-
-    Example:
+21. Deploy your application yaml which will be created on the local disk using the following command.
 
     ```
-    wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml
+    kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml
     ```
 
-22. Edit the downloaded “percona-openebs-deployment.yaml” and do the following changes.
-
-    Under "PersistentVolumeClaim" section,change the “storageClassName” to “openebs-jiva-default” from ”openebs-standard”.
-
-23. Save the modified changes and apply the YAML as follows.
-
-    ```
-    kubectl apply -f percona-openebs-deployment.yaml
-    ```
-
-24. This will create a PVC and PV in mentioned size. You can get the PVC status by running the following command.
+22. This will create a PVC and PV in mentioned size. You can get the PVC status by running the following command.
 
     ```
     kubectl get pvc
@@ -256,7 +244,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     demo-vol1-claim Bound  default-demo-vol1-claim-2300073071 5G 	   RWO 			openebs-jiva-default 11m
     ```
 
-25. Get the status of PV using the following command.
+23. Get the status of PV using the following command.
 
     ```
     kubectl get pv
@@ -269,7 +257,7 @@ Use local ubuntu 16.04 machine from where you can login to AWS with appropriate 
     default-demo-vol1-claim-1171753629   5G         RWO            Delete           Bound     default/demo-vol1-claim   openebs-jiva-default             17s
     ```
 
-26. Now, your Percona application pod will be running along with three Jiva volume replica and One Jiva Controller pod. You can get the running pod status by running the following command:
+24. Now, your Percona application pod will be running along with three Jiva volume replica and One Jiva Controller pod. You can get the running pod status by running the following command:
 
     ```
     kubectl get pods -o wide
