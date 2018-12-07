@@ -90,7 +90,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    If you are using default cstor-sparse-pool, skip to step 9. 
 
 3. If you would like to create a storage pool using external disks which are mounted on nodes, you can create storage pool either manually or by auto pool method.
-  
+
    In the manual method, you have to select the disks which will be used for cStor pool creation in the sample ymal file provided in      Step4. You can create a file called *openebs-config.yaml* in your master node and add the following contents into the file. In this case, there are 2 disks per node attached which creates a storage pool per node in a striped manner. Hence there are a total of 6 external disks i.e. 2 disks per node which are mentioned in the following yaml file.  Go to Step4 to edit the *openebs-config.yaml* to include the required disks for creating cStor Pool.
 
    ```
@@ -136,32 +136,33 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    ---
    ```
 
-In the auto pool method, you must not select the disks which are detected by NDM for creating cStor Pools. You can create a file called *openebs-config.yaml* in your master node and add the following contents into the file.  Go to Step5 to apply the modified *openebs-config.yaml* for creating cStor Pools.
-```
----
-apiVersion: openebs.io/v1alpha1
-kind: StoragePoolClaim
-metadata:
-  name: cstor-disk
-spec:
-  name: cstor-disk
-  type: disk
-  maxPools: 3
-  poolSpec:
-    poolType: striped
----
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: openebs-cstor-disk
-  annotations:
-    openebs.io/cas-type: cstor
-    cas.openebs.io/config: |
-      - name: StoragePoolClaim
-        value: "cstor-disk"
-provisioner: openebs.io/provisioner-iscsi
----
-```
+   In the auto pool method, you must not select the disks which are detected by NDM for creating cStor Pools. You can create a file called *openebs-config.yaml* in your master node and add the following contents into the file.  Go to Step5 to apply the modified *openebs-config.yaml* for creating cStor Pools.
+
+   ```
+   ---
+   apiVersion: openebs.io/v1alpha1
+   kind: StoragePoolClaim
+   metadata:
+     name: cstor-disk
+   spec:
+     name: cstor-disk
+     type: disk
+     maxPools: 3
+     poolSpec:
+       poolType: striped
+   ---
+   apiVersion: storage.k8s.io/v1
+   kind: StorageClass
+   metadata:
+     name: openebs-cstor-disk
+     annotations:
+       openebs.io/cas-type: cstor
+       cas.openebs.io/config: |
+         - name: StoragePoolClaim
+           value: "cstor-disk"
+   provisioner: openebs.io/provisioner-iscsi
+   ---
+   ```
 
 4. Edit *openebs-config.yaml* file to include disk details associated to each node in the cluster which you are using for creating the OpenEBS cStor Pool. Replace the disk names under *diskList* section, which you can get from running the `kubectl get disks` command.
 
