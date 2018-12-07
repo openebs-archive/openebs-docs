@@ -72,7 +72,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ReplicaImage
-        value: quay.io/openebs/m-apiserver:0.7.2
+        value: quay.io/openebs/m-apiserver:0.8.0
 ```
 
 ### Controller Image Policy
@@ -92,7 +92,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: quay.io/openebs/jiva:0.7.2
+        value: quay.io/openebs/jiva:0.8.0
 
 ```
 
@@ -184,7 +184,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:0.7.2
+        value: quay.io/openebs/m-exporter:0.8.0
 ```
 
 ### Volume Space Reclaim Policy
@@ -360,7 +360,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeControllerImage
-        value: quay.io/openebs/cstor-volume-mgmt:0.7.2
+        value: quay.io/openebs/cstor-volume-mgmt:0.8.0
     openebs.io/cas-type: cstor
 ```
 
@@ -375,7 +375,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeTargetImage
-        value:quay.io/openebs/cstor-istgt:0.7.2
+        value:quay.io/openebs/cstor-istgt:0.8.0
     openebs.io/cas-type: cstor
 ```
 
@@ -424,7 +424,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:0.7.2
+        value: quay.io/openebs/m-exporter:0.8.0
     openebs.io/cas-type: cstor
 ```
 
