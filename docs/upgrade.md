@@ -6,24 +6,24 @@ sidebar_label: Upgrade
 
 ------
 
-# Upgrade from OpenEBS 0.6.0 to 0.7.0
+# Upgrade from OpenEBS 0.7.x to 0.8.0
 
 ## Overview
 
-This document describes the steps for upgrading OpenEBS from 0.6.0 to 0.7.x. 
+This document describes the steps for upgrading OpenEBS from 0.7.x to 0.8.0
 
 The upgrade of OpenEBS is a two step process:
 
 - *Step 1* - Upgrade the OpenEBS Operator
-- *Step 2* - Upgrade the OpenEBS Volumes that were created with older OpenEBS Operator (0.6.0)
+- *Step 2* - Upgrade the OpenEBS Volumes that were created with older OpenEBS Operator (0.7.x), one at a time.
 
 **Note:**
-For older versions, OpenEBS supports upgrade to 0.6 version only from 0.5.3 and 0.5.4. For steps to upgrade to 0.6.0, [click](https://v06-docs.openebs.io/docs/next/upgrade.html) here.
+For older versions, OpenEBS supports upgrade to 0.7.0 version only from 0.5.3, 0.5.4and 0.6.0. For steps to upgrade to 0.7.x from 0.6, [click](https://v07-docs.openebs.io/docs/next/upgrade.html) here.
 
 ### Terminology
 
 - **OpenEBS Operator:** Refers to maya-apiserver and openebs-provisioner along with respective services, service account, roles, rolebindings.
-- **OpenEBS Volume:**The Jiva controller and replica pods.
+- **OpenEBS Volume:** Storage Engine pods like cStor or Jiva controller(aka target) & replica pods
 
 ### Prerequisites
 
@@ -37,22 +37,24 @@ You can either `git clone` or download the upgrade scripts.
 mkdir upgrade-openebs
 cd upgrade-openebs
 git clone https://github.com/openebs/openebs.git
-cd openebs/k8s/upgrade/0.6.0-0.7.0/Or
+cd openebs/k8s/upgrade/0.7.0-0.8.0/
 ```
 
-Else you can download the following files to your work directory from <https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.6.0-0.7.0>
+Else you can download the following files to your work directory from https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.7.0-0.8.0 .
 
 - `patch-strategy-recreate.json`
 - `jiva-replica-patch.tpl.json`
 - `jiva-target-patch.tpl.json`
 - `jiva-target-svc-patch.tpl.json`
-- `target-patch-remove-labels.json`
-- `target-svc-patch-remove-labels.json`
-- `replica-patch-remove-labels.json`
-- `sc.patch.tpl.yaml`
-- `upgrade_sc.sh`
-- `oebs_update.sh`
-- `pre_upgrade.sh`
+- `jiva_volume_update.sh`
+- `cstor-pool-patch.tpl.json`
+- `cstor-target-patch.tpl.json`
+- `cstor-target-svc-patch.json`
+- `cstor_pool_update.sh`
+- `cstor_target_update.sh`
+- `pre_upgrade.sh` 
+
+**Note:**The upgrade  procedure uses the node labels to pin the Jiva replicas to the nodes where they are present. On node restart, these labels will disappear and can cause the replica to be un-scheduled.
 
 ### Breaking Changes in 0.7.x
 
