@@ -10,7 +10,7 @@ sidebar_label: MayaOnline
 
 ![MayaOnline Overview](https://docs.mayaonline.io/docs/assets/docOverview.jpg)
 
-MayaOnline supports importing vanilla Kubernetes clusters and OpenShift Kubernetes clusters.
+MayaOnline supports connecting vanilla Kubernetes clusters and OpenShift Kubernetes clusters.
 
 ![Importing OpenEBS clusters into MayaOnline](/docs/assets/MO-import2.png)
 
