@@ -234,7 +234,7 @@ openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-prom
 standard (default)          kubernetes.io/gce-pd                                       19m
 ```
 
-If you are using default Storage Class which is created as part of *openebs-operator-0.7.0.yaml* installation then you have to modify your existing default Storage Class and edit it using *kubectl* command using following way.
+If you are using default Storage Class which is created as part of *openebs-operator-0.8.0.yaml* installation then you have to modify your existing default Storage Class and edit it using *kubectl* command using following way.
 
 ```
 kubectl edit sc openebs-jiva-default
