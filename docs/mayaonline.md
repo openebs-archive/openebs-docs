@@ -12,7 +12,7 @@ sidebar_label: MayaOnline
 
 MayaOnline supports importing vanilla Kubernetes clusters and OpenShift Kubernetes clusters.
 
-![Importing OpenEBS clusters into MayaOnline](/docs/assets/MO-import1.png)
+![Importing OpenEBS clusters into MayaOnline](/docs/assets/MO-import2.png)
 
 [Getting started ](https://docs.mayaonline.io/docs/start.html) with MayaOnline is very easy. Login with your github credentials and start importing your Kubernetes clusters. 
 
