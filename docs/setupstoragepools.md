@@ -87,7 +87,7 @@ spec:
 cStor provides storage scalability along with ease of deployment and usage.cStor can handle multiple disks of same size per Node and create different storage pools. You can use these storage pools to create cStor volumes which you can utilize to run applications.
 
 Additionally, you can add disks using the documentation available at [Kubernetes docs](https://cloud.google.com/compute/docs/disks/add-persistent-disk#create_disk).  You can use these disks for creating the OpenEBS cStor pool by combining all the disks per node. You can scale the storage pool by adding more disks to the instance and in turn to the storage pool. RAID type for creating storage pools are mirror and striped types.
-You can create cStor pools on OpenEBS clusters once you have installed OpenEBS 0.7 version. You can create storage pool manually or by creating auto pool configuration.
+You can create cStor pools on OpenEBS clusters once you have installed OpenEBS 0.8 version. You can create storage pool manually or by creating auto pool configuration.
 
 ### By Using Manual Method
 
