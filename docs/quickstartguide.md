@@ -20,7 +20,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
 4. You can install OpenEBS either through stable helm chart or by using OpenEBS operator/kubectl.  
 
-5. If you are using CentOS as base OS for 0.7 OpenEBS installation, then you must *disable selinux* for OpenEBS Node Disk Manager to detect the OS disk. You can *disable selinux* by using the `setenforce 0` command.
+5. If you are using CentOS as base OS for 0.8 OpenEBS installation, then you must *disable selinux* for OpenEBS Node Disk Manager to detect the OS disk. You can *disable selinux* by using the `setenforce 0` command.
 
     ### Using a Stable Helm Chart
 

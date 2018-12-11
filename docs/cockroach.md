@@ -36,7 +36,7 @@ The following output shows the status of the nodes in the cluster
     gke-ranjith-080-default-pool-8d4e3480-qsvn   Ready     <none>    22h       v1.9.7-gke.11
     gke-ranjith-080-default-pool-8d4e3480-rb03   Ready     <none>    22h       v1.9.7-gke.11
 
-Also make sure that you have deployed OpenEBS in your cluster. If not deployed, you can install from [here](https://docs.openebs.io/docs/next/quickstartguide.html).
+Also make sure that you have deployed OpenEBS in your cluster. If not deployed, you can install from [here](/docs/next/quickstartguide.html).
 
 You can check the status of OpenEBS pods by running following command.
 
@@ -416,8 +416,6 @@ Using a Load Generator
    ```
    >\q
    ```
-
-
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 

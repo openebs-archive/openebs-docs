@@ -33,7 +33,7 @@ gke-doc-update-chandan-default-pool-80bd877e-jhc9   Ready     <none>    26m     
 
 
 
-Also make sure that you have deployed OpenEBS in your cluster. If not deployed, you can install from [here](https://docs.openebs.io/docs/next/quickstartguide.html).
+Also make sure that you have deployed OpenEBS in your cluster. If not deployed, you can install from [here](/docs/next/quickstartguide.html).
 
 You can check the status of OpenEBS pods by running following command.
 

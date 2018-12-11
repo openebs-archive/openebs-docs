@@ -64,7 +64,7 @@ oc adm policy add-scc-to-user hostaccess admin --as:system:admin
 You can install OpenEBS cluster by running the following command on OpenShift master.
 
 ```
-oc apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
+oc apply -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
 ```
 
 OpenEBS control plane pods are created under “openebs” namespace. CAS Template, default Storage Pool and default Storage Classes are created after executing the above command.
@@ -113,7 +113,7 @@ Use this pvc name in your application yaml to run your application using OpenEBS
 **Example:**: Once the changes are done in Percona application yaml, it can be deployed by using the following command.
 
 ```
-oc apply -f https://raw.githubusercontent.com/openebs/openebs/v0.7/k8s/demo/percona/percona-openebs-deployment.yaml
+oc apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml
 ```
 
 Verify that the deployment runs successfully using the following commands.
