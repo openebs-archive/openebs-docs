@@ -46,7 +46,7 @@ gke-ranjith-080-default-pool-8d4e3480-qsvn   Ready     <none>    1d        v1.9.
 gke-ranjith-080-default-pool-8d4e3480-rb03   Ready     <none>    1d        v1.9.7-gke.11
 ```
 
-Also make sure that you have deployed OpenEBS in your cluster. If not deployed, you can install from [here](https://docs.openebs.io/docs/next/quickstartguide.html).
+Also make sure that you have deployed OpenEBS in your cluster. If not deployed, you can install from [here](/docs/next/quickstartguide.html).
 
 You can check the status of OpenEBS pods by running following command.
 
@@ -136,7 +136,6 @@ NAME                         READY     STATUS    RESTARTS   AGE
 pxc-node1-688f987789-9tvz5   1/1       Running   0          18m
 pxc-node2-7f64f4cfd4-qrsz8   1/1       Running   0          15m
 pxc-node3-65ddfd699-nk62z    1/1       Running   0          9m
-
 ```
 
 ## Deployment Guidelines

@@ -25,6 +25,14 @@ gke-doc-update-chandan-default-pool-80bd877e-5jqh   Ready     <none>    6h      
 gke-doc-update-chandan-default-pool-80bd877e-jhc9   Ready     <none>    6h        v1.11.3-gke.18
 ```
 
+Also make sure that you have deployed OpenEBS in your cluster. If not deployed, you can install from [here](/docs/next/quickstartguide.html).
+
+You can check the status of OpenEBS pods by running following command.
+
+```
+kubectl get pod -n openebs
+```
+
 Get the default StorageClasses installed during the OpenEBS operator installation. You can run the following command to get the StorageClass details.
 
 ```
@@ -91,8 +99,6 @@ spec:
       storage: 5G
 ```
 
-
-
 Apply the percona pod yaml using the following commands.
 
     kubectl apply -f percona-mysql.yaml
@@ -114,10 +120,6 @@ You should get the below output for the above command.
 NAME      READY     STATUS    RESTARTS   AGE
 percona   1/1       Running   0          5m
 ```
-
-**Note:**
-
-It may take some time for the pods to start as the images must be pulled and instantiated. This is also dependent on the network speed.
 
 Running a Database Client Container to Generate SQL Load
 ------------------------------------------------------

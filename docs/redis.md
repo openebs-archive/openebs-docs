@@ -84,7 +84,7 @@ wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/redis/red
 Change the storage-class to **openebs-cstor-sparse** from openebs-jiva-default in redis-statefulset.yml
 
 ```
-  volumeClaimTemplates:
+volumeClaimTemplates:
   - metadata:
       name: datadir
       annotations:
@@ -94,8 +94,8 @@ Change the storage-class to **openebs-cstor-sparse** from openebs-jiva-default i
       resources:
         requests:
           storage: 5G
-```          
-          
+```
+
 Apply the modified Redis YML file using the following command.
 
 ```
