@@ -60,8 +60,9 @@ Create a YAML file named *mongo-statefulset.yaml* and copy the following sample 
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: openebs-cstor-sparse
+  name: openebs-cstor-sparse-mongo
   annotations:
+    openebs.io/cas-type: cstor
     cas.openebs.io/config: |
       - name: ReplicaCount
         value: "1"
@@ -130,7 +131,7 @@ spec:
  - metadata:
      name: mongo-persistent-storage
    spec:
-     storageClassName: openebs-cstor-sparse
+     storageClassName: openebs-cstor-sparse-mongo
      accessModes:
        - ReadWriteOnce
      resources:
