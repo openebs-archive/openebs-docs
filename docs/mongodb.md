@@ -49,7 +49,7 @@ openebs-snapshot-promoter volumesnapshot.external-storage.k8s.io/snapshot-promot
 standard (default)        kubernetes.io/gce-pd                                       18h
 ```
 
-Create a YAML file named *mongo-statefulset.yaml* and copy the following sample YAML of cockroach DB to the created file.
+Create a YAML file named *mongo-statefulset.yaml* and copy the following sample YAML of Mongo DB to the created file.
 
 ```
 # Create a StorageClass suited for Mongo StatefulSet
@@ -139,10 +139,10 @@ spec:
          storage: 5G
 ```
 
-Apply the mongo-statefulset.yml using the following commands.
+Apply the mongo-statefulset.yaml using the following commands.
 
 ```
-kubectl apply -f mongo-statefulset.yml
+kubectl apply -f mongo-statefulset.yaml
 ```
 
 Output will be similar to following one.
