@@ -72,7 +72,7 @@ helm repo add openebs-charts https://openebs.github.io/charts/
 helm repo update
 ```
 
-Now you are ready to install OpenEBS using helm using the following command. OpenEBS will install in "**default**" namespace.
+Now you are ready to install OpenEBS using Helm using the following command. OpenEBS will install in "**default**" namespace.
 
 ```
 helm install openebs-charts/openebs
