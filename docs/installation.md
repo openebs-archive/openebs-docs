@@ -152,7 +152,7 @@ You can install OpenEBS cluster by running the following command.
 kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.7.0.yaml
 ```
 
-OpenEBS control plane pods are created under “**openebs**” namespace. CAS Template, default Storage Pool and default Storage Classes are created after executing the above command.Now select your storage to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
+OpenEBS control plane pods are created under “**openebs**” namespace. CAS Template, default Storage Pool and default Storage Classes are created after executing the above command. Now select your storage to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
 
 ## Select Your Storage Engine
 
