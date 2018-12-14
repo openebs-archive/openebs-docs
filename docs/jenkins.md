@@ -56,7 +56,7 @@ openebs-provisioner-5c65ff5d55-ljhbh        1/1       Running   0          20m
 openebs-snapshot-operator-9898bbb95-68rw7   2/2       Running   0          20m
 ```
 
-Create a YAML file named *jenkins.yaml* and copy the following contents to the yaml file.
+Create a YAML file named *jenkins.yaml* and copy the following contents to the YAML file.
 
     kind: PersistentVolumeClaim
     apiVersion: v1
@@ -110,7 +110,7 @@ Create a YAML file named *jenkins.yaml* and copy the following contents to the y
         app: jenkins-app
       type: NodePort
 
-Once you have copied the above content to *cockroachdb-sts.yaml*l, you can run the following command to launch Jenkins application on OpenEBS cStor volume.
+Once you have copied the above content to *jenkins.yaml*, you can run the following command to launch Jenkins application on OpenEBS cStor volume.
 
 ```
 kubectl apply -f jenkins.yaml
