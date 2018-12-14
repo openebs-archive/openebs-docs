@@ -99,7 +99,7 @@ spec:
       storage: 5G
 ```
 
-Apply the percona pod yaml using the following commands.
+Apply the *percona-mysql.yaml* using the following commands.
 
     kubectl apply -f percona-mysql.yaml
 
