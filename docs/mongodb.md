@@ -49,7 +49,7 @@ openebs-snapshot-promoter volumesnapshot.external-storage.k8s.io/snapshot-promot
 standard (default)        kubernetes.io/gce-pd                                       18h
 ```
 
-Create a YAML file named *mongo-statefulset.yaml* and copy the following sample YAML of cockroach DB to the created file.
+Create a YAML file named *mongo-statefulset.yaml* and copy the following sample YAML of Mongo DB to the created file.
 
 ```
 # Create a StorageClass suited for Mongo StatefulSet
@@ -60,8 +60,9 @@ Create a YAML file named *mongo-statefulset.yaml* and copy the following sample 
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: openebs-cstor-sparse
+  name: openebs-cstor-sparse-mongo
   annotations:
+    openebs.io/cas-type: cstor
     cas.openebs.io/config: |
       - name: ReplicaCount
         value: "1"
@@ -130,7 +131,7 @@ spec:
  - metadata:
      name: mongo-persistent-storage
    spec:
-     storageClassName: openebs-cstor-sparse
+     storageClassName: openebs-cstor-sparse-mongo
      accessModes:
        - ReadWriteOnce
      resources:
@@ -138,10 +139,10 @@ spec:
          storage: 5G
 ```
 
-Apply the mongo-statefulset.yml using the following commands.
+Apply the *mongo-statefulset.yaml* using the following commands.
 
 ```
-kubectl apply -f mongo-statefulset.yml
+kubectl apply -f mongo-statefulset.yaml
 ```
 
 Output will be similar to following one.
@@ -158,7 +159,7 @@ Verify that MongoDB replicas, mongo headless service and OpenEBS persistent volu
 kubectl get pods
 ```
 
-Output will be similar to below one.
+Output will be similar to following one.
 
 ```
 NAME                  READY     STATUS    RESTARTS   AGE
@@ -187,7 +188,7 @@ mongo        ClusterIP   None          <none>        27017/TCP   1h
 
 In this example, you will be using a mongo-loadgen.yaml to create load on mongo-0.mongo pod.
 
-The mongo-loadgen.yaml  can be created with below entries.
+The *mongo-loadgen.yaml*  can be created with below entries.
 
 ```
 apiVersion: batch/v1
@@ -208,33 +209,14 @@ spec:
         tty: true
 ```
 
-**Note:** While creating mongo-loadgen.yaml,in the --mongo-url section user has to mention your pod mongo pod name. Here in this example its mongo-0.mongo.
-
-```
-vi mongo-loadgen.yaml
-```
+**Note:** While creating *mongo-loadgen.yaml*, in the --mongo-url section user has to mention your pod mongo pod name. Edit the *mongo-loadgen.yaml* . Here in this example its mongo-0.mongo.
 
 > --mongo-url='mongodb://mongo-0.mongo'
-
-Now run the below commands.
-
-```
-kubectl apply -f mongo-statefulset.yml
-```
 
 To check the pod status run the below command.
 
 ```
 kubectl get pods
-```
-
-Observed output will be similar to following.
-
-```
-NAME                  READY     STATUS      RESTARTS   AGE
-mongo-0               2/2       Running     0          33m
-mongo-1               2/2       Running     0          30m
-mongo-2               2/2       Running     0          27m
 ```
 
 

@@ -265,6 +265,8 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 
 9. If you are using cStor sparse pool which is created on sparse disk, then apply  the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values.  This sample PVC yaml will use default storage class *openebs-cstor-sparse* created as part of *openebs-operator.yaml* installation.
 
+   **Note:** cStor sparse pool should be used for POC and testing environments. We recommend to use disk pool for actual workloads.
+
 
 10. Apply the sample pvc yaml file to create cStor volume on cStor sparse Pool using the following command.
 
