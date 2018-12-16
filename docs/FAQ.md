@@ -81,7 +81,7 @@ If you have a Kubernetes environment, you can deploy OpenEBS using the following
 
 `kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml`
 
-You can then begin running a workload against OpenEBS. There are large and growing number of workloads that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. You can join the Slack channel at  https://openebs-community.slack.com.
+You can then begin running a workload against OpenEBS. There is a  large and growing number of workloads that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. You can join the Slack channel at  https://openebs-community.slack.com.
 
 Register at MayaOnline.io to receive free monitoring and a single view of stateful workloads of your Kubernetes environment. MayaOnline incorporates customized versions of Prometheus for monitoring, Grafana for metrics visualization and Scope to see the overall environment, and our MuleBot for ChatOps integration and more.  
 
