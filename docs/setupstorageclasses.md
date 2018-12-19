@@ -24,9 +24,9 @@ OpenEBS Storage provides several features that can be customized for each volume
 
 - Number of replications
 - Zone or node affinity
-- Snapshot scheduling
 - Volume expansion policy
 - Replication policy
+- File System policy
 
 OpenEBS comes with some pre-defined set of storage classes that can be readily used. They help in provisioning Jiva and cStor. 
 
