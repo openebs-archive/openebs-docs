@@ -91,7 +91,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
 
 3. If you would like to create a storage pool using external disks which are mounted on nodes, you can create storage pool either manually or by auto pool method.
 
-   In the manual method, you have to select the disks which will be used for cStor pool creation in the sample ymal file provided in      Step4. You can create a file called *openebs-config.yaml* in your master node and add the following contents into the file. In this case, there are 2 disks per node attached which creates a storage pool per node in a striped manner. Hence there are a total of 6 external disks i.e. 2 disks per node which are mentioned in the following yaml file.  Go to Step4 to edit the *openebs-config.yaml* to include the required disks for creating cStor Pool.
+   In the manual method, you have to select the disks which will be used for cStor pool creation in the sample YAML file provided in Step4. You can create a file called *openebs-config.yaml* in your master node and add the following contents into the file. In this case, there are 2 disks per node attached which creates a storage pool per node in a striped manner. Hence there are a total of 6 external disks i.e. 2 disks per node which are mentioned in the following yaml file.  Go to Step4 to edit the *openebs-config.yaml* to include the required disks for creating cStor Pool.
 
    ```
    ---
@@ -254,7 +254,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
     openebs-snapshot-operator-849f69b9bb-2vqwl   2/2       Running   0          10m\
     ```
 
-7. If you are using cStor Pool which is created using external disks, then apply the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values. This sample PVC yaml will use default storage class *openebs-cstor-disk* created as part of *openebs-config.yaml* installation.
+7. If you are using cStor Pool which is created using external disks, then apply the sample PVC yaml file which can be used to create OpenEBS cStor volume with default CAS Template values. This sample PVC yaml will use storage class named *openebs-cstor-disk* which is created as part of *openebs-config.yaml* installation.
 
 8. Apply the sample pvc yaml file to create cStor volume on cStor Pool created using external disks by following command.
 
@@ -268,7 +268,7 @@ cStor can be provisioned in your Kubernetes cluster by performing the following 
    **Note:** cStor sparse pool should be used for POC and testing environments. We recommend to use disk pool for actual workloads.
 
 
-10. Apply the sample pvc yaml file to create cStor volume on cStor sparse Pool using the following command.
+10. Apply the sample pvc yaml file to create cStor volume on cStor sparse Pool using the following command. 
 
   ```
   kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-cstor-default.yaml
