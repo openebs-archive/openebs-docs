@@ -35,10 +35,10 @@ Using Jiva, you can create storage pool on hosted path or an external disk. You 
 To utilize an external disk, you must create a storage pool on the node where you have attached the disk. Use the following command to login to the node from master. Replace `<Node Name>` with your actual node name and `<Zone Of Your Node>` with the actual zone.
 
 ```
-gcloud compute ssh <Node Name> --zone=<Zone Of Your Node>
+gcloud compute ssh <Node Name> --zone=<Zone of Your Node>
 ```
 
-To create a storage pool you must first mount the external disk to all required nodes in the cluster.
+To create a storage pool you must first mount the external disk to all required nodes in the cluster. You can create one folder where you can mount the external disk path. The folder can be created using the following command.
 
 ```
 sudo mkdir /mnt/openebs_disk
@@ -68,7 +68,7 @@ Mount the disk on your OpenEBS cluster.
 sudo mount /dev/sdb /mnt/openebs_disk
 ```
 
-Add the following entries in the *openebs-operator.yaml* file. 
+You can create a YAML file named *openebs-config.yaml* and add the following entries in the *openebs-config.yaml*file. 
 
 ```
 apiVersion: openebs.io/v1alpha1
@@ -82,18 +82,38 @@ spec:
 
 **Note:** Change the path with your mounted path if it is not your default mount path. Also, remember your pool name. In this example, the pool name is *test-mntdir*. 
 
+Once you have modified the *openebs-config.yaml*, you can apply the file using the following command.
+
+```
+kubectl apply -f openebs-config.yaml
+```
+
+This will create the Jiva storage pool with name *test-mntdir*. You can get the status of storage pool using the following command.
+
+```
+kubectl get sp
+```
+
 ## Configuring a Storage Pool on OpenEBS using cStor
 
 cStor provides storage scalability along with ease of deployment and usage.cStor can handle multiple disks of same size per Node and create different storage pools. You can use these storage pools to create cStor volumes which you can utilize to run applications.
 
-Additionally, you can add disks using the documentation available at [Kubernetes docs](https://cloud.google.com/compute/docs/disks/add-persistent-disk#create_disk).  You can use these disks for creating the OpenEBS cStor pool by combining all the disks per node. You can scale the storage pool by adding more disks to the instance and in turn to the storage pool. RAID type for creating storage pools are mirrored and striped types.
-You can create cStor pools on OpenEBS clusters once you have installed OpenEBS 0.8 version. You can create storage pool manually or by creating auto pool configuration.
+Additionally, you can add disks using the documentation available at [Kubernetes docs](https://cloud.google.com/compute/docs/disks/add-persistent-disk#create_disk).  You can use these disks for creating the OpenEBS cStor pool by combining all the disks per node. You can scale the storage pool by adding more disks to the instance and in turn to the storage pool. 
+
+Supported RAID type for creating storage pools are mentioned below.
+
+- Mirrored (RAID 1)
+- Striped (RAID 0) 
+
+You can change the **poolType** either **striped** or **mirrored** in the YAML mentioned in the following sections for choosing the needed RAID method. 
+
+You can create cStor pools on OpenEBS clusters once you have installed OpenEBS 0.8 version. Verify if the OpenEBS installation is complete. If not, go to [installation](/docs/next/installation.html). You can create storage pool manually or by creating auto pool configuration. 
 
 ### By Using Manual Method
 
-In manual method, you can select the required disks and use it in the below yaml file which will create cStor pool using these selected disks.
+In manual method, you can select the required disks and use it in the below yaml file which will create cStor pool using these selected disks. 
 
-You can create a yaml file named *openebs-config.yaml* and add below contents to it. 
+You can create a YAML file named *openebs-config.yaml* and add below contents to it for creating storage pool with striped manner. 
 
 ```
 ---
@@ -140,7 +160,7 @@ Edit *openebs-config.yaml* file to include disk details associated to each node 
 
 ### By Using Auto Method
 
-In auto pool creation method, you don't have to select the disks and it will create a cStor pool using the disks detected by [Node Disk Manager](/docs/next/architecture.html#cstor). You can create a yaml file named *openebs-config.yaml* and add below contents to it and then apply the yaml.
+In auto pool creation method, you don't have to select the disks and it will create a cStor pool using the disks detected by [Node Disk Manager](/docs/next/architecture.html#cstor). You can create a YAML file named *openebs-config.yaml* and add below contents to it and then apply the YAML for creating storage pool with striped manner.
 
 ```
 ---
@@ -174,13 +194,13 @@ provisioner: openebs.io/provisioner-iscsi
 #### **Limitations**:
 
 1. For Striped pool, it will take only one disk per Node even Node have multiple disks.
-2. For Mirrored pool, it must have only 2 disks attached per Node.
+2. For Mirrored pool, it will take only 2 disks attached per Node even Node have multiple disks.
 
-## Scheduling a Pool on a Node
+## Scheduling a Jiva Storage Pool on a Node
 
-If you want to schedule your pool on a particular node please follow [this](https://docs.openebs.io/docs/next/scheduler.html) procedure before applying the *openebs-operator.yaml* file. Please refer [installation](/docs/next/installation.html#install-openebs-using-kubectl) to deploy OpenEBS cluster in your k8s environment which will create a default storage pool on the host path. Jiva volumes will be deployed inside this path only.
+If you want to schedule your Jiva Storage pool on a particular node please follow [this](https://docs.openebs.io/docs/next/scheduler.html) procedure before applying the *openebs-operator.yaml* file. Please refer [installation](/docs/next/installation.html#install-openebs-using-kubectl) to deploy OpenEBS cluster in your k8s environment which will create a default storage pool on the host path. Jiva volumes will be deployed inside this path only.
 
-For example, if you want to run a Percona application in this storage pool, you must create a storage class yaml called as *openebs-storageclasses.yaml* by adding the storage pool name in the *openebs-percona* storage class as Percona application is used in the example. 
+For example, if you want to run a Percona application in this storage pool, you must create a storage class YAML called as *openebs-storageclasses.yaml* by adding the storage pool name in the *openebs-percona* storage class as Percona application is used in the example. 
 
 ```
 ---
