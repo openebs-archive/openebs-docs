@@ -91,9 +91,7 @@ For databases like Bolt DB, that do not provide replication and are intended for
 
 ## Example BG DB with OpenEBS:
 
-![BG No DB Using OpenEBS](/docs/assets/bg-nodb.png)
-
-Examples are either Cassandra or MySQL with master-slave or RabbitMQ with Federated Message QueuesRepeat the following till all the DB instances are upgradedLaunch a new Distributed Data Node by cloning the existing volume. (Cloning will help to speed up the rebuild time when data per node is large).Introduce the newer version of the node as either new node into the ring or as replica. The node can either replace an existing node or be added as a new node. On failure, either remove the new node if it was added as extra node or replace back with the old node. If the old node is added back, its data will be updated to latest state via the other nodes. 
+Examples are either Cassandra or MySQL with master-slave or RabbitMQ with Federated Message Queues. Repeat the following till all the DB instances are upgraded. Launch a new Distributed Data Node by cloning the existing volume. (Cloning will help to speed up the rebuild time when data per node is large). Introduce the newer version of the node as either new node into the ring or as replica. The node can either replace an existing node or be added as a new node. On failure, either remove the new node if it was added as extra node or replace back with the old node. If the old node is added back, its data will be updated to latest state via the other nodes. 
 
 
 
@@ -105,14 +103,14 @@ Providing Granular Volumes per Application vs other storages that share the same
 
 That data by being granular is also made very portable!
 
-OpenEBS supports Blue/Green Deployment (aka Seamless Upgrades). For example, upgrading of the storage controller doesn’t impact all the stateful workloads running on the OpenEBS storage. In other words, not all storage workloads need to be upgraded at once. 
-
+OpenEBS supports Blue/Green Deployment (aka Seamless Upgrades). For example, upgrading of the storage controller doesn’t impact all the Stateful workloads running on the OpenEBS storage. In other words, not all storage workloads need to be upgraded at once. 
 
 
 
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
