@@ -71,7 +71,7 @@ This issue is due to failed application operations in the container. Typically t
   3. If anyone of the replicas are still in RO mode, wait for the synchronization to complete. If all the replicas are in RO mode (this may occur when all replicas re-register into the controller within short intervals), you must restart the OpenEBS volume controller using the `kubectl delete pod <pvc-ctrl>`  command . Since it is a Kubernetes deployment, the controller pod is restarted successfully. Once done, verify that all replicas transition into *RW mode*.
 
   4. Un-mount the stale iscsi device mounts on the application node. Typically, these devices are mounted in the `/var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/<target-portal:iqn>-lun-0`  path.
-  
+
  ```
  Example:
  umount /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.39.241.26:
@@ -223,7 +223,9 @@ kubectl apply -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-op
 
 You can also exec into this application to check the content, retrieve the files, or use the application to check the content.
 
+## Application pod is not able to mount the cStor volume in OpenEBS 0.7
 
+In OpenEBS 0.7, unit for mentioning size in PVC should be using "G". Till OpenEBS 0.7 version, it can be used both "G" and "Gi" as the unit for mentioning size. Once you change the size in PVC as per the recommended way, your application pod will run by consuming cStor volume. 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
