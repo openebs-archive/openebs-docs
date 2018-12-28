@@ -30,7 +30,7 @@ An example of a B-G strategy is shown below.
 One assumption that is made for B/G to work properly is that software and database schema changes are designed to be backward compatible.  The sequence of steps in B/G strategy will be similar to what is outlined below
 
 - Green Deployment is brought up with the newer version.  
-- If there is a database, the replication is setup between Blue DB -> Green DB.  
+- If there is a database, the replication is set up between Blue DB -> Green DB.  
 - If there is no DB, then Blue Volume -> Green Volume replication should be enabled.  
 - Take snapshots are taken on the Blue volume.  
 - DB Schema changes are applied on the Green Volume.  
@@ -62,10 +62,10 @@ For the purpose of describing various scenarios of B/G strategy, the stateful ap
 
 ### B/G strategy for stateful applications which are not databases
 
-In this case, a direct clone of the OpenEBS volume is created and synchronous replication connection is setup between the primary volume (Blue) and secondary volume (Green). The B/G strategy sequence for upgrade is performed as described below.
+In this case, a direct clone of the OpenEBS volume is created and synchronous replication connection is set up between the primary volume (Blue) and secondary volume (Green). The B/G strategy sequence for upgrade is performed as described below.
 
 1. Stateful application (APP-V1) is connected to OpenEBS volume OE-V1
-2. OE-V1 is cloned to OE-V2 and a synchronous replication data connection is setup between OE-V1 and OE-V2
+2. OE-V1 is cloned to OE-V2 and a synchronous replication data connection is set up between OE-V1 and OE-V2
 3. Once OE-V2 is ready, new version of the application (APP-V2) is launched and load balancer is pointed to APP-V2. OpenEBS volume is switched to reverse replication mode, the data is now synchronized from OE-V2 to OE-V1. It is important to note that the data schema of APP-V1 and APP-V2 are backward compatible with each other so that both versions of application can work with data.
 4. If there is any issue with the application version APP-V2 / Green copy, the load balancer is pointed to APP-V1, where the latest data is already available on OE-V1. The deployment is back on Blue copy.
 
@@ -75,7 +75,7 @@ In this case, a direct clone of the OpenEBS volume is created and synchronous re
 
 
 
-Direct Apps and Standalone Database Apps can make use of the Clone feature to remove manual sync operations and also speed up the time required to setup a replicated deployment. 
+Direct Apps and Standalone Database Apps can make use of the Clone feature to remove manual sync operations and also speed up the time required to set up a replicated deployment. 
 
 Masterless Database Apps can make use of the Snapshot and Clone features to quickly add upgrade or downgrade a node in the ring by inline restore of the snapshots.
 
