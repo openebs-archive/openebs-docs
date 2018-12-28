@@ -143,11 +143,16 @@ If the following warning messages are displayed while launching an application, 
 
 The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.
 
-## Why ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ are showing in different size?
+## Why `OpenEBS_logical_size` and `OpenEBS_actual_used` are showing in different size?
 
-The ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ will start showing different sizes when there are replica node restarts and internal snapshots are created for synchronizing replicas.
+The `OpenEBS_logical_size` and `OpenEBS_actual_used` parameters will start showing different sizes when there are replica node restarts and internal snapshots are created for synchronizing replicas.
+
+## What must be the disk mount status on Node for provisioning OpenEBS volume?
+
+OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume. Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted) and cStor can consume disks that are attached (are visible to OS as SCSI devices) by creating a pool with these disks.
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
