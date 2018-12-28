@@ -21,7 +21,7 @@ Following are the benefits of using Logger.
 
 ### Where is the Logger found?
 
-You can find the Logger file [here](https://github.com/openebs/test-tools/blob/master/logger/debugjob.yamll).
+You can find the Logger file [here](https://github.com/openebs/test-tools/blob/master/logger/debugjob.yaml).
 
 ### How does Logger work?
 
