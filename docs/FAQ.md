@@ -129,9 +129,9 @@ Goto your application yaml file located in your kube master and apply the yaml a
 
 This will delete the application pod and the corresponding pvc associated to it.
 
-## What is the default OpenEBS retention policy?
+## What is the default OpenEBS Reclaim policy?
 
-The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim.
+The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim. In case of cStor volumes, data was being deleted as well. For jiva, from 0.8.0 version, the data is deleted via scrub jobs.
 
 ## Can I use the same PVC for multiple Pods?
 
