@@ -316,6 +316,8 @@ The StatefulSet workloads access the OpenEBS storage volume  by connecting to th
       openebs.io/target-affinity: fio-jiva
   ```
 
+**Note**: *This Policy only applies to Deployments or StatefulSets with single workload instance.*
+
 ## Types of Storage Policies for cStor
 
 OpenEBS supports several types of Storage Policies for cStor volume such as the following.
@@ -544,6 +546,8 @@ The StatefulSet workloads access the OpenEBS storage volume  by connecting to th
     labels:
       openebs.io/target-affinity: fio-jiva
   ```
+
+**Note**: *This Policy only applies to Deployments or StatefulSets with single workload instance.*
 
 ### Target Namespace
 
