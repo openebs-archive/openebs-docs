@@ -37,7 +37,7 @@ Following are the steps to get started with OpenEBS on a Kubernetes cluster.
 
     ```
     helm repo update
-    helm install --namespace <custome_namespace> --name openebs stable/openebs
+    helm install --namespace <custom_namespace> --name openebs stable/openebs
     ```
 
     Once you install OpenEBS in custom namespace, all the OpenEBS components will be deployed under the same namespace.
