@@ -149,7 +149,18 @@ The `OpenEBS_logical_size` and `OpenEBS_actual_used` parameters will start showi
 
 ## What must be the disk mount status on Node for provisioning OpenEBS volume?
 
-OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume. Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted) and cStor can consume disks that are attached (are visible to OS as SCSI devices) by creating a pool with these disks.
+OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume. Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted). cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks.
+
+## What are different device paths excluded by NDM?
+
+NDM is excluding following device path to avoid from creating cStor pools. This configuration is added under *Configmap* for *node-disk-manager-config*. 
+
+- `/dev/loop` - loop devices.
+- `/dev/fd` - file descriptors.
+- `/dev/sr` - CD-ROM devices.
+- `/dev/ram` - ramdisks.
+- `/dev/dm` -lvm.
+- `/dev/md` -multiple device ( software RAID devices). 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
