@@ -117,6 +117,7 @@ This can be checked by performing a `df -h` or `mount` command inside the applic
    - Un-mount the iSCSI volume from the node in which the application pod is scheduled. This may cause the application to 
      enter running state by using the local mount point.
    - Mount to volume to a new (temp) directory to replay the metadata changes in the log 
+   - Unmount the volume again
    - Perform `xfs_repair /dev/<device>`. This fixes if any file system related errors on the device
    - Perform application pod deletion to facilitate fresh mount of the volume. At this point, the app pod may be stuck on 
      terminating OR containerCreating state. This can be resolved by deleting the volume folder (w/ app content) on the local directory.
