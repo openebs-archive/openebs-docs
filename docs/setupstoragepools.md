@@ -179,7 +179,9 @@ Similarly, you can create a storage pool for different applications as per requi
 
 cStor provides storage scalability along with ease of deployment and usage.cStor can handle multiple disks of same size per Node and create different storage pools. You can use these storage pools to create cStor volumes which you can utilize to run applications.
 
-Additionally, you can add disks using the documentation available at [Kubernetes docs](https://cloud.google.com/compute/docs/disks/add-persistent-disk#create_disk).  You can use these disks for creating the OpenEBS cStor pool by combining all the disks per node. You can scale the storage pool by adding more disks to the instance and in turn to the storage pool. 
+Additionally, you can add disks using the documentation available at [Kubernetes docs](https://cloud.google.com/compute/docs/disks/add-persistent-disk#create_disk).  You can use these disks for creating the OpenEBS cStor pool by combining all the disks per node. NDM is handling the disks for creating cStor Storage pool. Currently NDM is excluding some of the device paths detected on Nodes to avoid from creating cStor Pools. You will get more information from [here](/docs/next/faq.html#what-are-different-device-paths-excluded-by-ndm).
+
+You can scale the storage pool by adding more disks to the instance and in turn to the storage pool. 
 
 Supported RAID type for creating storage pools are mentioned below.
 
@@ -192,7 +194,7 @@ You can create cStor pools on OpenEBS clusters once you have installed OpenEBS 0
 
 ### By Using Manual Method
 
-In manual method, you can select the required disks and use it in the below yaml file which will create cStor pool using these selected disks. 
+In manual method, you can select the required disks and use it in the below YAML file which will create cStor pool using these selected disks. 
 
 You can create a YAML file named *openebs-config.yaml* and add below contents to it for creating storage pool with striped manner. 
 
@@ -237,7 +239,9 @@ spec:
 #       - disk-d172a48ad8b0fb536b9984609b7ee653
 ---
 ```
-Edit *openebs-config.yaml* file to include disk details associated to each node in the cluster which you are using for creating the OpenEBS cStor Pool. Replace the disk names under diskList section, which you can get from running kubectl get disks command. Once it is modified, you can apply the yaml.
+Edit *openebs-config.yaml* file to include disk details associated to each node in the cluster which you are using for creating the OpenEBS cStor Pool. Replace the disk names under *diskList* section, which you can get from running *kubectl get disks* command. Once it is modified, you can apply the YAML. This will create cStor Storage Pool on each Nodes.
+
+For example, you have a 3 Node cluster. Each Node have 2 disks each. So if you select these disks in the above YAML, it will create a cStor Pool on each Node by using the disks attached to each Node.
 
 ### By Using Auto Method
 
