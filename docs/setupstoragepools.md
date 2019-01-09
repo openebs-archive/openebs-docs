@@ -181,22 +181,20 @@ Similarly, you can create a storage pool for different applications as per requi
 
 cStor provides storage scalability along with ease of deployment and usage.cStor can handle multiple disks of same size per Node and create different storage pools. You can use these storage pools to create cStor volumes which you can utilize to run applications.
 
-Additionally, you can add disks using the documentation available at [Kubernetes docs](https://cloud.google.com/compute/docs/disks/add-persistent-disk#create_disk).  You can use these disks for creating the OpenEBS cStor pool by combining all the disks per node. NDM is handling the disks for creating cStor Storage pool. Currently NDM is excluding some of the device paths detected on Nodes to avoid from creating cStor Pools. You will get more information from [here](/docs/next/faq.html#what-are-different-device-paths-excluded-by-ndm).
-
-You can scale the storage pool by adding more disks to the instance and in turn to the storage pool. 
+Additionally, you can add disks using the documentation available at [Kubernetes docs](https://cloud.google.com/compute/docs/disks/add-persistent-disk#create_disk).  You can use these disks for creating the OpenEBS cStor pool by combining all the disks per node. You can scale the storage pool by adding more disks to the instance and in turn to the storage pool.  [Node Disk Manager](/docs/next/architecture.html#cstor)(NDM) is handling the disks for creating cStor Storage pool. Currently NDM is excluding some of the device paths detected on Nodes to avoid from creating cStor Pools. You will get more information from [here](/docs/next/faq.html#what-are-different-device-paths-excluded-by-ndm).
 
 Supported RAID type for creating storage pools are mentioned below.
 
 - Mirrored (RAID 1)
 - Striped (RAID 0) 
 
-You can change the **poolType** either **striped** or **mirrored** in the YAML mentioned in the following sections for choosing the needed RAID method. 
+You can change the **poolType** either **striped** or **mirrored** in the sample YAML mentioned in the following sections for choosing the needed RAID method. 
 
 You can create cStor pools on OpenEBS clusters once you have installed OpenEBS 0.8 version. Verify if the OpenEBS installation is complete. If not, go to [installation](/docs/next/installation.html). You can create storage pool manually or by creating auto pool configuration. 
 
 ### By Using Manual Method
 
-In manual method, you can select the required disks and use it in the below YAML file which will create cStor pool using these selected disks. 
+In manual method, you can select the required disks and use it in the below sample YAML file which will create cStor pool using these selected disks. 
 
 You can create a YAML file named *openebs-config.yaml* and add below contents to it for creating storage pool with striped manner. 
 
@@ -243,11 +241,11 @@ spec:
 ```
 Edit *openebs-config.yaml* file to include disk details associated to each node in the cluster which you are using for creating the OpenEBS cStor Pool. Replace the disk names under *diskList* section, which you can get from running *kubectl get disks* command. Once it is modified, you can apply the YAML. This will create cStor Storage Pool on each Nodes.
 
-For example, you have a 3 Node cluster. Each Node have 2 disks each. So if you select these disks in the above YAML, it will create a cStor Pool on each Node by using the disks attached to each Node.
+For example, you have a 3 Node cluster. Each Node have 2 disks each. So if you select these disks in the above sample YAML, it will create a cStor Pool on each Node by using the disks attached to each Node.
 
 ### By Using Auto Method
 
-In auto pool creation method, you don't have to select the disks and it will create a cStor pool using the disks detected by [Node Disk Manager](/docs/next/architecture.html#cstor). You can create a YAML file named *openebs-config.yaml* and add below contents to it and then apply the YAML for creating storage pool with striped manner.
+In auto pool creation method, you don't have to select the disks and it will create a cStor pool using the disks detected by NDM. You can create a YAML file named *openebs-config.yaml* and add below contents to it and then apply the YAML for creating storage pool with striped manner.
 
 ```
 ---
@@ -276,7 +274,7 @@ provisioner: openebs.io/provisioner-iscsi
 ---
 ```
 
-**Note:** You can specify maximum and minimum number of cStor pool in the above yaml file. If there is no *minPools* specified, it will create Single cStor pool by default. 
+**Note:** You can specify maximum and minimum number of cStor pool in the above yaml file. If there is no *minPools* specified, it will create Single cStor pool by default. maxPool is the desired no of  pools that should be created on nodes. Also make sure that , *maxPools* count should be equal or less than the total number of Nodes in the cluster.
 
 #### **Limitations**:
 
