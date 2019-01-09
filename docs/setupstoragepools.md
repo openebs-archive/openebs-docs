@@ -14,11 +14,13 @@ Pools can be provisioned to include any amount of capacity and use any combinati
 
 Using the custom resource feature of Kubernetes you can mount an external disk from any SAN, GPT, or DAS and create a volume on top of the external disk/disks.
 
-OpenEBS allows you to create storage pool using cStor and Jiva Storage Engines. Jiva will create storgae pool on single external disk but cStor can create storage pool using multiple disks attached to a Node.
+OpenEBS allows you to create storage pool using cStor and Jiva Storage Engines. Jiva will create Storage Pool on single external disk but cStor can create storage pool using multiple disks attached to a Node.
+
+For both cStor and Jiva storage engine, disks mount status on the nodes are different. The more details are mentioned [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume).
 
 ## Creating and Attaching a Disk on GKE Node
 
-To create a GPD on a GKE cluster run the following command on master node. In the following commnad disk1 is the name of the disk. You can also mention the size.
+To create a GPD on a GKE cluster run the following command on master node. In the following command disk1 is the name of the disk. You can also mention the size.
 
 ```
 gcloud compute disks create disk1 --size 100GB --type pd-standard  --zone us-central1-a
