@@ -6,6 +6,15 @@
   }
 }
 
+/* CSS for sidebars dropdown in mobile view */
+
+@media only screen and (max-width: 735px){
+ul#languages-dropdown-items {
+    display: block;
+    background-color: #ffffff;
+}
+}
+
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 375px) {
@@ -47,8 +56,8 @@ body{
 .mainContainer .wrapper .post h1, .mainContainer .wrapper .post h2 {
     font-weight: 400;
 }
-.mainContainer .wrapper .post h3 {
-    font-weight: 450;
+.mainContainer .wrapper .post h3, .mainContainer .wrapper .post h3 {
+    font-weight: 400;
 }
 
 /* Body */	
@@ -59,7 +68,15 @@ body {
 h1, h2, h3, h4 {
     color: #282828;
 }
-
+.mainContainer .wrapper .post h2 {
+    font-size: 190%;
+}
+.mainContainer .wrapper .post h3 {
+    font-size: 155%;
+}
+.mainContainer .wrapper .post h4 {
+    font-size: 120%;
+}
 /* Css for image size */
 img {
   max-width: max-content;
@@ -83,9 +100,13 @@ footer .sitemap .nav-home {
 
 /* NAV bar */
 
+.fixedHeaderContainer header img#logo {
+    height: 100%;
+    margin-right: 3px;
+}
 .fixedHeaderContainer header img {
-    height: 60%;
-    margin-right: 10px;
+    height: 50%;
+    margin-right: 3px;
 }
 
 .fixedHeaderContainer header h2 {
@@ -108,12 +129,14 @@ footer .sitemap .nav-home {
 
 /* Side bar*/
 nav.toc .toggleNav {
-    background: #fff;
+    background: #f5f7fa;
     padding: 3%;
 }
 
 nav.toc .toggleNav ul li a {
     color: #282828;
+    font-size: 14px;
+    padding-left: 10px;
 }
 nav.toc .toggleNav .navGroup h3 {
     font-weight: 600;
@@ -121,18 +144,26 @@ nav.toc .toggleNav .navGroup h3 {
 }
 nav.toc .toggleNav ul li.navListItemActive {
     background: #f1584d;
-    color: #fff;
+    color: #f5f7fa;
 }
 nav.toc .toggleNav ul li a.navItemActive{
-    color: #ffffff;
+    color: #f5f7fa;    
 }
 nav.toc .toggleNav .navGroup.navGroupActive h3 {
-    background:#fff;
+    background:#f5f7fa;
     color:#f1584d;
+    font-size: 15px;
+    text-transform: uppercase;
 }
 
 nav.toc .toggleNav .navGroup.navGroupActive {
-    background: #fff;
+    background: #f5f7fa;
+    padding: '20px 0';
+}
+
+/* Right side menu */
+nav.onPageNav > ul.toc-headings > li > a {
+    font-weight: bold;
 }
 
 /*Doc body*/
@@ -164,30 +195,14 @@ nav.toc .toggleNav .navGroup.navGroupActive {
     margin-bottom: 0.5rem !important;
 }
 
-/* CSS for aligning images in markdown */
-
-img[alt$=">"] {
-  float:right;
-}
-
-img[alt$="<"] {
-  float:left;
-}
-
-img[alt$="<>"] {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    margin: auto;
-    float: none!important;
-}
-
-pre code{
-    border-color: #f2a850;
+pre code {
+    border-color: #F0F0F0;
 }
 
 @media (max-width: 375px) {
-
+    .fixedHeaderContainer header img#logo {
+        width: 20px;
+    }
     .fixedHeaderContainer header img {
         width: 108px;
         height: auto;
@@ -203,6 +218,9 @@ pre code{
     .fixedHeaderContainer header img {
         width: 141px;
         height: auto;
+    }
+    .fixedHeaderContainer header img#logo {
+        width: 30px;
     }
     .fixedHeaderContainer header h2{
         color: #fff;
@@ -255,18 +273,37 @@ input#search_input_react:focus, input#search_input_react:active {
 /* CSS for version dropdown */
 @media only screen
 and (min-device-width : 320px)
-and (max-device-width : 375px) {
+and (max-device-width : 720px) {
     element.style {
       position: relative;
-}
+    }
 
     .ver-link {
       cursor: pointer;
       color: #fff;
-      margin-right: 141px;
-}
+      margin-right: 160px;
+      margin-top: 11px;
+    }
+
     p {
       line-height: 1;
-      font-size: 12px;
+      font-size: 14px;
+    }
 }
+
+/**
+ * Styles for the Swagger API documentation (engine/api/v1.x/index.html)
+ */
+
+
+/* ReDoc doesn't change outer page styles */
+.redoc-body{
+    margin: 0px;
 }
+/**
+ * Disable request-type badges, see https://github.com/Rebilly/ReDoc/issues/61
+ */
+redoc .operation-type {
+    display: none !important;
+}
+

@@ -8,50 +8,47 @@ sidebar_label: Prerequisites
 
 The following prerequisites are required for installing OpenEBS.
 
-1. A Kubernetes cluster with version >= 1.7.5 (OpenEBS requires CRD feature of Kubernetes)
+1. A Kubernetes cluster with version >= 1.9.7 (OpenEBS requires CRD feature of Kubernetes).
 
-2. open-iscsi package installed and configured on the Kubernetes cluster
+2. Open-iscsi package installed and configured on the Kubernetes cluster.
 
-3. kubectl or helm installed and ready to use
+   **Note:** Do not install open-iscsi / iscsi-initiator-utils on host nodes if a kubelet container, for example, Rancher Container Engine (RKE) already has the package installed. See [Troubleshooting](https://staging-docs.openebs.io/docs/next/tsg_install.html#on-rancher-application-pods-are-not-running-when-openebs-volumes-are-provisioned) section for detailed information.
 
-   ​
+3. kubectl or helm installed and ready to use. Ensure that you run the `kubectl` commands with cluster admin context. The installation will involve creating a new Service Account that is assigned to OpenEBS components.
+4. If you are using CentOS as base OS for 0.7 OpenEBS installation, then you must disable selinux for OpenEBS Node Disk Manager to detect the OS disk. You can disable selinux by using the `setenforce 0` command.
 
+**Note:** 
 
-Installing and configuring open-iscsi on Kubernetes will vary slightly depending on the platform and you can [find those instructions here](#iSCSIConfig). 
+* If you face issues while setting up on-premise clusters, check your BIOS mode and enable the Intel virtualization acceleration key  and AMD-V virtualization hardware extensions.
+* Installing and configuring open-iscsi on Kubernetes will vary slightly depending on the platform and you can find those instructions [here](#iSCSIConfig). 
 
+### Kubernetes Storage Concepts
 
-
-### Required Kubernetes knowledge
-
-To understand how to use OpenEBS with Kubernetes, familiarize yourself with [Kubernetes Storage Concepts](https://kubernetes.io/docs/concepts/storage/persistent-volumes/), specifically the following.
+To understand how to use OpenEBS with Kubernetes, you must familiarize yourself with the [Kubernetes Storage Concepts](https://kubernetes.io/docs/concepts/storage/persistent-volumes/), specifically the following.
 
 - Persistent Volumes and Persistent Volume Claims
 - Dynamic Volume Provisioner
 - Storage Classes
 
-
-
 <a name="iSCSIConfig"></a>
 
-## Steps for configuring and verifying open-iscsi 
+## Steps for Configuring and Verifying open-iscsi 
 
-The open-iscsi initiator packages depend on your host operating system or kubelet container. Use the following steps for installation / verification of open-iscsi package.
+The open-iscsi initiator packages depend on your host operating system or kubelet container. Use the following procedure for installing/verifying open-iscsi package.
 
 ### GKE
 
-With GKE, you must create Kubernetes cluster with the host machine as Ubuntu.  Ubuntu host on GKE comes with iSCSI configured. 
+With GKE, you must create a Kubernetes cluster with the host machine as Ubuntu.  Ubuntu host on GKE comes with iSCSI configured. 
 
-You might need an admin-context in case if you are installing OpenEBS without helm approach. For that use below command to set admin-context.
+You may need an admin-context if you are installing OpenEBS without helm. Use the following command to set the admin-context.
 
 ```
 kubectl create clusterrolebinding <myclustername>-cluster-admin-binding --clusterrole=cluster-admin --user=<myusername>
 ```
 
+### Ubuntu Host
 
-
-### On Ubuntu host
-
-If an iSCSI initiator is already installed on your host, check that initiator name is configured and iSCSI service is running using the following commands.
+If an iSCSI initiator is already installed on your host, check if the initiator name is configured and iSCSI service is running using the following commands.
 
 ```
 sudo cat /etc/iscsi/initiatorname.iscsi
@@ -75,11 +72,9 @@ sudo apt-get install open-iscsi
 sudo service open-iscsi restart
 ```
 
+### CentOS Host
 
-
-### On CentOS host
-
-If an iSCSI initiator is already installed on your host, check that initiator name is configured and iSCSI service is running by running the following commands.
+If an iSCSI initiator is already installed on your host, check if the initiator name is configured and iSCSI service is running using the following commands.
 
 ```
 vi /etc/iscsi/initiatorname.iscsi
@@ -95,53 +90,52 @@ If an iSCSI initiator is not available on your host, install open iscsi-initiato
 yum install iscsi-initiator-utils -y
 ```
 
-You can verify the installation using the steps mentioned above. 
+You can verify the installation using the procedure mentioned above. 
 
 <a name="Azure"></a>
 
-### Configuring open-iscsi on Azure cloud
+### Azure Cloud
+
+#### Configuring open-iscsi  
 
 On Azure cloud, you need to verify if the open-iscsi package is installed on the kubelet. To validate, you can connect to the nodes through SSH using their public IP addresses by running the following command.
 
 ```
-devops@Azure:~$ ssh azureuser@40.xx.yyy.221
+ssh azureuser@40.xx.yyy.221
 
-azureuser@aks-nodepool1-46849391-1:~$
 ```
 
- **Note**: azureuser is the default username.
+**Note**: azureuser is the default username.
 
 Obtain the container ID of the hyperkube kubelet on each node by running the following command.
 
 ```
-azureuser@aks-nodepool1-46849391-1:~$ sudo docker ps | grep "hyperkube kubele" 
+sudo docker ps | grep "hyperkube kubele" 
 3aab0f9a48e2    k8s-gcrio.azureedge.net/hyperkube-amd64:v1.8.7   "/hyperkube kubele..."   48 minutes ago      Up 48 minutes                           eager_einstein
 ```
 
-Get inside the kubelet container by running the following command and install open-iscsi package in each Kubernetes node.
+Get to the kubelet container by running the following command and install open-iscsi package in each Kubernetes node.
 
 ```
-azureuser@aks-nodepool1-46849391-1:~$ sudo docker exec -it <Container ID> bash
+sudo docker exec -it <Container ID> bash
 # apt-get update
 # apt install -y open-iscsi
 ```
 
-Check the status of iSCSI service by running the following command inside kubelet container.
+Check the status of iSCSI service by running the following command inside the kubelet container.
 
 ```
-azureuser@aks-nodepool1-46849391-1:~$ service open-iscsi status
+service open-iscsi status
 ```
 
-**Note:** If hyperkube kubelet is running as a binary in the nodes, check for open-iscsi status in the node. If
-open-iscsi is not present, follow the procedure below to install open-iscsi.
+**Note:** If hyperkube kubelet is running as binary in the nodes, check for open-iscsi status in the node. If open-iscsi is not present, install open-iscsi using the following procedure.
 
 ```
-azureuser@aks-nodepool1-46849391-1:~$ 
 # apt-get update
 # apt install -y open-iscsi
 ```
 
-### Configuring RBAC on Azure cloud
+#### Configuring RBAC
 
 On Azure cloud, you must enable the cluster role binding by applying the following yaml.
 

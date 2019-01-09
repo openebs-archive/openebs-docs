@@ -30,9 +30,11 @@ const siteConfig = {
   ],
   users,
   onPageNav: 'separate',
-  editUrl: 'https://github.com/openebs/openebs-docs/edit/newstaging/docs/',
+  editUrl: 'https://github.com/openebs/openebs-docs/edit/staging/docs/',
+  createIssueUrl: 'https://github.com/openebs/openebs/issues/new/',
   /* path to images for header/footer */
-  headerIcon: 'img/OpenEBSLogo.png',
+  headerIcon: 'img/OpenEBS-logo.svg',
+  headerText: 'img/openebs-docs-logo.svg',
   favicon: 'img/favicon.ico',
   /* colors for website */
   colors: {
@@ -45,7 +47,14 @@ const siteConfig = {
     // Highlight.js theme to use for syntax highlighting in code blocks
     theme: 'default',
   },
-  scripts: ['https://buttons.github.io/buttons.js'],
+  scripts: [
+    'https://buttons.github.io/buttons.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js',
+    '/js/code-blocks-buttons.js',
+  ],
+  stylesheets: [
+    '/css/code-blocks-buttons.css',
+  ],
 };
 
 module.exports = siteConfig;

@@ -6,17 +6,13 @@ sidebar_label: Storage Schema
 
 ------
 
-`Note: Disk Object feature is available only from OpenEBS 0.6 release onwards`
-
 OpenEBS introduces more elements into the storage configuration to give the administrator an end-to-end control and experience while managing persistent storage on the Kubernetes cluster. Apart from the standard Kubernetes constructs of PVC, SC and PV, OpenEBS introduces Volume Pods, Storage Pools Claims, Storage Pools, and Disk Objects. The stack of these constructs is shown below.
-
-
 
 ![OpenEBS storage schema](/docs/assets/storage-schema.png)
 
-### Disk Objects (DOs)
+## Disk Objects (DOs)
 
-Disk Objects unify all the underlying disk types to a common Kubernetes construct. Disk objects are discovered, monitored and managed (sometimes provision and de-provision for example in network disks) using Node Disk Manager or NDM which runs as a daemonset on all nodes in the Kubernetes cluster. NDM registers itself into Kubernetes Node Problem Detector for receiving any faults in the underlying disks as soon as they are observed. 
+Disk Objects unify all the underlying disk types to a common Kubernetes construct. Disk objects are discovered, monitored and managed (sometimes provision and de-provision for example in network disks) using Node Disk Manager (NDM) which runs as a daemonset on all nodes in the Kubernetes cluster. NDM registers itself into Kubernetes Node Problem Detector for receiving any faults in the underlying disks as soon as they are observed. 
 
 ![OpenEBS Disk Objects](/docs/assets/do.png)
 
@@ -39,16 +35,13 @@ spec:
     vendor: "Google"
 ```
 
-
-
-### Storage Pools (SPs) and Storage Pool Claims (SPCs)
+## Storage Pools (SPs) and Storage Pool Claims (SPCs)
 
 Kubernetes Operators / Administrators write the Storage Pool Claim in which the specification can be found around how to pool the disks on a given node.  The SPCs are fed into Maya-cStor-Operator, which creates the Storage Pool (SP) objects. SP defines the mapping of disks on each node for a given pool. 
 
 The SP objects are again used by Node Disk Manager (NDM) to create actual pools inside the replica pod. 
 
 ![OpenEBS Storage Pools](/docs/assets/pool.png)
-
 
 
 As shown above, the end result of an SPC is either a cStor pool or a Jiva pool created inside the replica pod. For creating the cStor pools inside the replica pod, the Kuberntes side-car pattern is used. 

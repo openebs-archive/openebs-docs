@@ -8,23 +8,19 @@ sidebar_label: Changelog
 
 
 
-## Development Release
+## Current Release
 
-* Version 0.6.0 
+- [Version 0.8.0](https://github.com/openebs/openebs/releases/tag/0.8) ([Release blog](https://blog.openebs.io/openebs-0-8-release-allows-you-to-snapshot-and-clone-cstor-volumes-ebe09612f8b1))
 
-This version is currently under development. Following features are under development
+## Stable Release
 
-- Support for volume policies
-- Support for Kubernetes integrated volume snapshot and restore features
-- Introducing cStor (Beta) as the additional storage engine
-- Initial support for Node Disk Manager (NDM)
-
-## Stable/Current Release
-
-* [Version 0.5.4](https://github.com/openebs/openebs/releases/tag/v0.5.4)
+* [Version 0.7.2](https://github.com/openebs/openebs/releases/tag/0.7.2)
 
 ## Older Releases
 
+* [Version 0.7.0](https://github.com/openebs/openebs/releases/tag/v0.7) 
+* [Version 0.6.0](https://github.com/openebs/openebs/releases/tag/v0.6)
+* [Version 0.5.4](https://github.com/openebs/openebs/releases/tag/v0.5.4)
 * [Version 0.5.3](https://github.com/openebs/openebs/releases/tag/v0.5.3)
 * [Version 0.5.2](https://github.com/openebs/openebs/releases/tag/v0.5.2)
 * [Version 0.5.1](https://github.com/openebs/openebs/releases/tag/v0.5.1)
@@ -32,12 +28,6 @@ This version is currently under development. Following features are under develo
 * [Version 0.4.0](https://github.com/openebs/openebs/releases/tag/v0.4.0)
 * [Version 0.3](https://github.com/openebs/openebs/releases/tag/v0.3)
 * [Version 0.2](https://github.com/openebs/openebs/releases/tag/v0.2)
-
-
-
-
-
-
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
