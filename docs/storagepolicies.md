@@ -316,7 +316,7 @@ The StatefulSet workloads access the OpenEBS storage volume  by connecting to th
       openebs.io/target-affinity: fio-jiva
   ```
 
-**Note**: *This Policy only applies to Deployments or StatefulSets with single workload instance.*
+**Note**: *This feature works only for cases where there is a 1-1 mapping between a application and PVC. It's not recommended for STS where PVC is specified as a template.* 
 
 ## Types of Storage Policies for cStor
 
@@ -530,10 +530,10 @@ The StatefulSet workloads access the OpenEBS storage volume  by connecting to th
   apiVersion: v1
   kind: Pod
   metadata:
-    name: fio-jiva
+    name: fio-cstor
     labels:
-      name: fio-jiva
-      openebs.io/target-affinity: fio-jiva
+      name: fio-cstor
+      openebs.io/target-affinity: fio-cstor
   ```
 
   For OpenEBS PVC, it will be similar to the following.
@@ -544,16 +544,16 @@ The StatefulSet workloads access the OpenEBS storage volume  by connecting to th
   metadata:
     name: fio-cstor-claim
     labels:
-      openebs.io/target-affinity: fio-jiva
+      openebs.io/target-affinity: fio-cstor
   ```
 
-**Note**: *This Policy only applies to Deployments or StatefulSets with single workload instance.*
+**Note**: *This feature works only for cases where there is a 1-1 mapping between a application and PVC. It's not recommended for STS where PVC is specified as a template.* 
 
 ### Target Namespace
 
-By default, the cStor target pods are scheduled in a dedicated OpenEBS namespace. The target pod also is provided with openebs service account so that it can access the Kubernetes Custom Resource called `CStorVolume` and `Events`.
+By default, the cStor target pods are scheduled in a dedicated *openebs* namespace. The target pod also is provided with OpenEBS service account so that it can access the Kubernetes Custom Resource called `CStorVolume` and `Events`.
 This policy, allows the Cluster administrator to specify if the Volume Target pods should be deployed in the namespace of the workloads itself. This can help with setting the limits on the resources on the target pods, based on the namespace in which they are deployed.
-To use this policy, the Cluster administrator could either use the existing OpeNEBS service account or create a new service account with limited access and provide it in the StorageClass as follows:
+To use this policy, the Cluster administrator could either use the existing OpenEBS service account or create a new service account with limited access and provide it in the StorageClass as follows:
 
 ```
 annotations:
