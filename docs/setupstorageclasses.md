@@ -12,12 +12,12 @@ A Storage Class provides a way for administrators to describe the “classes” 
 
 **Setting Up Storage Class On OpenEBS**
 
-Once OpenEBS is installed on your Kubernetes cluster, you can start using it by specifying corresponding OpenEBS Storage Classes in your PVCs.
+Once OpenEBS is installed on your Kubernetes cluster either by OpenEBS operator YAML method or HELM method, you can start using it by specifying corresponding OpenEBS Storage Classes in your PVCs. By default, default storage classes will be installed for both Jiva and cStor when OpenEBS gets installed.
 
-Apply the openebs-operator.yaml file on the Kubernetes cluster using the following command. This creates the maya api-server and OpenEBS components which includes default storage classes.
+You can get the status of StorageClass information using the following command
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
+kubectl get sc
 ```
 
 OpenEBS Storage provides several features that can be customized for each volume. Some of features that could be customized per application are as follows:
@@ -34,7 +34,7 @@ The default storage classes are as follows.
 
 ### Storage Class for Provisioning Jiva
 
-Starting with OpenEBS 0.7, the volume policies must be specified under the `annotations` > `openebs.io/config:`. The default Jiva storage class is as follows:
+Starting with OpenEBS 0.7, the volume policies must be specified under the `annotations` > `openebs.io/config:`. The sample Jiva storage class is as follows:
 
 ```
 ---
@@ -70,14 +70,14 @@ provisioner: openebs.io/provisioner-iscsi
 reclaimPolicy: Delete
 ```
 
-OpenEBS supports both ext4 and xfs file systems. By default, it comes with ext4 file system for the mounted volumes. Some applications require using the xfs file system. The policy to specify xfs as the file system, you must add `openebs.io/fstype: "xfs"` under section `annotations:`. Following is a sample storage class for MongoDb application.
+OpenEBS supports both ext4 and XFS file systems. By default, it comes with ext4 file system for the mounted volumes. Some applications require using the XFS as file system. The policy to specify XFS as the file system, you must add `openebs.io/fstype: "xfs"` under section `annotations:`. Following is a sample storage class for application which need to be run of XFS.
 
 ```
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-   name: openebs-mongodb
+   name: openebs-xfs
    annotations:
    	openebs.io/cas-type: jiva
     cas.openebs.io/config: |
@@ -113,9 +113,9 @@ reclaimPolicy: Delete
 
 ### Storage Class for Provisioning cStor
 
-A new OpenEBS component called Storage Pool Claim (SPC) watcher has been introduced. This allows you to define an SPC name, for example,  `cstor-sparse-pool`. Pools will be created with the specified SPC name and the desired number of replicas specified in the `ReplicaCount`. The PVC that uses the storage class will create cStor volumes on the specified pools.
+A new OpenEBS component called Storage Pool Claim (SPC) watcher has been introduced. This allows you to define an SPC name, for example,  `cstor-sparse-pool`. Pools will be created with the specified SPC name and the desired number of replicas specified in the `ReplicaCount`. The PVC that uses the storage class will create cStor volumes on the specified pools. ReplicaCount mentioning under StorageClass will create replicas of OpenEBS volume.
 
-The default cStor storage class is as follows:
+The sample cStor storage class is as follows:
 
 ```
 ---
