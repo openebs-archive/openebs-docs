@@ -12,7 +12,7 @@ A Storage Class provides a way for administrators to describe the “classes” 
 
 **Setting Up Storage Class On OpenEBS**
 
-Once OpenEBS is installed on your Kubernetes cluster either by OpenEBS operator YAML method or HELM method, you can start using it by specifying corresponding OpenEBS Storage Classes in your PVCs. By default, default storage classes will be installed for both Jiva and cStor when OpenEBS gets installed.
+Once OpenEBS is installed on your Kubernetes cluster either by [kubectl](/docs/next/installation.html#install-openebs-using-kubectl) method or [Helm](/docs/next/installation.html#install-openebs-using-helm-charts) method, you can start using it by specifying corresponding OpenEBS Storage Classes in your PVCs. By default, default storage classes will be installed for both Jiva and cStor when OpenEBS gets installed.
 
 You can get the status of StorageClass information using the following command
 
