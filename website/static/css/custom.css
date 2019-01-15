@@ -38,30 +38,30 @@ body{
 
 /* Navigation header bg color */
 .fixedHeaderContainer {
-    background: #282828;
+    background: #262B3E;
 }
 
 /* Content headers */
 .container .wrapper h1 {
   font-family: helvetica;
   font-weight: 200;
-    color: #282828;
+    color: #262B3E;
 }
 .container .wrapper h2 {
-    color: #282828;
+    color: #262B3E;
 }
 .container .wrapper h3 {
-    color: #282828;
+    color: #262B3E;
 }
 .container .wrapper h4 {
-    color: #282828;
+    color: #262B3E;
 }
 .mainContainer .wrapper .post .postHeader h1 {
     font-size: 220%;
     padding: 0 0 30;
     font-family: helvetica;
   font-weight: 200;
-    color: #282828;
+    color: #262B3E;
 }
 .mainContainer .wrapper .post h1, .mainContainer .wrapper .post h2 {
     font-weight: 200;
@@ -72,11 +72,11 @@ body{
 
 /* Body */	
 body {
-    color : #282828;
+    color : ##262B3E;
     background: #fff;
 }
 h1, h2, h3, h4 {
-    color: #282828;
+    color: #262B3E;
 }
 .mainContainer .wrapper .post h2 {
     font-size: 190%;
@@ -144,7 +144,7 @@ nav.toc .toggleNav {
 }
 
 nav.toc .toggleNav ul li a {
-    color: #282828;
+    color: #262B3E;
     font-size: 14px;
     padding-left: 10px;
 }
