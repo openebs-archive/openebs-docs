@@ -8,7 +8,8 @@ sidebar_label: Architecture
 
 OpenEBS follows the container attached storage or CAS model.  As a part of this approach, each volume has a dedicated controller POD and a set of replica PODs. The advantages of the CAS architecture are discussed on the CNCF blog [here](https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/). OpenEBS is simple to operate and to use largely because it looks and feels like other cloud-native and Kubernetes friendly projects.  
 
-![OpenEBS-Architecture-Overview](/docs/assets/openebs-arch.png)
+
+<img src="/docs/assets/openebs-arch.png" alt="drawing" width="700"/>
 
 
 
