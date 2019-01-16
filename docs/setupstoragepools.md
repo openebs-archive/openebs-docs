@@ -274,7 +274,7 @@ provisioner: openebs.io/provisioner-iscsi
 ---
 ```
 
-**Note:** You can specify maximum and minimum number of cStor pool in the above yaml file. If there is no *minPools* specified, it will create Single cStor pool by default. maxPool is the desired no of  pools that should be created on nodes. Also make sure that , *maxPools* count should be equal or less than the total number of Nodes in the cluster.
+**Note:** You can specify maximum and minimum number of cStor pool in the above yaml file. If there is no *minPools* specified, it will create Single cStor pool by default. maxPool is the desired number of pools that should be created on nodes. Also make sure that , *maxPools* count should be equal or less than the total number of Nodes in the cluster.
 
 #### **Limitations**:
 
