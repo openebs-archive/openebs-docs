@@ -112,6 +112,16 @@ This issue is due to failed application operations in the container. Typically t
 3. Once the application is back in "Running" state post recovery by following steps 1-9, if existing/older data is not visible (i.e., it comes up as a fresh instance), it is possible that the application pod is using the docker container filesystem instead of the actual PV (observed sometimes due to the reconciliation attempts by Kubernetes to get the pod to a desired state in the absence of the mounted iSCSI disk).
 This can be checked by performing a `df -h` or `mount` command inside the application pods. These commands should show the scsi device `/dev/sd*` mounted on the specified mount point. If not, the application pod can be forced to use the PV by restarting it (deployment/statefulset) or performing  a docker stop of the application container on the node (pod).
 
+4. In case of `XFS` formatted volumes, perform the following steps once the iSCSI target is available in RW state & logged in:
+
+   - Un-mount the iSCSI volume from the node in which the application pod is scheduled. This may cause the application to 
+     enter running state by using the local mount point.
+   - Mount to volume to a new (temp) directory to replay the metadata changes in the log 
+   - Unmount the volume again
+   - Perform `xfs_repair /dev/<device>`. This fixes if any file system related errors on the device
+   - Perform application pod deletion to facilitate fresh mount of the volume. At this point, the app pod may be stuck on 
+     terminating OR containerCreating state. This can be resolved by deleting the volume folder (w/ app content) on the local directory.
+
 ## Stale data seen post application pod reschedule on other nodes
 
 - Sometimes, stale application data is seen on the OpenEBS volume mounts after application pod reschedules. Typically, these applications are Kubernetes deployments, with the reschedule to other nodes occurring due to rolling updates.
