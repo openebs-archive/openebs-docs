@@ -8,7 +8,8 @@ sidebar_label: Architecture
 
 OpenEBS follows the container attached storage or CAS model.  As a part of this approach, each volume has a dedicated controller POD and a set of replica PODs. The advantages of the CAS architecture are discussed on the CNCF blog [here](https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/). OpenEBS is simple to operate and to use largely because it looks and feels like other cloud-native and Kubernetes friendly projects.  
 
-![OpenEBS-Architecture-Overview](/docs/assets/openebs-arch.png)
+
+<img src="/docs/assets/openebs-arch.png" alt="drawing" width="700"/>
 
 
 
@@ -30,7 +31,7 @@ OpenEBS has many components, which can be grouped into the following categories.
 The control plane of an OpenEBS cluster is often referred to as Maya. The OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies, exporting the volume metrics for consumption by prometheus/grafana, and so on.
 
 
-![Maya is the control plane of OpenEBS](https://raw.githubusercontent.com/openebs/maya/master/docs/openebs-maya-architecture.png)
+![Maya is the control plane of OpenEBS](/docs/assets/openebs-maya-architecture.png)
 
 OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs), which is the standard Kubernetes external storage plugin. The primary task of an OpenEBS PV provisioner is to initiate volume provisioning to application PODS and to implement the Kubernetes specification for PVs.
 

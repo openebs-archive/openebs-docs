@@ -122,7 +122,7 @@ Perform the following steps to verify if the issue is due to a misconfiguration 
   2. Check if OpenEBS provisioner HTTPS requests are reaching the apiserver
   3. Use the latest version of network provider images.
   4. Try other network components such as Calico, kube-router etc. if you are not using any of these.
-  
+
 ## How to Uninstall OpenEBS Version 0.7?
 
 The recommended steps to uninstall are as follows:
@@ -144,7 +144,20 @@ kubectl delete crd storagepools.openebs.io
 kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
 kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
 ```
- 
+
+
+
+## Running OpenEBS v0.7 on Centos 7.5 displays an error in the Node Disk Manager(NDM) pod
+
+ ```
+ container_linux.go:247: starting container process caused "process_linux.go:359: container init caused \"rootfs_linux.go:53: mounting \\\"/proc/1/mounts\\\" to rootfs \\\"/mnt/docker/devicemapper/mnt/c6102aa3daf7ff291b1595fd6a9bf1367fd6d013498cc0a36442d9de4b968f3d/rootfs\\\" at \\\"/mnt/docker/devicemapper/mnt/c6102aa3daf7ff291b1595fd6a9bf1367fd6d013498cc0a36442d9de4b968f3d/rootfs/host/mounts\\\" caused \\\"permission denied\\\"\""
+ ```
+ ### Troubleshooting
+
+The hosts mount file that is attached to the NDM pod is to detect if the discovered disk is an OS disk. If selinux is enabled, NDM will be unable to attach the mount file. Try to disable selinux by  `setenforce 0` , which will allow to detect the disks.
+
+
+
 ## Creating cStor pool fails on CentOS when there are partitions on the disk
 
 Creating cStor pool fails with the following error message:
@@ -174,11 +187,12 @@ sdc           8:32   0 232.9G  0 disk
  |-cl-swap 254:1    0   7.8G  0 lvm
  |-cl-home 254:2    0 174.1G  0 lvm
  `-cl-root 254:3    0    50G  0 lvm
- ```
- 
+```
+
  ### Troubleshooting
- 
+
  1. Clear the partition on the partioned disk.
+
  2. Run the following command on the host machine to check any LVM handler on the device
     ```
     sudo dmsetup info -Ccore@k8worker01 ~ $ sudo dmsetup info -C
@@ -194,7 +208,11 @@ sdc           8:32   0 232.9G  0 disk
     sudo dmsetup remove centos-swap
     sudo dmsetup remove centos-root
     ```
-<!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
+
+
+
+    <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
 
 

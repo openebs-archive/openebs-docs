@@ -41,63 +41,6 @@ class Footer extends React.Component {
       <footer className="nav-footer" id="footer">
         <section className="sitemap">
           <div>
-            <a href="https://openebs.io/events" target="_blank">
-              Events
-            </a>
-            <a href="https://openebs.io/hackfests" target="_blank">
-              Hackfests
-            </a>
-            <a href="https://openebs.io/hangouts" target="_blank">
-              Hangouts
-            </a>
-            <a href="https://openebs.io/meetups" target="_blank">
-             Meetups
-            </a>
-            <a href="https://openebs.io/cafe" target="_blank">
-              Cafe
-            </a>
-          </div>
-
-          <div>
-            <a href="https://openebs.io/careers" target="_blank">
-              Careers
-            </a>
-            <a href="https://openebs.io/newsletter" target="_blank">
-              Newsletters
-            </a>
-            <a href="https://www.youtube.com/channel/UC3ywadaAUQ1FI4YsHZ8wa0g" target="_blank">
-              Videos
-            </a>
-            <a href="#" target="_blank">
-             Docs
-            </a>
-            <a>
-              Releases
-            </a>
-          </div>
-
-          <div>
-            <a href="https://slack.openebs.io/" target="_blank">
-              Slack
-            </a>
-            <a href="https://github.com/openebs/" target="_blank">
-              GitHub
-            </a>
-            <a href="https://twitter.com/openebs" target="_blank">
-              Twitter
-            </a>
-            <a href="https://blog.openebs.io" target="_blank">
-              Blogs
-            </a>
-            <a>
-              Email
-            </a>
-            <a href="https://facebook.com/openebs" target="_blank">
-              Facebook
-            </a>
-          </div>
-
-          <div>
            <br />
            <div>
              <a href="https://openebs.io" target="_blank">
@@ -109,28 +52,25 @@ class Footer extends React.Component {
               />
             </a>
             </div>
-            <br />
-            <div>
-              <a href="https://mayaonline.io" target="_blank">
-              <img
-                src={`${this.props.config.baseUrl}docs/assets/mayaonline-logo.svg`}
-                alt={this.props.config.title}
+	  <div>
+		<a href="https://slack.openebs.io">Get in touch with OpenEBS community via Slack</a>
+          </div>
+          </div>
+          <div>
+           <br />
+           <div>
+             <a href="https://mayadata.io" target="_blank">
+             <img
+                src={`https://openebs.io/assets/images/mayadata.svg`}
+                alt="mayadata.io"
                 width="130"
                 height="110"
-               />
-              </a>
+              />
+            </a>
             </div>
-            <br />
-            <div>
-              <a href="https://mayadata.io" target="_blank">
-              <img
-                src={`${this.props.config.baseUrl}docs/assets/mayadata-logo.svg`}
-                alt={this.props.config.title}
-                width="130"
-                height="110"
-               />
-              </a>
-            </div>
+	  <div>
+		<a href="https://app.mayaonline.io">Get OpenEBS support through MayaOnline</a>
+          </div>
           </div>
         </section>
 

@@ -31,7 +31,7 @@ This section captures steps to troubleshoot and resolve some errors faced while 
 
      Ensure that the above conditions are met and the replica rollout is successful. This will ensure application enters running state.
 
-  4. If the PV is created and OpenEBS pods are running, use the `iscsiadm -m` session command on the node (where the pod is scheduled) to identify whether the OpenEBS iSCSI volume has been attached/logged-into. If not, verify network connectivity between the nodes.
+  4. If the PV is created and OpenEBS pods are running, use the `iscsiadm -m session` command on the node (where the pod is scheduled) to identify whether the OpenEBS iSCSI volume has been attached/logged-into. If not, verify network connectivity between the nodes.
 
   5. If the session is present, identify the SCSI device associated with the session using the command `iscsiadm -m session -P 3`. Once it is confirmed that the iSCSI device is available (check the output of `fdisk -l` for the mapped SCSI device), check the kubelet and system logs including the iscsid and kernel (syslog) for information on the state of this iSCSI device. If inconsistencies are observed, execute the filesyscheck on the device `fsck -y /dev/sd<>`. This will mount the volume to the node.
 
@@ -71,7 +71,7 @@ This issue is due to failed application operations in the container. Typically t
   3. If anyone of the replicas are still in RO mode, wait for the synchronization to complete. If all the replicas are in RO mode (this may occur when all replicas re-register into the controller within short intervals), you must restart the OpenEBS volume controller using the `kubectl delete pod <pvc-ctrl>`  command . Since it is a Kubernetes deployment, the controller pod is restarted successfully. Once done, verify that all replicas transition into *RW mode*.
 
   4. Un-mount the stale iscsi device mounts on the application node. Typically, these devices are mounted in the `/var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/<target-portal:iqn>-lun-0`  path.
-  
+
  ```
  Example:
  umount /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.39.241.26:
@@ -111,6 +111,16 @@ This issue is due to failed application operations in the container. Typically t
 
 3. Once the application is back in "Running" state post recovery by following steps 1-9, if existing/older data is not visible (i.e., it comes up as a fresh instance), it is possible that the application pod is using the docker container filesystem instead of the actual PV (observed sometimes due to the reconciliation attempts by Kubernetes to get the pod to a desired state in the absence of the mounted iSCSI disk).
 This can be checked by performing a `df -h` or `mount` command inside the application pods. These commands should show the scsi device `/dev/sd*` mounted on the specified mount point. If not, the application pod can be forced to use the PV by restarting it (deployment/statefulset) or performing  a docker stop of the application container on the node (pod).
+
+4. In case of `XFS` formatted volumes, perform the following steps once the iSCSI target is available in RW state & logged in:
+
+   - Un-mount the iSCSI volume from the node in which the application pod is scheduled. This may cause the application to 
+     enter running state by using the local mount point.
+   - Mount to volume to a new (temp) directory to replay the metadata changes in the log 
+   - Unmount the volume again
+   - Perform `xfs_repair /dev/<device>`. This fixes if any file system related errors on the device
+   - Perform application pod deletion to facilitate fresh mount of the volume. At this point, the app pod may be stuck on 
+     terminating OR containerCreating state. This can be resolved by deleting the volume folder (w/ app content) on the local directory.
 
 ## Stale data seen post application pod reschedule on other nodes
 
@@ -223,7 +233,28 @@ kubectl apply -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-op
 
 You can also exec into this application to check the content, retrieve the files, or use the application to check the content.
 
+## Application pod is not able to mount the cStor volume in OpenEBS 0.7
 
+In OpenEBS 0.7, unit for mentioning size in PVC should be using "G". Till OpenEBS 0.7 version, it can be used both "G" and "Gi" as the unit for mentioning size. Once you change the size in PVC as per the recommended way, your application pod will run by consuming cStor volume. 
+
+## Jiva replica pods consume high memory utilisation and warnings in the logs
+
+In OpenEBS older version,Jiva replica pods are consuming high memory and displays following error messages in all replica pods. This occurs every minute. 
+
+```
+time="2018-07-20T15:39:56Z" level=info msg="New connection from: 10.32.3.18:39608"
+time="2018-07-20T15:39:56Z" level=error msg="Failed to read: Wrong API version received: 0xc4200f7d18"
+```
+### Troubleshooting the issue:
+
+The above problem could be due to prometheus monitoring tool is trying to connect to all Jiva replica pods on 9503. By default, prometheus montioring tool polls all ports defined by all pods. In OpenEBS, Jiva controller is exporting the volume metric.  
+
+### Workaround:
+
+Set the following annotation to false in all the replica pods.
+```
+prometheus.io/scrape:"false" 
+```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

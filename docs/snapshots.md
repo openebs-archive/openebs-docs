@@ -163,7 +163,7 @@ demo-snap-vol-claim-jiva   Bound     pvc-58c73bfd-f22c-11e8-aee9-42010a800145   
 demo-vol1-claim            Bound     pvc-01f7d743-f229-11e8-aee9-42010a800145   4G         RWO            openebs-jiva-default        24m
 ```
 
-If you are running any application, you can mount the **demo-snap-vol-claim** PersistentVolumeClaim into a new application pod to get the contents at the point of snapshot has taken. While deploying the new application pod with this new restored PVC, you have to edit the application deployment yaml and mention the restored PersistentVolumeClaim name, volume name, and volume mount accordingly.  
+If you are running any application, you can mount the **demo-snap-vol-claim** PersistentVolumeClaim into a new application pod to get the contents at the point of the snapshot was taken. While deploying the new application pod with this new restored PVC, you have to edit the application deployment YAML and mention the restored PVC name, volume name, and volume mount accordingly.  
 
 ### Deleting a Snapshot
 

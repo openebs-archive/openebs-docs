@@ -81,7 +81,7 @@ If you have a Kubernetes environment, you can deploy OpenEBS using the following
 
 `kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml`
 
-You can then begin running a workload against OpenEBS. There are large and growing number of workloads that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. You can join the Slack channel at  https://openebs-community.slack.com.
+You can then begin running a workload against OpenEBS. There is a large and growing number of workload that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. You can join the Slack channel at  https://openebs-community.slack.com.
 
 Register at MayaOnline.io to receive free monitoring and a single view of stateful workloads of your Kubernetes environment. MayaOnline incorporates customized versions of Prometheus for monitoring, Grafana for metrics visualization and Scope to see the overall environment, and our MuleBot for ChatOps integration and more.  
 
@@ -129,9 +129,9 @@ Goto your application yaml file located in your kube master and apply the yaml a
 
 This will delete the application pod and the corresponding pvc associated to it.
 
-## What is the default OpenEBS retention policy?
+## What is the default OpenEBS Reclaim policy?
 
-The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim.
+The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim. In case of cStor volumes, data was being deleted as well. For jiva, from 0.8.0 version, the data is deleted via scrub jobs.
 
 ## Can I use the same PVC for multiple Pods?
 
@@ -143,11 +143,27 @@ If the following warning messages are displayed while launching an application, 
 
 The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.
 
-## Why ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ are showing in different size?
+## Why `OpenEBS_logical_size` and `OpenEBS_actual_used` are showing in different size?
 
-The ‘OpenEBS_logical_size’ and ‘OpenEBS_actual_used’ will start showing different sizes when there are replica node restarts and internal snapshots are created for synchronizing replicas.
+The `OpenEBS_logical_size` and `OpenEBS_actual_used` parameters will start showing different sizes when there are replica node restarts and internal snapshots are created for synchronizing replicas.
+
+## What must be the disk mount status on Node for provisioning OpenEBS volume?
+
+OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume. Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted). cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks.
+
+## What are different device paths excluded by NDM?
+
+NDM is excluding following device path to avoid from creating cStor pools. This configuration is added under *Configmap* for *node-disk-manager-config*. 
+
+- `/dev/loop` - loop devices.
+- `/dev/fd` - file descriptors.
+- `/dev/sr` - CD-ROM devices.
+- `/dev/ram` - ramdisks.
+- `/dev/dm` -lvm.
+- `/dev/md` -multiple device ( software RAID devices). 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};

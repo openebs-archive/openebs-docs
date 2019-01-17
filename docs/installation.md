@@ -48,6 +48,14 @@ helm install --namespace openebs --name openebs stable/openebs
 
 OpenEBS control plane pods are now created. CAS Template,default Storage Pool,and default Storage Classes are created after executing the above command. Now,select the storage engine to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
 
+You can also install OpenEBS in custom namespace using the following way.
+
+```
+helm repo update
+helm install --namespace <custom_namespace> --name openebs stable/openebs
+```
+
+Once you install OpenEBS in custom namespace, all the OpenEBS components will be deployed under the same namespace.
 
 ### Default Values for Helm Chart Parameters
 

@@ -38,7 +38,7 @@ const siteConfig = {
   favicon: 'img/favicon.ico',
   /* colors for website */
   colors: {
-    primaryColor: '#f1584d',
+    primaryColor: '#a9a9a9',
     secondaryColor: '#205C3B',
   },
   // organizationName: 'deltice', // or set an env variable ORGANIZATION_NAME

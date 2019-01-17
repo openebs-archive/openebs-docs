@@ -71,7 +71,7 @@ After the modification on the required downloaded files, you can run following c
  kubectl apply -f 05-service-kafka.yml
  kubectl apply -f 06-kafka-statefulset.yml
 ```
-Running the above commands creates 3 node zookeeper ensemble and a 3 node Kafka cluster which uses OpenEBS volumes.
+Running the above commands creates 3 node Zookeeper ensemble and a 3 node Kafka cluster which uses OpenEBS volumes.
 
 **Note:** Kafka is a distributed system that uses Zookeeper to track the status of Kafka cluster nodes. 
 
