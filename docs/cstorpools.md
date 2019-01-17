@@ -6,13 +6,21 @@ sidebar_label: cStor Pools
 
 ------
 
-## Introduction to cStor pools
+## Introduction to cStor Pools
 
-A cStor pool is local to a node in OpenEBS and it refers to aggregation of disks that are attached to that node. The cStor Pools are represented as Kubernetes custom resources called *csp*. cStor pools have multiple benefits
+A cStor pool is local to a node in OpenEBS and it refers to aggregation of disks that are attached to that node. It is an important subject for the Kubernetes administrators in the design and planning of storage classes  which are the primary interfaces to the persistent volumes or to the persistent storage needs. cStor pools have multiple benefits
 
 - Aggregation of disks to increase the available capacity and performance on the fly
 - Thin provisioning of capacity. Volumes can be allocated more capacity than what is available in the node
 - When the pool is configured in mirror mode, High Availability of storage is achieved when disk loss happens 
+
+The cStor Pools are represented as Kubernetes custom resources called *csp*. A cStor Pool is constructed through a Storage Pool Claim specification by the storage administrator. 
+
+![PVC and Storage Pool relationship](/docs/assets/pvcspc.png)
+
+
+
+Node Disk Manager or NDM which runs as a daemonset would have discovered all the locally connected disks and created disk CRs. Administrator uses these disk CRs to construct the storage pool claim specification and creates a cStor Pool CR, which are referred in turn in the storage class specification as shown above.
 
 ## Data replication and pools in cStor
 
@@ -64,7 +72,27 @@ cStor Pool is an important component in the storage management. It is fundamenta
 
 **Expand a given pool replica :** (Not supported in OpenEBS 0.8, refer to the [cStor Pool roadmap](/docs/next/cStorPools.html#cstor-pool-feature-roadmap)  .  cStor Pools support thin provisioning, which means that the volume replica that resides on a given cStor pool can be given much bigger size or quota than the physical storage capacity available in the pool. When the actual capacity becomes nearly full (80% or more for example), the pool replica is expanded by adding a set of disks to it. If the pool replica type is stripe, then the disks can be added in any multiples of disks (1 disk or more) at a time, but if the type is any of the RAIDZx, then the expansion is done by adding any multiples of RAIDZ groups (1 group or more). 
 
-**Delete a pool replica** : (Not supported in OpenEBS 0.8, refer to the  [cStor Pool roadmap](/docs/next/cStorPools.html#cstor-pool-feature-roadmap) . When a Kubernetes node needs to be drained in a planned manner, then the data needs to be moved to another node first. Typical procedure would be to move the volume replicas on the pool replica to be moved on the fly to another pool and then delete the current pool replica. 
+**Delete a pool replica** : (Not supported in OpenEBS 0.8, refer to the  [cStor Pool roadmap](/docs/next/cStorPools.html#cstor-pool-feature-roadmap) . When a Kubernetes node needs to be drained in a planned manner, then the data needs to be moved to another node first. Typical procedure would be to move the volume replicas on the pool replica to be moved on the fly to another pool and then delete the current pool replica.
+
+
+
+## Basic command line options to work with cStor Pools
+
+As cStor Pools are implemented as Kubernetes custom resources, kubectl command line interface is used interact with them. These commands are cluster scoped and do not need the namespace argument. useful commands are
+
+```
+kubectl get spc
+```
+
+```
+kubectl get csp
+```
+
+```
+kubectl get disks
+```
+
+ 
 
 ## cStor Pool feature roadmap
 
