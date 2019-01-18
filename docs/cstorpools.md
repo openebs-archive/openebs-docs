@@ -14,9 +14,9 @@ A cStor pool is local to a node in OpenEBS and it refers to aggregation of disks
 - Thin provisioning of capacity. Volumes can be allocated more capacity than what is available in the node
 - When the pool is configured in mirror mode, High Availability of storage is achieved when disk loss happens 
 
-The cStor Pools are represented as Kubernetes custom resources called *csp*. A cStor Pool is constructed through a Storage Pool Claim specification by the storage administrator. 
+The cStor Pools are represented as Kubernetes custom resources called cStore Storage Pool or *csp*. A cStor Pool is constructed through a Storage Pool Claim specification by the storage administrator. 
 
-![PVC and Storage Pool relationship](/docs/assets/pvcspc.png)
+<img src="/docs/assets/pvcspc.png" alt="PVC and Storage Pool relationship" width="700"/>
 
 
 
@@ -26,9 +26,7 @@ Node Disk Manager or NDM which runs as a daemonset would have discovered all the
 
 Synchronous data replication and rebuilding happen at volume level by the cStor target. Volume replicas are scheduled to be deployed on cStor pools located on different nodes. In the given example figure below, a pool configuration is defined as having three replicas or three independent pools . The pool replicas are totally independent from each other in that each is a different pool in itself and could host different number of volumes. For example, replica3 of pool1 in Node3 has two volumes whereas the other two pool replicas have only one volume each. The pool replicas are related to each other only at the level of target where target decides where to host the volume/data replicas/copies.
 
-
-
-![cStor Pools in OpenEBS](/docs/assets/cstorpools.png)
+<img src="/docs/assets/cstorpools.png" alt="cStor Pools in OpenEBS" width="700"/>
 
 
 
@@ -60,9 +58,9 @@ A cStor pool spec consists of
 
 cStor Pool is an important component in the storage management. It is fundamental to storage planning especially in the context of hyperconvergence planning. The following are the different operations that can be performed on cStor Pools.
 
-![Operations on cStor Pools](/docs/assets/poolops.png)
+<img src="/docs/assets/poolops.png" alt="cStor Pools in OpenEBS" width="600"/>
 
-**Create a Pool :** Create a new pool with all the configuration. It is typically to start a pool with 3 pool replicas on three nodes. Currently pool types supported are STRIPE and MIRROR. A pool needs to be created before storage classes are created. So, pool creation is the first configuration step in the OpenEBS configuration.
+**Create a Pool :** Create a new pool with all the configuration. It is typical to start a pool with 3 pool replicas on three nodes. Currently pool types supported are STRIPE and MIRROR. A pool needs to be created before storage classes are created. So, pool creation is the first configuration step in the OpenEBS configuration process.
 
 **Add a new pool replica** : (Not supported in OpenEBS 0.8, refer to the  [cStor Pool roadmap](/docs/next/cStorPools.html#cstor-pool-feature-roadmap)  ) .A new pool replica may need to be added for many different reasons. Some of them could be 
 
@@ -100,9 +98,9 @@ kubectl get disks
 | ------------------------------------------------------------ | ----------------- |
 | cStor pool creation and initial use with either stripe mode or RAIDZ0 (mirror) mode | 0.8.0             |
 | Support for RAIDZ1                                           | 0.9.0             |
-| Support for RAIDZ2                                           | Not scheduled yet |
-| Adding a new pool replica                                    | 0.9.0             |
-| Expanding a given pool replica (add disks to a pool after it is created) | Not scheduled yet |
+| Support for RAIDZ2                                           | 0.9.0             |
+| Expanding a given pool replica (add disks to a pool after it is created) | 0.9.0             |
+| Adding a new pool replica                                    | Not scheduled yet |
 | Deleting a pool replica                                      | Not scheduled yet |
 
 

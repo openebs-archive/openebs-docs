@@ -50,7 +50,7 @@ demo-vol1-claim   Bound     pvc-01f7d743-f229-11e8-aee9-42010a800145   4G       
 Download the *snapshot.yaml* to create snapshot of the corresponding PVC
 
 ```
-wget https://raw.githubusercontent.com/openebs/external-storage/release/openebs/ci/snapshot/jiva/snapshot.yaml
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/ci/maya/snapshot/jiva/snapshot.yaml
 ```
 
 Edit the *snapshot.yaml* with your corresponding PVC name which you are going to take snapshot. You can also edit the snapshot name. In this example, it will take the snapshot of PVC called `demo-vol1-claim` and snapshot name as `snapshot-demo-jiva`.
@@ -130,7 +130,7 @@ spec:
 You can have your own storage class defined or you can use default storageclass . You can use the following command to download *snapshot_claim.yaml* which can be customized and use for creating a new PVC from snapshot.
 
 ```
-wget https://raw.githubusercontent.com/openebs/external-storage/release/openebs/ci/snapshot/jiva/snapshot_claim.yaml
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/ci/maya/snapshot/jiva/snapshot_claim.yaml
 ```
 
 You must given the snapshot name and required name for new PVC in this *snapshot_claim.yaml* YAML file. Once you have done with modification of the file, apply the file using the following command.
@@ -277,7 +277,7 @@ spec:
 You can have your own storage class defined or you can use default storageclass . You can use the following command to download *snapshot_claim.yaml* which can be customized and use for creating a new PVC from snapshot.
 
 ```
-wget https://raw.githubusercontent.com/openebs/external-storage/release/openebs/ci/snapshot/cstor/snapshot_claim.yaml
+wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/ci/maya/snapshot/cstor/snapshot_claim.yaml
 ```
 
 You must given the snapshot name and required name for new PVC in this *snapshot_claim.yaml* YAML file. In this example yaml new PVC name as *demo-snap-vol-claim* and snapshot name as *snapshot-demo-jiva*  . Once you have done with modification of the file, apply the file using the following command. 
