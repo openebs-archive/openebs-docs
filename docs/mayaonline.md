@@ -8,7 +8,7 @@ sidebar_label: MayaOnline
 
 [MayaOnline](https://docs.mayaonline.io/docs/overview.html) is a free SaaS service offering that acts as a cross-cloud control plane for OpenEBS enabled Kubernetes clusters and provides visibility into applications usage of OpenEBS volumes. 
 
-![MayaOnline Overview](https://docs.mayaonline.io/docs/assets/docOverview.png)
+![MayaOnline Overview](/docs/assets/docOverview.png)
 
 MayaOnline supports connecting vanilla Kubernetes clusters and OpenShift Kubernetes clusters.
 
