@@ -1,7 +1,7 @@
 {
   "docs": {
     "Getting Started": ["quickstartguide", "introduction","mayaonline", "usingminikube", "gethelp"],
-    "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine", "cStorPools", "storageschema", "storagepolicies"],
+    "Concepts": ["conceptscas", "architecture", "features","maya", "storageengine","jiva","cStor", "cStorPools", "storageschema", "storagepolicies"],
     "Setup": ["supportedplatforms", "prerequisites", "scheduler", "installation", "uninstall", "deployjiva", "deploycstor", "upgrade", "setupstoragepools", "setupstorageclasses", "setupstoragevolumes", "snapshots"],
     "Usecases": ["bluegreen", "cicd"],
     "Integrations": ["openshift", "stackpointcloud","aws", "ibmcloud", "rancher"],
