@@ -72,7 +72,7 @@ modprobe iscsi_tcp
 
 ## How can I select disks for creating a storage pool using cStor?
 
-From the OpenEBS 7.0 release, the following disk types/paths are excluded by NDM which identifies the disks to create cStor pools on nodes.
+From the OpenEBS 0.7 release, the following disk types/paths are excluded by NDM which identifies the disks to create cStor pools on nodes.
 ```
 loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-
 ```
