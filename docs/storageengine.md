@@ -32,13 +32,13 @@ OpenEBS provides two types of storage engines.
 
 **CVR** - cStor Volume Replica
 
-**SPC** - Storage Pool Claim, the custom resource that represents the cStor pool
+**SPC** - Storage Pool Claim, the custom resource that represents the cStor pool aggregate
 
-**CSP** - cStor Storage Pool, the custom resource that represents each replica of cStor Pool
+**CSP** - cStor Storage Pool, the custom resource that represents cStor Pool on each node
 
 
 
-One SPC points to multiple CSPs. Similarly one CV points to as CVRs. Read detailed explanation of cStor Pools [here](/docs/next/cstorpools.html). 
+One SPC points to multiple CSPs. Similarly one CV points to as CVRs. Read detailed explanation of cStor Pools [here](http://localhost:3000/docs/next/cstor.html#cstor-pools). 
 
 <br> <br>
 
@@ -90,26 +90,24 @@ When the cas-type is `jiva` , StoragePool value of `default` has a special meani
 
 
 
-## Which storage engine to use ? (cStor vs Jiva)
-
-
-
-
-
-Other notes :
-
-table of jiva and cstor should include feature comparison
+## cStor vs Jiva : Features comparison
 
 Below table identifies few differences between the two engines. 
 
-|                             Jiva                             |                            cStor                             |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-| **Important features**: Synchronous replication, container native storage | **Important features**: Synchronous replication, container native storage, data consistency, capacity scaling, data resiliency, copy-on-write snapshots, instantaneous clones |
-|                      Super Lightweight                       | Lightweight and superior read performance because of RAM as cache |
-|                      Isolated IO stack                       |                     Shared storage pool                      |
-|                      Ephemeral OS disks                      |                        SAS/SSD disks                         |
-|                    Low capacity workloads                    |                    Any capacity workloads                    |
-|                      Slow (Copy) clones                      |        Faster and instantaneous snapshots and clones         |
+| Feature                                   | Jiva  |  cStor   |
+| ----------------------------------------- | :---: | :------: |
+| Light weight and completely in user space |  Yes  |   Yes    |
+| Synchronous replication                   |  Yes  |   Yes    |
+| Suitable for low capacity workloads       |  Yes  |   Yes    |
+| Snapshots and cloning support             | Basic | Advanced |
+| Suitable for high capacity workloads      |       |   Yes    |
+| Thin Provisioning                         |       |   Yes    |
+| Data consistency                          |       |   Yes    |
+| Disk pool or aggregate support            |       |   Yes    |
+| On demand capacity expansion              |       |   Yes    |
+| Data resiliency (RAID support )           |       |   Yes    |
+
+
 
 cStor is recommended most of the times as it commands more features and focussed development effort. cStor does offer robust features including snapshots/clones, storage pool features such as thin provisioning, on demand capacity additions etc.
 
