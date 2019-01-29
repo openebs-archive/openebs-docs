@@ -6,7 +6,6 @@ sidebar_label: CAS Templates
 
 
 
-`Feature status: Alpha / Experimental. `
 
 OpenEBS control plane provides CAS templates as an approach to provision persistent volumes that make use of CAS storage engine. CAS Template (CAST) allows operators to specify the desired state of storage and also acts to converge towards this desired state which means creating and updating appropriate Kubernetes resources. CAS template based provisioning forms a part of Kubernetes PVC to PV state transition.
 

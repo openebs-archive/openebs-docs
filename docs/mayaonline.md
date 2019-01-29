@@ -67,15 +67,37 @@ Once your cluster is connected to MayaOnline, start exploring your OpenEBS resou
 
 
 
-## Example Dashboard at MayaOnline
+### Example Dashboards at MayaOnline
 
-<img src="/docs/assets/MO-import2.png" alt="Sample dashboard at MayaOnline" width="900"/>
+#### Landing page
 
+<img src="/docs/assets/MO-import2.png" alt="Sample dashboard at MayaOnline" width="800"/>
 
+<br><br>
+
+#### cStor pool view
+
+<img src="/docs/assets/mo-pool-view.png" alt="Sample dashboard at MayaOnline" width="800"/>
+
+<br><br>
+
+#### cStor volume pod view
+
+<img src="/docs/assets/mo-pod-view.png" alt="Sample dashboard at MayaOnline" width="800"/>
+
+<br><br>
+
+#### cStor custom resources view
+
+<img src="/docs/assets/mo-cr-view.png" alt="Sample dashboard at MayaOnline" width="800"/>
+
+<br><br>
 
 
 
 ### See Also
+
+#### [cStor Overview](/docs/next/cstor.html)
 
 #### [Connect to MayaOnline](https://app.mayaonline.io)
 

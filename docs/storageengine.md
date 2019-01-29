@@ -92,6 +92,14 @@ When the cas-type is `jiva` , StoragePool value of `default` has a special meani
 
 ## Which storage engine to use ? (cStor vs Jiva)
 
+
+
+
+
+Other notes :
+
+table of jiva and cstor should include feature comparison
+
 Below table identifies few differences between the two engines. 
 
 |                             Jiva                             |                            cStor                             |
