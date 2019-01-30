@@ -9,348 +9,120 @@ sidebar_label: CAS Engines
 
 ## Overview of a Storage Engine
 
-OpenEBS follows CAS architecture, where, in each storage volume is provided with its own storage controller and replica pods. A storage engine refers to the software functionality that is associated with a storage volume. A storage engine usually has one controller pod and multiple replication pods. Storage engines can be hardened to optimize a given workload for either with a feature set or for performance.
+A storage engine is the data plane component of the IO path of a persistent volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. A Storage engine can be hardened to optimize a given workload either with a feature set or for performance.
 
 Operators or administrators typically choose a storage engine with a specific software version and build optimized volume templates that are fine-tuned with the type of underlying disks, resiliency, number of replicas, set of nodes participating in the Kubernetes cluster. Users can then choose an optimal volume template at the time of volume provisioning, thus providing the maximum flexibility in running the optimum software and storage combination for all the storage volumes on a given Kubernetes cluster.
+
+
 
 ## Types of Storage Engines
 
 OpenEBS provides two types of storage engines.
 
-1. Jiva (Recommended engine and reliable)
-2. cStor
+1. **Jiva** - Jiva is the first storage engine that was released in 0.1 version of OpenEBS and is the most simple to use. It is built in GoLang and uses LongHorn and gotgt stacks inside. Jiva runs entirely in user space and provides standard block storage capabilities such as synchronous replication. Jiva is suitable for smaller capacity workloads in general and not suitable when extensive snapshotting and cloning features are a major need. [Read more details of Jiva here](/docs/next/jiva.html)
+2. **cStor** - cStor is the most recently released storage engine, which became available from 0.7 version of OpenEBS. cStor is very robust,  provides data consistency and supports enterprise storage features like snapshots and clones very well. It also comes with a robust storage pool feature for comprehensive storage management both interms of capacity and performance. Together with NDM (Node Disk Manager), cStor provides complete set of persistent storage features for stateful applications on Kubernetes. [Read more details of cStor here](/docs/next/cStor.html)
 
-### Jiva
+<img src="/docs/assets/engines.png" alt="OpenEBS storage engines - Jiva and cStor" width="900"/>
 
-Jiva has a single container image for both controller and replica. Docker image is available at https://hub.docker.com/r/openebs/jiva/ .  Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs entirely in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation. It supports thin provisioning, snapshotting, cloning of storage volumes.
+*In the above figure:*
 
-![Jiva storage engine of OpenEBS](/docs/assets/jiva.png)
+**SP** - Storage Pool, the custom resource that represents the Jiva storage pool
 
-#### Jiva Sparse File Layout
+**CV** - cStor Volume, the custom resource that represents the cStor volume
 
-The following content is directly taken from Rancher's LongHorn [announcement documentation](https://rancher.com/microservices-block-storage/).
+**CVR** - cStor Volume Replica
 
-**Replica Operations of Jiva**
+**SPC** - Storage Pool Claim, the custom resource that represents the cStor pool aggregate
 
-------
-
-Jiva replicas are built using Linux sparse files, which support thin provisioning. Jiva does not maintain additional metadata to indicate which blocks are used. The block size is 4K. When you take a snapshot, you create a differencing disk. As the number of snapshots grows, the differencing disk chain could get quite long. To improve read performance, Jiva, therefore, maintains a read index that records which differencing disk holds valid data for each 4K block. In the following figure, the volume has eight blocks. The read index has eight entries and is filled up lazily as read operation takes place. A write operation resets the read index, causing it to point to the live data. ![Longhorn read index](http://cdn.rancher.com/wp-content/uploads/2017/04/14095610/Longhorn-blog-3.png)
+**CSP** - cStor Storage Pool, the custom resource that represents cStor Pool on each node
 
 
 
-The read index is kept in memory and consumes one byte for each 4K block. The byte-sized read index means you can take as many as 254 snapshots for each volume. The read index consumes a certain amount of in-memory data structure for each replica. A 1TB volume, for example, consumes 256MB of in-memory read index. We will potentially consider placing the read index in memory-mapped files in the future.
+One SPC points to multiple CSPs. Similarly one CV points to as CVRs. Read detailed explanation of cStor Pools [here](http://localhost:3000/docs/next/cstor.html#cstor-pools). 
 
-**Replica Rebuild**
-
-------
-
-When the controller detects failures in one of its replicas, it marks the replica as being in an error state. The Longhorn/Jiva volume manager is responsible for initiating and coordinating the process of rebuilding the faulty replica as follows:
-
-- The Longhorn/Jiva volume manager creates a blank replica and calls the controller to add the blank replica into its replica set.
-- To add the blank replica, the controller performs the following operations:
-  - Pauses all read and write operations.
-  - Adds the blank replica in WO (write-only) mode.
-  - Takes a snapshot of all existing replicas, which will now have a blank differencing disk at its head.
-  - Unpauses all read the write operations. Only write operations will be dispatched to the newly added replica.
-  - Starts a background process to sync all but the most recent differencing disk from a good replica to the blank replica.
-  - After the sync completes, all replicas now have consistent data, and the volume manager sets the new replica to RW (read-write) mode.
-- The Longhorn/Jiva volume manager calls the controller to remove the faulty replica from its replica set.
-
-It is not very efficient to rebuild replicas from scratch. We can improve rebuild performance by trying to reuse the sparse files left from the faulty replica.
-
-### cStor
-
-cStor storage engine has separate container image files for storage controller and storage replica. Docker images for controller is at https://hub.docker.com/r/openebs/cstor-istgt/ and for replica is at https://hub.docker.com/r/openebs/cstor-pool/. cStor is a high performing storage engine built with proven building blocks of storage components. Access protocol iSCSI stack is a linux ported  BSD based Multi-threaded iSCSI protocol stack originally developed at CloudByte. This iSCSI is field tested at thousands of installations for many years". The storage block layer is the DMU layer of user space ZFS inherited from the proven OpenSolaris stack. With these proven building blocks, cStor engine is highly reliable for storing and protecting enterprise data.
-
-![cStor storage engine of OpenEBS](/docs/assets/cStor.png)
-
-## Choosing a Storage Engine
-
-Developer does not directly choose a storage engine, but chooses a pre-defined storage class. Operator or Administrator constructs a storage class that refers to a CAS template containing the type of storage engine.
-
-![Choosing a storage engine](/docs/assets/cas-template.png)
-
-As shown above, storage engine details are to be decided during the creation of a CAS template.
-
-## Overview of CAS Template
-
-A CAS template is a customizable resource file (or a YAML file ) used by an operator to define the basic components of a storage engine. OpenEBS control plane provides CAS templates as an approach to provision persistent volumes that make use of CAS storage engine. CAS Template (CAST) allows operators to specify the desired state of storage and also acts to converge towards this desired state which means creating and updating appropriate Kubernetes resources. CAS template based provisioning forms a part of Kubernetes PVC to PV state transition. Operator typically builds several of these templates with various combinations of storage engines and storage pools.
-
-OpenEBS dynamic storage provisioner along with maya api service works towards accomplishing the goal of provisioning CAS storage volume via CAS template. This storage volume is exposed as a PV object which is consumed by a Kubernetes application.
+<br> <br>
 
 
-The default CAS Template values are as follows:
 
-| Property        | Value              |
-| --------------- | ------------------ |
-| VolumeMonitor   | true               |
-| ControllerImage | openebs/jiva:0.5.0 |
-| ReplicaImage    | openebs/jiva:0.5.0 |
-| ReplicaCount    | 1                  |
-| StoragePool     | ssd                |
+## Choosing a storage engine
 
-Also, these values will have Taint toleration, Eviction toleration, and Node-affinity toleration fields. You can customize the key-value pair of above tolerations based on the taints applied on the Nodes.
+Storage engine is chosen by specifying the annotation `openebs.io/cas-type` in the StorageClass specification. 
 
-Following is an example of CAS Template yaml file.
+### Sample spec - StorageClass for cStor
 
 ```
-apiVersion: openebs.io/v1alpha1
-kind: CASTemplate
-metadata:  
-  name: openebs-jiva-v0.6.0-with-3-ssd-replica-v0.1
-spec:  
-  defaultConfig:  
-  - name: ControllerImage    
-    value: "openebs/jiva:0.6.0"  
-  - name: ReplicaImage    
-    value: "openebs/jiva:0.6.0"  
-  - name: ReplicaCount    
-    value: "3"  
-  - name: StoragePool    
-    value: "default"  
-  - name: Monitoring    
-    enabled: "true"  
-run:    
-  tasks:    ...
-```
-
-## Use Case
-
-### Persistent Storage Requirements
-
-Alice and Joe are developers of two different applications in a fintech enterprise, where the company is moving their DevOps from a legacy model to micro services model with Kubernetes as the orchestrating engine. Both the applications are stateful in nature and need persistent storage, but the persistent storage needs of these two applications differ vastly.
-
-- Alice's application uses MongoDB and has high capacity and performance requirements. For testing the application during development, Alice wishes to test the changes with real data in the database and also expects the data is stored in a volume with enterprise grade reliability.
-- Joe's application uses MySQL to store simple configuration data, the size of which is expected to be in the order of few Giga Bytes. The performance expectations on the persistent volume of this application is moderate.
-
-Both of them expect their DevOps administrator to provide a suitable storage class to choose from and do not want to learn in-depth details about how persistent storage volumes are being provisioned, or how they are managed.
-
-Eve is one of the DevOps admins in the company. Eve is responsible for designing and managing the storage infrastructure needs.
-
-### Infrastructure Setup
-
-DevOps team manages a single Kubernetes cluster, which is currently scaled to 32 nodes. They have planned to provide different classes of persistent storage tiers to their developers.
-
-- SAS disks based storage for moderate performance needs
-- SSD based storage for high-performance needs
-- In each of these tiers, they decided to offer varying degrees of resiliency by varying the number of copies of data
-
-They have provisioned 12 SAS disks of 1TB each in each of the nodes from 1 to 4 and 12 SSDs of 1TB each in each of the nodes from 11 to 19.
-
-### Creating Pools
-
-Eve planned the storage pools in the following way.
-
-| POOL     | Nodes                  | Expected data copies | Configuration                                             |
-| -------- | ---------------------- | -------------------- | --------------------------------------------------------- |
-| SASPool1 | N1                     | 1                    | 10 disks on each node (1+1 Mirror), remaining unconfigured |
-| SASPool2 | N2, N3, N4             | 3                    | 5 disks on each node (Striped), remaining unconfigured |
-| SSDPool1 | N11                    | 1                    | 10 disks on each node (1+1 Mirror), remaining unconfigured |
-| SSDPool2 | N12, N13, N14          | 3                    | 5 disks on each node (Striped), remaining unconfigured |
-| SSDPool3 | N15, N16, N17,N18, N19 | 5                    | 5 disks on each node (Striped), remaining unconfigured |
-
-OpenEBS supports pool creation and management through the use of Storage Pools (SP) and Storage Pool Claims (SPC). The SPC YAML manifests are maintained by operators for versioning.
-
-### Creating CAS Templates
-
-After pools are created, next step for Eve is to create CAS templates in such a way that
-
-- SASPool1, and SASPool2 are created using JIVA storage engine
-- SSDPool1, SSDPool2 and SSDPool3 are created using cStor storage engine
-
-Apart from selecting storage engines appropriately, Eve has two challenges related to Kubernetes scheduling.
-
-1. **Replica pod and node affinity challenge:** Ensure that the volume pods meant to be associated with a given pool are scheduled by Kubernetes only on the nodes having those pools. For example, volume pods of SASPool2 are scheduled on Nodes N2, N3 and N4 and not on any other nodes. This is achieved by appropriate volume pods taint toleration configuration in the CAS templates and on the nodes.
-2. **Controller pod and application pod affinity challenge:** Ensure that the OpenEBS controller pod (either Jiva or cStor) is scheduled as much as possible on the same node as the application pod (in this use case example, MongoDB or MySQL). This is achieved by configuring node affinity in the volume pods in the CAS templates.
-
-Eve creates five new CAS template files and creates corresponding Kubernetes CRs. Two example template YAML files are shown below.
-
-**CAS template 1 (CAS-CR-SASPool1.yaml)**
-
-```
-apiVersion: openebs.io/v1alpha1
-kind: CASTemplate
-metadata:  
-  name: openebs-saspool1-jiva-v0.6.0-with-3-replica-v0.1
-spec:  
-  defaultConfig:  
-  - name: ControllerImage    
-    value: "openebs/jiva:0.6.0"  
-  - name: ReplicaImage    
-    value: "openebs/jiva:0.6.0"  
-  - name: ReplicaCount    
-    value: "3"  
-  - name: SASPOOL1    
-    value: "default"  
-  - name: Monitoring    
-    enabled: "true"  
-  - name: TaintTolerations
-    value: |-
-      t1:
-        key: node.openebs.io/disktype
-        operator: Equal
-        value: SASPOOL1
-        effect: NoSchedule
-      t2:
-        key: node.openebs.io/disktype
-        operator: Equal
-        value: SASPOOL1
-        effect: NoExecute
-    - name: EvictionTolerations
-    value: |-
-      t1:
-        effect: NoExecute
-        key: node.alpha.kubernetes.io/notReady
-        operator: Exists
-      t2:
-        effect: NoExecute
-        key: node.alpha.kubernetes.io/unreachable
-        operator: Exists
-     - name: NodeAffinityRequiredSchedIgnoredExec
-    value: |-
-      t1:
-        key: beta.kubernetes.io/os
-        operator: In
-        values:
-        - linux
-  - name: NodeAffinityPreferredSchedIgnoredExec
-    value: |-
-      t1:
-        key: some-node-label-key
-        operator: In
-        values:
-        - some-node-label-value
-run:    
-  tasks:    ...
-```
-
-**CAS template 2 (CAS-CR-SSDPool2.yaml)**
-
-```
-apiVersion: openebs.io/v1alpha1
-kind: CASTemplate
-metadata:  
-  name: openebs-ssdpool1-jiva-v0.6.0-with-3-replica-v0.1
-spec:  
-  defaultConfig:  
-  - name: ControllerImage    
-    value: "openebs/jiva:0.6.0"  
-  - name: ReplicaImage    
-    value: "openebs/jiva:0.6.0"  
-  - name: ReplicaCount    
-    value: "3"  
-  - name: SSDPOOL1    
-    value: "default"  
-  - name: Monitoring    
-    enabled: "true"  
-  - name: TaintTolerations
-    value: |-
-      t1:
-        key: node.openebs.io/disktype
-        operator: Equal
-        value: SSDPOOL1
-        effect: NoSchedule
-      t2:
-        key: node.openebs.io/disktype
-        operator: Equal
-        value: SSDPOOL1
-        effect: NoExecute
-    - name: EvictionTolerations
-    value: |-
-      t1:
-        effect: NoExecute
-        key: node.alpha.kubernetes.io/notReady
-        operator: Exists
-      t2:
-        effect: NoExecute
-        key: node.alpha.kubernetes.io/unreachable
-        operator: Exists
-     - name: NodeAffinityRequiredSchedIgnoredExec
-    value: |-
-      t1:
-        key: beta.kubernetes.io/os
-        operator: In
-        values:
-        - linux
-  - name: NodeAffinityPreferredSchedIgnoredExec
-    value: |-
-      t1:
-        key: some-node-label-key
-        operator: In
-        values:
-        - some-node-label-value
-run:    
-  tasks:    ...
-```
-
-Eve creates 6 CRs with the above manifests.
-
-### Creating Storage Classes
-
-The last step for Eve is to create volume catalogs or in Kubernetes language "Storage Classes". Eve creates multiple storage classes as shown in the table below.
-
-| Storage Class Name               | CAS template                                     | Replicas |
-| -------------------------------- | ------------------------------------------------ | -------- |
-| SC-high-perf-no-resilience       | openebs-ssdpool1-jiva-v0.6.0-with-1-replica-v0.1 | 1        |
-| SC-high-perf-high-resilience     | openebs-ssdpool2-jiva-v0.6.0-with-3-replica-v0.1 | 3        |
-| SC-high-perf-veryhigh-resilience | openebs-ssdpool3-jiva-v0.6.0-with-5-replica-v0.1 | 5        |
-| SC-low-perf-no-resilience        | openebs-saspool1-jiva-v0.6.0-with-1-replica-v0.1 | 1        |
-| SC-high-perf-high-resilience     | openebs-saspool2-jiva-v0.6.0-with-3-replica-v0.1 | 3        |
-
-Example of storage class : **SC-high-perf-high-resilience**
-
-```
+---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
-metadata:  
-  name: SC-high-perf-high-resilience  
+metadata:
+  name: cStor-storageclass
   annotations:
-    cas.openebs.io/template: openebs-ssdpool2-jiva-v0.6.0-with-3-replica-v0.1
+    openebs.io/cas-type: cstor
+    cas.openebs.io/config: |
+      - name: StoragePoolClaim
+        value: "cStorPool-SSD"
 provisioner: openebs.io/provisioner-iscsi
+---
 ```
 
-Eve notifies the availability of these 5 storage classes to the developers.
 
-### Using Persistent Storage
 
-Developers Alice and Joe can choose one of these storage classes in constructing the PVC. Typically, developers have to select only the following parameters to construct a PVC.
-
-- Size of the volume required
-- Storage class
-- Namespace (if required)
-
-Alice's PVC **alice-mongodb-vol** for MongoDB looks like the following.
+### Sample spec - StorageClass for Jiva
 
 ```
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:  
-  name: alice-mongodb-vol  
-spec:  
-  storageClassName: SC-high-perf-high-resilience   
-  resources:    
-    requests:      
-      storage: 200Gi
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: jiva-storageclass
+  annotations:
+    openebs.io/cas-type: jiva
+    cas.openebs.io/config: |
+      - name: StoragePool
+        value: default
+provisioner: openebs.io/provisioner-iscsi
+---
 ```
 
-Joe's PVC **joe-mysql-vol** for MySQL looks like the following.
+When the cas-type is `jiva` , StoragePool value of `default` has a special meaning. When pool is `default` , Jiva engine will carve out the data storage space for the replica pod from the storage space of the container (replica pod) itself. When the size of the required volume is small (like 5G to 10G), StoragePool `default` works very well as it can be accommondated within the container itself.  
 
-```
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:  
-  name: joe-mysql-vol  
-spec:  
-  storageClassName: SC-low-perf-high-resilience   
-  resources:    
-    requests:      
-      storage: 50Gi
-```
+<br> <br>
 
-Initial work for the DevOps operators is shown in the above use case example. Developers get started with the volume provisioning. Day2 operations related to persistent storage typically include taking a snapshot of data, restoration from the snapshots, monitoring the health of pools and stateful applications, data migration. [MayaOnline](https://www.mayaonline.io) is useful for many of these day2 storage operations.
 
+
+## cStor vs Jiva : Features comparison
+
+Below table identifies few differences between the two engines. 
+
+| Feature                                   | Jiva  |  cStor   |
+| ----------------------------------------- | :---: | :------: |
+| Light weight and completely in user space |  Yes  |   Yes    |
+| Synchronous replication                   |  Yes  |   Yes    |
+| Suitable for low capacity workloads       |  Yes  |   Yes    |
+| Snapshots and cloning support             | Basic | Advanced |
+| Data consistency                          |  Yes  |   Yes    |
+| Backup and Restore using ARK              |  Yes  |   Yes    |
+| Suitable for high capacity workloads      |       |   Yes    |
+| Thin Provisioning                         |       |   Yes    |
+| Disk pool or aggregate support            |       |   Yes    |
+| On demand capacity expansion              |       |   Yes    |
+| Data resiliency (RAID support )           |       |   Yes    |
+
+
+
+cStor is recommended most of the times as it commands more features and focussed development effort. cStor does offer robust features including snapshots/clones, storage pool features such as thin provisioning, on demand capacity additions etc.
+
+Jiva is recommended for a low capacity workloads which can be accommodated within the container image storage, for example 5 to 50G. Jiva is very easy to use, and provides enterprise grade container native storage without the need of dedicated hard disks. Consider using cStor instead of Jiva especially when snapshots and clones capabilties are needed.
+
+
+
+<br><br>
 
 ### See Also:
+
+#### [cStor overview](/docs/next/cstor.html)
+
+#### [Jiva overview](/docs/next/jiva.html)
 
 #### [Storage Pools](/docs/next/setupstoragepools.html)
 #### [Storage Classes](/docs/next/setupstorageclasses.html)
