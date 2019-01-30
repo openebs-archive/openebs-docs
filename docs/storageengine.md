@@ -100,9 +100,10 @@ Below table identifies few differences between the two engines.
 | Synchronous replication                   |  Yes  |   Yes    |
 | Suitable for low capacity workloads       |  Yes  |   Yes    |
 | Snapshots and cloning support             | Basic | Advanced |
+| Data consistency                          |  Yes  |   Yes    |
+| Backup and Restore using ARK              |  Yes  |   Yes    |
 | Suitable for high capacity workloads      |       |   Yes    |
 | Thin Provisioning                         |       |   Yes    |
-| Data consistency                          |       |   Yes    |
 | Disk pool or aggregate support            |       |   Yes    |
 | On demand capacity expansion              |       |   Yes    |
 | Data resiliency (RAID support )           |       |   Yes    |
@@ -119,9 +120,9 @@ Jiva is recommended for a low capacity workloads which can be accommodated withi
 
 ### See Also:
 
-#### [cStor deep dive](/docs/next/cStor.html)
+#### [cStor overview](/docs/next/cstor.html)
 
-#### [Jiva deep dive](/docs/next/jiva.html)
+#### [Jiva overview](/docs/next/jiva.html)
 
 #### [Storage Pools](/docs/next/setupstoragepools.html)
 #### [Storage Classes](/docs/next/setupstorageclasses.html)

@@ -102,23 +102,23 @@ cStor Pool is an important component in the storage management. It is fundamenta
 
 
 
-**Create a Pool :** Create a new pool with all the configuration. It is typical to start a pool with 3 pool replicas on three nodes. Currently pool types supported are STRIPE and MIRROR. A pool needs to be created before storage classes are created. So, pool creation is the first configuration step in the OpenEBS configuration process.
+**Create a Pool :** Create a new pool with all the configuration. It is typical to start a pool with 3 pool instances on three nodes. Currently RAID types supported for a given pool instance are STRIPE and MIRROR. A pool needs to be created before storage classes are created. So, pool creation is the first configuration step in the OpenEBS configuration process.
 
-**Add a new pool replica** : (Not supported in OpenEBS 0.8, refer to the  [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)  ) .A new pool replica may need to be added for many different reasons. Some of them could be 
+**Add a new pool instance** : (Not supported in OpenEBS 0.8, refer to the  [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)  ) .A new pool instance may need to be added for many different reasons. Few example scenarios  are:
 
 - New node is being added to the Kubernetes cluster and the disks in the new node need to be considered for persistent volumes storage
-- An existing pool replica is full in capacity and it cannot be expanded as either local disks or network disks are not available. Hence, new volumes need to be provisioned on new pool replicas.
-- An existing pool replica is fully utilized in performance and it cannot be expanded either because CPU is saturated or more local disks are not available or more network disks or not available. Hence new volumes need to be provisioned on new pool replicas. 
+- An existing pool instance is full in capacity and it cannot be expanded as either local disks or network disks are not available. Hence, a new pool instance may be needed for hosting the new volume replicas.
+- An existing pool instance is fully utilized in performance and it cannot be expanded either because CPU is saturated or more local disks are not available or more network disks or not available. A new pool instance may be added and move some of the existing volumes to the new pool instance to free up some disk IOs on this instance. 
 
-**Expand a given pool replica :** (Not supported in OpenEBS 0.8, refer to the [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)  .  cStor Pools support thin provisioning, which means that the volume replica that resides on a given cStor pool can be given much bigger size or quota than the physical storage capacity available in the pool. When the actual capacity becomes nearly full (80% or more for example), the pool replica is expanded by adding a set of disks to it. If the pool replica type is stripe, then the disks can be added in any multiples of disks (1 disk or more) at a time, but if the type is any of the RAIDZx, then the expansion is done by adding any multiples of RAIDZ groups (1 group or more). 
+**Expand a given pool instance :** (Not supported in OpenEBS 0.8, refer to the [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)  ).  cStor Pools support thin provisioning, which means that the volume replica that resides on a given cStor pool can be given much bigger size or quota than the physical storage capacity available in the pool. When the actual capacity becomes nearly full (80% or more for example), the pool instance is expanded by adding a set of disks to it. If the pool instance's disk RAID type is STRIPE, then the disks can be added in any multiples of disks (1 disk or more) at a time, but if the type is any of the RAIDZx, then the expansion is done by adding any multiples of RAIDZ groups (1 group or more). 
 
-**Delete a pool replica** : (Not supported in OpenEBS 0.8, refer to the  [cStor roadmap](/docs/next/cstor.html#cstor-roadmap) . When a Kubernetes node needs to be drained in a planned manner, then the data needs to be moved to another node first. Typical procedure would be to move the volume replicas on the pool replica to be moved on the fly to another pool and then delete the current pool replica.
+**Delete a pool instance** : (Not supported in OpenEBS 0.8, refer to the  [cStor roadmap](/docs/next/cstor.html#cstor-roadmap) . When a Kubernetes node needs to be drained in a planned manner, then the volume replicas in the pool instance that resides on that node need to be drained by moving them to other pool instance(s). Once all the volume replicas are drained, the pool instance is deleted.
 
 
 
 ## cStor Volume snapshots
 
-cStor snapshots are  are taken instantaneously as they are point-in-time copy of the volume data. OpenEBS supports standard Kubernetes API to take snapshots and restore volumes from snapshots. 
+cStor snapshots are taken instantaneously as they are point-in-time copy of the volume data. OpenEBS supports standard Kubernetes API to take snapshots and restore volumes from snapshots. 
 
 Example specification for a snapshot is shown below. 
 
@@ -147,7 +147,7 @@ kubectl get volumesnapshots -n <namespace>
 
 
 
-*Note 1: When cStor volume has three replicas, creation of volume snapshots is possible when the volume is in quorum, which means the at least two of the replicas are healthy and rebuilt.* 
+*Note 1: When cStor volume has three replicas, creation of volume snapshots is possible when the volume is in quorum, which means the at least two of the replicas are online and fully synced.* 
 
 
 
@@ -242,7 +242,7 @@ Performance testing includes setting up the pools, storage classes and iSCSI ser
 - Number of replicas - For statefulsets, when the application is doing the required replication, one replica at volume may be sufficient
 - Network latency - Latency between the pods and zones (if the replicas are placed across AZs) plays a major role in the performance results and it needs to be in the expected range
 
-### Seek support for help
+### Seeking help or contact support
 
 As cStor volume has a dedicated iSCSI stack, it can be tuned with number of worker threads and other advanced parameters depending on the type of workload.  
 
@@ -253,7 +253,7 @@ As cStor volume has a dedicated iSCSI stack, it can be tuned with number of work
 
 ## Known limitations
 
-**Kubernetes fails to decide if a node has come up or not :**
+**After a node shutdown, I see application stuck in container creating waiting for PV to be attached.:**
 
 When a Kubernetes node is involved in an unplanned shutdown like a power loss or software hang etc, the PVs which are mounted on that node will not be mounted by Kubelet till the timeout of 30 minutes or 1800 seconds. In such scenarios, the application will lose connectivity to persistent storage. This limitation of Kubernetes will be resolved for OpenEBS PVs when the CSI driver support is available for OpenEBS. With OpenEBS CSI driver in place, the unavailability of the node can be detected by the CSI driver node agent and do the force mount of the PV on the new node
 
@@ -269,7 +269,7 @@ Note: It is common to reboot the nodes during Kubernetes upgrades and it may for
 
 **Delayed snapshots**
 
-In cStor, snapshots are taken only when the volume replicas are in quorum. For example, as soon as the volume is provisioned on cStor, the volume will be in ready state but the quorum attainment may take  few minutes. Snapshot commands during this period will be delayed or queued till the volumes replicas attain quorum. The snapshot commands received by the target are also delayed when the cStor volume is marked read-only because of no-quorum
+In cStor, snapshots are taken only when the volume replicas are in quorum. For example, as soon as the volume is provisioned on cStor, the volume will be in ready state but the quorum attainment may take  few minutes. Snapshot commands during this period will be delayed or queued till the volumes replicas attain quorum. The snapshot commands received by the target are also delayed when the cStor volume is marked read-only because of no-quorum.
 
 
 
@@ -305,19 +305,23 @@ Following are most commonly observed areas of troubleshooting
    Volume is already exclusively attached to one node and can't be attached to another
    ```
 
-   **Resolution ?**
+   **Resolution :**
 
-   This is because of the Kubernetes limitation [explained above](/docs/next/cstor.html#known-limitations). OpenEBS CSI driver will resolve this issue. See [roadmap](/docs/next/cstor.html#cstor-roadmap). 
+   This is because of the Kubernetes limitation [explained above](/docs/next/cstor.html#known-limitations). OpenEBS CSI driver will resolve this issue. See [roadmap](/docs/next/cstor.html#cstor-roadmap). In this situation if the node is stuck in a non-responsive state and if the node has to be permanently deleted, remove it from the cluster.  
 
-3. **Connect failed but reconnect succeeds**
+3. **Application is in ContainerCreating state, observed connection refused error**
 
-   [unable to connect and but then they go away after sometimes (get an example: unable to get disk path) ]
+   **Symptom:**
 
-   What is the error seen by the user ?
+   Application is seen to be in the `ContainerCreating` state, with kubectl describe showing `Connection refused` error to the cStor PV. 
 
-   What is the resolution ? (wait for few minutes and check again)
+   **Resolution**: 
 
+   This error eventually could get rectified on the further retries, volume gets mounted and application is started. This error is usually seen when cStor target takes some time to initialize  on low speed networks as it takes time to download cStor image binaries from repositories ( or )  or because the cstor target is waiting for the replicas to connect and establish quorum. If the error persists beyond 5 minutes, logs need to be verified, contact support or seek help on the community [slack](https://slack.openebs.io).
 
+   
+
+   
 
 ## cStor roadmap
 

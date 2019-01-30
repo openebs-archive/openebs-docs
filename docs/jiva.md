@@ -10,7 +10,7 @@ sidebar_label: Jiva
 
 ### Jiva
 
-Jiva has a single container image for both controller and replica. Docker image is available at https://hub.docker.com/r/openebs/jiva/ .  Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs entirely in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation. It supports thin provisioning, snapshotting, cloning of storage volumes.
+Jiva has a single container image for both controller and replica. Docker image is available at https://hub.docker.com/r/openebs/jiva/ . Each Jiva Volume comprises of a Jiva Controller (or Target) and a set of Jiva Replicas. The Jiva controller synchronously replicates the incoming IO to the Jiva replicas. The replica considers a Linux sparse file as the foundation. It supports thin provisioning, snapshotting of storage volumes.
 
 ![Jiva storage engine of OpenEBS](/docs/assets/jiva.png)
 
@@ -50,11 +50,18 @@ It is not very efficient to rebuild replicas from scratch. We can improve rebuil
 
 ### See Also:
 
+#### [Which storage engine should I use ?](/docs/next/storageengine.html#cstor-vs-jiva-features-comparison)
+
 #### [Provisioning Jiva volumes](/docs/next/deployjiva.html)
+
+#### [cStor overview](/docs/next/cstor.html)
+
+
 
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
