@@ -26,12 +26,13 @@ When the stateful application itself is taking care of data replication, it is t
 
 cStor has two main components:
 
-- **cStor targets** - cStor-target resides in this pod. It primarily does two things : exposethe iSCSI LUN and handle the synchronous replication of data if it has more than one replica. There will be one cStor target pod for each volume.
-- **cStor  pools**  - cStor replicas reside in this pod. Lots of volume replicas typically share a cStor pool. A cStor pool is a set of cStor pool pods with each pod on a given node. 
+(a) **cStor Pool Pods:** cStor Pool Pods are responsible for persisting the data on to the disks. The cStor Pool Pods are instantiated on a node and are provided with one or more disks on which data will be saved. Each cStor Pool Pod - can save data of one or more cStor Volumes. cStor Pool Pod - carves out space for each volume replica, manages the snapshots and clones of the replica. A set of such cStor Pool Pods form a single Storage Pool. The administrator will have to create a Storage Pool of type cStor - before creating a StorageClass for cStor Volumes. 
+
+(b) **cStor Target Pods:**  When a cStor Volume is provisioned, it creates a new cStor Target Pod that is responsible for exposing the iSCSI LUN. cSTor Target Pod receives the data from the workloads, and then passes it on to the respective cStor Volume Replicas (on cStor Pools). cStor Target Pod handles the synchronous replication and quorum management of its replicas. 
 
 ## cStor targets 
 
-cStor target runs in a pod and exposes an iSCSI lun on 3260 port. It also export the volume metrics that can be scraped by Prometheus. 
+cStor target runs in a pod and exposes an iSCSI lun on 3260 port. It also exports the volume metrics that can be scraped by Prometheus. 
 
 ## cStor pools
 
@@ -54,7 +55,7 @@ A pool is an important OpenEBS component for the Kubernetes administrators in th
 
 ### Relationship between cStor volumes and cStor pools
 
-cStor pools are a group of individual pools with one pool on each participating node. All the pools in the group are named as ""and each pod will be named as "".  The pools are totally independent from each other in that each is a different pool in itself and could host different number of volumes. They simply contain volume replicas.  For example, replica3 of pool1 in Node3 has two volumes whereas the other two pool replicas have only one volume each. The pool replicas are related to each other only at the level of target where target decides where to host the volume/data replicas/copies. 
+cStor pools are a group of individual pools with one pool on each participating node. Individual pools in the group are named as pool instances and corresponding pod for each pool instance is referred to as  cStor pool pod.  The pools are totally independent from each other in that each is a different pool in itself and could host different number of volumes. They simply contain volume replicas.  For example, replica3 of pool1 in Node3 has two volumes whereas the other two pool replicas have only one volume each. The pool replicas are related to each other only at the level of target where target decides where to host the volume/data replicas/copies. 
 
 Replication of data does not happen at the pool level. Synchronous data replication and rebuilding happen at volume level by the cStor target. Volume replicas are scheduled to be deployed on cStor pools located on different nodes. In the example figure below, a pool configuration is defined as having three replicas or three independent pools .
 
@@ -79,7 +80,7 @@ A cStor pool spec consists of
 - List of disks on each node that constitute the pool on that given node
 - RAID type within the pool (currently stripe and mirror are supported). Refer to the [cStor Pool roadmap](/docs/next/cStorPools.html#cstor-pool-feature-roadmap) to find the status of RAIDz1 support
 
-**Number of pools:** It is good to start with 3 poos as the number of volume replicas will be typically three or one. However, the number of pools are fixed in OpenEBS 0.8 version. Support for increasing the pool replicas on the fly is in the [cStor Pool roadmap](/docs/next/cStorPools.html#cstor-pool-feature-roadmap)  . At the time of cStor pool creation, individual and independent pools are created on the specified nodes. 
+**Number of pools:** It is good to start with 3 pools as the number of volume replicas will be typically three or one. However, the number of pools are fixed in OpenEBS 0.8 version. Support for increasing the pool replicas on the fly is in the [cStor Pool roadmap](/docs/next/cStorPools.html#cstor-pool-feature-roadmap)  . At the time of cStor pool creation, individual and independent pools are created on the specified nodes. 
 
 **List of nodes that host the pools:** This information and the number of pool replicas are implicitly provided by analyzing the provided disk CRs in the spec file. For example, if the spec file has 3 disk CRs, which belong to 3 different nodes, it implicitly means the number of pool replicas are 3 and the list of nodes taken from the disk CR metadata.
 
