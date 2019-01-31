@@ -92,6 +92,27 @@ yum install iscsi-initiator-utils -y
 
 You can verify the installation using the procedure mentioned above. 
 
+### CoreOS Host
+
+CoreOS typically installs the iSCSI initiator by default. Start with checking if the initiator name is configured and iSCSI service is running using the following commands.
+
+```
+vi /etc/iscsi/initiatorname.iscsi
+```
+
+```
+systemctl status iscsid
+```
+If iSCSId is listed as running, we will have to disable it (iscsiadm runs inside your pods, not on the host.)
+```
+systemctl disable iscsid
+```
+Lastly, we need to enable the iscsi_tcp kernel module to start at boot time (without iscsid starting it for us.)
+```
+echo iscsi_tcp >/etc/modules-load.d/iscsi_tcp.conf
+```
+Then reboot. You should be all set!
+
 <a name="Azure"></a>
 
 ### Azure Cloud
