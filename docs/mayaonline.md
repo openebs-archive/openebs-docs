@@ -47,7 +47,9 @@ User's data is never looked into or exported to MayaOnline by the agents.
 
 ## Connecting a Kubernetes cluster to MayaOnline
 
-### System requirements
+### System requirements (or resource required)
+
+- Installation of MayaOnline agents happen into maya-system namespace. On an average, the agents consume around 1Gig  memory and 1 vCPU cycles per node. 
 
 - Users can in general connect any Kubernetes cluster versioned above 1.10.x to MayaOnline and OpenShift versioned above 3.x. If you are facing troubles connecting your Kubernetes cluster, report the details in the OpenEBS community slack channel ([slack.openebs.io](https://slack.openebs.io) )
 
