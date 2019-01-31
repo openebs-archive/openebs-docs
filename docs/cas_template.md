@@ -137,3 +137,13 @@ pvc-f4df0b24-6890-11e8-a3dc-000c296fd8d3-rep-57478cd89f-44v8s    1/1       Runni
        a.appendChild(r);
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-92076314-12');
+</script>

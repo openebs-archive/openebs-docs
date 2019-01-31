@@ -67,3 +67,13 @@ root     25492  0.0  0.0  12944   924 pts/0    S+   15:27   0:00          \_ gre
 
 
 </script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-92076314-12');
+</script>
