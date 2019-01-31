@@ -149,9 +149,9 @@ The `OpenEBS_logical_size` and `OpenEBS_actual_used` parameters will start showi
 
 ## What must be the disk mount status on Node for provisioning OpenEBS volume?
 
-OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume. Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted). cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks.
+OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume. Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted). cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is optional to wipe out the data from the disk if you use existing disks for cStor pool creation.
 
-## What are different device paths excluded by NDM?
+## What are the different device paths excluded by NDM?
 
 NDM is excluding following device path to avoid from creating cStor pools. This configuration is added under *Configmap* for *node-disk-manager-config*. 
 
@@ -159,8 +159,13 @@ NDM is excluding following device path to avoid from creating cStor pools. This 
 - `/dev/fd` - file descriptors.
 - `/dev/sr` - CD-ROM devices.
 - `/dev/ram` - ramdisks.
-- `/dev/dm` -lvm.
-- `/dev/md` -multiple device ( software RAID devices). 
+- `/dev/dm` - lvm.
+- `/dev/md` - multiple device ( software RAID devices). 
+
+## Can I provision OpenEBS volume if the request in PVC is more than the avaialble physical capcaity of the pools in the Storage Nodes?
+
+As of 0.8.0, the user is allowed to create PVCs that cross the available capacity of the pools in the Nodes. In the future release, it will validate with an option `overProvisioning=false`, the PVC request should be denied if there is not enough available capacity to provision the volume.
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
