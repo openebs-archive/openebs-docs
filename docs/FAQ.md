@@ -143,29 +143,168 @@ If the following warning messages are displayed while launching an application, 
 
 The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.
 
-## Why `OpenEBS_logical_size` and `OpenEBS_actual_used` are showing in different size?
+## Why **OpenEBS_logical_size** and **OpenEBS_actual_used** are showing in different size?
 
 The `OpenEBS_logical_size` and `OpenEBS_actual_used` parameters will start showing different sizes when there are replica node restarts and internal snapshots are created for synchronizing replicas.
 
 ## What must be the disk mount status on Node for provisioning OpenEBS volume?
 
-OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume. Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted). cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is optional to wipe out the data from the disk if you use existing disks for cStor pool creation.
+OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume. 
+Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted). 
+cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is optional to wipe out the data from the disk if you use existing disks for cStor pool creation.
 
-## What are the different device paths excluded by NDM?
+## How OpenEBS detects disks for creating cStor Pool?
 
-NDM is excluding following device path to avoid from creating cStor pools. This configuration is added under *Configmap* for *node-disk-manager-config*. 
+Any block disks available on the node (that can be listed with say `lsblk`) will be discovered by OpenEBS. 
+Node Disk Manager(NDM) forms the DISK CRs in the following way
+- Scan the list of disks that are unmounted
+- Filter out the OS disks
+- Filter out any other disk patterns that are mentioned in `openebs-operator.yaml`.
 
-- `/dev/loop` - loop devices.
-- `/dev/fd` - file descriptors.
-- `/dev/sr` - CD-ROM devices.
-- `/dev/ram` - ramdisks.
-- `/dev/dm` - lvm.
-- `/dev/md` - multiple device ( software RAID devices). 
+NDM do some filters on the disks to exclude,for example boot disk. 
+NDM is excluding following device path to avoid from creating cStor pools. This configuration is added in `openebs-ndm-config` under Configmap in `openebs-operator.yaml`.
+/dev/loop - loop devices.
+/dev/fd - file descriptors.
+/dev/sr - CD-ROM devices.
+/dev/ram - ramdisks.
+/dev/dm -lvm.
+/dev/md -multiple device ( software RAID devices).
 
+It is also possible to customize by adding more disk types associated with your nodes. For example, used disks, unwanted disks and so on. Following is the default filters added in `openebs-operator.yaml`. This change must be done in the 'openebs-operator.yaml' file that you have downloaded before OpenEBS installation.
+
+`exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"`
+
+Example:
+ ```
+  filterconfigs:
+    - key: path-filter
+      name: path filter
+      state: true
+      include: ""
+      exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"
+ ```  
 ## Can I provision OpenEBS volume if the request in PVC is more than the avaialble physical capcaity of the pools in the Storage Nodes?
 
 As of 0.8.0, the user is allowed to create PVCs that cross the available capacity of the pools in the Nodes. In the future release, it will validate with an option `overProvisioning=false`, the PVC request should be denied if there is not enough available capacity to provision the volume.
 
+## What is the difference between cStor Pool creation using manual method and auto method?
+
+By using manual method, you must give the selected disk name which is listed by NDM. This details has to be entered in the StoragePoolClaim YAML under `diskList`. See [storage pool](/docs/next/setupstoragepools.html#by-using-manual-method) for more info. 
+It is also possible to change `maxPools` count and `poolType` in the StoragePoolClaim YAML. 
+Consider you have 4 nodes with 2 disks each. You can select `maxPools` count as 3, then cStor pool will create in any 3 nodes out of 4. The remaining disks belongs to 4th Node can be used for horizontal scale up in future.
+Advantage is that there is no restriction in the number of disks for the creation of cStor storage pool using `striped` or `mirrored` Type.
+
+By auto method, its not need to provide the disk details in the StoragePoolClaim YAML. You have to specify `maxPools` count to limit the storage pool creation in OpenEBS cluster and `poolType` for the type of storage pool such as Mirrored or Striped.  See [storage pool](/docs/next/setupstoragepools.html#by-using-auto-method) for more info.
+
+But the following are the limitations with this approach.
+1. For Striped pool, it will take only one disk per Node even Node have multiple disks.
+2. For Mirrored pool, it will take only 2 disks attached per Node even Node have multiple disks.
+
+Consider you have 4 nodes with 4 disks each. If you set `maxPools` as 3 and `poolType` as `striped`, then Striped pool will created with Single disk on 3 Nodes out of 4 Nodes.
+If you set `maxPools` as 3 and `poolType` as `mirrored`, then Mirrored cStor pool will create with single Mirrored pool with 2 disks on 3 Nodes out of 4 Nodes.
+ 
+## How the data is distributed when cStor maxPools count is 3 and replicaCount as 2 in StorageClass?
+
+If `maxPool` count is 3 in StoragePoolClaim, then 3 cStor storage pool will create if it meet the required number of Nodes,say 3 in this example.
+If `replicaCount` is 2 in StorageClass, then 2 OpenEBS volume will create on the top of any 2 cStor storage pool out of 3.
+
+## How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?
+
+Apply the following YAML in your cluster.
+- Create a Privileged PSP
+  ```
+  apiVersion: extensions/v1beta1
+  kind: PodSecurityPolicy
+   metadata:
+     name: privileged
+     annotations:
+       seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
+   spec:
+     privileged: true
+     allowPrivilegeEscalation: true
+     allowedCapabilities:
+     - '*'
+     volumes:
+     - '*'
+     hostNetwork: true
+     hostPorts:
+     - min: 0
+       max: 65535
+     hostIPC: true
+     hostPID: true
+     runAsUser:
+       rule: 'RunAsAny'
+     seLinux:
+       rule: 'RunAsAny'
+     supplementalGroups:
+       rule: 'RunAsAny'
+     fsGroup:
+       rule: 'RunAsAny'    
+  ```
+
+- Associate the above PSP to a ClusterRole
+  ```
+  kind: ClusterRole
+  apiVersion: rbac.authorization.k8s.io/v1
+  metadata:
+    name: privilegedpsp
+  rules:
+  - apiGroups: ['extensions']
+    resources: ['podsecuritypolicies']
+    verbs:     ['use']
+    resourceNames:
+    - privileged
+  ```
+- Associate the above Privileged ClusterRole to OpenEBS Service Account
+  ```
+  apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    annotations:
+      rbac.authorization.kubernetes.io/autoupdate: "true"
+    name: openebspsp
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: privilegedpsp
+  subjects:
+  - kind: ServiceAccount
+    name: openebs-maya-operator
+    namespace: openebs
+  ```
+- Proceed to install the OpenEBS. Note that the namespace and service account name used by the OpenEBS should match what is provided in   the above ClusterRoleBinding.
+
+## How to create a cStor volume on single cStor disk pool?
+
+You can give the `maxPools` count as `1` in StoragePoolClaim YAML and `replicaCount` as `1` in StorageClass YAML.
+In the following sample SPC and SC YAML, cStor pool is created using auto method. After applying this YAML, one cStor pool named `cstor-disk` will be created only in one Node and StorageClass named `openebs-cstor-disk`. 
+Only requirement is that one node has atleast one disk attached but unmounted. See [here.](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume) to understand more about disk mount status
+```
+---
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+spec:
+  name: cstor-disk
+  type: disk
+  maxPools: 1
+  poolSpec:
+    poolType: striped
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-cstor-disk
+  annotations:
+    openebs.io/cas-type: cstor
+    cas.openebs.io/config: |
+      - name: StoragePoolClaim
+        value: "cstor-disk"
+      - name: ReplicaCount
+        value: "1"
+provisioner: openebs.io/provisioner-iscsi
+```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
