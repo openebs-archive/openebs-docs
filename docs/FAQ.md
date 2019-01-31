@@ -163,13 +163,14 @@ Node Disk Manager(NDM) forms the DISK CRs in the following way
 
 NDM do some filters on the disks to exclude,for example boot disk. 
 NDM is excluding following device path to avoid from creating cStor pools. This configuration is added in `openebs-ndm-config` under Configmap in `openebs-operator.yaml`.
+```
 /dev/loop - loop devices.
 /dev/fd - file descriptors.
 /dev/sr - CD-ROM devices.
 /dev/ram - ramdisks.
 /dev/dm -lvm.
 /dev/md -multiple device ( software RAID devices).
-
+```
 It is also possible to customize by adding more disk types associated with your nodes. For example, used disks, unwanted disks and so on. Following is the default filters added in `openebs-operator.yaml`. This change must be done in the 'openebs-operator.yaml' file that you have downloaded before OpenEBS installation.
 
 `exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"`
