@@ -220,6 +220,7 @@ metadata:
 spec:
   name: cstor-disk
   type: disk
+  maxPools: 3
   poolSpec:
     poolType: striped
   # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
@@ -257,7 +258,6 @@ spec:
   name: cstor-disk
   type: disk
   maxPools: 3
-  minPools: 3
   poolSpec:
     poolType: striped
 ---
