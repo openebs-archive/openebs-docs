@@ -285,7 +285,7 @@ mayactl volume list
 Get all the replica information of required volume using the following command.
 
 ```
-mayactl volume info --volname pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343d
+ mayactl volume describe --volname pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343d
 ```
 
 The output will be similar to the following.
@@ -293,7 +293,7 @@ The output will be similar to the following.
 ```
 Name                                      Status
 pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc  Running
-cash-4.3#  mayactl volume info --volname pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343d
+cash-4.3#  mayactl volume describe --volname pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343d
 
 Portal Details :
 
@@ -314,7 +314,7 @@ pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc-rep-789c9958b9-fb9v5     RW            
 pvc-7f00bc57-9bb7-11e8-a48f-0667b9b343dc-rep-789c9958b9-x8pjf     RW              Running     100.96.1.6     ip-172-20-45-220.us-west-2.compute.internal
 ```
 
-Get the status and access mode of each replica from both the Nodes. Some access mode labels are NA, WO etc. **NA** means that Node is not running yet and **WO** means node has started replication after Node started running.
+Get the status and access mode of each replica from all the Nodes. Some access mode labels are NA, WO etc. **NA** means that Node is not running yet and **WO** means node has started replication after Node started running.
 
 ## Deploying Jiva Pods with Custom Namespace
 
