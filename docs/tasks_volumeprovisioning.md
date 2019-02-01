@@ -505,7 +505,37 @@ Following is a mongo statefulset application yaml file with the above entry adde
             openebs: controlnode
          containers:
 
+## How to create a cStor volume on single cStor disk pool?
 
+You can give the `maxPools` count as `1` in StoragePoolClaim YAML and `replicaCount` as `1` in StorageClass YAML.
+In the following sample SPC and SC YAML, cStor pool is created using auto method. Using auto method, it will take single attached disk. After applying this YAML, one cStor pool named `cstor-disk` will create only in one Node with StorageClass named `openebs-cstor-disk`. 
+Only requirement is that one node has atleast one disk attached but unmounted. See [here.](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume) to understand more about disk mount status
+```
+---
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+spec:
+  name: cstor-disk
+  type: disk
+  maxPools: 1
+  poolSpec:
+    poolType: striped
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-cstor-disk
+  annotations:
+    openebs.io/cas-type: cstor
+    cas.openebs.io/config: |
+      - name: StoragePoolClaim
+        value: "cstor-disk"
+      - name: ReplicaCount
+        value: "1"
+provisioner: openebs.io/provisioner-iscsi
+```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
