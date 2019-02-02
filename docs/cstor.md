@@ -116,7 +116,6 @@ cStor Pool is an important component in the storage management. It is fundamenta
 **Delete a pool instance** : (Not supported in OpenEBS 0.8, refer to the  [cStor roadmap](/docs/next/cstor.html#cstor-roadmap) . When a Kubernetes node needs to be drained in a planned manner, then the volume replicas in the pool instance that resides on that node need to be drained by moving them to other pool instance(s). Once all the volume replicas are drained, the pool instance is deleted.
 
 
-
 ## cStor Volume snapshots
 
 cStor snapshots are taken instantaneously as they are point-in-time copy of the volume data. OpenEBS supports standard Kubernetes API to take snapshots and restore volumes from snapshots. 
@@ -207,18 +206,21 @@ volumeClaimTemplates:
 | kubectl get volumesnapshot         | Get the list of volumesnapshots in the entire cluster        |
 
 
-
 ## High availability of cStor
 
 cStor volumes when deployed in 3 replica mode provide high availability of the data as long as the replicas are in quorum. At least two replicas need to be healthy to call the volume is in quorum. In a 3 replica setup, if the second replica becomes unavailable because of the pool failure or unavailability, the volume is set to read-only by the target. When the volume replicas are back online, they are rebuilt one by one and the volume is set to read-write as soon as the quorum is achieved. 
 
+## Ephemeral disk support
 
+In general case, when a node which is attached by ephemeral disks is lost such as rebooted or down and come back with same host name with new formatted disks. This means data stored  in the previous disk is lost. 
+
+From 0.8.1 onwards, cStor support ephemeral disks for creating cStor Pools with High availability. To support ephemeral disk, OpenEBS cStor volume replicas have a property `quorum` at ZFS layer. Setting this property to `ON` makes the ZFS volume to be part of quorum decisions at target . This means, the volume replicas which are connected to the target with the quorum value `ON` will be considered that volume replica is existing to process IO or not. If the quorum property is set to `OFF`, this makes the target to accept this replica(currently new replicas are not allowed to connect to the target), and triggers rebuild on this ZFS volume, and ZFS volume automatically sets 'quorum' as `ON` once the rebuilding is done. ZFS quorum is like once it is set to `ON` it can’t revert back it to `OFF`, but the reverse is allowed. Once the enough no.of volume replicas,that is as mentioned in replication factor are connected then target will not accept none of replica to connect.
 
 ## Monitoring cStor pools and volumes
 
 The easiest way to monitor cStor pools and volumes is through MayaOnline. The volume metrics are scraped and uploaded to MayaOnline where users can browse historical volume performance. MayaOnline also provides the topology view where detailed live status of Volumes, snapshots, clones, pools and disks is obtained. Through the topology view , users get granular details of each of these Kubernetes resources in an intuitive graphical user interface. 
 
-
+<br>
 
 Links to screenshots of some of the cStor resources in MayaOnline are shown below.
 
