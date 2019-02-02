@@ -259,11 +259,25 @@ kind: StorageClass
 metadata:
   annotations:
     cas.openebs.io/config: |
-      - name: TargetResourceLimits
+      - name: AuxResourceLimits
         value: |-
             memory: 0.5Gi
             cpu: 50m
 ```
+
+### AuxResourceRequests Policy
+
+This feature is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. `AuxResourceRequests` allow you to set requests on side cars. Requests have to be specified in the format expected by Kubernetes
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: AuxResourceRequests
+        value: "none"
+``` 
 
 ### ReplicaResourceLimits Policy
 
@@ -488,12 +502,26 @@ kind: StorageClass
 metadata:
   annotations:
     cas.openebs.io/config: |
-      - name: TargetResourceLimits
+      - name:  AuxResourceLimits
         value: |-
             memory: 0.5Gi
             cpu: 50m
     openebs.io/cas-type: cstor
 ```
+### AuxResourceRequests Policy
+
+This feature is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. `AuxResourceRequests` allow you to set requests on side cars. Requests have to be specified in the format expected by Kubernetes
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: AuxResourceRequests
+        value: "none"
+    openebs.io/cas-type: cstor
+``` 
 
 ### ReplicaResourceLimits Policy
 
