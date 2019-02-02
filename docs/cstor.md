@@ -320,50 +320,50 @@ Following are most commonly observed areas of troubleshooting
 4. **If upgrade from 0.8 to 0.8.1 is done by manually without using upgrade script, observed following error**
    
    **Symptom** 
-  ```
-    Warning  Unhealthy              1m (x3 over 1m)   kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Liveness probe failed:         cannot open 'cstor-5ff82ec7-2542-11e9-9965-42010a80013': dataset does not exist
-  Normal   Created                31s (x2 over 6m)  kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Created container
-  Normal   Started                31s (x2 over 6m)  kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Started container
-  Normal   Pulled                 31s (x2 over 6m)  kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Container image "quay.io/openebs/cstor-pool:v0.8.x-ci" already present on machine
-  Normal   Killing                31s               kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Killing container with id docker://cstor-pool:Container failed liveness probe.. Container will be killed and recreated.
-  
-  ```
+   ```
+   Warning  Unhealthy              1m (x3 over 1m)   kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Liveness probe failed:         cannot open 'cstor-5ff82ec7-2542-11e9-9965-42010a80013': dataset does not exist
+   Normal   Created                31s (x2 over 6m)  kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Created container
+   Normal   Started                31s (x2 over 6m)  kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Started container
+   Normal   Pulled                 31s (x2 over 6m)  kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Container image   "quay.io/openebs/cstor-pool:v0.8.x-ci" already present on machine
+   Normal   Killing                31s               kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Killing container with id    docker://cstor-pool:Container failed liveness probe.. Container will be killed and recreated.
+   ```
   
    **Reason**
    
-   In 0.8.1 liveness check for cstor-pool is added, for every 5 minutes liveness probe will check whether cstor-pool is alive or not if not alive liveness will kill the containers in corresponding deployment pod. The above error came if the upgrade to 0.8.1 from 0.8.0 is not done thorugh the upgrade script.
+    In 0.8.1 liveness check for cstor-pool is added, for every 5 minutes liveness probe will check whether cstor-pool is alive or not if not alive liveness will kill the containers in corresponding deployment pod. The above error came if the upgrade to 0.8.1 from 0.8.0 is not done thorugh the upgrade script.
    
 
    **Resolution**
   
-   The above error can be avoided by setting the correct `csp_uuid` in the correspoding deployment yaml. 
-  ```
-  "containers": [
-                {
-                  "name": "cstor-pool",
-                  "image": "quay.io/openebs/cstor-pool:0.8.1",
-                  "env": [
-                      {
-                         "name": "OPENEBS_IO_CSTOR_ID",
-                         "value": "@csp_uuid"
-                      }
-                  ],
-                  "livenessProbe": {
-                     "exec": {
-                        "command": [
-                           "/bin/sh",
-                           "-c",
-                           "zfs set io.openebs:livenesstimestap='$(date)' cstor-$OPENEBS_IO_CSTOR_ID"
-                         ]
-                     },
-                     "failureThreshold": 3,
-                     "initialDelaySeconds": 300,
-                     "periodSeconds": 10,
-                     "successThreshold": 1,
-                     "timeoutSeconds": 30
-                   }
-               },
-  ```
+    The above error can be avoided by setting the correct `csp_uuid` in the correspoding deployment yaml. 
+    ```
+    "containers": [
+              {
+                 "name": "cstor-pool",
+                 "image": "quay.io/openebs/cstor-pool:0.8.1",
+                 "env": [
+                     {
+                        "name": "OPENEBS_IO_CSTOR_ID",
+                        "value": "@csp_uuid"
+                     }
+                 ],
+                 "livenessProbe": {
+                    "exec": {
+                       "command": [
+                          "/bin/sh",
+                          "-c",
+                          "zfs set io.openebs:livenesstimestap='$(date)' cstor-$OPENEBS_IO_CSTOR_ID"
+                        ]
+                    },
+                    "failureThreshold": 3,
+                    "initialDelaySeconds": 300,
+                    "periodSeconds": 10,
+                    "successThreshold": 1,
+                    "timeoutSeconds": 30
+                  }
+              },
+    ```
+  
 The `csp_uuid` is the corresponding pool resource UID. 
 
 ## cStor roadmap
