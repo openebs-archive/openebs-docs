@@ -317,7 +317,7 @@ Following are most commonly observed areas of troubleshooting
    This error eventually could get rectified on the further retries, volume gets mounted and application is started. This error is usually seen when cStor target takes some time to initialize  on low speed networks as it takes time to download cStor image binaries from repositories ( or )  or because the cstor target is waiting for the replicas to connect and establish quorum. If the error persists beyond 5 minutes, logs need to be verified, contact support or seek help on the community [slack](https://slack.openebs.io).
 
    
-4. **If upgrade from 0.8 to 0.8.1 is done by manually without using upgrade script, observed following error**
+4. **If upgrade from 0.8 to 0.8.1 is done by manually without using upgrade script, observed following error can come**
    
    **Symptom** 
    ```
@@ -330,7 +330,7 @@ Following are most commonly observed areas of troubleshooting
   
    **Reason**
    
-    In 0.8.1 liveness check for cstor-pool is added, for every 5 minutes liveness probe will check whether cstor-pool is alive or not if not alive liveness will kill the containers in corresponding deployment pod. The above error came if the upgrade to 0.8.1 from 0.8.0 is not done thorugh the upgrade script.
+    In 0.8.1 liveness check for cstor-pool is added. For every 5 minutes liveness probe will check whether cstor pool is alive or not. If not alive, liveness will kill the containers in corresponding deployment pod. The above error can come if the upgrade to 0.8.1 from 0.8.0 is not done thorugh the upgrade script.
    
 
    **Resolution**
@@ -364,7 +364,7 @@ Following are most commonly observed areas of troubleshooting
               },
     ```
   
-The `csp_uuid` is the corresponding pool resource UID. 
+    The `csp_uuid` is the corresponding pool resource UID. 
 
 ## cStor roadmap
 
