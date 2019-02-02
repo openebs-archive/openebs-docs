@@ -216,6 +216,8 @@ In general case, when a node which is attached by ephemeral disks is lost such a
 
 From 0.8.1 onwards, cStor support ephemeral disks for creating cStor Pools with High availability. To support ephemeral disk, OpenEBS cStor volume replicas have a property `quorum` at ZFS layer. Setting this property to `ON` makes the ZFS volume to be part of quorum decisions at target . This means, the volume replicas which are connected to the target with the quorum value `ON` will be considered that volume replica is existing to process IO or not. If the quorum property is set to `OFF`, this makes the target to accept this replica(currently new replicas are not allowed to connect to the target), and triggers rebuild on this ZFS volume, and ZFS volume automatically sets 'quorum' as `ON` once the rebuilding is done. ZFS quorum is like once it is set to `ON` it can’t revert back it to `OFF`, but the reverse is allowed. Once the enough no.of volume replicas,that is as mentioned in replication factor are connected then target will not accept none of replica to connect.
 
+When the replica is connected with quorum OFF, OpenEBS will allow WRITE IO on the all the volume replicas irrespective of quorum property, but read IO’s are allowed on the replica which is set to quorum ON. Volume will be in RW mode only if the 51% of volume replicas are connected with quorum ON.   
+
 ## Monitoring cStor pools and volumes
 
 The easiest way to monitor cStor pools and volumes is through MayaOnline. The volume metrics are scraped and uploaded to MayaOnline where users can browse historical volume performance. MayaOnline also provides the topology view where detailed live status of Volumes, snapshots, clones, pools and disks is obtained. Through the topology view , users get granular details of each of these Kubernetes resources in an intuitive graphical user interface. 
@@ -253,7 +255,6 @@ As cStor volume has a dedicated iSCSI stack, it can be tuned with number of work
 - Contact OpenEBS community on [Slack](https://slack.openebs.io) and seek further help
 
 
-
 ## Known limitations
 
 **After a node shutdown, I see application stuck in container creating waiting for PV to be attached.:**
@@ -263,12 +264,6 @@ When a Kubernetes node is involved in an unplanned shutdown like a power loss or
 **Cannot disable thin provisioning**
 
 By default, cStor supports thin provisioning, which means that when a storage class or PVC specifies the size of the volume and the pool from which the volume must be provisioned, and volume of that size is provisioned irrespective of whether that much free space is available in the pool or not. There is no option to specify thick provision while requesting a volume provisioning
-
-**Ephemeral storage use case** 
-
-Consider a situation where the Kubernetes nodes consist of ephemeral local disks (like in EKS and GKE) and the cStor volume replica count is 3. Losing a node will bring up a new node with new empty local disks.  In OpenEBS 0.8.0, this situation will not result in rebuilding the cStor volumes onto the new pool of the newly brought up node. Instead it is considered just as a new node. The functionality of checking if the new node has the same Kubernetes label as the original one and rebuilding the data on that node is in the near-term cStor roadmap.
-
-Note: It is common to reboot the nodes during Kubernetes upgrades and it may force the above situation if the nodes have local disks which are ephemeral in nature. It is NOT recommended to use OpenEBS cStor in such scenarios. OpenEBS 0.8.1 release is expected to have this support.
 
 **Delayed snapshots**
 
