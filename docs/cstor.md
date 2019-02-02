@@ -363,7 +363,6 @@ Following are most commonly observed areas of troubleshooting
                   }
               },
     ```
-  
     The `csp_uuid` is the corresponding pool resource UID. 
 
 ## cStor roadmap
