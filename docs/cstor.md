@@ -214,9 +214,9 @@ cStor volumes when deployed in 3 replica mode provide high availability of the d
 
 In general case, when a node which is attached by ephemeral disks is lost such as rebooted or down and come back with same host name with new formatted disks. This means data stored  in the previous disk is lost. 
 
-From 0.8.1 onwards, cStor support ephemeral disks for creating cStor Pools with High availability. To support ephemeral disk, OpenEBS cStor volume replicas have a property `quorum` at ZFS layer. Setting this property to `ON` makes the ZFS volume to be part of quorum decisions at target . This means, the volume replicas which are connected to the target with the quorum value `ON` will be considered that volume replica is existing to process IO or not. If the quorum property is set to `OFF`, this makes the target to accept this replica(currently new replicas are not allowed to connect to the target), and triggers rebuild on this ZFS volume, and ZFS volume automatically sets 'quorum' as `ON` once the rebuilding is done. ZFS quorum is like once it is set to `ON` it can’t revert back it to `OFF`, but the reverse is allowed. Once the enough no.of volume replicas,that is as mentioned in replication factor are connected then target will not accept none of replica to connect.
+From 0.8.1 onwards, cStor support ephemeral disks for creating cStor Pools with High availability. To support ephemeral disk, OpenEBS cStor volume replicas have a property `quorum` at ZFS layer. Setting this property to `ON` makes the ZFS volume to be part of quorum decisions at target . This means, the volume replicas which are connected to the target with the quorum value `ON` will be considered that volume replica is existing to process IO or not. If the quorum property is set to `OFF`, this makes the target to accept this replica(currently new replicas are not allowed to connect to the target), and triggers rebuild on this ZFS volume, and ZFS volume automatically sets `quorum` as `ON` once the rebuilding is done. ZFS quorum is like once it is set to `ON` it can’t revert back it to `OFF`, but the reverse is allowed. Once the enough number of volume replicas that is as mentioned in replication factor are connected then target will not accept none of replica to connect.
 
-When the replica is connected with quorum OFF, OpenEBS will allow WRITE IO on the all the volume replicas irrespective of quorum property, but read IO’s are allowed on the replica which is set to quorum ON. Volume will be in RW mode only if the 51% of volume replicas are connected with quorum ON.   
+When the replica is connected with quorum `OFF`, OpenEBS will allow WRITE IO on the all the volume replicas irrespective of quorum property, but read IO’s are allowed on the replica which is set to quorum `ON`. Volume will be in RW mode only if the 51% of volume replicas are connected with quorum `ON`.   
 
 ## Monitoring cStor pools and volumes
 
@@ -270,7 +270,6 @@ By default, cStor supports thin provisioning, which means that when a storage cl
 In cStor, snapshots are taken only when the volume replicas are in quorum. For example, as soon as the volume is provisioned on cStor, the volume will be in ready state but the quorum attainment may take  few minutes. Snapshot commands during this period will be delayed or queued till the volumes replicas attain quorum. The snapshot commands received by the target are also delayed when the cStor volume is marked read-only because of no-quorum.
 
 
-
 ## Troubleshooting areas
 
 Following are most commonly observed areas of troubleshooting
@@ -318,8 +317,54 @@ Following are most commonly observed areas of troubleshooting
    This error eventually could get rectified on the further retries, volume gets mounted and application is started. This error is usually seen when cStor target takes some time to initialize  on low speed networks as it takes time to download cStor image binaries from repositories ( or )  or because the cstor target is waiting for the replicas to connect and establish quorum. If the error persists beyond 5 minutes, logs need to be verified, contact support or seek help on the community [slack](https://slack.openebs.io).
 
    
-
+4. **If upgrade from 0.8 to 0.8.1 is done by manually without using upgrade script, observed following error**
    
+   **Symptom** 
+  ```
+    Warning  Unhealthy              1m (x3 over 1m)   kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Liveness probe failed:         cannot open 'cstor-5ff82ec7-2542-11e9-9965-42010a80013': dataset does not exist
+  Normal   Created                31s (x2 over 6m)  kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Created container
+  Normal   Started                31s (x2 over 6m)  kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Started container
+  Normal   Pulled                 31s (x2 over 6m)  kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Container image "quay.io/openebs/cstor-pool:v0.8.x-ci" already present on machine
+  Normal   Killing                31s               kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Killing container with id docker://cstor-pool:Container failed liveness probe.. Container will be killed and recreated.
+  
+  ```
+  
+   **Reason**
+   
+   In 0.8.1 liveness check for cstor-pool is added, for every 5 minutes liveness probe will check whether cstor-pool is alive or not if not alive liveness will kill the containers in corresponding deployment pod. The above error came if the upgrade to 0.8.1 from 0.8.0 is not done thorugh the upgrade script.
+   
+
+   **Resolution**
+  
+   The above error can be avoided by setting the correct `csp_uuid` in the correspoding deployment yaml. 
+  ```
+  "containers": [
+                {
+                  "name": "cstor-pool",
+                  "image": "quay.io/openebs/cstor-pool:0.8.1",
+                  "env": [
+                      {
+                         "name": "OPENEBS_IO_CSTOR_ID",
+                         "value": "@csp_uuid"
+                      }
+                  ],
+                  "livenessProbe": {
+                     "exec": {
+                        "command": [
+                           "/bin/sh",
+                           "-c",
+                           "zfs set io.openebs:livenesstimestap='$(date)' cstor-$OPENEBS_IO_CSTOR_ID"
+                         ]
+                     },
+                     "failureThreshold": 3,
+                     "initialDelaySeconds": 300,
+                     "periodSeconds": 10,
+                     "successThreshold": 1,
+                     "timeoutSeconds": 30
+                   }
+               },
+  ```
+The `csp_uuid` is the corresponding pool resource UID. 
 
 ## cStor roadmap
 
