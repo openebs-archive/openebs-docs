@@ -542,34 +542,35 @@ metadata:
             memory: 2Gi
     openebs.io/cas-type: cstor
 ```
+
 ### PoolResourceLimits Policy
 
-This feature allow you to set the limits on memory and cpu for pool pods. The resource and limit value should be in the same format as expected by Kubernetes.
+This feature allow you to set the limits on memory and cpu for pool pods. The resource and limit value should be in the same format as expected by Kubernetes. The `name` of SPC can be changed if you need.
 
 ```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
 metadata:
-  annotations:
-    cas.openebs.io/config: |
-      - name: PoolResourceLimits
-        value: "none"
-    openebs.io/cas-type: cstor
+  name: cstor-disk
+spec:
+  - name: PoolResourceLimits
+    value: "none"
 ```
 
 ### PoolResourceRequests Policy
-This feature allow you to specify resource requests that need to be available before scheduling the containers. If not specified, the default is to use the limits from PoolResourceLimits or the default requests set in the cluster. 
+
+This feature allow you to specify resource requests that need to be available before scheduling the containers. If not specified, the default is to use the limits from PoolResourceLimits or the default requests set in the cluster. The `name` of SPC can be changed if you need.
  
  ```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
 metadata:
-  annotations:
-    cas.openebs.io/config: |
-      - name: PoolResourceRequests
-        value: "none"
-    openebs.io/cas-type: cstor
+  name: cstor-disk
+spec:
+  - name: PoolResourceRequests
+    value: "none"
 ````
+
 ### Target Affinity Policy
 
 The StatefulSet workloads access the OpenEBS storage volume  by connecting to the Volume Target Pod. This policy can be used to co-locate volume target pod on the same node as workload.
