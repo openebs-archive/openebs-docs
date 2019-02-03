@@ -109,11 +109,11 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.8.0
+        value: openebs/jiva:0.8.1
       - name: ReplicaImage
-        value: openebs/jiva:0.8.0
+        value: openebs/jiva:0.8.1
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.8.0
+        value: openebs/m-exporter:0.8.1
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
