@@ -1,11 +1,11 @@
 ---
-id: cassandra
-title: Using OpenEBS as statefulset storage for Cloud Native Cassandra
-sidebar_label: Cassandra
+id: common
+title: Common prerequisites for OpenEBS
+sidebar_label: Common
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:800px;">
+Features
 
 
 

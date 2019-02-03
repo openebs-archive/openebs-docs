@@ -1,17 +1,18 @@
 ---
-id: cassandra
-title: Using OpenEBS as statefulset storage for Cloud Native Cassandra
-sidebar_label: Cassandra
+id: minio
+title: Using OpenEBS to build Minio object storage on Kubernetes
+sidebar_label: Minio
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:800px;">
+<img src="/docs/assets/o-minio.png" alt="OpenEBS and Prometheus" style="width:800px;">
 
 
 
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};

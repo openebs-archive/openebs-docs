@@ -1,11 +1,11 @@
 ---
-id: cassandra
-title: Using OpenEBS as statefulset storage for Cloud Native Cassandra
-sidebar_label: Cassandra
+id: provisionvols
+title: Provisioning OpenEBS Storage Volumes - Using PVC
+sidebar_label: Provisioning Volumes
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:800px;">
+<img src="/docs/assets/sm-pv.png" alt="OpenEBS configuration flow" style="width:1000px">
 
 
 

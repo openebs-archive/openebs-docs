@@ -242,11 +242,14 @@ pre code {
 }
 
 /* css for tables */
+
+/*
 table tr th {
     background: #f2f2f2;
     font-weight: bold;
     text-transform: uppercase;
 }
+*/
 
 /* css for code snippets */
 .hljs, .hljs-subst {
@@ -320,3 +323,17 @@ redoc .operation-type {
     display: none !important;
 }
 
+.column2 {
+  -webkit-column-width: 200px; /* Chrome, Safari, Opera */
+  -moz-column-width: 200px; /* Firefox */  
+  column-width: 200px;
+  padding-left: 15px;
+}
+
+.emphasize {
+  -webkit-column-width: 800px; /* Chrome, Safari, Opera */
+  -moz-column-width: 800px; /* Firefox */  
+  column-width: 800px;
+  padding-left: 50px;
+  font-size: 18px;
+}

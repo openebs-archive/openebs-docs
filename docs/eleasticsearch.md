@@ -1,11 +1,11 @@
 ---
-id: cassandra
-title: Using OpenEBS as statefulset storage for Cloud Native Cassandra
-sidebar_label: Cassandra
+id: elasticsearch
+title: Using OpenEBS as storage for ElasticSearch on Kubernetes
+sidebar_label: ElasticSearch
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:800px;">
+<img src="/docs/assets/o-elastic.png" alt="OpenEBS and Prometheus" style="width:800px;">
 
 
 

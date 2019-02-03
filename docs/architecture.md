@@ -119,17 +119,13 @@ Node Disk Manager (NDM) fills a gap in the chain of tools required for managing 
 
 Prometheus is installed as a microservice by the OpenEBS operator during the initial setup. Prometheus monitoring for a given volume is controlled by a volume policy. With granular volume, disk-pool, and disk statistics, the Prometheus and Grafana tool combination help the OpenEBS user community to monitor their use of persistent data. 
 
-### Jaeger
 
-This is a roadmap feature. Jaeger tracing will be enabled for OpenEBS control plane components. Contributions to stabilize this integration are welcome.  
 
 ### WeaveScope
 
 Node Disk Manager components, volume pods, and other persistent storage structures of Kubernetes have been enabled for WeaveScope integration. With these enhancements, exploration and traversal of these components have become significantly easier.  WeaveScope is a well-regarded cloud-native visualization solution and is also incorporated in MayaOnline from MayaData.  
 
-### Kubernetes Dashboard
 
-The team behind OpenEBS also has extended the Kubernetes dashboard to include PV and PVC traversals from the application PODs and vice versa. 
 
 
 

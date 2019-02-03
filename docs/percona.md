@@ -1,11 +1,11 @@
 ---
-id: cassandra
-title: Using OpenEBS as statefulset storage for Cloud Native Cassandra
-sidebar_label: Cassandra
+id: percona
+title: Using OpenEBS as storage for Percona on Kubernetes
+sidebar_label: Percona
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:800px;">
+<img src="/docs/assets/o-percona.png" alt="OpenEBS and Prometheus" style="width:800px;">
 
 
 

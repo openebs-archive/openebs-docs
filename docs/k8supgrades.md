@@ -1,11 +1,11 @@
 ---
-id: cassandra
-title: Using OpenEBS as statefulset storage for Cloud Native Cassandra
-sidebar_label: Cassandra
+id: k8supgrades
+title: Best practices to follow when upgrading Kubernetes
+sidebar_label: Kubernetes Upgrades
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:800px;">
+Features
 
 
 

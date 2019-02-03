@@ -1,11 +1,11 @@
 ---
-id: cassandra
-title: Using OpenEBS as statefulset storage for Cloud Native Cassandra
-sidebar_label: Cassandra
+id: postgres
+title: Using OpenEBS as storage for PostgreSQL on Kubernetes
+sidebar_label: PostgreSQL
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:800px;">
+<img src="/docs/assets/o-postgres.png" alt="OpenEBS and Prometheus" style="width:800px;">	
 
 
 

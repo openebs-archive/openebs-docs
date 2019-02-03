@@ -1,11 +1,11 @@
 ---
-id: cassandra
-title: Using OpenEBS as statefulset storage for Cloud Native Cassandra
-sidebar_label: Cassandra
+id: rwm
+title: Using OpenEBS for Read-Write-Many (RWM) needs
+sidebar_label: Read-Write-Many (RWM)
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:800px;">
+Features
 
 
 

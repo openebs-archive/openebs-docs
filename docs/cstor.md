@@ -316,9 +316,8 @@ Following are most commonly observed areas of troubleshooting
 
    This error eventually could get rectified on the further retries, volume gets mounted and application is started. This error is usually seen when cStor target takes some time to initialize  on low speed networks as it takes time to download cStor image binaries from repositories ( or )  or because the cstor target is waiting for the replicas to connect and establish quorum. If the error persists beyond 5 minutes, logs need to be verified, contact support or seek help on the community [slack](https://slack.openebs.io).
 
-   
 4. **If upgrade from 0.8 to 0.8.1 is done by manually without using upgrade script, observed following error can come**
-   
+  
    **Symptom** 
    ```
    Warning  Unhealthy              1m (x3 over 1m)   kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Liveness probe failed:         cannot open 'cstor-5ff82ec7-2542-11e9-9965-42010a80013': dataset does not exist

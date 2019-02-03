@@ -1,17 +1,18 @@
 ---
-id: cassandra
-title: Using OpenEBS as statefulset storage for Cloud Native Cassandra
-sidebar_label: Cassandra
+id: operations
+title: Day2 operations in OpenEBS
+sidebar_label: Day 2 Operations
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:800px;">
+Features
 
 
 
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};

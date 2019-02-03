@@ -15,11 +15,25 @@ sidebar_label: MayaOnline
 - Logs of all pods related to OpenEBS components on the Kubernetes cluster are instantly available through Kibana dashboard interface
 - Alerts related to OpenEBS storage are provided on the portal as well as at user configured Slack channel
 
+## <br><br>System requirements (or resource required)
 
+- Installation of MayaOnline agents happen into maya-system namespace. On an average, the agents consume around 500mi node memory and  300-400m node cpu per node. 
 
-![MayaOnline Overview](/docs/assets/docOverview.png)
+- Users can in general connect any Kubernetes cluster versioned above 1.10.x to MayaOnline and OpenShift versioned above 3.x. If you are facing troubles connecting your Kubernetes cluster, report the details in the OpenEBS community slack channel ([slack.openebs.io](https://slack.openebs.io) )
 
+- Users need to authenticate to MayaOnline using their GitHub credentials
 
+- Users need to have access to Kubernetes admin context to install MayaOnline agents on Kubernetes
+
+   
+
+## Installing MayaOnline agents on  Kubernetes
+
+1. Sign up at app.mayaonline.io using GitHub credentials
+2. Create a project and choose the Kubernetes platform 
+3. Copy the kubectl command that is presented and run it in your Kubernetes environment 
+
+Once your cluster is connected to MayaOnline, start exploring your OpenEBS resources through the topology view of your cluster. 
 
 <br><br>
 
@@ -43,53 +57,35 @@ User's data is never looked into or exported to MayaOnline by the agents.
 
 **Note**: MayaOnline administrators will have read-only access to the topology, metrics and logs that are exported to MayaOnline.  
 
-<br><br>
+<br>
 
-## Connecting a Kubernetes cluster to MayaOnline
+[<img src="/docs/assets/mo-getstarted.png" width="400">](https://app.mayaonline.io/)
 
-### System requirements (or resource required)
-
-- Installation of MayaOnline agents happen into maya-system namespace. On an average, the agents consume around 1Gig  memory and 1 vCPU cycles per node. 
-
-- Users can in general connect any Kubernetes cluster versioned above 1.10.x to MayaOnline and OpenShift versioned above 3.x. If you are facing troubles connecting your Kubernetes cluster, report the details in the OpenEBS community slack channel ([slack.openebs.io](https://slack.openebs.io) )
-
-- Users need to authenticate to MayaOnline using their GitHub credentials
-
-- Users need to have access to Kubernetes admin context to install MayaOnline agents on Kubernetes
-
-   
-
-### Installing MayaOnline agents on  Kubernetes
-
-1. Sign up at app.mayaonline.io using GitHub credentials
-2. Create a project and choose the Kubernetes platform 
-3. Copy the kubectl command that is presented and run it in your Kubernetes environment 
-
-Once your cluster is connected to MayaOnline, start exploring your OpenEBS resources through the topology view of your cluster. 
+<br>
 
 
 
-### Example Dashboards at MayaOnline
+## Example Dashboards at MayaOnline
 
-#### Landing page
+### Landing page
 
 <img src="/docs/assets/MO-import2.png" alt="Sample dashboard at MayaOnline" width="800"/>
 
 <br><br>
 
-#### cStor pool view
+### cStor pool view
 
 <img src="/docs/assets/mo-pool-view.png" alt="Sample dashboard at MayaOnline" width="800"/>
 
 <br><br>
 
-#### cStor volume pod view
+### cStor volume pod view
 
 <img src="/docs/assets/mo-pod-view.png" alt="Sample dashboard at MayaOnline" width="800"/>
 
 <br><br>
 
-#### cStor custom resources view
+### cStor custom resources view 
 
 <img src="/docs/assets/mo-cr-view.png" alt="Sample dashboard at MayaOnline" width="800"/>
 

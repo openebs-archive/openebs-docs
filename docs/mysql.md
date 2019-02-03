@@ -1,11 +1,11 @@
 ---
-id: cassandra
-title: Using OpenEBS as statefulset storage for Cloud Native Cassandra
-sidebar_label: Cassandra
+id: mysql
+title: Using OpenEBS as storage for MySQL on Kubernetes
+sidebar_label: MySQL
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:800px;">
+<img src="/docs/assets/o-mysql.png" alt="OpenEBS and Prometheus" style="width:800px;">
 
 
 

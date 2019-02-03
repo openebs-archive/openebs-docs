@@ -1,11 +1,11 @@
 ---
-id: cassandra
-title: Using OpenEBS as statefulset storage for Cloud Native Cassandra
-sidebar_label: Cassandra
+id: configurepools
+title: Configuring Storage Pools
+sidebar_label:Configure StoragePools
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:800px;">
+<img src="/docs/assets/sm-pool.png" alt="OpenEBS configuration flow" style="width:1000px">
 
 
 

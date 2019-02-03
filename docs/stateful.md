@@ -1,11 +1,11 @@
 ---
-id: cassandra
-title: Using OpenEBS as statefulset storage for Cloud Native Cassandra
-sidebar_label: Cassandra
+id: stateful
+title: Using OpenEBS as storage for any stateful application on Kubernetes
+sidebar_label: Other stateful applications
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:800px;">
+<img src="/docs/assets/o-stateful.png" alt="OpenEBS and Prometheus" style="width:800px;">
 
 
 
