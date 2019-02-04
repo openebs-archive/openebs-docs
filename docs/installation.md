@@ -89,8 +89,6 @@ helm repo update
 helm install --namespace openebs --name openebs stable/openebs
 ```
 
-OpenEBS control plane pods are now created under “**openebs**” namespace . CAS Template,default Storage Pool, default Storage Classes and default SPCs are created after executing the above command. 
-
 You can also install OpenEBS in custom namespace using the following way.
 
 ```
@@ -163,13 +161,110 @@ You can install OpenEBS cluster by running the following command.
 kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
 ```
 
-OpenEBS control plane pods are created under “**openebs**” namespace. CAS Template,default Storage Pool , default Storage Classes  and default StoragePoolClaim are created after executing the above command.Now select your storage to provision OpenEBS volume from [here](/docs/next/installation.html#select-your-storage-engine).
-
 ## Verify OpenEBS is installed
 
+OpenEBS pods are created under "**openebs** namespace. Node Disk Manager, CAS Template , default Storage Classes and default Storage Pool Claim are created after installation.
 
+You can get the OpenEBS pods status by running following command.
 
- <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+```
+kubectl get pods -n openebs
+```
+
+Following is an example output.
+
+```
+NAME                                        READY     STATUS    RESTARTS   AGE
+cstor-sparse-pool-lkf1-86d75bc764-h9jpp     2/2       Running   0          6h
+cstor-sparse-pool-n8nw-779f4cd9cd-8g24v     2/2       Running   0          6h
+cstor-sparse-pool-u4ak-5f47688bdd-pd7mq     2/2       Running   0          6h
+maya-apiserver-6bcc5d9b5f-29vnz             1/1       Running   0          6h
+openebs-ndm-52cl6                           1/1       Running   0          6h
+openebs-ndm-ddf2s                           1/1       Running   0          6h
+openebs-ndm-pg6lm                           1/1       Running   0          6h
+openebs-provisioner-5c65ff5d55-s45t8        1/1       Running   0          6h
+openebs-snapshot-operator-9898bbb95-lzhq5   2/2       Running   0          6h
+```
+
+**CAS Template** is an approach to provision persistent volumes that make use of CAS storage engine. The following command helps check the CAS Template components.
+
+```
+kubectl get castemplate
+```
+
+Following is an example output.
+
+```
+NAME                                  AGE
+cstor-volume-create-default-0.8.0     5h
+cstor-volume-delete-default-0.8.0     5h
+cstor-volume-list-default-0.8.0       5h
+cstor-volume-read-default-0.8.0       5h
+jiva-snapshot-create-default-0.8.0    5h
+jiva-volume-create-default-0.8.0      5h
+jiva-volume-delete-default-0.6.0      5h
+jiva-volume-delete-default-0.8.0      5h
+jiva-volume-list-default-0.6.0        5h
+jiva-volume-list-default-0.8.0        5h
+jiva-volume-read-default-0.6.0        5h
+jiva-volume-read-default-0.8.0        5h
+storage-pool-list-default-0.8.0       5h
+storage-pool-read-default-0.8.0       5h
+```
+
+It also installs the default cStor **StorageClass** which can be used in your pvc yaml file to create Persistent Volume. For more information about sample storage classes used for different applications, see [storage classes](https://github.com/openebs/openebs-docs/blob/master/docs/next/setupstorageclasses.html). 
+
+You can get the StorageClass details using the following command.
+
+```
+kubectl get sc
+```
+
+Following is an example output.
+
+```
+NAME                        PROVISIONER                                                AGE
+openebs-cstor-sparse        openebs.io/provisioner-iscsi                               5h
+openebs-jiva-default        openebs.io/provisioner-iscsi                               5h
+openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   5h
+standard (default)          kubernetes.io/gce-pd                                       6h
+```
+
+In the above example output, `openebs-cstor-sparse ` is the default cStor StorageClass installed as part of OpenEBS installation.
+
+**Node Disk Manager** manages the disks associated with each node in the cluster. You can get the disk details by running the following command.
+
+```
+kubectl get disk
+```
+
+Following is an example output.
+
+```
+NAME                                      AGE
+sparse-00e09b1655329b8b944133aa5208d967   5h
+sparse-a5750209eede7ace90e07f68c566d599   5h
+sparse-cdfe80cd52424759de4a88831cd85a33   5h
+```
+
+ In the above example output, disk name starts with `sparse-\*` are the default sparse disks created on each Node as part of OpenEBS installation.
+
+Installing OpenEBS creates cStor sparse pool by default on each node using these sparse disk with a name such as *cstor-spare-pool-wxyz*. These sparse pools are created on the host disk of each node. You can get the default cStor pool names by using the following command.
+
+```
+kubectl get sp
+```
+
+Following is an example output.
+
+```
+NAME                     AGE
+cstor-sparse-pool-io1y   5h
+cstor-sparse-pool-lsm9   5h
+cstor-sparse-pool-y8pf   5h
+```
+
+<!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
 <script>
    (function(h,o,t,j,a,r){
@@ -184,6 +279,7 @@ OpenEBS control plane pods are created under “**openebs**” namespace. CAS Te
 
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
