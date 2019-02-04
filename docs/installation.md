@@ -39,13 +39,13 @@ You can download and customize the OpenEBS operator YAML file before the install
 
    ```
    data:
-     node-disk-manager.config: |
-       filterconfigs:
-         - key: path-filter
-           name: path filter
-           state: true
-           include: ""
-           exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"
+      node-disk-manager.config: |
+        filterconfigs:
+          - key: path-filter
+            name: path filter
+            state: true
+            include: ""
+            exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"
    ```
 
 
