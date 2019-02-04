@@ -40,18 +40,6 @@ In manual method, following sections types can be changed.
 You can create a YAML file named *openebs-config.yaml* and add below contents to it for creating storage pool with striped manner.
 
 ```
----
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: openebs-cstor-disk
-  annotations:
-    openebs.io/cas-type: cstor
-    cas.openebs.io/config: |
-      - name: StoragePoolClaim
-        value: "cstor-disk"
-provisioner: openebs.io/provisioner-iscsi
----
 #Use the following YAMLs to create a cStor Storage Pool.
 # and associated storage class.
 apiVersion: openebs.io/v1alpha1
@@ -81,13 +69,87 @@ spec:
 ---
 ```
 
-Edit *openebs-config.yaml* file to include disk details associated to each node in the cluster which you are using for creation of  the OpenEBS cStor Pool. Replace the disk names under *diskList* section, which you can get from running *kubectl get disks* command. Once it is modified, you can apply this YAML. This will create cStor Storage Pool on each Node and StorageClass named `openebs-cstor-disk`.  Also make sure that you are entering the correct StoragePoolClaim name in the StorageClass.
+Edit *openebs-config.yaml* file to include disk details associated to each node in the cluster which you are using for creation of  the OpenEBS cStor Pool. Replace the disk names under *diskList* section, which you can get from running *kubectl get disks* command. Once it is modified, you can apply this YAML. This will create cStor Storage Pool on each Node and StorageClass named `openebs-cstor-disk`.  
 
 For example, you have a 3 Node cluster. Each Node have 2 disks each. So if you select these disks in the above sample YAML, it will create a cStor Pool on each Node by using the disks attached to each Node.
 
+Once you have modified the YAML file with required changes, you can apply the YAML using the following command.
+
+```
+kubectl apply -f openebs-config.yaml
+```
+
+Following is an example output.
+
+```
+storagepoolclaim.openebs.io "cstor-disk" created
+```
+
 ### By Using Auto Method
 
+In the auto pool method, you must not select the disks which are detected by NDM for creating cStor Pools. You can create a file called **openebs-config.yaml** in your master node and add the following contents into the file. You can modify the following types in the YAML file.
 
+- `type`
+
+  The `type` can be either `sparse` or `disk`.
+
+- `maxPools`
+
+  This value represents the maximum number cStorStoragePool is creating on the cluster. 
+
+  This value should be less than or equal to the total number of Nodes in the cluster.
+
+-  `poolType`
+
+  This value represents the type of cStorStoragePool is getting created. Currently `striped` and `mirrored` are supported.
+
+Following is a sample SPC YAML file to use the physical disks for the cStor Pool creation with auto configuration.
+
+```
+---
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+spec:
+  name: cstor-disk
+  type: disk
+  maxPools: 3
+  poolSpec:
+    poolType: striped
+---
+```
+
+Once you have modified the YAML file with required changes, you can apply the YAML using the following command. This will create one cStorStoragePool in each of the 3 Nodes.
+
+```
+kubectl apply -f openebs-config.yaml
+```
+
+Following is an example output. 
+
+```
+storageclass.storage.k8s.io "openebs-cstor-disk" created
+storagepoolclaim.openebs.io "cstor-disk" created
+```
+
+## Verify StoragePoolClaim status
+
+Once the StoragePoolClaim YAML is applied using either of the method from the above section, the status of the StoragePoolClaim can be checked using the following command.
+
+```
+ kubectl get spc
+```
+
+Following is an example output. 
+
+```
+NAME                AGE
+cstor-disk          1m
+cstor-sparse-pool   22m
+```
+
+As mentioned in the above YAML, a SPC will be created with the name `cstor-disk`.
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
