@@ -21,13 +21,13 @@ The storage pool can be created either manually or by auto pool configuration. c
 
 In manual method, following sections types can be changed.
 
--  `diskList`
+- `diskList`
 
   You must give the selected disk name which is listed by NDM. This details has to be entered in the below StoragePoolClaim YAML under `diskList`. 
 
 - `type`
 
-  The `type` can be either `sparse` or `disk`.
+  This value can be either `sparse` or `disk`.
 
 - `maxPools`
 
@@ -35,7 +35,7 @@ In manual method, following sections types can be changed.
 
   This value should be less than or equal to the total number of Nodes in the cluster.
 
--  `poolType`
+- `poolType`
 
   This value represents the type of cStorStoragePool is getting created. Currently `striped` and `mirrored` are supported.
 
@@ -93,7 +93,7 @@ In the auto pool method, you must not select the disks which are detected by NDM
 
 - `type`
 
-  The `type` can be either `sparse` or `disk`.
+  This value can be either `sparse` or `disk`.
 
 - `maxPools`
 
