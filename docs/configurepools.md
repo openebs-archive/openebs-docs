@@ -7,13 +7,15 @@ sidebar_label:Configure StoragePools
 
 <img src="/docs/assets/sm-pool.png" alt="OpenEBS configuration flow" style="width:1000px">
 
-cStor provides storage scalability along with ease of deployment and usage. cStor can handle multiple disks of any size per Node and create different storage pools. You can use these storage pools to create cStor volumes which you can utilize to run your stateful applications.
+cStor provides storage scalability along with ease of deployment and usage. cStor can handle multiple disks with different size per Node and create different storage pools. You can use these storage pools to create cStor volumes which you can utilize to run your stateful applications.
+
+Storage Pool Claim (SPC) is a watcher which allows you to define an SPC name, for example, `cstor-sparse-pool`. Pools will be created with the specified SPC name and the required parameters mentioned in the following YAML. 
 
 OpenEBS creates cStorStoragePool(CSP) on each nodes by combining disks belongs to each Node.  [Node Disk Manager](https://docs.openebs.io/docs/next/architecture.html#cstor)(NDM) is handling the disks for creating cStor Storage pool. Currently NDM is excluding some of the device paths detected on Nodes to avoid from creating cStor Pools. You will get more information from [here](https://docs.openebs.io/docs/next/faq.html#what-are-different-device-paths-excluded-by-ndm). 
 
-You can create cStor pools on OpenEBS clusters once you have installed OpenEBS 0.8 version. Verify if the OpenEBS installation is complete. If not, go to [installation](https://docs.openebs.io/docs/next/installation.html).
+You can create cStor pools on OpenEBS clusters once you have installed latest OpenEBS version. Verify if the OpenEBS installation is complete. If not, go to [installation](https://docs.openebs.io/docs/next/installation.html).
 
-The storage pool can be created either manually or by auto pool configuration. cStorStoragePool is getting created by applying the StoragePoolClaim(SPC) YAMLs. StoragePoolClaim YAMLs are different for manual method and auto method.  The following section describes about the configuration of cStorStoragePool using manual and auto configuration.
+The storage pool can be created either manually or by auto pool configuration. cStorStoragePool is getting created by applying the StoragePoolClaim(SPC) YAML. StoragePoolClaim YAML is different for manual method and auto method.  The following section describes about the configuration of cStorStoragePool using manual and auto configuration.
 
 ### By Using Manual Method
 
@@ -150,6 +152,26 @@ cstor-sparse-pool   22m
 ```
 
 As mentioned in the above YAML, a SPC will be created with the name `cstor-disk`.
+
+## Verify cStorStoragePool status
+
+Once StoragePoolClaim is created, corresponding cStorStoragePool will be created. This can be check using the following command.
+
+```
+kubectl get csp
+```
+
+Following is an example output.
+
+```
+NAME                     AGE
+cstor-disk-8qvy          5s
+cstor-disk-k6si          6s
+cstor-disk-tns6          6s
+cstor-sparse-pool-a8qk   21m
+cstor-sparse-pool-d1zm   21m
+cstor-sparse-pool-sbv5   21m
+```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
