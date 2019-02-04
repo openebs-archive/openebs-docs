@@ -1,7 +1,7 @@
 ---
-id: common
-title: Common prerequisites for OpenEBS
-sidebar_label: Common
+id: iscsiclient
+title: iSCSI Client is a prerequisite for OpenEBS
+sidebar_label: iSCSI Client
 ---
 ------
 

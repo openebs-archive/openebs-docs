@@ -13,7 +13,7 @@ sidebar_label: Overview
 
 
 
-OpenEBS provides containerized storage for stateful applications on Kubernetes. OpenEBS adopts a new approach called Container Attached Storage or CAS, where each workload is provided with a dedicated storage controller, thereby having most granularity of storage policies and isolation to tune the storage just for that workload. OpenEBS runs completely in user space and does not have any dependency on linux kernel modules. <a href="/docs/next/features.html">See OpenEBS features</a>.
+OpenEBS is the most popular open source project for container attached or container native storage on Kubernetes. OpenEBS adopts a new approach called Container Attached Storage or CAS, where each workload is provided with a dedicated storage controller, thereby having most granularity of storage policies and isolation to tune the storage just for that workload. OpenEBS runs completely in user space and does not have any dependency on linux kernel modules. <a href="/docs/next/features.html">See OpenEBS features and benefits</a>.
 
 <br>
 
@@ -21,7 +21,7 @@ OpenEBS provides containerized storage for stateful applications on Kubernetes. 
 
 <font size="6">Quickstart</font>
 
-- OpenEBS requires iSCSI client to be available on the host nodes. Verify if iSCSI is setup and running before starting the installation
+- OpenEBS requires iSCSI client to be available on the host nodes. [Verify if iSCSI is setup](/docs/next/iscsiclient.html) and running before starting the installation
 
 - Default installation works for most cases. As a Kubernetes cluster-admin , start the default installation using either
 
@@ -40,7 +40,7 @@ OpenEBS provides containerized storage for stateful applications on Kubernetes. 
 
   
 
-- [Verify OpenEBS is installed successfully]() and start provisioning the OpenEBS volumes using the Kubernetes PVC interface. See [Provisioning OpenEBS volumes](/docs/next/provisionvols.html)
+- [Verify OpenEBS is installed successfully]() and start provisioning the OpenEBS volumes using the Kubernetes PVC interface by using `kubectl` command, for more details on how to provision OpenEBS volumes, see  [provisioning OpenEBS volumes](/docs/next/provisionvols.html)
 
 <br>
 <font size="6">Explore documentation</font>
@@ -80,9 +80,9 @@ OpenEBS provides containerized storage for stateful applications on Kubernetes. 
 	</a>
   </div>
 </div>
-
 <br>
 <font size="6">Stateful applications </font>
+
 <div class="row">
   <div class="column2">
 	<a href="/docs/next/postgres.html" target="_blank">
