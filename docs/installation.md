@@ -37,16 +37,16 @@ You can download and customize the OpenEBS operator YAML file before the install
 
    The modification can be done by editing `openebs-operator.yaml` in `openebs-ndm-config` under `ConfigMap` in the file as follows.
 
-   ```
+      ```
    data:
-      node-disk-manager.config: |
-        filterconfigs:
-          - key: path-filter
-            name: path filter
-            state: true
-            include: ""
-            exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"
-   ```
+     node-disk-manager.config: |
+       filterconfigs:
+         - key: path-filter
+           name: path filter
+           state: true
+           include: ""
+           exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"
+      ```
 
 
 ## Start the Installation
@@ -163,7 +163,7 @@ kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
 
 ## Verify OpenEBS is installed
 
-OpenEBS pods are created under "**openebs** namespace. Node Disk Manager, CAS Template , default Storage Classes and default Storage Pool Claim are created after installation.
+OpenEBS pods are created under "**openebs** namespace. Node Disk Manager, default Storage Classes and default Storage Pool Claim are created after installation.
 
 You can get the OpenEBS pods status by running following command.
 
@@ -184,32 +184,6 @@ openebs-ndm-ddf2s                           1/1       Running   0          6h
 openebs-ndm-pg6lm                           1/1       Running   0          6h
 openebs-provisioner-5c65ff5d55-s45t8        1/1       Running   0          6h
 openebs-snapshot-operator-9898bbb95-lzhq5   2/2       Running   0          6h
-```
-
-**CAS Template** is an approach to provision persistent volumes that make use of CAS storage engine. The following command helps to check the CAS Template components.
-
-```
-kubectl get castemplate
-```
-
-Following is an example output.
-
-```
-NAME                                  AGE
-cstor-volume-create-default-0.8.0     5h
-cstor-volume-delete-default-0.8.0     5h
-cstor-volume-list-default-0.8.0       5h
-cstor-volume-read-default-0.8.0       5h
-jiva-snapshot-create-default-0.8.0    5h
-jiva-volume-create-default-0.8.0      5h
-jiva-volume-delete-default-0.6.0      5h
-jiva-volume-delete-default-0.8.0      5h
-jiva-volume-list-default-0.6.0        5h
-jiva-volume-list-default-0.8.0        5h
-jiva-volume-read-default-0.6.0        5h
-jiva-volume-read-default-0.8.0        5h
-storage-pool-list-default-0.8.0       5h
-storage-pool-read-default-0.8.0       5h
 ```
 
 It also installs the default cStor **StorageClass** which can be used in your pvc yaml file to create Persistent Volume. For more information about sample storage classes used for different applications, see [storage classes](https://github.com/openebs/openebs-docs/blob/master/docs/next/setupstorageclasses.html). 
