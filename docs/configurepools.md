@@ -15,7 +15,10 @@ OpenEBS creates cStorStoragePool(CSP) on each nodes by combining disks belongs t
 
 You can create cStor pools on OpenEBS clusters once you have installed latest OpenEBS version. Verify if the OpenEBS installation is complete. If not, go to [installation](https://docs.openebs.io/docs/next/installation.html).
 
-The storage pool can be created either manually or by auto pool configuration. cStorStoragePool is getting created by applying the StoragePoolClaim(SPC) YAML. StoragePoolClaim YAML is different for manual method and auto method.  The following section describes about the configuration of cStorStoragePool using manual and auto configuration.
+The storage pool can be created either manually or by auto pool configuration. cStorStoragePool is getting created by applying the StoragePoolClaim(SPC) YAML. StoragePoolClaim YAML is different for manual method and auto method.  The following section describes about the configuration of cStorStoragePool . This can be done by following ways.
+
+- Manual method
+- Auto method
 
 ### By Using Manual Method
 
