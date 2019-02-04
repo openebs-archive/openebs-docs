@@ -249,7 +249,7 @@ sparse-cdfe80cd52424759de4a88831cd85a33   5h
 
  In the above example output, disk name starts with `sparse-\*` are the default sparse disks created on each Node as part of OpenEBS installation.
 
-Installing OpenEBS creates cStor sparse pool by default on each node using these sparse disk with a name such as *cstor-spare-pool-wxyz*. These sparse pools are created on the host disk of each node. You can get the default cStor pool names by using the following command.
+Installing OpenEBS creates default **cStorStoragePool** called  sparse pool on each node using these sparse disk with a name like *cstor-spare-pool-wxyz*. These sparse pools are created on the host disk of each node. You can get the default cStorStoragePool names by using the following command.
 
 ```
 kubectl get csp
