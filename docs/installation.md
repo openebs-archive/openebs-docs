@@ -186,7 +186,7 @@ openebs-provisioner-5c65ff5d55-s45t8        1/1       Running   0          6h
 openebs-snapshot-operator-9898bbb95-lzhq5   2/2       Running   0          6h
 ```
 
-**CAS Template** is an approach to provision persistent volumes that make use of CAS storage engine. The following command helps check the CAS Template components.
+**CAS Template** is an approach to provision persistent volumes that make use of CAS storage engine. The following command helps to check the CAS Template components.
 
 ```
 kubectl get castemplate
@@ -252,7 +252,7 @@ sparse-cdfe80cd52424759de4a88831cd85a33   5h
 Installing OpenEBS creates cStor sparse pool by default on each node using these sparse disk with a name such as *cstor-spare-pool-wxyz*. These sparse pools are created on the host disk of each node. You can get the default cStor pool names by using the following command.
 
 ```
-kubectl get sp
+kubectl get csp
 ```
 
 Following is an example output.
@@ -262,6 +262,19 @@ NAME                     AGE
 cstor-sparse-pool-io1y   5h
 cstor-sparse-pool-lsm9   5h
 cstor-sparse-pool-y8pf   5h
+```
+
+**StoragePoolClaim** represents the specification of cStor storage pool where it will specify the disk details, replica count of Storage Pool and type of cStor storage pool. After the installation, default **StoragePoolClaim** will be created to manage the creation of default cStor storage pool. You can get the default cStor StoragePoolClaim details using the following command.
+
+```
+kubectl get spc
+```
+
+Following is an example output.
+
+```
+NAME                AGE
+cstor-sparse-pool   6h
 ```
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
