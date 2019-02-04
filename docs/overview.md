@@ -45,6 +45,8 @@ OpenEBS is the most popular open source project for container attached or contai
 <br>
 <font size="6">Explore documentation</font>
 
+<br>
+
 <div class="row">
   <div class="column2">
 	<a href="/docs/next/architecture.html">
@@ -81,7 +83,14 @@ OpenEBS is the most popular open source project for container attached or contai
   </div>
 </div>
 <br>
+
+<br>
+
+<br>
+
 <font size="6">Stateful applications </font>
+
+<br>
 
 <div class="row">
   <div class="column2">

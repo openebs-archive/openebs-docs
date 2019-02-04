@@ -337,3 +337,19 @@ redoc .operation-type {
   padding-left: 50px;
   font-size: 18px;
 }
+
+/* Create three equal columns that floats next to each other */
+.divcol {
+  float: left;
+  width: 20%;
+  padding: 50px;
+  height: 15px; 
+  font-size: 18px;
+}
+
+/* Clear floats after the columns */
+.divrow:after {
+  content: "";
+  display: table;
+  clear: both;
+}
