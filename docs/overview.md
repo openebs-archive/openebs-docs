@@ -9,49 +9,42 @@ sidebar_label: Overview
 
 
 
-<p>
-<img src="/docs/assets/intrologo.png" alt="Smiley face" style="float:right;width:400px;">
-    <font size="6">Introduction</font>
+ <font size="6">Introduction</font>
+
 
 
 OpenEBS provides containerized storage for stateful applications on Kubernetes. OpenEBS adopts a new approach called Container Attached Storage or CAS, where each workload is provided with a dedicated storage controller, thereby having most granularity of storage policies and isolation to tune the storage just for that workload. OpenEBS runs completely in user space and does not have any dependency on linux kernel modules. <a href="/docs/next/features.html">See OpenEBS features</a>.
 
-</p>
-
-<p>
-    <font size="6" >Current release</font>
-</p>
+<br>
 
 
 
-Current release of OpenEBS is **0.8.1**. See [release notes ]()
+<font size="6">Quickstart</font>
 
+- OpenEBS requires iSCSI client to be available on the host nodes. Verify if iSCSI is setup and running before starting the installation
 
-<div class="row">
-  <div class="column2">
-	For the documentation of past releases see
-  </div>
-  <div class="column2">
-  	<a href="https://v07-docs.openebs.io/">
-		0.7.0 Documentation
-	</a>
-  </div>
-  <div class="column2">
-  	<a href="https://v07-docs.openebs.io/">
-		0.6.0 Documentation
-	</a>
-  </div>
-  <div class="column2">
-  	<a href="https://v05-docs.openebs.io/">
-		0.5.0 Documentation
-	</a>
-  </div>
-</div>
+- Default installation works for most cases. As a Kubernetes cluster-admin , start the default installation using either
 
+  ```
+  helm repo update
+  helm install --namespace openebs --name openebs stable/openebs
+  ```
 
+  <font size="4">(OR)</font>
+
+  ```
+  kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
+  ```
+
+  For more detailed and advanced installation,  see [installation section](/docs/next/installation.html). 
+
+  
+
+- [Verify OpenEBS is installed successfully]() and start provisioning the OpenEBS volumes using the Kubernetes PVC interface. See [Provisioning OpenEBS volumes](/docs/next/provisionvols.html)
 
 <br>
 <font size="6">Explore documentation</font>
+
 <div class="row">
   <div class="column2">
 	<a href="/docs/next/architecture.html">
@@ -96,6 +89,11 @@ Current release of OpenEBS is **0.8.1**. See [release notes ]()
 		<img src="/docs/assets/a-postgres.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
+<div class="column2">
+	<a href="/docs/next/gitlab.html" target="_blank">
+		<img src="/docs/assets/a-gitlab.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+	</a>
+  </div>
   <div class="column2">
 	<a href="/docs/next/cassandra.html" target="_blank">
 		<img src="/docs/assets/a-cassandra.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
@@ -112,6 +110,7 @@ Current release of OpenEBS is **0.8.1**. See [release notes ]()
 	</a>
   </div>
 </div>
+
 
 <br>
 
@@ -134,6 +133,11 @@ Current release of OpenEBS is **0.8.1**. See [release notes ]()
   <div class="column2">
 	<a href="/docs/next/nuodb.html" target="_blank">
 		<img src="/docs/assets/a-nuodb.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+	</a>
+  </div>
+ <div class="column2">
+	<a href="/docs/next/stateful.html" target="_blank">
+		<img src="/docs/assets/a-stateful.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
 </div>

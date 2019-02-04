@@ -1,20 +1,18 @@
 ---
-id: usecases
-title: OpenEBS Use cases
-sidebar_label: Use Cases
+id: gitlab
+title: Using OpenEBS to build On-Premise CI/CD using GitLab
+sidebar_label: GitLab
 ---
 ------
 
-- Persistent storage for Kubernetes
-- Cloud native monitoring -  using Prometheus and Grafana
-- Cloud native CI/CD  - using GitLab
-- Cloud native logging - using EFK
-- RDS like MySql
-- Increase high availability of stateful applications on Cloud Providers
+<img src="/docs/assets/o-gitlab.png" alt="OpenEBS and GitLab" style="width:800px;">
+
+
 
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};

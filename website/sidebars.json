@@ -1,10 +1,10 @@
 {
   "docs": {
-    "Introduction": ["overview","features", "usecases",  "mayaonline", "support", "releases"],
+    "Introduction": ["overview","features", "usecases", "releases", "support", "mayaonline"],
     "Concepts": ["architecture","cas","cstor","jiva"],
     "Prerequisites": ["common"],
     "User Guides": ["quickstart","installation", "configurepools", "configuresc", "provisionvols", "operations", "upgrade"],
-    "Stateful Applications": ["prometheus", "minio","cassandra","nuodb", "elasticsearch", "mysql", "percona", "postgres", "stateful"],
+    "Stateful Applications": ["prometheus", "minio", "gitlab", "cassandra","nuodb", "elasticsearch", "mysql", "percona", "postgres", "stateful"],
     "Advanced Topics": ["troubleshooting", "k8supgrades", "rwm"]
   }
 }
