@@ -80,11 +80,22 @@ sudo service open-iscsi restart
 
 #### Verify iSCSI client
 
-In Red Hat Enterprise Linux 7, the iSCSI service is lazily started by default: the service starts after running the `iscsiadm` command. If iSCSI is already installed on the host,check that initiator name is configured and iSCSI service is running using the following commands.
+In Red Hat Enterprise Linux 7, the iSCSI service is lazily started by default: the service starts after running the `iscsiadm` command. If iSCSI is already installed on the host,check that initiator name is configured  using the following command. 
 
 ```
  cat /etc/iscsi/initiatorname.iscsi
- systemctl status iscsi.service
+```
+
+Check iSCSI service is running using the following command.
+
+```
+ systemctl status iscsid
+```
+
+If status is showing as `Inactive`, then you may have to enable and start the iscsid service using the following command.
+
+```
+sudo systemctl enable iscsid && sudo systemctl start iscsid
 ```
 
 #### Install iSCSI client
@@ -99,11 +110,22 @@ yum install iscsi-initiator-utils -y
 
 #### Verify iSCSI client
 
-If iSCSI is already installed on your host, check that initiator name is configured and iSCSI service is running using the following commands.
+If iSCSI is already installed on your host, check that initiator name is configured using the following commands.
 
 ```
-vi /etc/iscsi/initiatorname.iscsi
-systemctl status iscsi.service
+ cat /etc/iscsi/initiatorname.iscsi
+```
+
+Check iSCSI service is running using the following command.
+
+```
+ systemctl status iscsid
+```
+
+If status is showing as `Inactive`, then you may have to enable and start the iscsid service using the following command.
+
+```
+sudo systemctl enable iscsid && sudo systemctl start iscsid
 ```
 
 #### Install iSCSI client
@@ -120,7 +142,43 @@ You can verify the iSCSI installation from above section.
 
 ### EKS
 
+EKS clusters can be brought up with either an AmazonLinux AMI or an Ubuntu 18.04 AMI.
 
+#### For clusters running with the AmazonLinux AMI 
+
+#### Verify iSCSI client
+
+If iSCSI is already installed on your host, check that initiator name is configured using the following commands.
+
+```
+ cat /etc/iscsi/initiatorname.iscsi
+```
+
+Check iSCSI service is running using the following command.
+
+```
+ systemctl status iscsid
+```
+
+If status is showing as `Inactive`, then you may have to enable and start the iscsid service using the following command.
+
+```
+sudo systemctl enable iscsid && sudo systemctl start iscsid
+```
+
+#### Install iSCSI client
+
+If iSCSI is not installed on your host, install open iscsi-initiator-utils RPM package by following the below commands.
+
+```
+yum install iscsi-initiator-utils -y
+```
+
+You can verify the iSCSI installation from above section.
+
+#### For clusters running with the Ubuntu 18.04 AMI, 
+
+This can be checked from [here](/docs/next/iscsiclient.html#ubuntu).
 
 ### GKE
 
