@@ -80,9 +80,20 @@ sudo service open-iscsi restart
 
 #### Verify iSCSI client
 
+In Red Hat Enterprise Linux 7, the iSCSI service is lazily started by default: the service starts after running the `iscsiadm` command. If iSCSI is already installed on the host,check that initiator name is configured and iSCSI service is running using the following commands.
 
+```
+ cat /etc/iscsi/initiatorname.iscsi
+ systemctl status iscsi.service
+```
 
 #### Install iSCSI client
+
+If iSCSI is not installed on your host, install iSCSI services using the following command.
+
+```
+yum install iscsi-initiator-utils -y
+```
 
 ### CentOS
 
@@ -108,6 +119,8 @@ You can verify the iSCSI installation from above section.
 ## Kubernetes services on Cloud
 
 ### EKS
+
+
 
 ### GKE
 
