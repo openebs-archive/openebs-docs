@@ -9,6 +9,8 @@ sidebar_label:Configure StoragePools
 
 cStor provides storage scalability along with ease of deployment and usage. cStor can handle multiple disks with different size per Node and create different storage pools. You can use these storage pools to create cStor volumes which you can utilize to run your stateful applications.
 
+## Configure Storage Pool
+
 Storage Pool Claim (SPC) is a watcher which allows you to define an SPC name, for example, `cstor-sparse-pool`. Pools will be created with the specified SPC name and the required parameters mentioned in the following YAML. 
 
 OpenEBS creates cStorStoragePool(CSP) on each nodes by combining disks belongs to each Node.  [Node Disk Manager](https://docs.openebs.io/docs/next/architecture.html#cstor)(NDM) is handling the disks for creating cStor Storage pool. Currently NDM is excluding some of the device paths detected on Nodes to avoid from creating cStor Pools. You will get more information from [here](https://docs.openebs.io/docs/next/faq.html#what-are-different-device-paths-excluded-by-ndm). 
@@ -22,7 +24,7 @@ The storage pool can be created either manually or by auto pool configuration. c
 
 ### By Using Manual Method
 
-In manual method, following sections types can be changed.
+In manual method, following parameter can be changed.
 
 - `diskList`
 
@@ -74,7 +76,7 @@ spec:
 ---
 ```
 
-Edit *openebs-config.yaml* file to include disk details associated to each node in the cluster which you are using for creation of  the OpenEBS cStor Pool. Replace the disk names under *diskList* section, which you can get from running *kubectl get disks* command. Once it is modified, you can apply this YAML. This will create cStor Storage Pool on each Node and StorageClass named `openebs-cstor-disk`.  
+Edit *openebs-config.yaml* file to include disk details associated to each node in the cluster which you are using for creation of  the OpenEBS cStor Pool. Replace the disk names under *diskList* section with the disk names, which you can get from running `kubectl get disks` command. Once this file is modified, you can apply this YAML. This will create cStor Storage Pool on each Node and StorageClass named `openebs-cstor-disk`.  
 
 For example, you have a 3 Node cluster. Each Node have 2 disks each. So if you select these disks in the above sample YAML, it will create a cStor Pool on each Node by using the disks attached to each Node.
 
@@ -89,6 +91,8 @@ Following is an example output.
 ```
 storagepoolclaim.openebs.io "cstor-disk" created
 ```
+
+The main advantage with this approach is that there is no restriction in the number of disks for the creation of cStor storage pool using striped or mirrored Type.
 
 ### By Using Auto Method
 
@@ -138,6 +142,11 @@ storageclass.storage.k8s.io "openebs-cstor-disk" created
 storagepoolclaim.openebs.io "cstor-disk" created
 ```
 
+#### **Limitations**:
+
+1. For Striped pool, it will take only one disk per Node even Node have multiple disks.
+2. For Mirrored pool, it will take only 2 disks attached per Node even Node have multiple disks.
+
 ## Verify StoragePoolClaim status
 
 Once the StoragePoolClaim YAML is applied using either of the method from the above section, the status of the StoragePoolClaim can be checked using the following command.
@@ -175,6 +184,35 @@ cstor-sparse-pool-a8qk   21m
 cstor-sparse-pool-d1zm   21m
 cstor-sparse-pool-sbv5   21m
 ```
+
+## Verify cStorStoragePool pods status
+
+Once cStorStoragePool is created, corresponding pool pods will be created and running. This can be checked using the following command.
+
+```
+kubectl get pods -n openebs
+```
+
+Following is an example output. 
+
+```
+cstor-disk-2xtj-6748d7f57d-tbqrp           2/2       Running   0          38s
+cstor-disk-m7xa-6f7bd8447c-nr5z4           2/2       Running   0          38s
+cstor-disk-sn5y-5688f94888-hmgkf           2/2       Running   0          38s
+cstor-sparse-pool-io1y-88cbf9bc-c6g29      2/2       Running   0          21m
+cstor-sparse-pool-lsm9-766567747b-rfplx    2/2       Running   0          21m
+cstor-sparse-pool-y8pf-598d794ff4-jn8gg    2/2       Running   0          21m
+maya-apiserver-5f8899f44f-hbnj2            1/1       Running   0          22m
+openebs-ndm-6w68f                          1/1       Running   0          22m
+openebs-ndm-9ktvv                          1/1       Running   0          22m
+openebs-ndm-g4d6l                          1/1       Running   0          22m
+openebs-provisioner-69956599d5-jlnb4       1/1       Running   0          22m
+openebs-snapshot-operator-c88544f5-76px8   2/2       Running   0          22m
+```
+
+In the above example output, name satrts with `cstor-disk-\*` are the cStorStoragePool pods. It must be in running state to provision cStor Volumes.
+
+**Note:** By default, OpenEBS cStorStoragePool pods will be running in `openebs` namespace.
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
