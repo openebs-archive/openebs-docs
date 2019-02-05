@@ -9,11 +9,13 @@ sidebar_label: Configuring StorageClasses
 
 As the definition of StorageClass a Storage Class provides a way for administrators to describe the “classes” of storage they offer.  
 
-**Setting Up Storage Class On OpenEBS**
+### **Setting Up StorageClass On OpenEBS**
 
 For setting up the a StorageClass for providing cStor volume, you must include `StoragePoolClaim` parameter to use the particular cStorStoragePool. This is the must requirement for provisioning cStor volume.
 
-The default cStor storage class is as follows:
+### Default StorageClass
+
+The default cStor StorageClass is as follows:
 
 ```
 ---
@@ -40,11 +42,13 @@ provisioner: openebs.io/provisioner-iscsi
 ---
 ```
 
-In the above sample StorageClass YAML, `StoragePoolClaim` used is default one `cstor-sparse-pool`.
+In the above sample StorageClass YAML, `StoragePoolClaim` used is default StorageClass`cstor-sparse-pool` which is created as part of OpenEBS installation.
 
-if you want to use the StoragePoolClaim ceated with the external disks which is mentioned in the [storage pool](/docs/next/configurepools.html) section, then you have to use the StoragePoolClaim in the new StorageClass YAML. Then the cStor volume will be provisioned in the cStorStroagePool which is created using the external disks.
+### Customized StorageClass
 
-The following is the new StorageClass YAML to include the StoragePoolClaim created in storage pool section.
+if you want to use the StoragePoolClaim created with the external disks which is mentioned in the [storage pool](/docs/next/configurepools.html) section, then you have to use the StoragePoolClaim name in the new StorageClass YAML. Then the cStor volume will be provisioned in the cStorStroagePool which is specified in the StoragePoolClaim.
+
+You can create a new file called  **openebs-sc-disk.yaml** and add below contents to it. This StorageClass YAML include the StoragePoolClaim created in storage pool section.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -60,9 +64,42 @@ provisioner: openebs.io/provisioner-iscsi
 ---
 ```
 
-in the above sample StorageClass YAML, `ReplicaCount` represents the desired number of cStor Volume Replica (CVR). The PVC that uses this storage class will create cStor volumes on the specified cStorStoragePools. 
+in the above sample StorageClass YAML, `ReplicaCount` represents the desired number of cStor Volume Replica (CVR). The PVC that uses this storage class will create cStor volumes on the corresponding cStorStoragePools specified the `StoragePoolClaim` parameter in the StorageClass . 
+
+You can apply the modified StorageClass YAML before provisioning cSor volume using the following command.
+
+```
+kubectl apply -f openebs-sc-disk.yaml
+```
+
+Following is an example output.
+
+```
+storageclass.storage.k8s.io "openebs-cstor-disk" created
+```
+
+You can get the StorageClass details using the following command.
+
+```
+kubectl get sc
+```
+
+Following is an example output
+
+```
+NAME                        PROVISIONER                                                AGE
+openebs-cstor-disk			openebs.io/provisioner-iscsi							   2m
+openebs-cstor-sparse        openebs.io/provisioner-iscsi                               6m
+openebs-jiva-default        openebs.io/provisioner-iscsi                               6m
+openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   6m
+standard (default)          kubernetes.io/gce-pd                                       9m
+
+```
+
+You can use the StorageClass  name`openebs-cstor-disk` in the PVC YAML to provision cStor Volume on the corresponding cStorStoragePool.
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
