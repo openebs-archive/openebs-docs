@@ -9,22 +9,22 @@ sidebar_label: Installation
 
 ## Before You Start
 
-As an administrator,latest OpenEBS can be installed in your K8s cluster once you meet the prerequisites in your setup.
+As an administrator,latest OpenEBS can be installed in your K8s cluster once you meet the [prerequisites]() in your setup.
 
 ## Customize your OpenEBS operator YAML
 
-You can download and customize the OpenEBS operator YAML file before the installation to include the desired disks and desired node details. The following will mention about how User can verify or include the desired disks attached to the Nodes and schedule the OpenEBS components into the desired Nodes. 
+You can download and customize the OpenEBS operator YAML file before the installation to include the desired disks and desired node details. The following will mention about how User can verify or include the desired disks which are attached to the Nodes and schedule the OpenEBS components into the selected Nodes. 
 
 1. #### Selecting Nodes to Schedule OpenEBS components
 
-   OpenEBS can be installed in selected nodes in your existing Kubernetes cluster using Node Selector method. OpenEBS does not have a separate scheduler to manage scheduling pods. It uses Kubernetes scheduler for managing the scheduling needs of an administrator.
+   OpenEBS can be installed on selected nodes of your existing Kubernetes cluster using Node Selector method. OpenEBS does not have a separate scheduler to manage scheduling pods. It uses Kubernetes scheduler for managing the scheduling needs of an administrator.
    Latest OpenEBS operator YAML can be downloaded using the following way.
 
    ```
    wget https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
    ```
 
-   Using Node Selector method, OpenEBS components can be scheduled to the selected Nodes by adding node labels in the corresponding deployment mentioned in the OpenEBS operator YAML file.  You can go to the scheduler section for scheduling OpenEBS components in the downloaded OpenEBS operator YAML file.
+   Using Node Selector method, OpenEBS components can be scheduled to the selected Nodes by adding appropriate node labels in the corresponding deployment mentioned in the OpenEBS operator YAML file.  You can go to the [scheduler]() section for more details.
 
 2. #### Selecting/Verifying the disks for cStor Pool creation
 
@@ -34,10 +34,9 @@ You can download and customize the OpenEBS operator YAML file before the install
     "exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"
    ```
 
+   The modification can be done by editing downloaded **openebs-operator.yaml** in `openebs-ndm-config` under `ConfigMap` in the file as follows.
 
-   The modification can be done by editing `openebs-operator.yaml` in `openebs-ndm-config` under `ConfigMap` in the file as follows.
-
-      ```
+   ```
    data:
      node-disk-manager.config: |
        filterconfigs:
@@ -46,16 +45,15 @@ You can download and customize the OpenEBS operator YAML file before the install
            state: true
            include: ""
            exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"
-      ```
-
+   ```
 
 ## Start the Installation
 
 On an existing Kubernetes cluster, as a cluster administrator, you can install latest version of OpenEBS in the following two ways.
 
-1. Using Stable helm charts
+1. Using [Stable Helm](/docs/next/installation.html#install-openebs-using-helm-charts) charts
 
-2. Using OpenEBS operator through kubectl
+2. Using OpenEBS operator through [kubectl](/docs/next/installation.html#install-openebs-using-kubectl)
 
 
 ### Install OpenEBS using Helm Charts
@@ -80,7 +78,7 @@ kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"sp
 
 #### Install OpenEBS using Stable Helm Charts
 
-You can install OpenEBS using helm charts using [Stable Helm Charts](/docs/next/installation.html#install-openebs-using-stable-helm-charts) which will use [Kubernetes stable helm charts](https://github.com/kubernetes/charts/tree/master/stable). Install OpenEBS using the following commands in the **openebs** namespace.
+You can install OpenEBS using [Stable Helm Charts](/docs/next/installation.html#install-openebs-using-stable-helm-charts) which will use [Kubernetes Stable Helm charts](https://github.com/kubernetes/charts/tree/master/stable). Install OpenEBS using the following commands in the **openebs** namespace.
 
 **Note:** Ensure that you have met the [prerequisites](/docs/next/prerequisites.html) before installation.
 
@@ -98,7 +96,7 @@ helm install --namespace <custom_namespace> --name openebs stable/openebs
 
 Once you install OpenEBS in custom namespace, all the OpenEBS components will be deployed under the same namespace.
 
-### Default Values for Helm Chart Parameters
+#### Default Values for Helm Chart Parameters
 
 The following table lists the configurable parameters of the OpenEBS chart and their default values.
 
@@ -163,7 +161,7 @@ kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
 
 ## Verify OpenEBS is installed
 
-OpenEBS pods are created under "**openebs** namespace. Node Disk Manager, default Storage Classes and default Storage Pool Claim are created after installation.
+OpenEBS pods are created under "**openebs** namespace by default. Node Disk Manager, default Storage Classes and default Storage Pool Claim are created after installation.
 
 You can get the OpenEBS pods status by running following command.
 
