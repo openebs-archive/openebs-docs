@@ -6,11 +6,17 @@ sidebar_label: MayaOnline
 
 ------
 
-[MayaOnline](https://docs.mayaonline.io/docs/overview.html)  offers visibility into OpenEBS persistent volumes present in Kubernetes. The basic services on this SaaS platform are free for OpenEBS community. A Kubernetes cluster can be connected to MayaOnline before or after OpenEBS installation. By connecting a Kubernetes cluster to MayaOnline,  OpenEBS users get the following benefits
+
+
+<br><br><div align="center"><font size="5">MayaOnline offers free visibility to OpenEBS. 
+
+Users get access to Prometheus metrics, logs and topology view of OpenEBS volumes </font></div> <br>
+
+<a href="https://app.mayaonline.io" target="_blank">MayaOnline</a> offers visibility into OpenEBS persistent volumes present in Kubernetes. The basic services on this SaaS platform are free for OpenEBS community. A Kubernetes cluster can be connected to MayaOnline before or after OpenEBS installation. By connecting a Kubernetes cluster to MayaOnline,  OpenEBS users get the following benefits
 
 - Topology view of all Kubernetes resources related to persistent volumes. This granular visualization helps to understand the relationships between storage and pod resources, get the real-time status of such resources and troubleshoot related issues   
 - User can take snapshots/clones of OpenEBS persistent volumes on the fly with ease
-- Prometheus monitoring is instantly made available for the stateful applications running with OpenEBS
+- Prometheus monitoring is instantly made available for the OpenEBS volumes
 - Customizable Grafana dashboards for the collected Prometheus metrics 
 - Logs of all pods related to OpenEBS components on the Kubernetes cluster are instantly available through Kibana dashboard interface
 - Alerts related to OpenEBS storage are provided on the portal as well as at user configured Slack channel

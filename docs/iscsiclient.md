@@ -95,6 +95,14 @@ Select Ubuntu as the image version for the node pools in the custom settings. Fo
 
 
 
+See Also:
+
+[OpenEBS Installation](/docs/next/installation.html)
+
+[OpenEBS Architecture](/docs/next/architecture.html)
+
+
+
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
 <script>
@@ -115,6 +123,5 @@ Select Ubuntu as the image version for the node pools in the custom settings. Fo
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'UA-92076314-12');
 </script>

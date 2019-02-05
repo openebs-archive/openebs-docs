@@ -1,14 +1,33 @@
 ---
 id: releases
-title: Releases of OpenEBS
+title: OpenEBS Releases
 sidebar_label: Releases
 ---
+
 ------
 
-Features
 
 
+## Current Release
 
+- [Version 0.8.0](https://github.com/openebs/openebs/releases/tag/0.8) ([Release blog](https://blog.openebs.io/openebs-0-8-release-allows-you-to-snapshot-and-clone-cstor-volumes-ebe09612f8b1))
+
+## Stable Release
+
+* [Version 0.7.2](https://github.com/openebs/openebs/releases/tag/0.7.2)
+
+## Older Releases
+
+* [Version 0.7.0](https://github.com/openebs/openebs/releases/tag/v0.7) 
+* [Version 0.6.0](https://github.com/openebs/openebs/releases/tag/v0.6)
+* [Version 0.5.4](https://github.com/openebs/openebs/releases/tag/v0.5.4)
+* [Version 0.5.3](https://github.com/openebs/openebs/releases/tag/v0.5.3)
+* [Version 0.5.2](https://github.com/openebs/openebs/releases/tag/v0.5.2)
+* [Version 0.5.1](https://github.com/openebs/openebs/releases/tag/v0.5.1)
+* [Version 0.5.0](https://github.com/openebs/openebs/releases/tag/v0.5.0)
+* [Version 0.4.0](https://github.com/openebs/openebs/releases/tag/v0.4.0)
+* [Version 0.3](https://github.com/openebs/openebs/releases/tag/v0.3)
+* [Version 0.2](https://github.com/openebs/openebs/releases/tag/v0.2)
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
@@ -22,7 +41,6 @@ Features
        a.appendChild(r);
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
-
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
