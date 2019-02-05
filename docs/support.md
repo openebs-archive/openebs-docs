@@ -1,11 +1,11 @@
 ---
-id: gethelp
-title: Getting help on OpenEBS
-sidebar_label: Getting Help
+id: support
+title: Getting help and support
+sidebar_label: Support
 ---
 ------
 
-You can use the various following methods to get answers to your queries and any information you need on OpenEBS.
+
 
 ## Slack
 
@@ -20,10 +20,6 @@ Slack requires registration, but the OpenEBS team welcomes anyone to register at
 Enterprise support is available through MayaOnline. All community users by default are subscribed to a free plan on MayaOnline. Enterprise subscriptions are available that come with various support plans.
 
 
-
-## Documentation
-
-Our documentation is available at [https://docs.openebs.io](https://docs.openebs.io). While we actively maintain the documentation of the latest release, the documentation for older releases also is made available from the same website. You can provide the feedback through the feedback handle on the right side of the pages.
 
 ## Blogs
 
