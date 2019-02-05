@@ -53,15 +53,34 @@ OpenEBS provides block volume support through iSCSI protocol. Hence, iSCSI clien
 
 ## Linux platforms
 
+The open-iscsi initiator packages depends on your host OS or in kubelet container. You can follow the following steps for installation / verification of open-iscsi package. It is a mandatory requirement to install the iSCSI services and running on all the host machine. OpenEBS uses iSCSI to connect to the block volumes. 
+
 ### Ubuntu
 
-#### Verify iSCSI client
+#### Verify iSCSI client is configured
+
+If iSCSI is already installed on your host,check that initiator name is configured and iSCSI service is running using the following commands.
+
+```
+sudo cat /etc/iscsi/initiatorname.iscsi
+sudo service open-iscsi status
+```
 
 #### Install iSCSI client
+
+If iSCSI is not installed on your host, install open-iscsi package by following below commands.
+
+```
+sudo apt-get update
+sudo apt-get install open-iscsi
+sudo service open-iscsi restart
+```
 
 ### RHEL
 
 #### Verify iSCSI client
+
+
 
 #### Install iSCSI client
 
@@ -84,6 +103,68 @@ Select Ubuntu as the image version for the node pools in the custom settings. Fo
 
 
 ### AKS
+
+Azure you need to verify the open-iscsi packages are installed and running the service on the kubelet. This can be checked by  connecting to the nodes through SSH using public IP addresses by running the following command.
+
+```
+ssh azureuser@40.xx.yyy.zzz
+```
+
+**Note**: azureuser is a default username.
+
+#### Verify iSCSI client is configured
+
+Obtain the container ID of the hyperkube kubelet on each node by running the following command.
+
+```
+sudo docker ps | grep "hyperkube kubelet" 
+```
+
+Following is the example output
+
+```
+3aab0f9a48e2    k8s-gcrio.azureedge.net/hyperkube-amd64:v1.8.7   "/hyperkube kubele..."   48 minutes ago      Up 48 minutes                           eager_einstein
+```
+
+Once kubelet conatiner ID is obtained, you need to get the shell of this container using the following command.   
+
+```
+sudo docker exec -it <container ID> bash
+```
+
+Example:
+
+```
+sudo docker exec -it 3aab0f9a48e2 bash
+```
+
+Check the status of iSCSI service by running the following command.
+
+```
+service open-iscsi status
+```
+
+#### Install iSCSI client
+
+You have to get the kubelet container ID using the steps mentioned in the above section. Once kubelet conatiner ID is obtained, you need to get the shell of this container using the following command.   
+
+```
+sudo docker exec -it <container ID> bash
+```
+
+Example:
+
+```
+sudo docker exec -it 3aab0f9a48e2 bash
+```
+
+Run the following commands to install and configure iSCSI in the kubelet.
+
+```
+apt-get update
+apt install -y open-iscsi
+exit
+```
 
 ## On-Prem Kubernetes solutions
 
