@@ -5,7 +5,7 @@ sidebar_label: Percona
 ---
 ------
 
-<img src="/docs/assets/o-percona.png" alt="OpenEBS and Prometheus" style="width:800px;">
+<img src="/docs/assets/o-percona.png" alt="OpenEBS and Prometheus" style="width:400px;">
 
 
 

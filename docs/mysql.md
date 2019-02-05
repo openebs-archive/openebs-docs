@@ -5,7 +5,7 @@ sidebar_label: MySQL
 ---
 ------
 
-<img src="/docs/assets/o-mysql.png" alt="OpenEBS and Prometheus" style="width:800px;">
+<img src="/docs/assets/o-mysql.png" alt="OpenEBS and Prometheus" style="width:400px;">
 
 
 

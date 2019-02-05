@@ -5,7 +5,7 @@ sidebar_label: PostgreSQL
 ---
 ------
 
-<img src="/docs/assets/o-postgres.png" alt="OpenEBS and Prometheus" style="width:800px;">	
+<img src="/docs/assets/o-postgres.png" alt="OpenEBS and Prometheus" style="width:400px;">	
 
 
 

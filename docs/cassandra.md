@@ -5,7 +5,7 @@ sidebar_label: Cassandra
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:800px;">
+<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:400px;">
 
 
 

@@ -5,7 +5,7 @@ sidebar_label: GitLab
 ---
 ------
 
-<img src="/docs/assets/o-gitlab.png" alt="OpenEBS and GitLab" style="width:800px;">
+<img src="/docs/assets/o-gitlab.png" alt="OpenEBS and GitLab" style="width:400px;">
 
 
 

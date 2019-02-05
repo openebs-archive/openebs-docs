@@ -5,7 +5,7 @@ sidebar_label: Other stateful applications
 ---
 ------
 
-<img src="/docs/assets/o-stateful.png" alt="OpenEBS and Prometheus" style="width:800px;">
+<img src="/docs/assets/o-stateful.png" alt="OpenEBS and Prometheus" style="width:400px;">
 
 
 
