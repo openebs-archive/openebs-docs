@@ -88,7 +88,22 @@ sudo service open-iscsi restart
 
 #### Verify iSCSI client
 
+If iSCSI is already installed on your host, check that initiator name is configured and iSCSI service is running using the following commands.
+
+```
+vi /etc/iscsi/initiatorname.iscsi
+systemctl status iscsi.service
+```
+
 #### Install iSCSI client
+
+If iSCSI is not installed on your host, install open iscsi-initiator-utils RPM package by following the below commands.
+
+```
+yum install iscsi-initiator-utils -y
+```
+
+You can verify the iSCSI installation from above section.
 
 ## Kubernetes services on Cloud
 
@@ -96,15 +111,13 @@ sudo service open-iscsi restart
 
 ### GKE
 
-GKE COS (Container Optimized OS) does not come with iSCSI client and does not allow to install iSCSI client. Hence, OpenEBS does not work on K8S clusters which are running COS version of the image on the worker nodes
+GKE COS (Container Optimized OS) does not come with iSCSI client and does not allow to install iSCSI client. Hence, OpenEBS does not work on K8S clusters which are running COS version of the image on the worker nodes.
 
 Select Ubuntu as the image version for the node pools in the custom settings. For setting up iSCSI clients on Ubuntu nodes, see the [instructions above](/docs/next/iscsiclient.html#install-iscsi-client)
 
-
-
 ### AKS
 
-Azure you need to verify the open-iscsi packages are installed and running the service on the kubelet. This can be checked by  connecting to the nodes through SSH using public IP addresses by running the following command.
+On Azure you need to verify the open-iscsi packages are installed and running the service on the kubelet. This can be checked by  connecting to the nodes through SSH using public IP addresses by running the following command.
 
 ```
 ssh azureuser@40.xx.yyy.zzz
@@ -165,6 +178,8 @@ apt-get update
 apt install -y open-iscsi
 exit
 ```
+
+You can verify the iSCSI installation from above section.
 
 ## On-Prem Kubernetes solutions
 
