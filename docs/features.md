@@ -12,7 +12,7 @@ sidebar_label: Features and Benefits
 - [Synchronus replication](/docs/next/features.html#synchronus-replication)
 - [Snapshots and clones](/docs/next/features.html#snapshots-and-clones)
 - [Backup and Restore](/docs/next/features.html#backup-and-restore)
-- [Prometheus metrics and Grafana graphs](/docs/next/features.html#prometheus-metrics-and-grafana-graphs)
+- [Prometheus metrics and Grafana graphs](/docs/next/features.html#prometheus-metrics-for-workload-tuning)
 
 
 
@@ -38,40 +38,45 @@ For more information on how OpenEBS is used in cloud native environments,  visit
 
 <p>
     <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:right;width:200px;">
-OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found here.
+OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found <a href="/docs/next/cas.html" target="_blank">here</a>
 </p>
+
 
 <br>
 
 ### Synchronus replication
 
 <p>
-    <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:right;width:200px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed rutrum nisl, nec tempus neque. Vestibulum in semper neque. Proin ullamcorper tempor velit, quis mollis nunc tempus nec. Fusce quam ligula, ullamcorper lobortis semper at, lobortis ac diam. Sed ut purus cursus, bibendum enim sit amet, tristique nibh. Vestibulum diam erat, pretium vel dapibus eu, eleifend sit amet diam. Aliquam erat volutpat. In efficitur lacinia augue sed porttitor. In consequat augue odio, ultrices fermentum quam commodo ac.
+    <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:right;width:200px;">OpenEBS synchronously replicates the data volume replicas for high availability. The replication happens across Kubernetes zone resulting in the cloud native applciations to be highly available in cross AZ setups. This feature is especially becomes useful to build highly available stateful applications using local disks on cloud providers services such as GKE, EKS and AKS 
 </p>
+
 
 <br>
 
 ### Snapshots and clones
 
 <p>
-    <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:right;width:200px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed rutrum nisl, nec tempus neque. Vestibulum in semper neque. Proin ullamcorper tempor velit, quis mollis nunc tempus nec. Fusce quam ligula, ullamcorper lobortis semper at, lobortis ac diam. Sed ut purus cursus, bibendum enim sit amet, tristique nibh. Vestibulum diam erat, pretium vel dapibus eu, eleifend sit amet diam. Aliquam erat volutpat. In efficitur lacinia augue sed porttitor. In consequat augue odio, ultrices fermentum quam commodo ac.
+    <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:right;width:200px;">Copy-on-write snapshots are a key feature of OpenEBS. The snapshots are created instantaneously and there is no limit on the number of snapshots. The incremental snapshot capablity enables data migration and portability services across Kubernetes clusters and across different cloud providers or data centers, enabling a true multi-cloud data plane for stateful applications. Operations on snapshots and clones are performed in completely Kubernetes native method using the standard kubectl command
 </p>
+
 
 <br>
 
 ### Backup and Restore
 
 <p>
-    <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:right;width:200px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed rutrum nisl, nec tempus neque. Vestibulum in semper neque. Proin ullamcorper tempor velit, quis mollis nunc tempus nec. Fusce quam ligula, ullamcorper lobortis semper at, lobortis ac diam. Sed ut purus cursus, bibendum enim sit amet, tristique nibh. Vestibulum diam erat, pretium vel dapibus eu, eleifend sit amet diam. Aliquam erat volutpat. In efficitur lacinia augue sed porttitor. In consequat augue odio, ultrices fermentum quam commodo ac.
+    <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:right;width:200px;">Backup and restore of OpenEBS volumes work with the recent Kubernetes backup and restore solution such as VMware velero (or HeptIO Ark). Data backup to object storage targets such as S3 or Minio can be built using OpenEBS incremental snapshot capability. This storage level snapshotting and backup saves a lot bandwidth and storage space as only the incremental data is used for backup. 
 </p>
+
 
 <br>
 
-### Prometheus metrics and Grafana graphs
+### Prometheus metrics for workload tuning
 
 <p>
-    <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:right;width:200px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed rutrum nisl, nec tempus neque. Vestibulum in semper neque. Proin ullamcorper tempor velit, quis mollis nunc tempus nec. Fusce quam ligula, ullamcorper lobortis semper at, lobortis ac diam. Sed ut purus cursus, bibendum enim sit amet, tristique nibh. Vestibulum diam erat, pretium vel dapibus eu, eleifend sit amet diam. Aliquam erat volutpat. In efficitur lacinia augue sed porttitor. In consequat augue odio, ultrices fermentum quam commodo ac.
+    <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:right;width:200px;">OpenEBS volumes are instrumented for granular data metrics such as volume IOPS, throughput, latency and data patterns. As OpenEBS follows CAS architecture, Stateful applications can be tuned for better performance by observing the traffic data patterns on Prometheus and tweaking the storage policy parameters without worrying about neighboring workloads that are using OpenEBS
 </p>
+
 
 <br>
 
@@ -86,28 +91,30 @@ OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always
 ### Truely cloud native storage for Kubernetes
 
 <p>
-    <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:left;width:200px;">
-Avoiding vendor/cloud lock-in is the common goal for most of the users and enterprises and this goal has contributed significantly to the adoption of Kubernetes as it is the widely accepted orchestration platform for containers. However, data of the stateful application remains as the lock-in contributor either to a given technology or to a cloud. With CAS approach, orchestration is made possible in such a way that storage controllers can migrate the data in the background to anywhere and live migration becomes a fairly easy task. In other words, stateful workloads can be moved from a Kubernetes cluster to any other Kubernetes cluster.
+    <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:left;width:200px;"> With CAS architecture and being completely in user space, OpenEBS is a truely cloud native storage for stateful applications on Kubernetes. This greatly simplifies how persistent storage is used and managed by developers and DevOps architects. They use the standard Kubernetes skills and utilities to configure, use and manage the peristent storage needs.
 </p>
 
+<br>
 
 
 ### Avoid Cloud Lock-in
 
 <p>
     <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:left;width:200px;">
-Avoiding vendor/cloud lock-in is the common goal for most of the users and enterprises and this goal has contributed significantly to the adoption of Kubernetes as it is the widely accepted orchestration platform for containers. However, data of the stateful application remains as the lock-in contributor either to a given technology or to a cloud. With CAS approach, orchestration is made possible in such a way that storage controllers can migrate the data in the background to anywhere and live migration becomes a fairly easy task. In other words, stateful workloads can be moved from a Kubernetes cluster to any other Kubernetes cluster.
+Even with Kubernetes data gravity concerns exist on clouds. With Kubernetes stateful applications can can be moved across clouds, but with stateful applications, the data is written to cloud provider storage infrastructure and results in the cloud lock-in of the stateful applications. The OpenEBS, the data is written to the OpenEBS layer and it acts as the data abstraction layer. Using this data abstraction layer, data can be moved across Kubernetes layers eliminating the expensive cloud lock-in issue. 
 </p>
+
 
 
 <br>
 
-### Granular policies per stateful workload
+### Granular policies per stateful workload, reduces TCO of storage administration
 
 <p>
     <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:left;width:200px;">
-Containerization of storage software and dedicating such controller for each volume brings in maximum granularity in storage policies. All storage policies can be configured as per volume. The storage parameters can be monitored on a per volume basis and storage policies can be dynamically updated at run time to achieve the desired result for a given workload. Control on storage throughput, IOPS, and latency increases with this level of granularity in the volume storage policies.
+Containerization of storage software and dedicating such controller for each volume brings in maximum granularity in storage policies. The storage parameters can be monitored on a per volume basis and storage policies can be dynamically updated at run time to achieve the desired result for a given workload. The policies are tested and tuned keeping only the particular workload in mind, neighboring workloads are affected. The operations and maintainance of storage is greatly reduced because of this dedicated storage stack per workload
 </p>
+
 
 <br>
 
@@ -117,8 +124,9 @@ Containerization of storage software and dedicating such controller for each vol
 ### Reduced storage TCO upto 50% 
 
 <p>
-    <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:left;width:200px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed rutrum nisl, nec tempus neque. Vestibulum in semper neque. Proin ullamcorper tempor velit, quis mollis nunc tempus nec. Fusce quam ligula, ullamcorper lobortis semper at, lobortis ac diam. Sed ut purus cursus, bibendum enim sit amet, tristique nibh. Vestibulum diam erat, pretium vel dapibus eu, eleifend sit amet diam. Aliquam erat volutpat. In efficitur lacinia augue sed porttitor. In consequat augue odio, ultrices fermentum quam commodo ac.
+    <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:left;width:200px;">On most clouds, block storage on cloud is charged based on how much is purchased and not on how much is used. Thin provisioning feature of OpenEBS is useful in pooling the local storage or cloud storage and start giving out the data volumes to the stateful applications in whatever size they need. The storage can be added on the fly without any disruption to the volumes exposed to the workloads or applications. This process has shown cost savings of upto 50% in the medium to long term of running workloads on clouds.
 </p>
+
 
 
 
@@ -145,8 +153,8 @@ Containerization of storage software and dedicating such controller for each vol
 ### Free cross cloud visibility of stateful applications
 
 <p>
-    <img src="https://mayaonline.io/assets/images/mayaonlin-with-mule.svg" alt="MayaOnline" 		style="float:left;width:150px;">
-   MayaOnline is the SaaS service for OpenEBS enabled Kubernetes clusters required for comprehensive monitoring and management of OpenEBS volumes.
+    <img src="https://mayaonline.io/assets/images/mayaonlin-with-mule.svg" alt="MayaOnline" 		style="float:left;width:200px;">
+   MayaOnline is the SaaS service for OpenEBS enabled Kubernetes clusters that provide  comprehensive monitoring and management of OpenEBS volumes. Logs of all OpenEBS volume pods are instantly uploaded to MayaOnline and available for users through Kibana dashboard. Topology view on MayaOnline used very often to understand the Kubernetes resources when they are deployed at scale. 
 </p>
 
 <br>

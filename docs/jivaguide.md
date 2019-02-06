@@ -1,20 +1,18 @@
 ---
-id: usecases
-title: OpenEBS Use cases
-sidebar_label: Use cases
+id: jivaguide
+title: Day2 operations in OpenEBS
+sidebar_label: Jiva user guide
 ---
 ------
 
-- Persistent storage for Kubernetes
-- Cloud native monitoring -  using Prometheus and Grafana
-- Cloud native CI/CD  - using GitLab
-- Cloud native logging - using EFK
-- RDS like MySql
-- Increase high availability of stateful applications on Cloud Providers
+Features
+
+
 
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};

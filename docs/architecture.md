@@ -1,7 +1,7 @@
 ---
 id: architecture
 title: OpenEBS Architecture
-sidebar_label: Architecture
+sidebar_label: OpenEBS Architecture
 ---
 
 ------

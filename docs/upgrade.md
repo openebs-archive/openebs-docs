@@ -1,7 +1,7 @@
 ---
 id: upgrade
 title: Upgrading OpenEBS
-sidebar_label: Upgrading OpenEBS
+sidebar_label: Upgrade
 ---
 ------
 

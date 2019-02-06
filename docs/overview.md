@@ -92,12 +92,14 @@ OpenEBS is the most popular open source project for container attached or contai
 
 <br>
 
-<div class="row">
-  <div class="column2">
-	<a href="/docs/next/postgres.html" target="_blank">
-		<img src="/docs/assets/a-postgres.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+
+<div class="row" width=60%>
+    <div class="column2">
+	<a href="/docs/next/prometheus.html" target="_blank">
+		<img src="/docs/assets/a-prometheus.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
+
 <div class="column2">
 	<a href="/docs/next/gitlab.html" target="_blank">
 		<img src="/docs/assets/a-gitlab.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
@@ -108,32 +110,36 @@ OpenEBS is the most popular open source project for container attached or contai
 		<img src="/docs/assets/a-cassandra.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
-  <div class="column2">
-	<a href="/docs/next/minio.html" target="_blank">
-		<img src="/docs/assets/a-minio.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
-	</a>
-  </div>
-  <div class="column2">
-	<a href="/docs/next/prometheus.html" target="_blank">
-		<img src="/docs/assets/a-prometheus.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
-	</a>
-  </div>
+
 </div>
+
+<br>
+
+<div class="row" width=60%>
+
+<div class="column2">
+	<a href="/docs/next/elasticsearch.html" target="_blank">
+		<img src="/docs/assets/a-elastic.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+	</a>
+  </div>
+<div class="column2">
+	<a href="/docs/next/mysql.html" target="_blank">
+		<img src="/docs/assets/a-mysql.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+	</a>
+  </div>  
+  <div class="column2">
+	<a href="/docs/next/postgres.html" target="_blank">
+		<img src="/docs/assets/a-postgres.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+	</a>
+  </div>
+
+</div>
+
 
 
 <br>
 
 <div class="row">
-  <div class="column2">
-	<a href="/docs/next/elasticsearch.html" target="_blank">
-		<img src="/docs/assets/a-elastic.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
-	</a>
-  </div>
-  <div class="column2">
-	<a href="/docs/next/mysql.html" target="_blank">
-		<img src="/docs/assets/a-mysql.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
-	</a>
-  </div>
   <div class="column2">
 	<a href="/docs/next/percona.html" target="_blank">
 		<img src="/docs/assets/a-percona.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
@@ -150,6 +156,16 @@ OpenEBS is the most popular open source project for container attached or contai
 	</a>
   </div>
 </div>
+
+<br><br>
+
+### See Also:
+
+#### <a href="https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/" target="_blank">CNCF CAS Blog</a>
+
+#### [OpenEBS architecture](/docs/next/architecture.html)
+
+#### [Container Attached Storage overview](/docs/next/cas.html)
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
