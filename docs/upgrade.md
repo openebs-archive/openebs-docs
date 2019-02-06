@@ -41,17 +41,20 @@ cd openebs/k8s/upgrade/0.8.0-0.8.1/
 
 Else you can download the following files to your work directory from https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.8.0-0.8.1
 
+- `cr_patch.json`
 - `patch-strategy-recreate.json`
 - `jiva-replica-patch.tpl.json`
 - `jiva-target-patch.tpl.json`
 - `jiva-target-svc-patch.tpl.json`
-- `jiva_volume_update.sh`
+- `jiva_volume_upgrade.sh`
 - `cstor-pool-patch.tpl.json`
 - `cstor-target-patch.tpl.json`
-- `cstor-target-svc-patch.json`
-- `cstor_pool_update.sh`
-- `cstor_target_update.sh`
-- `pre_upgrade.sh` 
+- `cstor-target-svc-patch.tpl.json`
+- `cstor-volume-patch.tpl.json`
+- `cstor_pool_upgrade.sh`
+- `cstor_volume_upgrade.sh`
+- `cstor-volume-replica-patch.tpl.json`
+- `cstor_pool_post_upgrade.sh` 
 
 **Note:**The upgrade  procedure uses the node labels to pin the Jiva replicas to the nodes where they are present. On node restart, these labels will disappear and can cause the replica to be un-scheduled.
 
