@@ -115,7 +115,7 @@ All steps described in this document must be performed on the Kubernetes master 
 
     3. Automatic rollback option is not provided. To rollback, you need to update the controller, exporter and replica pod images to the previous version
 
-    In the process of running the below steps, if you run into issues, you can always reach us on slack
+    In the process of running the below steps, if you run into issues, you can always reach us on [slack](https://openebs-community.slack.com/messages/C3NPGQ6G3/)
 
     **Upgrade the Jiva based OpenEBS PV**
 
