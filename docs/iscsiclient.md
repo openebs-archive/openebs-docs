@@ -57,7 +57,7 @@ The open-iscsi initiator packages depends on your host OS or in kubelet containe
 
 ### Ubuntu
 
-#### Verify iSCSI is configured
+#### <font size="4">Verify iSCSI is configured</font> 
 
 If iSCSI is already installed on your host,check that initiator name is configured and iSCSI service is running using the following commands.
 
@@ -66,7 +66,7 @@ sudo cat /etc/iscsi/initiatorname.iscsi
 sudo service open-iscsi status
 ```
 
-#### Install iSCSI 
+#### <font size="4">Install iSCSI </font> 
 
 If iSCSI is not installed on your host, install open-iscsi package by following below commands.
 
