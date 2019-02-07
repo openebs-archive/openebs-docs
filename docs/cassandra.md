@@ -25,7 +25,7 @@ Apache Cassandra is a free and open-source distributed NoSQL database management
 
    You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. Since Cassandra is a StaefulSet application, it requires only one replication at the storage level. So cStor volume `replicaCount` is 1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 1 is provided in the configuration details below.
 
-## Deployment of Cassandra with openEBS
+## Deployment of Cassandra with OpenEBS
 
 In this solution ,the number of replicas in the Statefulset can be modified as required. This example uses 3 application replicas. This means 3 Cassandra pods will be created after it successful deployment. 
 
@@ -60,7 +60,7 @@ cassandra-1   1/1       Running   0          6m
 cassandra-2   1/1       Running   0          2m
 ```
 
-### Verify PostgreSQL services
+## Verifying Successful Cassandra Deployment
 
 The verification procedure can be carried out in a series of steps, starting from listing the functional replicas to by creating and deleting test data in the Cassandra database.
 
@@ -349,6 +349,5 @@ spec:
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'UA-92076314-12');
 </script>
