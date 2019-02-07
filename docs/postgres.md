@@ -23,9 +23,9 @@ The Postgres container used in the StatefulSet is sourced from [CrunchyData](htt
 
 3. **Create Storage Class**
 
-   You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. Since PostgreSQL is a StaefulSet application, it requires only one replication at the storage level. So cStor volume `replicaCount` is 1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 1 is provided in the configuration details below.
+   You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. Since PostgreSQL is a StatefulSet application, it requires only one replication at the storage level. So cStor volume `replicaCount` is 1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 1 is provided in the configuration details below.
 
-## Deployment of PostgreSQL with openEBS
+## Deployment of PostgreSQL with OpenEBS
 
 The Postgres pods are configured as primary/master or as replica/slave by a startup script which decides the role based on ordinality assigned to the pod. 
 
@@ -39,7 +39,7 @@ wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/crunchy-p
 wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/crunchy-postgres/run.sh
 ```
 
-You must create a new file called "set.json" and add the content from "set.json" shows in the Configuration details section below to this new file.
+You must create a new file called **set.json** and add the content from **set.json** shows in the Configuration details section below to this new file.
 
 Once you have downloaded the files, you can do the modification on the required files. Once modification is done, you can run the following command to change the permission on the `run.sh` file to install the PostgreSQL application.
 
@@ -187,7 +187,7 @@ ERROR:  cannot execute CREATE TABLE in a read-only transaction
 
 
 
-## Configuration details
+## Configuration Details
 
 **openebs-config.yaml**
 
