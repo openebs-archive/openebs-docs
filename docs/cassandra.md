@@ -91,20 +91,90 @@ Datacenter: DC1-K8Demo
 Status=Up/Down
 |/ State=Normal/Leaving/Joining/Moving
 --  Address     Load       Tokens       Owns (effective)  Host ID                               Rack
-UN  10.72.1.11  101.04 KiB  32           74.3%             646261c2-25ea-4b16-9a93-0085da95d9a7  Rack1-K8Demo
-UN  10.72.0.13  65.66 KiB  32           64.6%             8a2cc1a9-58bf-4cb3-8c57-8e92549e390f  Rack1-K8Demo
-UN  10.72.2.14  65.62 KiB  32           61.1%             4b296349-818b-4ee5-b1e0-da99bf0b1062  Rack1-K8Demo
+UN  10.76.1.28  119.68 KiB  32           68.3%             ca4361b5-196a-4a38-bcc5-f832cc9b52ec  Rack1-K8Demo
+UN  10.76.0.30  154.01 KiB  32           54.0%             30627eb3-5e74-4471-b34a-269156bd8e81  Rack1-K8Demo
+UN  10.76.2.35  155.37 KiB  32           77.7%             63d0ee91-cc7c-4ebb-8a8c-2f6d9697133c  Rack1-K8Demo
 ```
 
 A status of "UN" implies Up and Normal. The "Owns" column suggests the data distribution percentage for the content placed into the Cassandra keyspaces. In the current example, a replica count of cStor Volume repliac as 1 and Cassandra application as 3 is chosen due to which the data is evenly distributed and copies are maintained.
 
 **Step 3**: Create a Test Keyspace with Tables
 
-Identify the IP Address of any of the Cassandra replicas. This is available from the output of the nodetool status command executed in the previous step.
+1. Identify the IP Address of any of the Cassandra replicas. This is available from the output of the nodetool status command executed in the previous step.
 
-Login to the CQL shell using the Cqlsh utility using the following command.
+2. Login to the CQL shell using the Cqlsh utility using the following command.
 
+   ```
+   cqlsh 10.76.1.28 9042 --cqlversion="3.4.2"
+   ```
 
+3. Create a keyspace with replication factor 2 using the following commands.
+
+   ```
+   cqlsh> create keyspace hardware with replication = { 'class' : 'SimpleStrategy' , 'replication_factor' : 2 };
+   cqlsh> describe keyspaces;
+   system_schema  system_auth  system  hardware  system_distributed  system_traces
+   ```
+
+4. Create a table with test content and view the data using the following commands.
+
+   ```
+   cqlsh> use hardware;
+   cqlsh:hardware> create table inventory (id uuid,Name text,HWtype text,Model text,PRIMARY KEY ((id), Name));
+   cqlsh:hardware> insert into inventory (id, Name, HWType, Model) values (5132b130-ae79-11e4-ab27-0800200c9a66, 'TestBox', 'Server', 'DellR820');
+   cqlsh:hardware> select * from inventory;
+   id                                   | name    | hwtype | model
+   ---------------------------------------+---------+--------+----------
+   5132b130-ae79-11e4-ab27-0800200c9a66 | TestBox | Server | DellR820
+   (1 rows) 
+   ```
+
+5. Flush the data to ensure it is written to a disk from the memtable (memory) using the following command.
+
+   ```
+   kubectl exec cassandra-0 -- nodetool flush hardware
+   ```
+
+**Step 4:** Delete the Test Keyspace
+
+1. Verify the masterless nature of Cassandra StatefulSet by deleting the keyspace from another replica, in this example, Cassandra-1.
+
+   ```
+   cqlsh 10.36.0.6 9042 --cqlversion="3.4.2"
+   ```
+
+   Output of above command will be similar to the following.
+
+   ```
+   cqlsh> use hardware;
+   cqlsh:hardware> select * from Inventory;
+   
+   id                                   | name    | hwtype | model
+   --------------------------------------+---------+--------+----------
+   5132b130-ae79-11e4-ab27-0800200c9a66 | TestBox | Server | DellR820
+   
+   (1 rows)
+   ```
+
+2. Now delete the keyspace which is created in the Step 3
+
+   ```
+   cqlsh> drop keyspace hardware;
+   ```
+
+3. Verify that the keyspace is deleted successfully using the following command.
+
+   ```
+   cqlsh> describe keyspaces
+   ```
+
+   Output of the above command will be similar to the following.
+
+   ```
+   system_traces  system_schema  system_auth  system  system_distributed
+   ```
+
+   So the keyspace is deleted successfully.
 
 ## Best Practices:
 
@@ -259,8 +329,6 @@ spec:
         requests:
           storage: 5G
 ```
-
-
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
