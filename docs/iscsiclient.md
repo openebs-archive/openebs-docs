@@ -138,13 +138,13 @@ yum install iscsi-initiator-utils -y
 
 You can verify the iSCSI installation from above section.
 
-## Kubernetes services on Cloud
+Kubernetes services on Cloud
 
 ### EKS
 
 EKS clusters can be brought up with either an AmazonLinux AMI or an Ubuntu 18.04 AMI.
 
-#### For clusters running with the AmazonLinux AMI 
+**For clusters running with the AmazonLinux AMI** 
 
 **Verify iSCSI is configured**
 
@@ -176,7 +176,7 @@ yum install iscsi-initiator-utils -y
 
 You can verify the iSCSI installation from above section.
 
-#### For clusters running with the Ubuntu 18.04 AMI, 
+**For clusters running with the Ubuntu 18.04 AMI**
 
 This can be checked from [here](/docs/next/iscsiclient.html#ubuntu).
 
