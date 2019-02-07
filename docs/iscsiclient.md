@@ -138,7 +138,7 @@ yum install iscsi-initiator-utils -y
 
 You can verify the iSCSI installation from above section.
 
-Kubernetes services on Cloud
+## Kubernetes services on Cloud
 
 ### EKS
 
