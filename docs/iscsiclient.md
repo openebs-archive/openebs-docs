@@ -57,7 +57,7 @@ The open-iscsi initiator packages depends on your host OS or in kubelet containe
 
 ### Ubuntu
 
-#### <font size="4">Verify iSCSI is configured</font> 
+**Verify iSCSI is configured**
 
 If iSCSI is already installed on your host,check that initiator name is configured and iSCSI service is running using the following commands.
 
@@ -66,7 +66,7 @@ sudo cat /etc/iscsi/initiatorname.iscsi
 sudo service open-iscsi status
 ```
 
-#### <font size="4">Install iSCSI </font> 
+**Install iSCSI**
 
 If iSCSI is not installed on your host, install open-iscsi package by following below commands.
 
@@ -78,7 +78,7 @@ sudo service open-iscsi restart
 
 ### RHEL
 
-#### Verify iSCSI 
+**Verify iSCSI is configured**
 
 In Red Hat Enterprise Linux 7, the iSCSI service is lazily started by default: the service starts after running the `iscsiadm` command. If iSCSI is already installed on the host,check that initiator name is configured  using the following command. 
 
@@ -98,7 +98,7 @@ If status is showing as `Inactive`, then you may have to enable and start the is
 sudo systemctl enable iscsid && sudo systemctl start iscsid
 ```
 
-#### Install iSCSI 
+**Install iSCSI** 
 
 If iSCSI is not installed on your host, install iSCSI services using the following command.
 
@@ -108,7 +108,7 @@ yum install iscsi-initiator-utils -y
 
 ### CentOS
 
-#### Verify iSCSI 
+**Verify iSCSI is configured**
 
 If iSCSI is already installed on your host, check that initiator name is configured using the following commands.
 
@@ -128,7 +128,7 @@ If status is showing as `Inactive`, then you may have to enable and start the is
 sudo systemctl enable iscsid && sudo systemctl start iscsid
 ```
 
-#### Install iSCSI 
+**Install iSCSI**
 
 If iSCSI is not installed on your host, install open iscsi-initiator-utils RPM package by following the below commands.
 
@@ -146,7 +146,7 @@ EKS clusters can be brought up with either an AmazonLinux AMI or an Ubuntu 18.04
 
 #### For clusters running with the AmazonLinux AMI 
 
-##### Verify iSCSI 
+**Verify iSCSI is configured**
 
 If iSCSI is already installed on your host, check that initiator name is configured using the following commands.
 
@@ -166,7 +166,7 @@ If status is showing as `Inactive`, then you may have to enable and start the is
 sudo systemctl enable iscsid && sudo systemctl start iscsid
 ```
 
-##### Install iSCSI 
+**Install iSCSI**
 
 If iSCSI is not installed on your host, install open iscsi-initiator-utils RPM package by following the below commands.
 
@@ -196,7 +196,7 @@ ssh azureuser@40.xx.yyy.zzz
 
 **Note**: azureuser is a default username.
 
-#### Verify iSCSI is configured
+**Verify iSCSI is configured**
 
 Obtain the container ID of the hyperkube kubelet on each node by running the following command.
 
@@ -228,7 +228,7 @@ Check the status of iSCSI service by running the following command.
 service open-iscsi status
 ```
 
-#### Install iSCSI 
+**Install iSCSI**
 
 You have to get the kubelet container ID using the steps mentioned in the above section. Once kubelet conatiner ID is obtained, you need to get the shell of this container using the following command.   
 
@@ -267,7 +267,7 @@ OpenEBS target will use the iscsi services inside the kubelet. It is recommended
 
 #### On Ubuntu
 
-##### Verify iSCSI status on Node and Kubelet?
+**Verify iSCSI status on Node and Kubelet?**
 
 Check the below commands on all worker nodes.
 
@@ -345,7 +345,7 @@ iscsi_tcp
 
 #### On RHEL
 
-##### Verify iSCSI on Node
+**Verify iSCSI is configured**
 
  If iSCSI is already installed on the host,check that initiator name is configured  using the following command. 
 
@@ -365,7 +365,7 @@ If status is showing as `Inactive`, then you may have to *enable* and *start* th
 sudo systemctl enable iscsid && sudo systemctl start iscsid
 ```
 
-##### Install iSCSI 
+**Install iSCSI**
 
 If iSCSI is not installed on your host, then configure iscsi initiator on each node using the following command. 
 
