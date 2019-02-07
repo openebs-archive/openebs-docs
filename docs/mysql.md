@@ -57,7 +57,7 @@ mysql-master-5c8444b547-g5tzx   1/1       Running   0          1h
 mysql-slave-7d8db6796f-85xnk    1/1       Running   0          1h
 ```
 
-### Verify MySQL services
+## Verify MySQL services
 
 Go to the master pod and execute the following commands to check the MySQL status.
 
@@ -160,7 +160,7 @@ This shows master data is synced with slave.
 
 
 
-## Configuration details
+## Configuration Details
 
 **openebs-config.yaml**
 
