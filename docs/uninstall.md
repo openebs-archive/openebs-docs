@@ -27,7 +27,7 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
 
   There should not have any entries of OpenEBS SPC.
 
-- Ensure that no volume or pool pods are pending in terminating state . You can check the running status of Pods using the following command.
+- Ensure that no volume or pool pods are in terminating state . You can check the running status of Pods using the following command.
 
   ```
   kubectl get pods -n <openebs namespace>
