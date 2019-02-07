@@ -144,7 +144,7 @@ Containerization of storage software and dedicating such controller for each vol
 
 <p>
     <img src="/docs/assets/intrologo.png" alt="Smiley face" 		style="float:left;width:200px;">
-    CAS architecture does not follow a typical distributed storage architecture with blast radius limitations. With synchronous replication happening from storage controller onto the storage replicas, the storage becomes highly available. The metadata of volume replicas are not shared among the nodes and is independently managed on each local node. If a node fails, the storage controller, which is a stateless container in this case, is spun on a node where second or third replica is running and data continues to be available. Hence, with CAS there is no blast radius effect that is typically seen in distributed storage systems such as Ceph, Glusterfs etc. in the event of node failures.
+    CAS architecture does not have the typical blast radius issue that is typically observed in the traditional storage systems. Metadata of the volume is not centralized and is kept local to the volume. Losing any node results in the loss of volume replicas present only on that node. As the volume data is synchronous replicated at least on to two other nodes, in the event of a node failure, 	the data continues to be available at the same performance levels.
 </p>
 
 
@@ -156,6 +156,7 @@ Containerization of storage software and dedicating such controller for each vol
     <img src="https://mayaonline.io/assets/images/mayaonlin-with-mule.svg" alt="MayaOnline" 		style="float:left;width:200px;">
    MayaOnline is the SaaS service for OpenEBS enabled Kubernetes clusters that provide  comprehensive monitoring and management of OpenEBS volumes. Logs of all OpenEBS volume pods are instantly uploaded to MayaOnline and available for users through Kibana dashboard. Topology view on MayaOnline used very often to understand the Kubernetes resources when they are deployed at scale. 
 </p>
+
 
 <br>
 
