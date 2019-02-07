@@ -1,29 +1,11 @@
 ---
-id: troubleshooting
-title: Troubleshooting OpenEBS
-sidebar_label: Troubleshooting
+id: performance
+title: Performance tuning on OpenEBS
+sidebar_label: Performance
 ---
 ------
 
-<font size="6">General guide lines for troubleshooting</font>
-
-<font size="6">Areas of troubleshooting</font>
-
-<font size="5">Installation</font>
-
-
-
-<font size="5">Volume provisioning</font>
-
-
-
-<font size="5">Upgrades</font>
-
-
-
-<font size="5">Kubernetes related</font>
-
-
+Features
 
 
 
