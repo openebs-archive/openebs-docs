@@ -210,7 +210,7 @@ This will show the images of all the OpenEBS components after the upgrade. All i
 
 ## Upgrade from OpenEBS 0.7.x to 0.8.0
 
-## <font size="5">Overview</font>
+<font size="5">Overview</font>
 
 This document describes the steps for upgrading OpenEBS from 0.7.x to 0.8.0
 
@@ -245,7 +245,7 @@ cd openebs/k8s/upgrades/0.7.0-0.8.0/
 
 ### Step 1: Upgrade the OpenEBS Operator
 
-### <font size="5">Upgrading OpenEBS Operator CRDs and Deployments</font>
+<font size="5">Upgrading OpenEBS Operator CRDs and Deployments</font>
 
 The upgrade steps vary depending on the way OpenEBS was installed. You can upgrade your OpenEBS cluster if you have already deployed your cluster using one of the following approach.
 
@@ -285,7 +285,7 @@ The following procedure will work if you have installed OpenEBS with default val
 - Run `helm ls` to get the OpenEBS release name.
 - Upgrade using `helm upgrade -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml <release-name> stable/openebs`
 
-#### <font size="5">Using Customized Operator YAML or Helm Chart</font>
+<font size="5">Using Customized Operator YAML or Helm Chart</font>
 
 If you are using customized Operator YAML or Helm Chart which has used for OpenEBS installation using helm method, then you must update your custom helm chart or YAML with 0.8 release tags and changes made in the values/templates.
 
@@ -321,7 +321,7 @@ pvc-dd52535e-fd0d-11e8-b0fd-42010a800225   5G         RWO            Delete     
 pvc-edd68f7e-fd0c-11e8-b0fd-42010a800225   5G         RWO            Delete           Bound     default/demo-vol1-claim         openebs-jiva-default             47m
 ```
 
-### <font size="5">Upgrade the Jiva Volume</font>
+#### Upgrade the Jiva Volume
 
 Get the Jiva PV that you want to upgrade and use the PV name in the following command to upgrade the particular PV to the latest version. You should perform upgrade one volume at a time.
 
@@ -339,7 +339,7 @@ Here `pvc-edd68f7e-fd0c-11e8-b0fd-42010a800225` is the pv name and `node-label`i
 
 After executing this above script, it will show that OpenEBS Jiva volume has been successfully upgraded to 0.8 version. You can run your application for using the upgraded volume.
 
-### <font size="5">Upgrade the cStor Pools</font>
+#### Upgrade the cStor Pools
 
 Extract the SPC name using the following command.
 
@@ -368,7 +368,7 @@ Upgrade the cStor Pools using the following command one at a time. In the follow
 
 After executing this above script, it will show that OpenEBS cStor Pool has been successfully upgraded to 0.8 version.
 
-### <font size="5">Upgrade the cStor Volumes</font>
+#### Upgrade the cStor Volumes
 
 Get the cStor PV that you want to upgrade and use the PV name in the following command to upgrade the particular PV to the latest version. From the Step2 output, you will get the cStor PV details. You should perform upgrade one volume at a time.
 
