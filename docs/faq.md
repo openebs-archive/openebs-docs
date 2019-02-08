@@ -44,8 +44,6 @@ sidebar_label: FAQs
 
 [Can I use the same PVC for multiple Pods?](/docs/next/faq.html#can-i-use-the-same-pvc-for-multiple-pods)
 
-[What must be the disk mount status on Node for provisioning OpenEBS volume?]()
-
 [Warning Messages while Launching PVC](http://localhost:3000/docs/next/faq.html#warning-messages-while-launching-pvc)
 
 [Why *OpenEBS_logical_size* and *OpenEBS_actual_used* are showing in different size?](/docs/next/faq.html#why-openebs-logical-size-and-openebs-actual-used-are-showing-in-different-size)
@@ -277,18 +275,6 @@ Jiva and cStor volumes are exposed via block storage using iSCSI. Currently, onl
 
 
 
-### What must be the disk mount status on Node for provisioning OpenEBS volume?
-
-OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume. 
-
-Jiva requires the disk to be mounted on Nodes (i.e., attached, formatted with a filesystem and mounted). 
-
-cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is optional to wipe out the data from the disk if you use existing disks for cStor pool creation.
-
-<a href="#top">Go to top</a>
-
-
-
 ### Warning Messages while Launching PVC
 
 If the following warning messages are displayed while launching an application, you can ignore these messages. These message are displayed only while launching an application pod initially and gets cleared on the subsequent attempt.What is most distinctive about the OpenEBS architecture?
@@ -310,7 +296,9 @@ The `OpenEBS_logical_size` and `OpenEBS_actual_used` parameters will start showi
 ### What must be the disk mount status on Node for provisioning OpenEBS volume?
 
 OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume. 
+
 Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted). 
+
 cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is optional to wipe out the data from the disk if you use existing disks for cStor pool creation.
 
 <a href="#top">Go to top</a>
