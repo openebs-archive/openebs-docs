@@ -48,6 +48,7 @@ All steps described in this document must be performed on the Kubernetes master 
   git clone https://github.com/openebs/openebs.git
   cd openebs/k8s/upgrade/0.8.0-0.8.1/
   ```
+
   **Note:**The upgrade  procedure uses the node labels to pin the Jiva replicas to the nodes where they are present. On node restart, these labels will disappear and can cause the replica to be un-scheduled.
 
 2. ### Upgrade OpenEBS operator
@@ -207,9 +208,9 @@ This will show the images of all the OpenEBS components after the upgrade. All i
 
 <TBD>
 
-# Upgrade from OpenEBS 0.7.x to 0.8.0
+## Upgrade from OpenEBS 0.7.x to 0.8.0
 
-## Overview
+## <font size="5">Overview</font>
 
 This document describes the steps for upgrading OpenEBS from 0.7.x to 0.8.0
 
@@ -220,16 +221,16 @@ The upgrade of OpenEBS is a two step process:
 
 **Note:** For older versions, OpenEBS supports upgrade to 0.7.0 version only from 0.5.3, 0.5.4and 0.6.0. For steps to upgrade to 0.7.x from 0.6, [click](https://v07-docs.openebs.io/docs/next/upgrade.html) here.
 
-### Terminology
+<font size="5">Terminology</font>
 
 - **OpenEBS Operator:** Refers to maya-apiserver and openebs-provisioner along with respective services, service account, roles, rolebindings.
 - **OpenEBS Volume:** Storage Engine pods like cStor or Jiva controller(aka target) & replica pods
 
-### Prerequisites
+<font size="5">Prerequisites</font>
 
 - All steps described in this document must be performed on the Kubernetes master or from a machine that has access to Kubernetes master.
 
-#### Download the upgrade scripts
+<font size="4">Download the upgrade scripts</font>
 
 You can do `git clone` of the upgrade scripts.
 
@@ -242,9 +243,9 @@ cd openebs/k8s/upgrades/0.7.0-0.8.0/
 
 **Note:**The upgrade procedure uses the node labels to pin the Jiva replicas to the nodes where they are present. On node restart, these labels will disappear and can cause the replica to be un-scheduled.
 
-## Step 1: Upgrade the OpenEBS Operator
+### Step 1: Upgrade the OpenEBS Operator
 
-### Upgrading OpenEBS Operator CRDs and Deployments
+### <font size="5">Upgrading OpenEBS Operator CRDs and Deployments</font>
 
 The upgrade steps vary depending on the way OpenEBS was installed. You can upgrade your OpenEBS cluster if you have already deployed your cluster using one of the following approach.
 
@@ -253,7 +254,7 @@ The upgrade steps vary depending on the way OpenEBS was installed. You can upgra
 
 Select one of the following:
 
-#### Install/Upgrade using kubectl (using openebs-operator.yaml )
+<font size="5">Install/Upgrade using kubectl (using openebs-operator.yaml )</font>
 
 The following sample steps will work if you have installed OpenEBS cluster without modifying the default values in the *openebs-operator.yaml* file. The following command will upgrade all the openebs-operator components to 0.8.0 version.
 
@@ -277,14 +278,14 @@ kubectl apply -f openebs-operator-0.8.0.yaml
 
 **Note:** Starting with OpenEBS 0.6, all the components are installed in namespace `openebs` as opposed to `default` namespace in earlier releases.
 
-#### Install/Upgrade using table/openebs helm chart
+<font size="5">Install/Upgrade using table/openebs helm chart</font>
 
 The following procedure will work if you have installed OpenEBS with default values provided by stable/openebs helm chart.
 
 - Run `helm ls` to get the OpenEBS release name.
 - Upgrade using `helm upgrade -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml <release-name> stable/openebs`
 
-#### Using Customized Operator YAML or Helm Chart.
+#### <font size="5">Using Customized Operator YAML or Helm Chart</font>
 
 If you are using customized Operator YAML or Helm Chart which has used for OpenEBS installation using helm method, then you must update your custom helm chart or YAML with 0.8 release tags and changes made in the values/templates.
 
@@ -293,7 +294,7 @@ After updating the YAML or helm chart or helm chart values, you can use the abov
 - You can use the following as references to know about the changes in 0.8:
   - openebs-charts [PR#2314](https://github.com/openebs/openebs/pull/2314) as reference.
 
-## Step 2: Upgrade the OpenEBS Volumes
+### Step 2: Upgrade the OpenEBS Volumes
 
 Even after the OpenEBS Operator has been upgraded to 0.8, the cStor Storage Pools and volumes (both jiva and cStor) will continue to work with older versions. Use the following steps to upgrade the cStor Pools and Volumes.
 
@@ -320,7 +321,7 @@ pvc-dd52535e-fd0d-11e8-b0fd-42010a800225   5G         RWO            Delete     
 pvc-edd68f7e-fd0c-11e8-b0fd-42010a800225   5G         RWO            Delete           Bound     default/demo-vol1-claim         openebs-jiva-default             47m
 ```
 
-### Upgrade the Jiva Volume
+### <font size="5">Upgrade the Jiva Volume</font>
 
 Get the Jiva PV that you want to upgrade and use the PV name in the following command to upgrade the particular PV to the latest version. You should perform upgrade one volume at a time.
 
@@ -338,7 +339,7 @@ Here `pvc-edd68f7e-fd0c-11e8-b0fd-42010a800225` is the pv name and `node-label`i
 
 After executing this above script, it will show that OpenEBS Jiva volume has been successfully upgraded to 0.8 version. You can run your application for using the upgraded volume.
 
-### Upgrade the cStor Pools
+### <font size="5">Upgrade the cStor Pools</font>
 
 Extract the SPC name using the following command.
 
@@ -367,7 +368,7 @@ Upgrade the cStor Pools using the following command one at a time. In the follow
 
 After executing this above script, it will show that OpenEBS cStor Pool has been successfully upgraded to 0.8 version.
 
-### Upgrade the cStor Volumes
+### <font size="5">Upgrade the cStor Volumes</font>
 
 Get the cStor PV that you want to upgrade and use the PV name in the following command to upgrade the particular PV to the latest version. From the Step2 output, you will get the cStor PV details. You should perform upgrade one volume at a time.
 
