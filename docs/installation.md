@@ -161,7 +161,7 @@ kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
 
 ## Verify OpenEBS is installed
 
-OpenEBS pods are created under "**openebs** namespace by default. Node Disk Manager, default Storage Classes and default Storage Pool Claim are created after installation.
+OpenEBS pods are created under **openebs** namespace by default. Node Disk Manager, default Storage Classes and default Storage Pool Claim are created after installation.
 
 You can get the OpenEBS pods status by running following command.
 
