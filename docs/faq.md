@@ -44,7 +44,7 @@ sidebar_label: FAQs
 
 [Can I use the same PVC for multiple Pods?](/docs/next/faq.html#can-i-use-the-same-pvc-for-multiple-pods)
 
-
+[What must be the disk mount status on Node for provisioning OpenEBS volume?]()
 
 [Warning Messages while Launching PVC](http://localhost:3000/docs/next/faq.html#warning-messages-while-launching-pvc)
 
@@ -269,13 +269,21 @@ Other enterprise capabilities: OpenEBS adds other capabilities such as extremely
 
 
 
-
-
-
-
 ### Can I use the same PVC for multiple Pods?
 
 Jiva and cStor volumes are exposed via block storage using iSCSI. Currently, only RWO is supported.
+
+<a href="#top">Go to top</a>
+
+
+
+### What must be the disk mount status on Node for provisioning OpenEBS volume?
+
+OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume. 
+
+Jiva requires the disk to be mounted on Nodes (i.e., attached, formatted with a filesystem and mounted). 
+
+cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is optional to wipe out the data from the disk if you use existing disks for cStor pool creation.
 
 <a href="#top">Go to top</a>
 
@@ -460,20 +468,6 @@ Apply the following YAML in your cluster.
 - Proceed to install the OpenEBS. Note that the namespace and service account name used by the OpenEBS should match what is provided in   the above ClusterRoleBinding.
 
 <a href="#top">Go to top</a>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
