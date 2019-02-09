@@ -45,7 +45,10 @@ kubectl get pods
 
 Following is an example output.
 
-
+```
+NAME                                READY     STATUS    RESTARTS   AGE
+minio-deployment-64d7c79464-wldr5   1/1       Running   0          54s
+```
 
 **Verify Minion Services**
 
@@ -57,11 +60,48 @@ kubectl get svc
 
 Following is an example output.
 
-
+```
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes      ClusterIP   10.15.240.1     <none>        443/TCP          14m
+minio-service   NodePort    10.15.250.174   <none>        9000:32701/TCP   1m
+```
 
 ## Verify Successful Deployment of Minio 
 
+The minio is deployed with Node port service. So the Minio service can be accessed using External IP of one of the Node and corresponding service port. You can get the Node details using following command.
 
+```
+kubectl get nodes -o wide
+```
+
+Following is an example output.
+
+```
+NAME                                           STATUS    ROLES     AGE       VERSION         EXTERNAL-IP      OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME
+gke-ranjith-minio-default-pool-b4985804-0qp7   Ready     <none>    14m       v1.11.6-gke.2   35.188.69.194    Ubuntu 18.04.1 LTS   4.15.0-1023-gcp   docker://17.3.2
+gke-ranjith-minio-default-pool-b4985804-ff07   Ready     <none>    14m       v1.11.6-gke.2   104.154.176.87   Ubuntu 18.04.1 LTS   4.15.0-1023-gcp   docker://17.3.2
+gke-ranjith-minio-default-pool-b4985804-kcvv   Ready     <none>    14m       v1.11.6-gke.2   35.192.103.51    Ubuntu 18.04.1 LTS   4.15.0-1023-gcp   docker://17.3.2
+```
+
+External IP of one of the Node is  35.188.69.194 . You can access minio object storage using 35.188.69.194:32701.
+
+![Home](/docs/assets/Home.PNG)
+
+You can enter access key as "minio" and Secret Key as "minio123".
+
+![home_key](/docs/assets/Home1.PNG)
+
+You can create a bucket from the "+" button showing in the left bottom side.
+
+![bucket](/docs/assets/bucket.PNG)
+
+You can upload a file using "upload" button.
+
+![uplaod-button](/docs/assets/Upload_button.PNG)
+
+You can verify if the file is uploaded.
+
+![finalfile](/docs/assets/Uploaded.PNG)
 
 ## Best Practices:
 
