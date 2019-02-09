@@ -99,7 +99,7 @@ You can upload a file using "upload" button.
 
 ![uplaod-button](/docs/assets/Upload_button.PNG)
 
-You can verify if the file is uploaded.
+Verify the upload is successful.
 
 ![finalfile](/docs/assets/Uploaded.PNG)
 
