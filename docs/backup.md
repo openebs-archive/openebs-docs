@@ -7,6 +7,10 @@ sidebar_label: Backup and Restore
 
 This document contains quick reference of the installation steps for both OpenEBS and heptio Ark which can be used for taking backup of OpenEBS volumes and then restoration of the data whenever it needed.
 
+
+
+<img src="/docs/assets/ark-openebs.png" alt="drawing" width="800"/>
+
 ## <font size="5">**Recommendation**</font>
 
 Recommended Kubernetes version is 1.10.7 and later. If you are using prior to the recommended version, you may face some issues and this can be rectified with some workaround steps which is mentioned below.

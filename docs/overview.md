@@ -118,6 +118,30 @@ OpenEBS is the most popular open source project for container attached or contai
 <div class="row" width=60%>
 
 <div class="column2">
+	<a href="/docs/next/minio.html" target="_blank">
+		<img src="/docs/assets/a-minio.png" alt="OpenEBS Minio" style="float:left;width:100px;">
+	</a>
+  </div>
+<div class="column2">
+	<a href="/docs/next/redis.html" target="_blank">
+		<img src="/docs/assets/a-redis.png" alt="OpenEBS Redis" style="float:left;width:100px;">
+	</a>
+  </div>  
+  <div class="column2">
+	<a href="/docs/next/nfs.html" target="_blank">
+		<img src="/docs/assets/a-nfs.png" alt="OpenEBS NFS" style="float:left;width:100px;">
+	</a>
+  </div>
+
+</div>
+
+
+
+<br>
+
+<div class="row" width=60%>
+
+<div class="column2">
 	<a href="/docs/next/elasticsearch.html" target="_blank">
 		<img src="/docs/assets/a-elastic.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>

@@ -5,7 +5,7 @@ sidebar_label: Performance
 ---
 ------
 
-Features
+Performance
 
 
 
