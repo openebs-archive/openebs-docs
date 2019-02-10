@@ -9,7 +9,7 @@ sidebar_label: GitLab
 
 
 
-
+<img src="/docs/assets/gitlab-deployment.png" alt="GitLab deployment using OpenEBS" style="width:1000px;">
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 

@@ -1,6 +1,6 @@
 ---
 id: minio
-title: Using OpenEBS to build Minio object storage on Kubernetes
+title: Build scalable object storage using Minio and OpenEBS
 sidebar_label: Minio
 ---
 ------
@@ -25,7 +25,15 @@ Minio is an object storage server released under Apache License v2.0.  It is bes
 
    You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. Since Minio is a deployment, it requires high availability of data. So cStor voume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStoveVolume Replica count as 3 is provided in the configuration details below.
 
-## Deployment of Minio with OpenEBS 
+## Deployment of Minio object storage with OpenEBS 
+
+
+
+<br>
+
+<img src="/docs/assets/minio-deployment.png" alt="OpenEBS and minio" style="width:1000px;">
+
+<br>
 
 Sample Minio deployment YAML is provided in the Configuration below. Create a YAML file called **minio.yaml** and add the YAML content from **minio.yaml** provided in the Configuration Details section.
 

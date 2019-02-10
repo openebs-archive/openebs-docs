@@ -11,7 +11,11 @@ OpenEBS is used as a solution for the persistent storage needs of stateful appli
 
 <font size="6">Persistent storage for Kubernetes</font>
 
-OpenEBS provides container native storage that is managed using native Kubernetes commands such as kubectl. For block storage needs of the application, iSCSI volumes are presented natively in OpenEBS. For <a href="/docs/next/rwm.html" target="_blank">RWM or NFS needs</a>, NFS provisioner can be deployed along with cStor volumes. For object storage needs, Minio is deployed with cStor volumes as the underlying needs. 
+OpenEBS provides container native storage that is managed using native Kubernetes commands such as kubectl. For block storage needs of the application, iSCSI volumes are presented natively in OpenEBS. For <a href="/docs/next/rwm.html" target="_blank">RWM or NFS needs</a>, NFS provisioner can be deployed along with cStor volumes. For object storage needs, Minio is deployed with cStor volumes as the underlying needs
+
+<font size="6">Object storage on Kubernetes</font>
+
+Use <a href="/docs/next/minio.html" target="_blank">OpenEBS and Minio</a> on Kubernetes to build cross Z cloud native object storage solution. Kubernetes PVCs are used by Minio to seamlessly scale Minio nodes. OpenEBS provides easily scalable and manageable storage pools. Scalability of Minio is directly complimented by OpenEBS's feature of infinitely scalable capacity via cStor pools.  
 
 <font size="6">Prometheus monitoring</font>
 
@@ -27,7 +31,7 @@ EFK is the most popular cloud native logging solution on Kubernetes for On-Premi
 
 <font size="6">RDS like mysql</font>
 
-RDS is famous because of its simplicity to setup and manage. One does not need special administration skills to manage RDS. An RDS like solution is <a href="/docs/next/mysql.html" target="_blank">built easily using OpenEBS</a>, as OpenEBS greatly simplifies the administrative tasks of the database such as provisioning the storage, expansion of the data , backup and restore etc. 
+RDS is famous because of its simplicity to setup and manage. One does not need special administration skills to manage RDS. An RDS like solution is <a href="/docs/next/mysql.html" target="_blank">built easily using OpenEBS</a>, as OpenEBS greatly simplifies the administrative tasks of the database such as provisioning the storage, expansion of the data , backup and restore etc
 
 
 
