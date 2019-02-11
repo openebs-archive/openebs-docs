@@ -50,9 +50,9 @@ It is not very efficient to rebuild replicas from scratch. We can improve rebuil
 
 ### See Also:
 
-#### [Which storage engine should I use ?](/docs/next/storageengine.html#cstor-vs-jiva-features-comparison)
+#### [Which storage engine should I use ?](/docs/next/casengines.html#cstor-vs-jiva-features-comparison)
 
-#### [Provisioning Jiva volumes](/docs/next/deployjiva.html)
+#### [Jiva user guide ](/docs/next/jivaguide.html)
 
 #### [cStor overview](/docs/next/cstor.html)
 

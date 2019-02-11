@@ -27,7 +27,7 @@ CI/CD systems are being rebuilt in most enterprises to take advantage of the mic
 
 <font size="6">Logging solution</font>
 
-EFK is the most popular cloud native logging solution on Kubernetes for On-Premise as well as cloud platform. OpenEBS when <a href="/docs/next/elasticsearch.html" target="_blank">deployed as statefulset</a>, provides itself as a clear choice for EFK stack storage because of its simplicity and CAS architecture
+EFK is the most popular cloud native logging solution on Kubernetes for On-Premise as well as cloud platforms. OpenEBS when <a href="/docs/next/elasticsearch.html" target="_blank">deployed as statefulset</a>, provides itself as a clear choice for EFK stack storage because of its simplicity and CAS architecture
 
 <font size="6">RDS like mysql</font>
 

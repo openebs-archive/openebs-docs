@@ -1,10 +1,10 @@
 {
   "docs": {
     "Introduction": ["overview","features", "usecases", "releases", "support", "mayaonline"],
-    "Concepts": ["cas", "architecture","cstor","jiva"],
+    "Concepts": ["cas", "architecture", "casengines","cstor","jiva"],
     "Prerequisites": ["iscsiclient"],
-    "User Guides": ["quickstart","installation", "configurepools", "configuresc", "provisionvols", "operations", "backup", "upgrade", "uninstall", "jivaguide"],
+    "User Guides": ["quickstart","installation", "configurepools", "configuresc", "provisionvols", "operations", "jivaguide", "backup", "rwm", "upgrade", "uninstall" ],
     "Stateful Applications": ["prometheus", "minio", "gitlab", "cassandra","nuodb", "elasticsearch", "mysql", "percona", "postgres", "stateful"],
-    "Advanced Topics": ["performance", "faq", "k8supgrades", "rwm", "troubleshooting"]
+    "Advanced Topics": ["performance", "faq", "k8supgrades", "troubleshooting"]
   }
 }
