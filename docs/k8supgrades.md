@@ -1,7 +1,7 @@
 ---
 id: k8supgrades
 title: Best practices to follow when upgrading Kubernetes
-sidebar_label: Kubernetes Upgrades
+sidebar_label: Kubernetes upgrades
 ---
 ------
 
