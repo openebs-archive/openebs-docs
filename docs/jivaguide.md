@@ -61,7 +61,13 @@ If is is a cloud disk provision and mount on the node. If three replicas of Jiva
 
   <font color="maroon">
 
-  gcloud compute disks create disk1 --size 100GB --type pd-standard  --zone us-central1-aAttach the GPD to a node
+  gcloud compute disks create disk1 --size 100GB --type pd-standard  --zone us-central1-a
+
+  </font>
+
+- Attach the GPD to a node
+
+  <font color="maroon">
 
   gcloud compute instances attach-disk <Node Name> --disk disk1 --zone us-central1-a
 
