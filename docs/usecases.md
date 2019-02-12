@@ -33,7 +33,7 @@ Read <font size="5"><a href="/docs/html/elasticsearch.html" target="_blank">EFK 
 
 <br>
 
-<font size="6">RDS like mysql for On-Prem</font> 
+<font size="6">Managed database service like RDS  for On-Prem</font> 
 
 RDS is famous because of its simplicity to setup and manage. One does not need special administration skills to manage RDS. An RDS like solution is built easily using OpenEBS, as OpenEBS greatly simplifies the administrative tasks of the database such as provisioning the storage, expansion of the data , backup and restore etc
 
@@ -41,7 +41,7 @@ Read <font size="5"><a href="/docs/next/mysql.html" target="_blank"> RDS type M
 
 <br>
 
-<font size="6">Persistent storage for SQLand NoSQL databases </font>
+<font size="6">Persistent storage for SQL and NoSQL databases </font>
 
 OpenEBS provides  iSCSI storage to support for cloud native applications that run either as deployments or as statefulsets. With features such as synchronous replication across AZs, thin provisioning, the peristent storage solution for sql and nosql databases becomes easy and simple. 
 
