@@ -50,6 +50,10 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [Application pod enters CrashLoopBackOff state]()
 
+[cStor pool pods are not running]()
+
+[OpenEBS Jiva PVC is not provisioning in 0.8.0]()
+
 **Upgrades**
 
 
@@ -104,6 +108,8 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
    ```
 
 2. Run `multipath -w /dev/sdc` command (replace the devname with your persistent devname).
+
+
 
 <font size="6" color="green">Volume provisioning</font>
 
@@ -310,6 +316,22 @@ The procedure to ensure application recovery in the above cases is as follows:
    - Unmount the volume again
    - Perform `xfs_repair /dev/<device>`. This fixes if any file system related errors on the device
    - Perform application pod deletion to facilitate fresh mount of the volume. At this point, the app pod may be stuck on terminating OR containerCreating state. This can be resolved by deleting the volume folder (w/ app content) on the local directory.
+
+### cStor pool pods are not running
+
+cstor disk pods are not coming up now. On checking the pool pod logs, it says `/dev/xvdg is in use and contains a xfs filesystem.`
+
+**Workaround:**
+
+cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is optional to wipe out the data from the disk if you use existing disks for cStor pool creation.
+
+### OpenEBS Jiva PVC is not provisioning in 0.8.0
+
+Even all OpenEBS pods are in running state, unable to provision JIva volume if you install through helm.
+
+**Troubleshooting:**
+
+Check the latest logs showing in the openebs provisioner logs. If the particular PVC creation entry is not coming on the openebs provisioner pod, then restart the openebs provisioner pod. From 0.8.1 version, liveness probe feature will check the openebs provisioner pod status periodically and ensure its availability for OpenEBS PVC creation.
 
 <font size="6" color="orange">Upgrades</font>
 
