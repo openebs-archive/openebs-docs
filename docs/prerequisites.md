@@ -1,7 +1,7 @@
 ---
 id: prerequisites
 title: Prerequisites (iSCSI client)
-sidebar_label: iSCSI Client
+sidebar_label: Prerequisites
 ---
 ------
 
