@@ -54,6 +54,12 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [OpenEBS Jiva PVC is not provisioning in 0.8.0]()
 
+[Recovery procedure for Read-only volume where kubelet is running in a container]()
+
+[Recovery procedure for Read-only volume for XFS formatted volumes]()
+
+
+
 **Upgrades**
 
 
@@ -62,7 +68,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [Kubernetes node reboots because of increase in memory consumed by  Kubelet](/docs/next/troubleshooting.html#kubernetes-node-reboots-because-of-increase-in-memory-consumed-by-kubelet)
 
-Application and OpenEBS pods terminate/restart under heavy I/O load
+[Application and OpenEBS pods terminate/restart under heavy I/O load]()
 
 <hr>
 <font size="6" color="blue">Installation</font>
@@ -88,7 +94,7 @@ $ helm installstable/openebs --name openebs --namespace openebs
 Error: release openebsfailed: clusterroles.rbac.authorization.k8s.io "openebs" isforbidden: attempt to grant extra privileges:[PolicyRule{Resources:["nodes"], APIGroups:["*"],Verbs:["get"]} PolicyRule{Resources:["nodes"],APIGroups:["*"], Verbs:["list"]}PolicyRule{Resources:["nodes"], APIGroups:["*"],Verbs:["watch"]} PolicyRule{Resources:["nodes/proxy"],APIGroups:["*"], Verbs:["get"]}PolicyRule{Resources:["nodes/proxy"], APIGroups:["*"],Verbs:["list"]} PolicyRule{Resources:["nodes/proxy"],APIGroups:["*"], Verbs:["watch"]}PolicyRule{Resources:["namespaces"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["services"],APIGroups:["*"], Verbs:["*"]} PolicyRule{Resources:["pods"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["deployments"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["events"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["endpoints"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["persistentvolumes"],APIGroups:["*"], Verbs:["*"]} PolicyRule{Resources:["persistentvolumeclaims"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["storageclasses"],APIGroups:["storage.k8s.io"], Verbs:["*"]}PolicyRule{Resources:["storagepools"], APIGroups:["*"],Verbs:["get"]} PolicyRule{Resources:["storagepools"], APIGroups:["*"],Verbs:["list"]} PolicyRule{NonResourceURLs:["/metrics"],Verbs:["get"]}] user=&{system:serviceaccount:kube-system:tiller6f3172cc-4a08-11e8-9af5-0a58ac1f1729 [system:serviceaccounts system:serviceaccounts:kube-systemsystem:authenticated] map[]} ownerrules=[]ruleResolutionErrors=[clusterroles.rbac.authorization.k8s.io"cluster-admin" not found]
 ```
 
-<font size="4">Troubleshooting</font>
+**Troubleshooting**
 
 You must enable RBAC on Azure before OpenEBS installation. For more details, see [Prerequisites](https://github.com/openebs/openebs-docs/blob/master/docs/next/prerequisites.html).
 
@@ -96,7 +102,7 @@ You must enable RBAC on Azure before OpenEBS installation. For more details, see
 
 A multipath.conf file without either find_multipaths or a manual blacklist claims all SCSI devices.
 
-<font size="4">Workaround</font>:
+**<font size="4">Workaround</font>:**
 
 1. Add the find_multipaths line to */etc/multipath.conf* file similar to the following snippet.
 
@@ -294,30 +300,7 @@ The procedure to ensure application recovery in the above cases is as follows:
 
 1. The above procedure works for applications that are either pods or deployments/statefulsets. In case of the latter, the application pod can be restarted (i.e., deleted) after step-4 (iscsi logout) as the deployment/statefulset controller will take care of rescheduling the application on a same/different node with the volume.
 
-2. In environments where the kubelet runs in a container, perform the following steps as part of the recovery procedure for a Volume-Read only issue.
-
-   - Confirm that the OpenEBS target does not exist as a Read Only device by the OpenEBS controller and that all replicas are in Read/Write mode.
-   - Un-mount the iSCSI volume from the node in which the application pod is scheduled.
-   - Perform the following iSCSI operations from inside the kubelet container.
-     - Logout
-     - Rediscover
-     - Login
-     - Perform the following iSCSI operations from inside the kubelet container.
-   - Re-mount the iSCSI device (may appear with a new SCSI device name) on the node.
-
-   - Verify if the application pod is able to start using/writing into the newly mounted device.
-
-3. Once the application is back in "Running" state post recovery by following steps 1-9, if existing/older data is not visible (i.e., it comes up as a fresh instance), it is possible that the application pod is using the docker container filesystem instead of the actual PV (observed sometimes due to the reconciliation attempts by Kubernetes to get the pod to a desired state in the absence of the mounted iSCSI disk). This can be checked by performing a `df -h` or `mount` command inside the application pods. These commands should show the scsi device `/dev/sd*` mounted on the specified mount point. If not, the application pod can be forced to use the PV by restarting it (deployment/statefulset) or performing a docker stop of the application container on the node (pod).
-
-4. In case of `XFS` formatted volumes, perform the following steps once the iSCSI target is available in RW state & logged in:
-
-   - Un-mount the iSCSI volume from the node in which the application pod is scheduled. This may cause the application to enter running state by using the local mount point.
-   - Mount to volume to a new (temp) directory to replay the metadata changes in the log
-   - Unmount the volume again
-   - Perform `xfs_repair /dev/<device>`. This fixes if any file system related errors on the device
-   - Perform application pod deletion to facilitate fresh mount of the volume. At this point, the app pod may be stuck on terminating OR containerCreating state. This can be resolved by deleting the volume folder (w/ app content) on the local directory.
-
-### cStor pool pods are not running
+###  cStor pool pods are not running
 
 cstor disk pods are not coming up now. On checking the pool pod logs, it says `/dev/xvdg is in use and contains a xfs filesystem.`
 
@@ -331,7 +314,34 @@ Even all OpenEBS pods are in running state, unable to provision JIva volume if y
 
 **Troubleshooting:**
 
-Check the latest logs showing in the openebs provisioner logs. If the particular PVC creation entry is not coming on the openebs provisioner pod, then restart the openebs provisioner pod. From 0.8.1 version, liveness probe feature will check the openebs provisioner pod status periodically and ensure its availability for OpenEBS PVC creation.
+Check the latest logs showing in the OpenEBS provisioner logs. If the particular PVC creation entry is not coming on the OpenEBS provisioner pod, then restart the OpenEBS provisioner pod. From 0.8.1 version, liveness probe feature will check the OpenEBS provisioner pod status periodically and ensure its availability for OpenEBS PVC creation.
+
+### Recovery procedure for Read-only volume where kubelet is running in a container.
+
+In environments where the kubelet runs in a container, perform the following steps as part of the recovery procedure for a Volume-Read only issue.
+
+1. Confirm that the OpenEBS target does not exist as a Read Only device by the OpenEBS controller and that all replicas are in Read/Write mode.
+   - Un-mount the iSCSI volume from the node in which the application pod is scheduled.
+   - Perform the following iSCSI operations from inside the kubelet container.
+     - Logout
+     - Rediscover
+     - Login
+   - Perform the following iSCSI operations from inside the kubelet container.
+   - Re-mount the iSCSI device (may appear with a new SCSI device name) on the node.
+   - Verify if the application pod is able to start using/writing into the newly mounted device.
+2. Once the application is back in "Running" state post recovery by following steps 1-9, if existing/older data is not visible (i.e., it comes up as a fresh instance), it is possible that the application pod is using the docker container filesystem instead of the actual PV (observed sometimes due to the reconciliation attempts by Kubernetes to get the pod to a desired state in the absence of the mounted iSCSI disk). This can be checked by performing a `df -h` or `mount` command inside the application pods. These commands should show the scsi device `/dev/sd*` mounted on the specified mount point. If not, the application pod can be forced to use the PV by restarting it (deployment/statefulset) or performing a docker stop of the application container on the node (pod).
+
+### Recovery procedure for Read-only volume for XFS formatted volumes
+
+In case of `XFS` formatted volumes, perform the following steps once the iSCSI target is available in RW state & logged in:
+
+- Un-mount the iSCSI volume from the node in which the application pod is scheduled. This may cause the application to enter running state by using the local mount point.
+- Mount to volume to a new (temp) directory to replay the metadata changes in the log
+- Unmount the volume again
+- Perform `xfs_repair /dev/<device>`. This fixes if any file system related errors on the device
+- Perform application pod deletion to facilitate fresh mount of the volume. At this point, the app pod may be stuck on `terminating` OR `containerCreating` state. This can be resolved by deleting the volume folder (w/ app content) on the local directory.
+
+
 
 <font size="6" color="orange">Upgrades</font>
 
@@ -375,6 +385,7 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 <br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
