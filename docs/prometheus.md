@@ -9,7 +9,11 @@ sidebar_label: Prometheus
 
 ## Introduction
 
-Prometheus is the mostly widely used application for scraping cloud native application metrics. Prometheus and OpenEBS togethr provide a complete open source stack for monitoring. In this solution, OpenEBS is used as Prometheus TSDB, where all the metrics are permanently stored on local Kubernetes cluster. When using OpenEBS as TSDB, following are the advantages:
+Prometheus is the mostly widely used application for scraping cloud native application metrics. Prometheus and OpenEBS togethr provide a complete open source stack for monitoring. In this solution, OpenEBS is used as Prometheus TSDB, where all the metrics are permanently stored on local Kubernetes cluster. 
+
+
+
+**When using OpenEBS as TSDB, following are the advantages:**
 
 - All the data is stored locally and managed natively to Kubernetes
 
@@ -51,27 +55,45 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
    Run `kubectl apply -f <prometheus.yaml>` to see Prometheus running. For more information on configuring more services to be monitored, see Prometheus documentation.
 
-7. Persistent volume for Grafana:
+   ```
+   helm install stable/prometheus --storage-class=< openebs-cstor-3replica >
+   ```
+
+   
+
+7. **Persistent volume for Grafana:**
 
    Grafana needs a much smaller persistent storage for storing metadata. Typically the storage class used for Prometheus is reused for Grafana as well. Just construct a new PVC with smaller storage size.  
 
    
 
-## Sample Prometheus deployment at openebs.ci
+## Reference at <a href="https://openebs.ci" target="_blank">openebs.ci</a>
 
-A <a href="https://openebs.ci/prometheus-cstor" target="_blank">sample Prometheus server</a> at <a href="https://openebs.ci" target="_blank">https://openebs.ci</a>
+A live deployment of Prometheus using OpenEBS volumes as highly available  TSDB storage can be seen at the website <a href="https://openebs.ci">www.openebs.ci</a>
 
-Sample yaml specs for running Prometheus using cStor are <a href="https://github.com/openebs/e2e-infrastructure/tree/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/prometheus-cstor" target="_blank">here</a>. 
+
+
+Deployment yaml spec files for Prometheus and OpenEBS resources are found <a href="https://github.com/openebs/e2e-infrastructure/tree/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/prometheus-cstor" target="_blank">here</a>
+
+
+
+ <a href="https://openebs.ci/prometheus-cstor" target="_blank">OpenEBS-CI dashboard of Prometheus</a>
+
+
+
+<a href="https://prometheuscstor.openebs.ci/" target="_blank">Live access to Prometheus dashboard</a>
+
+
 
 
 
 ## Post deployment Operations
 
-- Monitor OpenEBS Volume size 
+**Monitor OpenEBS Volume size** 
 
 It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
 
-- Monitor cStor Pool size
+**Monitor cStor Pool size**
 
 As in most cases, cStor pool may not be dedicated to just Prometheus alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. 
 
@@ -79,25 +101,25 @@ As in most cases, cStor pool may not be dedicated to just Prometheus alone. It i
 
 ## Best Practices
 
-### Maintain volume replica quorum always
+**Maintain volume replica quorum always**
 
-### Maintain cStor pool used capacity below 80%
+**Maintain cStor pool used capacity below 80%**
 
 
 
 ## Troubleshooting guidelines 
 
-### Read-Only volume
+**Read-Only volume**
 
-### Snapshots were failing
-
-
+**Snapshots were failing**
 
 
 
-## Configuration details
 
-### Sample cStor Pool spec
+
+## Sample yaml specs
+
+**Sample cStor Pool spec**
 
 ```
 apiVersion: openebs.io/v1alpha1
@@ -122,7 +144,7 @@ spec:
 
 
 
-### Prometheus StorageClass 
+**Prometheus StorageClass** 
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -152,7 +174,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 
 
-### PVC spec for Prometheus
+**PVC spec for Prometheus**
 
 ```
 #PersistentVolumeClaim for prometheus
@@ -172,7 +194,7 @@ spec:
 
 
 
-### PVC spec for Grafana
+**PVC spec for Grafana**
 
 ```
 #PersistentVolumeClaim for grafana
@@ -195,7 +217,7 @@ See the <a href="https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b
 
 
 
-### Complete YAML file for prometheus+OpenEBS
+**Complete YAML file for prometheus+OpenEBS**
 
 Following is the yaml file that has Prometheus and OpenEBS configuration
 
