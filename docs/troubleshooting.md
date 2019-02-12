@@ -28,11 +28,15 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 **Installation**
 
-[Installation failed because insufficient user rights](/docs/next/troubleshooting.html#installation-failed-because-insufficient-user-rights)
+[Installation failed because insufficient user rights](/docs/next/troubleshooting.html#installation-failed-because-insufficient-user-rights).
 
-[iSCSI client is not setup on Nodes. Application Pod is in ContainerCreating state](/docs/next/troubleshooting.html#iscsi-client-not-setup-pod-is-in-containercreating-state)
+[iSCSI client is not setup on Nodes. Application Pod is in ContainerCreating state.](/docs/next/troubleshooting.html#iscsi-client-not-setup-pod-is-in-containercreating-state)
 
-[OpenEBS installation fails on Azure]()
+[Why does OpenEBS provisioner pod restart continuously?]()
+
+[OpenEBS installation fails on Azure]().
+
+[multipath.conf file claims all SCSI devices in OpenShift]()
 
 **Volume provisioning**
 
@@ -44,13 +48,11 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [Creating cStor pool fails on CentOS when there are partitions on the disk]()
 
+[Application pod enters CrashLoopBackOff state]()
+
 **Upgrades**
 
 
-
-**Recover Data**
-
-[Recover data from Jiva replica]()
 
 **Kubernetes related**
 
@@ -85,6 +87,23 @@ Error: release openebsfailed: clusterroles.rbac.authorization.k8s.io "openebs" i
 <font size="4">Troubleshooting</font>
 
 You must enable RBAC on Azure before OpenEBS installation. For more details, see [Prerequisites](https://github.com/openebs/openebs-docs/blob/master/docs/next/prerequisites.html).
+
+### multipath.conf file claims all SCSI devices in OpenShift
+
+A multipath.conf file without either find_multipaths or a manual blacklist claims all SCSI devices.
+
+<font size="4">Workaround</font>:
+
+1. Add the find_multipaths line to */etc/multipath.conf* file similar to the following snippet.
+
+   ```
+   defaults {
+       user_friendly_names yes
+       find_multipaths yes
+   }
+   ```
+
+2. Run `multipath -w /dev/sdc` command (replace the devname with your persistent devname).
 
 <font size="6" color="green">Volume provisioning</font>
 
@@ -218,7 +237,7 @@ sdc           8:32   0 232.9G  0 disk
 
 This issue is due to failed application operations in the container. Typically this is caused due to failed writes on the mounted PV. To confirm this, check the status of the PV mount inside the application pod.
 
-### Troubleshooting the issue:
+**Troubleshooting**
 
 - Perform a `kubectl exec -it <app>` bash (or any available shell) on the application pod and attempt writes on the volume mount. The volume mount can be obtained either from the application specification ("volumeMounts" in container spec) or by performing a `df -h` command in the controller shell (the OpenEBS iSCSI device will be mapped to the volume mount).
 - The writes can be attempted using a simple command like `echo abc > t.out` on the mount. If the writes fail with *Read-only file system errors*, it means the iSCSI connections to the OpenEBS volumes are lost. You can confirm by checking the node's system logs including iscsid, kernel (syslog) and the kubectl logs (`journalctl -xe, kubelet.log`).
@@ -231,7 +250,7 @@ This issue is due to failed application operations in the container. Typically t
 - In all the above cases, loss of the device for a period greater than the node iSCSI initiator timeout causes the volumes to be re-mounted as RO.
 - In certain cases, the node/replica loss can lead to the replica quorum not being met (i.e., less than 51% of replicas available) for an extended period of time, causing the OpenEBS volume to be presented as a RO device.
 
-### Workaround/Recovery:
+**Workaround/Recovery**
 
 The procedure to ensure application recovery in the above cases is as follows:
 
@@ -297,89 +316,7 @@ The procedure to ensure application recovery in the above cases is as follows:
 <hr>
 <br>
 
-<font size="6" color="red">Recover Data</font>
 
-### Recover data from Jiva replica
-
-This document contains notes on how to recover data from a backed up replica files. OpenEBS Jiva volumes save the data in /var/openebs/pvc-id/. All the replicas contain identical data. Before performing a cluster re-build, it suffices to have a backup of data from one of the replica's /var/openebs/pvc-id/ path.
-
-The following procedure helps recovering data in the scenario where replicas get scheduled on nodes where data does not exist.
-
-**Step 1:** Run a sample application that generates some data.
-
-In the following example, executing the busybox.yaml file brings up the busybox pod that saves hostname and date into the mounted OpenEBS volume.
-
-```
-kubectl apply -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/busybox.yaml
-```
-
-Wait for the busybox application to run and exec into it to check if data is generated. You can add some additional content if required.
-
-Note the following details:
-
-- PV id `kubectl get pv` (say *source-pv-id* ).
-- nodes on which PV replica pods are running `kubectl get pods -o wide | grep source-pv-id` (say *replica-hostname*).
-
-Delete the busybox pod using the following command
-
-``` command. Note that the data folders will remain on the nodes even though the pod and PVs are deleted.
-kubectl delete -f https://raw.githubusercon.tent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/busybox.yaml
-```
-
-**Step 2:** Setup a Recovery PVC
-
-Deploy a Recovery PVC with a **single replica** using the following command.
-
-```
-kubectl apply -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/recovery-pvc.yaml
-```
-
-Note the following details:
-
-- PV id `kubectl get pv` (say *recovery-pv-id* ).
-- PV replica deployment name `kubectl get deploy | grep recovery-pv-id` (say *recovery-replica-deploy* ).
-- Recovery PVC namespace, if you have changed it to something other than default. (say *recovery-replica-ns*).
-
-**Step 3:** Patch the Recovery PV Replica to stick to the *replica-hostname*
-
-Replace **replica hostname** in patch-replica-dep-nodename.json with the *replica-hostname* that was obtained in **Step 1**. It is the node where source/backed up replica data is available. If the backup data is available on a remote machine, you can set the hostname to the current node where Replica is running.
-
-```
-wget https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/patch-replica-dep-nodename.json
-
-kubectl patch deploy -n <replica-replica-ns> <recovery-replica-deploy>  -p "$(cat patch-replica-dep-nodename.json)"
-```
-
-After the patch is applied, you will notice that the replica pod is restarted on the hostname specified. Since this replica deployment is patched, you will see an orphaned replica set `kubectl get rs`. You can go ahead and delete it.
-
-**Step 4:** Copy the backup data into Recovery Replica
-
-Execute the following commands.
-
-```
-a. ssh into the node  (_replica-hostname_)
-b. cd /var/openebs/recovery-pv-id/ (/var/openebs if you are using default pool.)
-c. sudo rm -rf *
-d. copy contents from earlier volume (/var/openebs/source-pv-id  or from remote server) into /var/openebs/recovery-pv-id/
-e. You will see *peer.details*, *revision.counter*, *volume.meta* and a bunch of *.img* and *.meta* files.
-f. edit peer.details to set ReplicaCount=1
-g. exit
-```
-
-**Step 5:** Restart the Volume Pods
-
-- `kubectl delete replica-pod`. Note that it gets rescheduled on the same node (*replica-hostname*).
-- `kubectl delete controller-pod`. Wait for these pods to get back to running state.
-
-**Step 6:** Use the recovery volume to retrieve the data.
-
-You can either launch the source application or a recovery application that now makes use of this recovery volume. In this example, using the busybox-recovery pod displays the file content which is the same as the one generated by the source application.
-
-```
-kubectl apply -f https://raw.githubusercontent.com/kmova/bootstrap/master/gke-openebs/jiva-recovery/busybox-recover.yaml
-```
-
-You can also exec into this application to check the content, retrieve the files, or use the application to check the content.
 
 <font size="6" color="red">Kubernetes related</font>
 
