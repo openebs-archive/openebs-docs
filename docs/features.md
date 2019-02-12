@@ -32,7 +32,7 @@ For more information on how OpenEBS is used in cloud native environments,  visit
 
 <br>
 
-## OpenEBS features
+OpenEBS features
 
 ### Containerized Storage for Containers
 
@@ -88,7 +88,7 @@ OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always
 
 
 
-## OpenEBS benefits
+OpenEBS benefits
 
 
 
@@ -172,7 +172,17 @@ Containerization of storage software and dedicating such controller for each vol
 
 <br>
 
-## See Also
+## See Also:
+
+## [Object Storage with OpenEBS](/docs/next/minio.html)
+
+## [RWM PVs with OpenEBS](/docs/next/rwm.html)
+
+## [Local storage for Prometheus ](/docs/next/prometheus.html)
+
+<br>
+
+<hr>
 
 
 
