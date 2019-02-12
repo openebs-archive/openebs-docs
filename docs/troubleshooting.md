@@ -119,7 +119,7 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 <font size="6" color="green">Volume provisioning</font>
 
 <hr>
-Appliation complaining ReadOnly filesystem
+## Appliation complaining ReadOnly filesystem
 
 <br>
 
@@ -235,12 +235,11 @@ sdc           8:32   0 232.9G  0 disk
 
    If the output is similar to the above, you must remove the handler on the device.
 
-   ```sudo dmsetup remove centos-home
-   
+   ```
+   sudo dmsetup remove centos-home
    sudo dmsetup remove centos-swap
-   
    sudo dmsetup remove centos-root
-
+   ```
 
 
 ## Application pod enters CrashLoopBackOff state
