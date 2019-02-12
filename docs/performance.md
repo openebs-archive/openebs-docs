@@ -58,17 +58,17 @@ Support for performance tuning for specific workloads can be obtained through th
 
 <br>
 
+## See Also:
+
+### [Connecting to MayaOnline](/docs/next/mayaonline.html)
+
+### [Seeking help](/docs/next/support.html)
+
 <br>
 
-### See Also:
+<hr>
 
-#### [Connecting to MayaOnline](/docs/next/mayaonline.html)
-
-#### [Seeking help](/docs/next/support.html)
-
-
-
-<br><br>
+<br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

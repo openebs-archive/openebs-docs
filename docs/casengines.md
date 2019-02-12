@@ -116,15 +116,21 @@ Jiva is recommended for a low capacity workloads which can be accommodated withi
 
 
 
-<br><br>
+<br>
 
-### See Also:
+## See Also:
 
-#### [cStor overview](/docs/next/cstor.html)
+### [cStor overview](/docs/next/cstor.html)
 
-#### [Jiva overview](/docs/next/jiva.html)
+### [Jiva overview](/docs/next/jiva.html)
 
-#### [Jiva user guide](/docs/next/jivaguide.html)
+### [Jiva user guide](/docs/next/jivaguide.html)
+<br>
+
+<hr>
+
+<br>
+
 
 
 

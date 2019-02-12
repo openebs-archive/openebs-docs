@@ -1,6 +1,6 @@
 ---
 id: iscsiclient
-title: iSCSI Client is a prerequisite for OpenEBS
+title: Prerequisites for OpenEBS (iSCSI client)
 sidebar_label: iSCSI Client
 ---
 ------
@@ -409,11 +409,23 @@ kubelet:
 
 
 
-See Also:
+<br>
 
-[OpenEBS Installation](/docs/next/installation.html)
 
-[OpenEBS Architecture](/docs/next/architecture.html)
+
+## See Also:
+
+### [OpenEBS Installation](/docs/next/installation.html)
+
+### [OpenEBS Architecture](/docs/next/architecture.html)
+
+
+
+<br>
+
+<hr>
+
+<br>
 
 
 

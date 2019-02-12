@@ -88,21 +88,25 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 
 
+
+
+<br>
+
+## See Also:
+
+### [FAQs](/docs/next/faq.html)
+
+### [Seek support or help](/docs/next/support.html)
+
+### [Latest release notes]()
+
+<br>
+
+<hr>
+
 <br>
 
 
-
-<br><br>
-
-### See Also:
-
-#### [FAQs](/docs/next/faq.html)
-
-#### [Seek support or help](/docs/next/support.html)
-
-#### [Latest release notes]()
-
-<br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

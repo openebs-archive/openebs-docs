@@ -33,6 +33,12 @@ EFK is the most popular cloud native logging solution on Kubernetes for On-Premi
 
 RDS is famous because of its simplicity to setup and manage. One does not need special administration skills to manage RDS. An RDS like solution is <a href="/docs/next/mysql.html" target="_blank">built easily using OpenEBS</a>, as OpenEBS greatly simplifies the administrative tasks of the database such as provisioning the storage, expansion of the data , backup and restore etc
 
+<br>
+
+<hr>
+
+<br>
+
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->

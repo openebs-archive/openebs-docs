@@ -54,12 +54,24 @@ CAS architecture does not follow a typical distributed storage architecture with
 
 Similar to hyperconverged systems, storage and performance of a volume in CAS is scalable. As each volume is having it's own storage controller, the storage can scale up within the permissible limits of a storage capacity of a node. As the number of container applications increase in a given Kubernetes cluster, more nodes are added, which increases the overall availability of storage capacity and performance, thereby making the storage available to the new application containers. This process is exactly similar to the successful hyperconverged systems like Nutanix. 
 
+<br>
 
-### See Also:
 
-#### [OpenEBS architecture](/docs/next/architecture.html)
+## See Also:
 
-#### [CAS blog on CNCF](https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/)
+### [OpenEBS architecture](/docs/next/architecture.html)
+
+### [CAS blog on CNCF](https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/)
+
+
+
+<br>
+
+<hr>
+
+<br>
+
+
 
 
 

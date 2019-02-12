@@ -21,13 +21,15 @@ sidebar_label: Quickstart
 
 <a href="/docs/next/installation.html"><img src="/docs/assets/sitemap.png" alt="OpenEBS configuration flow" style="width:1000px"></a>
 
-#### See Also
 
-OpenEBS Architecture
 
-cStor Sparse Pools
 
-cStor or Jiva ?
+
+<br>
+
+<hr>
+
+<br>
 
 
 

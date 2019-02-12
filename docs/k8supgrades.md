@@ -26,17 +26,17 @@ MayaOnline topology view of an OpenEBS volume provides [detailed status of all t
 
 <br>
 
-See Also:
+## See Also:
 
-#### [Connecting to MayaOnline](/docs/next/mayaonline.html)
+### [Connecting to MayaOnline](/docs/next/mayaonline.html)
 
-#### [Seeking help](/docs/next/support.html)
-
-
+### [Seeking help](/docs/next/support.html)
 
 <br>
 
+<hr>
 
+<br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 

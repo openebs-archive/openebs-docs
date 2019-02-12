@@ -79,15 +79,21 @@ Use the above storage class and create a new PVC and mount it inside the pod at 
 
 
 
-### See Also:
+## See Also:
 
-#### [cStor Overview](/docs/next/cstor.html)
+### [cStor Overview](/docs/next/cstor.html)
 
-#### [cStorPools](/docs/next/configurepools.html)
+### [cStorPools](/docs/next/configurepools.html)
 
-#### [Upgrading OpenEBS]()
+### [Upgrading OpenEBS]()
 
-<br>	
+<br>
+
+<hr>
+
+<br>
+
+​	
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
