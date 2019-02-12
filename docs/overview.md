@@ -9,7 +9,7 @@ sidebar_label: Overview
 
 
 
- <font size="6">Introduction</font>
+##  <font size="6">Introduction</font>
 
 
 
@@ -19,7 +19,7 @@ OpenEBS is the most popular open source project for container attached or contai
 
 
 
-<font size="6">Quickstart</font>
+## <font size="6">Quickstart</font>
 
 - OpenEBS requires iSCSI client to be available on the host nodes. [Verify if iSCSI is setup](/docs/next/iscsiclient.html) and running before starting the installation
 
@@ -88,7 +88,7 @@ OpenEBS is the most popular open source project for container attached or contai
 
 <br>
 
-<font size="6">Stateful applications </font>
+## <font size="6">Stateful applications </font>
 
 <br>
 
@@ -187,7 +187,7 @@ OpenEBS is the most popular open source project for container attached or contai
 
 #### <a href="https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/" target="_blank">CNCF CAS Blog</a>
 
-#### [Container Attached Storage overview](/docs/next/cas.html)
+#### [CAS overview](/docs/next/cas.html)
 
 #### [OpenEBS architecture](/docs/next/architecture.html)
 

@@ -5,29 +5,104 @@ sidebar_label: Troubleshooting
 ---
 ------
 
-<font size="6">General guide lines for troubleshooting</font>
+<font size="5">General guidelines for troubleshooting</font>
 
-<font size="6">Areas of troubleshooting</font>
-
-<font size="5">Installation</font>
+Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to monitor OpenEBS resources and volumes. Logs of OpenEBS pods available at MayaOnline are helpful for troubleshooting. Topology views of OpenEBS custom resources provide the live status which are helpful in the troubleshooting process.
 
 
 
-<font size="5">Volume provisioning</font>
+**Steps for troubleshooting:**
+
+- Join <a href="https://slack.openebs.io" target="_blank">OpenEBS slack </a>community
+- Connect Kubernetes cluster to MayaOnline and observe the following
+  - Any alerts that may be relevant to the issue under troubleshooting 
+  - Logs that throw up any errors
+  - Status of custom resources of OpenEBS volumes in the topology view
+- Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
 
 
-<font size="5">Upgrades</font>
+<br>
+
+<font size="5">Areas of troubleshooting</font>
+
+**Installation**
+
+[Installation failed because insufficient user rights](/docs/next/troubleshooting.html#installation-failed-because-insufficient-user-rights)
+
+[iSCSI client not setup. Pod is in ContainerCreating state](/docs/next/troubleshooting.html#iscsi-client-not-setup-pod-is-in-containercreating-state)
+
+**Volume provisioning**
+
+[Appliation complaining ReadOnly filesystem](/docs/next/troubleshooting.html#appliation-complaining-readonly-filesystem)
+
+**Upgrades**
 
 
 
-<font size="5">Kubernetes related</font>
+**Kubernetes related**
+
+[Kubernetes node reboots because of increase in memory consumed by  Kubelet](/docs/next/troubleshooting.html#kubernetes-node-reboots-because-of-increase-in-memory-consumed-by-kubelet)
 
 
 
+<hr>
+
+<font size="6" color="blue">Installation</font>
+
+### Installation failed because insufficient user rights
+
+<br>
+
+### iSCSI client not setup. Pod is in ContainerCreating state
+
+<br>
+
+<hr>
 
 
 
+<font size="6" color="green">Volume provisioning</font>
+
+<hr>
+
+### Appliation complaining ReadOnly filesystem
+
+<br>
+
+
+
+<font size="6" color="orange">Upgrades</font>
+
+<hr>
+
+<br>
+
+
+
+<font size="6" color="red">Kubernetes related</font>
+
+<hr>
+
+### Kubernetes node reboots because of increase in memory consumed by  Kubelet
+
+
+
+<br>
+
+
+
+<br><br>
+
+### See Also:
+
+#### [FAQs](/docs/next/faq.html)
+
+#### [Seek support or help](/docs/next/support.html)
+
+#### [Latest release notes]()
+
+<br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
