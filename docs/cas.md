@@ -1,6 +1,6 @@
 ---
 id: cas
-title: Container Attached Storage (CAS) - OpenEBS
+title: Container Attached Storage (CAS) 
 sidebar_label: Container Attached Storage
 ---
 

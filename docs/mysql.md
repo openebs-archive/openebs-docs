@@ -1,6 +1,6 @@
 ---
 id: mysql
-title: Using OpenEBS as storage for MySQL on Kubernetes
+title: Managed database service like RDS
 sidebar_label: MySQL
 ---
 ------

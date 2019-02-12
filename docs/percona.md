@@ -1,6 +1,6 @@
 ---
 id: percona
-title: Using OpenEBS as storage for Percona on Kubernetes
+title: OpenEBS for Percona
 sidebar_label: Percona
 ---
 ------

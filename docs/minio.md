@@ -1,6 +1,6 @@
 ---
 id: minio
-title: Build scalable object storage using Minio and OpenEBS
+title: OpenEBS for Minio
 sidebar_label: Minio
 ---
 ------

@@ -1,6 +1,6 @@
 ---
 id: rwm
-title: Provisioning Read-Write-Many (RWM) PVC with OpenEBS
+title: Provisioning Read-Write-Many (RWM) PVCs
 sidebar_label: Read-Write-Many (RWM)
 ---
 ------

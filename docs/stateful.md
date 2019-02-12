@@ -1,6 +1,6 @@
 ---
 id: stateful
-title: Using OpenEBS as storage for any stateful application on Kubernetes
+title: Using OpenEBS  for any stateful application
 sidebar_label: Other stateful applications
 ---
 ------

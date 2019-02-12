@@ -1,6 +1,6 @@
 ---
 id: postgres
-title: Using OpenEBS as storage for PostgreSQL on Kubernetes
+title: OpenEBS for PostgreSQL 
 sidebar_label: PostgreSQL
 ---
 ------

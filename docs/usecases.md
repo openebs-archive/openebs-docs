@@ -13,7 +13,7 @@ OpenEBS is used as a solution for the persistent storage needs of stateful appli
 
 Prometheus, Grafana and OpenEBS stack provides a scalable, high performing monitoring solution. 
 
-Read <font size="5"><a href="/docs/html/proemtheus.html" target="_blank">On-Premise Prometheus use case </a></font>
+Read <font size="5"><a href="/docs/next/prometheus.html" target="_blank">On-Premise Prometheus use case </a></font>
 
 <br>
 
@@ -21,7 +21,7 @@ Read <font size="5"><a href="/docs/html/proemtheus.html" target="_blank">On-Prem
 
 CI/CD systems are being rebuilt in most enterprises to take advantage of the micro service based technologies like Kubernetes and Docker.GitLab is one of the popular choices for cloud native CI/CD needs, and it needs a scalable, easy to manage cloud native storage for the underlying applications such as RDS, MySql and Minio. OpenEBS is the perfect choices from the storage point of view.  An easy an powerful cloud native CI/CD solution is built  using GitLab and OpenEBS
 
-Read <font size="5"><a href="/docs/html/gitlab.html" target="_blank">On-Premise GitLab use case</a></font>
+Read <font size="5"><a href="/docs/next/gitlab.html" target="_blank">On-Premise GitLab use case</a></font>
 
 <br>
 
@@ -29,7 +29,7 @@ Read <font size="5"><a href="/docs/html/gitlab.html" target="_blank">On-Premise 
 
 EFK is the most popular cloud native logging solution on Kubernetes for On-Premise as well as cloud platforms. OpenEBS when <a href="/docs/next/elasticsearch.html" target="_blank">deployed as statefulset</a>, provides itself as a clear choice for EFK stack storage because of its simplicity and CAS architecture
 
-Read <font size="5"><a href="/docs/html/elasticsearch.html" target="_blank">EFK use case </a></font>
+Read <font size="5"><a href="/docs/next/elasticsearch.html" target="_blank">EFK use case </a></font>
 
 <br>
 
@@ -59,7 +59,7 @@ Persistent storage for Object storage systems like Minio</font>
 
 Use OpenEBS and Minio on Kubernetes to build cross AZ cloud native object storage solution. Kubernetes PVCs are used by Minio to seamlessly scale Minio nodes. OpenEBS provides easily scalable and manageable storage pools. Scalability of Minio is directly complimented by OpenEBS's feature of infinitely scalable capacity via cStor pools.  
 
-Read <font size="5"><a href="/docs/html/minio.html" target="_blank">Minio object storage use case </a></font>
+Read <font size="5"><a href="/docs/next/minio.html" target="_blank">Minio object storage use case </a></font>
 
 <br>
 
@@ -71,7 +71,7 @@ Read <font size="5"><a href="/docs/html/minio.html" target="_blank">Minio object
 
 Webscale applications like WordPress require shared storage with RWM access mode. OpenEBS acting as a persistent storage backend for NFS storage provider solves this need very well. 
 
-Read <font size="5"><a href="/docs/html/rwm.html" target="_blank">RWM use case </a></font>
+Read <font size="5"><a href="/docs/next/rwm.html" target="_blank">RWM use case </a></font>
 
 <br>
 

@@ -1,6 +1,6 @@
 ---
 id: cassandra
-title: Using OpenEBS as statefulset storage for Cloud Native Cassandra
+title: OpenEBS for Cassandra
 sidebar_label: Cassandra
 ---
 ------

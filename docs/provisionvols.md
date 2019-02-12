@@ -1,6 +1,6 @@
 ---
 id: provisionvols
-title: Provisioning OpenEBS Storage Volumes - Using PVC
+title: Provisioning OpenEBS Storage Volumes
 sidebar_label: Provisioning Volumes
 ---
 ------

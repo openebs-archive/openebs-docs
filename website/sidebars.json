@@ -2,9 +2,8 @@
   "docs": {
     "Introduction": ["overview","features", "usecases", "releases", "support", "mayaonline"],
     "Concepts": ["cas", "architecture", "casengines","cstor","jiva"],
-    "Prerequisites": ["iscsiclient"],
-    "User Guides": ["quickstart","installation", "configurepools", "configuresc", "provisionvols", "operations", "jivaguide", "backup", "rwm", "upgrade", "uninstall" ],
-    "Stateful Applications": ["prometheus", "minio", "gitlab", "cassandra","nuodb", "elasticsearch", "mysql", "percona", "postgres", "stateful"],
+    "User Guides": ["quickstart", "prerequisites", "installation", "configurepools", "configuresc", "provisionvols", "operations", "jivaguide", "backup",  "upgrade", "uninstall" ],
+    "Stateful Applications": ["prometheus", "minio", "gitlab", "cassandra","nuodb", "elasticsearch", "mysql", "percona", "postgres", "rwm", "stateful"],
     "Advanced Topics": ["performance", "faq", "k8supgrades", "troubleshooting"]
   }
 }

@@ -1,6 +1,6 @@
 ---
 id: gitlab
-title: Using OpenEBS to build On-Premise CI/CD using GitLab
+title: OpenEBS for GitLab
 sidebar_label: GitLab
 ---
 ------

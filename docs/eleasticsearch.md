@@ -1,6 +1,6 @@
 ---
 id: elasticsearch
-title: Using OpenEBS as storage for ElasticSearch on Kubernetes
+title: OpenEBS for ElasticSearch
 sidebar_label: ElasticSearch
 ---
 ------

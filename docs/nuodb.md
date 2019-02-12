@@ -1,6 +1,6 @@
 ---
 id: nuodb
-title: Using OpenEBS as storage for NuoDB on Kubernetes
+title: OpenEBS for NuoDB
 sidebar_label: NuoDB
 ---
 ------
