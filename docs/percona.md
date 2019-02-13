@@ -5,65 +5,79 @@ sidebar_label: Percona
 ---
 ------
 
-<img src="/docs/assets/o-percona.png" alt="OpenEBS and Prometheus" style="width:400px;">
+<img src="/docs/assets/o-percona.png" alt="OpenEBS and Percona" style="width:400px;">
 
 ## Introduction
 
-Percona Server for MySQL is a free, fully compatible, enhanced and open source drop-in replacement for any MySQL database. in this solution , running a percona-mysql application pod which consumes OpenEBS cStor volume  to storge the database in a kubernetes cluster.
+Percona Server for MySQL is a free, fully compatible, enhanced and open source drop-in replacement for any MySQL database. In this solution , running a Percona-MySQL application pod which consumes OpenEBS cStor volume  to store the database in a kubernetes cluster.
 
-## Requirements
+## Deployment model 
+
+<img src="docs/assets/sol-prometheus.png" style="width:800px;">
+
+As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration work fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
+
+
+
+## Configuration workflow
 
 1. **Install OpenEBS**
 
    If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
-2. **Configure cStor Pool**
+2. **Connect to MayaOnline (Optional)** : Connecting  the Kubernetes cluster to <a href="app.mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
+
+3. **Configure cStor Pool**
 
    If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html). If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
 
-3. **Create Storage Class**
+4. **Create Storage Class**
 
-   You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. Since Percona-mysql is a depleoyement, it requires high availability of data. So cStor voume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStoveVolume Replica count as 3 is provided in the configuration details below.
+   You must configure a StorageClass to provision cStor volume on cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies  are defined. In this solution we using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. Since Percona-MySQL is a deployment, it requires high availability of data at Storage level. So cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStoveVolume Replica count as 3 is provided in the configuration details below.
 
-## Deployment of Percona with OpenEBS 
+5. **Configure PVC** : Percona deployment needs a volume with a replication factor as 3. See PVC example spec below.
 
-Sample  Percona deployement YAML is provided in the Configuration below. Create a YAML file called **percona-openebs-deployment.yaml** and add the YAML content to it.
+6. **Launch and test Percona**:
 
-Apply the **percona-openebs-deployment.yaml** using the below command  
+   Run `kubectl apply -f percona-openebs-deployment.yaml` to deploy Percona application. For more information, see Percona documentation. In other way,  you can use stable Percona image with helm to deploy Percona in your cluster using the following command.
 
-```
-kubectl apply -f percona-openebs-deployment.yaml
-```
+   ```
+    helm install --name my-release --storage-class=openebs-sc-disk.yaml stable/percona 
+   ```
 
-### Verify Percona Pods
-
-Run the following to get the status of Percona-mysql pods.
-
-```
-kubectl get pods
-```
-
-Following is an example output.
-
-```
-NAME      READY     STATUS    RESTARTS   AGE
-percona   1/1       Running   0          5m
-
-```
-
-## Sample Percona Deployment at openebs.ci
+## Reference at openebs.ci
 
 A [sample Percona server](https://www.openebs.ci/percona-cstor) at [https://openebs.ci](https://openebs.ci/)
 
-Sample YAML  for running Percona-mysql using cStor are [here](https://github.com/openebs/e2e-infrastructure/tree/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/percona-cstor)
+Sample YAML  for running Percona-mysql using cStor are [here](https://raw.githubusercontent.com/openebs/e2e-infrastructure/d536275e8c3d78f5c8ce1728b07eee26653b5056/production/percona-cstor/percona-openebs-deployment.yaml)
 
+<a href="https://openebs.ci/percona-cstor" target="_blank">OpenEBS-CI dashboard of Percona</a>
 
+## Post deployment Operations
+
+**Monitor OpenEBS Volume size** 
+
+It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
+
+**Monitor cStor Pool size**
+
+As in most cases, cStor pool may not be dedicated to just Prometheus alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. 
+
+ 
 
 ## Best Practices:
 
+**Maintain volume replica quorum always**
+
+**Maintain cStor pool used capacity below 80%**
 
 
-## Troubleshooting Guidelines
+
+## Troubleshooting guidelines 
+
+**Read-Only volume**
+
+**Snapshots were failing**
 
 
 
@@ -120,6 +134,24 @@ reclaimPolicy: Delete
 ---
 ```
 
+**percona-pvc.yaml**
+
+```
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: percona-cstor-claim
+  namespace: percona-cstor
+spec:
+  storageClassName: openebs-cstor-disk
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 30G
+---
+```
+
 **percona-openebs-deployment.yaml**
 
 ```
@@ -171,19 +203,6 @@ spec:
           persistentVolumeClaim:
             claimName: percona-cstor-claim
 ---
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: percona-cstor-claim
-  namespace: percona-cstor
-spec:
-  storageClassName: openebs-cstor-disk
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 30G
----
 apiVersion: v1
 kind: Service
 metadata:
@@ -198,8 +217,6 @@ spec:
   selector:
       name: percona
 ```
-
-
 
 <br>
 
