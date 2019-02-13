@@ -39,7 +39,7 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
 5. **Launch and test Cassandra**
 
-   Created a sample  `cassandra-statefulset.yaml` file in the Configuration details section. This can be applied to deploy Cassandra database  with OpenEBS. Run `kubectl apply -f cassandra-statefulset.yaml` to see Cassandra running. This will configure required PVC also.
+   Create a sample  `cassandra-statefulset.yaml` file in the Configuration details section. This can be applied to deploy Cassandra database  with OpenEBS. Run `kubectl apply -f cassandra-statefulset.yaml` to see Cassandra running. This will configure required PVC also.
 
    In other way , you can use Cassandra image with helm to deploy Cassandra in your cluster using the following command.
 
