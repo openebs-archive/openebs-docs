@@ -5,185 +5,84 @@ sidebar_label: PostgreSQL
 ---
 ------
 
-<img src="/docs/assets/o-postgres.png" alt="OpenEBS and Prometheus" style="width:400px;">	
+<img src="/docs/assets/o-postgres.png" alt="OpenEBS and PostgresSQL" style="width:400px;">	
 
 ## Introduction
 
-The Postgres container used in the StatefulSet is sourced from [CrunchyData](https://github.com/CrunchyData/crunchy-containers). CrunchyData provides cloud agnostic PostgreSQL container technology that is designed for production workloads with cloud native High Availability, Disaster Recovery, and monitoring. In this solution, running a PostgreSQL StatefulSet application on OpenEBS cStor volume  and perform simple database operations to verify successful deployment.
+The Postgres container used in the StatefulSet is sourced from [CrunchyData](https://github.com/CrunchyData/crunchy-containers). CrunchyData provides cloud agnostic PostgreSQL container technology that is designed for production workloads with cloud native High Availability, Disaster Recovery, and monitoring. In this solution, running a PostgreSQL StatefulSet application on OpenEBS cStor volume  to store the monitoring data with a storage replication factor of 1.
 
-## Requirements
+
+
+## Deployment model 
+
+
+
+As shown above, OpenEBS volumes need to be configured with single replica. This configuration work fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
+
+
+
+## Configuration workflow
 
 1. **Install OpenEBS**
 
    If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
-2. **Configure cStor Pool**
+2. **Connect to MayaOnline (Optional)** : Connecting  the Kubernetes cluster to <a href="app.mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
 
-   If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html). If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
+3. **Configure cStor Pool**
 
-3. **Create Storage Class**
+   If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html). As PostgresSQL is a StatefulSet application, it requires single storage replication factor. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
+
+4. **Create Storage Class**
 
    You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. Since PostgreSQL is a StatefulSet application, it requires only one replication at the storage level. So cStor volume `replicaCount` is 1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 1 is provided in the configuration details below.
 
-## Deployment of PostgreSQL with OpenEBS
+5. **Launch and test PostgresSQL**
 
-The Postgres pods are configured as primary/master or as replica/slave by a startup script which decides the role based on ordinality assigned to the pod. 
+   Install Postgress on OpenEBS volume using the following command.
 
-Run the following commands to get the files for running PostgreSQL application.
+   ```
+   helm install --name my-release --storage-class=openebs-cstor-disk replication.slaveReplicas=2 stable/postgresql
+   ```
 
-```
-wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/crunchy-postgres/set-sa.json
-wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/crunchy-postgres/set-service.json
-wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/crunchy-postgres/set-primary-service.json
-wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/crunchy-postgres/set-replica-service.json
-wget https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/crunchy-postgres/run.sh
-```
 
-You must create a new file called **set.json** and add the content from **set.json** shows in the [Configuration details](/docs/next/postgres.html#Configuration-Details) section below to this new file.
+## Reference at <a href="https://openebs.ci" target="_blank">openebs.ci</a>
 
-Once you have downloaded the files, you can do the modification on the required files. Once modification is done, you can run the following command to change the permission on the `run.sh` file to install the PostgreSQL application.
+A live deployment of PostgresSQL using OpenEBS volumes can be seen at the website <a href="https://openebs.ci">www.openebs.ci</a>
 
-```
- chmod +x run.sh
-```
+Deployment YAML spec files for PostgresSQL and OpenEBS resources are found <a href="https://github.com/openebs/e2e-infrastructure/tree/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/postgresql-cstor" target="_blank">here</a>
 
-Now you can execute the following command to install the PostgreSQL  application.
+ <a href="https://openebs.ci/postgresql-cstor" target="_blank">OpenEBS-CI dashboard of PostgresSQL
 
-```
-./run.sh
-```
 
-## Verify PostgreSQL  Pods
 
-Run the following to get the status of PostgreSQL pods.
 
-```
-kubectl get pods
-```
 
-Following is an example output.
+## Post deployment Operations
 
-```
-NAME      READY     STATUS    RESTARTS   AGE
-pgset-0   1/1       Running   0          5m
-pgset-1   1/1       Running   0          4m
-```
+**Monitor OpenEBS Volume size** 
 
-### Verify PostgreSQL services
+It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
 
-The verification procedure can be carried out using the following steps:
+**Monitor cStor Pool size**
 
-- Check cluster replication status between the Postgres primary and replica.
-- Create a table in the default database as Postgres user "testuser" on the primary.
-- Check data synchronization on the replica for the table you have created.
-- Verify that table is not created on the replica.
+As in most cases, cStor pool may not be dedicated to just PostgresSQL alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. 
 
-Once you enter into the pod, do the following.
-
-**Step-1:** Install the PostgreSQL-Client
-
-You can ssh to any of your Kubernetes Nodes and install the PostgreSQL CLient Utility (psql) to perform database operations from the command line.
-
-```
-sudo apt-get install postgresql-client -y
-```
-
-**Step 2:** Verify Cluster Replication Status on Crunchy-Postgres Cluster.
-
-Identify the IP Address of the primary (pgset-0) pod or the service (pgset-primary) .
-
-```
-kubectl describe pod pgset-0 | grep IP
-```
-
-Output of above command will be similar to the following.
-
-```
-IP:             10.76.0.35
-```
-
-**Step 3:** Use the IP obtained from the above output in the following query and execute the following.
-
-```
-psql -h 10.76.0.35 -U testuser postgres -c 'select * from pg_stat_replication'
-```
-
-Output of above command will be similar to the following.
-
-```
-pid | usesysid | usename | application_name | client_addr | client_hostname | client_port | backend_start | backend_xmin | state | sent_lsn | write_lsn | flush_lsn | replay_lsn | write_lag
-| flush_lag | replay_lag | sync_priority | sync_state
------+----------+-------------+------------------+-------------+-----------------+------------+-------------------------------+--------------+-----------+-----------+-----------+-----------+------------+-----------+-----------+------------+---------------+------------
-94 | 16391 | primaryuser | pgset-1 | 10.44.0.0 | | 60460 | 2018-12-05 09:29:21.990782-05 | |streaming | 0/30142
-```
-
-The replica should be registered for *asynchronous* replication.
-**Step 4:**  Create a Table with Test Content on the Default Database. The following queries should be executed on the primary pod.
-
-```
-psql -h 10.47.0.3 -U testuser postgres -c 'create table foo(id int)'
-```
-
-After entering the password, it will create a table.
-
-Once table is created, add a value to it using the following command.
-
-```
-psql -h 10.47.0.3 -U testuser postgres -c 'insert into foo values (1)'
-```
-
-After entering the password, it will add a value to the table.
-
-**Step 5:**  Verify Data Synchronization on Replica.
-
-Identify the IP Address of the replica (pgset-1) pod or the service (pgset-replica) using the following command.
-
-```
- kubectl describe pod pgset-1 | grep IP
-```
-
-Output of above command will be similar to the following.
-
-```
-IP:             10.76.2.53
-```
-
-Now use the above IP in the following command and execute the following command.
-
-```
- psql -h 10.76.2.53 -U testuser postgres -c 'table foo'
-```
-
-Output of above command will be similar to the following.
-
-```
- id
-----
-  1
-(1 row)
-```
-
-Verify that the table content is replicated successfully.
-
-**Step 6:** Verify Database Write is Restricted on Replica.
-
-Attempt to create a new table on the replica using the following command and verify that the creation is unsuccessful.
-
-```
- psql -h 10.76.2.53 -U testuser postgres -c 'create table bar(id int)'
-```
-
-Output of above command will be similar to the following.
-
-```
-ERROR:  cannot execute CREATE TABLE in a read-only transaction
-```
+ 
 
 ## Best Practices:
+
+**Maintain volume replica quorum always**
+
+**Maintain cStor pool used capacity below 80%**
 
 
 
 ## Troubleshooting Guidelines
+
+**Read-Only volume**
+
+**Snapshots were failing**
 
 
 
