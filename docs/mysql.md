@@ -11,152 +11,82 @@ sidebar_label: MySQL
 
 The MySQL server is a database server used to persist the data and provide a query interface for it (SQL). in this solution, running a MySQL replication cluster application which consumes OpenEBS cStor volume  to store the database in a kubernetes cluster.
 
-## Requirements
+
+
+## Deployment model 
+
+
+
+As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration work fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
+
+
+
+## Configuration workflow
 
 1. **Install OpenEBS**
 
    If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
-2. **Configure cStor Pool**
+2. **Connect to MayaOnline (Optional)** : Connecting  the Kubernetes cluster to <a href="app.mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
 
-   If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html). If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
+3. **Configure cStor Pool** : After OpenEBS installation,  cStor pool has to be configured. As MySQL is a deployment, it need high availability at storage levele. OpenEBS cStor volume has to be configured with 3 replica. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor Pool is already configured as required go to Step 4 to create Prometheus StorageClass. 
 
-3. **Create Storage Class**
+4. **Create Storage Class**
 
-   You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. Since MySQL master and slave are deployments, it requires high availability of data. So cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 3 is provided in the configuration details below.
+   You must configure a StorageClass to provision cStor volume on cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies  are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. Since MySQL master and slave are deployments, it requires high availability of data. So cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 3 is provided in the configuration details below.
 
-## Deployment of MySQL with openEBS
+5. **Configure PVC** : MySQL need a volume to store the data. See [PVC example spec](/docs/next/prometheus.html#pvc-spec-for-prometheus) below.
 
-Sample MySQL replication cluster deployment YAML which has mysql-master.yaml and mysql-slave.yaml is provided in the Configuration below. Create two YAML files for  **mysql-master.yaml** and **mysql-slave.yaml**  and add the YAML content to it.
+6. **Launch and test prometheus**:
 
-Apply the **mysql-master.yaml** using the below command  
+   MySQL deployment has Master and Slave configuration. 
 
-```
-kubectl apply -f mysql-master.yaml
-```
+   Run `kubectl apply -f  mysql-master.yaml` to deploy MySQL server running. Run `kubectl apply -f mysql-slave.yaml` to deploy MySQL slave running.  For more information on configuring more services to be monitored, see MySQL documentation.
 
-Apply the **mysql-slave.yaml** using the below command  
 
-```
-kubectl apply -f mysql-slave.yaml
-```
+## Reference at <a href="https://openebs.ci" target="_blank">openebs.ci</a>
 
-## Verify MySQL Pods
+A live deployment of MySQL using OpenEBS volumes as highly available Database storage can be seen at the website <a href="https://openebs.ci">www.openebs.ci</a>
 
-Run the following to get the status of MySQL master and slave pods.
 
-```
-kubectl get pods
-```
 
-Following is an example output.
+Deployment yaml spec files for MySQL and OpenEBS resources are found <a href="https://github.com/openebs/e2e-infrastructure/tree/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/prometheus-cstor" target="_blank">here</a>
 
-```
-NAME                            READY     STATUS    RESTARTS   AGE
-mysql-master-5c8444b547-g5tzx   1/1       Running   0          1h
-mysql-slave-7d8db6796f-85xnk    1/1       Running   0          1h
-```
 
-## Verify MySQL services
 
-Go to the master pod and execute the following commands to check the MySQL status.
+ <a href="https://openebs.ci/prometheus-cstor" target="_blank">OpenEBS-CI dashboard of MySQL</a>
 
-```
-kubectl exec -it mysql-master-5c8444b547-g5tzx bash
-```
 
-Once you enter into the pod, do the following.
 
-```
-root@mysql-master-5c8444b547-g5tzx:/# mysql -u root -p
-Enter password:
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 4
-Server version: 5.7.21-log MySQL Community Server (GPL)
+<a href="https://prometheuscstor.openebs.ci/" target="_blank">Live access to MySQL dashboard</a>
 
-Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
 
-Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.
 
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+## Post deployment Operations
 
-mysql> show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| mysql              |
-| performance_schema |
-| sys                |
-+--------------------+
-4 rows in set (0.00 sec)
+**Monitor OpenEBS Volume size** 
 
-mysql> create database demo;
-Query OK, 1 row affected (0.07 sec)
+It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
 
-mysql> create database demo;
-Query OK, 1 row affected (0.07 sec)
+**Monitor cStor Pool size**
 
-mysql> show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| demo               |
-| mysql              |
-| performance_schema |
-| sys                |
-+--------------------+
-5 rows in set (0.00 sec)
+As in most cases, cStor pool may not be dedicated to just MySQL alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. 
 
-```
-
-Now Go to the slave pod and execute the following commands to check the MySQL status.
-
-```
-kubectl exec -it mysql-slave-7d8db6796f-85xnk bash
-```
-
-Once you enter into the pod, do the following.
-
-```
-root@mysql-slave-7d8db6796f-85xnk:/# mysql -u root -p
-Enter password:
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 4
-Server version: 5.7.21-log MySQL Community Server (GPL)
-
-Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
-
-Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-mysql> show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| demo               |
-| mysql              |
-| performance_schema |
-| sys                |
-+--------------------+
-5 rows in set (0.00 sec)
-
-```
-
-This shows master data is synced with slave.
+ 
 
 ## Best Practices:
+
+**Maintain volume replica quorum always**
+
+**Maintain cStor pool used capacity below 80%**
 
 
 
 ## Troubleshooting Guidelines
+
+**Read-Only volume**
+
+**Snapshots were failing**
 
 
 
@@ -213,7 +143,7 @@ reclaimPolicy: Delete
 ---
 ```
 
-mysql-master.yaml
+**mysql-master.yaml**
 
 ```
 apiVersion: apps/v1beta1
