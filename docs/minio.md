@@ -33,19 +33,16 @@ Minio is an object storage server released under Apache License v2.0.  It is bes
 
    You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since Minio is a deployment, it requires high availability of data. So cStor voume `replicaCount` is >=4. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStoveVolume Replica count as 4 is provided in the configuration details below.
 
-5. **Configure PVC** 
+5. **Launch and test Minio**
 
-    Minio needs only one volume to store the data with a replication factor of 4. See **minio-pv-claim.yaml** below.
+    Use stable minio image with helm to deploy Minio in your cluster using the following command. In the following command, it will create PVC with 10G size.
 
-6. **Launch and test Minio**
+    ```
+    helm install --name=minio-test --set mode=distributed,accessKey=minio,secretKey=minio123,persistence.storageClass=openebs-cstor-disk,service.type=NodePort,persistence.enabled=true stable/minio
+    ```
 
-   Created a sample `minio.yaml` file in the Configuration details section. This can be applied to deploy Minio Object storage with OpenEBS. Run `kubectl apply -f minio.yaml` to see Minio running. Otherwise you can use stable minio image with helm to deploy Minio in your cluster using the following command.
+    For more information on installation, see Minio [documentation](https://github.com/helm/charts/tree/master/stable/minio).
 
-   ```
-   helm install --set accessKey=minio,secretKey=minio123 --storage-class=openebs-cstor-disk stable/minio
-   ```
-
-   For more information on configuring more services to be monitored, see Minio [documentation](https://docs.minio.io/docs/deploy-minio-on-kubernetes).
 
 
 ## Reference at [openebs.ci](https://openebs.ci/)
@@ -135,94 +132,10 @@ metadata:
       - name: StoragePoolClaim
         value: "cstor-disk"
       - name: ReplicaCount
-        value: "4"       
+        value: "1"       
 provisioner: openebs.io/provisioner-iscsi
 reclaimPolicy: Delete
 ---
-```
-
-**minio-pv-claim.yaml**
-
-```
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: minio-pv-claim
-  labels:
-    app: minio-storage-claim
-spec:
-  storageClassName: openebs-cstor-disk
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 50G
----
-```
-
-**minio.yaml**
-
-```
-# For k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
-apiVersion: apps/v1beta2 
-kind: Deployment
-metadata:
-  # This name uniquely identifies the Deployment
-  name: minio-deployment
-spec:
-  selector:
-    matchLabels:
-      app: minio
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        # Label is used as selector in the service.
-        app: minio
-    spec:
-      # Refer to the PVC 
-      volumes:
-      - name: storage
-        persistentVolumeClaim:
-          # Name of the PVC created earlier
-          claimName: minio-pv-claim
-      containers:
-      - name: minio
-        # Pulls the default Minio image from Docker Hub
-        image: minio/minio:latest
-        args:
-        - server
-        - /storage
-        env:
-        # Minio access key and secret key
-        - name: MINIO_ACCESS_KEY
-          value: "minio"
-        - name: MINIO_SECRET_KEY
-          value: "minio123"
-        ports:
-        - containerPort: 9000
-          hostPort: 9000
-        # Mount the volume into the pod
-        volumeMounts:
-        - name: storage # must match the volume name, above
-          mountPath: "/home/username"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: minio-service
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 9000
-      nodePort: 32701
-      protocol: TCP
-  selector:
-    app: minio
-  sessionAffinity: None
-  type: NodePort
 ```
 
 <br>
