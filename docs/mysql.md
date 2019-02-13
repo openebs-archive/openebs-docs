@@ -5,7 +5,7 @@ sidebar_label: MySQL
 ---
 ------
 
-<img src="/docs/assets/o-mysql.png" alt="OpenEBS and Prometheus" style="width:400px;">
+<img src="/docs/assets/o-mysql.png" alt="OpenEBS and MySQL" style="width:400px;">
 
 ## Introduction
 
@@ -29,19 +29,19 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
 2. **Connect to MayaOnline (Optional)** : Connecting  the Kubernetes cluster to <a href="app.mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
 
-3. **Configure cStor Pool** : After OpenEBS installation,  cStor pool has to be configured. As MySQL is a deployment, it need high availability at storage levele. OpenEBS cStor volume has to be configured with 3 replica. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor Pool is already configured as required go to Step 4 to create Prometheus StorageClass. 
+3. **Configure cStor Pool** : After OpenEBS installation,  cStor pool has to be configured. As MySQL is a deployment, it need high availability at storage levele. OpenEBS cStor volume has to be configured with 3 replica. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor Pool is already configured as required go to Step 4 to create MySQL StorageClass. 
 
 4. **Create Storage Class**
 
    You must configure a StorageClass to provision cStor volume on cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies  are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. Since MySQL master and slave are deployments, it requires high availability of data. So cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 3 is provided in the configuration details below.
 
-5. **Configure PVC** : MySQL need a volume to store the data. See [PVC example spec](/docs/next/prometheus.html#pvc-spec-for-prometheus) below.
+5. **Configure PVC** : Configure PVC for both MySQL master and MySQL slave.  See PVC example spec below. 
 
-6. **Launch and test prometheus**:
+6. **Launch and test Mysql**:
 
    MySQL deployment has Master and Slave configuration. 
 
-   Run `kubectl apply -f  mysql-master.yaml` to deploy MySQL server running. Run `kubectl apply -f mysql-slave.yaml` to deploy MySQL slave running.  For more information on configuring more services to be monitored, see MySQL documentation.
+   Run `kubectl apply -f  mysql-master.yaml` to deploy MySQL server running. Run `kubectl apply -f mysql-slave.yaml` to deploy MySQL slave running.  For more information, see MySQL documentation.
 
 
 ## Reference at <a href="https://openebs.ci" target="_blank">openebs.ci</a>
@@ -143,6 +143,25 @@ reclaimPolicy: Delete
 ---
 ```
 
+**mysql-master-pvc.yaml**
+
+```
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: demo-vol1-claim
+spec:
+  storageClassName: openebs-cstor-disk
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5G
+```
+
+
+
 **mysql-master.yaml**
 
 ```
@@ -185,18 +204,6 @@ spec:
           persistentVolumeClaim:
             claimName: demo-vol1-claim
 ---
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: demo-vol1-claim
-spec:
-  storageClassName: openebs-cstor-disk
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5G
----
 apiVersion: v1
 kind: Service
 metadata:
@@ -211,7 +218,24 @@ spec:
       name: mysql-master
 ```
 
-mysql-slave.yaml
+**mysql-slave-pvc.yaml**
+
+```
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: demo-vol2-claim
+spec:
+  storageClassName: openebs-cstor-disk
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5G
+```
+
+**mysql-slave.yaml**
 
 ```
 apiVersion: apps/v1beta1
@@ -252,18 +276,6 @@ spec:
         - name: demo-vol2     
           persistentVolumeClaim:
             claimName: demo-vol2-claim
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: demo-vol2-claim
-spec:
-  storageClassName: openebs-cstor-disk
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5G
 ---
 apiVersion: v1
 kind: Service
