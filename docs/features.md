@@ -48,8 +48,9 @@ OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always
 ### Synchronus replication
 
 <p>
-    <img src="/docs/assets/feature-replication.png" alt="Smiley face" 		style="float:right;width:150px;">OpenEBS synchronously replicates the data volume replicas for high availability. The replication happens across Kubernetes zone resulting in the cloud native applciations to be highly available in cross AZ setups. This feature is especially becomes useful to build highly available stateful applications using local disks on cloud providers services such as GKE, EKS and AKS 
+    <img src="/docs/assets/svg/f-replication.svg" alt="Smiley face" 		style="float:right;width:150px;">OpenEBS synchronously replicates the data volume replicas for high availability. The replication happens across Kubernetes zone resulting in the cloud native applciations to be highly available in cross AZ setups. This feature is especially becomes useful to build highly available stateful applications using local disks on cloud providers services such as GKE, EKS and AKS 
 </p>
+
 
 
 <br>
@@ -57,8 +58,9 @@ OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always
 ### Snapshots and clones
 
 <p>
-    <img src="/docs/assets/feature-snaps.png" alt="Smiley face" 		style="float:right;width:150px;">Copy-on-write snapshots are a key feature of OpenEBS. The snapshots are created instantaneously and there is no limit on the number of snapshots. The incremental snapshot capablity enables data migration and portability services across Kubernetes clusters and across different cloud providers or data centers, enabling a true multi-cloud data plane for stateful applications. Operations on snapshots and clones are performed in completely Kubernetes native method using the standard kubectl command
+    <img src="/docs/assets/svg/f-snapshots.svg" alt="Smiley face" 		style="float:right;width:150px;">Copy-on-write snapshots are a key feature of OpenEBS. The snapshots are created instantaneously and there is no limit on the number of snapshots. The incremental snapshot capablity enables data migration and portability services across Kubernetes clusters and across different cloud providers or data centers, enabling a true multi-cloud data plane for stateful applications. Operations on snapshots and clones are performed in completely Kubernetes native method using the standard kubectl command
 </p>
+
 
 
 
@@ -67,8 +69,9 @@ OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always
 ### Backup and Restore
 
 <p>
-    <img src="/docs/assets/feature-backup.png" alt="Smiley face" 		style="float:right;width:150px;">Backup and restore of OpenEBS volumes work with the recent Kubernetes backup and restore solution such as VMware velero (or HeptIO Ark). Data backup to object storage targets such as S3 or Minio can be built using OpenEBS incremental snapshot capability. This storage level snapshotting and backup saves a lot bandwidth and storage space as only the incremental data is used for backup. 
+    <img src="/docs/assets/svg/f-backup.svg" alt="Smiley face" 		style="float:right;width:150px;">Backup and restore of OpenEBS volumes work with the recent Kubernetes backup and restore solution such as VMware velero (or HeptIO Ark). Data backup to object storage targets such as S3 or Minio can be built using OpenEBS incremental snapshot capability. This storage level snapshotting and backup saves a lot bandwidth and storage space as only the incremental data is used for backup. 
 </p>
+
 
 
 
@@ -77,7 +80,7 @@ OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always
 ### Prometheus metrics for workload tuning
 
 <p>
-    <img src="/docs/assets/feature-prometheus.png" alt="Smiley face" 		style="float:right;width:150px;">OpenEBS volumes are instrumented for granular data metrics such as volume IOPS, throughput, latency and data patterns. As OpenEBS follows CAS architecture, Stateful applications can be tuned for better performance by observing the traffic data patterns on Prometheus and tweaking the storage policy parameters without worrying about neighboring workloads that are using OpenEBS
+    <img src="/docs/assets/svg/f-prometheus.svg" alt="Smiley face" 		style="float:right;width:150px;">OpenEBS volumes are instrumented for granular data metrics such as volume IOPS, throughput, latency and data patterns. As OpenEBS follows CAS architecture, Stateful applications can be tuned for better performance by observing the traffic data patterns on Prometheus and tweaking the storage policy parameters without worrying about neighboring workloads that are using OpenEBS
 </p>
 
 

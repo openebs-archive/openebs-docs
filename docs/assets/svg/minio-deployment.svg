@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1268 708.7" style="enable-background:new 0 0 1268 708.7;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#D1D3D4;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#1B75BC;stroke-width:2;stroke-miterlimit:10;}
+	.st2{fill:#1B75BC;}
+	.st3{font-family:'Helvetica';}
+	.st4{font-size:18px;}
+	.st5{fill:none;stroke:#6D6E71;stroke-width:3;stroke-miterlimit:10;}
+	.st6{fill:none;stroke:#6D6E71;stroke-width:3;stroke-miterlimit:10;stroke-dasharray:6.16,6.16;}
+	.st7{fill:#58595B;}
+	.st8{font-size:48px;}
+	.st9{fill:#414042;}
+	.st10{fill:none;stroke:#F26522;stroke-width:3;stroke-miterlimit:10;}
+	.st11{fill:#F26522;}
+	.st12{fill:#F1F2F2;}
+	.st13{fill:none;stroke:#F26522;stroke-linecap:round;stroke-miterlimit:10;}
+	.st14{fill:none;stroke:#414042;stroke-width:3;stroke-miterlimit:10;}
+	.st15{fill:none;stroke:#6D6E71;stroke-width:2;stroke-miterlimit:10;}
+	.st16{font-size:21px;}
+	.st17{letter-spacing:-1;}
+</style>
+<title>minio-deployment</title>
+<rect x="20" y="17.7" class="st0" width="1227.1" height="666.5"/>
+<rect x="88.5" y="73.6" class="st1" width="1100.7" height="475.3"/>
+<text transform="matrix(1 0 0 1 93.28 451.24)" class="st2 st3 st4">Kubernetes</text>
+<text transform="matrix(1 0 0 1 110.81 472.84)" class="st2 st3 st4">Cluster</text>
+<g id="VJpa7U.tif">
+	
+		<image style="overflow:visible;enable-background:new    ;" width="510" height="498" id="Layer_0" xlink:href="36BF6D7170244769.png"  transform="matrix(0.1697 0 0 0.1697 71.462 475)">
+	</image>
+</g>
+<path class="st5" d="M380.7,588.8h34.9c6.2,0,11.3,5,11.3,11.3v48.6c0,6.2-5,11.3-11.3,11.3h-34.9c-6.2,0-11.3-5-11.3-11.3v-48.6
+	C369.5,593.9,374.5,588.8,380.7,588.8z"/>
+<path class="st5" d="M448.4,588.8h34.9c6.2,0,11.3,5,11.3,11.3v48.6c0,6.2-5,11.3-11.3,11.3h-34.9c-6.2,0-11.3-5-11.3-11.3v-48.6
+	C437.1,593.9,442.2,588.8,448.4,588.8z"/>
+<path class="st5" d="M516.8,588.8h34.9c6.2,0,11.3,5,11.3,11.3v48.6c0,6.2-5,11.3-11.3,11.3h-34.9c-6.2,0-11.3-5-11.3-11.3v-48.6
+	C505.6,593.9,510.6,588.8,516.8,588.8z"/>
+<path class="st5" d="M583.8,588.8h34.9c6.2,0,11.3,5,11.3,11.3v48.6c0,6.2-5,11.3-11.3,11.3h-34.9c-6.2,0-11.3-5-11.3-11.3v-48.6
+	C572.5,593.9,577.6,588.8,583.8,588.8z"/>
+<path class="st5" d="M817,588.5h34.9c6.2,0,11.3,5,11.3,11.3v48.6c0,6.2-5,11.3-11.3,11.3H817c-6.2,0-11.3-5-11.3-11.3v-48.6
+	C805.8,593.5,810.8,588.5,817,588.5z"/>
+<line class="st5" x1="647.5" y1="622.9" x2="650.5" y2="622.9"/>
+<line class="st6" x1="656.7" y1="622.9" x2="752.2" y2="622.9"/>
+<line class="st5" x1="755.2" y1="622.9" x2="758.2" y2="622.9"/>
+<text transform="matrix(1 0 0 1 767.53 636.52)" class="st7 st3 st8">+</text>
+<text transform="matrix(1 0 0 1 298.59 628.05)" class="st9 st3 st4">Nodes</text>
+<path class="st10" d="M604.2,438H639c6.2,0,11.3,5,11.3,11.3v48.6c0,6.2-5,11.3-11.3,11.3h-34.9c-6.2,0-11.3-5-11.3-11.3v-48.6
+	C592.9,443,597.9,438,604.2,438z"/>
+<path class="st10" d="M687.8,438.3h34.9c6.2,0,11.3,5,11.3,11.3v48.6c0,6.2-5,11.3-11.3,11.3h-34.9c-6.2,0-11.3-5-11.3-11.3v-48.6
+	C676.5,443.3,681.5,438.3,687.8,438.3z"/>
+<path class="st10" d="M770.2,437.4h34.9c6.2,0,11.3,5,11.3,11.3v48.6c0,6.2-5,11.3-11.3,11.3h-34.9c-6.2,0-11.3-5-11.3-11.3v-48.6
+	C759,442.5,764,437.4,770.2,437.4z"/>
+<path class="st10" d="M851.9,436.5h34.9c6.2,0,11.3,5,11.3,11.3v48.6c0,6.2-5,11.3-11.3,11.3h-34.9c-6.2,0-11.3-5-11.3-11.3v-48.6
+	C840.6,441.5,845.6,436.5,851.9,436.5z"/>
+<text transform="matrix(1 0 0 1 1013.8301 487.04)" class="st11 st3 st8">+</text>
+<path class="st10" d="M1064.6,439.3h34.9c6.2,0,11.3,5,11.3,11.3v48.6c0,6.2-5,11.3-11.3,11.3h-34.9c-6.2,0-11.3-5-11.3-11.3v-48.6
+	C1053.3,444.4,1058.3,439.3,1064.6,439.3z"/>
+<text transform="matrix(1 0 0 1 495.89 467.81)" class="st11 st3 st4">OpenEBS</text>
+<text transform="matrix(1 0 0 1 513.4 489.41)" class="st11 st3 st4">Pools</text>
+<path class="st11" d="M588.1,391.2h509.6c3.8,0,6.9,3.1,6.9,6.9v20.4c0,3.8-3.1,6.9-6.9,6.9H588.1c-3.8,0-6.9-3.1-6.9-6.9v-20.4
+	C581.2,394.3,584.3,391.2,588.1,391.2z"/>
+<text transform="matrix(1 0 0 1 741.03 414.11)" class="st12 st3 st4">OpenEBS-Minio-Storage-Class</text>
+<ellipse class="st13" cx="640.7" cy="347.6" rx="19.9" ry="7.5"/>
+<path class="st13" d="M660.6,368.7c0,4.1-8.9,7.5-19.9,7.5s-19.9-3.4-19.9-7.5"/>
+<line class="st13" x1="620.8" y1="347.6" x2="620.8" y2="368.7"/>
+<line class="st13" x1="660.6" y1="347.6" x2="660.6" y2="368.7"/>
+<ellipse class="st13" cx="738.7" cy="347.6" rx="19.9" ry="7.5"/>
+<path class="st13" d="M758.6,368.7c0,4.1-8.9,7.5-19.9,7.5s-19.9-3.4-19.9-7.5"/>
+<line class="st13" x1="718.8" y1="347.6" x2="718.8" y2="368.7"/>
+<line class="st13" x1="758.6" y1="347.6" x2="758.6" y2="368.7"/>
+<ellipse class="st13" cx="832.3" cy="347.4" rx="19.9" ry="7.5"/>
+<path class="st13" d="M852.2,368.5c0,4.1-8.9,7.5-19.9,7.5s-19.9-3.4-19.9-7.5"/>
+<line class="st13" x1="812.4" y1="347.4" x2="812.4" y2="368.5"/>
+<line class="st13" x1="852.2" y1="347.4" x2="852.2" y2="368.5"/>
+<ellipse class="st13" cx="931.3" cy="347.4" rx="19.9" ry="7.5"/>
+<path class="st13" d="M951.2,368.5c0,4.1-8.9,7.5-19.9,7.5s-19.9-3.4-19.9-7.5"/>
+<line class="st13" x1="911.4" y1="347.4" x2="911.4" y2="368.5"/>
+<line class="st13" x1="951.2" y1="347.4" x2="951.2" y2="368.5"/>
+<text transform="matrix(1 0 0 1 1000.99 349.21)" class="st11 st3 st4">OpenEBS</text>
+<text transform="matrix(1 0 0 1 1024.51 370.81)" class="st11 st3 st4">PVs</text>
+<g id="aEeoxO.tif">
+	<g id="Layer_0-2" transform="translate(141.5 201.41) scale(0.25)">
+		
+			<image style="overflow:visible;enable-background:new    ;" width="226" height="226" id="image" xlink:href="36BF6D717024476B.png"  transform="matrix(0.2489 0 0 0.2489 141.5 201.41)">
+		</image>
+	</g>
+</g>
+<g id="aEeoxO.tif-2">
+	<g id="Layer_0-3" transform="translate(234.43 201.41) scale(0.25)">
+		
+			<image style="overflow:visible;enable-background:new    ;" width="226" height="226" id="image-2" xlink:href="36BF6D717024476E.png"  transform="matrix(0.2489 0 0 0.2489 234.43 201.41)">
+		</image>
+	</g>
+</g>
+<g id="aEeoxO.tif-3">
+	<g id="Layer_0-4" transform="translate(337.33 201.41) scale(0.25)">
+		
+			<image style="overflow:visible;enable-background:new    ;" width="226" height="226" xlink:href="36BF6D717024476F.png"  transform="matrix(0.2489 0 0 0.2489 337.33 201.41)">
+		</image>
+	</g>
+</g>
+<g id="aEeoxO.tif-4">
+	<g id="Layer_0-5" transform="translate(439.61 201.41) scale(0.25)">
+		
+			<image style="overflow:visible;enable-background:new    ;" width="226" height="226" xlink:href="36BF6D717024476A.png"  transform="matrix(0.2489 0 0 0.2489 439.61 201.41)">
+		</image>
+	</g>
+</g>
+<line class="st14" x1="141.9" y1="174.6" x2="489.7" y2="174.6"/>
+<text transform="matrix(1 0 0 1 196.64 163.49)" class="st9 st3 st4">Minio object storage service</text>
+<line class="st15" x1="168" y1="358" x2="621.3" y2="358.2"/>
+<line class="st15" x1="264.6" y1="320.9" x2="737.8" y2="321.1"/>
+<line class="st15" x1="364.6" y1="286.3" x2="831.1" y2="286.3"/>
+<line class="st15" x1="494.9" y1="226.7" x2="925.9" y2="226.7"/>
+<line class="st15" x1="168.8" y1="358.7" x2="169.3" y2="257.9"/>
+<line class="st15" x1="265.4" y1="321.4" x2="265.3" y2="257.8"/>
+<line class="st15" x1="365.6" y1="287" x2="365.6" y2="257.4"/>
+<line class="st15" x1="925.5" y1="337.8" x2="925.7" y2="225.7"/>
+<line class="st15" x1="831.2" y1="339.7" x2="830.9" y2="285.4"/>
+<line class="st15" x1="737.6" y1="339.8" x2="737.5" y2="320.2"/>
+<text transform="matrix(1 0 0 1 128.97 281.7901)" class="st9 st3 st4">PVC</text>
+<text transform="matrix(1 0 0 1 223.37 281.5301)" class="st9 st3 st4">PVC</text>
+<text transform="matrix(1 0 0 1 326.56 279.61)" class="st9 st3 st4">PVC</text>
+<text transform="matrix(1 0 0 1 502.55 245.97)" class="st9 st3 st4">PVC</text>
+<text transform="matrix(1 0 0 1 582.55 350.3)" class="st9 st3 st4">PV</text>
+<text transform="matrix(1 0 0 1 691.5 346.49)" class="st9 st3 st4">PV</text>
+<text transform="matrix(1 0 0 1 787.14 342.33)" class="st9 st3 st4">PV</text>
+<text transform="matrix(1 0 0 1 882.98 339.9)" class="st9 st3 st4">PV</text>
+<text transform="matrix(1 0 0 1 313.89 46.08)" class="st9 st3 st16">Cross</text>
+<text transform="matrix(1 0 0 1 368.73 46.08)" class="st9 st3 st16 st17"> </text>
+<text transform="matrix(1 0 0 1 373.41 46.08)" class="st9 st3 st16">AZ S3</text>
+<text transform="matrix(1 0 0 1 431.77 46.08)" class="st9 st3 st16 st17"> </text>
+<text transform="matrix(1 0 0 1 436.45 46.08)" class="st9 st3 st16">API compatible object storage solution on Kubernetes</text>
+<g id="_6lLLic.tif">
+	
+		<image style="overflow:visible;enable-background:new    ;" width="1008" height="1827" id="Layer_0-6" xlink:href="36BF6D7170244765.png"  transform="matrix(3.996032e-02 0 0 3.996032e-02 1123.6801 357.1363)">
+	</image>
+</g>
+<text transform="matrix(1 0 0 1 744.2 532.94)" class="st9 st3 st4">Scalable to peta bytes</text>
+<text transform="matrix(1 0 0 1 626.3976 165.5239)" class="st9 st3 st4">(statefulsets)</text>
+</svg>

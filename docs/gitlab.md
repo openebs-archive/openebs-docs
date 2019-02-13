@@ -9,7 +9,7 @@ sidebar_label: GitLab
 
 
 
-<img src="/docs/assets/gitlab-deployment.png" alt="GitLab deployment using OpenEBS" style="width:1000px;">
+<img src="/docs/assets/svg/gitlab-deployment.svg" alt="GitLab deployment using OpenEBS" style="width:1000px;">
 
 <br>
 
