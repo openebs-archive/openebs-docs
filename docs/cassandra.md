@@ -9,178 +9,82 @@ sidebar_label: Cassandra
 
 ## Introduction
 
-Apache Cassandra is a free and open-source distributed NoSQL database management system designed to handle large amounts of data across nodes, providing high availability with no single point of failure. It uses asynchronous masterless replication allowing low latency operations for all clients. In this solution, running a Cassandra StatefulSet application on OpenEBS cStor volume and perform simple database operations to verify successful deployment.
+Apache Cassandra is a free and open-source distributed NoSQL database management system designed to handle large amounts of data across nodes, providing high availability with no single point of failure. It uses asynchronous masterless replication allowing low latency operations for all clients. In this solution, running a Cassandra StatefulSet application on OpenEBS cStor volume to store the data in the database.
 
-## Requirements
+
+
+## Deployment model 
+
+
+
+As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration work fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
+
+
+
+## Configuration workflow
 
 1. **Install OpenEBS**
 
    If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
-2. **Configure cStor Pool**
+2. **Connect to MayaOnline (Optional)** : Connecting the Kubernetes cluster to [MayaOnline](https://staging-docs.openebs.io/docs/next/app.mayaonline.io) provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
 
-   If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html). If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
+3. **Configure cStor Pool**
 
-3. **Create Storage Class**
+   After OpenEBS installation, cStor pool has to be configured.If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html). During cStor Pool creation, make sure that the maxPools parameter is set to >=3. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. . If cStor pool is already configured, go to the next step.
 
-   You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. Since Cassandra is a StaefulSet application, it requires only one replication at the storage level. So cStor volume `replicaCount` is 1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 1 is provided in the configuration details below.
+4. **Create Storage Class**
 
-## Deployment of Cassandra with OpenEBS
+   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since Cassandra is a StaefulSet application, it requires only one replication at the storage level. So cStor volume `replicaCount` is 1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 1 is provided in the configuration details below.
 
-In this solution ,the number of replicas in the Statefulset can be modified as required. This example uses 3 application replicas. This means 3 Cassandra pods will be created after it successful deployment. 
+5. **Launch and test Cassandra**
 
-Run the following command to install Cassandra services.
+   Created a sample  `cassandra-statefulset.yaml` file in the Configuration details section. This can be applied to deploy Cassandra database  with OpenEBS. Run `kubectl apply -f cassandra-statefulset.yaml` to see Cassandra running. This will configure required PVC also.
 
-```
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/cassandra/cassandra-service.yaml	
-```
-
-Now,you must create a new file called **cassandra-statefulset.yaml** and add the content from **cassandra-statefulset.yaml** shows in the Configuration details section below to this new file.
-
-Once you added the contents to the new **cassandra-statefulset.yaml**,  you can run the following command to install Cassandra StatefulSet application.
-
-```
-kubectl apply -f cassandra-statefulset.yaml
-```
-
-## Verify Cassandra Pods
-
-Run the following to get the status of Cassandra pods.
-
-```
-kubectl get pods
-```
-
-Following is an example output.
-
-```
-NAME          READY     STATUS    RESTARTS   AGE
-cassandra-0   1/1       Running   0          8m
-cassandra-1   1/1       Running   0          6m
-cassandra-2   1/1       Running   0          2m
-```
-
-## Verifying Successful Cassandra Deployment
-
-The verification procedure can be carried out in a series of steps, starting from listing the functional replicas to by creating and deleting test data in the Cassandra database.
-
-**Step 1:** Install the Cqlsh Utility
-
-Cqlsh is a Python based utility that enables you to execute Cassandra Query Language (CQL). CQL is a declarative language that enables users to query Cassandra using semantics similar to SQL.
-
-Install the python-minimal and python-pip apt packages (if not available) and perform a pip install of Csqlsh using the following commands.
-
-```
-sudo apt-get install -y python-minimal python-pip 
-pip install cqlsh
-```
-
-**Step 2**: Verify Replica Status on Cassandra
-
-Run the following command to login to one of the Cassandra application pod.
-
-```
-kubectl exec cassandra-0 -- nodetool status
-```
-
-Output of above command will be similar to the following.
-
-```
-Datacenter: DC1-K8Demo
-======================
-Status=Up/Down
-|/ State=Normal/Leaving/Joining/Moving
---  Address     Load       Tokens       Owns (effective)  Host ID                               Rack
-UN  10.76.1.28  119.68 KiB  32           68.3%             ca4361b5-196a-4a38-bcc5-f832cc9b52ec  Rack1-K8Demo
-UN  10.76.0.30  154.01 KiB  32           54.0%             30627eb3-5e74-4471-b34a-269156bd8e81  Rack1-K8Demo
-UN  10.76.2.35  155.37 KiB  32           77.7%             63d0ee91-cc7c-4ebb-8a8c-2f6d9697133c  Rack1-K8Demo
-```
-
-A status of "UN" implies Up and Normal. The "Owns" column suggests the data distribution percentage for the content placed into the Cassandra keyspaces. In the current example, a replica count of cStor Volume repliac as 1 and Cassandra application as 3 is chosen due to which the data is evenly distributed and copies are maintained.
-
-**Step 3**: Create a Test Keyspace with Tables
-
-1. Identify the IP Address of any of the Cassandra replicas. This is available from the output of the nodetool status command executed in the previous step.
-
-2. Login to the CQL shell using the Cqlsh utility using the following command.
+   In other way , you can use Cassandra image with helm to deploy Cassandra in your cluster using the following command.
 
    ```
-   cqlsh 10.76.1.28 9042 --cqlversion="3.4.2"
+   helm install --namespace "cassandra" -n "cassandra" --storage-class=openebs-cstor-disk incubator/cassandra
    ```
 
-3. Create a keyspace with replication factor 2 using the following commands.
 
-   ```
-   cqlsh> create keyspace hardware with replication = { 'class' : 'SimpleStrategy' , 'replication_factor' : 2 };
-   cqlsh> describe keyspaces;
-   system_schema  system_auth  system  hardware  system_distributed  system_traces
-   ```
+## Reference at [openebs.ci](https://openebs.ci/)
 
-4. Create a table with test content and view the data using the following commands.
+A live deployment of Cassandra using OpenEBS volumes as highly available object storage can be seen at the website [www.openebs.ci](https://openebs.ci/)
 
-   ```
-   cqlsh> use hardware;
-   cqlsh:hardware> create table inventory (id uuid,Name text,HWtype text,Model text,PRIMARY KEY ((id), Name));
-   cqlsh:hardware> insert into inventory (id, Name, HWType, Model) values (5132b130-ae79-11e4-ab27-0800200c9a66, 'TestBox', 'Server', 'DellR820');
-   cqlsh:hardware> select * from inventory;
-   id                                   | name    | hwtype | model
-   ---------------------------------------+---------+--------+----------
-   5132b130-ae79-11e4-ab27-0800200c9a66 | TestBox | Server | DellR820
-   (1 rows) 
-   ```
+Deployment YAML spec files for Cassandra and OpenEBS resources are found [here]()
 
-5. Flush the data to ensure it is written to a disk from the memtable (memory) using the following command.
+[OpenEBS-CI dashboard of Cassandra]()
 
-   ```
-   kubectl exec cassandra-0 -- nodetool flush hardware
-   ```
+[Live access to Cassandradashboard]()
 
-**Step 4:** Delete the Test Keyspace
 
-1. Verify the masterless nature of Cassandra StatefulSet by deleting the keyspace from another replica, in this example, Cassandra-1.
 
-   ```
-   cqlsh 10.36.0.6 9042 --cqlversion="3.4.2"
-   ```
+## Post deployment Operations
 
-   Output of above command will be similar to the following.
+**Monitor OpenEBS Volume size** 
 
-   ```
-   cqlsh> use hardware;
-   cqlsh:hardware> select * from Inventory;
-   
-   id                                   | name    | hwtype | model
-   --------------------------------------+---------+--------+----------
-   5132b130-ae79-11e4-ab27-0800200c9a66 | TestBox | Server | DellR820
-   
-   (1 rows)
-   ```
+It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
 
-2. Now delete the keyspace which is created in the Step 3
+**Monitor cStor Pool size**
 
-   ```
-   cqlsh> drop keyspace hardware;
-   ```
+As in most cases, cStor pool may not be dedicated to just Cassandra alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. 
 
-3. Verify that the keyspace is deleted successfully using the following command.
 
-   ```
-   cqlsh> describe keyspaces
-   ```
-
-   Output of the above command will be similar to the following.
-
-   ```
-   system_traces  system_schema  system_auth  system  system_distributed
-   ```
-
-   So the keyspace is deleted successfully.
 
 ## Best Practices:
+
+**Maintain volume replica quorum always**
+
+**Maintain cStor pool used capacity below 80%**
 
 
 
 ## Troubleshooting Guidelines
+
+**Read-Only volume**
+
+**Snapshots were failing**
 
 
 
@@ -329,8 +233,6 @@ spec:
         requests:
           storage: 5G
 ```
-
-
 
 
 
