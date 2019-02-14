@@ -9,61 +9,77 @@ sidebar_label: ElasticSearch
 
 ## Introduction
 
-Elasticsearch is an open-source, RESTful, distributed search and analytics engine built on Apache License. Elasticsearch has quickly become the most popular search engine, and is commonly used for log analytics, full-text search, security intelligence, business analytics, and operational intelligence use cases. In this solution, running a ElasticSearch StatefulSet application on OpenEBS cStor volume and perform simple database operations to verify successful deployment.
+Elasticsearch is an open-source, RESTful, distributed search and analytics engine built on Apache License. Elasticsearch has quickly become the most popular search engine, and is commonly used for log analytics, full-text search, security intelligence, business analytics, and operational intelligence use cases. In this solution, running a ElasticSearch StatefulSet application on OpenEBS cStor volume using helm chart.
 
-## Requirements
+
+
+## Deployment model
+
+## 
+
+## Configuration workflow
 
 1. **Install OpenEBS**
 
    If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
-2. **Configure cStor Pool**
+2. **Connect to MayaOnline (Optional)** : Connecting the Kubernetes cluster to [MayaOnline](https://staging-docs.openebs.io/docs/next/app.mayaonline.io) provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
 
-   If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html). If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
+3. **Configure cStor Pool**
 
-3. **Create Storage Class**
+   After OpenEBS installation, cStor pool has to be configured.If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html).  During cStor Pool creation, make sure that the maxPools parameter is set to >=3. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. If cStor pool is already configured, go to the next step. 
 
-   You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. Since Cassandra is a StaefulSet application, it requires only one replication at the storage level. So cStor volume `replicaCount` is 1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 1 is provided in the configuration details below.
+4. **Create Storage Class**
 
-## Deployment of ElasticSearch with OpenEBS
+   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since Elasticsearch is a StatefulSet, it requires only single storage replica. So cStor voume `replicaCount` is >=1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStoveVolume Replica count as 1 is provided in the configuration details below.
 
-In this solution ,the number of replicas in the Statefulset can be modified as required. This example uses 3 application replicas. This means 3 Cassandra pods will be created after it successful deployment. 
+5. **Launch and test Minio**
 
-Run the following command to install elasticsearch  services.
+   Use latest ElasticSearch chart with helm to deploy ElasticSearch in your cluster using the following command. In the following command, it will create PVC with 30G size.
 
-```
+   ```
+   helm install --name es-test --set volumeClaimTemplate.storageClassName=openebs-cstor-disk elastic/elasticsearch --version 6.6.0-alpha1
+   ```
 
-```
+   For more information on installation, see ElasticSearch [documentation](https://github.com/elastic/helm-charts/tree/master/elasticsearch).
 
-Now,you must create a new file called **elasticsearch -statefulset.yaml** and add the content from **elasticsearch -statefulset.yaml** shows in the Configuration details section below to this new file.
+## Reference at [openebs.ci](https://openebs.ci/)
 
-Once you added the contents to the new **elasticsearch -statefulset.yaml**,  you can run the following command to install ElasticSearch StatefulSet application.
+A live deployment of ElasticSearch with Kibana using OpenEBS volumes can be seen at the website [www.openebs.ci](https://openebs.ci/)
 
-```
-kubectl apply -f 
-```
+Deployment YAML spec files for ElasticSearch and OpenEBS resources are found [here](https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/efk-server/elasticsearch/es-statefulset.yaml)
 
-## Verify ElasticSearch Pods
+[OpenEBS-CI dashboard of ElasticSearch](https://openebs.ci/logging)
 
-Run the following to get the status of ElasticSearch pods.
+[Live access to ElasticSearch dashboard](https://e2elogs.openebs.ci/app/kibana)
 
-```
-kubectl get pods
-```
 
-Following is an example output.
 
-```
+## Post deployment Operations
 
-```
+**Monitor OpenEBS Volume size**
 
-## Verifying Successful ElasticSearch Deployment
+It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
+
+**Monitor cStor Pool size**
+
+As in most cases, cStor pool may not be dedicated to just ElasticSearch application alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold.
+
+
 
 ## Best Practices:
+
+**Maintain volume replica quorum always**
+
+**Maintain cStor pool used capacity below 80%**
 
 
 
 ## Troubleshooting Guidelines
+
+**Read-Only volume**
+
+**Snapshots were failing**
 
 
 
@@ -119,10 +135,6 @@ provisioner: openebs.io/provisioner-iscsi
 reclaimPolicy: Delete
 ---
 ```
-
-**cassandra-statefulset.yaml**
-
-
 
 <br>
 
