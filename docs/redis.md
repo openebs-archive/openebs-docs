@@ -5,7 +5,7 @@ sidebar_label: Redis
 ---
 ------
 
-<img src="/docs/assets/a-redis.png" alt="OpenEBS and Redis" style="width:400px;">
+<img src="/docs/assets/svg/o-redis.svg" alt="OpenEBS and Redis" style="width:400px;">
 
 ## Introduction
 

@@ -55,33 +55,34 @@ OpenEBS is the most popular open source project for container attached or contai
   </div>
   <div class="column2">
 	<a href="/docs/next/quickstart.html">
-		<img src="/docs/assets/intro-gs.png" alt="OpenEBS Architecture" style="float:left;width:250px;">
+		<img src="/docs/assets/intro-gs.png" alt="OpenEBS quick start" style="float:left;width:250px;">
 	</a>
   </div>
   <div class="column2">
-	<a href="/docs/next/quickstart.html">
-		<img src="/docs/assets/intro-platforms.png" alt="OpenEBS Architecture" style="float:left;width:250px;">
+	<a href="/docs/next/prerequisites.html">
+		<img src="/docs/assets/intro-platforms.png" alt="OpenEBS platforms" style="float:left;width:250px;">
 	</a>
   </div>
 </div>
 
 <div class="row">
   <div class="column2">
-	<a href="/docs/next/quickstart.html">
-		<img src="/docs/assets/intro-uc.png" alt="OpenEBS Architecture" style="float:left;width:250px;">
+	<a href="/docs/next/usecases.html">
+		<img src="/docs/assets/intro-uc.png" alt="OpenEBS use cases" style="float:left;width:250px;">
 	</a>
   </div>
   <div class="column2">
 	<a href="/docs/next/mayaonline.html">
-		<img src="/docs/assets/intro-mo.png" alt="OpenEBS Architecture" style="float:left;width:250px;">
+		<img src="/docs/assets/intro-mo.png" alt="Connecting to MayaOnline" style="float:left;width:250px;">
 	</a>
   </div>
   <div class="column2">
 	<a href="/docs/next/support.html">
-		<img src="/docs/assets/intro-support.png" alt="OpenEBS Architecture" style="float:left;width:250px;">
+		<img src="/docs/assets/intro-support.png" alt="OpenEBS Support" style="float:left;width:250px;">
 	</a>
   </div>
 </div>
+
 <br>
 
 <br>
@@ -128,7 +129,7 @@ OpenEBS is the most popular open source project for container attached or contai
 	</a>
   </div>  
   <div class="column2">
-	<a href="/docs/next/nfs.html" target="_blank">
+	<a href="/docs/next/rwm.html" target="_blank">
 		<img src="/docs/assets/a-nfs.png" alt="OpenEBS NFS" style="float:left;width:100px;">
 	</a>
   </div>
@@ -166,20 +167,21 @@ OpenEBS is the most popular open source project for container attached or contai
 <div class="row">
   <div class="column2">
 	<a href="/docs/next/percona.html" target="_blank">
-		<img src="/docs/assets/a-percona.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+		<img src="/docs/assets/a-percona.png" alt="OpenEBS for Percona" style="float:left;width:100px;">
 	</a>
   </div>
   <div class="column2">
 	<a href="/docs/next/nuodb.html" target="_blank">
-		<img src="/docs/assets/a-nuodb.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+		<img src="/docs/assets/a-nuodb.png" alt="OpenEBS for NuoDB" style="float:left;width:100px;">
 	</a>
   </div>
  <div class="column2">
-	<a href="/docs/next/stateful.html" target="_blank">
-		<img src="/docs/assets/a-stateful.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+	<a href="/docs/next/mongo.html" target="_blank">
+		<img src="/docs/assets/svg/a-mongo.svg" alt="OpenEBS for MongoDB" style="float:left;width:100px;">
 	</a>
   </div>
 </div>
+
 
 <br><br>
 

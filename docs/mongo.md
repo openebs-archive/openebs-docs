@@ -1,11 +1,11 @@
 ---
-id: stateful
-title: Using OpenEBS  for any stateful application
-sidebar_label: Other stateful applications
+id: mongo
+title: OpenEBS for MongoDB
+sidebar_label: MongoDB
 ---
 ------
 
-<img src="/docs/assets/o-stateful.png" alt="OpenEBS and Prometheus" style="width:400px;">
+<img src="/docs/assets/svg/o-mongo.svg" alt="OpenEBS and MongoDB" style="width:400px;">
 
 
 
