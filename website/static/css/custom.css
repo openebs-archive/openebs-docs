@@ -353,3 +353,8 @@ redoc .operation-type {
   display: table;
   clear: both;
 }
+
+.nocopy {
+    background: #F0F0F0;
+    color: #000;
+}
