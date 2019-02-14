@@ -38,7 +38,7 @@ In this solution , running a Redis StatefulSet  which consumes OpenEBS cStor vol
     Use stable minio image with helm to deploy Minio in your cluster using the following command. In the following command, it will create a PVC with 8G size.
 
     ```
-    helm install --set master.persistence.storageClass=openebs-cstor-sparse1,cluster.slaveCount=3 stable/redis
+    helm install --set master.persistence.storageClass=openebs-cstor-disk stable/redis
     ```
 
     For more information on installation, see Redis[documentation](https://github.com/helm/charts/tree/master/stable/redis).
