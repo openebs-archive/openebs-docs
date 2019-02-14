@@ -3,7 +3,6 @@ id: mongo
 title: OpenEBS for MongoDB
 sidebar_label: MongoDB
 ---
-------
 
 <img src="/docs/assets/svg/o-mongo.svg" alt="OpenEBS and MongoDB" style="width:400px;">
 
@@ -14,8 +13,6 @@ MongoDB is a cross-platform document-oriented database. Classified as a NoSQL da
 
 
 ## Deployment model
-
-##  
 
 ## Configuration workflow
 
