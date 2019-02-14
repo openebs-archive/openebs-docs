@@ -5,7 +5,7 @@ sidebar_label: Redis
 ---
 ------
 
-<img src="/docs/assets/o-minio.png" alt="OpenEBS and Redis" style="width:400px;">
+<img src="/docs/assets/a-redis.png" alt="OpenEBS and Redis" style="width:400px;">
 
 ## Introduction
 
@@ -35,13 +35,13 @@ In this solution , running a Redis StatefulSet  which consumes OpenEBS cStor vol
 
 5. **Launch and test Redis**
 
-    Use stable minio image with helm to deploy Minio in your cluster using the following command. In the following command, it will create a PVC with 8G size.
+    Use stable Redis image with helm to deploy Redis in your cluster using the following command. In the following command, it will create a PVC with 8G size for data volume.
 
     ```
     helm install --set master.persistence.storageClass=openebs-cstor-disk stable/redis
     ```
 
-    For more information on installation, see Redis[documentation](https://github.com/helm/charts/tree/master/stable/redis).
+    For more information on installation, see Redis [documentation](https://github.com/helm/charts/tree/master/stable/redis).
 
 
 
@@ -49,7 +49,7 @@ In this solution , running a Redis StatefulSet  which consumes OpenEBS cStor vol
 
 A live deployment of Redis using OpenEBS volumes as highly available data storage can be seen at the website [www.openebs.ci](https://openebs.ci/)
 
-Deployment YAML spec files for Minio and OpenEBS resources are found [here](https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/redis-cstor/redis-statefulset.yaml)
+Deployment YAML spec files for Redis and OpenEBS resources are found [here](https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/redis-cstor/redis-statefulset.yaml)
 
 [OpenEBS-CI dashboard of Redis](https://openebs.ci/redis-cstor)
 
