@@ -3,7 +3,6 @@ id: elasticsearch
 title: OpenEBS for ElasticSearch
 sidebar_label: ElasticSearch
 ---
-------
 
 <img src="/docs/assets/o-elastic.png" alt="OpenEBS and ElasticSearch" style="width:400px;">
 
@@ -14,8 +13,6 @@ Elasticsearch is an open-source, RESTful, distributed search and analytics engin
 
 
 ## Deployment model
-
-## 
 
 ## Configuration workflow
 
