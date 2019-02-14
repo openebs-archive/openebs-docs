@@ -33,15 +33,17 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
 4. **Create Storage Class**
 
-   You must configure a StorageClass to provision cStor volume on cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies  are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. Since MySQL master and slave are deployments, it requires high availability of data. So cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 3 is provided in the configuration details below.
+   You must configure a StorageClass to provision cStor volume on cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies  are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. Since MySQL is a deployments, it requires high availability of data at storage level. So cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 3 is provided in the configuration details below.
 
-5. **Configure PVC** : Configure PVC for both MySQL master and MySQL slave.  See PVC example spec below. 
+5. **Launch and test Mysql**:
 
-6. **Launch and test Mysql**:
+   Run MySQL database application using the stable helm chart. The following command  will install MySQL database application in your cluster. This command will create a PVC of size 8Gi for running the database.
 
-   MySQL deployment has Master and Slave configuration. 
+   ```
+   helm install --name my-release --set persistence.storageClass=openebs-cstor-disk stable/mysql
+   ```
 
-   Run `kubectl apply -f  mysql-master.yaml` to deploy MySQL server running. Run `kubectl apply -f mysql-slave.yaml` to deploy MySQL slave running.  For more information, see MySQL documentation.
+    For more information about installation, see MySQL [documentation](https://github.com/helm/charts/tree/master/stable/mysql).
 
 
 ## Reference at <a href="https://openebs.ci" target="_blank">openebs.ci</a>
@@ -142,158 +144,6 @@ provisioner: openebs.io/provisioner-iscsi
 reclaimPolicy: Delete
 ---
 ```
-
-**mysql-master-pvc.yaml**
-
-```
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: demo-vol1-claim
-spec:
-  storageClassName: openebs-cstor-disk
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5G
-```
-
-
-
-**mysql-master.yaml**
-
-```
-apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: mysql-master
-  labels:
-    name: mysql-master
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      name: mysql-master
-  template:
-    metadata:
-      labels:
-        name: mysql-master
-    spec:
-      containers:
-        - name: master
-          image: openebs/tests-mysql-master
-          args:
-            - "--ignore-db-dir"
-            - "lost+found"
-          ports:
-            - containerPort: 3306
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: "test"
-            - name: MYSQL_REPLICATION_USER
-              value: 'demo'
-            - name: MYSQL_REPLICATION_PASSWORD
-              value: 'demo'
-          volumeMounts:
-            - mountPath: /var/lib/mysql
-              name: demo-vol1
-      volumes:
-        - name: demo-vol1
-          persistentVolumeClaim:
-            claimName: demo-vol1-claim
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql-master
-  labels:
-    name: mysql-master
-spec:
-  ports:
-    - port: 3306
-      targetPort: 3306
-  selector:
-      name: mysql-master
-```
-
-**mysql-slave-pvc.yaml**
-
-```
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: demo-vol2-claim
-spec:
-  storageClassName: openebs-cstor-disk
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5G
-```
-
-**mysql-slave.yaml**
-
-```
-apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: mysql-slave
-  labels:
-    name: mysql-slave
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      name: mysql-slave
-  template:
-    metadata:
-      labels:
-        name: mysql-slave
-    spec:
-      containers:
-        - name: slave
-          image: openebs/tests-mysql-slave
-          args: 
-            - "--ignore-db-dir"
-            - "lost+found"
-          ports:
-            - containerPort: 3306
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: "test"
-            - name: MYSQL_REPLICATION_USER
-              value: 'demo'
-            - name: MYSQL_REPLICATION_PASSWORD
-              value: 'demo'
-          volumeMounts: 
-            - mountPath: /var/lib/mysql
-              name: demo-vol2
-      volumes:
-        - name: demo-vol2     
-          persistentVolumeClaim:
-            claimName: demo-vol2-claim
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql-slave
-  labels:
-    name: mysql-slave
-spec:
-  ports:
-    - port: 3306
-      targetPort: 3306
-  selector:
-      name: mysql-slave
-```
-
-
-
-
 
 <br>
 
