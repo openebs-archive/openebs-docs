@@ -37,7 +37,7 @@ For more information on how OpenEBS is used in cloud native environments,  visit
 <font size="5">Containerized Storage for Containers</font>
 
 <p>
-    <img src="/docs/assets/feature-cas.png" alt="Smiley face" 		style="float:right;width:150px;">
+    <img src="/docs/assets/svg/f-cas.svg" alt="Smiley face" 		style="float:right;width:150px;">
 OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found <a href="/docs/next/cas.html" target="_blank">here</a>
 </p>
 
