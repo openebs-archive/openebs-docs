@@ -17,6 +17,10 @@ In this solution , running a Redis StatefulSet  which consumes OpenEBS cStor vol
 
 
 
+<img src="/docs/assets/svg/redis-deployment.svg" alt="OpenEBS and Redis" style="width:1000px;">
+
+
+
 ## Configuration workflow
 
 1. **Install OpenEBS**

@@ -17,6 +17,8 @@ The Postgres container used in the StatefulSet is sourced from [CrunchyData](htt
 
 
 
+<img src="/docs/assets/svg/postgresql-deployment.svg" alt="OpenEBS and ElasticSearch" style="width:1000px;">
+
 As shown above, OpenEBS volumes need to be configured with single replica. This configuration work fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
 
 
