@@ -37,9 +37,10 @@ For more information on how OpenEBS is used in cloud native environments,  visit
 <font size="5">Containerized Storage for Containers</font>
 
 <p>
-    <img src="/docs/assets/svg/f-cas.svg" alt="Smiley face" 		style="float:right;width:150px;">
+    <img src="/docs/assets/svg/f-cas.svg" alt="Smiley face" 		style="float:right;width:200px;">
 OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found <a href="/docs/next/cas.html" target="_blank">here</a>
 </p>
+
 
 
 
@@ -108,9 +109,10 @@ OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always
 ### Avoid Cloud Lock-in
 
 <p>
-    <img src="/docs/assets/benefits-nolockin.png" alt="Smiley face" 		style="float:left;width:150px;">
+    <img src="/docs/assets/svg/b-no-lockin.svg" alt="Smiley face" 		style="float:left;width:150px;">
 Even with Kubernetes data gravity concerns exist on clouds. With Kubernetes stateful applications can can be moved across clouds, but with stateful applications, the data is written to cloud provider storage infrastructure and results in the cloud lock-in of the stateful applications. The OpenEBS, the data is written to the OpenEBS layer and it acts as the data abstraction layer. Using this data abstraction layer, data can be moved across Kubernetes layers eliminating the expensive cloud lock-in issue. 
 </p>
+
 
 
 
@@ -134,8 +136,9 @@ Containerization of storage software and dedicating such controller for each vol
 ### Reduced storage TCO upto 50% 
 
 <p>
-    <img src="/docs/assets/benefits-lowtco.png" alt="Smiley face" 		style="float:left;width:150px;">On most clouds, block storage on cloud is charged based on how much is purchased and not on how much is used. Thin provisioning feature of OpenEBS is useful in pooling the local storage or cloud storage and start giving out the data volumes to the stateful applications in whatever size they need. The storage can be added on the fly without any disruption to the volumes exposed to the workloads or applications. This process has shown cost savings of upto 50% in the medium to long term of running workloads on clouds.
+    <img src="/docs/assets/svg/b-lowtco.svg" alt="Smiley face" 		style="float:left;width:150px;">On most clouds, block storage on cloud is charged based on how much is purchased and not on how much is used. Thin provisioning feature of OpenEBS is useful in pooling the local storage or cloud storage and start giving out the data volumes to the stateful applications in whatever size they need. The storage can be added on the fly without any disruption to the volumes exposed to the workloads or applications. This process has shown cost savings of upto 50% in the medium to long term of running workloads on clouds.
 </p>
+
 
 
 
@@ -148,8 +151,9 @@ Containerization of storage software and dedicating such controller for each vol
 ### Native Hyperconvergence on Kubernetes
 
 <p>
-    <img src="/docs/assets/benefits-hc.png" alt="Smiley face" 		style="float:left;width:150px;">Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by using Kubernetes constructs. Using OpenEBS, nodes in the Kubernetes cluster can be horizontally scaled without worrying about managing persistent storage needs of stateful applications. The storage needs (capacity planning, performance planning, and volume managment) of a cluster can easily be automated using the volume and pool policies of OpenEBS. 
+    <img src="/docs/assets/svg/b-hc.svg" alt="Smiley face" 		style="float:left;width:150px;">Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by using Kubernetes constructs. Using OpenEBS, nodes in the Kubernetes cluster can be horizontally scaled without worrying about managing persistent storage needs of stateful applications. The storage needs (capacity planning, performance planning, and volume managment) of a cluster can easily be automated using the volume and pool policies of OpenEBS. 
 </p>
+
 
 
 ### High availability (No Blast Radius)
