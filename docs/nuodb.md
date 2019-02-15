@@ -35,12 +35,12 @@ NuoDB’s distributed SQL database combines the elastic scale and continuous ava
 
 5. **Launch and test NuoDB**
 
-   Apply following YAML files to deploy NuoDB application. Sample YAML files are provided in the Configuration details below.
+   Create a namespace called **testns** and  apply following YAML files to deploy NuoDB application. Sample YAML files are provided in the Configuration details below.
 
    ```
-   kubectl apply -f nuodb.yaml
-   kubectl apply -f nuodb-sm.yaml
-   kubectl apply -f nuodb-te.yaml
+   kubectl apply -f nuodb.yaml -n testns
+   kubectl apply -f nuodb-sm.yaml -n testns
+   kubectl apply -f nuodb-te.yaml -n testns
    ```
 
 
