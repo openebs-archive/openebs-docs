@@ -14,6 +14,12 @@ MongoDB is a cross-platform document-oriented database. Classified as a NoSQL da
 
 ## Deployment model
 
+
+
+<img src="/docs/assets/svg/mongo-deployment.svg" alt="OpenEBS and Mongo" style="width:1000px;">
+
+
+
 ## Configuration workflow
 
 1. **Install OpenEBS**
