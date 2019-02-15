@@ -17,33 +17,88 @@ This document contains quick reference of the installation steps for both OpenEB
 
 
 
-K8S 1.10.7 or later is preferred
+- Mount propagation feature has to be enabled on Kubernetes, otherwise the data written from the pods
+  will not visible in the restic daemonset pod on the same node
+- Create required storage provider configuration to store the backup data
+- Create required OpenEBS storage pools and  storage classes 
 
 
 
-## Steps for backup 
+## Install Velero (ARK)
 
+Follow the instructions at <a href="https://heptio.github.io/velero/v0.10.0/" target="_blank">Velero documentation</a> to install and configure Velero. 
 
+The helm chart is available at<a href="https://github.com/helm/charts/tree/master/stable/ark" target="_blank">https://github.com/helm/charts/tree/master/stable/ark</a>  
+
+At the end of Velero setup, Restic will be successfully running and ready for taking backup of any application. 
+
+## Steps for backup
+
+`ark backup` command invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or <a href="/docs/next/minio.html" target="_blank">Minio</a>. 
+
+Take the backup using the below command 
+
+```
+ark backup create <backup-name> -l app=<app-label-selector>
+```
+
+Verify backup is taken successfully
+
+```
+ark backup describe bbb-01
+```
 
 ## Steps for restore
 
-
-
-## Troubleshooting
-
+Ark backup can be restored onto a new cluster or to the same cluster. An OpenEBS PVC **with the same name as the original PVC** needs to be created and made available before the restore command is performed. The target cluster OpenEBS EBS PVC can be from a different StorageClass and cStorPool, only the PVC name has to be same.
 
 
 
+On the target cluster, restore the applicaiton using the below command
+
+```
+ark restore create <restore-name> --from-backup <backup-name> -l app=<app-label-selector>
+```
+
+ Verify the restore 
+
+```
+ark restore describe <restore-name> --volume-details
+```
 
 
 
+Once the restore is completed to the PVC, attach the PVC to the target application. 
 
+
+
+## Scheduling backups
+
+Using `ark schedule` command, periodic backups are taken. 
+
+```
+ark schedule create <backup-schedule-name> --schedule "0 * * * *" -l app=<app-label-selector>
+```
+
+Get the details of backup using the following command
+
+```
+ark backup get
+```
+
+
+
+## Roadmap
+
+**OpenEBS ARK storage plugin** 
+
+The above backup and restore procedure is done using Restic, where the entire data is copied and restored in a bulk manner. More efficient backup and restore possible through incremental data snapshots using the OpenEBS ARK storage plugin which is planned for OpenEBS 0.9 release
 
 <br>
 
 ## See Also:
 
-
+### [Setting up On-Premise Minio using OpenEBS](/docs/next/minio.html)
 
 <br>
 
