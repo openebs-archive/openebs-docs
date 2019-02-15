@@ -14,6 +14,12 @@ Elasticsearch is an open-source, RESTful, distributed search and analytics engin
 
 ## Deployment model
 
+
+
+<img src="/docs/assets/svg/elasticsearch-deployment.svg" alt="OpenEBS and ElasticSearch" style="width:1000px;">
+
+
+
 ## Configuration workflow
 
 1. **Install OpenEBS**
