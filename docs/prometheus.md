@@ -29,7 +29,7 @@ Prometheus is the mostly widely used application for scraping cloud native appli
 
 ## Deployment model 
 
-<img src="/docs/assets/svg/deploy-prometheus.svg" style="width:1000px;">
+<img src="/docs/assets/svg/prometheus-deployment.svg" style="width:1000px;">
 
 As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration work fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
 
