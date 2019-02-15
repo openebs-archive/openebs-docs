@@ -5,7 +5,7 @@ sidebar_label: Upgrade
 ---
 ------
 
-Latest version of OpenEBS is 0.8.0. Check the release notes [here]().  This section describes about the upgrade from OpenEBS 0.7.x to 0.8.0.
+Latest version of OpenEBS is 0.8.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/0.8).  This section describes about the upgrade from OpenEBS 0.7.x to 0.8.0.
 
 ## Supported upgrade paths
 
@@ -82,13 +82,19 @@ All steps described in this document must be performed on the Kubernetes master 
 
   **Note:** Starting with OpenEBS 0.6, all the components are installed in namespace `openebs` as opposed to `default` namespace in earlier releases.
 
+  
+
   **Install/Upgrade using stable helm chart**
 
   The following procedure will work if you have installed OpenEBS with default values provided by stable helm chart.
 
   - Run `helm repo update` to update local cache with latest package.
+
   - Run `helm ls` to get the OpenEBS `release-name`. Use the `release-nam` in the following upgrade command.
+
   - Upgrade using `helm upgrade -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml <release-name> stable/openebs`.
+
+    
 
   **Using Customized Operator YAML or Helm Chart.**
 
@@ -99,6 +105,8 @@ All steps described in this document must be performed on the Kubernetes master 
   You can use the following as references to know about the changes in 0.8.0:
 
   - openebs-charts [PR#2314](https://github.com/openebs/openebs/pull/2314)  as reference.
+
+    
 
 3. ### Upgrade volumes one by one
 
