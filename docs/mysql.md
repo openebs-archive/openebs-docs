@@ -1,7 +1,7 @@
 ---
 id: mysql
 title: Managed database service like RDS
-sidebar_label: MySQL
+sidebar_label: RDS like MySQL
 ---
 ------
 
@@ -14,6 +14,10 @@ The MySQL server is a database server used to persist the data and provide a que
 
 
 ## Deployment model 
+
+
+
+<img src="/docs/assets/svg/mysql-deployment.svg" alt="OpenEBS and Percona" style="width:1000px;">
 
 
 

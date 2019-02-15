@@ -13,7 +13,7 @@ Percona Server for MySQL is a free, fully compatible, enhanced and open source d
 
 ## Deployment model 
 
-<img src="docs/assets/sol-prometheus.png" style="width:800px;">
+<img src="/docs/assets/svg/percona-deployment.svg" alt="OpenEBS and Percona" style="width:1000px;">
 
 As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration work fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
 
