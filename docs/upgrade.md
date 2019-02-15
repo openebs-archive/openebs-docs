@@ -47,59 +47,58 @@ All steps described in this document must be performed on the Kubernetes master 
   cd openebs/k8s/upgrades/0.7.0-0.8.0/
   ```
 
-  **Note:**The upgrade  procedure uses the node labels to pin the Jiva replicas to the nodes where they are present. On node restart, these labels will disappear and can cause the replica to be un-scheduled.
-
 2. ### Upgrade OpenEBS operator
 
-   **Upgrading OpenEBS Operator CRDs and Deployments**
+  **Upgrading OpenEBS Operator CRDs and Deployments**
 
-   The upgrade steps may vary depending on the way OpenEBS was installed. You can upgrade your OpenEBS cluster if you have already deployed your cluster using one of the following approach.
+  The upgrade steps may vary depending on the way OpenEBS was installed. You can upgrade your OpenEBS cluster if you have already deployed your cluster using one of the following approach.
 
-   1. Using kubectl
-   2. Using helm
+  1. Using kubectl
+  2. Using helm
 
-   Select one of the following:
+  Select one of the following:
 
-   **Install/Upgrade using kubectl (using openebs-operator.yaml )**
+  **Install/Upgrade using kubectl (using openebs-operator.yaml )**
 
-   The following sample steps will work if you have installed OpenEBS cluster without modifying the default values in the *openebs-operator.yaml* file.  The following command will upgrade all the openebs-operator components to 0.8.0 version.  
+  The following sample steps will work if you have installed OpenEBS cluster without modifying the default values in the *openebs-operator.yaml* file.  The following command will upgrade all the openebs-operator components to 0.8.0 version.  
 
-   ```
-   kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
-   ```
+  ```
+  kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
+  ```
 
-   This will upgrade all OpenEBS components to latest image.
+  This will upgrade all OpenEBS components to latest image.
 
-   **Note:** *If you have customized it for your cluster, you have to download the 0.8.0 openebs-operator.yaml using below command and customize it again.* 
+  **Note:** *If you have customized it for your cluster, you have to download the 0.8.0 openebs-operator.yaml using below command and customize it again.* 
 
-   ```
-   wget https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
-   ```
+  ```
+  wget https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
+  ```
 
-   Customize the downloaded YAML file and apply the modified YAML using the following command.
+  Customize the downloaded YAML file and apply the modified YAML using the following command.
 
-   ```
-   kubectl apply -f openebs-operator-0.8.0.yaml
-   ```
+  ```
+  kubectl apply -f openebs-operator-0.8.0.yaml
+  ```
 
-   **Note:** Starting with OpenEBS 0.6, all the components are installed in namespace `openebs` as opposed to `default` namespace in earlier releases.
+  **Note:** Starting with OpenEBS 0.6, all the components are installed in namespace `openebs` as opposed to `default` namespace in earlier releases.
 
-   **Install/Upgrade using stable helm chart**
+  **Install/Upgrade using stable helm chart**
 
-   The following procedure will work if you have installed OpenEBS with default values provided by stable helm chart.
+  The following procedure will work if you have installed OpenEBS with default values provided by stable helm chart.
 
-   - Run `helm repo update` to update local cache with latest package.
-   - Run `helm ls` to get the OpenEBS `release-name`. Use the `release-nam` in the following upgrade command.
-   - Upgrade using `helm upgrade -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml <release-name> stable/openebs`.
+  - Run `helm repo update` to update local cache with latest package.
+  - Run `helm ls` to get the OpenEBS `release-name`. Use the `release-nam` in the following upgrade command.
+  - Upgrade using `helm upgrade -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml <release-name> stable/openebs`.
 
-   **Using Customized Operator YAML or Helm Chart.**
+  **Using Customized Operator YAML or Helm Chart.**
 
-   As a first step, you must update your custom helm chart or YAML with 0.8.0 release tags and changes made in the values/templates.
+  As a first step, you must update your custom helm chart or YAML with 0.8.0 release tags and changes made in the values/templates.
 
-   After updating the YAML or helm chart or helm chart values, you can use the above [procedures](https://staging-docs.openebs.io/docs/next/upgrade.html#install-upgrade-using-table-openebs-helm-chart) to upgrade the OpenEBS Operator.
+  After updating the YAML or helm chart or helm chart values, you can use the above [procedures](https://staging-docs.openebs.io/docs/next/upgrade.html#install-upgrade-using-table-openebs-helm-chart) to upgrade the OpenEBS Operator.
 
-   - You can use the following as references to know about the changes in 0.8.0:
-     - openebs-charts [PR#2314](https://github.com/openebs/openebs/pull/2314)  as reference.
+  You can use the following as references to know about the changes in 0.8.0:
+
+  - openebs-charts [PR#2314](https://github.com/openebs/openebs/pull/2314)  as reference.
 
 3. ### Upgrade volumes one by one
 
@@ -174,8 +173,6 @@ All steps described in this document must be performed on the Kubernetes master 
     ```
 
     Make sure that this step completes successfully before proceeding to next step.
-
-    
 
     **Upgrade cStor Volumes**
 
