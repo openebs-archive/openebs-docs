@@ -11,7 +11,7 @@ NFS server provisioner stable helm chart is widely used for deploying NFS server
 
 <br><br>
 
-<img src="/docs/assets/rwm-deployment.png" alt="OpenEBS and NFS provisioner" style="width:1000px;">
+<img src="/docs/assets/svg/rwm-single.svg" alt="OpenEBS and NFS provisioner" style="width:1000px;">
 
 <br>	
 
@@ -24,7 +24,7 @@ Below are advantage of using NFS provisiner over OpenEBS cStor volumes
 
 <br>
 
-<font size="6">Steps to be followed to create a RWM PVC</font>
+## Setting up a single NFS server
 
 <br>
 
@@ -73,7 +73,15 @@ Use the above storage class and create a new PVC and mount it inside the pod at 
 
 <br>
 
-<font size="6">Troubleshooting</font>
+## Setting up multiple NFS servers
+
+When multiple NFS shares are needed, use multiple NFS provisioners. Each NFS server manages one NFS server. Same or different OpenEBS StorageClass can be used for multiple NFS provisioners.
+
+
+
+<img src="/docs/assets/svg/rwm-multiple.svg" alt="OpenEBS and NFS provisioner" style="width:1000px;">
+
+
 
 <br>
 
@@ -85,7 +93,7 @@ Use the above storage class and create a new PVC and mount it inside the pod at 
 
 ### [cStorPools](/docs/next/configurepools.html)
 
-### [Upgrading OpenEBS]()
+### [Setting up Object Storage](/docs/next/minio.html)
 
 <br>
 
