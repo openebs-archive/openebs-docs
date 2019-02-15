@@ -43,8 +43,8 @@ All steps described in this document must be performed on the Kubernetes master 
   You can do `git clone` of the upgrade scripts.
 
   ```
-      git clone https://github.com/openebs/openebs.git
-      cd openebs/k8s/upgrades/0.7.0-0.8.0/
+  git clone https://github.com/openebs/openebs.git
+  cd openebs/k8s/upgrades/0.7.0-0.8.0/
   ```
 
   **Note:**The upgrade  procedure uses the node labels to pin the Jiva replicas to the nodes where they are present. On node restart, these labels will disappear and can cause the replica to be un-scheduled.
