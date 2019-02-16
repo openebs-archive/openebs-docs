@@ -5,7 +5,7 @@ sidebar_label:Configure StoragePools
 ---
 ------
 
-<img src="/docs/assets/sm-pool.png" alt="OpenEBS configuration flow" style="width:1000px">
+<img src="/docs/assets/svg/2-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
 
 cStor provides storage scalability along with ease of deployment and usage. cStor can handle multiple disks with different size per Node and create different storage pools. You can use these storage pools to create cStor volumes which you can utilize to run your stateful applications.
 

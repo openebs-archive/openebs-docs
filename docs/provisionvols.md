@@ -5,7 +5,7 @@ sidebar_label: Provisioning Volumes
 ---
 ------
 
-<img src="/docs/assets/sm-pv.png" alt="OpenEBS configuration flow" style="width:1000px">
+<img src="/docs/assets/svg/4-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
 
 In this section , it explains how a cStor volume can be provisioned on cStorStoragePools and verification of this cStor volume. 
 

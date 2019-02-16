@@ -5,7 +5,7 @@ sidebar_label: Installation
 ---
 ------
 
-<img src="/docs/assets/sm-install.png" alt="OpenEBS configuration flow" style="width:1000px">
+<img src="/docs/assets/svg/1-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
 
 ## Before You Start
 
