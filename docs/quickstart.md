@@ -7,6 +7,14 @@ sidebar_label: Quickstart
 
 <br>
 
+<img src="/docs/assets/svg/config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
+
+
+
+<br>
+
+<font size="5">Steps:</font>
+
 
 
 <div class="emphasize">
@@ -17,14 +25,9 @@ sidebar_label: Quickstart
         <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses</li>
     </ul>
 
-
 </div>
 
-<br>
 
-<font size="5">OpenEBS configuration sequence</font>
-
-<a href="/docs/next/installation.html"><img src="/docs/assets/svg/config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%"></a>
 
 
 

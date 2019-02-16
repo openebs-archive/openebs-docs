@@ -5,7 +5,13 @@ sidebar_label: Configuring StorageClasses
 ---
 ------
 
+<br>
+
 <img src="/docs/assets/svg/3-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
+
+<br>
+
+
 
 As the definition of StorageClass a Storage Class provides a way for administrators to describe the “classes” of storage they offer.  
 
