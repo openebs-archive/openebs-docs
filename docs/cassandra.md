@@ -17,7 +17,7 @@ Apache Cassandra is a free and open-source distributed NoSQL database management
 
 
 
-<img src="/docs/assets/svg/cassandra-deployment.svg" alt="OpenEBS and ElasticSearch" style="width:1000px;">
+<img src="/docs/assets/svg/cassandra-deployment.svg" alt="OpenEBS and ElasticSearch" style="width:100%;">
 
 
 

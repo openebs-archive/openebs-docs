@@ -17,7 +17,7 @@ The MySQL server is a database server used to persist the data and provide a que
 
 
 
-<img src="/docs/assets/svg/mysql-deployment.svg" alt="OpenEBS and Percona" style="width:1000px;">
+<img src="/docs/assets/svg/mysql-deployment.svg" alt="OpenEBS and Percona" style="width:100%;">
 
 
 

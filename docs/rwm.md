@@ -11,7 +11,7 @@ NFS server provisioner stable helm chart is widely used for deploying NFS server
 
 <br><br>
 
-<img src="/docs/assets/svg/rwm-single.svg" alt="OpenEBS and NFS provisioner" style="width:1000px;">
+<img src="/docs/assets/svg/rwm-single.svg" alt="OpenEBS and NFS provisioner" style="width:100%;">
 
 <br>	
 
@@ -79,7 +79,7 @@ When multiple NFS shares are needed, use multiple NFS provisioners. Each NFS ser
 
 
 
-<img src="/docs/assets/svg/rwm-multiple.svg" alt="OpenEBS and NFS provisioner" style="width:1000px;">
+<img src="/docs/assets/svg/rwm-multiple.svg" alt="OpenEBS and NFS provisioner" style="width:100%;">
 
 
 

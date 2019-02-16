@@ -15,7 +15,7 @@ Minio is an object storage server released under Apache License v2.0.  It is bes
 
 ## Deployment model
 
-<img src="/docs/assets/svg/minio-deployment.svg" alt="OpenEBS and Minio" style="width:1000px;">
+<img src="/docs/assets/svg/minio-deployment.svg" alt="OpenEBS and Minio" style="width:100%;">
 
 ## Configuration workflow
 

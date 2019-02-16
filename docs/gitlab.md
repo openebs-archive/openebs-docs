@@ -9,7 +9,7 @@ sidebar_label: GitLab
 
 
 
-<img src="/docs/assets/svg/gitlab-deployment.svg" alt="GitLab deployment using OpenEBS" style="width:1000px;">
+
 
 ## Introduction
 
@@ -18,6 +18,12 @@ GitLab is a web-based Git-repository manager providing wiki, issue-tracking and 
 
 
 ## Deployment model
+
+
+
+<img src="/docs/assets/svg/gitlab-deployment.svg" alt="GitLab deployment using OpenEBS" style="width:100%;">
+
+
 
 ## Configuration workflow
 
