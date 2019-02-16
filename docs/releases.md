@@ -8,28 +8,22 @@ sidebar_label: Releases
 
 
 
-## Current Release
+| Release   Version | Release Note                                                 | Highlights                                                   | Remarks        |
+| ----------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------- |
+| 0.8.0             | [0.8.0](https://github.com/openebs/openebs/releases/tag/0.8) | 1.cStor   Snapshot & Clone      2. cStor volume & Pool runtime status       3. Target Affinity for both Jiva & cStor      4. Target namespace for cStor      5. Enhance the volume metrics exporter       6. Enhance Jiva to clear up internal snapshot taken during Replica   rebuild      7. Enhance Jiva to support sync and unmap IOs.      8. Enhance cStor for recreating pool by automattically selecting the disks. | Latest Release |
+|                   |                                                              |                                                              |                |
+|                   |                                                              |                                                              |                |
+|                   |                                                              |                                                              |                |
+|                   |                                                              |                                                              |                |
+|                   |                                                              |                                                              |                |
+|                   |                                                              |                                                              |                |
+|                   |                                                              |                                                              |                |
+|                   |                                                              |                                                              |                |
+|                   |                                                              |                                                              |                |
+|                   |                                                              |                                                              |                |
+|                   |                                                              |                                                              |                |
 
-- [Version 0.8.0](https://github.com/openebs/openebs/releases/tag/0.8) ([Release blog](https://blog.openebs.io/openebs-0-8-release-allows-you-to-snapshot-and-clone-cstor-volumes-ebe09612f8b1))
 
-## Stable Release
-
-* [Version 0.7.2](https://github.com/openebs/openebs/releases/tag/0.7.2)
-
-## Older Releases
-
-* [Version 0.7.0](https://github.com/openebs/openebs/releases/tag/v0.7) 
-* [Version 0.6.0](https://github.com/openebs/openebs/releases/tag/v0.6)
-* [Version 0.5.4](https://github.com/openebs/openebs/releases/tag/v0.5.4)
-* [Version 0.5.3](https://github.com/openebs/openebs/releases/tag/v0.5.3)
-* [Version 0.5.2](https://github.com/openebs/openebs/releases/tag/v0.5.2)
-* [Version 0.5.1](https://github.com/openebs/openebs/releases/tag/v0.5.1)
-* [Version 0.5.0](https://github.com/openebs/openebs/releases/tag/v0.5.0)
-* [Version 0.4.0](https://github.com/openebs/openebs/releases/tag/v0.4.0)
-* [Version 0.3](https://github.com/openebs/openebs/releases/tag/v0.3)
-* [Version 0.2](https://github.com/openebs/openebs/releases/tag/v0.2)
-
-<br>
 
 ## See Also:
 
