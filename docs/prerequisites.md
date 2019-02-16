@@ -5,6 +5,12 @@ sidebar_label: Prerequisites
 ---
 ------
 
+<br>
+
+<a href="/docs/next/installation.html"><img src="/docs/assets/svg/0-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%"></a>
+
+<br>
+
 OpenEBS provides block volume support through iSCSI protocol. Hence, iSCSI client presence on all Kubernetes nodes is a prerequisite. Choose the platform below to find the steps to verify if iSCSI client is installed and running or to find the steps to install iSCSI client
 
 <br>
@@ -15,41 +21,42 @@ OpenEBS provides block volume support through iSCSI protocol. Hence, iSCSI clien
 
 <div class="divrow">
     <div class="divcol">
-        <a href="/docs/next/iscsiclient.html#ubuntu"><img src="/docs/assets/l-ubuntu.png" width="50px;">Ubuntu</a>
+        <a href="/docs/next/prerequisites.html#ubuntu"><img src="/docs/assets/l-ubuntu.png" width="50px;">Ubuntu</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/iscsiclient.html#rhel"><img src="/docs/assets/l-rhel.png" width="50px;">RHEL</a>
+        <a href="/docs/next/prerequisites.html#rhel"><img src="/docs/assets/l-rhel.png" width="50px;">RHEL</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/iscsiclient.html#centos"><img src="/docs/assets/l-centos.png" width="50px;">CentOS</a>
+        <a href="/docs/next/prerequisites.html#centos"><img src="/docs/assets/l-centos.png" width="50px;">CentOS</a>
     </div>
 </div>
 
 <div class="divrow">
     <div class="divcol">
-        <a href="/docs/next/iscsiclient.html#eks"><img src="/docs/assets/l-eks.png" width="50px;">EKS</a>
+        <a href="/docs/next/prerequisites.html#eks"><img src="/docs/assets/l-eks.png" width="50px;">EKS</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/iscsiclient.html#gke"><img src="/docs/assets/l-gke.png" width="50px;">GKE</a>
+        <a href="/docs/next/prerequisites.html#gke"><img src="/docs/assets/l-gke.png" width="50px;">GKE</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/iscsiclient.html#aks"><img src="/docs/assets/l-aks.png" width="50px;">AKS</a>
+        <a href="/docs/next/prerequisites.html#aks"><img src="/docs/assets/l-aks.png" width="50px;">AKS</a>
     </div>
 </div>
 
 <div class="divrow">
     <div class="divcol">
-        <a href="/docs/next/iscsiclient.html#openshift"><img src="/docs/assets/l-openshift.png" width="50px;">OpenShift</a>
+        <a href="/docs/next/prerequisites.html#openshift"><img src="/docs/assets/l-openshift.png" width="50px;">OpenShift</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/iscsiclient.html#rancher"><img src="/docs/assets/l-rancher.png" width="50px;">Rancher</a>
+        <a href="/docs/next/prerequisites.html#rancher"><img src="/docs/assets/l-rancher.png" width="50px;">Rancher</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/iscsiclient.html#icp"><img src="/docs/assets/l-icp.png" width="50px;">ICP</a>
+        <a href="/docs/next/prerequisites.html#icp"><img src="/docs/assets/l-icp.png" width="50px;">ICP</a>
     </div>
 </div>
 
 
+[Provide feedback](https://github.com/openebs/openebs-docs/edit/staging/docs/quickstart.md) if a platform is missing in the above list
 
 ## Linux platforms
 
@@ -178,13 +185,13 @@ You can verify the iSCSI installation from above section.
 
 **For clusters running with the Ubuntu 18.04 AMI**
 
-This can be checked from [here](/docs/next/iscsiclient.html#ubuntu).
+This can be checked from [here](/docs/next/prerequisites.html#ubuntu).
 
 ### GKE
 
 GKE COS (Container Optimized OS) does not come with iSCSI client and does not allow to install iSCSI client. Hence, OpenEBS does not work on K8S clusters which are running COS version of the image on the worker nodes.
 
-Select Ubuntu as the image version for the node pools in the custom settings. For setting up iSCSI clients on Ubuntu nodes, see the [instructions above](/docs/next/iscsiclient.html#install-iscsi-client)
+Select Ubuntu as the image version for the node pools in the custom settings. For setting up iSCSI clients on Ubuntu nodes, see the [instructions above](/docs/next/prerequisites.html#install-iscsi-client)
 
 ### AKS
 

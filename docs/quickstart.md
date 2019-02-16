@@ -5,13 +5,18 @@ sidebar_label: Quickstart
 ---
 ------
 
+<br>
+
+
+
 <div class="emphasize">
     <ul>
         <li>Understand the <a href="/docs/next/common.html">pre-requisites</a> for your Kubernetes platform</li>
         <li>Start <a href="/docs/next/installation.html">installation </a> either through helm or through OpenEBS operator. For ease of testing OpenEBS functionality, a default cStor sparse pool and a corresponding StorageClass are created </li>
-        <li>For test deployments, use cStor-sparse-storage-class to start provisioning cStor OpenEBS volumes</li>
-        <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the cStor-StorageClasses</li>
+        <li>For test deployments, use cStor-sparse-storage-class and start provisioning cStor OpenEBS volumes</li>
+        <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses</li>
     </ul>
+
 
 </div>
 
@@ -19,11 +24,41 @@ sidebar_label: Quickstart
 
 <font size="5">OpenEBS configuration sequence</font>
 
-<a href="/docs/next/installation.html"><img src="/docs/assets/sitemap.png" alt="OpenEBS configuration flow" style="width:1000px"></a>
+<a href="/docs/next/installation.html"><img src="/docs/assets/svg/config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%"></a>
 
 
 
+<br>
 
+<font size="5">As a first step, follow the instructions to setup or verify iSCSI clients on any of the platforms below </font>
+
+<div class="emphasize">
+
+[Ubuntu](/docs/next/prerequisites.html#ubuntu)
+
+[RHEL](/docs/next/prerequisites.html#rhel)
+
+[CentOS](/docs/next/prerequisites.html#centos)
+
+[OpenShift](/docs/next/prerequisites.html#openshift)
+
+[Rancher](/docs/next/prerequisites.html#rancher)
+
+[ICP](/docs/next/prerequisites.html#icp)
+
+[EKS](/docs/next/prerequisites.html#eks)
+
+[GKE](/docs/next/prerequisites.html#gke)
+
+[AKS](/docs/next/prerequisites.html#aks)
+
+<br>
+
+</div>
+
+
+
+[Provide feedback](https://github.com/openebs/openebs-docs/edit/staging/docs/quickstart.md) if a platform is missing in the above list
 
 <br>
 
