@@ -338,6 +338,14 @@ redoc .operation-type {
   font-size: 18px;
 }
 
+.emphasize {
+  -webkit-column-width: 800px; /* Chrome, Safari, Opera */
+  -moz-column-width: 800px; /* Firefox */  
+  column-width: 800px;
+  padding-left: 50px;
+  font-size: 18px;
+}
+
 /* Create three equal columns that floats next to each other */
 .divcol {
   float: left;
@@ -357,4 +365,22 @@ redoc .operation-type {
 .nocopy {
     background: #F0F0F0;
     color: #000;
+}
+
+.co {
+  -webkit-column-width: 700px; /* Chrome, Safari, Opera */
+  -moz-column-width: 700px; /* Firefox */  
+  column-width: 700px;
+  padding-left: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 14px;
+  font-family: monospace, monospace;
+  white-space: pre-wrap;
+  /*background-color: #f7f7f7;
+  background-color: #FCF2E8;
+  background-color: #fff5ee;
+  background-color: #fff8f3;*/
+  background-color: #FEF0EB;
+  border-radius: 15px;
 }

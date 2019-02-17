@@ -317,12 +317,14 @@ lsmod | grep iscsi
 
 Sample Output:
 
-```
+<div class="co">
+
 iscsi_tcp 20480 0
 libiscsi_tcp 24576 1 iscsi_tcp
 libiscsi 53248 2 libiscsi_tcp,iscsi_tcp
 scsi_transport_iscsi 98304 2 libiscsi,iscsi_tcp
-```
+
+</div>
 
 If your output is similar to the above sample output then you are good to go. If your output doesn’t have `iscsi_tcp` , you need to follow below steps to load the `iscsi_tcp` module.
 
@@ -340,15 +342,7 @@ lsmod | grep iscsi
 
 You can also make the kernel to load `iscsi_tcp` automatically every time the node reboots by appending the line `iscsi_tcp` in `/etc/ modules`.
 
-Example:
 
-```
-# /etc/modules: kernel modules to load at boot time.
-#
-# This file contains the names of kernel modules that should be loaded
-# at boot time, one per line. Lines beginning with “#” are ignored.
-iscsi_tcp
-```
 
 #### On RHEL
 
@@ -394,14 +388,18 @@ lsmod |grep iscsi
 
 Output of above command will be similar to the following
 
-```
-iscsi_tcp 20480 0
+
+
+<div class="co">iscsi_tcp 20480 0
 libiscsi_tcp 28672 1
 iscsi_tcp libiscsi 57344 2 libiscsi_tcp,iscsi_tcp 
 scsi_transport_iscsi 110592 4 libiscsi_tcp,iscsi_tcp,libiscsi
-```
+
+</div>
 
 Create new custom cluster in rancher and apply bind mounts to kubelet container spec:
+
+
 
 ```
 kubelet: 

@@ -93,7 +93,7 @@ If is is a cloud disk provision and mount on the node. If three replicas of Jiva
 
 
 
-### Create jiva pool
+### Create a Jiva pool
 
 Jiva pool requires mount path to prepared and available. Note that if the mount path is not pointing a real disk, then a local directory is created with this mount path and the replica data goes to the container image disk (similar to the case of `default` pool)
 

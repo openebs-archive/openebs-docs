@@ -13,98 +13,456 @@ sidebar_label: Installation
 
 
 
-## Before You Start
+<font size="6">Summary:</font>
 
-As an administrator,latest OpenEBS can be installed in your K8s cluster once you meet the [prerequisites]() in your setup.
+- Verify if iSCSI.d service is running
 
-## Customize your OpenEBS operator YAML
+- Set Kubernetes admin context 
 
-You can download and customize the OpenEBS operator YAML file before the installation to include the desired disks and desired node details. The following will mention about how User can verify or include the desired disks which are attached to the Nodes and schedule the OpenEBS components into the selected Nodes. 
+- Install through 
 
-1. #### Selecting Nodes to Schedule OpenEBS components
+  - **helm**
 
-   OpenEBS can be installed on selected nodes of your existing Kubernetes cluster using Node Selector method. OpenEBS does not have a separate scheduler to manage scheduling pods. It uses Kubernetes scheduler for managing the scheduling needs of an administrator.
-   Latest OpenEBS operator YAML can be downloaded using the following way.
+    (or)
 
-   ```
-   wget https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
-   ```
+  - **kubectl yaml spec file**
 
-   Using Node Selector method, OpenEBS components can be scheduled to the selected Nodes by adding appropriate node labels in the corresponding deployment mentioned in the OpenEBS operator YAML file.  You can go to the [scheduler]() section for more details.
+- Verify installation 
 
-2. #### Selecting/Verifying the disks for cStor Pool creation
+- Installtion troubleshooting 
 
-   NDM is handling the disks attached to the OpenEBS nodes and by default NDM exclude following device path to avoid from creating cStor pools.
-
-   ```
-    "exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"
-   ```
-
-   The modification can be done by editing downloaded **openebs-operator.yaml** in `openebs-ndm-config` under `ConfigMap` in the file as follows.
-
-   ```
-   data:
-     node-disk-manager.config: |
-       filterconfigs:
-         - key: path-filter
-           name: path filter
-           state: true
-           include: ""
-           exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"
-   ```
-
-## Start the Installation
-
-On an existing Kubernetes cluster, as a cluster administrator, you can install latest version of OpenEBS in the following two ways.
-
-1. Using [Stable Helm](/docs/next/installation.html#install-openebs-using-helm-charts) charts
-
-2. Using OpenEBS operator through [kubectl](/docs/next/installation.html#install-openebs-using-kubectl)
+- Post installation
 
 
-### Install OpenEBS using Helm Charts
 
-![Installing OpenEBS using helm ](/docs/assets/helm.png)
+<br>
 
-For installing OpenEBS using helm, you must setup Helm and setup RBAC for tiller. This can be done by running the following commands.
+<hr>
 
-#### Setup Helm and RBAC
+<br>
 
-**Setup Helm**
+## Verify iSCSI client
 
-You should have [configured helm](https://docs.helm.sh/using_helm/#from-script) on your Kubernetes cluster as a prerequisite.
+<br>
 
-**Setup RBAC for Tiller before Installing OpenEBS Chart**
+iSCSI client is a pre-requisite for provisioning volumes and not for installation of OpenEBS. However, it is recommended that the [iSCSI client is setup](/docs/next/prerequisites.html) and iSCSI.d service is running before proceeding with the installation
 
-```
-kubectl -n kube-system create sa tiller
-kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
-kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"spec": {"serviceAccountName": "tiller"}}}}'
-```
+<br>
 
-#### Install OpenEBS using Stable Helm Charts
+<hr>
 
-You can install OpenEBS using [Stable Helm Charts](/docs/next/installation.html#install-openebs-using-stable-helm-charts) which will use [Kubernetes Stable Helm charts](https://github.com/kubernetes/charts/tree/master/stable). Install OpenEBS using the following commands in the **openebs** namespace.
+<br>
 
-**Note:** Ensure that you have met the [prerequisites](/docs/next/prerequisites.html) before installation.
 
-```
-helm repo update
-helm install --namespace openebs --name openebs stable/openebs
-```
 
-You can also install OpenEBS in custom namespace using the following way.
+## Set cluster-admin user context
+
+<br>
+
+For installation of OpenEBS, cluster-admin user context is a must. 
+
+If there is no cluster-admin user context already, create one and use it. 
+
+Use the following command to create the new context
+
+`kubectl config set-context NAME [--cluster=cluster_nickname] [--user=user_nickname] [--namespace=namespace]`
+
+*Example:*
+
+`kubectl config set-context admin-ctx --user=cluster-admin`
+
+
+
+Set the existing cluster-admin user context or the newly created context by using the following command
+
+*Example:*
+
+`kubectl config use-context admin-ctx`
+
+<br>
+
+<hr>
+
+<br>
+
+## Installation through helm
+
+<br>
+
+In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace. 
 
 ```
-helm repo update
 helm install --namespace <custom_namespace> --name openebs stable/openebs
 ```
 
-Once you install OpenEBS in custom namespace, all the OpenEBS components will be deployed under the same namespace.
 
-#### Default Values for Helm Chart Parameters
 
-The following table lists the configurable parameters of the OpenEBS chart and their default values.
+As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation) steps.
+
+<br>
+
+In the **custom installation mode**, you can achieve the following advanced configurations
+
+- Choose a set of nodes for OpenEBS control plane pods
+- Choose a set of nodes for OpenEBS storage pool
+- You can customise the disk filters that need to be excluded from being used
+
+
+
+Follow the below instructions to do any of the above configurations and then install OpenEBS through helm and values.yaml
+
+
+
+<font size="5">Setup nodeSelectors for OpenEBS control plane</font> 
+
+In a large Kubernetes cluster , you may choose to limit the scheduling of the OpenEBS control plane pods to two or three specific nodes. To do this, use nodeSelector field of PodSpec of OpenEBS control plane pods - *apiserver, volume provisioner and snapshot operator*.  
+
+See the example [here](#example-nodeselector-helm). 
+
+
+
+<font size="5">Setup nodeSelectors for Node Disk Manager (NDM)</font> 
+
+OpenEBS cStorPool is constructed using the disk custom resources or disk CRs created by Node Disk Manager or NDM. If you want to consider only some nodes in Kubernetes cluster to be used for OpenEBS storage (for hosting cStor Storage Pool instances), then use nodeSelector field of NDM PodSpec and dedicate those nodes to NDM.  
+
+See an example [here](#example-nodeselector-helm). 
+
+
+
+<font size="5">Setup disk filters for Node Disk Manager</font> 
+
+NDM by default filters out the below disk patterns and converts the rest of the disks discovered on a given node into DISK CRs as long as they are not mounted. 
+
+`"exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"`
+
+If your cluster nodes have different disk types that are to be filtered out (meaning that those should not be created as DISK CRs ), add the additional disk patterns to the exclude list. 
+
+See an example configuration [here](#example-helm-diskfilter)
+
+
+
+<font size="5">Other values.yaml parameters</font>
+
+For customized configuration through helm, use values.yaml or command line parameters. 
+
+Default values for Helm Chart parameters are provided [below](#helm-values).
+
+<br>
+
+After doing the custom configuration in the values.yaml file, run the below command to do the custom installation.
+
+
+
+```
+helm install --namespace <custom_namespace> --name openebs stable/openebs -f values.yaml
+```
+
+
+
+As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation) steps.
+
+<br>
+
+<hr>
+
+<br>
+
+## Installation through kubectl 
+
+<br>
+
+In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace. 
+
+```
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
+```
+
+As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation) steps.
+
+<br>
+
+
+
+In the **custom installation mode**, you can achieve the following advanced configurations
+
+- Choose a set of nodes for OpenEBS control plane pods
+- Choose a set of nodes for OpenEBS storage pool
+- You can customise the disk filters that need to be excluded from being used
+
+
+
+For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-0.8.0.yaml" target="_blank">download</a> the above file, update the above configurations using the instructions below and proceed to installation with  `kubectl` and updated file.
+
+
+
+<font size="5">Setup nodeSelectors for OpenEBS control plane</font> 
+
+In a large Kubernetes cluster , you may choose to limit the scheduling of the OpenEBS control plane pods to two or three specific nodes. To do this, specify a map of key-value pair and then attach the same key-value pair as labels to the required nodes on the cluster. 
+
+Example nodeSelector configuration for OpenEBS control plane components is given [here](#example-nodeselector-yaml). 
+
+<br>
+
+<font size="5">Setup nodeSelectors for Node Disk Manager (NDM)</font> 
+
+OpenEBS cStorPool is constructed using the disk custom resources or disk CRs created by Node Disk Manager or NDM. If you want to consider only some nodes in Kubernetes cluster to be used for OpenEBS storage (for hosting cStor Storage Pool instances), then specify a map of key-value pair and then attach the same key-value pair as labels to the required nodes on the cluster. 
+
+Example nodeSelector configuration for OpenEBS control plane components is given [here](#example-nodeselector-yaml). 
+
+<br>
+
+<font size="5">Setup disk filters for Node Disk Manager</font> 
+
+NDM by default filters out the below disk patterns and converts the rest of the disks discovered on a given node into DISK CRs as long as they are not mounted. 
+
+`"exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"`
+
+If your cluster nodes have different disk types that are to be filtered out (meaning that those should not be created as DISK CRs ), add the additional disk patterns to the exclude list in the yaml file. 
+
+
+
+See an example configuration [here](#example-diskfilter-yaml)
+
+<br>
+
+After doing the custom configuration in the downloaded openebs-operator.yaml file, run the below command to do the custom installation.
+
+
+
+```
+kubectl apply -f <custom-openebs-operator-0.8.0.yaml>
+```
+
+
+
+As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation) steps.
+
+<br>
+
+<hr>
+<br>
+
+## Verifying OpenEBS installation
+
+**Verify pods:**
+
+List the pods in `<openebs>` name space 
+
+```
+kubectl get pods -n openebs
+```
+
+In the successful installation of OpenEBS, you should see an example output like below.
+
+<div class="co">NAME                                        READY     STATUS    RESTARTS   AGE
+cstor-sparse-pool-lkf1-86d75bc764-h9jpp     2/2       Running   0          6h
+cstor-sparse-pool-n8nw-779f4cd9cd-8g24v     2/2       Running   0          6h
+cstor-sparse-pool-u4ak-5f47688bdd-pd7mq     2/2       Running   0          6h
+maya-apiserver-6bcc5d9b5f-29vnz             1/1       Running   0          6h
+openebs-ndm-52cl6                           1/1       Running   0          6h
+openebs-ndm-ddf2s                           1/1       Running   0          6h
+openebs-ndm-pg6lm                           1/1       Running   0          6h
+openebs-provisioner-5c65ff5d55-s45t8        1/1       Running   0          6h
+openebs-snapshot-operator-9898bbb95-lzhq5   2/2       Running   0          6h
+</div>
+
+`openebs-ndm` is a daemonset, it should be running on all nodes or on the nodes that are selected through nodeSelector configuration.
+
+The control plane pods `openebs-provisioner`, `maya-apiserver` and `openebs-snapshot-operator` should be running. If you have configured nodeSelectors , check if they are scheduled on the appropriate nodes by listing the pods through `kubectl get pods -n openebs -o wide`
+
+ <br>
+
+**Verify StorageClasses:**
+
+
+
+List the storage classes to check if OpenEBS has installed three new StorageClasses.
+
+```
+kubectl get sc
+```
+
+In the successful installation, you should 3 new StorageClasses
+
+<div class="co">NAME                        PROVISIONER                                                AGE
+openebs-cstor-sparse        openebs.io/provisioner-iscsi                               5h
+openebs-jiva-default        openebs.io/provisioner-iscsi                               5h
+openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   5h
+standard (default)          kubernetes.io/gce-pd                                       6h
+</div>
+
+<br>
+
+**Verify DISK CRs** 
+
+NDM daemonset creates a disk CR for each disk that is discovered on the node with two exceptions
+
+- The disks that match the exclusions in 'vendor-filter'  and 'path-filter'
+- The disks that are already mounted in the node
+
+NDM also creates a new sparse-disk for each node on which it is running. These sparse disks are used in creating the default cStorPool called `cstor-sparse-pool` . 
+
+List the disk CRs to verify the CRs are appearing as expected
+
+```
+kubectl get disk
+```
+
+Following is an example output.
+
+<div class="co">sparse-00e09b1655329b8b944133aa5208d967   5h
+sparse-a5750209eede7ace90e07f68c566d599   5h
+sparse-cdfe80cd52424759de4a88831cd85a33   5h
+</div>
+
+To know which disk CR belongs to which node, check the node label set on the CR by doing 
+
+```
+kubectl describe disk <disk-cr>
+```
+
+
+
+**Verify cStor default pool : cstor-sparse-pool**
+
+```
+kubectl get csp
+```
+
+Following is an example output.
+
+<div class="co">NAME                     AGE
+cstor-sparse-pool-io1y   5h
+cstor-sparse-pool-lsm9   5h
+cstor-sparse-pool-y8pf   5h
+</div>
+
+```
+kubectl get spc
+```
+
+Following is an example output.
+
+<div class="co">NAME                AGE
+cstor-sparse-pool   6h
+</div>
+
+
+
+**Verify Jiva default pool - default**
+
+```
+kubectl get sp
+```
+
+Following is an example output.
+
+<div class="co">NAME                     AGE
+cstor-sparse-pool-io1y   5h
+cstor-sparse-pool-lsm9   5h
+cstor-sparse-pool-y8pf   5h
+default                  5h
+</div>
+
+
+
+Note that listing `sp` lists both `csp` and the `Jiva pool`. 
+
+
+
+<br>
+
+<hr>
+<br>
+
+## Post-Installation considerations
+
+<br>
+
+For a simple testing of OpenEBS, you can use the below default storage classes
+
+- openebs-cstor-sparse (this uses cstor-sparse-pool as the storage pool and data is stored on sparse files that are created during installation)
+- openebs-jiva-default (this uses `default` pool which means the data replicas are created in the /mnt/openebs_disk directory of the Jiva replica pod)
+
+For using real disks, you have to [create cStorPools](/docs/next/configurepools.html) or [Jiva pools](/docs/next/jivaguide.html#create-a-jiva-pool) and then create StorageClasses to use them
+
+
+
+To monitor the OpenEBS volumes and obtain corresponding logs, connect to the free SaaS service MayaOnline. See connecting to [MayaOnline](/docs/next/mayaonline.html). 
+
+
+
+<br>
+
+<hr>
+
+<br>
+
+## Example configurations - helm
+
+<br>
+
+
+
+<h4><a class="anchor" aria-hidden="true" id="example-nodeselector-helm"></a>For nodeSelectors in values.yaml (helm) </h4>
+
+
+
+First, label the required nodes with an appropriate label. In the following command, the required nodes for storage nodes are labelled as *node=openebs*
+
+```
+kubectl label nodes <node-name> node=openebs
+```
+
+Find `apiServer`, `provisioner`, `snapshotOperator` and `ndm` sections in `values.yaml` and update `nodeSelector` key. Example of the updated provisioner section looks like below where `node:openebs` is the `nodeSelector` label. 
+
+```
+provisioner:
+  image: "quay.io/openebs/openebs-k8s-provisioner"
+  imageTag: "0.8.0"
+  replicas: 1
+  nodeSelector:
+    node: openebs
+  tolerations: []
+  affinity: {}
+```
+
+<br>
+
+
+
+
+
+<h4><a class="anchor" aria-hidden="true" id="example-helm-diskfilter"></a>For disk filters in values.yaml (helm)</h4>
+
+In the `values.yaml`, find` ndm` section to update `excludeVendors:` and `excludePaths:`
+
+```
+ndm:
+  image: "quay.io/openebs/node-disk-manager-amd64"
+  imageTag: "v0.2.0"
+  sparse:
+    enabled: "true"
+    path: "/var/openebs/sparse"
+    size: "10737418240"
+    count: "1"
+  filters:
+    excludeVendors: "CLOUDBYT,OpenEBS"
+    excludePaths: "loop,fd0,sr0,/dev/ram,/dev/dm-,/dev/md"
+  nodeSelector: {}
+```
+
+<br>
+
+
+
+<h4><a class="anchor" aria-hidden="true" id="helm-values"></a>Default Values for Helm Chart Parameters</h4>
+
+
+
+Download the values.yaml from  [here](https://github.com/helm/charts/blob/master/stable/openebs/values.yaml ) and update them as per your needs. The configurable parameters are described here for reading convenience.
+
+
 
 | Parameter                               | Description                                  | Default                                   |
 | --------------------------------------- | -------------------------------------------- | ----------------------------------------- |
@@ -143,123 +501,98 @@ The following table lists the configurable parameters of the OpenEBS chart and t
 | `policies.monitoring.image`             | Docker Image for Prometheus Exporter         | `openebs/m-exporter`                      |
 | `policies.monitoring.imageTag`          | Docker Image Tag for Prometheus Exporter     | `0.8.1`                                   |
 
-Specify each parameter using the `--set key=value` argument to `helm install`.
 
-Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
-```
-helm install -f values.yaml --namespace openebs --name openebs stable/openebs
-```
+<br>
 
-You can get default values.yaml from [here](https://github.com/helm/charts/blob/master/stable/openebs/values.yaml ).
+<hr>
 
-### Install OpenEBS using kubectl
+<br>
 
-![Installing OpenEBS with Operator](/docs/assets/operator.png)
 
-You can install OpenEBS cluster by running the following command.
 
-**Note:** Ensure that you have met the [prerequisites](/docs/next/prerequisites.html) before installation.
+## Example configurations - kubectl
 
-```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
-```
 
-## Verify OpenEBS is installed
 
-OpenEBS pods are created under **openebs** namespace by default. Node Disk Manager, default Storage Classes and default Storage Pool Claim are created after installation.
+<h4><a class="anchor" aria-hidden="true" id="example-nodeselector-yaml"></a>For nodeSelectors in openebs-operator.yaml</h4>
 
-You can get the OpenEBS pods status by running following command.
+First, label the required nodes with an appropriate label. In the following command, the required nodes for storage nodes are labelled as *node=openebs*.
 
 ```
-kubectl get pods -n openebs
+kubectl label nodes <node-name> node=openebs
 ```
 
-Following is an example output.
+Next, in the downloaded openebs-operator.yaml, find the PodSpec for `openebs-provisioner`, `maya-apiserver`, `openebs-snapshot-operator` and `openebs-ndm` pods and add the following key-value pair under `nodeSelector` field
 
 ```
-NAME                                        READY     STATUS    RESTARTS   AGE
-cstor-sparse-pool-lkf1-86d75bc764-h9jpp     2/2       Running   0          6h
-cstor-sparse-pool-n8nw-779f4cd9cd-8g24v     2/2       Running   0          6h
-cstor-sparse-pool-u4ak-5f47688bdd-pd7mq     2/2       Running   0          6h
-maya-apiserver-6bcc5d9b5f-29vnz             1/1       Running   0          6h
-openebs-ndm-52cl6                           1/1       Running   0          6h
-openebs-ndm-ddf2s                           1/1       Running   0          6h
-openebs-ndm-pg6lm                           1/1       Running   0          6h
-openebs-provisioner-5c65ff5d55-s45t8        1/1       Running   0          6h
-openebs-snapshot-operator-9898bbb95-lzhq5   2/2       Running   0          6h
-```
-
-It also installs the default cStor **StorageClass** which can be used in your pvc yaml file to create Persistent Volume. For more information about sample storage classes used for different applications, see [storage classes](https://github.com/openebs/openebs-docs/blob/master/docs/next/setupstorageclasses.html). 
-
-You can get the StorageClass details using the following command.
-
-```
-kubectl get sc
-```
-
-Following is an example output.
-
-```
-NAME                        PROVISIONER                                                AGE
-openebs-cstor-sparse        openebs.io/provisioner-iscsi                               5h
-openebs-jiva-default        openebs.io/provisioner-iscsi                               5h
-openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   5h
-standard (default)          kubernetes.io/gce-pd                                       6h
-```
-
-In the above example output, `openebs-cstor-sparse ` is the default cStor StorageClass installed as part of OpenEBS installation.
-
-**Node Disk Manager** manages the disks associated with each node in the cluster. You can get the disk details by running the following command.
-
-```
-kubectl get disk
-```
-
-Following is an example output.
-
-```
-NAME                                      AGE
-sparse-00e09b1655329b8b944133aa5208d967   5h
-sparse-a5750209eede7ace90e07f68c566d599   5h
-sparse-cdfe80cd52424759de4a88831cd85a33   5h
-```
-
- In the above example output, disk name starts with `sparse-\*` are the default sparse disks created on each Node as part of OpenEBS installation.
-
-Installing OpenEBS creates default **cStorStoragePool** called  sparse pool on each node using these sparse disk with a name like *cstor-spare-pool-wxyz*. These sparse pools are created on the host disk of each node. You can get the default cStorStoragePool names by using the following command.
-
-```
-kubectl get csp
-```
-
-Following is an example output.
-
-```
-NAME                     AGE
-cstor-sparse-pool-io1y   5h
-cstor-sparse-pool-lsm9   5h
-cstor-sparse-pool-y8pf   5h
-```
-
-**StoragePoolClaim** represents the specification of cStor storage pool where it will specify the disk details, replica count of Storage Pool and type of cStor storage pool. After the installation, default **StoragePoolClaim** will be created to manage the creation of default cStor storage pool. You can get the default cStor StoragePoolClaim details using the following command.
-
-```
-kubectl get spc
-```
-
-Following is an example output.
-
-```
-NAME                AGE
-cstor-sparse-pool   6h
+nodeSelector:
+  node: openebs
 ```
 
 
+
+<br>
+
+<h4><a class="anchor" aria-hidden="true" id="example-diskfilter-yaml"></a>For disk filters in openebs-operator.yaml</h4>
+
+In the downloaded o`penebs-operator.yaml`, find `openebs-ndm-config` configmap and update the values for keys `path-filter` and `vendor-filter`
+
+```
+---
+# This is the node-disk-manager related config.
+# It can be used to customize the disks probes and filters
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openebs-ndm-config
+  namespace: openebs
+data:
+  # udev-probe is default or primary probe which should be enabled to run ndm
+  # filterconfigs contails configs of filters - in their form fo include
+  # and exclude comma separated strings
+  node-disk-manager.config: |
+    probeconfigs:
+      - key: udev-probe
+        name: udev probe
+        state: true
+      - key: smart-probe
+        name: smart probe
+        state: true
+    filterconfigs:
+      - key: os-disk-exclude-filter
+        name: os disk exclude filter
+        state: true
+        exclude: "/,/etc/hosts,/boot"
+      - key: vendor-filter
+        name: vendor filter
+        state: true
+        include: ""
+        exclude: "CLOUDBYT,OpenEBS"
+      - key: path-filter
+        name: path filter
+        state: true
+        include: ""
+        exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"
+---
+```
+
+
+
+<br>
+
+<hr>
+<br>
+
+<br>
 
 ## See Also:
 
+### [OpenEBS Architecture](/docs/next/architecture.html)
 
+### [Installation troubleshooting](/docs/next/troubleshooting.html)
+
+### [OpenEBS use cases](/docs/next/usecases.html)
 
 <br>
 
