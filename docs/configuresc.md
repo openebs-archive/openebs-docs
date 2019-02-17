@@ -11,100 +11,393 @@ sidebar_label: Configuring StorageClasses
 
 <br>
 
+<font size="6">Summary:</font>
+
+[Using openebs-cstor-sparse StorageClass](#sparse-class)
+
+[Creating a new StorageClass for cStor](#creating-a-new-class)
+
+[cStor Storage Policies](#cstor-storage-policies)
 
 
-As the definition of StorageClass a Storage Class provides a way for administrators to describe the “classes” of storage they offer.  
 
-### **Setting Up StorageClass On OpenEBS**
+*Note: This page describes how to create, use and maintain StorageClasses that use cStorPools. For details about StorageClasses that Jiva pools, see [Jiva user guide](/docs/next/jivaguide.html)* 
 
-For setting up the a StorageClass for providing cStor volume, you must include `StoragePoolClaim` parameter to use the particular cStorStoragePool. This is the must requirement for provisioning cStor volume.
+<br>
 
-### Default StorageClass
+<hr>
 
-The default cStor StorageClass is as follows:
+<br>
 
-```
----
+## Using sparse StorageClass
+
+<br>
+
+During the installation, OpenEBS creates a StorageClass called `openebs-cstor-sparse` . You can use this StorageClass for creating a PVC (  `kind: PersistentVolumeClaim` for applications of `kind: Deployment`) or for creating a VolumeClaimTemplate (`volumeClaimTemplates:` for applications of `kind: StatefulSet`)
+
+Note that this StorageClass has cStor volumes `replicaCount` set as `3`. Sometimes it may not be necessary to have three storage replicas for each statefulset application replica. In such cases, you can create a new StorageClass that uses the existing sparse pool `cstor-sparse-pool` but with cStor volume's replicaCount=1 using the following command
+
+
+
+<div class="co">
+    
+cat <<EOF | kubectl create -f -
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: openebs-cstor-sparse
+  name: openebs-sparse-sc-statefulset
   annotations:
     openebs.io/cas-type: cstor
     cas.openebs.io/config: |
       - name: StoragePoolClaim
         value: "cstor-sparse-pool"
       - name: ReplicaCount
-        value: "3"
-     #- name: TargetResourceLimits
-     #  value: |-
-     #      memory: 1Gi
-     #      cpu: 200m
-     #- name: AuxResourceLimits
-     #  value: |-
-     #      memory: 0.5Gi
-     #      cpu: 50m
+        value: "1"       
 provisioner: openebs.io/provisioner-iscsi
----
-```
+reclaimPolicy: Delete
+EOF
+</div>
 
-In the above sample StorageClass YAML, `StoragePoolClaim` used is default StorageClass`cstor-sparse-pool` which is created as part of OpenEBS installation.
 
-### Customized StorageClass
 
-if you want to use the StoragePoolClaim created with the external disks which is mentioned in the [storage pool](/docs/next/configurepools.html) section, then you have to use the StoragePoolClaim name in the new StorageClass YAML. Then the cStor volume will be provisioned in the cStorStroagePool which is specified in the StoragePoolClaim.
+The above command creates storage class called `openebs-sparse-sc-statefulset` which you can use under volumeClaimTemplates. 
 
-You can create a new file called  **openebs-sc-disk.yaml** and add below contents to it. This StorageClass YAML include the StoragePoolClaim created in storage pool section.
+<br>
+
+<hr>
+
+## Creating a new StorageClass
+
+<br>
+
+StorageClass definition is an important task in the planning and execution of OpenEBS storage. As detailed in the CAS page, the real power of CAS architecture is to give an independent or a dedicated storage engine like cStor for each workload, so that granular policies can be applied to that storage engine to tune the behavior or performance as per the workload's need. In OpenEBS policies to the storage engine (in this case it is cStor) through the `annotations` specified in the `StorageClass` interface. 
+
+<font size="5">Steps to create a cStor StorageClass</font>
+
+
+
+**Step1:** Decide the cStorPool
+
+**Step2:** Which application uses it? Decide the replicaCount based on it
+
+**Step3:** Are there any other storage policies to be applied to the StorageClass? Refer to the [storage policies section](#cstor-storage-policies) for more details on the storage policies applicable for cStor.
+
+**Step4:** Create a yaml spec file <storage-class-name.yaml> from the master template below, update the pool, replica count and other policies and create the class using `kubectl apply -f <storage-class-name.yaml>` command.
+
+**Step5:** Verify the newly created StorageClass using `kubectl describe sc <storage-class-name>`
+
+<br>
+
+<hr>
+
+<br>
+
+
+
+## cStor storage policies
+
+
+
+Below table lists the storage policies supported by cStor. These policies should be built into StorageClass and apply them through PersistentVolumeClaim or VolumeClaimTemplates interface
+
+| cStor Storage Policy                                     | Mandatory | Default                                 | Purpose                                                      |
+| -------------------------------------------------------- | --------- | --------------------------------------- | ------------------------------------------------------------ |
+| [ReplicaCount](#replica-count-policy)                    | No        | 3                                       | Defines the number of cStor volume replicas                  |
+| [VolumeControllerImage](#volume-controller-image-policy) |           | quay.io/openebs/cstor-volume-mgmt:0.8.0 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
+| [VolumeTargetImage](#volume-target-image-policy)         |           | value:quay.io/openebs/cstor-istgt:0.8.0 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
+| [StoragePoolClaim](#storage-pool-claim-policy)           | Yes       | N/A (a valid pool must be provided)     | The cStorPool on which the volume replicas should be provisioned |
+| [VolumeMonitor](#volume-monitor-policy)                  |           | ON                                      | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
+| [VolumeMonitorImage](#volume-monitoring-image-policy)    |           | quay.io/openebs/m-exporter:0.8.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [FSType](#volume-file-system-type-policy)                |           | ext4                                    | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
+| [TargetNodeSelector](#targetnodeselector-policy)         |           | Decided by Kubernetes scheduler         | Specify the label in key:value format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
+| [TargetResourceLimits](#targetresourcelimits-policy)     |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
+| [AuxResourceLimits](#auxresourcelimits-policy)           |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod sidecar            |
+| [AuxResourceRequests](#auxresourcerequests-policy)       |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod sidecar            |
+| [PoolResourceRequests](#poolresourcerequests-policy)     |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStorPool pod                       |
+| [PoolResourceLimits](#poolresourcelimits-policy)         |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStorPool pod                       |
+| [ReplicaResourceLimits](#replicaresourcelimits-policy)   |           | Decided by Kubernetes scheduler         | ??                                                           |
+| [Target Affinity](#target-affinity-policy)               |           | Decided by Kubernetes scheduler         | The policy specifies the label KV pair to be used both on the cStor target and on the application being used so that application pod and cStor target pod are scheduled on the same node. |
+| [Target Namespace](#target-namespace)                    |           | Openebs                                 | When service account name is specified, the cStor target pod is scheduled in the application's namespace  ?? |
+
+
+
+
+
+
+
+### Replica Count Policy
+
+You can specify the cStor Pool replica count using the *value* for *ReplicaCount* property. In the following example, the ReplicaCount is specified as 3. Hence, three replicas for storage pool will be created.
 
 ```
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: openebs-cstor-disk
   annotations:
+    cas.openebs.io/config: |
+      - name: ReplicaCount
+        value: "3"
     openebs.io/cas-type: cstor
+```
+
+### Volume Controller Image Policy
+
+You can specify the cStor Volume Controller Image using the *value* for *VolumeControllerImage* property. This will help you choose the volume management image.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: VolumeControllerImage
+        value: quay.io/openebs/cstor-volume-mgmt:0.8.0
+    openebs.io/cas-type: cstor
+```
+
+### Volume Target Image Policy
+
+You can specify the cStor Target Image using the *value* for *VolumeTargetImage* property. This will help you choose the cStor istgt target image.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: VolumeTargetImage
+        value:quay.io/openebs/cstor-istgt:0.8.0
+    openebs.io/cas-type: cstor
+```
+
+### Storage Pool Claim Policy
+
+You can specify the cStor Pool Claim name using the *value* for *StoragePoolClaim* property. This will help you choose cStor storage pool name where OpenEBS volume will be created. Following is the default StorageClass template where cStor volume will be created on default cStor Sparse Pool.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
     cas.openebs.io/config: |
       - name: StoragePoolClaim
-        value: "cstor-disk"
-provisioner: openebs.io/provisioner-iscsi
----
+        value: "cstor-sparse-pool"
+    openebs.io/cas-type: cstor
 ```
 
-in the above sample StorageClass YAML, `ReplicaCount` represents the desired number of cStor Volume Replica (CVR). The PVC that uses this storage class will create cStor volumes on the corresponding cStorStoragePools specified the `StoragePoolClaim` parameter in the StorageClass . 
+### Volume Monitor Policy
 
-You can apply the modified StorageClass YAML before provisioning cSor volume using the following command.
+You can specify the cStor volume monitor feature which can be set using *value* for the *VolumeMonitor* property.  By default, volume monitor is enabled.
 
-```
-kubectl apply -f openebs-sc-disk.yaml
-```
+**Note:**
 
-Following is an example output.
+cStor Volume Monitor is a docker image. Following is a sample that makes use of Volume monitor setting policy.
 
 ```
-storageclass.storage.k8s.io "openebs-cstor-disk" created
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - enabled: "true"
+        name: VolumeMonitor
+    openebs.io/cas-type: cstor
 ```
 
-You can get the StorageClass details using the following command.
+### Volume Monitoring Image Policy
+
+You can specify the monitoring image policy for a particular volume using *value* for *VolumeMonitorImage* property. The following sample storage class uses the Volume Monitor Image policy.
 
 ```
-kubectl get sc
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: VolumeMonitorImage
+        value: quay.io/openebs/m-exporter:0.8.0
+    openebs.io/cas-type: cstor
 ```
 
-Following is an example output
+### Volume File System Type Policy
+
+You can specify the file system type for the cStor volume where application will consue the storage using *value* for *FSType*. The following is the sample storage class. Currently OpenEBS support ext4 as the default file system and it also supports XFS as filesystem.
 
 ```
-NAME                        PROVISIONER                                                AGE
-openebs-cstor-disk			openebs.io/provisioner-iscsi							   2m
-openebs-cstor-sparse        openebs.io/provisioner-iscsi                               6m
-openebs-jiva-default        openebs.io/provisioner-iscsi                               6m
-openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   6m
-standard (default)          kubernetes.io/gce-pd                                       9m
-
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: FSType
+        value: ext4
+    openebs.io/cas-type: cstor
 ```
 
-You can use the StorageClass  name`openebs-cstor-disk` in the PVC YAML to provision cStor Volume on the corresponding cStorStoragePool.
+### TargetNodeSelector Policy
+
+You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: apnode `is the node label.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: TargetNodeSelector
+        value: |-
+            node: appnode
+    openebs.io/cas-type: cstor
+```
+
+### TargetResourceLimits Policy
+
+You can specify the *TargetResourceLimits* to restrict the memory and cpu usage of target pod within the given limit  using the *value* for *TargetResourceLimits* .
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: TargetResourceLimits
+        value: |-
+            memory: 1Gi
+            cpu: 100m
+    openebs.io/cas-type: cstor
+```
+
+### AuxResourceLimits Policy
+
+You can specify the *AuxResourceLimits* which allow you to set limits on side cars. 
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name:  AuxResourceLimits
+        value: |-
+            memory: 0.5Gi
+            cpu: 50m
+    openebs.io/cas-type: cstor
+```
+
+### AuxResourceRequests Policy
+
+This feature is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. `AuxResourceRequests` allow you to set requests on side cars. Requests have to be specified in the format expected by Kubernetes
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: AuxResourceRequests
+        value: "none"
+    openebs.io/cas-type: cstor
+```
+
+### ReplicaResourceLimits Policy
+
+You can specify the *ReplicaResourceLimits* to restrict the memory usage of replica pod within the given limit  using the *value* for *ReplicaResourceLimits*.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: ReplicaResourceLimits
+        value: |-
+            memory: 2Gi
+    openebs.io/cas-type: cstor
+```
+
+### PoolResourceLimits Policy
+
+This feature allow you to set the limits on memory and cpu for pool pods. The resource and limit value should be in the same format as expected by Kubernetes. The `name` of SPC can be changed if you need.
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+spec:
+  - name: PoolResourceLimits
+    value: "none"
+```
+
+### PoolResourceRequests Policy
+
+This feature allow you to specify resource requests that need to be available before scheduling the containers. If not specified, the default is to use the limits from PoolResourceLimits or the default requests set in the cluster. The `name` of SPC can be changed if you need.
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+spec:
+  - name: PoolResourceRequests
+    value: "none"
+```
 
 
+
+  ### Target Affinity Policy
+
+The StatefulSet workloads access the OpenEBS storage volume  by connecting to the Volume Target Pod. This policy can be used to co-locate volume target pod on the same node as workload.
+
+This feature makes use of the Kubernetes Pod Affinity feature that is dependent on the Pod labels. User will need to add the following label to both Application and PVC.
+
+```
+labels:
+    openebs.io/target-affinity: <application-unique-label>
+```
+
+You can specify the Target Affinity in both application and OpenEBS PVC using the following way
+For Application Pod, it will be similar to the following
+
+```
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: fio-cstor
+    labels:
+      name: fio-cstor
+      openebs.io/target-affinity: fio-cstor
+```
+
+
+
+**Note**: *This feature works only for cases where there is a 1-1 mapping between a application and PVC. It's not recommended for STS where PVC is specified as a template.* 
+
+
+
+### Target Namespace
+By default, the cStor target pods are scheduled in a dedicated *openebs* namespace. The target pod also is provided with OpenEBS service account so that it can access the Kubernetes Custom Resource called `CStorVolume` and `Events`.
+This policy, allows the Cluster administrator to specify if the Volume Target pods should be deployed in the namespace of the workloads itself. This can help with setting the limits on the resources on the target pods, based on the namespace in which they are deployed.
+To use this policy, the Cluster administrator could either use the existing OpenEBS service account or create a new service account with limited access and provide it in the StorageClass as follows:
+
+
+
+```
+annotations:
+    cas.openebs.io/config: |
+      - name: PVCServiceAccountName
+        value: "user-service-account"  
+```
+
+The sample service account can be found [here](https://github.com/openebs/openebs/blob/master/k8s/ci/maya/volume/cstor/service-account.yaml).
+
+
+
+
+
+<br>
+
+<hr>
 
 <br>
 

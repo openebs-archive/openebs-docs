@@ -23,7 +23,7 @@ sidebar_label: Features and Benefits
 - [Avoid Cloud Lock-in](/docs/next/features.html#avoid-cloud-lock-in)
 - [Reduced storage TCO upto 50%](/docs/next/features.html#reduced-storage-tco-upto-50)
 - [Native Hyperconvergence on Kubernetes](/docs/next/features.html#native-hyperconvergence-on-kubernetes)
-- [High availability - No Blast Radius](/docs/next/features.html#high-availability-no-blast-radius)
+- [High availability - No Blast Radius](#high-availability)
 - [Free cross cloud visibility of stateful applications](http://localhost:3000/docs/next/features.html#free-cross-cloud-visibility-of-stateful-applications)
 
 
@@ -40,7 +40,7 @@ For more information on how OpenEBS is used in cloud native environments,  visit
 
 <br>
 
-<font size="5">Containerized Storage for Containers</font>
+### Containerized Storage for Containers
 
 <img src="/docs/assets/svg/f-cas.svg" alt="Smiley face" 		style="width:200px;">
 

@@ -25,6 +25,8 @@ sidebar_label:Configure StoragePools
 
 
 
+*Note: This page describes how to create, use and maintain cStorPools. For details about Jiva pools, see [Jiva user guide](/docs/next/jivaguide.html)* 
+
 <br>
 
 <hr>
