@@ -15,23 +15,23 @@ sidebar_label: Installation
 
 <font size="6">Summary:</font>
 
-- Verify if iSCSI.d service is running
+- Verify if [iSCSI.d](#verify-iscsi-client) service is running
 
-- Set Kubernetes admin context 
+- Set Kubernetes [admin context](#set-cluster-admin-user-context) 
 
 - Install through 
 
-  - **helm**
+  - **[helm](#example-configurations-helm) chart** 
 
     (or)
 
-  - **kubectl yaml spec file**
+  - **[kubectl yaml](#installation-through-kubectl) spec file**
 
-- Verify installation 
+- [Verify](#verifying-openebs-installation) installation 
 
-- Installtion troubleshooting 
+- Installtion [troubleshooting](/docs/next/troubleshooting.html) 
 
-- Post installation
+- [Post installation](#post-installation-considerations)
 
 
 
