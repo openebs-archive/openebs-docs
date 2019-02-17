@@ -13,44 +13,62 @@ sidebar_label:Configure StoragePools
 
 
 
-cStor provides storage scalability along with ease of deployment and usage. cStor can handle multiple disks with different size per Node and create different storage pools. You can use these storage pools to create cStor volumes which you can utilize to run your stateful applications.
+<font size="6">Summary:</font>
 
-## Configure Storage Pool
+[Using default pool](#using-default-cstor-pool)
 
-Storage Pool Claim (SPC) is a watcher which allows you to define an SPC name, for example, `cstor-sparse-pool`. Pools will be created with the specified SPC name and the required parameters mentioned in the following YAML. 
+[Creating a new pool](#creating-a-new-pool)
 
-OpenEBS creates cStorStoragePool(CSP) on each nodes by combining disks belongs to each Node.  [Node Disk Manager](https://docs.openebs.io/docs/next/architecture.html#cstor)(NDM) is handling the disks for creating cStor Storage pool. Currently NDM is excluding some of the device paths detected on Nodes to avoid from creating cStor Pools. You will get more information from [here](https://docs.openebs.io/docs/next/faq.html#what-are-different-device-paths-excluded-by-ndm). 
+[Day 2 operations on cStorPools](#day-2-operations-on-cstorpools)
 
-You can create cStor pools on OpenEBS clusters once you have installed latest OpenEBS version. Verify if the OpenEBS installation is complete. If not, go to [installation](https://docs.openebs.io/docs/next/installation.html).
+[Verifying pool status](#verifying-pool-status)
 
-The storage pool can be created either manually or by auto pool configuration. cStorStoragePool is getting created by applying the StoragePoolClaim(SPC) YAML. StoragePoolClaim YAML is different for manual method and auto method.  The following section describes about the configuration of cStorStoragePool . This can be done by following ways.
 
-- Manual method
-- Auto method
 
-### By Using Manual Method
+<br>
 
-In manual method, following parameter can be changed.
+<hr>
 
-- `diskList`
+<br>
 
-  You must give the selected disk name which is listed by NDM. This details has to be entered in the below StoragePoolClaim YAML under `diskList`. 
+## Using default cStor pool
 
-- `type`
+<br>
 
-  This value can be either `sparse` or `disk`.
+`openebs-cstor-sparse` storageClass and `cstor-sparse-pool` are created for convenience and ease of use. The data stored to this pool is stored on the sparse disks created during installation. This storageClass can be used in test setups and learning OpenEBS but not for production. For production use, create cStorPools on read disks.
 
-- `maxPools`
+If you want to know more details about sparse pools and disks, see [sparse pool deep dive](#sparse-pool-deepdive)
 
-  This value represents the maximum number cStorStoragePool is creating on the cluster. 
+<br>
 
-  This value should be less than or equal to the total number of Nodes in the cluster.
+<hr>
 
-- `poolType`
+<br>
 
-  This value represents the type of cStorStoragePool is getting created. Currently `striped` and `mirrored` are supported.
 
-You can create a YAML file named *openebs-config.yaml* and add below contents to it for creating storage pool with striped manner.
+
+## Creating a new pool
+
+<br>
+
+Process of creating a new cStor storage pool
+
+- Create a YAML spec `cstor-pool-config.yaml`. You can create a cStorPool in two ways.
+  - [By specifying disks list](#manual-mode) (or)
+  - [Without specifying disks list](#auto-mode) method
+- Create pool config through `kubectl apply` 
+
+
+
+<br>
+
+<h3><a class="anchor" aria-hidden="true" id="manual-mode"></a>Create a cStorPool by specifying diskList </h3>
+
+**Step1:**
+
+Create a YAML file called `cstor-pool1-config.yaml` with the following content
+
+
 
 ```
 #Use the following YAMLs to create a cStor Storage Pool.
@@ -58,9 +76,9 @@ You can create a YAML file named *openebs-config.yaml* and add below contents to
 apiVersion: openebs.io/v1alpha1
 kind: StoragePoolClaim
 metadata:
-  name: cstor-disk
+  name: cstor-pool1
 spec:
-  name: cstor-disk
+  name: cstor-pool1
   type: disk
   poolSpec:
     poolType: striped
@@ -82,52 +100,80 @@ spec:
 ---
 ```
 
-Edit *openebs-config.yaml* file to include disk details associated to each node in the cluster which you are using for creation of  the OpenEBS cStor Pool. Replace the disk names under *diskList* section with the disk names, which you can get from running `kubectl get disks` command. Once this file is modified, you can apply this YAML. This will create cStor Storage Pool on each Node and StorageClass named `openebs-cstor-disk`.  
 
-For example, you have a 3 Node cluster. Each Node have 2 disks each. So if you select these disks in the above sample YAML, it will create a cStor Pool on each Node by using the disks attached to each Node.
 
-Once you have modified the YAML file with required changes, you can apply the YAML using the following command.
+In the above file, change the parameters as required
 
-```
-kubectl apply -f openebs-config.yaml
-```
+- `poolType`
 
-Following is an example output.
+  This filed is not named very aptly. This field may be changed to `diskAggType` in future. This filed  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`
 
-```
-storagepoolclaim.openebs.io "cstor-disk" created
-```
+  
 
-The main advantage with this approach is that there is no restriction in the number of disks for the creation of cStor storage pool using striped or mirrored Type.
+  Note: In OpenEBS, the pool instance do not extend beyond a node. The replicaton happens at volume level but not at pool level. See [volmes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
-### By Using Auto Method
+- `diskList`
 
-In the auto pool method, you must not select the disks which are detected by NDM for creating cStor Pools. You can create a file called **openebs-config.yaml** in your master node and add the following contents into the file. You can modify the following types in the YAML file.
+  Select the list of disk CRs in each participating nodes and enter them under `diskList`. To get the list of disk CRs use `kubectl get disks` . To know which node a given disk CR belongs, use `kubectl describe disk <disk-cr>`
+
+  You must enter all the disk CRs manually together from the selected nodes. 
+
+  When the `poolType` = `mirrorred` make sure the disk CRs selected from from each node are in even number.  The data is striped across mirrors. For example, if 4x1TB disks are selected on `node1`, the raw capacity of the pool instance of `cstor-pool1` on `node1` is 2TB. 
+
+  When the `pooltype` = `striped` the number of disk CRs from each node can be in any number, the data is striped across each disk. For example, if 4x1TB disks are selected on `node1`, the raw capacity of the pool instance of `cstor-pool1` on that `node1` is 4TB. 
+
+  The number of selected disk CRs across nodes need not be same. The disk CRs can be added to the pool spec dynamically as the used capacity gets filled up. 
+
+  Note: Some of the pool expansion features of the cStorpools are under development. See [pool day2 operations](#day2-operations-on-cstorpools)
 
 - `type`
 
-  This value can be either `sparse` or `disk`.
+  This value can be either `sparse` or `disk`. 
 
-- `maxPools`
+**Step2:**
 
-  This value represents the maximum number cStorStoragePool is creating on the cluster. 
+After the pool yaml spec is created, run the following command to create the pool instances on nodes.
 
-  This value should be less than or equal to the total number of Nodes in the cluster.
 
--  `poolType`
 
-  This value represents the type of cStorStoragePool is getting created. Currently `striped` and `mirrored` are supported.
+```
+kubectl apply -f cstor-pool1-config.yaml
+```
 
-Following is a sample SPC YAML file to use the physical disks for the cStor Pool creation with auto configuration.
+If the pool creation is successful, you will the example result as shown below.
+
+<div class="co">storagepoolclaim.openebs.io "cstor-pool1" created</div>
+
+
+
+<br>
+
+<hr>
+
+<br>
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="auto-mode"></a>Create a cStorPool WITHOUT specifying diskList </h3>
+
+Sometimes for new users, identifying the correct disks CRs and node-citizenship could be time consuming.  To make the process of cStorPool creation simple for users to quickly test cStor with real disks, OpenEBS supports creation of a cStorPool even when `diskList` is not specified in the YAML specification.  In this case, one pool instance on each node is created  with just one striped disk or one mirrored group of disks. 
+
+Follow the below steps to create a quick cStorPool in this method.
+
+
+
+**Step1:**
+
+Create a YAML file called `cstor-pool-config2.yaml` with the following content
 
 ```
 ---
 apiVersion: openebs.io/v1alpha1
 kind: StoragePoolClaim
 metadata:
-  name: cstor-disk
+  name: cstor-pool2
 spec:
-  name: cstor-disk
+  name: cstor-pool2
   type: disk
   maxPools: 3
   poolSpec:
@@ -135,27 +181,67 @@ spec:
 ---
 ```
 
-Once you have modified the YAML file with required changes, you can apply the YAML using the following command. This will create one cStorStoragePool in each of the 3 Nodes.
+
+
+- `type`
+
+  This value can be either `sparse` or `disk`.
+
+- `maxPools`
+
+  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`, then three nodes are randomly chosen by OpenEBS and one cStorPool instance each is created on them  with one disk (`striped`) or two disks (`mirrored`)
+
+  This value should be less than or equal to the total number of Nodes in the cluster.
+
+- `poolType`
+
+  This filed is not named very aptly. This field may be changed to `diskAggType` in future. This filed  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`
+
+  
+
+  Note: In OpenEBS, the pool instance do not extend beyond a node. The replicaton happens at volume level but not at pool level. See [volmes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
+
+**Step2:**
+
+After the pool yaml spec is created, run the following command to create the pool instances on nodes.
+
+
 
 ```
-kubectl apply -f openebs-config.yaml
+kubectl apply -f cstor-pool2-config.yaml
 ```
 
-Following is an example output. 
+If the pool creation is successful, you will the example result as shown below.
 
-```
-storageclass.storage.k8s.io "openebs-cstor-disk" created
-storagepoolclaim.openebs.io "cstor-disk" created
-```
+<div class="co">storagepoolclaim.openebs.io "cstor-pool2" created</div>
 
-#### **Limitations**:
+<br>
 
-1. For Striped pool, it will take only one disk per Node even Node have multiple disks.
-2. For Mirrored pool, it will take only 2 disks attached per Node even Node have multiple disks.
+<hr>
 
-## Verify StoragePoolClaim status
+<br>
 
-Once the StoragePoolClaim YAML is applied using either of the method from the above section, the status of the StoragePoolClaim can be checked using the following command.
+## Day 2 operations on cStorPools
+
+In 0.8.0 , day2 operations are not supported. The day2 operations are under active development. See [cStor roadmap](docs/next/cstor.html#cstor-roadmap) for more details. 
+
+**Note:** *All pools created using 0.8.1 will receive the pool exapansion capabilities when those features are available in future releases.* 
+
+<br>
+
+<hr>
+
+<br>
+
+## Verifying pool status
+
+<br>
+
+Detailed metrics for cStorPool are under development. See [cStor Roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. 
+
+At the moment, status of cStor pools is obtained via the standard `kubectl get` and `kubectl describe` commands of pool  custom resources (spc, csp)
+
+**StoragePoolClaim status**
 
 ```
  kubectl get spc
@@ -163,15 +249,16 @@ Once the StoragePoolClaim YAML is applied using either of the method from the ab
 
 Following is an example output. 
 
-```
-NAME                AGE
+<div class="co">NAME                AGE
 cstor-disk          1m
 cstor-sparse-pool   22m
-```
+</div>
 
-As mentioned in the above YAML, a SPC will be created with the name `cstor-disk`.
 
-## Verify cStorStoragePool status
+
+
+
+**cStorStoragePool status**
 
 Once StoragePoolClaim is created, corresponding cStorStoragePool will be created. This can be check using the following command.
 
@@ -181,19 +268,18 @@ kubectl get csp
 
 Following is an example output.
 
-```
-NAME                     AGE
+<div class="co">NAME                     AGE
 cstor-disk-8qvy          5s
 cstor-disk-k6si          6s
 cstor-disk-tns6          6s
 cstor-sparse-pool-a8qk   21m
 cstor-sparse-pool-d1zm   21m
 cstor-sparse-pool-sbv5   21m
-```
+</div>
 
-## Verify cStorStoragePool pods status
+**cStorStoragePool pods status**
 
-Once cStorStoragePool is created, corresponding pool pods will be created and running. This can be checked using the following command.
+Once cStorStoragePool is created, corresponding pool pods will be created and running. This can be verified using the following command.
 
 ```
 kubectl get pods -n openebs
@@ -201,8 +287,7 @@ kubectl get pods -n openebs
 
 Following is an example output. 
 
-```
-cstor-disk-2xtj-6748d7f57d-tbqrp           2/2       Running   0          38s
+<div class="co">cstor-disk-2xtj-6748d7f57d-tbqrp           2/2       Running   0          38s
 cstor-disk-m7xa-6f7bd8447c-nr5z4           2/2       Running   0          38s
 cstor-disk-sn5y-5688f94888-hmgkf           2/2       Running   0          38s
 cstor-sparse-pool-io1y-88cbf9bc-c6g29      2/2       Running   0          21m
@@ -214,17 +299,70 @@ openebs-ndm-9ktvv                          1/1       Running   0          22m
 openebs-ndm-g4d6l                          1/1       Running   0          22m
 openebs-provisioner-69956599d5-jlnb4       1/1       Running   0          22m
 openebs-snapshot-operator-c88544f5-76px8   2/2       Running   0          22m
-```
+</div>
 
 In the above example output, name satrts with `cstor-disk-\*` are the cStorStoragePool pods. It must be in running state to provision cStor Volumes.
 
 **Note:** By default, OpenEBS cStorStoragePool pods will be running in `openebs` namespace.
 
+<br>
 
+<hr>
+
+<br>
+
+
+
+<h2><a class="anchor" aria-hidden="true" id="sparse-pool-deepdive"></a>Sparse Pool deep dive </h2>
+
+OpenEBS installation process creates the following defaults : 
+
+- One sparse disk is created on each node in the cluster  
+- A ready to use cStorPool config called `cstor-sparse-pool` .  This `cstor-sparse-pool` config has a `cStor Pool` instance on every node of the cluster. 
+- One StorageClass called `openebs-cstor-sparse` that points to `cstor-sparse-pool` 
+
+<img src="/docs/assets/svg/sparsepool.svg" alt="OpenEBS configuration flow" style="width:100%">
+
+`kubectl describe StorageClass openebs-cstor-sparse` provides the relationship  details
+
+<div class="co">
+
+Name:            openebs-cstor-sparse
+IsDefaultClass:  No
+Annotations:     cas.openebs.io/config=- name: StoragePoolClaim
+  value: "cstor-sparse-pool"
+  -name: ReplicaCount
+  value: "3"
+,openebs.io/cas-type=cstor
+Provisioner:           openebs.io/provisioner-iscsi
+Parameters:            <none>
+AllowVolumeExpansion:  <unset>
+MountOptions:          <none>
+ReclaimPolicy:         Delete
+VolumeBindingMode:     Immediate
+Events:                <none>
+
+</div>
+
+
+
+cStor provides storage scalability along with ease of deployment and usage. cStor can handle multiple disks with different size per Node and create different storage pools. You can use these storage pools to create cStor volumes which you can utilize to run your stateful applications.
+
+<br>
+
+<hr>
 
 <br>
 
 ## See Also:
+
+
+
+### [Understand cStorPools ](/docs/next/cstor.html#cstor-pools)
+
+### [cStorPool use case for Prometheus](/docs/next/prometheus.html)
+
+### [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
 
 
 

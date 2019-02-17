@@ -15,15 +15,14 @@ sidebar_label: Installation
 
 <font size="6">Summary:</font>
 
+
+
 - Verify if [iSCSI.d](#verify-iscsi-client) service is running
 
 - Set Kubernetes [admin context](#set-cluster-admin-user-context) 
 
 - Install through 
-
-  - **[helm](#example-configurations-helm) chart** 
-
-    (or)
+  - **[helm](#example-configurations-helm) chart**  `(or)`
 
   - **[kubectl yaml](#installation-through-kubectl) spec file**
 
@@ -33,12 +32,9 @@ sidebar_label: Installation
 
 - [Post installation](#post-installation-considerations)
 
-
-
 <br>
 
 <hr>
-
 <br>
 
 ## Verify iSCSI client
