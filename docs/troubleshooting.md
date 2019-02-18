@@ -86,15 +86,17 @@ text goes here
 
 
 
-iSCSI client is not setup on Nodes. Pod is in ContainerCreating state.
+<h3><a class="anchor" aria-hidden="true" id="install-failed-iscsi-not-configured"></a>iSCSI client is not setup on Nodes. Pod is in ContainerCreating state.</h3>
 
 <br>
 
-Why does OpenEBS provisioner pod restart continuously?
+<h3><a class="anchor" aria-hidden="true" id="openebs-provsioner-restart-continuously-"></a>Why does OpenEBS provisioner pod restart continuously?</h3>
+
+
 
 <br>
 
-OpenEBS installation fails on Azure
+<h3><a class="anchor" aria-hidden="true" id="install-failed-azure-no-rbac-set"></a>OpenEBS installation fails on Azure</h3>
 
 On AKS, while installing OpenEBS using Helm,  you may seen the following error.
 
@@ -107,7 +109,7 @@ Error: release openebsfailed: clusterroles.rbac.authorization.k8s.io "openebs" i
 
 You must enable RBAC on Azure before OpenEBS installation. For more details, see [Prerequisites](https://github.com/openebs/openebs-docs/blob/master/docs/next/prerequisites.html).
 
-multipath.conf file claims all SCSI devices in OpenShift
+<h3><a class="anchor" aria-hidden="true" id="multipath-conf-claims-all-scsi-devices-openshift"></a>A multipath.conf file claims all SCSI devices in OpenShift</h3>
 
 A multipath.conf file without either find_multipaths or a manual blacklist claims all SCSI devices.
 
@@ -128,12 +130,13 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 <font size="6" color="green">Volume provisioning</font>
 
-<hr>
-## Appliation complaining ReadOnly filesystem
+<h3><a class="anchor" aria-hidden="true" id="application-read-only"></a> Appliation complaining ReadOnly filesystem</h3>
 
 <br>
 
-Application pods are not running when OpenEBS volumes are provisioned on Rancher
+<h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
+
+
 
 The setup environment where the issue occurs is rancher/rke with bare metal hosts running CentOS. After installing OpenEBS, OpenEBS pods are running, but application pod is in *ContainerCreating* state. The output of `kubectl get pods` is displayed as follows.
 
@@ -159,7 +162,7 @@ iscsiadm version 2.0-874
 
 If output returns iscsiadm version for both commands, then you have to remove iSCSI from the node. You will find the resolution method from [here](/docs/next/iscsiclient.html#aks).
 
-Application pod is stuck in ContainerCreating state after deployment
+<h3><a class="anchor" aria-hidden="true" id="application-pod-stuck-after-deployment"></a>Application pod is stuck in ContainerCreating state after deployment</h3>
 
 **Troubleshooting**
 
@@ -192,7 +195,7 @@ Application pod is stuck in ContainerCreating state after deployment
   - *allowHostDirVolumePlugin: true*
   - *runAsUser: runAsAny*
 
-Creating cStor pool fails on CentOS when there are partitions on the disk.
+<h3><a class="anchor" aria-hidden="true" id="cstor-pool-failed-centos-partion-disk"></a>Creating cStor pool fails on CentOS when there are partitions on the disk.</h3>
 
 Creating cStor pool fails with the following error message:
 
@@ -251,8 +254,9 @@ sdc           8:32   0 232.9G  0 disk
    sudo dmsetup remove centos-root
    ```
 
+<h3><a class="anchor" aria-hidden="true" id="application-crashloopbackoff"></a>Application pod enters CrashLoopBackOff states</h3>
 
-## Application pod enters CrashLoopBackOff state
+Application pod enters CrashLoopBackOff state
 
 This issue is due to failed application operations in the container. Typically this is caused due to failed writes on the mounted PV. To confirm this, check the status of the PV mount inside the application pod.
 
@@ -307,7 +311,7 @@ The procedure to ensure application recovery in the above cases is as follows:
 
 1. The above procedure works for applications that are either pods or deployments/statefulsets. In case of the latter, the application pod can be restarted (i.e., deleted) after step-4 (iscsi logout) as the deployment/statefulset controller will take care of rescheduling the application on a same/different node with the volume.
 
-## cStor pool pods are not running
+<h3><a class="anchor" aria-hidden="true" id="cstor-pool-pod-not-running"></a>cStor pool pods are not running</h3>
 
 cstor disk pods are not coming up now. On checking the pool pod logs, it says `/dev/xvdg is in use and contains a xfs filesystem.`
 
@@ -315,7 +319,7 @@ cstor disk pods are not coming up now. On checking the pool pod logs, it says `/
 
 cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is optional to wipe out the data from the disk if you use existing disks for cStor pool creation.
 
-## OpenEBS Jiva PVC is not provisioning in 0.8.0
+<h3><a class="anchor" aria-hidden="true" id="Jiva-provisioning-failed-080"></a>OpenEBS Jiva PVC is not provisioning in 0.8.0</h3>
 
 Even all OpenEBS pods are in running state, unable to provision JIva volume if you install through helm.
 
@@ -323,7 +327,7 @@ Even all OpenEBS pods are in running state, unable to provision JIva volume if y
 
 Check the latest logs showing in the OpenEBS provisioner logs. If the particular PVC creation entry is not coming on the OpenEBS provisioner pod, then restart the OpenEBS provisioner pod. From 0.8.1 version, liveness probe feature will check the OpenEBS provisioner pod status periodically and ensure its availability for OpenEBS PVC creation.
 
-## Recovery procedure for Read-only volume where kubelet is running in a container.
+<h3><a class="anchor" aria-hidden="true" id="recovery-readonly-when-kubelet-is-container"></a>Recovery procedure for Read-only volume where kubelet is running in a container.</h3>
 
 In environments where the kubelet runs in a container, perform the following steps as part of the recovery procedure for a Volume-Read only issue.
 
@@ -338,7 +342,7 @@ In environments where the kubelet runs in a container, perform the following ste
    - Verify if the application pod is able to start using/writing into the newly mounted device.
 2. Once the application is back in "Running" state post recovery by following steps 1-9, if existing/older data is not visible (i.e., it comes up as a fresh instance), it is possible that the application pod is using the docker container filesystem instead of the actual PV (observed sometimes due to the reconciliation attempts by Kubernetes to get the pod to a desired state in the absence of the mounted iSCSI disk). This can be checked by performing a `df -h` or `mount` command inside the application pods. These commands should show the scsi device `/dev/sd*` mounted on the specified mount point. If not, the application pod can be forced to use the PV by restarting it (deployment/statefulset) or performing a docker stop of the application container on the node (pod).
 
-## Recovery procedure for Read-only volume for XFS formatted volumes
+<h3><a class="anchor" aria-hidden="true" id="recovery-readonly-xfs-volume"></a>Recovery procedure for Read-only volume for XFS formatted volumes</h3>
 
 In case of `XFS` formatted volumes, perform the following steps once the iSCSI target is available in RW state & logged in:
 
@@ -360,10 +364,13 @@ In case of `XFS` formatted volumes, perform the following steps once the iSCSI t
 <font size="6" color="red">Kubernetes related</font>
 
 <hr>
+<h3><a class="anchor" aria-hidden="true" id="node-reboot-when-kubelet-memory-increases"></a>Kubernetes node reboots because of increase in memory consumed by Kubelet</h3>
 
-## Kubernetes node reboots because of increase in memory consumed by  Kubelet
+<To do>
 
-## Application and OpenEBS pods terminate/restart under heavy I/O load
+<br>
+
+<h3><a class="anchor" aria-hidden="true" id="Pods-restart-terminate-when-heavy-load"></a>Application and OpenEBS pods terminate/restart under heavy I/O load</h3>
 
 This is caused due to lack of resources on the Kubernetes nodes, which causes the pods to evict under loaded conditions as the node becomes *unresponsive*. The pods transition from *Running* state to *unknown* state followed by *Terminating* before restarting again.
 
