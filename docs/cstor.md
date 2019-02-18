@@ -377,8 +377,9 @@ Following are most commonly observed areas of troubleshooting
 | <font size="5">cStor Pool features</font>                    |                   |
 | cStor pool creation and initial use with either stripe mode or RAIDZ0 (mirror) mode | 0.8.0             |
 | Adding a new cStorPool instance to the existing cstor-pool-config | 0.8.1             |
-| Expanding a given pool replica (add disks to a pool after it is created) | 0.9.0             |
 | Ephemeral disk/pool support for rebuilding                   | 0.8.1             |
+| Disk replacement in a given cStor pool instance              | 0.9.0             |
+| Expanding a given pool replica (add disks to a pool after it is created) | 0.9.0             |
 | Support for RAIDZ1 in cStorPool                              | 0.9.0             |
 | Support for RAIDZ2 in cStorPool                              | 0.9.0             |
 | Deleting a pool replica                                      | Not scheduled yet |

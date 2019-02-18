@@ -11,9 +11,9 @@ Day2 operations on OpenEBS are broadly categorised as  :
 
 - <a href="/docs/next/operations.html#openebs-snapshots-and-clones">Taking snapshots/clones</a> 
 - <a href="/docs/next/backup.html">Backup and Restore</a>
-- <a href="/docs/next/backup.html">Volume size increase</a>
-- <a href="/docs/next/backup.html">Pool size increase</a>
-- <a href="/docs/next/backup.html">Adding new pool instances to the current pool</a>
+- <a href="#expanding-the-size-of-a-volume">Volume size increase</a>
+- <a href="#expanding-the-size-of-a-pool-instance">Add disks to existing pool instance</a>
+- <a href="#expanding-the-pool-to-more-nodes">Adding new pool instances to the current pool</a>
 - <a href="/docs/next/configuresc.html#creating-a-new-storageclass">Creating new storage classes</a>
 - <a href="/docs/next/upgrade.html">Upgrading OpenEBS</a>
 - <a href="/docs/next/k8supgrades.html">Upgrading stateful applications or Kubernetes</a>
@@ -161,7 +161,7 @@ When a new node is added, you may want to expand the cStor pool config to extend
 
 <br>
 
-## Expanding the size of a provisioned volume
+## Expanding the size of a volume
 
 OpenEBS control plane does not support increasing the size of volume seamlessly. Increasing the size of a provisioned volume requires support from Kubernetes' kubelet as the existing connection has to be remounted to reflect the new volume size. This can also be tackled with the new CSI plugin where the responsibility of the mount, unmount and remount actions will be held with the vendor CSI plugin rather than the kubelet itself.
 
