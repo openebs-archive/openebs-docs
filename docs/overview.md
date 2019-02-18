@@ -21,7 +21,7 @@ OpenEBS is the most popular open source project for container attached or contai
 
 ## <font size="6">Quickstart</font>
 
-- OpenEBS requires iSCSI client to be available on the host nodes. [Verify if iSCSI is setup](/docs/next/iscsiclient.html) and running before starting the installation
+- OpenEBS requires iSCSI client to be available on the host nodes. [Verify if iSCSI is setup](/docs/next/prerequisites.html) and running before starting the installation
 
 - Default installation works for most cases. As a Kubernetes cluster-admin , start the default installation using either
 
