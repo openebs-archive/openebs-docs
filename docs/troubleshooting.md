@@ -409,8 +409,69 @@ In case of `XFS` formatted volumes, perform the following steps once the iSCSI t
 
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="node-reboot-when-kubelet-memory-increases"></a>Kubernetes node reboots because of increase in memory consumed by Kubelet</h3>
+Sometime it is observed that iscsiadm is  continuously fails and repeats rapidly and for some reason this causes the memory consumption of kubelet to grow until the node goes out-of-memory and needs to be rebooted. Following type of error can be observed in journalctl and cstor-istgt container.
 
-<To do>
+**journalctl logs**
+
+```
+Feb 06 06:11:38 <hostname> kubelet[1063]: iscsiadm: failed to send SendTargets PDU
+Feb 06 06:11:38 <hostname> kubelet[1063]: iscsiadm: connection login retries (reopen_max) 5 exceeded
+Feb 06 06:11:38 <hostname> kubelet[1063]: iscsiadm: Connection to Discovery Address 10.233.46.76 failed
+Feb 06 06:11:38 <hostname> kubelet[1063]: iscsiadm: failed to send SendTargets PDU
+Feb 06 06:11:38 <hostname> kubelet[1063]: iscsiadm: connection login retries (reopen_max) 5 exceeded
+Feb 06 06:11:38 <hostname> kubelet[1063]: iscsiadm: Connection to Discovery Address 10.233.46.76 failed
+Feb 06 06:11:38 <hostname> kubelet[1063]: iscsiadm: failed to send SendTargets PDU
+Feb 06 06:11:38 <hostname> kubelet[1063]: iscsiadm: connection login retries (reopen_max) 5 exceeded
+Feb 06 06:11:38 <hostname> kubelet[1063]: iscsiadm: Connection to Discovery Address 10.233.46.76 failed
+Feb 06 06:11:38 <hostname> kubelet[1063]: iscsiadm: failed to send SendTargets PDU
+```
+
+**cstor-istgt container logs**
+
+```
+2019-02-05/15:43:30.250 worker            :6088: c#0.140005771040512.: iscsi_read_pdu() EOF
+
+2019-02-05/15:43:30.250 sender            :5852: s#0.140005666154240.: sender loop ended (0:14:43084)
+
+2019-02-05/15:43:30.251 worker            :6292: c#0.140005771040512.: worker 0/-1/43084 end (c#0.140005771040512/s#0.140005666154240)
+2019-02-05/15:43:30.264 worker            :5885: c#1.140005666154240.: con:1/16 [8d614b93:43088->10.233.45.100:3260,1]
+2019-02-05/15:43:30.531 istgt_iscsi_op_log:1923: c#1.140005666154240.: login failed, target not ready
+
+2019-02-05/15:43:30.782 worker            :6088: c#1.140005666154240.: iscsi_read_pdu() EOF
+
+2019-02-05/15:43:30.782 sender            :5852: s#1.140005649413888.: sender loop ended (1:16:43088)
+
+2019-02-05/15:43:30.783 worker            :6292: c#1.140005666154240.: worker 1/-1/43088 end (c#1.140005666154240/s#1.140005649413888)
+2019-02-05/15:43:33.285 worker            :5885: c#2.140005649413888.: con:2/18 [8d614b93:43092->10.233.45.100:3260,1]
+2019-02-05/15:43:33.536 istgt_iscsi_op_log:1923: c#2.140005649413888.: login failed, target not ready
+
+2019-02-05/15:43:33.787 worker            :6088: c#2.140005649413888.: iscsi_read_pdu() EOF
+
+2019-02-05/15:43:33.787 sender            :5852: s#2.140005632636672.: sender loop ended (2:18:43092)
+
+2019-02-05/15:43:33.788 worker            :6292: c#2.140005649413888.: worker 2/-1/43092 end (c#2.140005649413888/s#2.140005632636672)
+2019-02-05/15:43:35.251 istgt_remove_conn :7039: c#0.140005771040512.: remove_conn->initiator:147.75.97.141(iqn.2019-02.net.packet:device.7c8ad781) Target: 10.233.109.82(dummy LU0) conn:0x7f55a4c18000:0 tsih:1 connections:0  IOPending=0
+2019-02-05/15:43:36.291 worker            :5885: c#0.140005666154240.: con:0/14 [8d614b93:43094->10.233.45.100:3260,1]
+2019-02-05/15:43:36.540 istgt_iscsi_op_log:1923: c#0.140005666154240.: login failed, target not ready
+```
+
+**Troubleshooting**
+
+The cause of high memory consumption of kubelet is mainly due to the following.
+
+There are 3 modules are involved - cstor-isgt, kubelet and iscsiInitiator(iscsiadm).
+kubelet runs iscsiadm command to do discovery on cstor-istgt.
+If there is any delay in receiving response of discovery opcode (either due to network or delay in processing on target side), iscsiadm retries few times, and, gets into infinite loop dumping error messages as below:
+
+    iscsiadm: Connection to Discovery Address 127.0.0.1 failed
+    iscsiadm: failed to send SendTargets PDU
+    iscsiadm: connection login retries (reopen_max) 5 exceeded
+    iscsiadm: Connection to Discovery Address 127.0.0.1 failed
+    iscsiadm: failed to send SendTargets PDU```
+    kubelet keeps taking this response and accumulates the memory.
+**Workaround**
+
+Restart the corresponding istgt pod to avoid memory consumption.
 
 <h3><a class="anchor" aria-hidden="true" id="Pods-restart-terminate-when-heavy-load"></a>Application and OpenEBS pods terminate/restart under heavy I/O load</h3>
 
