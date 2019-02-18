@@ -74,19 +74,73 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-user-rights"></a>Installation failed because insufficient user rights</h3>
 
+During OpenEBS installation, it can failed in some cloud platform with showing following errors.
 
+```
+namespace "openebs" created
+serviceaccount "openebs-maya-operator" created
+clusterrolebinding.rbac.authorization.k8s.io "openebs-maya-operator" created
+deployment.apps "maya-apiserver" created
+service "maya-apiserver-service" created
+deployment.apps "openebs-provisioner" created
+deployment.apps "openebs-snapshot-operator" created
+configmap "openebs-ndm-config" created
+daemonset.extensions "openebs-ndm" created
+Error from server (Forbidden): error when creating "https://raw.githubusercontent.com/openebs/openebs/v0.8.x/k8s/openebs-operator.yaml": clusterroles.rbac.authorization.k8s.io "openebs-maya-operator" is forbidden: attempt to grant extra privileges: [{[*] [*] [nodes] [] []} {[*] [*] [nodes/proxy] [] []} {[*] [*] [namespaces] [] []} {[*] [*] [services] [] []} {[*] [*] [pods] [] []} {[*] [*] [deployments] [] []} {[*] [*] [events] [] []} {[*] [*] [endpoints] [] []} {[*] [*] [configmaps] [] []} {[*] [*] [jobs] [] []} {[*] [*] [storageclasses] [] []} {[*] [*] [persistentvolumeclaims] [] []} {[*] [*] [persistentvolumes] [] []} {[get] [volumesnapshot.external-storage.k8s.io] [volumesnapshots] [] []} {[list] [volumesnapshot.external-storage.k8s.io] [volumesnapshots] [] []} {[watch] [volumesnapshot.external-storage.k8s.io] [volumesnapshots] [] []} {[create] [volumesnapshot.external-storage.k8s.io] [volumesnapshots] [] []} {[update] [volumesnapshot.external-storage.k8s.io] [volumesnapshots] [] []} {[patch] [volumesnapshot.external-storage.k8s.io] [volumesnapshots] [] []} {[delete] [volumesnapshot.external-storage.k8s.io] [volumesnapshots] [] []} {[get] [volumesnapshot.external-storage.k8s.io] [volumesnapshotdatas] [] []} {[list] [volumesnapshot.external-storage.k8s.io] [volumesnapshotdatas] [] []} {[watch] [volumesnapshot.external-storage.k8s.io] [volumesnapshotdatas] [] []} {[create] [volumesnapshot.external-storage.k8s.io] [volumesnapshotdatas] [] []} {[update] [volumesnapshot.external-storage.k8s.io] [volumesnapshotdatas] [] []} {[patch] [volumesnapshot.external-storage.k8s.io] [volumesnapshotdatas] [] []} {[delete] [volumesnapshot.external-storage.k8s.io] [volumesnapshotdatas] [] []} {[get] [apiextensions.k8s.io] [customresourcedefinitions] [] []} {[list] [apiextensions.k8s.io] [customresourcedefinitions] [] []} {[create] [apiextensions.k8s.io] [customresourcedefinitions] [] []} {[update] [apiextensions.k8s.io] [customresourcedefinitions] [] []} {[delete] [apiextensions.k8s.io] [customresourcedefinitions] [] []} {[*] [*] [disks] [] []} {[*] [*] [storagepoolclaims] [] []} {[*] [*] [storagepools] [] []} {[*] [*] [castemplates] [] []} {[*] [*] [runtasks] [] []} {[*] [*] [cstorpools] [] []} {[*] [*] [cstorvolumereplicas] [] []} {[*] [*] [cstorvolumes] [] []} {[get] [] [] [] [/metrics]}] user=&{user.name@mayadata.io  [system:authenticated] map[user-assertion.cloud.google.com:[AKUJVpmzjjLCED3Vk2Q7wSjXV1gJs/pA3V9ZW53TOjO5bHOExEps6b2IZRjnru9YBKvaj3pgVu+34A0fKIlmLXLHOQdL/uFA4WbKbKfMdi1XC52CcL8gGTXn0/G509L844+OiM+mDJUftls7uIgOIRFAyk2QBixnYv22ybLtO2n8kcpou+ZcNFEVAD6z8Xy3ZLEp9pMd9WdQuttS506x5HIQSpDggWFf9T96yPc0CYmVEmkJm+O7uw==]]} ownerrules=[{[create] [authorization.k8s.io] [selfsubjectaccessreviews selfsubjectrulesreviews] [] []} {[get] [] [] [] [/api /api/* /apis /apis/* /healthz /openapi /openapi/* /swagger-2.0.0.pb-v1 /swagger.json /swaggerapi /swaggerapi/* /version /version/]}] ruleResolutionErrors=[]
+```
 
-text goes here
+**Troubleshooting**
 
+You must enable RBAC before OpenEBS installation.  This can be done in the following way from the kubernetes master console.
 
+```
+kubectl create clusterrolebinding  <cluster_name>-admin-binding --clusterrole=cluster-admin --user=<user-reigistered-email-with-the-provider>
+```
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-iscsi-not-configured"></a>iSCSI client is not setup on Nodes. Pod is in ContainerCreating state.</h3>
 
-<Todo>
+After OpenEBS installation, you may proceed with application installation which will provisioning on OpenEBS volume. This may fail due to the following errors showing while describe the application pod.
+
+```
+MountVolume.WaitForAttach failed for volume “pvc-ea5b871b-32d3-11e9-9bf5-0a8e969eb15a” : open /sys/class/iscsi_host: no such file or directory -
+```
+
+**Troubleshooting**
+
+This logs points that iscsid.service may not be enabled and running on you Nodes. Service you need  to check is `iscsid.service`. If the service is still not running you might have to `enable` and `start` the service. You can refer [prerequisites](/docs/next/prerequisites.html) section and choose your platform and get the steps to enable it.
 
 <h3><a class="anchor" aria-hidden="true" id="openebs-provsioner-restart-continuously"></a>Why does OpenEBS provisioner pod restart continuously?</h3>
 
-<Todo>
+The following output displays the pod status of all namespaces in which the OpenEBS provisioner is restarting continuously.
+
+```
+NAMESPACE     NAME                                         READY     STATUS             RESTARTS   AGE       IP                NODE
+default       percona                                      0/1       Pending            0          36m       <none>            <none>
+kube-system   calico-etcd-tl4td                            1/1       Running            0          1h        192.168.56.65     master
+kube-system   calico-kube-controllers-84fd4db7cd-jz9wt     1/1       Running            0          1h        192.168.56.65     master
+kube-system   calico-node-5rqdl                            2/2       Running            0          1h        192.168.56.65     master
+kube-system   calico-node-zt95x                            2/2       Running            0          1h        192.168.56.66     node
+kube-system   coredns-78fcdf6894-2plxb                     1/1       Running            0          1h        192.168.219.65    master
+kube-system   coredns-78fcdf6894-gcjj7                     1/1       Running            0          1h        192.168.219.66    master
+kube-system   etcd-master                                  1/1       Running            0          1h        192.168.56.65     master
+kube-system   kube-apiserver-master                        1/1       Running            0          1h        192.168.56.65     master
+kube-system   kube-controller-manager-master               1/1       Running            0          1h        192.168.56.65     master
+kube-system   kube-proxy-9t98s                             1/1       Running            0          1h        192.168.56.65     master
+kube-system   kube-proxy-mwk9f                             1/1       Running            0          1h        192.168.56.66     node
+kube-system   kube-scheduler-master                        1/1       Running            0          1h        192.168.56.65     master
+openebs       maya-apiserver-5598cf68ff-tndgm              1/1       Running            0          1h        192.168.167.131   node
+openebs       openebs-provisioner-776846bbff-rqfzr         0/1       CrashLoopBackOff   16         1h        192.168.167.129   node
+openebs       openebs-snapshot-operator-5b5f97dd7f-np79k   0/2       CrashLoopBackOff   32         1h        192.168.167.130   node
+```
+
+**Troubleshooting**
+
+Perform the following steps to verify if the issue is due to a misconfiguration while installing the network component.
+
+1. Check if your network related pods are running fine.
+2. Check if OpenEBS provisioner HTTPS requests are reaching the apiserver
+3. Use the latest version of network provider images.
+4. Try other network components such as Calico, kube-router etc. if you are not using any of these.
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-azure-no-rbac-set"></a>OpenEBS installation fails on Azure</h3>
 
@@ -99,7 +153,7 @@ Error: release openebsfailed: clusterroles.rbac.authorization.k8s.io "openebs" i
 
 **Troubleshooting**
 
-You must enable RBAC on Azure before OpenEBS installation. For more details, see [Prerequisites](https://github.com/openebs/openebs-docs/blob/master/docs/next/prerequisites.html).
+You must enable RBAC on Azure before OpenEBS installation. For more details, see [Prerequisites](/docs/next/prerequisites.html).
 
 <h3><a class="anchor" aria-hidden="true" id="multipath-conf-claims-all-scsi-devices-openshift"></a>A multipath.conf file claims all SCSI devices in OpenShift</h3>
 
@@ -128,7 +182,7 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
 
-The setup environment where the issue occurs is rancher/rke with bare metal hosts running CentOS. After installing OpenEBS, OpenEBS pods are running, but application pod is in *ContainerCreating* state. The output of `kubectl get pods` is displayed as follows.
+The setup environment where the issue occurs is rancher/rke with bare metal hosts running CentOS. After installing OpenEBS, OpenEBS pods are running, but application pod is in *ContainerCreating* state. It consume Jiva volume.The output of `kubectl get pods` is displayed as follows.
 
 ```
 NAME                                                             READY     STATUS              RESTARTS   AGE
@@ -193,7 +247,7 @@ Creating cStor pool fails with the following error message:
 E0920 14:51:17.474702       8 pool.go:78] Unable to create pool: /dev/disk/by-id/ata-WDC_WD2500BPVT-00JJ
 ```
 
-sdb and sdc are used for pool.
+sdb and sdc are used for cStor pool creation.
 
 ```
 core@k8worker02 ~ $ lsblk
@@ -303,7 +357,7 @@ The procedure to ensure application recovery in the above cases is as follows:
 
 <h3><a class="anchor" aria-hidden="true" id="cstor-pool-pod-not-running"></a>cStor pool pods are not running</h3>
 
-cstor disk pods are not coming up now. On checking the pool pod logs, it says `/dev/xvdg is in use and contains a xfs filesystem.`
+The cStor disk pods are not coming up after it deploy with the YAML. On checking the pool pod logs, it says `/dev/xvdg is in use and contains a xfs filesystem.`
 
 **Workaround:**
 
@@ -315,7 +369,7 @@ Even all OpenEBS pods are in running state, unable to provision JIva volume if y
 
 **Troubleshooting:**
 
-Check the latest logs showing in the OpenEBS provisioner logs. If the particular PVC creation entry is not coming on the OpenEBS provisioner pod, then restart the OpenEBS provisioner pod. From 0.8.1 version, liveness probe feature will check the OpenEBS provisioner pod status periodically and ensure its availability for OpenEBS PVC creation.
+Check the latest logs showing in the OpenEBS provisioner logs. If the particular PVC creation entry logs are not coming on the OpenEBS provisioner pod, then restart the OpenEBS provisioner pod. From 0.8.1 version, liveness probe feature will check the OpenEBS provisioner pod status periodically and ensure its availability for OpenEBS PVC creation.
 
 <h3><a class="anchor" aria-hidden="true" id="recovery-readonly-when-kubelet-is-container"></a>Recovery procedure for Read-only volume where kubelet is running in a container.</h3>
 
