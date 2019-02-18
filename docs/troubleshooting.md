@@ -28,7 +28,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 **Installation**
 
-[Installation failed because insufficient user rights](/docs/next/troubleshooting.html#installation-failed-because-insufficient-user-rights).
+[Installation failed because insufficient user rights](#install-failed-user-rights)
 
 [iSCSI client is not setup on Nodes. Application Pod is in ContainerCreating state.](/docs/next/troubleshooting.html#iscsi-client-not-setup-pod-is-in-containercreating-state)
 
@@ -70,21 +70,31 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [Application and OpenEBS pods terminate/restart under heavy I/O load]()
 
-<hr>
-<font size="6" color="blue">Installation</font>
-Installation failed because insufficient user rights
+
+
+
+
+## Installation
 
 <br>
 
-## iSCSI client is not setup on Nodes. Pod is in ContainerCreating state.
+<h3><a class="anchor" aria-hidden="true" id="install-failed-user-rights"></a>Installation failed because insufficient user rights</h3>
+
+
+
+text goes here
+
+
+
+iSCSI client is not setup on Nodes. Pod is in ContainerCreating state.
 
 <br>
 
-## Why does OpenEBS provisioner pod restart continuously?
+Why does OpenEBS provisioner pod restart continuously?
 
 <br>
 
-## OpenEBS installation fails on Azure
+OpenEBS installation fails on Azure
 
 On AKS, while installing OpenEBS using Helm,  you may seen the following error.
 
@@ -97,7 +107,7 @@ Error: release openebsfailed: clusterroles.rbac.authorization.k8s.io "openebs" i
 
 You must enable RBAC on Azure before OpenEBS installation. For more details, see [Prerequisites](https://github.com/openebs/openebs-docs/blob/master/docs/next/prerequisites.html).
 
-## multipath.conf file claims all SCSI devices in OpenShift
+multipath.conf file claims all SCSI devices in OpenShift
 
 A multipath.conf file without either find_multipaths or a manual blacklist claims all SCSI devices.
 
@@ -123,7 +133,7 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 <br>
 
-## Application pods are not running when OpenEBS volumes are provisioned on Rancher
+Application pods are not running when OpenEBS volumes are provisioned on Rancher
 
 The setup environment where the issue occurs is rancher/rke with bare metal hosts running CentOS. After installing OpenEBS, OpenEBS pods are running, but application pod is in *ContainerCreating* state. The output of `kubectl get pods` is displayed as follows.
 
@@ -182,7 +192,7 @@ Application pod is stuck in ContainerCreating state after deployment
   - *allowHostDirVolumePlugin: true*
   - *runAsUser: runAsAny*
 
-## Creating cStor pool fails on CentOS when there are partitions on the disk.
+Creating cStor pool fails on CentOS when there are partitions on the disk.
 
 Creating cStor pool fails with the following error message:
 
@@ -371,13 +381,13 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 
 <br><br>
 
-### See Also:
+## See Also:
 
-#### [FAQs](/docs/next/faq.html)
+### [FAQs](/docs/next/faq.html)
 
-#### [Seek support or help](/docs/next/support.html)
+### [Seek support or help](/docs/next/support.html)
 
-#### [Latest release notes]()
+### [Latest release notes]()
 
 <br>
 
