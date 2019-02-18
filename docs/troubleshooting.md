@@ -20,8 +20,6 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
   - Status of custom resources of OpenEBS volumes in the topology view
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
-[]()
-
 <br>
 
 <font size="5">Areas of troubleshooting</font>
@@ -72,11 +70,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 
 
-
-
 ## Installation
-
-<br>
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-user-rights"></a>Installation failed because insufficient user rights</h3>
 
@@ -88,13 +82,11 @@ text goes here
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-iscsi-not-configured"></a>iSCSI client is not setup on Nodes. Pod is in ContainerCreating state.</h3>
 
-<br>
+<Todo>
 
 <h3><a class="anchor" aria-hidden="true" id="openebs-provsioner-restart-continuously"></a>Why does OpenEBS provisioner pod restart continuously?</h3>
 
-
-
-<br>
+<Todo>
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-azure-no-rbac-set"></a>OpenEBS installation fails on Azure</h3>
 
@@ -132,11 +124,9 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 <h3><a class="anchor" aria-hidden="true" id="application-read-only"></a> Appliation complaining ReadOnly filesystem</h3>
 
-<br>
+<Todo>
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
-
-
 
 The setup environment where the issue occurs is rancher/rke with bare metal hosts running CentOS. After installing OpenEBS, OpenEBS pods are running, but application pod is in *ContainerCreating* state. The output of `kubectl get pods` is displayed as follows.
 
@@ -358,7 +348,7 @@ In case of `XFS` formatted volumes, perform the following steps once the iSCSI t
 
 <hr>
 <br>
-
+<Todo>
 
 
 <font size="6" color="red">Kubernetes related</font>
@@ -367,8 +357,6 @@ In case of `XFS` formatted volumes, perform the following steps once the iSCSI t
 <h3><a class="anchor" aria-hidden="true" id="node-reboot-when-kubelet-memory-increases"></a>Kubernetes node reboots because of increase in memory consumed by Kubelet</h3>
 
 <To do>
-
-<br>
 
 <h3><a class="anchor" aria-hidden="true" id="Pods-restart-terminate-when-heavy-load"></a>Application and OpenEBS pods terminate/restart under heavy I/O load</h3>
 
