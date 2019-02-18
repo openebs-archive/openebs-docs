@@ -22,9 +22,15 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 <br>
 
-<font size="5">Areas of troubleshooting</font>
+<hr>
 
-**Installation**
+
+
+<font size="6">Areas of troubleshooting</font>
+
+<br>
+
+## Installation
 
 [Installation failed because insufficient user rights](#install-failed-user-rights)
 
@@ -35,8 +41,13 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 [OpenEBS installation fails on Azure](#install-failed-azure-no-rbac-set).
 
 [A multipath.conf file claims all SCSI devices in OpenShift](#multipath-conf-claims-all-scsi-devices-openshift)
+<br>
 
-**Volume provisioning**
+
+
+## Volume provisioning
+
+
 
 [Application complaining ReadOnly filesystem](#application-read-only)
 
@@ -58,11 +69,9 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 
 
-**Upgrades**
+<br>
 
-
-
-**Kubernetes related**
+## Kubernetes related
 
 [Kubernetes node reboots because of increase in memory consumed by Kubelet](#node-reboot-when-kubelet-memory-increases)
 
@@ -70,7 +79,15 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 
 
-## Installation
+<br>
+
+<hr>
+
+<br>
+
+
+
+<font size="6" color="blue">Installation</font>
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-user-rights"></a>Installation failed because insufficient user rights</h3>
 
@@ -172,13 +189,35 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 2. Run `multipath -w /dev/sdc` command (replace the devname with your persistent devname).
 
+<br>
+
+<hr>
+
+<br>
+
+<font size="6" color="red"> Volume provisioning</font>
+
+<br>
 
 
-## Volume provisioning
 
 <h3><a class="anchor" aria-hidden="true" id="application-read-only"></a> Appliation complaining ReadOnly filesystem</h3>
 
-<Todo>
+Application sometimes complain about the underlying filesystem has become ReadOnly.
+
+
+
+**Troubleshooting**
+
+This can happen for many reasons. 
+
+- The cStor target pod is evicted because of resource constraints and is not scheduled within time 
+- Node is rebooted in adhoc manner (or unscheduled reboot) and Kubernetes is waiting for Kubelet to come backup to know that the node is rebooted and the pods on that node need to be rescheduled. Kubernetes can take upto 30 minutes as timeout before deciding the node does not comebackup and pods need to be rescheduled. During this time, the iSCSI initiator at the application pod has timeout and marked the underlying filesystem as ReadOnly
+- cStor target has lost quorum because of underlying node losses and target has marked the lun as ReadOnly
+
+Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kuberntes node reboots. 
+
+
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
 
@@ -396,20 +435,24 @@ In case of `XFS` formatted volumes, perform the following steps once the iSCSI t
 - Perform `xfs_repair /dev/<device>`. This fixes if any file system related errors on the device
 - Perform application pod deletion to facilitate fresh mount of the volume. At this point, the app pod may be stuck on `terminating` OR `containerCreating` state. This can be resolved by deleting the volume folder (w/ app content) on the local directory.
 
-
-
-## Upgrades
-
-<hr>
 <br>
-<Todo>
-
-
-## Kubernetes related
 
 <hr>
+
+<br>
+
+
+
+<font size="6" color="green">Kubernetes related</font>
+
+<br>
+
+
+
+
 <h3><a class="anchor" aria-hidden="true" id="node-reboot-when-kubelet-memory-increases"></a>Kubernetes node reboots because of increase in memory consumed by Kubelet</h3>
 Sometime it is observed that iscsiadm is  continuously fails and repeats rapidly and for some reason this causes the memory consumption of kubelet to grow until the node goes out-of-memory and needs to be rebooted. Following type of error can be observed in journalctl and cstor-istgt container.
+
 
 **journalctl logs**
 
@@ -487,7 +530,7 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 
 <br>
 
-
+<hr>
 
 <br><br>
 
@@ -500,6 +543,12 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 ### [Latest release notes]()
 
 <br>
+
+<hr>
+
+<br>
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
