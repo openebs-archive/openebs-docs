@@ -48,15 +48,15 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [Creating cStor pool fails on CentOS when there are partitions on the disk](#cstor-pool-failed-centos-partion-disk)
 
-[Application pod enters CrashLoopBackOff state]()
+[Application pod enters CrashLoopBackOff state](#application-crashloopbackoff)
 
-[cStor pool pods are not running]()
+[cStor pool pods are not running](#cstor-pool-pod-not-running)
 
-[OpenEBS Jiva PVC is not provisioning in 0.8.0]()
+[OpenEBS Jiva PVC is not provisioning in 0.8.0](#Jiva-provisioning-failed-080)
 
-[Recovery procedure for Read-only volume where kubelet is running in a container]()
+[Recovery procedure for Read-only volume where kubelet is running in a container](#recovery-readonly-when-kubelet-is-container)
 
-[Recovery procedure for Read-only volume for XFS formatted volumes]()
+[Recovery procedure for Read-only volume for XFS formatted volumes](#recovery-readonly-xfs-volume)
 
 
 
@@ -66,9 +66,9 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 **Kubernetes related**
 
-[Kubernetes node reboots because of increase in memory consumed by  Kubelet](/docs/next/troubleshooting.html#kubernetes-node-reboots-because-of-increase-in-memory-consumed-by-kubelet)
+[Kubernetes node reboots because of increase in memory consumed by Kubelet](#node-reboot-when-kubelet-memory-increases)
 
-[Application and OpenEBS pods terminate/restart under heavy I/O load]()
+[Application and OpenEBS pods terminate/restart under heavy I/O load](#Pods-restart-terminate-when-heavy-load)
 
 
 
