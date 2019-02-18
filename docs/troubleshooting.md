@@ -174,7 +174,7 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 
 
-<font size="6" color="green">Volume provisioning</font>
+## Volume provisioning
 
 <h3><a class="anchor" aria-hidden="true" id="application-read-only"></a> Appliation complaining ReadOnly filesystem</h3>
 
@@ -398,14 +398,14 @@ In case of `XFS` formatted volumes, perform the following steps once the iSCSI t
 
 
 
-<font size="6" color="orange">Upgrades</font>
+## Upgrades
 
 <hr>
 <br>
 <Todo>
 
 
-<font size="6" color="red">Kubernetes related</font>
+## Kubernetes related
 
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="node-reboot-when-kubelet-memory-increases"></a>Kubernetes node reboots because of increase in memory consumed by Kubelet</h3>
