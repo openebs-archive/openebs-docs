@@ -187,9 +187,11 @@ OpenEBS is the most popular open source project for container attached or contai
 
 ## See Also:
 
-### <a href="https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/" target="_blank">CNCF CAS Blog </a>
 
-### [CASf overview](/docs/next/cas.html)
+
+### [Container Attached Storage or CAS](/docs/next/cas.html)
+
+### <a href="https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/" target="_blank">CNCF CAS Blog </a>
 
 ### [OpenEBS architecture](/docs/next/architecture.html)
 
