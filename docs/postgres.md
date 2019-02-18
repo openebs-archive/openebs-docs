@@ -60,6 +60,14 @@ Deployment YAML spec files for PostgresSQL and OpenEBS resources are found <a hr
 
 
 
+<br>
+
+<hr>
+
+<br>
+
+
+
 ## Post deployment Operations
 
 **Monitor OpenEBS Volume size** 
@@ -68,23 +76,17 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just PostgresSQL alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. 
-
- 
-
-## Best Practices:
-
-**Maintain volume replica quorum always**
-
-**Maintain cStor pool used capacity below 80%**
+As in most cases, cStor pool may not be dedicated to just PostgreSQL database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
 
 
 
-## Troubleshooting Guidelines
+<br>
 
-**Read-Only volume**
+<hr>
 
-**Snapshots were failing**
+<br>
+
+
 
 
 
@@ -244,6 +246,14 @@ reclaimPolicy: Delete
 
 ## See Also:
 
+<br>
+
+### [OpenEBS architecture](/docs/next/architecture.html)
+
+### [OpenEBS use cases](/docs/next/usecases.html)
+
+### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
+
 
 
 <br>
@@ -274,6 +284,5 @@ reclaimPolicy: Delete
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'UA-92076314-12');
 </script>

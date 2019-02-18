@@ -74,33 +74,33 @@ Deployment YAML spec files for GitLab and OpenEBS resources are found [here]()
 
 [Live access to GitLab dashboard]()
 
+<br>
 
+<hr>
+
+<br>
 
 ## Post deployment Operations
 
-**Monitor OpenEBS Volume size**
+**Monitor OpenEBS Volume size** 
 
 It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just GitLab alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold.
+As in most cases, cStor pool may not be dedicated to just GitLab's databases alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
 
 
 
-## Best Practices:
+**Maintain volume replica quorum during node upgrades**
 
-**Maintain volume replica quorum always**
+ cStor volume replicas need to be in quorum when applications are deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/docs/next/k8supgrades.html) for more detials.
 
-**Maintain cStor pool used capacity below 80%**
+<br>
 
+<hr>
 
-
-## Troubleshooting Guidelines
-
-**Read-Only volume**
-
-**Snapshots were failing**
+<br>
 
 
 
@@ -160,6 +160,14 @@ reclaimPolicy: Delete
 
 
 ## See Also:
+
+<br>
+
+### [OpenEBS architecture](/docs/next/architecture.html)
+
+### [OpenEBS use cases](/docs/next/usecases.html)
+
+### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
 
 
 

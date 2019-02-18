@@ -53,6 +53,16 @@ Sample YAML  for running Percona-mysql using cStor are [here](https://raw.github
 
 <a href="https://openebs.ci/percona-cstor" target="_blank">OpenEBS-CI dashboard of Percona</a>
 
+
+
+<br>
+
+<hr>
+
+<br>
+
+
+
 ## Post deployment Operations
 
 **Monitor OpenEBS Volume size** 
@@ -61,23 +71,19 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just Prometheus alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. 
-
- 
-
-## Best Practices:
-
-**Maintain volume replica quorum always**
-
-**Maintain cStor pool used capacity below 80%**
+As in most cases, cStor pool may not be dedicated to just Percona database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
 
 
 
-## Troubleshooting guidelines 
+**Maintain volume replica quorum during node upgrades**
 
-**Read-Only volume**
+ cStor volume replicas need to be in quorum when applications are deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/docs/next/k8supgrades.html) for more detials.
 
-**Snapshots were failing**
+<br>
+
+<hr>
+
+<br>
 
 
 
@@ -221,6 +227,14 @@ spec:
 <br>
 
 ## See Also:
+
+<br>
+
+### [OpenEBS architecture](/docs/next/architecture.html)
+
+### [OpenEBS use cases](/docs/next/usecases.html)
+
+### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
 
 
 

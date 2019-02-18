@@ -61,31 +61,31 @@ Deployment YAML spec files for NuoDB and OpenEBS resources are found [here](http
 
 
 
+<br>
+
+<hr>
+
+<br>
+
+
+
 ## Post deployment Operations
 
-**Monitor OpenEBS Volume size**
+**Monitor OpenEBS Volume size** 
 
 It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just NuoDB  alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold.
+As in most cases, cStor pool may not be dedicated to just NuoDB database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
 
 
 
-## Best Practices:
+<br>
 
-**Maintain volume replica quorum always**
+<hr>
 
-**Maintain cStor pool used capacity below 80%**
-
-
-
-## Troubleshooting Guidelines
-
-**Read-Only volume**
-
-**Snapshots were failing**
+<br>
 
 
 
@@ -574,6 +574,14 @@ spec:
 <br>
 
 ## See Also:
+
+<br>
+
+### [OpenEBS architecture](/docs/next/architecture.html)
+
+### [OpenEBS use cases](/docs/next/usecases.html)
+
+### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
 
 
 

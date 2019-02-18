@@ -64,6 +64,14 @@ Deployment YAML spec files for Cassandra and OpenEBS resources are found [here](
 
 
 
+<br>
+
+<hr>
+
+<br>
+
+
+
 ## Post deployment Operations
 
 **Monitor OpenEBS Volume size** 
@@ -72,23 +80,17 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just Cassandra alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. 
+As in most cases, cStor pool may not be dedicated to just Cassandra database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
 
 
 
-## Best Practices:
+<br>
 
-**Maintain volume replica quorum always**
+<hr>
 
-**Maintain cStor pool used capacity below 80%**
+<br>
 
 
-
-## Troubleshooting Guidelines
-
-**Read-Only volume**
-
-**Snapshots were failing**
 
 
 
@@ -243,6 +245,14 @@ spec:
 <br>
 
 ## See Also:
+
+<br>
+
+### [OpenEBS architecture](/docs/next/architecture.html)
+
+### [OpenEBS use cases](/docs/next/usecases.html)
+
+### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
 
 
 

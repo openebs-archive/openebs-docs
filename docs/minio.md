@@ -55,33 +55,29 @@ Deployment YAML spec files for Minio and OpenEBS resources are found [here]()
 
 [Live access to Minio dashboard]()
 
+<br>
 
+<hr>
+
+<br>
 
 ## Post deployment Operations
 
-**Monitor OpenEBS Volume size**
+**Monitor OpenEBS Volume size** 
 
 It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just Minio Object storage alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold.
+As in most cases, cStor pool may not be dedicated to just Minio alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
+
+<br>
+
+<hr>
+
+<br>
 
 
-
-## Best Practices:
-
-**Maintain volume replica quorum always**
-
-**Maintain cStor pool used capacity below 80%**
-
-
-
-## Troubleshooting Guidelines
-
-**Read-Only volume**
-
-**Snapshots were failing**
 
 
 
@@ -141,6 +137,14 @@ reclaimPolicy: Delete
 <br>
 
 ## See Also:
+
+<br>
+
+### [OpenEBS architecture](/docs/next/architecture.html)
+
+### [OpenEBS use cases](/docs/next/usecases.html)
+
+### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
 
 
 
