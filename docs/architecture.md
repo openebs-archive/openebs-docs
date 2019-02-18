@@ -97,11 +97,11 @@ The OpenEBS data plane is responsible for the actual volume IO path. A storage e
 
 ### Jiva
 
-The Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation for building the storage features such as thin provisioning, snapshotting, rebuilding etc. More details on Jiva architecture are [written here](/docs/next/storageengine.html).   
+The Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation for building the storage features such as thin provisioning, snapshotting, rebuilding etc. More details on Jiva architecture are written [here](/docs/next/jiva.html).   
 
 ### cStor
 
-cStor is a high performing storage engine built with proven building blocks of storage components such as "BSD based Multi-threaded iSCSI protocol stack that is still serving hundreds of installations" and DMU layer of userspace ZFS. cStor gives provable data integrity, CoW based snapshots and more. Common use cases include larger environments using snapshots and clones as a part of a test, deploy and operate pipelines; for example, clones are often used with DBs running on OpenEBS in staging pipelines.  More details on cStor architecture are [written here](/data/next/storageengine.html).
+cStor is a high performing storage engine built with proven building blocks of storage components such as "BSD based Multi-threaded iSCSI protocol stack that is still serving hundreds of installations" and DMU layer of userspace ZFS. cStor gives provable data integrity, CoW based snapshots and more. Common use cases include larger environments using snapshots and clones as a part of a test, deploy and operate pipelines; for example, clones are often used with DBs running on OpenEBS in staging pipelines.  More details on cStor architecture are written [here](/docs/next/cstor.html).
 
 ## Node Disk Manager<a name="NDM"></a>
 
