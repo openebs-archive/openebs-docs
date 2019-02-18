@@ -20,7 +20,7 @@ Operators or administrators typically choose a storage engine with a specific so
 OpenEBS provides two types of storage engines.
 
 1. **Jiva** - Jiva is the first storage engine that was released in 0.1 version of OpenEBS and is the most simple to use. It is built in GoLang and uses LongHorn and gotgt stacks inside. Jiva runs entirely in user space and provides standard block storage capabilities such as synchronous replication. Jiva is suitable for smaller capacity workloads in general and not suitable when extensive snapshotting and cloning features are a major need. [Read more details of Jiva here](/docs/next/jiva.html)
-2. **cStor** - cStor is the most recently released storage engine, which became available from 0.7 version of OpenEBS. cStor is very robust,  provides data consistency and supports enterprise storage features like snapshots and clones very well. It also comes with a robust storage pool feature for comprehensive storage management both interms of capacity and performance. Together with NDM (Node Disk Manager), cStor provides complete set of persistent storage features for stateful applications on Kubernetes. [Read more details of cStor here](/docs/next/cStor.html)
+2. **cStor** - cStor is the most recently released storage engine, which became available from 0.7 version of OpenEBS. cStor is very robust,  provides data consistency and supports enterprise storage features like snapshots and clones very well. It also comes with a robust storage pool feature for comprehensive storage management both interms of capacity and performance. Together with NDM (Node Disk Manager), cStor provides complete set of persistent storage features for stateful applications on Kubernetes. [Read more details of cStor here](/docs/next/cstor.html)
 
 <img src="/docs/assets/engines.png" alt="OpenEBS storage engines - Jiva and cStor" width="900"/>
 
@@ -38,7 +38,7 @@ OpenEBS provides two types of storage engines.
 
 
 
-One SPC points to multiple CSPs. Similarly one CV points to as CVRs. Read detailed explanation of cStor Pools [here](http://localhost:3000/docs/next/cstor.html#cstor-pools). 
+One SPC points to multiple CSPs. Similarly one CV points to as CVRs. Read detailed explanation of cStor Pools [here](/docs/next/cstor.html#cstor-pools). 
 
 <br> <br>
 
