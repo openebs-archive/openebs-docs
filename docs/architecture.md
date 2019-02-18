@@ -101,7 +101,9 @@ The Jiva storage engine is developed with Rancher's LongHorn and gotgt as the ba
 
 ### cStor
 
-cStor is a high performing storage engine built with proven building blocks of storage components such as "BSD based Multi-threaded iSCSI protocol stack that is still serving hundreds of installations" and DMU layer of userspace ZFS. cStor gives provable data integrity, CoW based snapshots and more. Common use cases include larger environments using snapshots and clones as a part of a test, deploy and operate pipelines; for example, clones are often used with DBs running on OpenEBS in staging pipelines.  More details on cStor architecture are written [here](/docs/next/cstor.html).
+cStor data engine is written in C and has a high performing iSCSI target and Copy-On-Write block system to provide data integrity,  data resiliency and  point-in-time snapshots and clones. cStor has a pool feature that aggregates the disks on a node in striped, mirrored or in RAIDZ mode to give larger units of capacity and performance. cStor also provides  the synchronous replication of data to multiple nodes even across zones so that node loss or node reboots do not cause unavilability of data. See [here](/docs/next/cstor.html) for more details on cStor features and architecture.
+
+
 
 ## Node Disk Manager<a name="NDM"></a>
 
