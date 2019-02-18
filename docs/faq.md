@@ -6,6 +6,8 @@ sidebar_label: FAQs
 
 ------
 
+<br>
+
 
 
 <font size="6" id="general">General</font>
@@ -24,9 +26,7 @@ sidebar_label: FAQs
 
 [What is the default OpenEBS Reclaim policy?](http://localhost:3000/docs/next/faq.html#what-is-the-default-openebs-reclaim-policy)
 
-<font size="6">Performance</font>
 
-[How does OpenEBS perform?]()
 
 <font size="6">Data Protection</font>
 
@@ -164,20 +164,6 @@ The default retention is the same used by K8s. For dynamically provisioned Persi
 <a href="#top">Go to top</a>
 
 
-
-
-
-<font size="6" color="green">Performance</font>
-
-<hr>
-
-
-
-### How does OpenEBS perform?
-
-Performance tests on release v.0.5.2 show acceptable performance, but additional efforts are ongoing to improve performance. OpenEBS will soon implement many changes to improve performance elsewhere in the stack and much more is coming via the cStor storage engine.
-
-<a href="#top">Go to top</a>
 
 
 
