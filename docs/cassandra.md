@@ -60,7 +60,7 @@ Deployment YAML spec files for Cassandra and OpenEBS resources are found [here](
 
 [OpenEBS-CI dashboard of Cassandra]()
 
-[Live access to Cassandradashboard]()
+[Live access to Cassandra dashboard]()
 
 
 

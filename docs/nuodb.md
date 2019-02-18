@@ -35,7 +35,7 @@ NuoDB’s distributed SQL database combines the elastic scale and continuous ava
 
 4. **Create Storage Class**
 
-   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since NuoDB is a statefulset application, it requires only single storage replica. So cStor voume `replicaCount` is =1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStoveVolume Replica count as 1 is provided in the configuration details below.
+   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since NuoDB is a statefulset application, it requires only single storage replica. So cStor volume `replicaCount` is =1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStoveVolume Replica count as 1 is provided in the configuration details below.
 
 5. **Launch and test NuoDB**
 
@@ -55,9 +55,9 @@ A live deployment of Minio using OpenEBS volumes as highly available object stor
 
 Deployment YAML spec files for NuoDB and OpenEBS resources are found [here](https://github.com/openebs/litmus/blob/master/apps/nuodb/deployers/nuodb.yaml)
 
-[OpenEBS-CI dashboard of NuodDB](https://openebs.ci/nuodb-cstor)
+[OpenEBS-CI dashboard of NuoDB](https://openebs.ci/nuodb-cstor)
 
-[Live access to NuodDB dashboard](https://insights.nuodb.com/3N5YV375G0/)
+[Live access to NuoDB dashboard](https://insights.nuodb.com/3N5YV375G0/)
 
 
 

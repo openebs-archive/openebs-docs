@@ -8,7 +8,7 @@ sidebar_label: Kubernetes upgrades
 There are few reasons why nodes in a Kubernetes cluster get  rebooted
 
 - Kubernetes upgrades do need to happen to new features that roll out and to get minimum requirements satisfied for the applications upgrade running on Kubernetes. The upgrade process of Kubernetes cluster involves upgrading the nodes one by one. This process may involve rebooting of the nodes of the cluster.
-- Kubertes nodes go through hardware changes
+- Kubernetes nodes go through hardware changes
 
 
 

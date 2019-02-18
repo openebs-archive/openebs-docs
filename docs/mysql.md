@@ -56,7 +56,7 @@ A live deployment of MySQL using OpenEBS volumes as highly available Database st
 
 
 
-Deployment yaml spec files for MySQL and OpenEBS resources are found <a href="https://github.com/openebs/e2e-infrastructure/tree/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/prometheus-cstor" target="_blank">here</a>
+Deployment YAML spec files for MySQL and OpenEBS resources are found <a href="https://github.com/openebs/e2e-infrastructure/tree/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/prometheus-cstor" target="_blank">here</a>
 
 
 
@@ -86,7 +86,7 @@ As in most cases, cStor pool may not be dedicated to just MySQL alone. It is rec
 
 **Maintain volume replica quorum during node upgrades**
 
- cStor volume replicas need to be in quorum when MySQL application is deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/docs/next/k8supgrades.html) for more detials.
+ cStor volume replicas need to be in quorum when MySQL application is deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/docs/next/k8supgrades.html) for more details.
 
 
 

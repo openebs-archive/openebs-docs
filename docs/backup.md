@@ -54,7 +54,7 @@ Ark backup can be restored onto a new cluster or to the same cluster. An OpenEBS
 
 
 
-On the target cluster, restore the applicaiton using the below command
+On the target cluster, restore the application using the below command
 
 ```
 ark restore create <restore-name> --from-backup <backup-name> -l app=<app-label-selector>

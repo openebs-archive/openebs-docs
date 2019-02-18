@@ -5,7 +5,7 @@ sidebar_label: PostgreSQL
 ---
 ------
 
-<img src="/docs/assets/o-postgres.png" alt="OpenEBS and PostgresSQL" style="width:400px;">	
+<img src="/docs/assets/o-postgres.png" alt="OpenEBS and PostgreSQL" style="width:400px;">	
 
 ## Introduction
 
@@ -33,15 +33,15 @@ As shown above, OpenEBS volumes need to be configured with single replica. This 
 
 3. **Configure cStor Pool**
 
-   If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html). As PostgresSQL is a StatefulSet application, it requires single storage replication factor. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
+   If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html). As PostgreSQL is a StatefulSet application, it requires single storage replication factor. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
 
 4. **Create Storage Class**
 
    You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. Since PostgreSQL is a StatefulSet application, it requires only one replication at the storage level. So cStor volume `replicaCount` is 1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 1 is provided in the configuration details below.
 
-5. **Launch and test PostgresSQL**
+5. **Launch and test PostgreSQL**
 
-   Install Postgress on OpenEBS volume using the following command.
+   Install PostgreSQL on OpenEBS volume using the following command.
 
    ```
    helm install --name my-release --storage-class=openebs-cstor-disk replication.slaveReplicas=2 stable/postgresql
@@ -50,11 +50,11 @@ As shown above, OpenEBS volumes need to be configured with single replica. This 
 
 ## Reference at <a href="https://openebs.ci" target="_blank">openebs.ci</a>
 
-A live deployment of PostgresSQL using OpenEBS volumes can be seen at the website <a href="https://openebs.ci">www.openebs.ci</a>
+A live deployment of PostgreSQL using OpenEBS volumes can be seen at the website <a href="https://openebs.ci">www.openebs.ci</a>
 
-Deployment YAML spec files for PostgresSQL and OpenEBS resources are found <a href="https://github.com/openebs/e2e-infrastructure/tree/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/postgresql-cstor" target="_blank">here</a>
+Deployment YAML spec files for PostgreSQL and OpenEBS resources are found <a href="https://github.com/openebs/e2e-infrastructure/tree/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/postgresql-cstor" target="_blank">here</a>
 
- <a href="https://openebs.ci/postgresql-cstor" target="_blank">OpenEBS-CI dashboard of PostgresSQL
+ <a href="https://openebs.ci/postgresql-cstor" target="_blank">OpenEBS-CI dashboard of PostgreSQL
 
 
 

@@ -15,7 +15,7 @@ NFS server provisioner stable helm chart is widely used for deploying NFS server
 
 <br>	
 
-Below are advantage of using NFS provisiner over OpenEBS cStor volumes 
+Below are advantage of using NFS provisioner over OpenEBS cStor volumes 
 
 - NFS data is replicated, highly available across zones if configured accordingly
 - Data is thin provisioned. Persistent volume mounts are configured at the required size and cStor physical pools can be started with as low as one disk per pool instance and grow as the storage is used up

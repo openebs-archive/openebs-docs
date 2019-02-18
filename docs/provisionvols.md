@@ -85,7 +85,7 @@ fio-cstor-sparse   1/1       Running   0          1m
 
 
 
-***Note:** The StorageClass `openebs-cstor-sparse` provisions volume on the `cstor-sparse-pool` which is constructed on sparse disks created on the node during OpenEBS installation. This is useful for testing applicaitions, initial testing of OpenEBS etc. For production applicaitions, consider provisioning volumes on disk pools. See [below](#provision-from-a-disk-pool)* 
+***Note:** The StorageClass `openebs-cstor-sparse` provisions volume on the `cstor-sparse-pool` which is constructed on sparse disks created on the node during OpenEBS installation. This is useful for testing applications, initial testing of OpenEBS etc. For production applicaitions, consider provisioning volumes on disk pools. See [below](#provision-from-a-disk-pool)* 
 
 <br>
 
@@ -153,7 +153,7 @@ spec:
 
 ## Monitor volumes
 
-By default the `VolumeMonitor` is set to ON in cStor StorageClasses. Volume metrics are exported when this parameter is set to ON. Followin metrics are supported by cStor as of the current release.
+By default the `VolumeMonitor` is set to ON in cStor StorageClasses. Volume metrics are exported when this parameter is set to ON. Following metrics are supported by cStor as of the current release.
 
 ```
 

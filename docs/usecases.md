@@ -43,7 +43,7 @@ Read <font size="5"><a href="/docs/next/mysql.html" target="_blank"> RDS type M
 
 <font size="6">Persistent storage for SQL and NoSQL databases </font>
 
-OpenEBS provides  iSCSI storage to support for cloud native applications that run either as deployments or as statefulsets. With features such as synchronous replication across AZs, thin provisioning, the peristent storage solution for sql and nosql databases becomes easy and simple. 
+OpenEBS provides  iSCSI storage to support for cloud native applications that run either as deployments or as statefulsets. With features such as synchronous replication across AZs, thin provisioning, the persistent storage solution for sql and nosql databases becomes easy and simple. 
 
 **Below are some example use cases for sql  SQL and NoSQL**
 

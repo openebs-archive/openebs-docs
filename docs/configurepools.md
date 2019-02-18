@@ -112,7 +112,7 @@ In the above file, change the parameters as required
 
   
 
-  Note: In OpenEBS, the pool instance do not extend beyond a node. The replicaton happens at volume level but not at pool level. See [volmes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
+  Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
 - `diskList`
 
@@ -120,7 +120,7 @@ In the above file, change the parameters as required
 
   You must enter all the disk CRs manually together from the selected nodes. 
 
-  When the `poolType` = `mirrorred` make sure the disk CRs selected from from each node are in even number.  The data is striped across mirrors. For example, if 4x1TB disks are selected on `node1`, the raw capacity of the pool instance of `cstor-pool1` on `node1` is 2TB. 
+  When the `poolType` = `mirrored` make sure the disk CRs selected from from each node are in even number.  The data is striped across mirrors. For example, if 4x1TB disks are selected on `node1`, the raw capacity of the pool instance of `cstor-pool1` on `node1` is 2TB. 
 
   When the `pooltype` = `striped` the number of disk CRs from each node can be in any number, the data is striped across each disk. For example, if 4x1TB disks are selected on `node1`, the raw capacity of the pool instance of `cstor-pool1` on that `node1` is 4TB. 
 
@@ -134,7 +134,7 @@ In the above file, change the parameters as required
 
 **Step2:**
 
-After the pool yaml spec is created, run the following command to create the pool instances on nodes.
+After the pool YAML spec is created, run the following command to create the pool instances on nodes.
 
 
 
@@ -201,11 +201,11 @@ spec:
 
   
 
-  Note: In OpenEBS, the pool instance do not extend beyond a node. The replicaton happens at volume level but not at pool level. See [volmes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
+  Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volmes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
 **Step2:**
 
-After the pool yaml spec is created, run the following command to create the pool instances on nodes.
+After the pool YAML spec is created, run the following command to create the pool instances on nodes.
 
 
 
@@ -227,7 +227,7 @@ If the pool creation is successful, you will the example result as shown below.
 
 In 0.8.0 , day2 operations are not supported. The day2 operations are under active development. See [cStor roadmap](docs/next/cstor.html#cstor-roadmap) for more details. 
 
-**Note:** *All pools created using 0.8.1 will receive the pool exapansion capabilities when those features are available in future releases.* 
+**Note:** *All pools created using 0.8.1 will receive the pool expansion capabilities when those features are available in future releases.* 
 
 <br>
 
@@ -303,7 +303,7 @@ openebs-provisioner-69956599d5-jlnb4       1/1       Running   0          22m
 openebs-snapshot-operator-c88544f5-76px8   2/2       Running   0          22m
 </div>
 
-In the above example output, name satrts with `cstor-disk-\*` are the cStorStoragePool pods. It must be in running state to provision cStor Volumes.
+In the above example output, name starts with `cstor-disk-\*` are the cStorStoragePool pods. It must be in running state to provision cStor Volumes.
 
 **Note:** By default, OpenEBS cStorStoragePool pods will be running in `openebs` namespace.
 

@@ -40,7 +40,7 @@ Note that this StorageClass has cStor volumes `replicaCount` set as `3`. Sometim
 
 
 <div class="co">
-    
+
 cat <<EOF | kubectl create -f -
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -70,7 +70,7 @@ The above command creates storage class called `openebs-sparse-sc-statefulset` w
 
 <br>
 
-StorageClass definition is an important task in the planning and execution of OpenEBS storage. As detailed in the CAS page, the real power of CAS architecture is to give an independent or a dedicated storage engine like cStor for each workload, so that granular policies can be applied to that storage engine to tune the behavior or performance as per the workload's need. In OpenEBS policies to the storage engine (in this case it is cStor) through the `annotations` specified in the `StorageClass` interface. 
+StorageClass definition is an important task in the planning and execution of OpenEBS storage. As detailed in the CAS page, the real power of CAS architecture is to give an independent or a dedicated storage engine like cStor for each workload, so that granular policies can be applied to that storage engine to tune the behaviour or performance as per the workload's need. In OpenEBS policies to the storage engine (in this case it is cStor) through the `annotations` specified in the `StorageClass` interface. 
 
 <font size="5">Steps to create a cStor StorageClass</font>
 
@@ -82,7 +82,7 @@ StorageClass definition is an important task in the planning and execution of Op
 
 **Step3:** Are there any other storage policies to be applied to the StorageClass? Refer to the [storage policies section](#cstor-storage-policies) for more details on the storage policies applicable for cStor.
 
-**Step4:** Create a yaml spec file <storage-class-name.yaml> from the master template below, update the pool, replica count and other policies and create the class using `kubectl apply -f <storage-class-name.yaml>` command.
+**Step4:** Create a YAML spec file <storage-class-name.yaml> from the master template below, update the pool, replica count and other policies and create the class using `kubectl apply -f <storage-class-name.yaml>` command.
 
 **Step5:** Verify the newly created StorageClass using `kubectl describe sc <storage-class-name>`
 
@@ -221,7 +221,7 @@ metadata:
 
 ### Volume File System Type Policy
 
-You can specify the file system type for the cStor volume where application will consue the storage using *value* for *FSType*. The following is the sample storage class. Currently OpenEBS support ext4 as the default file system and it also supports XFS as filesystem.
+You can specify the file system type for the cStor volume where application will consume the storage using *value* for *FSType*. The following is the sample storage class. Currently OpenEBS support ext4 as the default file system and it also supports XFS as filesystem.
 
 ```
 apiVersion: storage.k8s.io/v1

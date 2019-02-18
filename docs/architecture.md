@@ -8,7 +8,6 @@ sidebar_label: OpenEBS Architecture
 
 OpenEBS follows the container attached storage or CAS model.  As a part of this approach, each volume has a dedicated controller POD and a set of replica PODs. The advantages of the CAS architecture are discussed on the CNCF blog [here](https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/). OpenEBS is simple to operate and to use largely because it looks and feels like other cloud-native and Kubernetes friendly projects.  
 
-
 <img src="/docs/assets/openebs-arch.png" alt="drawing" width="700"/>
 
 
@@ -28,7 +27,7 @@ OpenEBS has many components, which can be grouped into the following categories.
 
 ## Control Plane
 
-The control plane of an OpenEBS cluster is often referred to as Maya. The OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies, exporting the volume metrics for consumption by prometheus/grafana, and so on.
+The control plane of an OpenEBS cluster is often referred to as Maya. The OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies, exporting the volume metrics for consumption by Prometheus/grafana, and so on.
 
 
 ![Maya is the control plane of OpenEBS](/docs/assets/openebs-maya-architecture.png)
@@ -50,7 +49,7 @@ The above control plane components are explained in detail below.
 
 This component runs as a POD and makes provisioning decisions. 
 
-The way it is used is that the developer constructs a claim with the required volume parameters, chooses the appropriate storage class and invokes kubelet on the yaml specification. The OpenEBS PV dynamic provisioner interacts with the maya-apiserver to create deployment specifications for the volume controller pod and volume replica pod(s) on appropriate nodes. Scheduling of the volume pods (controller/replica) can be controlled using annotations in PVC specification, details of which are discussed in a separate section.
+The way it is used is that the developer constructs a claim with the required volume parameters, chooses the appropriate storage class and invokes kubelet on the YAML specification. The OpenEBS PV dynamic provisioner interacts with the `maya-apiserver` to create deployment specifications for the volume controller pod and volume replica pod(s) on appropriate nodes. Scheduling of the volume pods (controller/replica) can be controlled using annotations in PVC specification, details of which are discussed in a separate section.
 
 Currently, the OpenEBS provisioner supports only one type of binding i.e. iSCSI. 
 
@@ -62,7 +61,7 @@ m-apiserver runs as a POD. As the name suggests, m-apiserver exposes the OpenEBS
 
 m-apiserver is also responsible for creating deployment specification files required for creating the volume pods. After generating these specification files, it invokes kube-apiserver for scheduling the pods accordingly. At the end of volume provisioning by the OpenEBS PV provisioner, a Kubernetes object PV is created and is mounted on the application pod. The PV is hosted by the controller pod which is supported by a set of replica pods in different nodes. The controller pod and replica pods are part of the data plane and are described in more detail in the [Storage Engines](/docs/next/storageengine.html) section.
 
-Another important task of the m-apiserver is volume policy management. OpenEBS provides very granular specification for expressing policies. m-apiserver interprets these yaml specifications, converts them into enforceable components and enforces them through volume-management sidecars.
+Another important task of the m-apiserver is volume policy management. OpenEBS provides very granular specification for expressing policies. m-apiserver interprets these YAML specifications, converts them into enforceable components and enforces them through volume-management sidecars.
 
 
 ### Maya Volume Exporter
@@ -93,15 +92,15 @@ Sidecars are also used for passing controller configuration parameters and volum
 
 ## Data Plane 
 
-The OpenEBS data plane is responsible for the actual volume IO path. A storage engine implements the actual IO path in the data plane. Currently, OpenEBS provides two storage engines that can be plugged in easily. These are called Jiva and cStor. Both these storage engines run completely in Linux user space and are based on microservices. 
+The OpenEBS data plane is responsible for the actual volume IO path. A storage engine implements the actual IO path in the data plane. Currently, OpenEBS provides two storage engines that can be plugged in easily. These are called Jiva and cStor. Both these storage engines run completely in Linux user space and are based on micro services architecture. 
 
 ### Jiva
 
-The Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. The entire Jiva engine is written in GO language and runs in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation for building the storage features such as thin provisioning, snapshotting, rebuilding etc. More details on Jiva architecture are written [here](/docs/next/jiva.html).   
+Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. Jiva engine is written in GO language and runs in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation for building the storage features such as thin provisioning, snapshotting, rebuilding etc. More details on Jiva architecture are written [here](/docs/next/jiva.html).   
 
 ### cStor
 
-cStor data engine is written in C and has a high performing iSCSI target and Copy-On-Write block system to provide data integrity,  data resiliency and  point-in-time snapshots and clones. cStor has a pool feature that aggregates the disks on a node in striped, mirrored or in RAIDZ mode to give larger units of capacity and performance. cStor also provides  the synchronous replication of data to multiple nodes even across zones so that node loss or node reboots do not cause unavilability of data. See [here](/docs/next/cstor.html) for more details on cStor features and architecture.
+cStor data engine is written in C and has a high performing iSCSI target and Copy-On-Write block system to provide data integrity,  data resiliency and  point-in-time snapshots and clones. cStor has a pool feature that aggregates the disks on a node in striped, mirrored or in RAIDZ mode to give larger units of capacity and performance. cStor also provides  the synchronous replication of data to multiple nodes even across zones so that node loss or node reboots do not cause unavailability of data. See [here](/docs/next/cstor.html) for more details on cStor features and architecture.
 
 
 
@@ -119,13 +118,13 @@ Node Disk Manager (NDM) fills a gap in the chain of tools required for managing 
 
 ### Prometheus and Grafana 
 
-Prometheus is installed as a microservice by the OpenEBS operator during the initial setup. Prometheus monitoring for a given volume is controlled by a volume policy. With granular volume, disk-pool, and disk statistics, the Prometheus and Grafana tool combination help the OpenEBS user community to monitor their use of persistent data. 
+Prometheus is installed as a micro service by the OpenEBS operator during the initial setup. Prometheus monitoring for a given volume is controlled by a volume policy. With granular volume, disk-pool, and disk statistics, the Prometheus and Grafana tool combination help the OpenEBS user community to monitor their use of persistent data. 
 
 
 
 ### WeaveScope
 
-Node Disk Manager components, volume pods, and other persistent storage structures of Kubernetes have been enabled for WeaveScope integration. With these enhancements, exploration and traversal of these components have become significantly easier.  WeaveScope is a well-regarded cloud-native visualization solution and is also incorporated in MayaOnline from MayaData.  
+Node Disk Manager components, volume pods, and other persistent storage structures of Kubernetes have been enabled for WeaveScope integration. With these enhancements, exploration and traversal of these components have become significantly easier.  WeaveScope is a well-regarded cloud-native visualisation solution and is also incorporated in MayaOnline from MayaData.  
 
 
 

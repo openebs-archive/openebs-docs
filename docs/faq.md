@@ -52,7 +52,7 @@ sidebar_label: FAQs
 
 [How OpenEBS detects disks for creating cStor Pool?](/docs/next/faq.html#how-openebs-detects-disks-for-creating-cstor-pool)
 
-[Can I provision OpenEBS volume if the request in PVC is more than the avaialble physical capcaity of the pools in the Storage Nodes?](/docs/next/faq.html#can-i-provision-openebs-volume-if-the-request-in-pvc-is-more-than-the-avaialble-physical-capcaity-of-the-pools-in-the-storage-nodes)
+[Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?](/docs/next/faq.html#can-i-provision-openebs-volume-if-the-request-in-pvc-is-more-than-the-avaialble-physical-capcaity-of-the-pools-in-the-storage-nodes)
 
 [What is the difference between cStor Pool creation using manual method and auto method?](/docs/next/faq.html#what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method)
 
@@ -314,7 +314,7 @@ Node Disk Manager(NDM) forms the DISK CRs in the following way
 - Filter out the OS disks
 - Filter out any other disk patterns that are mentioned in `openebs-operator.yaml`.
 
-NDM do some filters on the disks to exclude,for example boot disk. 
+NDM do some filters on the disks to exclude, for example boot disk. 
 NDM is excluding following device path to avoid from creating cStor pools. This configuration is added in `openebs-ndm-config` under Configmap in `openebs-operator.yaml`.
 
 ```
@@ -345,7 +345,7 @@ Example:
 
 
 
-### Can I provision OpenEBS volume if the request in PVC is more than the avaialble physical capcaity of the pools in the Storage Nodes?
+### Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?
 
 As of 0.8.0, the user is allowed to create PVCs that cross the available capacity of the pools in the Nodes. In the future release, it will validate with an option `overProvisioning=false`, the PVC request should be denied if there is not enough available capacity to provision the volume.
 

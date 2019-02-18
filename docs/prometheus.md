@@ -9,7 +9,7 @@ sidebar_label: Prometheus
 
 ## Introduction
 
-Prometheus is the mostly widely used application for scraping cloud native application metrics. Prometheus and OpenEBS togethr provide a complete open source stack for monitoring. In this solution, OpenEBS is used as Prometheus TSDB, where all the metrics are permanently stored on local Kubernetes cluster. 
+Prometheus is the mostly widely used application for scraping cloud native application metrics. Prometheus and OpenEBS together provide a complete open source stack for monitoring. In this solution, OpenEBS is used as Prometheus TSDB, where all the metrics are permanently stored on local Kubernetes cluster. 
 
 
 
@@ -73,7 +73,7 @@ A live deployment of Prometheus using OpenEBS volumes as highly available  TSDB 
 
 
 
-Deployment yaml spec files for Prometheus and OpenEBS resources are found <a href="https://github.com/openebs/e2e-infrastructure/tree/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/prometheus-cstor" target="_blank">here</a>
+Deployment YAML spec files for Prometheus and OpenEBS resources are found <a href="https://github.com/openebs/e2e-infrastructure/tree/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/prometheus-cstor" target="_blank">here</a>
 
 
 
@@ -107,7 +107,7 @@ As in most cases, cStor pool may not be dedicated to just Prometheus alone. It i
 
 **Maintain volume replica quorum during node upgrades**
 
- cStor volume replicas need to be in quorum Prometheus application is deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/docs/next/k8supgrades.html) for more detials.
+ cStor volume replicas need to be in quorum Prometheus application is deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/docs/next/k8supgrades.html) for more details.
 
 ,<br>
 
@@ -117,7 +117,7 @@ As in most cases, cStor pool may not be dedicated to just Prometheus alone. It i
 
 
 
-## Sample yaml specs
+## Sample YAML specs
 
 **Sample cStor Pool spec**
 

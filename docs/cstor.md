@@ -8,7 +8,7 @@ sidebar_label: cStor
 
 cStor is the recommended storage engine in OpenEBS. cStor was originally introduced in OpenEBS 0.7 release and has been tested well in the community and in production deployments. The primary function of cStor is to serve the iSCSI block storage using the underlying disks in a cloud native way. cStor is a very light weight and feature rich storage engine. It provides enterprise grade features such as synchronous data replication, snapshots, clones, thin provisioning of data, high resiliency of data, data consistency and on-demand increase of capacity or performance. 
 
-When the stateful application desires the storage to provide high availability of data, cStor is configured to have 3 replicas where data is written synchronously to all the three replicas. As shown below, the cStor target is replicating the data to Node1 (R1), Node3(R2) and Node4(R3). The data is written to the three repicas before the response is sent back to the application. It is important to note that the replicas R1, R2 and R3 are copies of the same data written to by the target, data is not striped across replicas or across nodes.
+When the stateful application desires the storage to provide high availability of data, cStor is configured to have 3 replicas where data is written synchronously to all the three replicas. As shown below, the cStor target is replicating the data to Node1 (R1), Node3(R2) and Node4(R3). The data is written to the three replicas before the response is sent back to the application. It is important to note that the replicas R1, R2 and R3 are copies of the same data written to by the target, data is not striped across replicas or across nodes.
 
 <br><img src="/docs/assets/cstor-for-deployment.png" alt="cStor components" width="900"/>
 
@@ -65,7 +65,7 @@ Replication of data does not happen at the pool level. Synchronous data replicat
 
 ### Relationship among PVC, PV, Storage Class, cStor pool and disks
 
-Storage administrators or DevOps administrators first build cStor pools using discovered disks on the designated OpenEBS nodes. Once pools are built, they are used to design and build storage clases. Application developers then use PVC and storage class to obtain a PV for the applications. 
+Storage administrators or DevOps administrators first build cStor pools using discovered disks on the designated OpenEBS nodes. Once pools are built, they are used to design and build storage classes. Application developers then use PVC and storage class to obtain a PV for the applications. 
 
 <img src="/docs/assets/pvcspc.png" alt="PVC and Storage Pool relationship" width="700"/>
 
@@ -175,7 +175,7 @@ spec:
 
 
 
-For Statefulsets, snapshots are created against each PV. For creating a clone, any one snapshot is used in the volumeClaimTemplates specification. Kubernetes will launch the PVs for all the statefulset pods from the chosen snapshot.  Example specificaiton for creating a clone out of snapshot for a statefulset application is shown below.
+For Statefulsets, snapshots are created against each PV. For creating a clone, any one snapshot is used in the volumeClaimTemplates specification. Kubernetes will launch the PVs for all the statefulset pods from the chosen snapshot.  Example specification for creating a clone out of snapshot for a statefulset application is shown below.
 
   
 
@@ -230,7 +230,7 @@ Links to screenshots of some of the cStor resources in MayaOnline are shown belo
 
 ## Thin provisioning in cStor
 
-cStor supports thin provisioning of volumes. By default, a volume is provisioned with whatever capacity that is mentioned in storage class. Capacity of the pool can be expanded on demand by adding more disks to the cStor pool. cStor architecture also supports the resizing of a provisoned volume on the fly, eventhough this feature is not fully functional yet and is part of the roadmap.
+cStor supports thin provisioning of volumes. By default, a volume is provisioned with whatever capacity that is mentioned in storage class. Capacity of the pool can be expanded on demand by adding more disks to the cStor pool. cStor architecture also supports the resizing of a provisioned volume on the fly, even though this feature is not fully functional yet and is part of the roadmap.
 
 <br>
 
@@ -282,7 +282,7 @@ Following are most commonly observed areas of troubleshooting
 
    **Symptom:**
 
-   If iSCSI tools are not installed on the nodes, after lauching the application with PVC pointing to OpenEBS provisioner,  you may observe the application is in "ContainerCreating" state. 
+   If iSCSI tools are not installed on the nodes, after launching the application with PVC pointing to OpenEBS provisioner,  you may observe the application is in "ContainerCreating" state. 
 
    `kubectl describe pod <app pod> ` may give an error that looks like the following
 
@@ -333,12 +333,12 @@ Following are most commonly observed areas of troubleshooting
   
    **Reason**
    
-    In 0.8.1 liveness check for cstor-pool is added. For every 5 minutes liveness probe will check whether cstor pool is alive or not. If not alive, liveness will kill the containers in corresponding deployment pod. The above error can come if the upgrade to 0.8.1 from 0.8.0 is not done thorugh the upgrade script.
+    In 0.8.1 liveness check for cstor-pool is added. For every 5 minutes liveness probe will check whether cstor pool is alive or not. If not alive, liveness will kill the containers in corresponding deployment pod. The above error can come if the upgrade to 0.8.1 from 0.8.0 is not done through the upgrade script.
    
 
    **Resolution**
   
-    The above error can be avoided by setting the correct `csp_uuid` in the correspoding deployment yaml. 
+    The above error can be avoided by setting the correct `csp_uuid` in the corresponding deployment YAML. 
     ```
     "containers": [
               {
@@ -420,7 +420,7 @@ Each CV will have as many CVRs as the number of replicas configured in the cStor
 
 **Disks :**
 
-Each discovered disk on a node is added as a disk CR. This is needed to identify a disk uniquely across the Kubernetes cluster. SPC secification contains the information about the disks CRs that correspond to a CSP on that given node
+Each discovered disk on a node is added as a disk CR. This is needed to identify a disk uniquely across the Kubernetes cluster. SPC specification contains the information about the disks CRs that correspond to a CSP on that given node
 
 <br>
 

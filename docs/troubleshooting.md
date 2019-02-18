@@ -38,7 +38,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 **Volume provisioning**
 
-[Appliation complaining ReadOnly filesystem](#application-read-only)
+[Application complaining ReadOnly filesystem](#application-read-only)
 
 [Application pods are not running when OpenEBS volumes are provisioned on Rancher](#application-pod-not-running-Rancher)
 
@@ -226,7 +226,7 @@ If output returns iscsiadm version for both commands, then you have to remove iS
 
      - replica count is equal to or lesser than available schedulable nodes
      - there are enough resources on the nodes to run the replica pods
-     - whether nodes are tainted and if so, whether they are tolerated by the OpeneEBS replica pods
+     - whether nodes are tainted and if so, whether they are tolerated by the OpenEBS replica pods
 
      Ensure that the above conditions are met and the replica rollout is successful. This will ensure application enters running state.
 

@@ -8,7 +8,7 @@ sidebar_label: Container Attached Storage
 
 
 
-In CAS or Container Attached Storage architecture, storage runs within containers and is closely associated with the application that the storage is bound to. Storage runs as micro service and will have no Kernel module dependencies. Orchestration systems such as Kubernetes orchestraes the storage volume like any other microservices or container. CAS provides benefits of both DAS and NAS. 
+In CAS or Container Attached Storage architecture, storage runs within containers and is closely associated with the application that the storage is bound to. Storage runs as micro service and will have no Kernel module dependencies. Orchestration systems such as Kubernetes orchestrates the storage volume like any other micro services or container. CAS provides benefits of both DAS and NAS. 
 
 
 
@@ -20,7 +20,7 @@ In non-CAS models, Kubernetes Persistent Volumes are still tightly coupled to th
 
 ## PVs on CAS systems
 
-In contrast, CAS enables you to leverage flexibility and scalability of cloud-native applications. The storage software that defines a Kubernetes PV (Persistent Volume) is based on the microservices architecture. The control plane (storage controller) and the data plane of the storage software (storage replica) are run as Kubernetes Pods and, therefore, enable you to apply all the advantages of being cloud-native to CAS.
+In contrast, CAS enables you to leverage flexibility and scalability of cloud-native applications. The storage software that defines a Kubernetes PV (Persistent Volume) is based on the micro services architecture. The control plane (storage controller) and the data plane of the storage software (storage replica) are run as Kubernetes Pods and, therefore, enable you to apply all the advantages of being cloud-native to CAS.
 
 ![CAS](/docs/assets/cas.png)
 
@@ -46,7 +46,7 @@ CAS containerizes the storage software and uses Kubernetes Custom Resource Defin
 
 ![CAS](/docs/assets/cas-arch.png)
 
-As shown in the above diagram, in CAS architecture, the software of storage controller and replicas are completely microservices-based and hence no kernel components are involved. Typically, the storage controller POD is scheduled on the same node as the persistent volume to increase the efficiency and the replica pods can be scheduled anywhere on the cluster nodes. Each replica is configured completely independently from the others using any combination of local disks, SAN disks, and cloud disks. This allows huge flexibility in managing the storage allocation for workloads at scale. 
+As shown in the above diagram, in CAS architecture, the software of storage controller and replicas are completely micro services based and hence no kernel components are involved. Typically, the storage controller POD is scheduled on the same node as the persistent volume to increase the efficiency and the replica pods can be scheduled anywhere on the cluster nodes. Each replica is configured completely independently from the others using any combination of local disks, SAN disks, and cloud disks. This allows huge flexibility in managing the storage allocation for workloads at scale. 
 
 ## Hyperconverged and not Distributed
 

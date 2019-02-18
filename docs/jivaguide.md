@@ -163,7 +163,7 @@ kubectl get sc
 
 ### Provision jiva volumes
 
-Once the storage class is created, provision the volumes using the standard PVC interface. In the example below the `StorageClass` openebs-jiva-gpd-3repl is specified in teh `PersistentVolumeClaim` specification
+Once the storage class is created, provision the volumes using the standard PVC interface. In the example below the `StorageClass` openebs-jiva-gpd-3repl is specified in the `PersistentVolumeClaim` specification
 
 
 

@@ -28,7 +28,7 @@ sidebar_label: Installation
 
 - [Verify](#verifying-openebs-installation) installation 
 
-- Installtion [troubleshooting](/docs/next/troubleshooting.html) 
+- Installation [troubleshooting](/docs/next/troubleshooting.html) 
 
 - [Post installation](#post-installation-considerations)
 

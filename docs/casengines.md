@@ -20,7 +20,7 @@ Operators or administrators typically choose a storage engine with a specific so
 OpenEBS provides two types of storage engines.
 
 1. **Jiva** - Jiva is the first storage engine that was released in 0.1 version of OpenEBS and is the most simple to use. It is built in GoLang and uses LongHorn and gotgt stacks inside. Jiva runs entirely in user space and provides standard block storage capabilities such as synchronous replication. Jiva is suitable for smaller capacity workloads in general and not suitable when extensive snapshotting and cloning features are a major need. [Read more details of Jiva here](/docs/next/jiva.html)
-2. **cStor** - cStor is the most recently released storage engine, which became available from 0.7 version of OpenEBS. cStor is very robust,  provides data consistency and supports enterprise storage features like snapshots and clones very well. It also comes with a robust storage pool feature for comprehensive storage management both interms of capacity and performance. Together with NDM (Node Disk Manager), cStor provides complete set of persistent storage features for stateful applications on Kubernetes. [Read more details of cStor here](/docs/next/cstor.html)
+2. **cStor** - cStor is the most recently released storage engine, which became available from 0.7 version of OpenEBS. cStor is very robust,  provides data consistency and supports enterprise storage features like snapshots and clones very well. It also comes with a robust storage pool feature for comprehensive storage management both in terms of capacity and performance. Together with NDM (Node Disk Manager), cStor provides complete set of persistent storage features for stateful applications on Kubernetes. [Read more details of cStor here](/docs/next/cstor.html)
 
 <img src="/docs/assets/engines.png" alt="OpenEBS storage engines - Jiva and cStor" width="900"/>
 
@@ -84,7 +84,7 @@ provisioner: openebs.io/provisioner-iscsi
 ---
 ```
 
-When the cas-type is `jiva` , StoragePool value of `default` has a special meaning. When pool is `default` , Jiva engine will carve out the data storage space for the replica pod from the storage space of the container (replica pod) itself. When the size of the required volume is small (like 5G to 10G), StoragePool `default` works very well as it can be accommondated within the container itself.  
+When the cas-type is `jiva` , StoragePool value of `default` has a special meaning. When pool is `default` , Jiva engine will carve out the data storage space for the replica pod from the storage space of the container (replica pod) itself. When the size of the required volume is small (like 5G to 10G), StoragePool `default` works very well as it can be accommodated within the container itself.  
 
 <br> <br>
 
@@ -112,7 +112,7 @@ Below table identifies few differences between the two engines.
 
 cStor is recommended most of the times as it commands more features and focussed development effort. cStor does offer robust features including snapshots/clones, storage pool features such as thin provisioning, on demand capacity additions etc.
 
-Jiva is recommended for a low capacity workloads which can be accommodated within the container image storage, for example 5 to 50G. Jiva is very easy to use, and provides enterprise grade container native storage without the need of dedicated hard disks. Consider using cStor instead of Jiva especially when snapshots and clones capabilties are needed.
+Jiva is recommended for a low capacity workloads which can be accommodated within the container image storage, for example 5 to 50G. Jiva is very easy to use, and provides enterprise grade container native storage without the need of dedicated hard disks. Consider using cStor instead of Jiva especially when snapshots and clones capabilities are needed.
 
 
 

@@ -66,7 +66,7 @@ The open-iscsi initiator packages depends on your host OS or in kubelet containe
 
 **Verify iSCSI is configured**
 
-If iSCSI is already installed on your host,check that initiator name is configured and iSCSI service is running using the following commands.
+If iSCSI is already installed on your host, check that initiator name is configured and iSCSI service is running using the following commands.
 
 ```
 sudo cat /etc/iscsi/initiatorname.iscsi
@@ -87,7 +87,7 @@ sudo service open-iscsi restart
 
 **Verify iSCSI is configured**
 
-In Red Hat Enterprise Linux 7, the iSCSI service is lazily started by default: the service starts after running the `iscsiadm` command. If iSCSI is already installed on the host,check that initiator name is configured  using the following command. 
+In Red Hat Enterprise Linux 7, the iSCSI service is lazily started by default: the service starts after running the `iscsiadm` command. If iSCSI is already installed on the host, check that initiator name is configured  using the following command. 
 
 ```
  cat /etc/iscsi/initiatorname.iscsi
@@ -217,7 +217,7 @@ Following is the example output
 3aab0f9a48e2    k8s-gcrio.azureedge.net/hyperkube-amd64:v1.8.7   "/hyperkube kubele..."   48 minutes ago      Up 48 minutes                           eager_einstein
 ```
 
-Once kubelet conatiner ID is obtained, you need to get the shell of this container using the following command.   
+Once kubelet container ID is obtained, you need to get the shell of this container using the following command.   
 
 ```
 sudo docker exec -it <container ID> bash
@@ -237,7 +237,7 @@ service open-iscsi status
 
 **Install iSCSI**
 
-You have to get the kubelet container ID using the steps mentioned in the above section. Once kubelet conatiner ID is obtained, you need to get the shell of this container using the following command.   
+You have to get the kubelet container ID using the steps mentioned in the above section. Once kubelet container ID is obtained, you need to get the shell of this container using the following command.   
 
 ```
 sudo docker exec -it <container ID> bash

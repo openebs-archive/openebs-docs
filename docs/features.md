@@ -9,7 +9,7 @@ sidebar_label: Features and Benefits
 <font size="6">OpenEBS features</font>
 
 - [Containerized Storage for Containers](/docs/next/features.html#containerized-storage-for-containers)
-- [Synchronus replication](/docs/next/features.html#synchronus-replication)
+- [Synchronous replication](/docs/next/features.html#synchronous-replication)
 - [Snapshots and clones](/docs/next/features.html#snapshots-and-clones)
 - [Backup and Restore](/docs/next/features.html#backup-and-restore)
 - [Prometheus metrics and Grafana graphs](/docs/next/features.html#prometheus-metrics-for-workload-tuning)
@@ -50,10 +50,10 @@ OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always
 
 <br>
 
-### Synchronus replication
+### Synchronous replication
 
 <img src="/docs/assets/svg/f-replication.svg" alt="Smiley face" style="width:200px;">
-OpenEBS synchronously replicates the data volume replicas for high availability. The replication happens across Kubernetes zone resulting in the cloud native applciations to be highly available in cross AZ setups. This feature is especially becomes useful to build highly available stateful applications using local disks on cloud providers services such as GKE, EKS and AKS 
+OpenEBS synchronously replicates the data volume replicas for high availability. The replication happens across Kubernetes zone resulting in the cloud native applications to be highly available in cross AZ setups. This feature is especially becomes useful to build highly available stateful applications using local disks on cloud providers services such as GKE, EKS and AKS 
 
 <hr>
 
@@ -65,7 +65,7 @@ OpenEBS synchronously replicates the data volume replicas for high availability.
 
 <img src="/docs/assets/svg/f-snapshots.svg" alt="Smiley face" style="width:200px;">
 
-Copy-on-write snapshots are a key feature of OpenEBS. The snapshots are created instantaneously and there is no limit on the number of snapshots. The incremental snapshot capablity enables data migration and portability services across Kubernetes clusters and across different cloud providers or data centers, enabling a true multi-cloud data plane for stateful applications. Operations on snapshots and clones are performed in completely Kubernetes native method using the standard kubectl command
+Copy-on-write snapshots are a key feature of OpenEBS. The snapshots are created instantaneously and there is no limit on the number of snapshots. The incremental snapshot capability enables data migration and portability services across Kubernetes clusters and across different cloud providers or data centers, enabling a true multi-cloud data plane for stateful applications. Operations on snapshots and clones are performed in completely Kubernetes native method using the standard kubectl command
 
 <hr>
 
@@ -85,7 +85,7 @@ Backup and restore of OpenEBS volumes work with the recent Kubernetes backup and
 
 <img src="/docs/assets/svg/f-prometheus.svg" alt="Smiley face" style="width:200px;">
 
-OpenEBS volumes are instrumented for granular data metrics such as volume IOPS, throughput, latency and data patterns. As OpenEBS follows CAS architecture, Stateful applications can be tuned for better performance by observing the traffic data patterns on Prometheus and tweaking the storage policy parameters without worrying about neighboring workloads that are using OpenEBS
+OpenEBS volumes are instrumented for granular data metrics such as volume IOPS, throughput, latency and data patterns. As OpenEBS follows CAS architecture, Stateful applications can be tuned for better performance by observing the traffic data patterns on Prometheus and tweaking the storage policy parameters without worrying about neighbouring workloads that are using OpenEBS
 
 <hr>
 <br>
@@ -105,7 +105,7 @@ OpenEBS volumes are instrumented for granular data metrics such as volume IOPS, 
 ### Truely cloud native storage for Kubernetes
 
 <img src="/docs/assets/svg/b-cn.svg" alt="Smiley face" style="width:200px;"> 
-With CAS architecture and being completely in user space, OpenEBS is a truely cloud native storage for stateful applications on Kubernetes. This greatly simplifies how persistent storage is used and managed by developers and DevOps architects. They use the standard Kubernetes skills and utilities to configure, use and manage the peristent storage needs.
+With CAS architecture and being completely in user space, OpenEBS is a truly cloud native storage for stateful applications on Kubernetes. This greatly simplifies how persistent storage is used and managed by developers and DevOps architects. They use the standard Kubernetes skills and utilities to configure, use and manage the persistent storage needs.
 
 <hr>
 
@@ -128,7 +128,7 @@ Even with Kubernetes data gravity concerns exist on clouds. With Kubernetes stat
 
 <img src="/docs/assets/svg/b-granular.svg" alt="Smiley face" style="width:200px;">
 
-Containerization of storage software and dedicating such controller for each volume brings in maximum granularity in storage policies. The storage parameters can be monitored on a per volume basis and storage policies can be dynamically updated at run time to achieve the desired result for a given workload. The policies are tested and tuned keeping only the particular workload in mind, neighboring workloads are affected. The operations and maintainance of storage is greatly reduced because of this dedicated storage stack per workload
+Containerization of storage software and dedicating such controller for each volume brings in maximum granularity in storage policies. The storage parameters can be monitored on a per volume basis and storage policies can be dynamically updated at run time to achieve the desired result for a given workload. The policies are tested and tuned keeping only the particular workload in mind, neighbouring workloads are affected. The operations and maintenance of storage is greatly reduced because of this dedicated storage stack per workload
 
 <hr>
 
@@ -151,7 +151,7 @@ On most clouds, block storage on cloud is charged based on how much is purchased
 
 <img src="/docs/assets/svg/b-hci.svg" alt="Smiley face" style="width:200px;">
 
-Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by using Kubernetes constructs. Using OpenEBS, nodes in the Kubernetes cluster can be horizontally scaled without worrying about managing persistent storage needs of stateful applications. The storage needs (capacity planning, performance planning, and volume managment) of a cluster can easily be automated using the volume and pool policies of OpenEBS.
+Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by using Kubernetes constructs. Using OpenEBS, nodes in the Kubernetes cluster can be horizontally scaled without worrying about managing persistent storage needs of stateful applications. The storage needs (capacity planning, performance planning, and volume management) of a cluster can easily be automated using the volume and pool policies of OpenEBS.
 
 <hr>
 <br>
