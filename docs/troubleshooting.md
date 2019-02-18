@@ -30,23 +30,23 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [Installation failed because insufficient user rights](#install-failed-user-rights)
 
-[iSCSI client is not setup on Nodes. Application Pod is in ContainerCreating state.](/docs/next/troubleshooting.html#iscsi-client-not-setup-pod-is-in-containercreating-state)
+[iSCSI client is not setup on Nodes. Application Pod is in ContainerCreating state.](#install-failed-iscsi-not-configured)
 
-[Why does OpenEBS provisioner pod restart continuously?]()
+[Why does OpenEBS provisioner pod restart continuously?](#openebs-provsioner-restart-continuously)
 
-[OpenEBS installation fails on Azure]().
+[OpenEBS installation fails on Azure](#install-failed-azure-no-rbac-set).
 
-[multipath.conf file claims all SCSI devices in OpenShift]()
+[A multipath.conf file claims all SCSI devices in OpenShift](#multipath-conf-claims-all-scsi-devices-openshift)
 
 **Volume provisioning**
 
-[Appliation complaining ReadOnly filesystem](/docs/next/troubleshooting.html#appliation-complaining-readonly-filesystem)
+[Appliation complaining ReadOnly filesystem](#application-read-only)
 
-[Application pods are not running when OpenEBS volumes are provisioned on Rancher]()
+[Application pods are not running when OpenEBS volumes are provisioned on Rancher](#application-pod-not-running-Rancher)
 
-[Application pod is stuck in ContainerCreating state after deployment]()
+[Application pod is stuck in ContainerCreating state after deployment](#application-pod-stuck-after-deployment)
 
-[Creating cStor pool fails on CentOS when there are partitions on the disk]()
+[Creating cStor pool fails on CentOS when there are partitions on the disk](#cstor-pool-failed-centos-partion-disk)
 
 [Application pod enters CrashLoopBackOff state]()
 
@@ -90,7 +90,7 @@ text goes here
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="openebs-provsioner-restart-continuously-"></a>Why does OpenEBS provisioner pod restart continuously?</h3>
+<h3><a class="anchor" aria-hidden="true" id="openebs-provsioner-restart-continuously"></a>Why does OpenEBS provisioner pod restart continuously?</h3>
 
 
 
