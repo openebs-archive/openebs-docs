@@ -364,18 +364,28 @@ Following are most commonly observed areas of troubleshooting
     ```
     The `csp_uuid` is the corresponding pool resource UID. 
 
+<hr>
+
+<br>
+
+
+
 ## cStor roadmap
 
 | Feature                                                      | Release           |
 | ------------------------------------------------------------ | ----------------- |
+| <font size="5">cStor Pool features</font>                    |                   |
 | cStor pool creation and initial use with either stripe mode or RAIDZ0 (mirror) mode | 0.8.0             |
+| Adding a new cStorPool instance to the existing cstor-pool-config | 0.8.1             |
+| Expanding a given pool replica (add disks to a pool after it is created) | 0.9.0             |
+| Ephemeral disk/pool support for rebuilding                   | 0.8.1             |
 | Support for RAIDZ1 in cStorPool                              | 0.9.0             |
 | Support for RAIDZ2 in cStorPool                              | 0.9.0             |
-| Expanding a given pool replica (add disks to a pool after it is created) | 0.9.0             |
-| Adding a new cStorPool replica (CSP autoscaling)             | Not scheduled yet |
 | Deleting a pool replica                                      | Not scheduled yet |
+|                                                              |                   |
+| <font size="5">cStor volume features</font>                  |                   |
+| Expanding the size of a cStor volume                         | 0.9.0             |
 | CSI driver support                                           | 0.9.0             |
-| Ephemeral disk/pool support for rebuilding                   | 0.8.1             |
 
 
 

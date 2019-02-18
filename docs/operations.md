@@ -14,9 +14,9 @@ Day2 operations on OpenEBS are broadly categorised as  :
 - <a href="/docs/next/backup.html">Volume size increase</a>
 - <a href="/docs/next/backup.html">Pool size increase</a>
 - <a href="/docs/next/backup.html">Adding new pool instances to the current pool</a>
-- <a href="/docs/next/backup.html">Creating new storage classes</a>
-- <a href="/docs/next/backup.html">Upgrading OpenEBS</a>
-- <a href="/docs/next/backup.html">Upgrading stateful applications or Kubernetes</a>
+- <a href="/docs/next/configuresc.html#creating-a-new-storageclass">Creating new storage classes</a>
+- <a href="/docs/next/upgrade.html">Upgrading OpenEBS</a>
+- <a href="/docs/next/k8supgrades.html">Upgrading stateful applications or Kubernetes</a>
 
 
 
@@ -131,15 +131,61 @@ kubectl delete -f snapshot.yaml -n <namespace>
 
 This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` that were already provisioned using the snapshot. On the other hand, deleting any `PersistentVolumeClaims` or `PersistentVolumes` that were provisioned using the snapshot will not delete the snapshot from the OpenEBS backend.
 
+<br>
+
+<hr>
+
+<br>
 
 
 
+## Expanding the size of a pool instance
+
+A pool instance is local to a node. A pool instance can be started with as small as one disk (in `striped` mode) or two disks (in `mirrored`) mode. cStor pool instances support thin provisioning of data, which means that provisioning of any volume size will be successful from a given cstorPool config. 
+
+However, as the actual used capacity of the pool is utilized, more disks need to be added. In 0.8.0, the feature to add more disks to pool instance is not supported. This feature is under active development. See [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
+
+<br>
+
+<hr>
+
+<br>
+
+## Expanding the pool to more nodes
+
+When a new node is added, you may want to expand the cStor pool config to extend to that node so that a new pool instance is created on the new node. Typical procedure would be to add new disk CRs to `diskList` and `kubectl` apply the `<castor-pool-config.yaml>`. This feature is under active development.  See [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
+
+<br>
+
+<hr>
+
+<br>
+
+## Expanding the size of a provisioned volume
+
+OpenEBS control plane does not support increasing the size of volume seamlessly. Increasing the size of a provisioned volume requires support from Kubernetes' kubelet as the existing connection has to be remounted to reflect the new volume size. This can also be tackled with the new CSI plugin where the responsibility of the mount, unmount and remount actions will be held with the vendor CSI plugin rather than the kubelet itself.
+
+
+
+OpenEBS team is working on both the CSI plugin as well as the feature to resize the provisioned volume when the PVC is patched for new volume size. See [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
+
+<br>
+
+<hr>
 
 <br>
 
 ## See Also:
 
 
+
+<br>
+
+### [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
+
+### [Understand cStorPools](/docs/next/cstor.html#cstor-pools)
+
+### [Connecting to MayaOnline](/docs/next/mayaonline.html)
 
 <br>
 
