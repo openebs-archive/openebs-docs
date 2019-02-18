@@ -40,7 +40,7 @@ OpenEBS is the most popular open source project for container attached or contai
 
   
 
-- [Verify OpenEBS is installed successfully]() and start provisioning the OpenEBS volumes using the Kubernetes PVC interface by using `kubectl` command, for more details on how to provision OpenEBS volumes, see  [provisioning OpenEBS volumes](/docs/next/provisionvols.html)
+- [Verify OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation) and start provisioning the OpenEBS volumes using the Kubernetes PVC interface by using `kubectl` command, for more details on how to provision OpenEBS volumes, see  [provisioning OpenEBS volumes](/docs/next/provisionvols.html)
 
 <br>
 <font size="6">Explore documentation</font>
