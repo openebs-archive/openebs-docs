@@ -24,7 +24,7 @@ sidebar_label: Features and Benefits
 - [Reduced storage TCO upto 50%](/docs/next/features.html#reduced-storage-tco-upto-50)
 - [Native Hyperconvergence on Kubernetes](/docs/next/features.html#native-hyperconvergence-on-kubernetes)
 - [High availability - No Blast Radius](#high-availability)
-- [Free cross cloud visibility of stateful applications](http://localhost:3000/docs/next/features.html#free-cross-cloud-visibility-of-stateful-applications)
+- [Free cross cloud visibility of stateful applications](/docs/next/features.html#free-cross-cloud-visibility-of-stateful-applications)
 
 
 
