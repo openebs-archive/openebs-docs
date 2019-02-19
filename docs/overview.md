@@ -35,7 +35,7 @@ OpenEBS is the most popular open source project for container attached or contai
   kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
   ```
 
-  For advanced installation steps,  see [installation section](/docs/next/installation.html). 
+  For advanced installation steps,  see [Installation](/docs/next/installation.html) section. 
 
   
 
