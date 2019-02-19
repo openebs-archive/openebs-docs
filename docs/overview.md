@@ -13,7 +13,7 @@ sidebar_label: Overview
 
 
 
-OpenEBS is the most popular open source project for container attached or container native storage on Kubernetes. OpenEBS adopts a new approach called Container Attached Storage or CAS, where each workload is provided with a dedicated storage controller, thereby having most granularity of storage policies and isolation to tune the storage just for that workload. OpenEBS runs completely in user space and does not have any dependency on linux kernel modules. See  OpenEBS  <a href="/docs/next/features.html">features & benefits</a> and <a href="/docs/next/usecases.html" target="">use cases</a>.
+OpenEBS is the most popular open source project for container attached or container native storage on Kubernetes. OpenEBS adopts a new approach called Container Attached Storage (CAS), where each workload is provided with a dedicated storage controller, thereby having most granularity of storage policies and isolation to tune the storage just for that workload. OpenEBS runs completely in user space and does not have any dependency on Linux kernel modules. See  OpenEBS  <a href="/docs/next/features.html">features & benefits</a> and <a href="/docs/next/usecases.html" target="">use cases</a>.
 
 <br>
 
@@ -23,7 +23,7 @@ OpenEBS is the most popular open source project for container attached or contai
 
 - OpenEBS requires iSCSI client to be configured and iSCSI.d service running on the host nodes. [Verify if iSCSI is setup](/docs/next/prerequisites.html) and running before starting the installation
 
-- Default installation works for most cases. As a Kubernetes cluster-admin , start the default installation using either
+- Default installation works for most cases. As a Kubernetes cluster-admin, start the default installation using either
 
   ```
   helm install --namespace openebs --name openebs stable/openebs
@@ -35,14 +35,14 @@ OpenEBS is the most popular open source project for container attached or contai
   kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
   ```
 
-  For more detailed and advanced installation,  see [installation section](/docs/next/installation.html). 
+  For advanced installation steps,  see [installation section](/docs/next/installation.html). 
 
   
 
 - [Verify OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation) and start provisioning the OpenEBS volumes using the Kubernetes PVC interface by using `kubectl` command, for more details on how to provision OpenEBS volumes, see  [provisioning OpenEBS volumes](/docs/next/provisionvols.html)
 
 <br>
-<font size="6">Explore documentation</font>
+## <font size="6">Explore documentation</font>
 
 <br>
 
@@ -84,9 +84,6 @@ OpenEBS is the most popular open source project for container attached or contai
 
 <br>
 
-<br>
-
-<br>
 
 ## <font size="6">Stateful applications </font>
 
