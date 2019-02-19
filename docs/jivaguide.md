@@ -17,11 +17,13 @@ Follow the below steps to provision persistent volumes using Jiva storage engine
 
 <a href="/docs/next/installation.html" target="_blank">Verify</a> OpenEBS installation
 
-<a href="/docs/next/iscsiclient.html" target="_blank">Verify</a> iSCSI client is installed and iSCSI service is running
+<a href="/docs/next/iscsiclient.html" target="_blank">Verify</a> iSCSI client is installed and iscsid service is running
 
 If simple provisioning of jiva volumes is desired without any configuration see  <a href="/docs/next/jivaguide.html#simple-provisioning-of-jiva">here</a>
 
 For provisioning with local or cloud disks <a href="/docs/next/jivaguide.html#provisioning-with-local-or-cloud-disks">here</a>
+
+For configuring different storage policies on Jiva volume, see [here](/docs/next/jivaguide.html#jiva-storage-policies).
 
 <br>
 
@@ -123,7 +125,7 @@ kubectl get storagepool
 
  
 
-### Create a storageClass
+### Create a StorageClass
 
 Specify the jiva pool in the `StoragePool` annotation of storage class. Example StorageClass specification is given below
 
@@ -161,7 +163,7 @@ kubectl get sc
 
  
 
-### Provision jiva volumes
+### Provision Jiva Volumes
 
 Once the storage class is created, provision the volumes using the standard PVC interface. In the example below the `StorageClass` openebs-jiva-gpd-3repl is specified in the `PersistentVolumeClaim` specification
 
