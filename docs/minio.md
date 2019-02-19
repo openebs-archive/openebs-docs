@@ -9,7 +9,16 @@ sidebar_label: Minio
 
 ## Introduction
 
-Minio is an object storage server released under Apache License v2.0.  It is best suited for storing unstructured data such as photos, videos, log files, backups and container / VM images. Size of an object can range from a few KBs to a maximum of 5TB. In this solution , running a Minio server pod which consumes OpenEBS cStor volume to store these type of data as object storage in a kubernetes cluster.
+Cloud native Object storage is easy to deploy with Minio and OpenEBS. Both run in user space and do not have any kernel dependencies. Minio and OpenEBS start with a very simple configuration of few gigabytes and scale on demand to very high capacities.
+
+
+
+**Advantages of using OpenEBS for this Object storage solution:**
+
+- PVCs to Minio are dynamically provisioned out of a dedicated or shared storage pool. You don't need to have dedicated disks On-Premise or on cloud to launch Object storage solution
+- Adding more storage to the Kubernetes cluster with OpenEBS is seamless and done along with adding a Kubernetes node. Auto scaling of Minio instances is easy to do On-Premise as you do it on cloud platforms.
+- Storage within a node or pool instance can also be scaled up on demand. 
+- Complete management of disks under Minio are managed by OpenEBS, leading to production grade deployment of object storage
 
 
 

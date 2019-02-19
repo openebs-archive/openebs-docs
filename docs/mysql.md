@@ -9,7 +9,11 @@ sidebar_label: RDS like MySQL
 
 ## Introduction
 
-The MySQL server is a database server used to persist the data and provide a query interface for it (SQL). in this solution, running a MySQL replication cluster application which consumes OpenEBS cStor volume  to store the database in a kubernetes cluster.
+ MYSQL is most ubiquitous and commonly used database. RDS is a service that make deploying and making MYSQL easy. With OpenEBS CAS architecture each user is assigned an independent stack of storage that serves just one instance of MySQL database, making it easy to handle the provisioning and post depolyment operations like capacity increase and upgrades. 
+
+
+
+Use OpenEBS and MySQL containers to quickly launch an RDS like service, where database launch is instantaneous, availability is provided across zones and increase in requested capacity can happen on the fly. 
 
 
 

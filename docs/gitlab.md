@@ -13,7 +13,19 @@ sidebar_label: GitLab
 
 ## Introduction
 
-GitLab is a web-based Git-repository manager providing wiki, issue-tracking and CI/CD pipeline features, using an open-source license, developed by GitLab Inc. GitLab is a single application for the entire software development lifecycle. This conveys that it needs a persistent storage solution to keep these information safely. In this solution, implementing a gitlab web-based application which consumes OpenEBS cStor volume to store the data in a kubernetes cluster.
+GitLab is a good solution for building On-Premise cloud native CI/CD platforms, it is a single application for the entire software development lifecycle. The helm charts for GitLab are made so simple that the entire infrastructure including the undelying databases and storage needed for GitLab are dynamically provisioned. This solution discusses the use cases of using OpenEBS from a single pool of storage for all the databases required to run GitLab.
+
+
+
+**Advantages of using OpenEBS for Gitlab:**
+
+- OpenEBS acts a single storage platform for all stateful applications including Gitaly,  Redis, PostgreSQL, Minio and Prometheus
+
+- OpenEBS volumes are highly available. Node loss, reboots and Kubernetes upgrades will not affect the availability of peristent storage to the stateful applications
+
+- Storage is scalable on demand. You can start with a small storage for all the databases required by GitLab and scale it on demand
+
+  
 
 
 
