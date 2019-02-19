@@ -223,32 +223,28 @@ kubectl apply -f demo-percona-mysql-pvc.yaml
 
 The Percona application now runs inside the `gpdpool` storage pool.
 
-
-
 ### Jiva Storage Policies
 
 Below table lists the storage policies supported by Jiva. These policies should be built into *StorageClass* and apply them through *PersistentVolumeClaim* or *VolumeClaimTemplates* interface.
 
 
 
-| CSTOR STORAGE POLICY                                         | MANDATORY | DEFAULT                                 | PURPOSE                                                      |
-| ------------------------------------------------------------ | --------- | --------------------------------------- | ------------------------------------------------------------ |
-| [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                       | Defines the number of cStor volume replicas                  |
-| [Replica Image](#Replica-Image-Policy)                       |           |                                         |                                                              |
-| [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/cstor-volume-mgmt:0.8.0 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
-| [StoragePool](#Storage-Pool-Policy)                          | Yes       | N/A (a valid pool must be provided)     | The cStorPool on which the volume replicas should be provisioned |
-| [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                      | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:0.8.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
-| [Volume FSType](#Volume-File-System-Type-Policy)             |           | ext4                                    | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
-| [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)         |           |                                         |                                                              |
-| [TargetNodeSelector](#Targe-NodeSelector-Policy)             |           | Decided by Kubernetes scheduler         | Specify the label in key:value format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
-| [Replica NodeSelector](#Replica-NodeSelector-Policy)         |           |                                         |                                                              |
-| [TargetResourceLimits](#Target-ResourceLimits-Policy)        |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
-| [AuxResourceLimits](#AuxResourceLimits-Policy)               |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod sidecar            |
-| [AuxResourceRequests](https://staging-docs.openebs.io/docs/next/configuresc.html#auxresourcerequests-policy) |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod sidecar            |
-| [PoolResourceRequests](https://staging-docs.openebs.io/docs/next/configuresc.html#poolresourcerequests-policy) |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStorPool pod                       |
-| [ReplicaResourceLimits](#ReplicaResourceLimits-Policy)       |           | Decided by Kubernetes scheduler         | ??                                                           |
-| [Target Affinity](#Target Affinity Policy)                   |           | Decided by Kubernetes scheduler         | The policy specifies the label KV pair to be used both on the cStor target and on the application being used so that application pod and cStor target pod are scheduled on the same node. |
+| CSTOR STORAGE POLICY                                   | MANDATORY | DEFAULT                           | PURPOSE                                                      |
+| ------------------------------------------------------ | --------- | --------------------------------- | ------------------------------------------------------------ |
+| [ReplicaCount](#Replica-Count-Policy)                  | No        | 3                                 | Defines the number of Jiva volume replicas                   |
+| [Replica Image](#Replica-Image-Policy)                 |           | quay.io/openebs/m-apiserver:0.8.0 | To use particular Jiva replica image                         |
+| [ControllerImage](#Controller-Image-Policy)            |           | quay.io/openebs/jiva:0.8.0        | To use particular Jiva Controller Image                      |
+| [StoragePool](#Storage-Pool-Policy)                    | Yes       | default                           | A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on host OS or externally mounted disk. |
+| [VolumeMonitor](#Volume-Monitor-Policy)                |           | ON                                | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)  |           | quay.io/openebs/m-exporter:0.8.0  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [Volume FSType](#Volume-File-System-Type-Policy)       |           | ext4                              | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
+| [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)   |           | false                             | It will specify whether data need to be retained post PVC deletion. |
+| [TargetNodeSelector](#Targe-NodeSelector-Policy)       |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva target pod on the nodes that match label. |
+| [Replica NodeSelector](#Replica-NodeSelector-Policy)   |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva replica pods on the nodes that match label. |
+| [TargetResourceLimits](#Target-ResourceLimits-Policy)  |           | Decided by Kubernetes scheduler   | CPU and Memory limits to Jiva target pod                     |
+| [AuxResourceLimits](#AuxResourceLimits-Policy)         |           | Decided by Kubernetes scheduler   | configuring resource limits on the target pod.               |
+| [ReplicaResourceLimits](#ReplicaResourceLimits-Policy) |           | Decided by Kubernetes scheduler   | Allow you to specify resource limits for the Replica.        |
+| [Target Affinity](#Target Affinity Policy)             |           | Decided by Kubernetes scheduler   | The policy specifies the label `key: value` pair to be used both on the Jiva target and on the application being used so that application pod and Jiva target pod are scheduled on the same node. |
 
 <h3><a class="anchor" aria-hidden="true" id="Replica-Count-Policy"></a>Replica Count Policy</h3>
 
