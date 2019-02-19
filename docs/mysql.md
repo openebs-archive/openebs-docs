@@ -65,36 +65,6 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
     For more information about installation, see MySQL [documentation](https://github.com/helm/charts/tree/master/stable/mysql).
 
-<br>
-
-<hr>
-
-<br>
-
-## Reference at <a href="https://openebs.ci" target="_blank">openebs.ci</a>
-
-<br>
-
-A live deployment of MySQL using OpenEBS volumes as highly available Database storage can be seen at the website <a href="https://openebs.ci">www.openebs.ci</a>
-
-
-
-Deployment YAML spec files for MySQL and OpenEBS resources are found <a href="https://github.com/openebs/e2e-infrastructure/tree/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/prometheus-cstor" target="_blank">here</a>
-
-
-
- <a href="https://openebs.ci/prometheus-cstor" target="_blank">OpenEBS-CI dashboard of MySQL</a>
-
-
-
-<a href="https://prometheuscstor.openebs.ci/" target="_blank">Live access to MySQL dashboard</a>
-
-<br>
-
-<hr>
-
-<br>
-
 ## Post deployment Operations
 
 <br>
@@ -107,13 +77,9 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 As in most cases, cStor pool may not be dedicated to just MySQL alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
 
-
-
 **Maintain volume replica quorum during node upgrades**
 
  cStor volume replicas need to be in quorum when MySQL application is deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/docs/next/k8supgrades.html) for more details.
-
-
 
 <br>
 

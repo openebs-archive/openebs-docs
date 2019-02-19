@@ -70,30 +70,6 @@ Cloud native Object storage is easy to deploy with Minio and OpenEBS. Both run i
 
     For more information on installation, see Minio [documentation](https://github.com/helm/charts/tree/master/stable/minio).
 
-<br>
-
-<hr>
-
-<br>
-
-## Reference at [openebs.ci](https://openebs.ci/)
-
-<br>
-
-A live deployment of Minio using OpenEBS volumes as highly available object storage can be seen at the website [www.openebs.ci](https://openebs.ci/)
-
-Deployment YAML spec files for Minio and OpenEBS resources are found [here]()
-
-[OpenEBS-CI dashboard of Minio]()
-
-[Live access to Minio dashboard]()
-
-<br>
-
-<hr>
-
-<br>
-
 ## Post deployment Operations
 
 <br>
@@ -107,14 +83,6 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 As in most cases, cStor pool may not be dedicated to just Minio alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
 
 <br>
-
-<hr>
-
-<br>
-
-
-
-
 
 ## Configuration details
 

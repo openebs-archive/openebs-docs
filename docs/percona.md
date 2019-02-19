@@ -47,8 +47,6 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
 ## Configuration workflow
 
-<br>
-
 1. **Install OpenEBS**
 
    If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
@@ -70,18 +68,10 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
    Run `kubectl apply -f percona-openebs-deployment.yaml` to deploy Percona application. For more information, see Percona documentation. In other way,  you can use stable Percona image with helm to deploy Percona in your cluster using the following command.
 
    ```
-    helm install --name my-release --storage-class=openebs-sc-disk.yaml stable/percona 
+    helm install --name my-release --storage-class=openebs-cstor-disk stable/percona 
    ```
 
-<br>
-
-<hr>
-
-<br>
-
 ## Reference at openebs.ci
-
-<br>
 
 A [sample Percona server](https://www.openebs.ci/percona-cstor) at [https://openebs.ci](https://openebs.ci/)
 
@@ -89,19 +79,7 @@ Sample YAML  for running Percona-mysql using cStor are [here](https://raw.github
 
 <a href="https://openebs.ci/percona-cstor" target="_blank">OpenEBS-CI dashboard of Percona</a>
 
-
-
-<br>
-
-<hr>
-
-<br>
-
-
-
 ## Post deployment Operations
-
-<br>
 
 **Monitor OpenEBS Volume size** 
 
@@ -111,17 +89,9 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 As in most cases, cStor pool may not be dedicated to just Percona database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
 
-
-
 **Maintain volume replica quorum during node upgrades**
 
  cStor volume replicas need to be in quorum when applications are deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/docs/next/k8supgrades.html) for more details.
-
-<br>
-
-<hr>
-
-<br>
 
 
 
@@ -179,96 +149,6 @@ provisioner: openebs.io/provisioner-iscsi
 reclaimPolicy: Delete
 ---
 ```
-
-**percona-pvc.yaml**
-
-```
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: percona-cstor-claim
-  namespace: percona-cstor
-spec:
-  storageClassName: openebs-cstor-disk
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 30G
----
-```
-
-**percona-openebs-deployment.yaml**
-
-```
----
-apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: percona
-  namespace: percona-cstor	
-  labels:
-    app: percona
-    type: workload
-spec:
-  replicas: 1
-  selector: 
-    matchLabels:
-      name: percona 
-  template: 
-    metadata:
-      labels: 
-        name: percona
-        type: workload
-    spec:
-      tolerations:
-      - key: "ak"
-        value: "av"
-        operator: "Equal"
-        effect: "NoSchedule"
-      containers:
-        - resources:
-            limits:
-              cpu: 0.5
-          name: percona
-          image: percona:latest
-          args:
-            - "--ignore-db-dir"
-            - "lost+found"
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: k8sDem0
-          ports:
-            - containerPort: 3306
-              name: percona
-          volumeMounts:
-            - mountPath: /var/lib/mysql
-              name: percona-cstor-volume
-      volumes:
-        - name: percona-cstor-volume
-          persistentVolumeClaim:
-            claimName: percona-cstor-claim
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: percona-mysql
-  namespace: percona-cstor
-  labels:
-    name: percona-mysql
-spec:
-  ports:
-    - port: 3306
-      targetPort: 3306
-  selector:
-      name: percona
-```
-
-<br>
-
-<hr>
-
-<br>
 
 ## See Also:
 

@@ -64,9 +64,9 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
 4. **Create Storage Class** : 
 
-   StorageClass is the interface through which most of the OpenEBS storage policies  are defined. See [Prometheus Storage Class](/docs/next/prometheus.html#prometheus-storageclass) section below. 
+   StorageClass is the interface through which most of the OpenEBS storage policies  are defined. See Prometheus Storage Class section below. 
 
-5. **Configure PVC** : Prometheus needs only one volume to store the data. See [PVC example spec](/docs/next/prometheus.html#pvc-spec-for-prometheus) below.
+5. **Configure PVC** : Prometheus needs only one volume to store the data. See PVC example spec below.
 
 6. **Launch and test prometheus**:
 
