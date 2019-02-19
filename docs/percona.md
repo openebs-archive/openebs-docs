@@ -7,19 +7,47 @@ sidebar_label: Percona
 
 <img src="/docs/assets/o-percona.png" alt="OpenEBS and Percona" style="width:400px;">
 
+
+
+<br>
+
 ## Introduction
 
-Percona Server for MySQL is a free, fully compatible, enhanced and open source drop-in replacement for any MySQL database. In this solution , running a Percona-MySQL application pod which consumes OpenEBS cStor volume  to store the database in a kubernetes cluster.
+<br>
+
+Percona is highly scalable and requires underlying persistent storage to be euqally scalable and performing. OpenEBS provides scalable storage for Percona for providing a simple and scalable RDS like solution for both On-Premise and cloud environments.
+
+
+
+**Advantages of using OpenEBS for Percona database:**
+
+- Storage is highly available. Data is replicated on to three different nodes,  even across zones. Node upgrades, node failures will not result in unavailability of persistent data. 
+- For each database instance of Percona, a dedicated OpenEBS workload is allocated so that granular storage policies can be applied. OpenEBS storage controller can be tuned with resources such as memory, CPU and number/type of disks for optimal performance.
+- Take backup of the Prometheus metrics periodically and back them up to S3 or any object storage so that restoration of the same metrics is possible to the same or any other Kubernetes cluster
+
+<br>
+
+<hr>
+
+<br>
 
 ## Deployment model 
+
+<br>
 
 <img src="/docs/assets/svg/percona-deployment.svg" alt="OpenEBS and Percona" style="width:100%;">
 
 As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration work fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
 
+<br>
 
+<hr>
+
+<br>
 
 ## Configuration workflow
+
+<br>
 
 1. **Install OpenEBS**
 
@@ -45,7 +73,15 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
     helm install --name my-release --storage-class=openebs-sc-disk.yaml stable/percona 
    ```
 
+<br>
+
+<hr>
+
+<br>
+
 ## Reference at openebs.ci
+
+<br>
 
 A [sample Percona server](https://www.openebs.ci/percona-cstor) at [https://openebs.ci](https://openebs.ci/)
 
@@ -64,6 +100,8 @@ Sample YAML  for running Percona-mysql using cStor are [here](https://raw.github
 
 
 ## Post deployment Operations
+
+<br>
 
 **Monitor OpenEBS Volume size** 
 
@@ -88,6 +126,8 @@ As in most cases, cStor pool may not be dedicated to just Percona database alone
 
 
 ## Configuration details
+
+<br>
 
 **openebs-config.yaml**
 
@@ -223,6 +263,10 @@ spec:
   selector:
       name: percona
 ```
+
+<br>
+
+<hr>
 
 <br>
 

@@ -8,19 +8,45 @@ sidebar_label: MongoDB
 
 ## Introduction
 
-MongoDB is a cross-platform document-oriented database. Classified as a NoSQL database, MongoDB eschews the traditional table-based relational database structure in favour of JSON-like documents with dynamic schemas, making the integration of data in certain types of applications easier and faster. In this solution, running a MongoDB StatefulSet application on OpenEBS cStor volume using helm chart.
+<br>
 
+MongoDB is a cross-platform document-oriented database. Classified as a NoSQL database, MongoDB eschews the traditional table-based relational database structure in favour of JSON-like documents with dynamic schemas, making the integration of data in certain types of applications easier and faster. MongoDB  is deployed usually as a `statefulset` on Kubernetes and requires persistent storage for each instance of MongoDB StorageManager instance. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
 
+<br>
+
+**Advantages of using OpenEBS for MongoDB:**
+
+- No need to manage the local disks, they are managed by OpenEBS
+- Large size PVs can be provisioned by OpenEBS and MongoDB
+- Start with small storage and add disks as needed on the fly. Sometimes MongoDB instances are scaled up because of capacity on the nodes. With OpenEBS persistent volumes, capacity can be thin provisioned and disks can be added to OpenEBS on the fly without disruption of service 
+- MongoDB sometimes need highly available storage, in such cases OpenEBS volumes can be configured with 3 replicas.
+- If required, take backup of the MongoDB data periodically and back them up to S3 or any object storage so that restoration of the same data is possible to the same or any other Kubernetes cluster
+
+<br>
+
+*Note: MongoDB can be deployed both as `deployment` or as `statefulset`. When MongoDB deployed as `statefulset`, you don't need to replicate the data again at OpenEBS level. When MongoDB is deployed as `deployment`, consider 3 OpenEBS replicas, choose the StorageClass accordingly.*
+
+<br>
+
+<hr>
+
+<br>
 
 ## Deployment model
 
-
+<br>
 
 <img src="/docs/assets/svg/mongo-deployment.svg" alt="OpenEBS and Mongo" style="width:100%;">
 
+<br>
 
+<hr>
+
+<br>
 
 ## Configuration workflow
+
+<br>
 
 1. **Install OpenEBS**
 
@@ -50,6 +76,8 @@ MongoDB is a cross-platform document-oriented database. Classified as a NoSQL da
 
 ## Reference at [openebs.ci](https://openebs.ci/)
 
+<br>
+
 A live deployment of MongoDB using OpenEBS volumes can be seen at the website [www.openebs.ci](https://openebs.ci/)
 
 Deployment YAML spec files for MongoDB and OpenEBS resources are found [here](https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/mongo-cstor/mongo-cstor-mongo.yaml)
@@ -67,6 +95,8 @@ Deployment YAML spec files for MongoDB and OpenEBS resources are found [here](ht
 
 
 ## Post deployment Operations
+
+<br>
 
 **Monitor OpenEBS Volume size** 
 
@@ -89,6 +119,8 @@ As in most cases, cStor pool may not be dedicated to just Mongo database alone. 
 
 
 ## Configuration details
+
+<br>
 
 **openebs-config.yaml**
 
@@ -160,7 +192,6 @@ reclaimPolicy: Delete
 <br>
 
 <hr>
-
 <br>
 
 

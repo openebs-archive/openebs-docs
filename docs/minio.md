@@ -7,7 +7,11 @@ sidebar_label: Minio
 
 <img src="/docs/assets/o-minio.png" alt="OpenEBS and Minio" style="width:400px;">
 
+<br>
+
 ## Introduction
+
+<br>
 
 Cloud native Object storage is easy to deploy with Minio and OpenEBS. Both run in user space and do not have any kernel dependencies. Minio and OpenEBS start with a very simple configuration of few gigabytes and scale on demand to very high capacities.
 
@@ -20,13 +24,27 @@ Cloud native Object storage is easy to deploy with Minio and OpenEBS. Both run i
 - Storage within a node or pool instance can also be scaled up on demand. 
 - Complete management of disks under Minio are managed by OpenEBS, leading to production grade deployment of object storage
 
+<br>
 
+<hr>
+
+<br>
 
 ## Deployment model
 
+<br>
+
 <img src="/docs/assets/svg/minio-deployment.svg" alt="OpenEBS and Minio" style="width:100%;">
 
+<br>
+
+<hr>
+
+<br>
+
 ## Configuration workflow
+
+<br>
 
 1. **Install OpenEBS**
 
@@ -52,9 +70,15 @@ Cloud native Object storage is easy to deploy with Minio and OpenEBS. Both run i
 
     For more information on installation, see Minio [documentation](https://github.com/helm/charts/tree/master/stable/minio).
 
+<br>
 
+<hr>
+
+<br>
 
 ## Reference at [openebs.ci](https://openebs.ci/)
+
+<br>
 
 A live deployment of Minio using OpenEBS volumes as highly available object storage can be seen at the website [www.openebs.ci](https://openebs.ci/)
 
@@ -71,6 +95,8 @@ Deployment YAML spec files for Minio and OpenEBS resources are found [here]()
 <br>
 
 ## Post deployment Operations
+
+<br>
 
 **Monitor OpenEBS Volume size** 
 
@@ -91,6 +117,8 @@ As in most cases, cStor pool may not be dedicated to just Minio alone. It is rec
 
 
 ## Configuration details
+
+<br>
 
 **openebs-config.yaml**
 
@@ -142,6 +170,10 @@ provisioner: openebs.io/provisioner-iscsi
 reclaimPolicy: Delete
 ---
 ```
+
+<br>
+
+<hr>
 
 <br>
 

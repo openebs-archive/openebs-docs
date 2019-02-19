@@ -7,21 +7,49 @@ sidebar_label: Redis
 
 <img src="/docs/assets/svg/o-redis.svg" alt="OpenEBS and Redis" style="width:400px;">
 
+<br>
+
 ## Introduction
 
-In this solution , running a Redis StatefulSet  which consumes OpenEBS cStor volume to used as a data storage in a kubernetes cluster.
+<br>
 
+Redis is an open source (BSD licensed), in-memory **data structure store**, used as a database, cache and message broker.  Redis is deployed usually as a `statefulset` on Kubernetes and requires persistent storage for each instance of Redis StorageManager instance. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
 
+<br>
+
+**Advantages of using OpenEBS for Redis:**
+
+- No need to manage the local disks, they are managed by OpenEBS
+- Large size PVs can be provisioned by OpenEBS and Redis
+- Start with small storage and add disks as needed on the fly. Sometimes Redis instances are scaled up because of capacity on the nodes. With OpenEBS persistent volumes, capacity can be thin provisioned and disks can be added to OpenEBS on the fly without disruption of service 
+- Redis sometimes need highly available storage, in such cases OpenEBS volumes can be configured with 3 replicas.
+- If required, take backup of the Redis data periodically and back them up to S3 or any object storage so that restoration of the same data is possible to the same or any other Kubernetes cluster
+
+<br>
+
+*Note: Redis can be deployed both as `deployment` or as `statefulset`. When Redis deployed as `statefulset`, you don't need to replicate the data again at OpenEBS level. When Redis is deployed as `deployment`, consider 3 OpenEBS replicas, choose the StorageClass accordingly.*
+
+<br>
+
+<hr>
+
+<br>
 
 ## Deployment model
 
-
+<br>
 
 <img src="/docs/assets/svg/redis-deployment.svg" alt="OpenEBS and Redis" style="width:100%;">
 
+<br>
 
+<hr>
+
+<br>
 
 ## Configuration workflow
+
+<br>
 
 1. **Install OpenEBS**
 
@@ -47,9 +75,15 @@ In this solution , running a Redis StatefulSet  which consumes OpenEBS cStor vol
 
     For more information on installation, see Redis [documentation](https://github.com/helm/charts/tree/master/stable/redis).
 
+<br>
 
+<hr>
+
+<br>
 
 ## Reference at [openebs.ci](https://openebs.ci/)
+
+<br>
 
 A live deployment of Redis using OpenEBS volumes as highly available data storage can be seen at the website [www.openebs.ci](https://openebs.ci/)
 
@@ -68,6 +102,8 @@ Deployment YAML spec files for Redis and OpenEBS resources are found [here](http
 
 
 ## Post deployment Operations
+
+<br>
 
 **Monitor OpenEBS Volume size** 
 
@@ -90,6 +126,8 @@ As in most cases, cStor pool may not be dedicated to just Redis database alone. 
 
 
 ## Configuration details
+
+<br>
 
 **openebs-config.yaml**
 
@@ -144,6 +182,10 @@ reclaimPolicy: Delete
 
 <br>
 
+<hr>
+
+<br>
+
 ## See Also:
 
 <br>
@@ -159,7 +201,6 @@ reclaimPolicy: Delete
 <br>
 
 <hr>
-
 <br>
 
 

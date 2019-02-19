@@ -24,6 +24,12 @@ Below are advantage of using NFS provisioner over OpenEBS cStor volumes
 
 <br>
 
+<hr>
+
+<br>
+
+
+
 ## Setting up a single NFS server
 
 <br>
@@ -73,6 +79,12 @@ Use the above storage class and create a new PVC and mount it inside the pod at 
 
 <br>
 
+<hr>
+
+<br>
+
+
+
 ## Setting up multiple NFS servers
 
 When multiple NFS shares are needed, use multiple NFS provisioners. Each NFS server manages one NFS server. Same or different OpenEBS StorageClass can be used for multiple NFS provisioners.
@@ -84,6 +96,12 @@ When multiple NFS shares are needed, use multiple NFS provisioners. Each NFS ser
 
 
 <br>
+
+<hr>
+
+<br>
+
+
 
 
 

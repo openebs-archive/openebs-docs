@@ -6,21 +6,52 @@ sidebar_label: ElasticSearch
 
 <img src="/docs/assets/o-elastic.png" alt="OpenEBS and ElasticSearch" style="width:400px;">
 
+<br>
+
 ## Introduction
 
-Elasticsearch is an open-source, RESTful, distributed search and analytics engine built on Apache License. Elasticsearch has quickly become the most popular search engine, and is commonly used for log analytics, full-text search, security intelligence, business analytics, and operational intelligence use cases. In this solution, running a ElasticSearch StatefulSet application on OpenEBS cStor volume using helm chart.
+<br>
+
+EFK is the most popular cloud native logging solution on Kubernetes for On-Premise as well as cloud platforms. In the EFK stack, ElasticSearch is a stateful application that needs persistent storage. Logs of production applications need to be stored for a long time which requires reliable and highly available storage.  OpenEBS and EFK together provides a complete logging solution.
+
+
+
+Advantages of using OpenEBS for ElasticSearch database:
+
+- All the logs data is stored locally and managed natively to Kubernetes
+- Start with small storage and add disks as needed on the fly
+- Logs are are highly available. When a node fails or rebooted during upgrades, the persistent volumes from OpenEBS continue to be highly available. 
+- If required, take backup of the ElasticSearch database periodically and back them up to S3 or any object storage so that restoration of the same logs is possible to the same or any other Kubernetes cluster
+
+<br>
+
+*Note: ElasticSearch can be deployed both as `deployment` or as `statefulset`. When ElasticSearch deployed as `statefulset`, you don't need to replicate the data again at OpenEBS level. When ElasticSearch is deployed as `deployment`, consider 3 OpenEBS replicas, choose the StorageClass accordingly.*
+
+<br>
+
+<hr>
+
+<br>
 
 
 
 ## Deployment model
 
+<br>
+
 
 
 <img src="/docs/assets/svg/elasticsearch-deployment.svg" alt="OpenEBS and ElasticSearch" style="width:100%;">
 
+<br>
 
+<hr>
+
+<br>
 
 ## Configuration workflow
+
+<br>
 
 1. **Install OpenEBS**
 
@@ -46,7 +77,17 @@ Elasticsearch is an open-source, RESTful, distributed search and analytics engin
 
    For more information on installation, see ElasticSearch [documentation](https://github.com/elastic/helm-charts/tree/master/elasticsearch).
 
+<br>
+
+<hr>
+
+<br>
+
 ## Reference at [openebs.ci](https://openebs.ci/)
+
+<br>
+
+
 
 A live deployment of ElasticSearch with Kibana using OpenEBS volumes can be seen at the website [www.openebs.ci](https://openebs.ci/)
 
@@ -67,6 +108,8 @@ Deployment YAML spec files for ElasticSearch and OpenEBS resources are found [he
 
 
 ## Post deployment Operations
+
+<br>
 
 **Monitor OpenEBS Volume size** 
 
@@ -89,6 +132,10 @@ As in most cases, cStor pool may not be dedicated to just elasticsearch database
 
 
 ## Configuration details
+
+<br>
+
+
 
 **openebs-config.yaml**
 
@@ -140,6 +187,10 @@ provisioner: openebs.io/provisioner-iscsi
 reclaimPolicy: Delete
 ---
 ```
+
+<br>
+
+<hr>
 
 <br>
 

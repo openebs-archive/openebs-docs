@@ -9,17 +9,23 @@ sidebar_label: RDS like MySQL
 
 ## Introduction
 
+<br>
+
  MYSQL is most ubiquitous and commonly used database. RDS is a service that make deploying and making MYSQL easy. With OpenEBS CAS architecture each user is assigned an independent stack of storage that serves just one instance of MySQL database, making it easy to handle the provisioning and post depolyment operations like capacity increase and upgrades. 
 
 
 
 Use OpenEBS and MySQL containers to quickly launch an RDS like service, where database launch is instantaneous, availability is provided across zones and increase in requested capacity can happen on the fly. 
 
+<br>
 
+<hr>
+
+<br>
 
 ## Deployment model 
 
-
+<br>
 
 <img src="/docs/assets/svg/mysql-deployment.svg" alt="OpenEBS and Percona" style="width:100%;">
 
@@ -27,9 +33,15 @@ Use OpenEBS and MySQL containers to quickly launch an RDS like service, where da
 
 As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration work fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
 
+<br>
 
+<hr>
+
+<br>
 
 ## Configuration workflow
+
+<br>
 
 1. **Install OpenEBS**
 
@@ -53,8 +65,15 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
     For more information about installation, see MySQL [documentation](https://github.com/helm/charts/tree/master/stable/mysql).
 
+<br>
+
+<hr>
+
+<br>
 
 ## Reference at <a href="https://openebs.ci" target="_blank">openebs.ci</a>
+
+<br>
 
 A live deployment of MySQL using OpenEBS volumes as highly available Database storage can be seen at the website <a href="https://openebs.ci">www.openebs.ci</a>
 
@@ -77,6 +96,8 @@ Deployment YAML spec files for MySQL and OpenEBS resources are found <a href="ht
 <br>
 
 ## Post deployment Operations
+
+<br>
 
 **Monitor OpenEBS Volume size** 
 
@@ -105,6 +126,8 @@ As in most cases, cStor pool may not be dedicated to just MySQL alone. It is rec
 
 
 ## Configuration Details
+
+<br>
 
 **openebs-config.yaml**
 
@@ -156,6 +179,10 @@ provisioner: openebs.io/provisioner-iscsi
 reclaimPolicy: Delete
 ---
 ```
+
+<br>
+
+<hr>
 
 <br>
 

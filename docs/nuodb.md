@@ -7,9 +7,33 @@ sidebar_label: NuoDB
 
 <img src="/docs/assets/o-nuodb.png" alt="OpenEBS and Nuodb" style="width:400px;">
 
+<br>
+
 ## Introduction
 
-NuoDB’s distributed SQL database combines the elastic scale and continuous availability of the cloud with the transactional consistency and durability that databases of record demand. In this solution , running a NuoDB database application which consumes OpenEBS cStor volume to store distributed database in a kubernetes cluster.
+NuoDB’s distributed SQL database combines the elastic scale and continuous availability of the cloud with the transactional consistency and durability that databases of record demand. NuoDB is deployed usually as a `statefulset` on Kubernetes and requires persistent storage for each instance of NuoDB StorageManager instance. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
+
+<br>
+
+**Advantages of using OpenEBS for NuoDB database:**
+
+- No need to manage the local disks, they are managed by OpenEBS
+- Large size PVs can be provisioned by OpenEBS and NuoDB
+- Start with small storage and add disks as needed on the fly. Sometimes NuoDB instances are scaled up because of capacity on the nodes. With OpenEBS persistent volumes, capacity can be thin provisioned and disks can be added to OpenEBS on the fly without disruption of service 
+- NuoDB sometimes need highly available storage, in such cases OpenEBS volumes can be configured with 3 replicas.
+- If required, take backup of the NuoDB data periodically and back them up to S3 or any object storage so that restoration of the same data is possible to the same or any other Kubernetes cluster
+
+<br>
+
+*Note: NuoDB can be deployed both as `deployment` or as `statefulset`. When NuoDB deployed as `statefulset`, you don't need to replicate the data again at OpenEBS level. When NuoDB is deployed as `deployment`, consider 3 OpenEBS replicas, choose the StorageClass accordingly.*
+
+<br>
+
+<hr>
+
+<br>
+
+
 
 
 
@@ -17,7 +41,17 @@ NuoDB’s distributed SQL database combines the elastic scale and continuous ava
 
 
 
+<br>
+
+
+
 <img src="/docs/assets/svg/nuodb-deployment.svg" alt="OpenEBS and ElasticSearch" style="width:100%;">
+
+<br>
+
+<hr>
+
+<br>
 
 
 
@@ -49,6 +83,16 @@ NuoDB’s distributed SQL database combines the elastic scale and continuous ava
 
 
 
+<br>
+
+<hr>
+
+<br>
+
+
+
+
+
 ## Reference at [openebs.ci](https://openebs.ci/)
 
 A live deployment of Minio using OpenEBS volumes as highly available object storage can be seen at the website [www.openebs.ci](https://openebs.ci/)
@@ -71,6 +115,10 @@ Deployment YAML spec files for NuoDB and OpenEBS resources are found [here](http
 
 ## Post deployment Operations
 
+<br>
+
+
+
 **Monitor OpenEBS Volume size** 
 
 It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
@@ -90,6 +138,10 @@ As in most cases, cStor pool may not be dedicated to just NuoDB database alone. 
 
 
 ## Configuration details
+
+<br>
+
+
 
 **openebs-config.yaml**
 
@@ -573,7 +625,19 @@ spec:
 
 <br>
 
+<hr>
+
+<br>
+
+
+
+
+
 ## See Also:
+
+<br>
+
+<hr>
 
 <br>
 

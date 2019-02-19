@@ -13,6 +13,8 @@ sidebar_label: GitLab
 
 ## Introduction
 
+<br>
+
 GitLab is a good solution for building On-Premise cloud native CI/CD platforms, it is a single application for the entire software development lifecycle. The helm charts for GitLab are made so simple that the entire infrastructure including the undelying databases and storage needed for GitLab are dynamically provisioned. This solution discusses the use cases of using OpenEBS from a single pool of storage for all the databases required to run GitLab.
 
 
@@ -27,17 +29,31 @@ GitLab is a good solution for building On-Premise cloud native CI/CD platforms, 
 
   
 
+<br>
 
+<hr>
+
+<br>
 
 ## Deployment model
+
+<br>
 
 
 
 <img src="/docs/assets/svg/gitlab-deployment.svg" alt="GitLab deployment using OpenEBS" style="width:100%;">
 
+<br>
 
+<br>
+
+<hr>
+
+<br>
 
 ## Configuration workflow
+
+<br>
 
 1. **Install OpenEBS**
 
@@ -74,9 +90,15 @@ GitLab is a good solution for building On-Premise cloud native CI/CD platforms, 
 
    For more information on installation, see GitLab [documentation](https://docs.gitlab.com/ee/install/kubernetes/gitlab_chart.html#deployment-of-gitlab-to-kubernetes).
 
+<br>
 
+<hr>
+
+<br>
 
 ## Reference at [openebs.ci](https://openebs.ci/)
+
+<br>
 
 A live deployment of GitLab using OpenEBS volumes can be seen at the website [www.openebs.ci](https://openebs.ci/)
 
@@ -93,6 +115,8 @@ Deployment YAML spec files for GitLab and OpenEBS resources are found [here]()
 <br>
 
 ## Post deployment Operations
+
+<br>
 
 **Monitor OpenEBS Volume size** 
 
@@ -117,6 +141,8 @@ As in most cases, cStor pool may not be dedicated to just GitLab's databases alo
 
 
 ## Configuration details
+
+<br>
 
 **openebs-config.yaml**
 
@@ -169,7 +195,11 @@ reclaimPolicy: Delete
 ---
 ```
 
+<br>
 
+<hr>
+
+<br>
 
 ## See Also:
 
@@ -186,7 +216,6 @@ reclaimPolicy: Delete
 <br>
 
 <hr>
-
 <br>
 
 

@@ -9,6 +9,8 @@ sidebar_label: Prometheus
 
 ## Introduction
 
+<br>
+
 Prometheus is the mostly widely used application for scraping cloud native application metrics. Prometheus and OpenEBS together provide a complete open source stack for monitoring. In this solution, OpenEBS is used as Prometheus TSDB, where all the metrics are permanently stored on local Kubernetes cluster. 
 
 
@@ -23,11 +25,18 @@ Prometheus is the mostly widely used application for scraping cloud native appli
 
 - Prometheus metrics are highly available. When a node fails or rebooted, Prometheus pod is rescheduled onto on of the two other nodes where cStor volume replica is available. The metrics data is  rebuilt when the node becomes available
 
--  Take backup of the Prometheus metrics periodically and back them up to S3 or any object storage so that restoration of the same metrics is possible to the same or any other Kubernetes cluster
+- Take backup of the Prometheus metrics periodically and back them up to S3 or any object storage so that restoration of the same metrics is possible to the same or any other Kubernetes cluster
 
-  
+
+<br>
+
+<hr>
+
+<br>
 
 ## Deployment model 
+
+<br>
 
 <img src="/docs/assets/svg/prometheus-deployment.svg" style="width:100%;">
 
@@ -35,7 +44,15 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
 
 
+<br>
+
+<hr>
+
+<br>
+
 ## Configuration workflow
+
+<br>
 
 
 
@@ -65,9 +82,16 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
    Grafana needs a much smaller persistent storage for storing metadata. Typically the storage class used for Prometheus is reused for Grafana as well. Just construct a new PVC with smaller storage size.  
 
-   
+
+<br>
+
+<hr>
+
+<br>
 
 ## Reference at <a href="https://openebs.ci" target="_blank">openebs.ci</a>
+
+<br>
 
 A live deployment of Prometheus using OpenEBS volumes as highly available  TSDB storage can be seen at the website <a href="https://openebs.ci">www.openebs.ci</a>
 
@@ -93,7 +117,7 @@ Deployment YAML spec files for Prometheus and OpenEBS resources are found <a hre
 
 ## Post deployment Operations
 
-
+<br>
 
  **Monitor OpenEBS Volume size** 
 
@@ -118,6 +142,8 @@ As in most cases, cStor pool may not be dedicated to just Prometheus alone. It i
 
 
 ## Sample YAML specs
+
+<br>
 
 **Sample cStor Pool spec**
 
@@ -219,6 +245,10 @@ See the <a href="https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b
 
 <br>
 
+<hr>
+
+<br>
+
 ## See Also:
 
 <br>
@@ -234,7 +264,6 @@ See the <a href="https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b
 <br>
 
 <hr>
-
 <br>
 
 

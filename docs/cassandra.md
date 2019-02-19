@@ -9,23 +9,59 @@ sidebar_label: Cassandra
 
 ## Introduction
 
-Apache Cassandra is a free and open-source distributed NoSQL database management system designed to handle large amounts of data across nodes, providing high availability with no single point of failure. It uses asynchronous masterless replication allowing low latency operations for all clients. In this solution, running a Cassandra StatefulSet application on OpenEBS cStor volume to store the data in the database.
+<br>
+
+Apache Cassandra is a distributed NoSQL database management system designed to handle large amounts of data across nodes, providing high availability with no single point of failure. It uses asynchronous masterless replication allowing low latency operations for all clients. Cassandra is deployed usually as a `statefulset` on Kubernetes and requires persistent storage for each instance of Cassandra. OpenEBS provides persistent volumes on the fly when Cassandra instances are scaled up.
+
+<br>
+
+**Advantages of using OpenEBS for Cassandra database:**
+
+- No need to manage the local disks, they are managed by OpenEBS
+- Large size PVs can be provisioned by OpenEBS and Cassandra
+- Start with small storage and add disks as needed on the fly. Sometimes Cassandra instances are scaled up because of capacity on the nodes. With OpenEBS persistent volumes, capacity can be thin provisioned and disks can be added to OpenEBS on the fly without disruption of service 
+- Cassandra sometimes need highly available storage, in such cases OpenEBS volumes can be configured with 3 replicas.
+- If required, take backup of the Cassandra data periodically and back them up to S3 or any object storage so that restoration of the same data is possible to the same or any other Kubernetes cluster
+
+<br>
+
+*Note: Cassandra can be deployed both as `deployment` or as `statefulset`. When Cassandra deployed as `statefulset`, you don't need to replicate the data again at OpenEBS level. When Cassandra is deployed as `deployment`, consider 3 OpenEBS replicas, choose the StorageClass accordingly.*
+
+
+
+<br>
+
+<hr>
+
+<br>
+
+
 
 
 
 ## Deployment model 
 
-
+<br>
 
 <img src="/docs/assets/svg/cassandra-deployment.svg" alt="OpenEBS and ElasticSearch" style="width:100%;">
 
-
+<br>
 
 As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration work fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
 
 
 
+<br>
+
+<hr>
+
+<br>
+
+
+
 ## Configuration workflow
+
+<br>
 
 1. **Install OpenEBS**
 
@@ -51,8 +87,17 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
    helm install --namespace "cassandra" -n "cassandra" --storage-class=openebs-cstor-disk incubator/cassandra
    ```
 
+<br>
+
+<hr>
+
+<br>
+
+
 
 ## Reference at [openebs.ci](https://openebs.ci/)
+
+<br>
 
 A live deployment of Cassandra using OpenEBS volumes as highly available object storage can be seen at the website [www.openebs.ci](https://openebs.ci/)
 
@@ -73,6 +118,8 @@ Deployment YAML spec files for Cassandra and OpenEBS resources are found [here](
 
 
 ## Post deployment Operations
+
+<br>
 
 **Monitor OpenEBS Volume size** 
 
@@ -95,6 +142,8 @@ As in most cases, cStor pool may not be dedicated to just Cassandra database alo
 
 
 ## Configuration details
+
+<br>
 
 **openebs-config.yaml**
 
