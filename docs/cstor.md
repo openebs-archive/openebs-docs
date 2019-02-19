@@ -78,9 +78,9 @@ A cStor pool spec consists of
 - Number of pools
 - List of nodes that host the pools
 - List of disks on each node that constitute the pool on that given node
-- RAID type within the pool (currently stripe and mirror are supported). Refer to the [cStor Pool roadmap](/docs/next/cStorPools.html#cstor-pool-feature-roadmap) to find the status of RAIDz1 support
+- RAID type within the pool (currently stripe and mirror are supported). Refer to the [cStor Pool roadmap](/docs/next/cstor.html#cstor-roadmap) to find the status of RAIDz1 support
 
-**Number of pools:** It is good to start with 3 pools as the number of volume replicas will be typically three or one. However, the number of pools are fixed in OpenEBS 0.8 version. Support for increasing the pool replicas on the fly is in the [cStor Pool roadmap](/docs/next/cStorPools.html#cstor-pool-feature-roadmap)  . At the time of cStor pool creation, individual and independent pools are created on the specified nodes. 
+**Number of pools:** It is good to start with 3 pools as the number of volume replicas will be typically three or one. However, the number of pools are fixed in OpenEBS 0.8 version. Support for increasing the pool replicas on the fly is in the [cStor Pool roadmap](//docs/next/cstor.html#cstor-roadmap)  . At the time of cStor pool creation, individual and independent pools are created on the specified nodes. 
 
 **List of nodes that host the pools:** This information and the number of pool replicas are implicitly provided by analyzing the provided disk CRs in the spec file. For example, if the spec file has 3 disk CRs, which belong to 3 different nodes, it implicitly means the number of pool replicas are 3 and the list of nodes taken from the disk CR metadata.
 
@@ -105,13 +105,13 @@ cStor Pool is an important component in the storage management. It is fundamenta
 
 **Create a Pool :** Create a new pool with all the configuration. It is typical to start a pool with 3 pool instances on three nodes. Currently RAID types supported for a given pool instance are STRIPE and MIRROR. A pool needs to be created before storage classes are created. So, pool creation is the first configuration step in the OpenEBS configuration process.
 
-**Add a new pool instance** : (Not supported in OpenEBS 0.8, refer to the  [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)  ) .A new pool instance may need to be added for many different reasons. Few example scenarios  are:
+**Add a new pool instance** : (Not supported in OpenEBS 0.8, refer to the  [cStor roadmap](/docs/next/cstor.html#cstor-roadmap). A new pool instance may need to be added for many different reasons. Few example scenarios  are:
 
 - New node is being added to the Kubernetes cluster and the disks in the new node need to be considered for persistent volumes storage
 - An existing pool instance is full in capacity and it cannot be expanded as either local disks or network disks are not available. Hence, a new pool instance may be needed for hosting the new volume replicas.
 - An existing pool instance is fully utilized in performance and it cannot be expanded either because CPU is saturated or more local disks are not available or more network disks or not available. A new pool instance may be added and move some of the existing volumes to the new pool instance to free up some disk IOs on this instance. 
 
-**Expand a given pool instance :** (Not supported in OpenEBS 0.8, refer to the [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)  ).  cStor Pools support thin provisioning, which means that the volume replica that resides on a given cStor pool can be given much bigger size or quota than the physical storage capacity available in the pool. When the actual capacity becomes nearly full (80% or more for example), the pool instance is expanded by adding a set of disks to it. If the pool instance's disk RAID type is STRIPE, then the disks can be added in any multiples of disks (1 disk or more) at a time, but if the type is any of the RAIDZx, then the expansion is done by adding any multiples of RAIDZ groups (1 group or more). 
+**Expand a given pool instance :** (Not supported in OpenEBS 0.8, refer to the [cStor roadmap](/docs/next/cstor.html#cstor-roadmap).  cStor Pools support thin provisioning, which means that the volume replica that resides on a given cStor pool can be given much bigger size or quota than the physical storage capacity available in the pool. When the actual capacity becomes nearly full (80% or more for example), the pool instance is expanded by adding a set of disks to it. If the pool instance's disk RAID type is STRIPE, then the disks can be added in any multiples of disks (1 disk or more) at a time, but if the type is any of the RAIDZx, then the expansion is done by adding any multiples of RAIDZ groups (1 group or more). 
 
 **Delete a pool instance** : (Not supported in OpenEBS 0.8, refer to the  [cStor roadmap](/docs/next/cstor.html#cstor-roadmap) . When a Kubernetes node needs to be drained in a planned manner, then the volume replicas in the pool instance that resides on that node need to be drained by moving them to other pool instance(s). Once all the volume replicas are drained, the pool instance is deleted.
 
@@ -244,7 +244,6 @@ Performance testing includes setting up the pools, storage classes and iSCSI ser
 
   
 
-- 
 
 
 ## Known limitations
@@ -269,7 +268,7 @@ In cStor, snapshots are taken only when the volume replicas are in quorum. For e
 
 **No support for Ephemeral disks in 0.8.0**
 
-Kubernetes services such as GKE, EKS and AKS have cloud VMs where when a node is lost a new replacement node is provided but the data on local disks of the original node will be lost permanently.  Though cStor volumes are replicated to more than one node, rebuilding of cStor data to a new replica is not supported in 0.8.1. This feature is in active development, see [roadmap](#cstor-roadmap) for more details. Till this feature is available, use of local ephemeral disks for cStorPools is not recommended.
+Kubernetes services such as GKE, EKS and AKS have cloud VMs where when a node is lost a new replacement node is provided but the data on local disks of the original node will be lost permanently.  Though cStor volumes are replicated to more than one node, rebuilding of cStor data to a new replica is not supported in 0.8.1. This feature is in active development, see [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. Till this feature is available, use of local ephemeral disks for cStorPools is not recommended.
 
 
 
@@ -292,7 +291,7 @@ Following are most commonly observed areas of troubleshooting
 
    **Resolution**: 
 
-   Install iSCSI tools and make sure iSCSI service is running. See [iSCSI installation](/docs/next/prerequisites.html#steps-for-configuring-and-verifying-open-iscsi)
+   Install iSCSI tools and make sure iSCSI service is running. See [iSCSI installation](/docs/next/prerequisites.html)
 
 2. **Multi-attach error is seen in the logs**
 
