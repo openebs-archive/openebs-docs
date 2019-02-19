@@ -70,7 +70,30 @@ If iSCSI is already installed on your host, check that initiator name is configu
 
 ```
 sudo cat /etc/iscsi/initiatorname.iscsi
-sudo service open-iscsi status
+systemctl status iscsid 
+```
+
+If status is showing as `Inactive`, then you may have to enable and start the iscsid service using the following command.
+
+```
+sudo systemctl enable iscsid && sudo systemctl start iscsid
+```
+
+The following is the expected output.
+
+```
+systemctl status iscsid
+● iscsid.service - iSCSI initiator daemon (iscsid)
+   Loaded: loaded (/lib/systemd/system/iscsid.service; disabled; vendor preset: enabled)
+   Active: active (running) since Mon 2019-02-18 11:00:07 UTC; 1min 51s ago
+     Docs: man:iscsid(8)
+  Process: 11185 ExecStart=/sbin/iscsid (code=exited, status=0/SUCCESS)
+  Process: 11170 ExecStartPre=/lib/open-iscsi/startup-checks.sh (code=exited, status=0/SUCCESS)
+ Main PID: 11187 (iscsid)
+    Tasks: 2 (limit: 4915)
+   CGroup: /system.slice/iscsid.service
+           ├─11186 /sbin/iscsid
+           └─11187 /sbin/iscsid
 ```
 
 **Install iSCSI**
@@ -105,7 +128,31 @@ If status is showing as `Inactive`, then you may have to enable and start the is
 sudo systemctl enable iscsid && sudo systemctl start iscsid
 ```
 
-**Install iSCSI** 
+The following is the expected output. 
+
+```
+systemctl status iscsid
+● iscsid.service - Open-iSCSI
+   Loaded: loaded (/usr/lib/systemd/system/iscsid.service; enabled; vendor preset: disabled)
+   Active: active (running) since Tue 2019-02-19 12:19:08 IST; 2h 37min ago
+     Docs: man:iscsid(8)
+           man:iscsiadm(8)
+ Main PID: 2138 (iscsid)
+    Tasks: 2
+   CGroup: /system.slice/iscsid.service
+           ├─2137 /usr/sbin/iscsid
+           └─2138 /usr/sbin/iscsid
+
+Feb 19 12:19:08 master-1550555590.mayalab.com systemd[1]: Starting Open-iSCSI...
+Feb 19 12:19:08 master-1550555590.mayalab.com iscsid[2136]: iSCSI logger with pid=2137 started!
+Feb 19 12:19:08 master-1550555590.mayalab.com systemd[1]: Failed to read PID from file /var/run/iscsid.pid: Invalid argument
+Feb 19 12:19:08 master-1550555590.mayalab.com systemd[1]: Started Open-iSCSI.
+Feb 19 12:19:09 master-1550555590.mayalab.com iscsid[2137]: iSCSI daemon with pid=2138 started!
+```
+
+
+
+Install iSCSI** 
 
 If iSCSI is not installed on your host, install iSCSI services using the following command.
 
