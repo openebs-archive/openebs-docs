@@ -27,14 +27,6 @@ For configuring different storage policies on Jiva volume, see [here](/docs/next
 
 <br>
 
-<font size="5">Also see:</font>
-
-Backup and restore Jiva volumes
-
-Jiva troubleshooting tips
-
-
-
 ## Simple provisioning of jiva
 
 To quickly provision a jiva volume using the default pool and storageClass, use the following command
@@ -42,8 +34,6 @@ To quickly provision a jiva volume using the default pool and storageClass, use 
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-jiva-default.yaml
 ```
-
-
 
 In this mode, OpenEBS provisions a jiva volume with three replicas on three different nodes. The data in each replica is storage in the local container storage of the replica itself. The data is replicated and highly available and is suitable for quick testing of OpenEBS and simple application PoCs.
 
@@ -99,7 +89,7 @@ If is is a cloud disk provision and mount on the node. If three replicas of Jiva
 
 Jiva pool requires mount path to prepared and available. Note that if the mount path is not pointing a real disk, then a local directory is created with this mount path and the replica data goes to the container image disk (similar to the case of `default` pool)
 
-- yaml specification to create the jiva pool is shown below
+- YAML specification to create the jiva pool is shown below
 
 ```
     apiVersion: openebs.io/v1alpha1
@@ -524,24 +514,15 @@ The StatefulSet workloads access the OpenEBS storage volume by connecting to the
 
 **Note**: *This feature works only for cases where there is a 1-1 mapping between a application and PVC. It's not recommended for STS where PVC is specified as a template.*
 
-
-
-## Troubleshooting jiva volumes
-
-
-
-
-
 <br>
 
 ## See Also:
 
-
+### [Backup and Restore](/docs/next/backup.html)
 
 <br>
 
 <hr>
-
 <br>
 
 
