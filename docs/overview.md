@@ -13,7 +13,7 @@ sidebar_label: Overview
 
 
 
-OpenEBS is the most popular open source project for container attached or container native storage on Kubernetes. OpenEBS adopts a new approach called Container Attached Storage (CAS), where each workload is provided with a dedicated storage controller, thereby having most granularity of storage policies and isolation to tune the storage just for that workload. OpenEBS runs completely in user space and does not have any dependency on Linux kernel modules. See  OpenEBS  <a href="/docs/next/features.html">features & benefits</a> and <a href="/docs/next/usecases.html" target="">use cases</a>.
+OpenEBS is the most popular open source project for container attached or container native storage on Kubernetes. OpenEBS adopts a new approach called Container Attached Storage (CAS), where each workload is provided with a dedicated storage controller, thereby having most granularity of storage policies and isolation to tune the storage just for that workload. OpenEBS runs completely in user space and does not have any dependency on Linux kernel modules. See  OpenEBS  <a href="/docs/next/features.html">Features & Benefits</a> and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 
 <br>
 
@@ -42,6 +42,9 @@ OpenEBS is the most popular open source project for container attached or contai
 - [Verify OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation) and start provisioning the OpenEBS volumes using the Kubernetes PVC interface by using `kubectl` command, for more details on how to provision OpenEBS volumes, see  [provisioning OpenEBS volumes](/docs/next/provisionvols.html)
 
 <br>
+
+
+
 ## <font size="6">Explore documentation</font>
 
 <br>
