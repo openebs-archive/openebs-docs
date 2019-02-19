@@ -225,6 +225,309 @@ The Percona application now runs inside the `gpdpool` storage pool.
 
 
 
+### Jiva Storage Policies
+
+Below table lists the storage policies supported by Jiva. These policies should be built into *StorageClass* and apply them through *PersistentVolumeClaim* or *VolumeClaimTemplates* interface.
+
+
+
+| CSTOR STORAGE POLICY                                         | MANDATORY | DEFAULT                                 | PURPOSE                                                      |
+| ------------------------------------------------------------ | --------- | --------------------------------------- | ------------------------------------------------------------ |
+| [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                       | Defines the number of cStor volume replicas                  |
+| [Replica Image](#Replica-Image-Policy)                       |           |                                         |                                                              |
+| [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/cstor-volume-mgmt:0.8.0 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
+| [StoragePool](#Storage-Pool-Policy)                          | Yes       | N/A (a valid pool must be provided)     | The cStorPool on which the volume replicas should be provisioned |
+| [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                      | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:0.8.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [Volume FSType](#Volume-File-System-Type-Policy)             |           | ext4                                    | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
+| [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)         |           |                                         |                                                              |
+| [TargetNodeSelector](#Targe-NodeSelector-Policy)             |           | Decided by Kubernetes scheduler         | Specify the label in key:value format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
+| [Replica NodeSelector](#Replica-NodeSelector-Policy)         |           |                                         |                                                              |
+| [TargetResourceLimits](#Target-ResourceLimits-Policy)        |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
+| [AuxResourceLimits](#AuxResourceLimits-Policy)               |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod sidecar            |
+| [AuxResourceRequests](https://staging-docs.openebs.io/docs/next/configuresc.html#auxresourcerequests-policy) |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod sidecar            |
+| [PoolResourceRequests](https://staging-docs.openebs.io/docs/next/configuresc.html#poolresourcerequests-policy) |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStorPool pod                       |
+| [ReplicaResourceLimits](#ReplicaResourceLimits-Policy)       |           | Decided by Kubernetes scheduler         | ??                                                           |
+| [Target Affinity](#Target Affinity Policy)                   |           | Decided by Kubernetes scheduler         | The policy specifies the label KV pair to be used both on the cStor target and on the application being used so that application pod and cStor target pod are scheduled on the same node. |
+
+<h3><a class="anchor" aria-hidden="true" id="Replica-Count-Policy"></a>Replica Count Policy</h3>
+
+You can specify the Jiva replica count using the *value* for *ReplicaCount* property. In the following example, the jiva-replica-count is specified as 3. Hence, three replicas are created.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-jiva-default
+  annotations:
+    openebs.io/cas-type: jiva
+    cas.openebs.io/config: |
+       - name: ReplicaCount
+         value: "3"
+```
+
+<h3><a class="anchor" aria-hidden="true" id="Replica-Image-Policy"></a>Replica Image Policy</h3>
+
+You can specify the jiva replica image using *value* for *ReplicaImage* property.
+
+**Note:**
+
+Jiva replica image is a docker image. Following is a sample that makes use of replica image policy.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-jiva-default
+  annotations:
+    openebs.io/cas-type: jiva
+    cas.openebs.io/config: |
+      - name: ReplicaImage
+        value: quay.io/openebs/m-apiserver:0.8.0
+```
+
+<h3><a class="anchor" aria-hidden="true" id="Controller-Image-Policy"></a>Controller Image Policy</h3>
+
+You can specify the jiva controller image using the *value* for *ControllerImage* property.
+
+**Note:**
+
+Jiva controller image is a docker image. Following is a sample setting.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-jiva-default
+  annotations:
+    openebs.io/cas-type: jiva
+    cas.openebs.io/config: |
+      - name: ControllerImage
+        value: quay.io/openebs/jiva:0.8.0
+```
+
+<h3><a class="anchor" aria-hidden="true" id="Volume-Monitor-Policy"></a>Volume Monitor Policy</h3>
+
+You can specify the jiva volume monitor feature which can be set using *value* for *VolumeMonitor* property.
+
+**Note:**
+
+Jiva Volume Monitor is a docker image. Following is a sample that makes use of Volume monitor setting policy.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-jiva-default
+  annotations:
+    openebs.io/cas-type: jiva
+    cas.openebs.io/config: |
+      - enabled: "true"
+        name: VolumeMonitor
+```
+
+<h3><a class="anchor" aria-hidden="true" id="Storage-Pool-Policy"></a>Storage Pool Policy</h3>
+
+A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on any of the following.
+
+- host-os or
+- mounted disk
+
+**Note:**
+
+You must define the storage pool as a Kubernetes Custom Resource (CR) before using it as a Storage Pool policy. Following is a sample Kubernetes custom resource definition for a storage pool.
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: StoragePool
+metadata:
+    name: default
+    type: hostdir
+spec:
+    path: "/mnt/openebs"
+```
+
+This storage pool custom resource can now be used as follows in the storage class.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-jiva-default
+  annotations:
+    openebs.io/cas-type: jiva
+    cas.openebs.io/config: |
+      - name: StoragePool
+        value: default
+```
+
+<h3><a class="anchor" aria-hidden="true" id="Volume-File-System-Type-Policy"></a>Volume File System Type Policy</h3>
+
+You can specify a storage class policy where you can specify the file system type. By default, OpenEBS comes with ext4 file system. However, you can also use the xfs file system.
+
+Following is a sample setting.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+   name: openebs-mongodb
+   annotations:
+    openebs.io/cas-type: jiva
+    cas.openebs.io/config: |
+      - name: FSType
+        value: "xfs"
+```
+
+<h3><a class="anchor" aria-hidden="true" id="Volume-Monitoring-Image-Policy"></a>Volume Monitoring Image Policy</h3>
+
+You can specify the monitoring image policy for a particular volume using *value* for *VolumeMonitorImage*property. The following Kubernetes storage class sample uses the Volume Monitoring policy. By default, volume monitor is enabled.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-jiva-default
+  annotations:
+    openebs.io/cas-type: jiva
+    cas.openebs.io/config: |
+      - name: VolumeMonitorImage
+        value: quay.io/openebs/m-exporter:0.8.0
+```
+
+<h3><a class="anchor" aria-hidden="true" id="Volume-Space-Reclaim-Policy"></a>Volume Space Reclaim Policy</h3>
+
+Support for a storage policy that can disable the Jiva Volume Space reclaim. You can specify the jiva volume space reclaim feature setting using the *value* for *RetainReplicaData* property. In the following example, the jiva volume space reclaim feature is enabled as true. Hence, retain the volume data post PVC deletion.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-jiva-default
+  annotations:
+    openebs.io/cas-type: jiva
+    cas.openebs.io/config: |
+      - name: RetainReplicaData
+        enabled: true
+```
+
+<h3><a class="anchor" aria-hidden="true" id="Targe-NodeSelector-Policy"></a>Target  NodeSelector Policy</h3>
+
+You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: apnode`is the node label.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: TargetNodeSelector
+        value: |-
+            node: appnode
+```
+
+<h3><a class="anchor" aria-hidden="true" id="Replica-NodeSelector-Policy"></a>Replica NodeSelector Policy</h3>
+
+You can specify the *ReplicaNodeSelector* where replica pods has to be scheduled using the *value* for *ReplicaNodeSelector* . In following sample storage class yaml, `node: openebs` is the node label.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: ReplicaNodeSelector
+        value: |-
+            node: openebs
+```
+
+<h3><a class="anchor" aria-hidden="true" id="Target-ResourceLimits-Policy"></a>Target ResourceLimits Policy</h3>
+
+You can specify the *TargetResourceLimits* to restrict the memory and cpu usage of target pod within the given limit using the *value* for *TargetResourceLimits* .
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: TargetResourceLimits
+        value: |-
+            memory: 1Gi
+            cpu: 100m
+```
+
+<h3><a class="anchor" aria-hidden="true" id="AuxResourceLimits-Policy"></a>AuxResourceLimits Policy</h3>
+
+You can specify the *AuxResourceLimits* which allow you to set limits on side cars.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: TargetResourceLimits
+        value: |-
+            memory: 0.5Gi
+            cpu: 50m
+```
+
+<h3><a class="anchor" aria-hidden="true" id="ReplicaResourceLimits-Policy"></a>ReplicaResourceLimits Policy</h3>
+
+You can specify the *ReplicaResourceLimits* to restrict the memory usage of replica pod within the given limit using the *value* for *ReplicaResourceLimits*.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: ReplicaResourceLimits
+        value: |-
+            memory: 2Gi
+```
+
+<h3><a class="anchor" aria-hidden="true" id="Target Affinity Policy"></a>Target Affinity Policy</h3>
+
+The StatefulSet workloads access the OpenEBS storage volume by connecting to the Volume Target Pod. This policy can be used to co-locate volume target pod on the same node as workload.
+
+- This feature makes use of the Kubernetes Pod Affinity feature that is dependent on the Pod labels. User will need to add the following label to both Application and PVC.
+
+  ```
+  labels:
+    openebs.io/target-affinity: <application-unique-label>
+  ```
+
+- You can specify the Target Affinity in both application and OpenEBS PVC using the following way
+
+  For Application Pod, it will be similar to the following
+
+  ```
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: fio-jiva
+    labels:
+      name: fio-jiva
+      openebs.io/target-affinity: fio-jiva
+  ```
+
+  For OpenEBS PVC, it will be similar to the following.
+
+  ```
+  kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: fio-jiva-claim
+    labels:
+      openebs.io/target-affinity: fio-jiva
+  ```
+
+**Note**: *This feature works only for cases where there is a 1-1 mapping between a application and PVC. It's not recommended for STS where PVC is specified as a template.*
+
+
+
 ## Troubleshooting jiva volumes
 
 
