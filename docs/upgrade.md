@@ -216,26 +216,22 @@ kubectl get deployment -o yaml -n openebs | grep -i image | grep -i quay | grep 
 Output will be similar to the following.
 
 ```
-  image: quay.io/openebs/cstor-pool:v0.8.0
-  image: quay.io/openebs/cstor-pool-mgmt:v0.8.0
-  image: quay.io/openebs/cstor-pool:v0.8.0
-  image: quay.io/openebs/cstor-pool-mgmt:v0.8.0
-  image: quay.io/openebs/cstor-pool:v0.8.0
-  image: quay.io/openebs/cstor-pool-mgmt:v0.8.0
-  image: quay.io/openebs/m-apiserver:v0.8.0
-  image: quay.io/openebs/openebs-k8s-provisioner:v0.8.0
-  image: quay.io/openebs/snapshot-controller:v0.8.0
-  image: quay.io/openebs/snapshot-provisioner:v0.8.0
+image: quay.io/openebs/cstor-pool:v0.8.0
+image: quay.io/openebs/cstor-pool-mgmt:v0.8.0
+image: quay.io/openebs/cstor-pool:v0.8.0
+image: quay.io/openebs/cstor-pool-mgmt:v0.8.0
+image: quay.io/openebs/cstor-pool:v0.8.0
+image: quay.io/openebs/cstor-pool-mgmt:v0.8.0
+image: quay.io/openebs/m-apiserver:v0.8.0
+image: quay.io/openebs/openebs-k8s-provisioner:v0.8.0
+image: quay.io/openebs/snapshot-controller:v0.8.0
+image: quay.io/openebs/snapshot-provisioner:v0.8.0
 - image: quay.io/openebs/cstor-istgt:v0.8.0
-  image: quay.io/openebs/m-exporter:v0.8.0
-  image: quay.io/openebs/cstor-volume-mgmt:v0.8.0
+image: quay.io/openebs/m-exporter:v0.8.0
+image: quay.io/openebs/cstor-volume-mgmt:v0.8.0
 ```
 
 This will show the images of all the OpenEBS components after the upgrade. All image tag should in v0.8.0
-
-## Troubleshooting 
-
-<TBD>
 
 <br>
 
