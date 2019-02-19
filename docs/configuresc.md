@@ -111,21 +111,17 @@ Below table lists the storage policies supported by cStor. These policies should
 | [FSType](#volume-file-system-type-policy)                |           | ext4                                    | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [TargetNodeSelector](#targetnodeselector-policy)         |           | Decided by Kubernetes scheduler         | Specify the label in key:value format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
 | [TargetResourceLimits](#targetresourcelimits-policy)     |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
-| [AuxResourceLimits](#auxresourcelimits-policy)           |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod sidecar            |
-| [AuxResourceRequests](#auxresourcerequests-policy)       |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod sidecar            |
+| [AuxResourceLimits](#auxresourcelimits-policy)           |           | Decided by Kubernetes scheduler         | Configuring resource limits on the pool and volume pod side-cars. |
+| [AuxResourceRequests](#auxresourcerequests-policy)       |           | Decided by Kubernetes scheduler         | Configure minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. |
 | [PoolResourceRequests](#poolresourcerequests-policy)     |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStorPool pod                       |
 | [PoolResourceLimits](#poolresourcelimits-policy)         |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStorPool pod                       |
-| [ReplicaResourceLimits](#replicaresourcelimits-policy)   |           | Decided by Kubernetes scheduler         | ??                                                           |
+| [ReplicaResourceLimits](#replicaresourcelimits-policy)   |           | Decided by Kubernetes scheduler         | Allow you to specify resource limits for the Replica.        |
 | [Target Affinity](#target-affinity-policy)               |           | Decided by Kubernetes scheduler         | The policy specifies the label KV pair to be used both on the cStor target and on the application being used so that application pod and cStor target pod are scheduled on the same node. |
 | [Target Namespace](#target-namespace)                    |           | Openebs                                 | When service account name is specified, the cStor target pod is scheduled in the application's namespace  ?? |
 
 
 
-
-
-
-
-### Replica Count Policy
+<h3><a class="anchor" aria-hidden="true" id="Replica-Count-Policy"></a>Replica Count Policy</h3>
 
 You can specify the cStor Pool replica count using the *value* for *ReplicaCount* property. In the following example, the ReplicaCount is specified as 3. Hence, three replicas for storage pool will be created.
 
@@ -140,7 +136,7 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-### Volume Controller Image Policy
+<h3><a class="anchor" aria-hidden="true" id="Volume-Controller-Image-Policy"></a>Volume Controller Image Policy</h3>
 
 You can specify the cStor Volume Controller Image using the *value* for *VolumeControllerImage* property. This will help you choose the volume management image.
 
@@ -155,7 +151,7 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-### Volume Target Image Policy
+<h3><a class="anchor" aria-hidden="true" id="Volume-Target-Image-Policy"></a>Volume Target Image Policy</h3>
 
 You can specify the cStor Target Image using the *value* for *VolumeTargetImage* property. This will help you choose the cStor istgt target image.
 
@@ -170,7 +166,7 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-### Storage Pool Claim Policy
+<h3><a class="anchor" aria-hidden="true" id="Storage-Pool-Claim-Policy"></a>Storage Pool Claim Policy</h3>
 
 You can specify the cStor Pool Claim name using the *value* for *StoragePoolClaim* property. This will help you choose cStor storage pool name where OpenEBS volume will be created. Following is the default StorageClass template where cStor volume will be created on default cStor Sparse Pool.
 
@@ -185,7 +181,7 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-### Volume Monitor Policy
+<h3><a class="anchor" aria-hidden="true" id="Volume-Monitor-Policy"></a>Volume Monitor Policy</h3>
 
 You can specify the cStor volume monitor feature which can be set using *value* for the *VolumeMonitor* property.  By default, volume monitor is enabled.
 
@@ -204,7 +200,7 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-### Volume Monitoring Image Policy
+<h3><a class="anchor" aria-hidden="true" id="Volume-Monitoring-Image-Policy"></a>Volume Monitoring Image Policy</h3>
 
 You can specify the monitoring image policy for a particular volume using *value* for *VolumeMonitorImage* property. The following sample storage class uses the Volume Monitor Image policy.
 
@@ -219,7 +215,7 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-### Volume File System Type Policy
+<h3><a class="anchor" aria-hidden="true" id="Volume-File-System-Type-Policy"></a>Volume File System Type Policy</h3>
 
 You can specify the file system type for the cStor volume where application will consume the storage using *value* for *FSType*. The following is the sample storage class. Currently OpenEBS support ext4 as the default file system and it also supports XFS as filesystem.
 
@@ -234,7 +230,7 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-### TargetNodeSelector Policy
+<h3><a class="anchor" aria-hidden="true" id="Target NodeSelector-Policy"></a>Target NodeSelector Policy</h3>
 
 You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: apnode `is the node label.
 
@@ -250,7 +246,7 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-### TargetResourceLimits Policy
+<h3><a class="anchor" aria-hidden="true" id="Target ResourceLimits Policy"></a>Target ResourceLimits Policy</h3>
 
 You can specify the *TargetResourceLimits* to restrict the memory and cpu usage of target pod within the given limit  using the *value* for *TargetResourceLimits* .
 
@@ -267,7 +263,7 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-### AuxResourceLimits Policy
+<h3><a class="anchor" aria-hidden="true" id="AuxResourceLimits-Policy"></a>AuxResourceLimits Policy</h3>
 
 You can specify the *AuxResourceLimits* which allow you to set limits on side cars. 
 
@@ -284,7 +280,7 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-### AuxResourceRequests Policy
+<h3><a class="anchor" aria-hidden="true" id="AuxResourceRequests-Policy"></a>AuxResourceRequests Policy</h3
 
 This feature is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. `AuxResourceRequests` allow you to set requests on side cars. Requests have to be specified in the format expected by Kubernetes
 
@@ -299,7 +295,7 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-### ReplicaResourceLimits Policy
+<h3><a class="anchor" aria-hidden="true" id="ReplicaResourceLimits-Policy"></a>Replica ResourceLimits Policy</h3>
 
 You can specify the *ReplicaResourceLimits* to restrict the memory usage of replica pod within the given limit  using the *value* for *ReplicaResourceLimits*.
 
@@ -315,7 +311,7 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-### PoolResourceLimits Policy
+<h3><a class="anchor" aria-hidden="true" id="PoolResourceLimits-Policy"></a>PoolResourceLimits-Policy</h3>
 
 This feature allow you to set the limits on memory and cpu for pool pods. The resource and limit value should be in the same format as expected by Kubernetes. The `name` of SPC can be changed if you need.
 
@@ -329,7 +325,7 @@ spec:
     value: "none"
 ```
 
-### PoolResourceRequests Policy
+<h3><a class="anchor" aria-hidden="true" id="PoolResourceRequests-Policy"></a>PoolResourceRequests Policy</h3>
 
 This feature allow you to specify resource requests that need to be available before scheduling the containers. If not specified, the default is to use the limits from PoolResourceLimits or the default requests set in the cluster. The `name` of SPC can be changed if you need.
 
@@ -343,9 +339,7 @@ spec:
     value: "none"
 ```
 
-
-
-  ### Target Affinity Policy
+<h3><a class="anchor" aria-hidden="true" id="Target Affinity-Policy"></a>Target Affinity Policy</h3>
 
 The StatefulSet workloads access the OpenEBS storage volume  by connecting to the Volume Target Pod. This policy can be used to co-locate volume target pod on the same node as workload.
 
@@ -373,14 +367,11 @@ For Application Pod, it will be similar to the following
 
 **Note**: *This feature works only for cases where there is a 1-1 mapping between a application and PVC. It's not recommended for STS where PVC is specified as a template.* 
 
+<h3><a class="anchor" aria-hidden="true" id="Target Namespace"></a>Target Namespace</h3>
 
-
-### Target Namespace
 By default, the cStor target pods are scheduled in a dedicated *openebs* namespace. The target pod also is provided with OpenEBS service account so that it can access the Kubernetes Custom Resource called `CStorVolume` and `Events`.
 This policy, allows the Cluster administrator to specify if the Volume Target pods should be deployed in the namespace of the workloads itself. This can help with setting the limits on the resources on the target pods, based on the namespace in which they are deployed.
 To use this policy, the Cluster administrator could either use the existing OpenEBS service account or create a new service account with limited access and provide it in the StorageClass as follows:
-
-
 
 ```
 annotations:
@@ -390,10 +381,6 @@ annotations:
 ```
 
 The sample service account can be found [here](https://github.com/openebs/openebs/blob/master/k8s/ci/maya/volume/cstor/service-account.yaml).
-
-
-
-
 
 <br>
 

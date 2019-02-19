@@ -463,7 +463,7 @@ kind: StorageClass
 metadata:
   annotations:
     cas.openebs.io/config: |
-      - name: TargetResourceLimits
+      - name: AuxResourceLimits
         value: |-
             memory: 0.5Gi
             cpu: 50m
