@@ -88,7 +88,7 @@ OpenEBS is the most popular open source project for container attached or contai
 <br>
 
 
-## <font size="6">Stateful applications </font>
+## <font size="6">Run stateful applications on OpenEBS</font>
 
 <br>
 
