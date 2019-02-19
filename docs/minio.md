@@ -27,7 +27,6 @@ Cloud native Object storage is easy to deploy with Minio and OpenEBS. Both run i
 <br>
 
 <hr>
-
 <br>
 
 ## Deployment model
@@ -39,7 +38,6 @@ Cloud native Object storage is easy to deploy with Minio and OpenEBS. Both run i
 <br>
 
 <hr>
-
 <br>
 
 ## Configuration workflow
@@ -70,6 +68,12 @@ Cloud native Object storage is easy to deploy with Minio and OpenEBS. Both run i
 
     For more information on installation, see Minio [documentation](https://github.com/helm/charts/tree/master/stable/minio).
 
+<br>
+
+<hr>
+
+<br>
+
 ## Post deployment Operations
 
 <br>
@@ -84,9 +88,11 @@ As in most cases, cStor pool may not be dedicated to just Minio alone. It is rec
 
 <br>
 
-## Configuration details
+<hr>
 
 <br>
+
+## Configuration details
 
 **openebs-config.yaml**
 

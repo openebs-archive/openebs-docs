@@ -61,15 +61,19 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
    You must configure a StorageClass to provision cStor volume on cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies  are defined. In this solution we using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. Since Percona-MySQL is a deployment, it requires high availability of data at Storage level. So cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStoveVolume Replica count as 3 is provided in the configuration details below.
 
-5. **Configure PVC** : Percona deployment needs a volume with a replication factor as 3. See PVC example spec below.
+5. **Launch and test Percona**:
 
-6. **Launch and test Percona**:
-
-   Run `kubectl apply -f percona-openebs-deployment.yaml` to deploy Percona application. For more information, see Percona documentation. In other way,  you can use stable Percona image with helm to deploy Percona in your cluster using the following command.
+   Create a file called `percona-openebs-deployment.yaml` and add content from `percona-openebs-deployment.yaml` given in the configuration details section. Run `kubectl apply -f percona-openebs-deployment.yaml` to deploy Percona application. For more information, see Percona documentation. In other way,  you can use stable Percona image with helm to deploy Percona in your cluster using the following command.
 
    ```
     helm install --name my-release --storage-class=openebs-cstor-disk stable/percona 
    ```
+
+<br>
+
+<hr>
+
+<br>
 
 ## Reference at openebs.ci
 
@@ -78,6 +82,12 @@ A [sample Percona server](https://www.openebs.ci/percona-cstor) at [https://open
 Sample YAML  for running Percona-mysql using cStor are [here](https://raw.githubusercontent.com/openebs/e2e-infrastructure/d536275e8c3d78f5c8ce1728b07eee26653b5056/production/percona-cstor/percona-openebs-deployment.yaml)
 
 <a href="https://openebs.ci/percona-cstor" target="_blank">OpenEBS-CI dashboard of Percona</a>
+
+<br>
+
+<hr>
+
+<br>
 
 ## Post deployment Operations
 
@@ -93,7 +103,11 @@ As in most cases, cStor pool may not be dedicated to just Percona database alone
 
  cStor volume replicas need to be in quorum when applications are deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/docs/next/k8supgrades.html) for more details.
 
+<br>
 
+<hr>
+
+<br>
 
 ## Configuration details
 
@@ -149,6 +163,57 @@ provisioner: openebs.io/provisioner-iscsi
 reclaimPolicy: Delete
 ---
 ```
+
+**percona-openebs-deployment.yaml**
+
+```
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: percona
+  labels:
+    name: percona
+spec:
+  securityContext:
+    fsGroup: 999
+  containers:
+  - resources:
+      limits:
+        cpu: 0.5
+    name: percona
+    image: percona
+    args:
+      - "--ignore-db-dir"
+      - "lost+found"
+    env:
+      - name: MYSQL_ROOT_PASSWORD
+        value: k8sDem0
+    ports:
+      - containerPort: 3306
+        name: percona
+    volumeMounts:
+    - mountPath: /var/lib/mysql
+      name: demo-vol1
+  volumes:
+  - name: demo-vol1
+    persistentVolumeClaim:
+      claimName: demo-vol1-claim
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: demo-vol1-claim
+spec:
+  storageClassName: openebs-cstor-disk
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 30G
+```
+
+
 
 ## See Also:
 

@@ -92,6 +92,10 @@ GitLab is a good solution for building On-Premise cloud native CI/CD platforms, 
 
 <br>
 
+<hr>
+
+<br>
+
 ## Post deployment Operations
 
 <br>
@@ -107,6 +111,10 @@ As in most cases, cStor pool may not be dedicated to just GitLab's databases alo
 **Maintain volume replica quorum during node upgrades**
 
  cStor volume replicas need to be in quorum when applications are deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/docs/next/k8supgrades.html) for more details.
+
+<br>
+
+<hr>
 
 <br>
 

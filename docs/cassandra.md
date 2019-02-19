@@ -87,32 +87,11 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
    helm install --namespace "cassandra" -n "cassandra" --storage-class=openebs-cstor-disk incubator/cassandra
    ```
 
-<br>
-
-<hr>
-
-<br>
-
-
-
-## Reference at [openebs.ci](https://openebs.ci/)
-
-<br>
-
-A live deployment of Cassandra using OpenEBS volumes as highly available object storage can be seen at the website [www.openebs.ci](https://openebs.ci/)
-
-Deployment YAML spec files for Cassandra and OpenEBS resources are found [here]()
-
-[OpenEBS-CI dashboard of Cassandra]()
-
-[Live access to Cassandra dashboard]()
-
 
 
 <br>
 
 <hr>
-
 <br>
 
 

@@ -65,6 +65,12 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
     For more information about installation, see MySQL [documentation](https://github.com/helm/charts/tree/master/stable/mysql).
 
+<br>
+
+<hr>
+
+<br>
+
 ## Post deployment Operations
 
 <br>
@@ -86,10 +92,6 @@ As in most cases, cStor pool may not be dedicated to just MySQL alone. It is rec
 <hr>
 
 <br>
-
-
-
-
 
 ## Configuration Details
 
