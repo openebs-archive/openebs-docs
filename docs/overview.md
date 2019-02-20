@@ -5,25 +5,29 @@ sidebar_label: Overview
 ---
 ------
 
-
-
-
-
 ##  <font size="6">Introduction</font>
 
-
-
-OpenEBS is the most popular open source project for container attached or container native storage on Kubernetes. OpenEBS adopts a new approach called Container Attached Storage or CAS, where each workload is provided with a dedicated storage controller, thereby having most granularity of storage policies and isolation to tune the storage just for that workload. OpenEBS runs completely in user space and does not have any dependency on linux kernel modules. See  OpenEBS  <a href="/docs/next/features.html">features & benefits</a> and <a href="/docs/next/usecases.html" target="">use cases</a>.
+OpenEBS is the leading open-source project for container-attached and
+container-native storage on Kubernetes. OpenEBS adopts a
+Container Attached Storage (CAS) approach, where each workload is
+provided with a dedicated storage controller. OpenEBS
+implements granular storage policies and isolation that enable users
+to optimize storage for each specific workload. OpenEBS runs
+in user space and does not have any Linux kernel module dependencies.
+See OpenEBS  <a href="/docs/next/features.html">Features & Benefits</a>
+and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 
 <br>
 
-
-
 ## <font size="6">Quickstart</font>
 
-- OpenEBS requires iSCSI client to be configured and iSCSI.d service running on the host nodes. [Verify if iSCSI is setup](/docs/next/prerequisites.html) and running before starting the installation
+- OpenEBS requires iSCSI client to be configured and iSCSI.d service
+running on the host nodes.
+[Verify if iSCSI service is up](/docs/next/prerequisites.html) and
+running before starting the installation
 
-- Default installation works for most cases. As a Kubernetes cluster-admin , start the default installation using either
+- Default installation works for most cases. As a Kubernetes
+cluster-admin, start the default installation using either
 
   ```
   helm install --namespace openebs --name openebs stable/openebs
@@ -32,17 +36,21 @@ OpenEBS is the most popular open source project for container attached or contai
   <font size="4">(OR)</font>
 
   ```
-  kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
+  kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
   ```
 
-  For more detailed and advanced installation,  see [installation section](/docs/next/installation.html). 
+  For advanced installation steps, see 
+[Installation](/docs/next/installation.html) section. 
 
-  
-
-- [Verify OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation) and start provisioning the OpenEBS volumes using the Kubernetes PVC interface by using `kubectl` command, for more details on how to provision OpenEBS volumes, see  [provisioning OpenEBS volumes](/docs/next/provisionvols.html)
+- [Verify OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation)
+and start provisioning the OpenEBS volumes using the Kubernetes PVC
+interface by using `kubectl` command, for more details on how to
+provision OpenEBS volumes, see
+[provisioning OpenEBS volumes](/docs/next/provisionvols.html)
 
 <br>
-<font size="6">Explore documentation</font>
+
+## <font size="6">Explore documentation</font>
 
 <br>
 
@@ -63,7 +71,6 @@ OpenEBS is the most popular open source project for container attached or contai
 	</a>
   </div>
 </div>
-
 <div class="row">
   <div class="column2">
 	<a href="/docs/next/usecases.html">
@@ -81,25 +88,17 @@ OpenEBS is the most popular open source project for container attached or contai
 	</a>
   </div>
 </div>
-
 <br>
 
-<br>
+## <font size="6">Run stateful applications on OpenEBS</font>
 
 <br>
-
-## <font size="6">Stateful applications </font>
-
-<br>
-
-
 <div class="row" width=60%>
     <div class="column2">
 	<a href="/docs/next/prometheus.html" target="_blank">
 		<img src="/docs/assets/a-prometheus.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
-
 <div class="column2">
 	<a href="/docs/next/gitlab.html" target="_blank">
 		<img src="/docs/assets/a-gitlab.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
@@ -110,13 +109,9 @@ OpenEBS is the most popular open source project for container attached or contai
 		<img src="/docs/assets/a-cassandra.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
-
 </div>
-
 <br>
-
 <div class="row" width=60%>
-
 <div class="column2">
 	<a href="/docs/next/minio.html" target="_blank">
 		<img src="/docs/assets/a-minio.png" alt="OpenEBS Minio" style="float:left;width:100px;">
@@ -132,15 +127,9 @@ OpenEBS is the most popular open source project for container attached or contai
 		<img src="/docs/assets/a-nfs.png" alt="OpenEBS NFS" style="float:left;width:100px;">
 	</a>
   </div>
-
 </div>
-
-
-
 <br>
-
 <div class="row" width=60%>
-
 <div class="column2">
 	<a href="/docs/next/elasticsearch.html" target="_blank">
 		<img src="/docs/assets/a-elastic.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
@@ -156,13 +145,8 @@ OpenEBS is the most popular open source project for container attached or contai
 		<img src="/docs/assets/a-postgres.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
-
 </div>
-
-
-
 <br>
-
 <div class="row">
   <div class="column2">
 	<a href="/docs/next/percona.html" target="_blank">
@@ -180,22 +164,17 @@ OpenEBS is the most popular open source project for container attached or contai
 	</a>
   </div>
 </div>
-
-
 <br><br>
 
 ## See Also:
 
-
-
-### [Container Attached Storage or CAS](/docs/next/cas.html)
+### [Container Attached Storage (CAS)](/docs/next/cas.html)
 
 ### <a href="https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/" target="_blank">CNCF CAS Blog </a>
 
 ### [OpenEBS architecture](/docs/next/architecture.html)
 
 <br><hr><br>
-
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
