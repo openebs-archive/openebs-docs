@@ -109,14 +109,14 @@ Below table lists the storage policies supported by cStor. These policies should
 | [VolumeMonitor](#Volume-Monitor-Policy)                  |           | ON                                      | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
 | [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)    |           | quay.io/openebs/m-exporter:0.8.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [FSType](#Volume-File-System-Type-Policy)                |           | ext4                                    | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
-| [TargetNodeSelector](#Target-NodeSelector-Policy)        |           | Decided by Kubernetes scheduler         | Specify the label in key:value format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
+| [TargetNodeSelector](#Target-NodeSelector-Policy)        |           | Decided by Kubernetes scheduler         | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
 | [TargetResourceLimits](#Target-ResourceLimits Policy)    |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
 | [AuxResourceLimits](#AuxResourceLimits-Policy)           |           | Decided by Kubernetes scheduler         | Configuring resource limits on the pool and volume pod side-cars. |
 | [AuxResourceRequests](#AuxResourceRequests-Policy)       |           | Decided by Kubernetes scheduler         | Configure minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. |
 | [PoolResourceRequests](#PoolResourceRequests-Policy)     |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStorPool pod                       |
 | [PoolResourceLimits](#PoolResourceLimits-Policy)         |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStorPool pod                       |
 | [Target Affinity](#Target-Affinity-Policy)               |           | Decided by Kubernetes scheduler         | The policy specifies the label KV pair to be used both on the cStor target and on the application being used so that application pod and cStor target pod are scheduled on the same node. |
-| [Target Namespace](#Target-Namespace)                    |           | Openebs                                 | When service account name is specified, the cStor target pod is scheduled in the application's namespace  ?? |
+| [Target Namespace](#Target-Namespace)                    |           | openebs                                 | When service account name is specified, the cStor target pod is scheduled in the application's namespace. |
 
 
 
