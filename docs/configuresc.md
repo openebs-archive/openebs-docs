@@ -110,7 +110,7 @@ Below table lists the storage policies supported by cStor. These policies should
 | [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)    |           | quay.io/openebs/m-exporter:0.8.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [FSType](#Volume-File-System-Type-Policy)                |           | ext4                                    | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [TargetNodeSelector](#Target-NodeSelector-Policy)        |           | Decided by Kubernetes scheduler         | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
-| [TargetResourceLimits](#Target-ResourceLimits Policy)    |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
+| [TargetResourceLimits](#Target-ResourceLimits-Policy)    |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
 | [AuxResourceLimits](#AuxResourceLimits-Policy)           |           | Decided by Kubernetes scheduler         | Configuring resource limits on the pool and volume pod side-cars. |
 | [AuxResourceRequests](#AuxResourceRequests-Policy)       |           | Decided by Kubernetes scheduler         | Configure minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. |
 | [PoolResourceRequests](#PoolResourceRequests-Policy)     |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStorPool pod                       |
@@ -245,7 +245,7 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-<h3><a class="anchor" aria-hidden="true" id="Target-ResourceLimits Policy"></a>Target ResourceLimits Policy</h3>
+<h3><a class="anchor" aria-hidden="true" id="Target-ResourceLimits-Policy"></a>Target ResourceLimits Policy</h3>
 
 You can specify the *TargetResourceLimits* to restrict the memory and cpu usage of target pod within the given limit  using the *value* for *TargetResourceLimits* .
 
