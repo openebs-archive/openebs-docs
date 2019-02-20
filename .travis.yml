@@ -22,7 +22,7 @@ after_success:
        docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$TRAVIS_BRANCH-$COMMIT . && docker push $REPO; 
     fi
 
-  - if [ "$TRAVIS_BRANCH" = "0.6" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/newstaging-openebs-docs;
+  - if [ "$TRAVIS_BRANCH" = "newstaging" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/newstaging-openebs-docs;
        docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$TRAVIS_BRANCH-$COMMIT . && docker push $REPO;
     fi
 
