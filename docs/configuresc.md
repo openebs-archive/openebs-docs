@@ -294,22 +294,6 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-<h3><a class="anchor" aria-hidden="true" id="ReplicaResourceLimits-Policy"></a>Replica ResourceLimits Policy</h3>
-
-You can specify the *ReplicaResourceLimits* to restrict the memory usage of replica pod within the given limit  using the *value* for *ReplicaResourceLimits*.
-
-```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  annotations:
-    cas.openebs.io/config: |
-      - name: ReplicaResourceLimits
-        value: |-
-            memory: 2Gi
-    openebs.io/cas-type: cstor
-```
-
 <h3><a class="anchor" aria-hidden="true" id="PoolResourceLimits-Policy"></a>PoolResourceLimits Policy</h3>
 
 This feature allow you to set the limits on memory and cpu for pool pods. The resource and limit value should be in the same format as expected by Kubernetes. The `name` of SPC can be changed if you need.
