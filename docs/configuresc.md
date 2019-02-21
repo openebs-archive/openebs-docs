@@ -103,14 +103,16 @@ Below table lists the storage policies supported by cStor. These policies should
 | cStor Storage Policy                                     | Mandatory | Default                                 | Purpose                                                      |
 | -------------------------------------------------------- | --------- | --------------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                    | No        | 3                                       | Defines the number of cStor volume replicas                  |
-| [VolumeControllerImage](#Volume-Controller-Image-Policy) |           | quay.io/openebs/cstor-volume-mgmt:0.8.0 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
-| [VolumeTargetImage](#Volume-Target-Image-Policy)         |           | value:quay.io/openebs/cstor-istgt:0.8.0 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeControllerImage](#Volume-Controller-Image-Policy) |           | quay.io/openebs/cstor-volume-mgmt:0.8.1 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
+| [VolumeTargetImage](#Volume-Target-Image-Policy)         |           | value:quay.io/openebs/cstor-istgt:0.8.1 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
 | [StoragePoolClaim](#Storage-Pool-Claim-Policy)           | Yes       | N/A (a valid pool must be provided)     | The cStorPool on which the volume replicas should be provisioned |
 | [VolumeMonitor](#Volume-Monitor-Policy)                  |           | ON                                      | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)    |           | quay.io/openebs/m-exporter:0.8.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)    |           | quay.io/openebs/m-exporter:0.8.1        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [FSType](#Volume-File-System-Type-Policy)                |           | ext4                                    | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [TargetNodeSelector](#Target-NodeSelector-Policy)        |           | Decided by Kubernetes scheduler         | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
 | [TargetResourceLimits](#Target-ResourceLimits-Policy)    |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
+| [TargetResourceRequests](#TargetResourceRequests)        |           | Decided by Kubernetes scheduler         | Configuring resource requests that need to be available before scheduling the containers. |
+| [TargetTolerations](#TargetTolerations)                  |           | Decided by Kubernetes scheduler         | Configuring the tolerations for target.                      |
 | [AuxResourceLimits](#AuxResourceLimits-Policy)           |           | Decided by Kubernetes scheduler         | Configuring resource limits on the pool and volume pod side-cars. |
 | [AuxResourceRequests](#AuxResourceRequests-Policy)       |           | Decided by Kubernetes scheduler         | Configure minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. |
 | [PoolResourceRequests](#PoolResourceRequests-Policy)     |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStorPool pod                       |
@@ -146,7 +148,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeControllerImage
-        value: quay.io/openebs/cstor-volume-mgmt:0.8.0
+        value: quay.io/openebs/cstor-volume-mgmt:0.8.1
     openebs.io/cas-type: cstor
 ```
 
@@ -161,7 +163,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeTargetImage
-        value:quay.io/openebs/cstor-istgt:0.8.0
+        value:quay.io/openebs/cstor-istgt:0.8.1
     openebs.io/cas-type: cstor
 ```
 
@@ -183,10 +185,6 @@ metadata:
 <h3><a class="anchor" aria-hidden="true" id="Volume-Monitor-Policy"></a>Volume Monitor Policy</h3>
 
 You can specify the cStor volume monitor feature which can be set using *value* for the *VolumeMonitor* property.  By default, volume monitor is enabled.
-
-**Note:**
-
-cStor Volume Monitor is a docker image. Following is a sample that makes use of Volume monitor setting policy.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -210,7 +208,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:0.8.0
+        value: quay.io/openebs/m-exporter:0.8.1
     openebs.io/cas-type: cstor
 ```
 
@@ -260,6 +258,40 @@ metadata:
             memory: 1Gi
             cpu: 100m
     openebs.io/cas-type: cstor
+```
+
+<h3><a class="anchor" aria-hidden="true" id="TargetResourceRequests"></a>TargetResourceRequests Policy </h3>
+
+You can specify the *TargetResourceRequests* to specify resource requests that need to be available before scheduling the containers. 
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: TargetResourceRequests
+        value: "none"
+    openebs.io/cas-type: cstor
+```
+
+<h3><a class="anchor" aria-hidden="true" id="TargetTolerations"></a>TargetTolerations Policy </h3>
+
+You can specify the *TargetTolerations* to specify the tolerations for target. 
+
+```
+- name: TargetTolerations
+  value: |-
+     t1:
+       key: "key1"
+       operator: "Equal"
+       value: "value1"
+       effect: "NoSchedule"
+     t2:
+       key: "key1"
+       operator: "Equal"
+       value: "value1"
+       effect: "NoExecute"
 ```
 
 <h3><a class="anchor" aria-hidden="true" id="AuxResourceLimits-Policy"></a>AuxResourceLimits Policy</h3>
