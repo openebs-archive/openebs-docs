@@ -62,7 +62,7 @@ OpenEBS provides block volume support through iSCSI protocol. Hence, iSCSI clien
 
 The open-iscsi initiator packages depends on your host OS or in kubelet container. You can follow the following steps for installation / verification of open-iscsi package. It is a mandatory requirement to install the iSCSI services and running on all the host machine. OpenEBS uses iSCSI to connect to the block volumes. 
 
-### Ubuntu
+<h3><a class="anchor" aria-hidden="true" id="Ubuntu"></a>Ubuntu</h3>
 
 **Verify iSCSI is configured**
 
@@ -106,7 +106,7 @@ sudo apt-get install open-iscsi
 sudo service open-iscsi restart
 ```
 
-### RHEL
+<h3><a class="anchor" aria-hidden="true" id="RHEL"></a>RHEL</h3>
 
 **Verify iSCSI is configured**
 
@@ -150,9 +150,7 @@ Feb 19 12:19:08 master-1550555590.mayalab.com systemd[1]: Started Open-iSCSI.
 Feb 19 12:19:09 master-1550555590.mayalab.com iscsid[2137]: iSCSI daemon with pid=2138 started!
 ```
 
-
-
-Install iSCSI** 
+**Install iSCSI** 
 
 If iSCSI is not installed on your host, install iSCSI services using the following command.
 
@@ -160,7 +158,7 @@ If iSCSI is not installed on your host, install iSCSI services using the followi
 yum install iscsi-initiator-utils -y
 ```
 
-### CentOS
+<h3><a class="anchor" aria-hidden="true" id="CentOS"></a>CentOS</h3>
 
 **Verify iSCSI is configured**
 
@@ -194,7 +192,7 @@ You can verify the iSCSI installation from above section.
 
 ## Kubernetes services on Cloud
 
-### EKS
+<h3><a class="anchor" aria-hidden="true" id="EKS"></a>EKS</h3>
 
 EKS clusters can be brought up with either an AmazonLinux AMI or an Ubuntu 18.04 AMI.
 
@@ -232,15 +230,15 @@ You can verify the iSCSI installation from above section.
 
 **For clusters running with the Ubuntu 18.04 AMI**
 
-This can be checked from [here](/docs/next/prerequisites.html#ubuntu).
+This can be checked from [here](#Ubuntu).
 
-### GKE
+<h3><a class="anchor" aria-hidden="true" id="GKE"></a>GKE</h3>
 
 GKE COS (Container Optimized OS) does not come with iSCSI client and does not allow to install iSCSI client. Hence, OpenEBS does not work on K8S clusters which are running COS version of the image on the worker nodes.
 
-Select Ubuntu as the image version for the node pools in the custom settings. For setting up iSCSI clients on Ubuntu nodes, see the [instructions above](/docs/next/prerequisites.html#install-iscsi-client)
+Select Ubuntu as the image version for the node pools in the custom settings. For setting up iSCSI clients on Ubuntu nodes, see the [instructions above.](#Ubuntu)
 
-### AKS
+<h3><a class="anchor" aria-hidden="true" id="AKS"></a>AKS</h3>
 
 On Azure you need to verify the open-iscsi packages are installed and running the service on the kubelet. This can be checked by  connecting to the nodes through SSH using public IP addresses by running the following command.
 
@@ -308,9 +306,28 @@ You can verify the iSCSI installation from above section.
 
 ## On-Prem Kubernetes solutions
 
-### OpenShift
+<h3><a class="anchor" aria-hidden="true" id="OpenShift"></a>OpenShift</h3>
 
-### Rancher
+OpenEBS can be installed using Openshift with following Operating System. Tested OpenShift versions are 3.9 and 3.10.
+
+1. On RHEL
+2. On CentOS 7
+
+<h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
+
+Latest tested RHEL versions are 7.5, 7.6.
+
+For setting up iSCSI clients on RHEL nodes, see the [instructions above][#RHEL].
+
+<h4><a class="anchor" aria-hidden="true" id="On-Centos"></a>On CentOS</h4>
+
+Latest tested CentOS version is CentOS 7.
+
+For setting up iSCSI clients on CentOS nodes, see the [instructions above][#CentOS].
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="Rancher"></a>Rancher</h3>
 
 OpenEBS can be installed using Rancher on 2 different Operating System.
 
@@ -319,7 +336,7 @@ OpenEBS can be installed using Rancher on 2 different Operating System.
 
 OpenEBS target will use the iscsi services inside the kubelet. It is recommended to remove iscsi from Node if it present on Node also.
 
-#### On Ubuntu
+<h4><a class="anchor" aria-hidden="true" id="On-Ubuntu"></a>On Ubuntu</h4>
 
 **Verify iSCSI status on Node and Kubelet?**
 
@@ -365,7 +382,6 @@ lsmod | grep iscsi
 Sample Output:
 
 <div class="co">
-
 iscsi_tcp 20480 0
 libiscsi_tcp 24576 1 iscsi_tcp
 libiscsi 53248 2 libiscsi_tcp,iscsi_tcp
@@ -389,9 +405,7 @@ lsmod | grep iscsi
 
 You can also make the kernel to load `iscsi_tcp` automatically every time the node reboots by appending the line `iscsi_tcp` in `/etc/ modules`.
 
-
-
-#### On RHEL
+<h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
 
 **Verify iSCSI is configured**
 
@@ -430,23 +444,18 @@ modprobe iscsi_tcp
 You can verify the `iscsi_tcp` status on the Node using the following command
 
 ```
-lsmod |grep iscsi
+lsmod | grep iscsi
 ```
 
-Output of above command will be similar to the following
-
-
+Output of above command will be similar to the following.
 
 <div class="co">iscsi_tcp 20480 0
 libiscsi_tcp 28672 1
 iscsi_tcp libiscsi 57344 2 libiscsi_tcp,iscsi_tcp 
 scsi_transport_iscsi 110592 4 libiscsi_tcp,iscsi_tcp,libiscsi
-
 </div>
 
 Create new custom cluster in rancher and apply bind mounts to kubelet container spec:
-
-
 
 ```
 kubelet: 
@@ -456,6 +465,8 @@ kubelet:
     - "/var/lib/iscsi:/var/lib/iscsi"
     - "/lib/modules"
 ```
+
+
 
 ### ICP
 
