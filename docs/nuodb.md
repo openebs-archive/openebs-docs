@@ -69,9 +69,21 @@ NuoDB’s distributed SQL database combines the elastic scale and continuous ava
 
 4. **Create Storage Class**
 
-   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since NuoDB is a statefulset application, it requires only single storage replica. So cStor volume `replicaCount` is =1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStoveVolume Replica count as 1 is provided in the configuration details below.
+   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since NuoDB is a statefulset application, it requires only single storage replica. So cStor volume `replicaCount` is =1. Sample YAML named **openebs-sc-disk.yaml** to consume cStor pool with cStoveVolume Replica count as 1 is provided in the configuration details below.
 
-5. **Launch and test NuoDB**
+5. Download the YAML spec files from OpenEBS litmus repository. 
+
+   ```
+   wget https://raw.githubusercontent.com/openebs/litmus/master/apps/nuodb/deployers/nuodb.yaml
+   
+   wget https://raw.githubusercontent.com/openebs/litmus/master/apps/nuodb/deployers/nuodb-sm.yaml
+   
+   wget https://raw.githubusercontent.com/openebs/litmus/master/apps/nuodb/deployers/nuodb-te.yaml
+   ```
+
+6. Edit the above YAML spec files and update them with correct StorageClass. For example, replace `openebs-cstor-sparse`  with  `openebs-cstor-disk`
+
+7. **Launch and test NuoDB**
 
    Create a namespace called **testns** and  apply following YAML files to deploy NuoDB application. Sample YAML files are provided in the Configuration details below.
 
