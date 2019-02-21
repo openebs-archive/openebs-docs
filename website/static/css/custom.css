@@ -15,14 +15,6 @@ ul#languages-dropdown-items {
 }
 }
 
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 375px) {
-    .reactNavSearchWrapper input#search_input_react {
-        width:181px;
-   }
-}
-
 body{
   font-size: 16px;
 }
@@ -274,21 +266,35 @@ table tr th {
 /* CSS for search bar */
 input#search_input_react 
 {
-  background-color: #ffffff;
-  font-weight:400;
-  height:35;
+    background-color: #7B787D;
+    font-weight:400;
+    width:500px;
+    line-height: 28px;
 }
 input#search_input_react:focus, input#search_input_react:active {
-    color: #555;
+    width: 500px;
+    background-color: #7B787D;
 }
 
 #panel, .flip {
     cursor: pointer;
 }
 
+@media (max-width: 320px) {
+    .ver-link-span {
+      display: none;
+    }
+    .dropdown {
+        display: inline-block;
+        margin-right: auto;
+        margin-left: 0px;
+        margin-top: 3.5px;
+    }
+}
+
 /* CSS for version dropdown */
 @media only screen
-and (min-device-width : 320px)
+and (min-device-width : 321px)
 and (max-device-width : 720px) {
     element.style {
       position: relative;
@@ -297,13 +303,25 @@ and (max-device-width : 720px) {
     .ver-link {
       cursor: pointer;
       color: #fff;
-      margin-right: 160px;
-      margin-top: 11px;
+      padding: 1px 3px;
     }
 
     p {
       line-height: 1;
       font-size: 14px;
+    }
+
+    .ver-link-span {
+        padding: 1px 3px;
+        border: 1px solid white;
+        vertical-align: bottom;
+    }
+
+    .dropdown {
+        display: inline-block;
+        margin-right: auto;
+        margin-left: 0px;
+        margin-top: 3.5px;
     }
 }
 
