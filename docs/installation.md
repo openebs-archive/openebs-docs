@@ -483,6 +483,7 @@ Download the values.yaml from  [here](https://github.com/helm/charts/blob/master
 | `ndm.sparse.count`                      | Number of sparse files to be created         | `1`                                       |
 | `ndm.sparse.filters.excludeVendors`     | Exclude devices with specified vendor        | `CLOUDBYT,OpenEBS`                        |
 | `ndm.sparse.filters.excludePaths`       | Exclude devices with specified path patterns | `loop,fd0,sr0,/dev/ram,/dev/dm-,/dev/md`  |
+| `ndm.updateStrategy.type`               | Update strategy policy                       | `RollingUpdate`                           |
 | `jiva.image`                            | Docker Image for Jiva                        | `openebs/jiva`                            |
 | `jiva.imageTag`                         | Docker Image Tag for Jiva                    | `0.8.1`                                   |
 | `jiva.replicas`                         | Number of Jiva Replicas                      | `3`                                       |
@@ -496,6 +497,9 @@ Download the values.yaml from  [here](https://github.com/helm/charts/blob/master
 | `cstor.volumeMgmt.imageTag`             | Docker Image Tag for cStor Volume Management | `0.8.1`                                   |
 | `policies.monitoring.image`             | Docker Image for Prometheus Exporter         | `openebs/m-exporter`                      |
 | `policies.monitoring.imageTag`          | Docker Image Tag for Prometheus Exporter     | `0.8.1`                                   |
+| `analytics.pingInterval`                | Duration(hours) between sending ping stat    | `24h`                                     |
+| `HealthCheck.initialDelaySeconds`       | Delay before liveness probe is initiated     | `30`                                      |
+| `HealthCheck.periodSeconds`             | How often to perform the liveness probe      | `60`                                      |
 
 
 
