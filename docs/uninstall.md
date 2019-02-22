@@ -55,23 +55,6 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl delete jobs -l openebs.io/cas-type=jiva -n <namespace>
   ```
 
-**Note:** Sometimes, there are chances that cStor volumes will not get deleted. Below workaround will resolve this issue. Perform the following command. 
-
-```
-kubectl edit cvr -n openebs
-```
-
-And then remove finalizers from the CVR. Need to remove following entries and save it. 
-
-```
-finalizers:
-- cstorvolumereplica.openebs.io/finalizer
-```
-
-This will automatically remove the pending CVR entries and delete the cStor volume completely.
-
-
-
 <br>
 
 ## See Also:

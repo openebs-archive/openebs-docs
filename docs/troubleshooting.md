@@ -45,6 +45,12 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 
 
+## Un Install
+
+[cStor Volume Replicas are not getting deleted properly](#cvr-deletion-unsuccessful)
+
+
+
 ## Volume provisioning
 
 
@@ -188,6 +194,27 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
    ```
 
 2. Run `multipath -w /dev/sdc` command (replace the devname with your persistent devname).
+
+
+
+<font size="6" color="maroon"> Volume provisioning</font>Un Install
+
+<h3><a class="anchor" aria-hidden="true" id="cvr-deletion-unsuccessful"></a>cStor Volume Replicas are not getting deleted properly.</h3>
+
+Sometimes, there are chances that cStor volumes will not get deleted. Below workaround will resolve this issue. Perform the following command.
+
+```
+kubectl edit cvr -n openebs
+```
+
+And then remove finalizers from the corresponding CVR. Need to remove following entries and save it.
+
+```
+finalizers:
+- cstorvolumereplica.openebs.io/finalizer
+```
+
+This will automatically remove the pending CVR entries and delete the cStor volume completely.
 
 <br>
 
@@ -404,7 +431,7 @@ cStor can consume disks that are attached (are visible to OS as SCSI devices) to
 
 <h3><a class="anchor" aria-hidden="true" id="Jiva-provisioning-failed-080"></a>OpenEBS Jiva PVC is not provisioning in 0.8.0</h3>
 
-Even all OpenEBS pods are in running state, unable to provision JIva volume if you install through helm.
+Even all OpenEBS pods are in running state, unable to provision Jiva volume if you install through helm.
 
 **Troubleshooting:**
 
@@ -435,10 +462,13 @@ In case of `XFS` formatted volumes, perform the following steps once the iSCSI t
 - Perform `xfs_repair /dev/<device>`. This fixes if any file system related errors on the device
 - Perform application pod deletion to facilitate fresh mount of the volume. At this point, the app pod may be stuck on `terminating` OR `containerCreating` state. This can be resolved by deleting the volume folder (w/ app content) on the local directory.
 
+
+
+
+
 <br>
 
 <hr>
-
 <br>
 
 
