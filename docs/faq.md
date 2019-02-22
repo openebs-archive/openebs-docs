@@ -64,7 +64,7 @@ sidebar_label: FAQs
 
 [How can I create cStor pool on newly added with same SPC?](#cstor-pool-new-node-same-spc)
 
-How to get the details of cStor Pool,cStor Volume Replica ,Cstor Volumes and Disks ?
+[How to get the details of cStor Pool,cStor Volume Replica ,Cstor Volumes and Disks ?](#more-info-pool-cvr-cv-disk) 
 
 
 
