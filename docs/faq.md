@@ -62,8 +62,6 @@ sidebar_label: FAQs
 
 [How to create a cStor volume on single cStor disk pool?](#create-cstor-volume-single-disk-pool)
 
-[How can I create cStor pool on newly added with same SPC?](#cstor-pool-new-node-same-spc)
-
 [How to get the details of cStor Pool,cStor Volume Replica ,Cstor Volumes and Disks ?](#more-info-pool-cvr-cv-disk) 
 
 
@@ -481,20 +479,6 @@ metadata:
         value: "1"
 provisioner: openebs.io/provisioner-iscsi
 ```
-
-<a href="#top">Go to top</a>
-
-
-
-<h3><a class="anchor" aria-hidden="true" id="cstor-pool-new-node-same-spc"></a>How to create a cStor pool on newly added nodes with using same SPC?</h3>
-
-From 0.8.1 onwards, new cStor storage pool can be created using the existing StoragePoolClaim(SPC) by editing the corresponding SPC YAML. This feature is available for the creation of cStor storage pool using both auto and manual method.
-
-For manual method, you have to edit the existing SPC by adding the required disks from new node and change the `maxPools` count to the required value.
-
-For auto method, you have to edit the existing SPC by changing the `maxPools` count to the required number.
-
-After the change,cStor pool will be created on the new Nodes.
 
 <a href="#top">Go to top</a>
 
