@@ -24,7 +24,7 @@ sidebar_label: FAQs
 
 [What are the most common use case and most common workloads?](/docs/next/faq.html#what-are-the-most-common-use-case-and-most-common-workloads)
 
-[What is the default OpenEBS Reclaim policy?](http://localhost:3000/docs/next/faq.html#what-is-the-default-openebs-reclaim-policy)
+[What is the default OpenEBS Reclaim policy?](/docs/next/faq.html#what-is-the-default-openebs-reclaim-policy)
 
 
 
@@ -44,7 +44,7 @@ sidebar_label: FAQs
 
 [Can I use the same PVC for multiple Pods?](/docs/next/faq.html#can-i-use-the-same-pvc-for-multiple-pods)
 
-[Warning Messages while Launching PVC](http://localhost:3000/docs/next/faq.html#warning-messages-while-launching-pvc)
+[Warning Messages while Launching PVC](/docs/next/faq.html#warning-messages-while-launching-pvc)
 
 [Why *OpenEBS_logical_size* and *OpenEBS_actual_used* are showing in different size?](/docs/next/faq.html#why-openebs-logical-size-and-openebs-actual-used-are-showing-in-different-size)
 
@@ -52,7 +52,7 @@ sidebar_label: FAQs
 
 [How OpenEBS detects disks for creating cStor Pool?](/docs/next/faq.html#how-openebs-detects-disks-for-creating-cstor-pool)
 
-[Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?](/docs/next/faq.html#can-i-provision-openebs-volume-if-the-request-in-pvc-is-more-than-the-avaialble-physical-capcaity-of-the-pools-in-the-storage-nodes)
+[Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?](#provision-pvc-higher-than-physical-sapce)
 
 [What is the difference between cStor Pool creation using manual method and auto method?](/docs/next/faq.html#what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method)
 
@@ -61,6 +61,8 @@ sidebar_label: FAQs
 [How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?](/docs/next/faq.html#how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions)
 
 [How to create a cStor volume on single cStor disk pool?](#create-cstor-volume-single-disk-pool)
+
+[How can I create cStor pool on newly added with same SPC?](#cstor-pool-new-node-same-spc)
 
 
 
@@ -333,7 +335,7 @@ Example:
 
 
 
-### Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?
+<h3><a class="anchor" aria-hidden="true" id="provision-pvc-higher-than-physical-sapce"></a>Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?</h3>
 
 As of 0.8.0, the user is allowed to create PVCs that cross the available capacity of the pools in the Nodes. In the future release, it will validate with an option `overProvisioning=false`, the PVC request should be denied if there is not enough available capacity to provision the volume.
 
@@ -482,11 +484,29 @@ provisioner: openebs.io/provisioner-iscsi
 
 
 
+<h3><a class="anchor" aria-hidden="true" id="cstor-pool-new-node-same-spc"></a>How to create a cStor pool on newly added nodes with using same SPC?</h3>
+
+From 0.8.1 onwards, new cStor storage pool can be created using the existing StoragePoolClaim(SPC) by editing the corresponding SPC YAML. This feature is available for the creation of cStor storage pool using both auto and manual method.
+
+For manual method, you have to edit the existing SPC by adding the required disks from new node and change the `maxPools` count to the required value.
+
+For auto method, you have to edit the existing SPC by changing the `maxPools` count to the required number.
+
+After the change,cStor pool will be created on the new Nodes.
+
+<a href="#top">Go to top</a>
+
 <br>
 
 ## See Also:
 
+### [Creating cStor Pool](/docs/next/configurepools.html)
 
+### [Provisioning cStor volumes](/docs/next/deploycstor.html)
+
+### [BackUp and Restore](/docs/next/backup.html)
+
+### [Uninstall](/docs/next/uninstall.html)
 
 <br>
 
