@@ -15,7 +15,7 @@ From 0.6.0 to 0.7.x - Get the steps from [here](https://v07-docs.openebs.io/docs
 
 From 0.5.3 or 0.5.4 to 0.6.0 - Get the steps from [here](https://v06-docs.openebs.io/docs/next/upgrade.html).
 
-Currently upgrade to latest OpenEBS 0.8.1 version is supported from 0.8.0 only. You have to follow the above mentioned upgrade path to the next level from the previous version as per the supported path.
+Currently, Upgrade to latest OpenEBS 0.8.1 version is supported only from 0.8.0. You have to follow the above mentioned upgrade path to the next level from the previous version as per the supported path.
 
 ## Overview of the upgrade process
 
