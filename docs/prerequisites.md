@@ -66,7 +66,7 @@ step to verify the iSCSI services and make sure that it is running on
 all the worker nodes. OpenEBS uses iSCSI protocol to connect to the
 block volumes. 
 
-<h3><a class="anchor" aria-hidden="true" id="Ubuntu"></a>Ubuntu</h3>
+<h3><a class="anchor" aria-hidden="true" id="ubuntu"></a>Ubuntu</h3>
 
 **Verify iSCSI services are configured**
 
@@ -116,7 +116,7 @@ sudo service open-iscsi restart
 
 You can verify the iSCSI installation from above section.
 
-<h3><a class="anchor" aria-hidden="true" id="RHEL"></a>Red Hat Enterprise Linux</h3>
+<h3><a class="anchor" aria-hidden="true" id="rhel"></a>Red Hat Enterprise Linux</h3>
 
 **Verify iSCSI services are configured**
 
@@ -175,7 +175,7 @@ yum install iscsi-initiator-utils -y
 
 You can verify the iSCSI installation from above section.
 
-<h3><a class="anchor" aria-hidden="true" id="CentOS"></a>CentOS</h3>
+<h3><a class="anchor" aria-hidden="true" id="centOS"></a>CentOS</h3>
 
 **Verify iSCSI services are configured**
 
@@ -212,8 +212,9 @@ You can verify the iSCSI installation from above section.
 
 ## Managed Kubernetes Services on Public Cloud
 
-<h3><a class="anchor" aria-hidden="true" id="EKS"></a>Amazon Elastic
+<h3><a class="anchor" aria-hidden="true" id="eks"></a>Amazon Elastic
 Container Service for Kubernetes (EKS)</h3>
+
 
 Amazon EKS clusters can be brought up with either an AmazonLinux AMI
 or an Ubuntu 18.04 AMI.
@@ -256,10 +257,11 @@ You can verify the iSCSI installation from above section.
 **For clusters running with the Ubuntu 18.04 AMI**
 
 For setting up iSCSI clients on Ubuntu nodes, see the
-[instructions above.](#Ubuntu)
+[instructions above.](#ubuntu)
 
-<h3><a class="anchor" aria-hidden="true" id="GKE"></a>Google Kubernetes
+<h3><a class="anchor" aria-hidden="true" id="gke"></a>Google Kubernetes
 Engine (GKE)</h3>
+
 
 GKE Container-Optimized OS does not come with an iSCSI client
 preinstalled and does not allow installation of an iSCSI client.
@@ -269,9 +271,9 @@ worker nodes.
 
 Select Ubuntu as the image version for the node pools in the custom
 settings. For setting up iSCSI clients on Ubuntu nodes, see the
-[instructions above.](#Ubuntu)
+[instructions above.](#ubuntu)
 
-<h3><a class="anchor" aria-hidden="true" id="AKS"></a>Azure Kubernetes Service (AKS)</h3>
+<h3><a class="anchor" aria-hidden="true" id="aks"></a>Azure Kubernetes Service (AKS)</h3>
 
 On Azure Kubernetes Service you need to verify that the `open-iscsi`
 packages are installed and running the service on the kubelet.
@@ -347,7 +349,7 @@ You can verify the iSCSI installation from above section.
 
 ## Kubernetes On-Prem Solutions
 
-<h3><a class="anchor" aria-hidden="true" id="OpenShift"></a>Red Hat OpenShift</h3>
+<h3><a class="anchor" aria-hidden="true" id="openshift"></a>Red Hat OpenShift</h3>
 
 OpenEBS can be installed using Openshift on the following Operating
 Systems. Tested OpenShift versions are 3.9 and 3.10.
@@ -359,15 +361,15 @@ Systems. Tested OpenShift versions are 3.9 and 3.10.
 
 Latest tested RHEL versions are 7.5, 7.6.
 
-For setting up iSCSI clients on RHEL nodes, see the [instructions above][#RHEL].
+For setting up iSCSI clients on RHEL nodes, see the [instructions above][#rhel].
 
 <h4><a class="anchor" aria-hidden="true" id="On-Centos"></a>On CentOS</h4>
 
 Latest tested CentOS version is CentOS 7.
 
-For setting up iSCSI clients on CentOS nodes, see the [instructions above][#CentOS].
+For setting up iSCSI clients on CentOS nodes, see the [instructions above][#centOS].
 
-<h3><a class="anchor" aria-hidden="true" id="Rancher"></a>Rancher</h3>
+<h3><a class="anchor" aria-hidden="true" id="rancher"></a>Rancher</h3>
 
 OpenEBS can be installed using Rancher on the following Operating
 System.
@@ -524,8 +526,9 @@ kubelet:
     - "/lib/modules"
 ```
 
-<h3><a class="anchor" aria-hidden="true" id="ICP"></a>IBM Cloud
+<h3><a class="anchor" aria-hidden="true" id="icp"></a>IBM Cloud
 Private (ICP)</h3>
+
 
 OpenEBS can be installed using ICP on the following Operating
 Systems. Latest tested ICP versions are 2.1.0.3 and 3.1.1.
@@ -537,14 +540,14 @@ Systems. Latest tested ICP versions are 2.1.0.3 and 3.1.1.
 
 Latest tested RHEL versions are 7.5, 7.6.
 
-For setting up iSCSI clients on RHEL nodes, see the [instructions above][#RHEL].
+For setting up iSCSI clients on RHEL nodes, see the [instructions above][#rhel].
 
 <h4><a class="anchor" aria-hidden="true" id="On-Ubuntu"></a>On Ubuntu</h4>
 
 Latest tested Ubuntu version are Ubuntu 16.04 LTS and 18.04 LTS.
 
 For setting up iSCSI clients on CentOS nodes, see the
-[instructions above][#Ubuntu].
+[instructions above][#ubuntu].
 
 <br>
 
