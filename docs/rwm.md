@@ -67,7 +67,7 @@ Deploy NFS server provisioner into the above namespace using stable helm chart. 
 
 An example helm install command is
 
-<font color="maroon" >*helm install stable/nfs-server-provisioner --name=openebs-nfs-wordpress --set=persistence.enabled=true,persistence.storageClass=openebs-sc-cstor-pool1,persistence.size=5Gi,storageClass.name=wordpress-nfs-sc1*</font>
+<font color="maroon" >```helm install stable/nfs-server-provisioner --name=openebs-nfs-wordpress --set=persistence.enabled=true,persistence.storageClass=openebs-sc-cstor-pool1,persistence.size=5Gi,storageClass.name=wordpress-nfs-sc1```</font>
 
 <br>
 
