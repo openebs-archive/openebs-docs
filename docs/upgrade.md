@@ -86,22 +86,23 @@ All steps described in this document must be performed on the Kubernetes master 
    **Install/Upgrade using stable helm chart**
    The following procedure will work if you have installed OpenEBS with default values provided by stable helm chart.
 
-   - [ ] Run helm repo update to update local cache with latest package.
+   1. Run helm repo update to update local cache with latest package.
 
-   - [ ] Run helm ls to get the OpenEBS release-name. Use the release-nam in the following upgrade command.
+   2. Run helm ls to get the OpenEBS release-name. Use the release-nam in the following upgrade command.
 
-   - [ ] Upgrade using the following command.
+   3. Upgrade using the following command.
 
-     ```
-     helm upgrade -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml <release-name> stable/openebs.
-     ```
+      ```
+      helm upgrade -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml <release-name> stable/openebs.
+      ```
 
    **Using Customized Operator YAML or Helm Chart**
    As a first step, you must update your custom helm chart or YAML with 0.8.1 release tags and changes made in the values/templates.
    After updating the YAML or helm chart or helm chart values, you can use the above procedures to upgrade the OpenEBS Operator.
 
-   1. [ ] You can use the following as references to know about the changes in 0.8.1:
-      - openebs-charts PR [#2400](https://github.com/openebs/openebs/pull/2400) as reference.
+   1. You can use the following as references to know about the changes in 0.8.1:
+
+      openebs-charts PR [#2400](https://github.com/openebs/openebs/pull/2400) as reference.
 
 3. <h3><a class="anchor" aria-hidden="true" id="upgrade-volume"></a>Upgrade volumes one by one</h3>
 
