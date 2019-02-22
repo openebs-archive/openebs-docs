@@ -317,7 +317,26 @@ Following are most commonly observed areas of troubleshooting
 
    This error eventually could get rectified on the further retries, volume gets mounted and application is started. This error is usually seen when cStor target takes some time to initialize  on low speed networks as it takes time to download cStor image binaries from repositories ( or )  or because the cstor target is waiting for the replicas to connect and establish quorum. If the error persists beyond 5 minutes, logs need to be verified, contact support or seek help on the community [slack](https://slack.openebs.io).<br>
 
+4. **Kubelet seen consuming high RAM usage with cStor volumes**
 
+   The cause of high memory consumption of Kubelet is seen on Fedora 29  mainly due to the following.
+
+   There are 3 modules are involved - `cstor-isgt`, `kubelet` and `iscsiInitiator(iscsiadm)`.
+   kubelet runs iscsiadm command to do discovery on cstor-istgt. If there is any delay in receiving response of discovery opcode (either due to network or delay in processing on target side), iscsiadm retries few times, and, gets into infinite loop dumping error messages as below:
+
+       iscsiadm: Connection to Discovery Address 127.0.0.1 failed
+       iscsiadm: failed to send SendTargets PDU
+       iscsiadm: connection login retries (reopen_max) 5 exceeded
+       iscsiadm: Connection to Discovery Address 127.0.0.1 failed
+       iscsiadm: failed to send SendTargets PDU```
+       kubelet keeps taking this response and accumulates the memory.
+   More details can be seen [here](https://github.com/openebs/openebs/issues/2382).
+
+   **Resolution:**
+
+   This issue is fixed in 0.8.1 version.
+
+   
 
 
 ## cStor roadmap
