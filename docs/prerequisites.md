@@ -175,7 +175,7 @@ yum install iscsi-initiator-utils -y
 
 You can verify the iSCSI installation from above section.
 
-<h3><a class="anchor" aria-hidden="true" id="centOS"></a>CentOS</h3>
+<h3><a class="anchor" aria-hidden="true" id="centos"></a>CentOS</h3>
 
 **Verify iSCSI services are configured**
 
