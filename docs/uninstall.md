@@ -33,6 +33,14 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl get pods -n <openebs namespace>
   ```
 
+- Ensure that no `openebs` custom resources are present using the following command.
+
+  ```
+  kubectl get cvr -n <openebs namespace>
+  ```
+
+- Ensure to delete OpenEBS related `StorageClass`
+
 - Delete the OpenEBS namespace either via helm purge or `kubectl delete ns openebs`.
 
 - Uninstalling the OpenEBS doesn't automatically delete the CRDs that were created. If you would like to complete remove the CRDs and the associated objects, run the following commands:
@@ -49,11 +57,8 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
   ```
 
-- As part of deleting the Jiva Volumes, OpenEBS launches scrub jobs for clearing the data from the nodes. The completed jobs need to be cleared using the following command.
+  
 
-  ```
-  kubectl delete jobs -l openebs.io/cas-type=jiva -n <namespace>
-  ```
 
 <br>
 
