@@ -49,6 +49,8 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [cStor Volume Replicas are not getting deleted properly](#cvr-deletion-unsuccessful)
 
+[Whenever a Jiva PVC is deleted, a job will created and status is seeing as `completed`](#jiva-deletion-scrub-job)
+
 
 
 ## Volume provisioning
@@ -221,6 +223,24 @@ finalizers:
 ```
 
 This will automatically remove the pending CVR entries and delete the cStor volume completely.
+
+If there are multiple CVR entries need to be deleted,this can be done by using the following command.
+
+```
+CRD=`kubectl get crd | grep cstorvolumereplica | cut -d" " -f1` && kubectl patch crd $CRD -p '{"metadata":{"finalizers": [null]}}' --type=merge
+```
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="jiva-deletion-scrub-job"></a>Whenever a Jiva PVC is deleted, a job will created and status is seeing and 'completed'</h3>
+
+As part of deleting the Jiva Volumes, OpenEBS launches scrub jobs for clearing the data from the nodes. The completed jobs need to be cleared using the following command.
+
+```
+kubectl delete jobs -l openebs.io/cas-type=jiva -n <namespace>
+```
+
+
 
 <br>
 
