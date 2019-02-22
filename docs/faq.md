@@ -64,6 +64,8 @@ sidebar_label: FAQs
 
 [How can I create cStor pool on newly added with same SPC?](#cstor-pool-new-node-same-spc)
 
+How to get the details of cStor Pool,cStor Volume Replica ,Cstor Volumes and Disks ?
+
 
 
 <br><br>
@@ -495,6 +497,66 @@ For auto method, you have to edit the existing SPC by changing the `maxPools` co
 After the change,cStor pool will be created on the new Nodes.
 
 <a href="#top">Go to top</a>
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="more-info-pool-cvr-cv-disk"></a>How to get the details like status, capacity etc. of cStor Pool, cStor Volume Replica, cStor Volumes and Disks using kubectl command?</h3>
+
+From 0.8.1 onwards, following command list down the info like status, size etc. using `kubectl get` command. These command will output similar to the following only if Kubernetes version of client and server are above 1.11.
+
+The following command  will give the details of cStor Storage Pool.
+
+```
+kubectl get csp -n openebs
+```
+
+Following is an example output.
+
+```
+NAME                     ALLOCATED   FREE    CAPACITY    STATUS    TYPE       AGE
+sparse-claim-auto-lja7   125K        9.94G   9.94G       Healthy   striped    1h
+```
+
+The following command  will give the details of replica status of each cStor volume created in `openebs` namespace.
+
+```
+kubectl get cvr -n openebs
+```
+
+Following is an example output.
+
+```
+NAME                                                              USED  ALLOCATED  STATUS    AGE
+pvc-9ca83170-01e3-11e9-812f-54e1ad0c1ccc-sparse-claim-auto-lja7   6K    6K         Healthy   1h
+```
+
+The following command  will give the details of cStor volume created in `openebs` namespace.
+
+```
+kubectl get cstorvolume -n openebs
+```
+
+Following is an example output.
+
+```
+NAME                                        STATUS    AGE
+pvc-9ca83170-01e3-11e9-812f-54e1ad0c1ccc    Healthy   4h
+```
+
+The following command will give the details disks that are attached to all Nodes in the cluster.
+
+```
+kubectl get disk
+```
+
+Following is an example output.
+
+```
+NAME                                      SIZE          STATUS   AGE
+sparse-5a92ced3e2ee21eac7b930f670b5eab5   10737418240   Active   10m
+```
+
+
 
 <br>
 
