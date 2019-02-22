@@ -212,11 +212,17 @@ cStor volumes when deployed in 3 replica mode provide high availability of the d
 
 ## Ephemeral Disk Support
 
-Kubernetes services such as GKE, EKS and AKS have cloud VMs where when a node is lost a new replacement node is provided with a formatted new disk as part of their Auto Scaling policy but the data on local disks of the original node will be lost permanently. 
+Ephermeral disk support is added to cStor in 0.8.1 version.
 
-From 0.8.1 onwards, cStor support ephemeral disks for creating cStor Pools with High availability. To support ephemeral disk, OpenEBS cStor volume replicas have a property called  `quorum` . Setting this property to `ON` makes the cStor volume to be part of quorum decisions at target . This means, the volume replicas which are connected to the target with the quorum value `ON` , will be considered that volume replica is existing to process IO or not. If the quorum property is set to `OFF`, this makes the target to accept this replica(currently new replicas are not allowed to connect to the target), and triggers rebuild on this cStor volume, and cStor volume automatically sets `quorum` as `ON` once the rebuilding is done. This quorum is like once it is set to `ON` it can’t revert back it to `OFF`, but the reverse is allowed. Once the enough number of volume replicas that is as mentioned in replication factor are connected then target will not accept none of replica to connect.
 
-When the replica is connected with quorum `OFF`, OpenEBS will allow WRITE IO on the all the volume replicas irrespective of quorum property, but read IO’s are allowed on the replica which is set to quorum `ON`. Volume will be in RW mode only if the 51% of volume replicas are connected with quorum `ON`.
+
+Kubernetes services such as GKE, EKS and AKS have cloud VMs where when a node is lost a new replacement node is provided with  formatted new disks as part of their Auto Scaling policy which means that the data on local disks of the original node is lost permanently. However, with cStor, you can still build a reliable and highly available persistent storage solution using these ephemeral local disks by using cStor's replication feature. 
+
+For this to work, cStor StorageClass has to be configured with `ReplicaCount=3`. With this setting data on cStor volume is replicated to three copies on different nodes. In the ephemeral nodes scenario, when a node is lost, Kubernetes brings up a new node with the same label. Data of cStor volumes continues to be available and will be served from one of the two remaining replicas. OpenEBS detects that a new node has come up with all new disks and it automatically reconfigures the disk CRs to the existing StoragePoolClaim config or StoragePool configuration. The net effect is that  the cStorPool instance that was gone with the lost node is recreated on the newly replaced node. cStor will then start rebuilding the cStor volume replicas onto this new cStorPool instance. 
+
+**Note:** Rebuilding of data onto the new cStorPool instance can take time depending on the size of data to be rebuilt. During this time the volume quorum needs to be maintained. In other words, during rebuilding time, the cStorPool is in an unprotected state where losing another node will cause permanent loss of data. Hence, during Kubernetes node upgrades, administrators need to make sure that the cStorPools are fully rebuilt and volumes are healthy/online before starting the upgrade of the next node.
+
+
 
 ## Monitoring cStor Pools and Volumes
 
