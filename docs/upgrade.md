@@ -115,7 +115,7 @@ All steps described in this document must be performed on the Kubernetes master 
    2. Have the following link handy in case the volume gets into read-only during upgrade https://docs.openebs.io/docs/next/readonlyvolumes.html
    3. Automatic rollback option is not provided. To rollback, you need to update the controller, exporter and replica pod images to the previous version.
 
-   In the process of running the below steps, if you run into issues, you can always reach us on slack.
+   In the process of running the below steps, if you run into issues, you can always reach us on [slack](https://slack.openebs.io).
 
    <h4><a class="anchor" aria-hidden="true" id="Jiva-PV"></a>Jiva PV</h4>
 
