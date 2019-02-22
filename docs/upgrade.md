@@ -61,6 +61,12 @@ All steps described in this document must be performed on the Kubernetes master 
 
    **Install/Upgrade using kubectl (using openebs-operator.yaml )**
 
+   Before applying the latest YAML, change the updatStrategy of NDM daemonset from `OnDelete` to `RollingUpdate`. This patch can be done using the following command.
+
+   ```
+   kubectl patch ds openebs-ndm -n openebs --patch='{"spec":{"updateStrategy":{"type": "OnDelete"}}}'
+   ```
+
    The following sample steps will work if you have installed OpenEBS cluster without modifying the default values in the openebs-operator.yaml file.  The following command will upgrade all the openebs-operator components to 0.8.1 version.  
 
    ```
