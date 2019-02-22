@@ -197,7 +197,7 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 
 
-<font size="6" color="maroon"> Volume provisioning</font>Un Install
+<font size="6" color="maroon">Un Install</font>
 
 <h3><a class="anchor" aria-hidden="true" id="cvr-deletion-unsuccessful"></a>cStor Volume Replicas are not getting deleted properly.</h3>
 
