@@ -12,7 +12,7 @@ sidebar_label: Prerequisites
 <br>
 
 OpenEBS provides block volume support through the iSCSI protocol. Therefore,
-iSCSI client (initiator) presence on all Kubernetes nodes is required.
+the iSCSI client (initiator) presence on all Kubernetes nodes is required.
 Choose the platform below to find the steps to verify if the iSCSI client
 is installed and running or to find the steps to install the iSCSI client.
 <br>
@@ -61,9 +61,9 @@ is installed and running or to find the steps to install the iSCSI client.
 
 Installation of the iSCSI initiator service and tools depends on your
 host O/S or the kubelet container. You can follow the below steps for
-installation / verification of the required packages. It is a mandatory
+installation/verification of the required packages. It is a mandatory
 step to verify the iSCSI services and make sure that it is running on
-all the worker nodes. OpenEBS uses iSCSI protocol to connect to the
+all the worker nodes. OpenEBS uses the iSCSI protocol to connect to the
 block volumes. 
 
 <h3><a class="anchor" aria-hidden="true" id="ubuntu"></a>Ubuntu</h3>
@@ -122,7 +122,7 @@ You can verify the iSCSI installation from above section.
 
 In Red Hat Enterprise Linux 7, the iSCSI service is lazily started by
 default: the service starts after running the `iscsiadm` command. If
-an iSCSI initator is already installed on the node, check that
+an iSCSI initiator is already installed on the node, check that
 the initiator name is configured using the following command. 
 
 ```
@@ -135,7 +135,7 @@ Check iSCSI service is running using the following command.
  systemctl status iscsid
 ```
 
-If status is showing as `Inactive`, then you may have to enable and
+If the status is showing as `Inactive`, then you may have to enable and
 start the iscsid service using the following command.
 
 ```
@@ -166,7 +166,7 @@ Feb 19 12:19:09 master-1550555590.mayalab.com iscsid[2137]: iSCSI daemon with pi
 
 **Install the iSCSI tools** 
 
-If an iSCSI iniator is not installed on your node, install
+If an iSCSI initiator is not installed on your node, install
 `iscsi-initiator-utils` packages using the following command.
 
 ```
@@ -192,7 +192,7 @@ Check iSCSI service is running using the following command.
  systemctl status iscsid
 ```
 
-If status is showing as `Inactive`, then you may have to enable and
+If the status is showing as `Inactive`, then you may have to enable and
 start the iscsid service using the following command.
 
 ```
@@ -208,7 +208,7 @@ If an iSCSI initiator is not installed on your node, install
 yum install iscsi-initiator-utils -y
 ```
 
-You can verify the iSCSI installation from above section.
+You can verify the iSCSI installation from the above section.
 
 ## Managed Kubernetes Services on Public Cloud
 
@@ -236,7 +236,7 @@ Check the iSCSI service is running using the following command.
  systemctl status iscsid
 ```
 
-If status is showing as `Inactive`, then you may have to enable and
+If the status is showing as `Inactive`, then you may have to enable and
 start the iscsid service using the following command.
 
 ```
@@ -252,7 +252,7 @@ If an iSCSI initiator is not installed on your node, install
 yum install iscsi-initiator-utils -y
 ```
 
-You can verify the iSCSI installation from above section.
+You can verify the iSCSI installation from the above section.
 
 **For clusters running with the Ubuntu 18.04 AMI**
 
@@ -261,7 +261,6 @@ For setting up iSCSI clients on Ubuntu nodes, see the
 
 <h3><a class="anchor" aria-hidden="true" id="gke"></a>Google Kubernetes
 Engine (GKE)</h3>
-
 
 GKE Container-Optimized OS does not come with an iSCSI client
 preinstalled and does not allow installation of an iSCSI client.
@@ -345,7 +344,7 @@ apt install -y open-iscsi
 exit
 ```
 
-You can verify the iSCSI installation from above section.
+You can verify the iSCSI installation from the above section.
 
 ## Kubernetes On-Prem Solutions
 
@@ -377,8 +376,8 @@ System.
 1. On Ubuntu/Debian
 2. On RHEL
 
-OpenEBS target will use the iscsi services inside the kubelet. It is
-recommended to remove iscsi from Node if it present on Node also.
+OpenEBS target will use the iSCSI services inside the kubelet. It is
+recommended to remove iSCSI from the node if it presents on the node.
 
 <h4><a class="anchor" aria-hidden="true" id="On-Ubuntu"></a>On Ubuntu</h4>
 
@@ -474,7 +473,7 @@ Check iSCSI service is running using the following command.
  systemctl status iscsid
 ```
 
-If status is showing as `Inactive`, then you may have to *enable*
+If the status is showing as `Inactive`, then you may have to *enable*
 and *start* the `iscsid` service using the following command.
 
 ```
@@ -540,14 +539,15 @@ Systems. Latest tested ICP versions are 2.1.0.3 and 3.1.1.
 
 Latest tested RHEL versions are 7.5, 7.6.
 
-For setting up iSCSI clients on RHEL nodes, see the [instructions above][#rhel].
+For setting up iSCSI clients on RHEL nodes, see the
+[instructions above](#rhel).
 
 <h4><a class="anchor" aria-hidden="true" id="On-Ubuntu"></a>On Ubuntu</h4>
 
 Latest tested Ubuntu version are Ubuntu 16.04 LTS and 18.04 LTS.
 
 For setting up iSCSI clients on CentOS nodes, see the
-[instructions above][#ubuntu].
+[instructions above](#ubuntu).
 
 <br>
 
