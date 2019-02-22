@@ -65,7 +65,7 @@ kubectl get volumesnapshot
 kubectl get volumesnapshotdata
 ```
 
-*Note*: All cStor snapshots are created in the ` default` namespace.
+*Note*: All cStor snapshots are created in the ` default` namespace. Also make sure that there is no stale entries of snapshot and snapshot data.
 
 
 
@@ -158,7 +158,6 @@ When a new node is added, you may want to expand the cStor pool config to extend
 <br>
 
 <hr>
-
 <br>
 
 ## Expanding the size of a volume
