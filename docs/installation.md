@@ -481,8 +481,8 @@ Download the values.yaml from  [here](https://github.com/helm/charts/blob/master
 | `ndm.sparse.path`                       | Directory where Sparse files are created     | `/var/openebs/sparse`                     |
 | `ndm.sparse.size`                       | Size of the sparse file in bytes             | `10737418240`                             |
 | `ndm.sparse.count`                      | Number of sparse files to be created         | `1`                                       |
-| `ndm.sparse.filters.excludeVendors`     | Exclude devices with specified vendor        | `CLOUDBYT,OpenEBS`                        |
-| `ndm.sparse.filters.excludePaths`       | Exclude devices with specified path patterns | `loop,fd0,sr0,/dev/ram,/dev/dm-,/dev/md`  |
+| `ndm.filters.excludeVendors`            | Exclude devices with specified vendor        | `CLOUDBYT,OpenEBS`                        |
+| `ndm.filters.excludePaths`              | Exclude devices with specified path patterns | `loop,fd0,sr0,/dev/ram,/dev/dm-,/dev/md`  |
 | `ndm.updateStrategy.type`               | Update strategy policy                       | `RollingUpdate`                           |
 | `jiva.image`                            | Docker Image for Jiva                        | `openebs/jiva`                            |
 | `jiva.imageTag`                         | Docker Image Tag for Jiva                    | `0.8.1`                                   |
