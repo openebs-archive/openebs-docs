@@ -45,6 +45,14 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 
 
+## Un-Install
+
+[cStor Volume Replicas are not getting deleted properly](#cvr-deletion-unsuccessful)
+
+[Whenever a Jiva PVC is deleted, a job will created and status is seeing as `completed`](#jiva-deletion-scrub-job)
+
+
+
 ## Volume provisioning
 
 
@@ -67,7 +75,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [Recovery procedure for Read-only volume for XFS formatted volumes](#recovery-readonly-xfs-volume)
 
-
+[Unable to clone OpenEBS volume from snapshot](#unable-to-clone-from-snapshot)
 
 <br>
 
@@ -189,10 +197,54 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 2. Run `multipath -w /dev/sdc` command (replace the devname with your persistent devname).
 
+
+
 <br>
 
 <hr>
 
+<br>
+
+<font size="6" color="maroon">Un-Install</font>
+
+<h3><a class="anchor" aria-hidden="true" id="cvr-deletion-unsuccessful"></a>cStor Volume Replicas are not getting deleted properly.</h3>
+
+Sometimes, there are chances that cStor volumes will not get deleted. Below workaround will resolve this issue. Perform the following command.
+
+```
+kubectl edit cvr -n openebs
+```
+
+And then remove finalizers from the corresponding CVR. Need to remove following entries and save it.
+
+```
+finalizers:
+- cstorvolumereplica.openebs.io/finalizer
+```
+
+This will automatically remove the pending CVR entries and delete the cStor volume completely.
+
+If there are multiple CVR entries need to be deleted,this can be done by using the following command.
+
+```
+CRD=`kubectl get crd | grep cstorvolumereplica | cut -d" " -f1` && kubectl patch crd $CRD -p '{"metadata":{"finalizers": [null]}}' --type=merge
+```
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="jiva-deletion-scrub-job"></a>Whenever a Jiva PVC is deleted, a job will created and status is seeing and 'completed'</h3>
+
+As part of deleting the Jiva Volumes, OpenEBS launches scrub jobs for clearing the data from the nodes. The completed jobs need to be cleared using the following command.
+
+```
+kubectl delete jobs -l openebs.io/cas-type=jiva -n <namespace>
+```
+
+
+
+<br>
+
+<hr>
 <br>
 
 <font size="6" color="red"> Volume provisioning</font>
@@ -404,7 +456,7 @@ cStor can consume disks that are attached (are visible to OS as SCSI devices) to
 
 <h3><a class="anchor" aria-hidden="true" id="Jiva-provisioning-failed-080"></a>OpenEBS Jiva PVC is not provisioning in 0.8.0</h3>
 
-Even all OpenEBS pods are in running state, unable to provision JIva volume if you install through helm.
+Even all OpenEBS pods are in running state, unable to provision Jiva volume if you install through helm.
 
 **Troubleshooting:**
 
@@ -435,10 +487,75 @@ In case of `XFS` formatted volumes, perform the following steps once the iSCSI t
 - Perform `xfs_repair /dev/<device>`. This fixes if any file system related errors on the device
 - Perform application pod deletion to facilitate fresh mount of the volume. At this point, the app pod may be stuck on `terminating` OR `containerCreating` state. This can be resolved by deleting the volume folder (w/ app content) on the local directory.
 
+
+
+<h3><a class="anchor" aria-hidden="true" id="unable-to-clone-from-snapshot"></a>Unable to clone OpenEBS volume from snapshot</h3>
+
+Taken a snpashot of a PVC successfully. But unable to clone the volume from the snapshot.
+
+**Troubleshooting:**
+
+Logs from snapshot-controller pods  are follows.
+
+```
+ERROR: logging before flag.Parse: I0108 18:11:54.017909      1 volume.go:73] OpenEBS volume provisioner namespace openebs
+I0108 18:11:54.181897      1 snapshot-controller.go:95] starting snapshot controller
+I0108 18:11:54.200069      1 snapshot-controller.go:167] Starting snapshot controller
+I0108 18:11:54.200139      1 controller_utils.go:1027] Waiting for caches to sync for snapshot-controller controller
+I0108 18:11:54.300430      1 controller_utils.go:1034] Caches are synced for snapshot-controller controller
+I0108 23:12:26.170921      1 snapshot-controller.go:190] [CONTROLLER] OnAdd /apis/volumesnapshot.external-storage.k8s.io/v1/namespaces/default/volumesnapshots/xl-release-snapshot, Snapshot &v1.VolumeSnapshot{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, Metadata:v1.ObjectMeta{Name:"xl-release-snapshot", GenerateName:"", Namespace:"default", SelfLink:"/apis/volumesnapshot.external-storage.k8s.io/v1/namespaces/default/volumesnapshots/xl-release-snapshot", UID:"dc804d0d-139a-11e9-9561-005056949728", ResourceVersion:"2072353", Generation:1, CreationTimestamp:v1.Time{Time:time.Time{wall:0x0, ext:63682585945, loc:(*time.Location)(0x2a17900)}}, DeletionTimestamp:(*v1.Time)(nil), DeletionGracePeriodSeconds:(*int64)(nil), Labels:map[string]string(nil), Annotations:map[string]string{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"volumesnapshot.external-storage.k8s.io/v1\",\"kind\":\"VolumeSnapshot\",\"metadata\":{\"annotations\":{},\"name\":\"xl-release-snapshot\",\"namespace\":\"default\"},\"spec\":{\"persistentVolumeClaimName\":\"xlr-data-pvc\"}}\n"}, OwnerReferences:[]v1.OwnerReference(nil), Initializers:(*v1.Initializers)(nil), Finalizers:[]string(nil), ClusterName:""}, Spec:v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:""}, Status:v1.VolumeSnapshotStatus{CreationTimestamp:v1.Time{Time:time.Time{wall:0x0, ext:0, loc:(*time.Location)(nil)}}, Conditions:[]v1.VolumeSnapshotCondition(nil)}}
+I0108 23:12:26.210135      1 desired_state_of_world.go:76] Adding new snapshot to desired state of world: default/xl-release-snapshot-dc804d0d-139a-11e9-9561-005056949728
+E0108 23:12:26.288184      1 snapshotter.go:309] No conditions for this snapshot yet.
+I0108 23:12:26.295175      1 snapshotter.go:160] No VolumeSnapshotData objects found on the API server
+I0108 23:12:26.295224      1 snapshotter.go:458] findSnapshot: snapshot xl-release-snapshot
+I0108 23:12:26.355476      1 snapshotter.go:469] findSnapshot: find snapshot xl-release-snapshot by tags &map[].
+I0108 23:12:26.355550      1 processor.go:183] FindSnapshot by tags: map[string]string(nil)
+I0108 23:12:26.355575      1 snapshotter.go:449] syncSnapshot: Creating snapshot default/xl-release-snapshot-dc804d0d-139a-11e9-9561-005056949728 ...
+I0108 23:12:26.355603      1 snapshotter.go:491] createSnapshot: Creating snapshot default/xl-release-snapshot-dc804d0d-139a-11e9-9561-005056949728 through the plugin ...
+I0108 23:12:26.373908      1 snapshotter.go:497] createSnapshot: Creating metadata for snapshot default/xl-release-snapshot-dc804d0d-139a-11e9-9561-005056949728.
+I0108 23:12:26.373997      1 snapshotter.go:701] In updateVolumeSnapshotMetadata
+I0108 23:12:26.380908      1 snapshotter.go:721] updateVolumeSnapshotMetadata: Metadata UID: dc804d0d-139a-11e9-9561-005056949728 Metadata Name: xl-release-snapshot Metadata Namespace: default Setting tags in Metadata Labels: map[string]string{"SnapshotMetadata-Timestamp":"1546989146380869451", "SnapshotMetadata-PVName":"pvc-5f9bd5ec-1398-11e9-9561-005056949728"}.
+I0108 23:12:26.391791      1 snapshot-controller.go:197] [CONTROLLER] OnUpdate oldObj: v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:""}
+I0108 23:12:26.391860      1 snapshot-controller.go:198] [CONTROLLER] OnUpdate newObj: v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:""}
+I0108 23:12:26.392281      1 snapshotter.go:742] updateVolumeSnapshotMetadata: returning cloudTags [map[string]string{"kubernetes.io/created-for/snapshot/namespace":"default", "kubernetes.io/created-for/snapshot/name":"xl-release-snapshot", "kubernetes.io/created-for/snapshot/uid":"dc804d0d-139a-11e9-9561-005056949728", "kubernetes.io/created-for/snapshot/timestamp":"1546989146380869451"}]
+I0108 23:12:26.392661      1 snapshot.go:53] snapshot Spec Created:
+{"metadata":{"name":"pvc-5f9bd5ec-1398-11e9-9561-005056949728_xl-release-snapshot_1546989146392411824","namespace":"default","creationTimestamp":null},"spec":{"casType":"jiva","volumeName":"pvc-5f9bd5ec-1398-11e9-9561-005056949728"}}
+I0108 23:12:26.596285      1 snapshot.go:84] Snapshot Successfully Created:
+{"apiVersion":"v1alpha1","kind":"CASSnapshot","metadata":{"name":"pvc-5f9bd5ec-1398-11e9-9561-005056949728_xl-release-snapshot_1546989146392411824"},"spec":{"casType":"jiva","volumeName":"pvc-5f9bd5ec-1398-11e9-9561-005056949728"}}
+I0108 23:12:26.596362      1 snapshotter.go:276] snapshot created: &{<nil> <nil> <nil> <nil> <nil> 0xc420038a00}. Conditions: &[]v1.VolumeSnapshotCondition{v1.VolumeSnapshotCondition{Type:"Ready", Status:"True", LastTransitionTime:v1.Time{Time:time.Time{wall:0xbf056976a38b90b7, ext:18032657942280, loc:(*time.Location)(0x2a17900)}}, Reason:"", Message:"Snapshot created successfully"}}
+I0108 23:12:26.596439      1 snapshotter.go:508] createSnapshot: create VolumeSnapshotData object for VolumeSnapshot default/xl-release-snapshot-dc804d0d-139a-11e9-9561-005056949728.
+I0108 23:12:26.596478      1 snapshotter.go:533] createVolumeSnapshotData: Snapshot default/xl-release-snapshot-dc804d0d-139a-11e9-9561-005056949728. Conditions: &[]v1.VolumeSnapshotCondition{v1.VolumeSnapshotCondition{Type:"Ready", Status:"True", LastTransitionTime:v1.Time{Time:time.Time{wall:0xbf056976a38b90b7, ext:18032657942280, loc:(*time.Location)(0x2a17900)}}, Reason:"", Message:"Snapshot created successfully"}}
+I0108 23:12:26.604409      1 snapshotter.go:514] createSnapshot: Update VolumeSnapshot status and bind VolumeSnapshotData to VolumeSnapshot default/xl-release-snapshot-dc804d0d-139a-11e9-9561-005056949728.
+I0108 23:12:26.604456      1 snapshotter.go:860] In bindVolumeSnapshotDataToVolumeSnapshot
+I0108 23:12:26.604472      1 snapshotter.go:862] bindVolumeSnapshotDataToVolumeSnapshot: Namespace default Name xl-release-snapshot
+I0108 23:12:26.608792      1 snapshotter.go:877] bindVolumeSnapshotDataToVolumeSnapshot: Updating VolumeSnapshot object [&v1.VolumeSnapshot{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, Metadata:v1.ObjectMeta{Name:"xl-release-snapshot", GenerateName:"", Namespace:"default", SelfLink:"/apis/volumesnapshot.external-storage.k8s.io/v1/namespaces/default/volumesnapshots/xl-release-snapshot", UID:"dc804d0d-139a-11e9-9561-005056949728", ResourceVersion:"2072354", Generation:2, CreationTimestamp:v1.Time{Time:time.Time{wall:0x0, ext:63682585945, loc:(*time.Location)(0x2a17900)}}, DeletionTimestamp:(*v1.Time)(nil), DeletionGracePeriodSeconds:(*int64)(nil), Labels:map[string]string{"SnapshotMetadata-Timestamp":"1546989146380869451", "SnapshotMetadata-PVName":"pvc-5f9bd5ec-1398-11e9-9561-005056949728"}, Annotations:map[string]string{"kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"volumesnapshot.external-storage.k8s.io/v1\",\"kind\":\"VolumeSnapshot\",\"metadata\":{\"annotations\":{},\"name\":\"xl-release-snapshot\",\"namespace\":\"default\"},\"spec\":{\"persistentVolumeClaimName\":\"xlr-data-pvc\"}}\n"}, OwnerReferences:[]v1.OwnerReference(nil), Initializers:(*v1.Initializers)(nil), Finalizers:[]string(nil), ClusterName:""}, Spec:v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:"k8s-volume-snapshot-dd0c3a0d-139a-11e9-a875-467fb97678b7"}, Status:v1.VolumeSnapshotStatus{CreationTimestamp:v1.Time{Time:time.Time{wall:0x0, ext:0, loc:(*time.Location)(nil)}}, Conditions:[]v1.VolumeSnapshotCondition{v1.VolumeSnapshotCondition{Type:"Ready", Status:"True", LastTransitionTime:v1.Time{Time:time.Time{wall:0xbf056976a38b90b7, ext:18032657942280, loc:(*time.Location)(0x2a17900)}}, Reason:"", Message:"Snapshot created successfully"}}}}]
+I0108 23:12:26.617060      1 snapshot-controller.go:197] [CONTROLLER] OnUpdate oldObj: v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:""}
+I0108 23:12:26.617102      1 snapshot-controller.go:198] [CONTROLLER] OnUpdate newObj: v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:"k8s-volume-snapshot-dd0c3a0d-139a-11e9-a875-467fb97678b7"}
+I0108 23:12:26.617118      1 desired_state_of_world.go:76] Adding new snapshot to desired state of world: default/xl-release-snapshot-dc804d0d-139a-11e9-9561-005056949728
+I0108 23:12:26.617449      1 snapshotter.go:202] In waitForSnapshot: snapshot default/xl-release-snapshot-dc804d0d-139a-11e9-9561-005056949728 snapshot data k8s-volume-snapshot-dd0c3a0d-139a-11e9-a875-467fb97678b7
+I0108 23:12:26.620951      1 snapshotter.go:241] waitForSnapshot: Snapshot default/xl-release-snapshot-dc804d0d-139a-11e9-9561-005056949728 created successfully. Adding it to Actual State of World.
+I0108 23:12:26.620991      1 actual_state_of_world.go:74] Adding new snapshot to actual state of world: default/xl-release-snapshot-dc804d0d-139a-11e9-9561-005056949728
+I0108 23:12:26.621005      1 snapshotter.go:526] createSnapshot: Snapshot default/xl-release-snapshot-dc804d0d-139a-11e9-9561-005056949728 created successfully.
+I0109 00:11:54.211526      1 snapshot-controller.go:197] [CONTROLLER] OnUpdate oldObj: v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:"k8s-volume-snapshot-dd0c3a0d-139a-11e9-a875-467fb97678b7"}
+I0109 00:11:54.211695      1 snapshot-controller.go:198] [CONTROLLER] OnUpdate newObj: v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:"k8s-volume-snapshot-dd0c3a0d-139a-11e9-a875-467fb97678b7"}
+I0109 01:11:54.211693      1 snapshot-controller.go:197] [CONTROLLER] OnUpdate oldObj: v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:"k8s-volume-snapshot-dd0c3a0d-139a-11e9-a875-467fb97678b7"}
+I0109 01:11:54.211817      1 snapshot-controller.go:198] [CONTROLLER] OnUpdate newObj: v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:"k8s-volume-snapshot-dd0c3a0d-139a-11e9-a875-467fb97678b7"}
+I0109 02:11:54.211890      1 snapshot-controller.go:197] [CONTROLLER] OnUpdate oldObj: v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:"k8s-volume-snapshot-dd0c3a0d-139a-11e9-a875-467fb97678b7"}
+I0109 02:11:54.212010      1 snapshot-controller.go:198] [CONTROLLER] OnUpdate newObj: v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:"k8s-volume-snapshot-dd0c3a0d-139a-11e9-a875-467fb97678b7"}
+I0109 03:11:54.212062      1 snapshot-controller.go:197] [CONTROLLER] OnUpdate oldObj: v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:"k8s-volume-snapshot-dd0c3a0d-139a-11e9-a875-467fb97678b7"}
+I0109 03:11:54.212201      1 snapshot-controller.go:198] [CONTROLLER] OnUpdate newObj: v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc", SnapshotDataName:"k8s-volume-snapshot-dd0c3a0d-139a-11e9-a875-467fb97678b7"}
+I0109 04:11:54.212249      1 snapshot-controller.go:197] [CONTROLLER] OnUpdate oldObj: v1.VolumeSnapshotSpec{PersistentVolumeClaimName:"xlr-data-pvc",
+```
+
+**Resolution:**
+
+This can be happen due to the stale entries of snapshot and snapshot data. By deleting those entries will resolve this issue. 
+
+
+
 <br>
 
 <hr>
-
 <br>
 
 

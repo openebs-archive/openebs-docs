@@ -80,7 +80,7 @@ A cStor pool spec consists of
 - List of disks on each node that constitute the pool on that given node
 - RAID type within the pool (currently stripe and mirror are supported). Refer to the [cStor Pool roadmap](/docs/next/cstor.html#cstor-roadmap) to find the status of RAIDz1 support
 
-**Number of pools:** It is good to start with 3 pools as the number of volume replicas will be typically three or one. However, the number of pools are fixed in OpenEBS 0.8 version. Support for increasing the pool replicas on the fly is in the [cStor Pool roadmap](//docs/next/cstor.html#cstor-roadmap)  . At the time of cStor pool creation, individual and independent pools are created on the specified nodes. 
+**Number of pools:** It is good to start with 3 pools as the number of volume replicas will be typically three or one. However, the number of pools are fixed in OpenEBS 0.8 version. Support for increasing the pool replicas on the fly is in the [cStor Pool roadmap](/docs/next/cstor.html#cstor-roadmap)  . At the time of cStor pool creation, individual and independent pools are created on the specified nodes. 
 
 **List of nodes that host the pools:** This information and the number of pool replicas are implicitly provided by analyzing the provided disk CRs in the spec file. For example, if the spec file has 3 disk CRs, which belong to 3 different nodes, it implicitly means the number of pool replicas are 3 and the list of nodes taken from the disk CR metadata.
 
@@ -206,13 +206,25 @@ volumeClaimTemplates:
 | kubectl get volumesnapshot         | Get the list of volumesnapshots in the entire cluster        |
 
 
-## High availability of cStor
+## High Availability of cStor
 
 cStor volumes when deployed in 3 replica mode provide high availability of the data as long as the replicas are in quorum. At least two replicas need to be healthy to call the volume is in quorum. In a 3 replica setup, if the second replica becomes unavailable because of the pool failure or unavailability, the volume is set to read-only by the target. When the volume replicas are back online, they are rebuilt one by one and the volume is set to read-write as soon as the quorum is achieved. 
 
+## Ephemeral Disk Support
+
+Ephermeral disk support is added to cStor in 0.8.1 version.
 
 
-## Monitoring cStor pools and volumes
+
+Kubernetes services such as GKE, EKS and AKS have cloud VMs where when a node is lost a new replacement node is provided with  formatted new disks as part of their Auto Scaling policy which means that the data on local disks of the original node is lost permanently. However, with cStor, you can still build a reliable and highly available persistent storage solution using these ephemeral local disks by using cStor's replication feature. 
+
+For this to work, cStor StorageClass has to be configured with `ReplicaCount=3`. With this setting data on cStor volume is replicated to three copies on different nodes. In the ephemeral nodes scenario, when a node is lost, Kubernetes brings up a new node with the same label. Data of cStor volumes continues to be available and will be served from one of the two remaining replicas. OpenEBS detects that a new node has come up with all new disks and it automatically reconfigures the disk CRs to the existing StoragePoolClaim config or StoragePool configuration. The net effect is that  the cStorPool instance that was gone with the lost node is recreated on the newly replaced node. cStor will then start rebuilding the cStor volume replicas onto this new cStorPool instance. 
+
+**Note:** Rebuilding of data onto the new cStorPool instance can take time depending on the size of data to be rebuilt. During this time the volume quorum needs to be maintained. In other words, during rebuilding time, the cStorPool is in an unprotected state where losing another node will cause permanent loss of data. Hence, during Kubernetes node upgrades, administrators need to make sure that the cStorPools are fully rebuilt and volumes are healthy/online before starting the upgrade of the next node.
+
+
+
+## Monitoring cStor Pools and Volumes
 
 The easiest way to monitor cStor pools and volumes is through MayaOnline. The volume metrics are scraped and uploaded to MayaOnline where users can browse historical volume performance. MayaOnline also provides the topology view where detailed live status of Volumes, snapshots, clones, pools and disks is obtained. Through the topology view , users get granular details of each of these Kubernetes resources in an intuitive graphical user interface. 
 
@@ -244,8 +256,6 @@ Performance testing includes setting up the pools, storage classes and iSCSI ser
 
   
 
-
-
 ## Known limitations
 
 **After a node shutdown, I see application stuck in container creating waiting for PV to be attached.:**
@@ -263,12 +273,6 @@ By default, cStor supports thin provisioning, which means that when a storage cl
 **Delayed snapshots**
 
 In cStor, snapshots are taken only when the volume replicas are in quorum. For example, as soon as the volume is provisioned on cStor, the volume will be in ready state but the quorum attainment may take  few minutes. Snapshot commands during this period will be delayed or queued till the volumes replicas attain quorum. The snapshot commands received by the target are also delayed when the cStor volume is marked read-only because of no-quorum.
-
-
-
-**No support for Ephemeral disks in 0.8.0**
-
-Kubernetes services such as GKE, EKS and AKS have cloud VMs where when a node is lost a new replacement node is provided but the data on local disks of the original node will be lost permanently.  Though cStor volumes are replicated to more than one node, rebuilding of cStor data to a new replica is not supported in 0.8.1. This feature is in active development, see [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. Till this feature is available, use of local ephemeral disks for cStorPools is not recommended.
 
 
 
@@ -319,7 +323,26 @@ Following are most commonly observed areas of troubleshooting
 
    This error eventually could get rectified on the further retries, volume gets mounted and application is started. This error is usually seen when cStor target takes some time to initialize  on low speed networks as it takes time to download cStor image binaries from repositories ( or )  or because the cstor target is waiting for the replicas to connect and establish quorum. If the error persists beyond 5 minutes, logs need to be verified, contact support or seek help on the community [slack](https://slack.openebs.io).<br>
 
+4. **Kubelet seen consuming high RAM usage with cStor volumes**
 
+   The cause of high memory consumption of Kubelet is seen on Fedora 29  mainly due to the following.
+
+   There are 3 modules are involved - `cstor-isgt`, `kubelet` and `iscsiInitiator(iscsiadm)`.
+   kubelet runs iscsiadm command to do discovery on cstor-istgt. If there is any delay in receiving response of discovery opcode (either due to network or delay in processing on target side), iscsiadm retries few times, and, gets into infinite loop dumping error messages as below:
+
+       iscsiadm: Connection to Discovery Address 127.0.0.1 failed
+       iscsiadm: failed to send SendTargets PDU
+       iscsiadm: connection login retries (reopen_max) 5 exceeded
+       iscsiadm: Connection to Discovery Address 127.0.0.1 failed
+       iscsiadm: failed to send SendTargets PDU```
+       kubelet keeps taking this response and accumulates the memory.
+   More details can be seen [here](https://github.com/openebs/openebs/issues/2382).
+
+   **Resolution:**
+
+   This issue is fixed in 0.8.1 version.
+
+   
 
 
 ## cStor roadmap
@@ -328,7 +351,7 @@ Following are most commonly observed areas of troubleshooting
 | ------------------------------------------------------------ | ----------------- |
 | <font size="5">cStor Pool features</font>                    |                   |
 | cStor pool creation and initial use with either stripe mode or RAIDZ0 (mirror) mode | 0.8.0             |
-| Adding a new cStorPool instance to the existing cstor-pool-config | 0.8.1             |
+| Adding a new cStorPool instance to the existing cstor-pool-config(SPC) | 0.8.1             |
 | Ephemeral disk/pool support for rebuilding                   | 0.8.1             |
 | Disk replacement in a given cStor pool instance              | 0.9.0             |
 | Expanding a given pool replica (add disks to a pool after it is created) | 0.9.0             |

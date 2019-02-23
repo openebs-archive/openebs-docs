@@ -19,6 +19,8 @@ sidebar_label:Configure StoragePools
 
 [Creating a new pool](#creating-a-new-pool)
 
+[Pool policies](#pool-policies)
+
 [Day 2 operations on cStorPools](#day-2-operations-on-cstorpools)
 
 [Verifying pool status](#verifying-pool-status)
@@ -68,9 +70,7 @@ Process of creating a new cStor storage pool
 
 **Step1:**
 
-Create a YAML file called `cstor-pool1-config.yaml` with the following content
-
-
+Create a YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is limted to `1Gi` and `PoolResourceLimits` value is set to `2Gi`. These values can be changed as per the Node configuration.
 
 ```
 #Use the following YAMLs to create a cStor Storage Pool.
@@ -79,9 +79,18 @@ apiVersion: openebs.io/v1alpha1
 kind: StoragePoolClaim
 metadata:
   name: cstor-pool1
+  annotations:
+    cas.openebs.io/config: |
+      - name: PoolResourceRequests
+        value: |-
+            memory: 1Gi
+      - name: PoolResourceLimits
+        value: |-
+            memory: 2Gi
 spec:
   name: cstor-pool1
   type: disk
+  maxPools: 3
   poolSpec:
     poolType: striped
   # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
@@ -113,6 +122,12 @@ In the above file, change the parameters as required
   
 
   Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
+
+- `maxPools`
+
+  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`, then three nodes are randomly chosen by OpenEBS and one cStorPool instance each is created on them  with one disk (`striped`) or two disks (`mirrored`)
+
+  This value should be less than or equal to the total number of Nodes in the cluster.
 
 - `diskList`
 
@@ -166,7 +181,7 @@ Follow the below steps to create a quick cStorPool in this method.
 
 **Step1:**
 
-Create a YAML file called `cstor-pool-config2.yaml` with the following content
+Create a YAML file called `cstor-pool-config2.yaml` with the following content.  In the following YAML, `PoolResourceRequests` value is limted to `1Gi` and `PoolResourceLimits` value is set to `2Gi`. These values can be changed as per the Node configuration.
 
 ```
 ---
@@ -174,6 +189,14 @@ apiVersion: openebs.io/v1alpha1
 kind: StoragePoolClaim
 metadata:
   name: cstor-pool2
+  annotations:
+    cas.openebs.io/config: |
+      - name: PoolResourceRequests
+        value: |-
+            memory: 1Gi
+      - name: PoolResourceLimits
+        value: |-
+            memory: 2Gi
 spec:
   name: cstor-pool2
   type: disk
@@ -220,12 +243,67 @@ If the pool creation is successful, you will the example result as shown below.
 <br>
 
 <hr>
+<br>
+
+## Pool Policies
+
+This section captures the policies supported for cStorPools in `StoragePoolClaim` under `spec`  in the name and value pair format. 
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="PoolResourceLimits-Policy"></a>PoolResourceLimits Policy</h3>
+
+This feature allow you to set the limits on memory and cpu for pool pods. The resource and limit value should be in the same format as expected by Kubernetes. The `name` of SPC can be changed if you need.
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+  annotations:
+    cas.openebs.io/config: |
+      - name: PoolResourceRequests
+        value: |-
+            memory: 1Gi
+spec:
+  name: cstor-pool-prom1
+```
+
+
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="PoolResourceRequests-Policy"></a>PoolResourceRequests Policy</h3>
+
+This feature allow you to specify resource requests that need to be available before scheduling the containers. If not specified, the default is to use the limits from PoolResourceLimits or the default requests set in the cluster. The `name` of SPC can be changed if you need.
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+  annotations:
+    cas.openebs.io/config: |
+      - name: PoolResourceLimits
+        value: |-
+            memory: 2Gi
+spec:
+  name: cstor-pool-prom1
+```
+
+
+
+
+
+<br>
+
+<hr>
 
 <br>
 
 ## Day 2 operations on cStorPools
 
-In 0.8.0 , day2 operations are not supported. The day2 operations are under active development. See [cStor roadmap](docs/next/cstor.html#cstor-roadmap) for more details. 
+In 0.8.1 , only some day2 operations are supported. Many day2 operations are under active development. See [cStor roadmap](docs/next/cstor.html#cstor-roadmap) for more details. 
 
 **Note:** *All pools created using 0.8.1 will receive the pool expansion capabilities when those features are available in future releases.* 
 

@@ -24,7 +24,7 @@ sidebar_label: FAQs
 
 [What are the most common use case and most common workloads?](/docs/next/faq.html#what-are-the-most-common-use-case-and-most-common-workloads)
 
-[What is the default OpenEBS Reclaim policy?](http://localhost:3000/docs/next/faq.html#what-is-the-default-openebs-reclaim-policy)
+[What is the default OpenEBS Reclaim policy?](/docs/next/faq.html#what-is-the-default-openebs-reclaim-policy)
 
 
 
@@ -44,7 +44,7 @@ sidebar_label: FAQs
 
 [Can I use the same PVC for multiple Pods?](/docs/next/faq.html#can-i-use-the-same-pvc-for-multiple-pods)
 
-[Warning Messages while Launching PVC](http://localhost:3000/docs/next/faq.html#warning-messages-while-launching-pvc)
+[Warning Messages while Launching PVC](/docs/next/faq.html#warning-messages-while-launching-pvc)
 
 [Why *OpenEBS_logical_size* and *OpenEBS_actual_used* are showing in different size?](/docs/next/faq.html#why-openebs-logical-size-and-openebs-actual-used-are-showing-in-different-size)
 
@@ -52,13 +52,17 @@ sidebar_label: FAQs
 
 [How OpenEBS detects disks for creating cStor Pool?](/docs/next/faq.html#how-openebs-detects-disks-for-creating-cstor-pool)
 
-[Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?](/docs/next/faq.html#can-i-provision-openebs-volume-if-the-request-in-pvc-is-more-than-the-avaialble-physical-capcaity-of-the-pools-in-the-storage-nodes)
+[Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?](#provision-pvc-higher-than-physical-sapce)
 
 [What is the difference between cStor Pool creation using manual method and auto method?](/docs/next/faq.html#what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method)
 
 [How the data is distributed when cStor maxPools count is 3 and replicaCount as 2 in StorageClass?](/docs/next/faq.html#how-the-data-is-distributed-when-cstor-maxpools-count-is-3-and-replicacount-as-2-in-storageclass)
 
 [How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?](/docs/next/faq.html#how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions)
+
+[How to create a cStor volume on single cStor disk pool?](#create-cstor-volume-single-disk-pool)
+
+[How to get the details of cStor Pool,cStor Volume Replica ,Cstor Volumes and Disks ?](#more-info-pool-cvr-cv-disk) 
 
 
 
@@ -331,7 +335,7 @@ Example:
 
 
 
-### Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?
+<h3><a class="anchor" aria-hidden="true" id="provision-pvc-higher-than-physical-sapce"></a>Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?</h3>
 
 As of 0.8.0, the user is allowed to create PVCs that cross the available capacity of the pools in the Nodes. In the future release, it will validate with an option `overProvisioning=false`, the PVC request should be denied if there is not enough available capacity to provision the volume.
 
@@ -445,11 +449,110 @@ Apply the following YAML in your cluster.
 
 
 
+<h3><a class="anchor" aria-hidden="true" id="create-cstor-volume-single-disk-pool"></a>How to create a cStor volume on single cStor disk pool?</h3>
+
+You can give the maxPools count as 1 in StoragePoolClaim YAML and `replicaCount` as `1`in StorageClass YAML. In the following sample SPC and SC YAML, cStor pool is created using auto method. After applying this YAML, one cStor pool named cstor-disk will be created only in one Node and `StorageClass` named `openebs-cstor-disk`. Only requirement is that one node has at least one disk attached but unmounted. See [here](docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume) to understand more about disk mount status.
+
+```
+---
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+spec:
+  name: cstor-disk
+  type: disk
+  maxPools: 1
+  poolSpec:
+    poolType: striped
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-cstor-disk
+  annotations:
+    openebs.io/cas-type: cstor
+    cas.openebs.io/config: |
+      - name: StoragePoolClaim
+        value: "cstor-disk"
+      - name: ReplicaCount
+        value: "1"
+provisioner: openebs.io/provisioner-iscsi
+```
+
+<a href="#top">Go to top</a>
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="more-info-pool-cvr-cv-disk"></a>How to get the details like status, capacity etc. of cStor Pool, cStor Volume Replica, cStor Volumes and Disks using kubectl command?</h3>
+
+From 0.8.1 onwards, following command list down the info like status, size etc. using `kubectl get` command. These command will output similar to the following only if Kubernetes version of client and server are above 1.11.
+
+The following command  will give the details of cStor Storage Pool.
+
+```
+kubectl get csp -n openebs
+```
+
+Following is an example output.
+
+```
+NAME                     ALLOCATED   FREE    CAPACITY    STATUS    TYPE       AGE
+sparse-claim-auto-lja7   125K        9.94G   9.94G       Healthy   striped    1h
+```
+
+The following command  will give the details of replica status of each cStor volume created in `openebs` namespace.
+
+```
+kubectl get cvr -n openebs
+```
+
+Following is an example output.
+
+```
+NAME                                                              USED  ALLOCATED  STATUS    AGE
+pvc-9ca83170-01e3-11e9-812f-54e1ad0c1ccc-sparse-claim-auto-lja7   6K    6K         Healthy   1h
+```
+
+The following command  will give the details of cStor volume created in `openebs` namespace.
+
+```
+kubectl get cstorvolume -n openebs
+```
+
+Following is an example output.
+
+```
+NAME                                        STATUS    AGE
+pvc-9ca83170-01e3-11e9-812f-54e1ad0c1ccc    Healthy   4h
+```
+
+The following command will give the details disks that are attached to all Nodes in the cluster.
+
+```
+kubectl get disk
+```
+
+Following is an example output.
+
+```
+NAME                                      SIZE          STATUS   AGE
+sparse-5a92ced3e2ee21eac7b930f670b5eab5   10737418240   Active   10m
+```
+
+
+
 <br>
 
 ## See Also:
 
+### [Creating cStor Pool](/docs/next/configurepools.html)
 
+### [Provisioning cStor volumes](/docs/next/deploycstor.html)
+
+### [BackUp and Restore](/docs/next/backup.html)
+
+### [Uninstall](/docs/next/uninstall.html)
 
 <br>
 

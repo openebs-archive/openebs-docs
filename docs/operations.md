@@ -20,7 +20,7 @@ Day2 operations on OpenEBS are broadly categorised as  :
 
 
 
-## OpenEBS snapshots and clones
+## OpenEBS Snapshots and Clones
 
 An OpenEBS snapshot is a set of reference markers for data at a particular point in time. A snapshot acts as a detailed table of contents,  with accessible copies of data that user can roll back to.  Snapshots in OpenEBS are instantaneous and are managed through `kubectl`.
 
@@ -65,7 +65,7 @@ kubectl get volumesnapshot
 kubectl get volumesnapshotdata
 ```
 
-*Note*: All cStor snapshots are created in the ` default` namespace.
+*Note*: All cStor snapshots are created in the ` default` namespace. Also make sure that there is no stale entries of snapshot and snapshot data.
 
 
 
@@ -153,12 +153,11 @@ However, as the actual used capacity of the pool is utilized, more disks need to
 
 ## Expanding the pool to more nodes
 
-When a new node is added, you may want to expand the cStor pool config to extend to that node so that a new pool instance is created on the new node. Typical procedure would be to add new disk CRs to `diskList` and `kubectl` apply the `<castor-pool-config.yaml>`. This feature is under active development.  See [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
+When a new node is added, you may want to expand the cStor pool config to extend to that node so that a new pool instance is created on the new node. Typical procedure would be to add new disk CRs to `diskList` and `kubectl` apply the `<castor-pool-config.yaml>`.  See [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
 
 <br>
 
 <hr>
-
 <br>
 
 ## Expanding the size of a volume

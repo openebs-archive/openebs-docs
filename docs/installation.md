@@ -170,7 +170,7 @@ As a next step [verify](#verifying-openebs-installation) your installation and d
 In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace. 
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
 ```
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation) steps.
@@ -226,7 +226,7 @@ After doing the custom configuration in the downloaded openebs-operator.yaml fil
 
 
 ```
-kubectl apply -f <custom-openebs-operator-0.8.0.yaml>
+kubectl apply -f <custom-openebs-operator-0.8.1.yaml>
 ```
 
 
@@ -415,7 +415,7 @@ Find `apiServer`, `provisioner`, `snapshotOperator` and `ndm` sections in `value
 ```
 provisioner:
   image: "quay.io/openebs/openebs-k8s-provisioner"
-  imageTag: "0.8.0"
+  imageTag: "0.8.1"
   replicas: 1
   nodeSelector:
     node: openebs
@@ -436,7 +436,7 @@ In the `values.yaml`, find` ndm` section to update `excludeVendors:` and `exclud
 ```
 ndm:
   image: "quay.io/openebs/node-disk-manager-amd64"
-  imageTag: "v0.2.0"
+  imageTag: "v0.3.0"
   sparse:
     enabled: "true"
     path: "/var/openebs/sparse"
@@ -465,37 +465,41 @@ Download the values.yaml from  [here](https://github.com/helm/charts/blob/master
 | `rbac.create`                           | Enable RBAC Resources                        | `true`                                    |
 | `image.pullPolicy`                      | Container pull policy                        | `IfNotPresent`                            |
 | `apiserver.image`                       | Docker Image for API Server                  | `openebs/m-apiserver`                     |
-| `apiserver.imageTag`                    | Docker Image Tag for API Server              | `0.8.0`                                   |
+| `apiserver.imageTag`                    | Docker Image Tag for API Server              | `0.8.1`                                   |
 | `apiserver.replicas`                    | Number of API Server Replicas                | `1`                                       |
 | `provisioner.image`                     | Docker Image for Provisioner                 | `openebs/openebs-k8s-provisioner`         |
-| `provisioner.imageTag`                  | Docker Image Tag for Provisioner             | `0.8.0`                                   |
+| `provisioner.imageTag`                  | Docker Image Tag for Provisioner             | `0.8.1`                                   |
 | `provisioner.replicas`                  | Number of Provisioner Replicas               | `1`                                       |
 | `snapshotOperator.provisioner.image`    | Docker Image for Snapshot Provisioner        | `openebs/snapshot-provisioner`            |
-| `snapshotOperator.provisioner.imageTag` | Docker Image Tag for Snapshot Provisioner    | `0.8.0`                                   |
+| `snapshotOperator.provisioner.imageTag` | Docker Image Tag for Snapshot Provisioner    | `0.8.1`                                   |
 | `snapshotOperator.controller.image`     | Docker Image for Snapshot Controller         | `openebs/snapshot-controller`             |
-| `snapshotOperator.controller.imageTag`  | Docker Image Tag for Snapshot Controller     | `0.8.0`                                   |
+| `snapshotOperator.controller.imageTag`  | Docker Image Tag for Snapshot Controller     | `0.8.1`                                   |
 | `snapshotOperator.replicas`             | Number of Snapshot Operator Replicas         | `1`                                       |
 | `ndm.image`                             | Docker Image for Node Disk Manager           | `openebs/openebs/node-disk-manager-amd64` |
-| `ndm.imageTag`                          | Docker Image Tag for Node Disk Manager       | `v0.2.0`                                  |
+| `ndm.imageTag`                          | Docker Image Tag for Node Disk Manager       | `v0.3.0`                                  |
 | `ndm.sparse.enabled`                    | Create Sparse files and cStor Sparse Pool    | `true`                                    |
 | `ndm.sparse.path`                       | Directory where Sparse files are created     | `/var/openebs/sparse`                     |
 | `ndm.sparse.size`                       | Size of the sparse file in bytes             | `10737418240`                             |
 | `ndm.sparse.count`                      | Number of sparse files to be created         | `1`                                       |
-| `ndm.sparse.filters.excludeVendors`     | Exclude devices with specified vendor        | `CLOUDBYT,OpenEBS`                        |
-| `ndm.sparse.filters.excludePaths`       | Exclude devices with specified path patterns | `loop,fd0,sr0,/dev/ram,/dev/dm-,/dev/md`  |
+| `ndm.filters.excludeVendors`            | Exclude devices with specified vendor        | `CLOUDBYT,OpenEBS`                        |
+| `ndm.filters.excludePaths`              | Exclude devices with specified path patterns | `loop,fd0,sr0,/dev/ram,/dev/dm-,/dev/md`  |
+| `ndm.updateStrategy.type`               | Update strategy policy                       | `RollingUpdate`                           |
 | `jiva.image`                            | Docker Image for Jiva                        | `openebs/jiva`                            |
-| `jiva.imageTag`                         | Docker Image Tag for Jiva                    | `0.8.0`                                   |
+| `jiva.imageTag`                         | Docker Image Tag for Jiva                    | `0.8.1`                                   |
 | `jiva.replicas`                         | Number of Jiva Replicas                      | `3`                                       |
 | `cstor.pool.image`                      | Docker Image for cStor Pool                  | `openebs/cstor-pool`                      |
-| `cstor.pool.imageTag`                   | Docker Image Tag for cStor Pool              | `0.8.0`                                   |
+| `cstor.pool.imageTag`                   | Docker Image Tag for cStor Pool              | `0.8.1`                                   |
 | `cstor.poolMgmt.image`                  | Docker Image for cStor Pool Management       | `openebs/cstor-pool-mgmt`                 |
-| `cstor.poolMgmt.imageTag`               | Docker Image Tag for cStor Pool Management   | `0.8.0`                                   |
+| `cstor.poolMgmt.imageTag`               | Docker Image Tag for cStor Pool Management   | `0.8.1`                                   |
 | `cstor.target.image`                    | Docker Image for cStor Target                | `openebs/cstor-target`                    |
-| `cstor.target.imageTag`                 | Docker Image Tag for cStor Target            | `0.8.0`                                   |
+| `cstor.target.imageTag`                 | Docker Image Tag for cStor Target            | `0.8.1`                                   |
 | `cstor.volumeMgmt.image`                | Docker Image for cStor Volume Management     | `openebs/cstor-volume-mgmt`               |
-| `cstor.volumeMgmt.imageTag`             | Docker Image Tag for cStor Volume Management | `0.8.0`                                   |
+| `cstor.volumeMgmt.imageTag`             | Docker Image Tag for cStor Volume Management | `0.8.1`                                   |
 | `policies.monitoring.image`             | Docker Image for Prometheus Exporter         | `openebs/m-exporter`                      |
-| `policies.monitoring.imageTag`          | Docker Image Tag for Prometheus Exporter     | `0.8.0`                                   |
+| `policies.monitoring.imageTag`          | Docker Image Tag for Prometheus Exporter     | `0.8.1`                                   |
+| `analytics.pingInterval`                | Duration(hours) between sending ping stat    | `24h`                                     |
+| `HealthCheck.initialDelaySeconds`       | Delay before liveness probe is initiated     | `30`                                      |
+| `HealthCheck.periodSeconds`             | How often to perform the liveness probe      | `60`                                      |
 
 
 
