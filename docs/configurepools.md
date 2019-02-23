@@ -70,9 +70,7 @@ Process of creating a new cStor storage pool
 
 **Step1:**
 
-Create a YAML file called `cstor-pool1-config.yaml` with the following content
-
-
+Create a YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is limted to `1Gi` and `PoolResourceLimits` value is set to `2Gi`. These values can be changed as per the Node configuration.
 
 ```
 #Use the following YAMLs to create a cStor Storage Pool.
@@ -81,9 +79,18 @@ apiVersion: openebs.io/v1alpha1
 kind: StoragePoolClaim
 metadata:
   name: cstor-pool1
+  annotations:
+    cas.openebs.io/config: |
+      - name: PoolResourceRequests
+        value: |-
+            memory: 1Gi
+      - name: PoolResourceLimits
+        value: |-
+            memory: 2Gi
 spec:
   name: cstor-pool1
   type: disk
+  maxPools: 3
   poolSpec:
     poolType: striped
   # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
@@ -115,6 +122,12 @@ In the above file, change the parameters as required
   
 
   Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
+
+- `maxPools`
+
+  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`, then three nodes are randomly chosen by OpenEBS and one cStorPool instance each is created on them  with one disk (`striped`) or two disks (`mirrored`)
+
+  This value should be less than or equal to the total number of Nodes in the cluster.
 
 - `diskList`
 
@@ -168,7 +181,7 @@ Follow the below steps to create a quick cStorPool in this method.
 
 **Step1:**
 
-Create a YAML file called `cstor-pool-config2.yaml` with the following content
+Create a YAML file called `cstor-pool-config2.yaml` with the following content.  In the following YAML, `PoolResourceRequests` value is limted to `1Gi` and `PoolResourceLimits` value is set to `2Gi`. These values can be changed as per the Node configuration.
 
 ```
 ---
@@ -176,6 +189,14 @@ apiVersion: openebs.io/v1alpha1
 kind: StoragePoolClaim
 metadata:
   name: cstor-pool2
+  annotations:
+    cas.openebs.io/config: |
+      - name: PoolResourceRequests
+        value: |-
+            memory: 1Gi
+      - name: PoolResourceLimits
+        value: |-
+            memory: 2Gi
 spec:
   name: cstor-pool2
   type: disk
@@ -239,9 +260,13 @@ apiVersion: openebs.io/v1alpha1
 kind: StoragePoolClaim
 metadata:
   name: cstor-disk
+  annotations:
+    cas.openebs.io/config: |
+      - name: PoolResourceRequests
+        value: |-
+            memory: 1Gi
 spec:
-  - name: PoolResourceLimits
-    value: "none"
+  name: cstor-pool-prom1
 ```
 
 
@@ -257,9 +282,13 @@ apiVersion: openebs.io/v1alpha1
 kind: StoragePoolClaim
 metadata:
   name: cstor-disk
+  annotations:
+    cas.openebs.io/config: |
+      - name: PoolResourceLimits
+        value: |-
+            memory: 2Gi
 spec:
-  - name: PoolResourceRequests
-    value: "none"
+  name: cstor-pool-prom1
 ```
 
 
