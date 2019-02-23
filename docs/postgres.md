@@ -72,7 +72,7 @@ As shown above, OpenEBS volumes need to be configured with single replica. This 
    Install PostgreSQL on OpenEBS volume using the following command.
 
    ```
-   helm install --name my-release --storage-class=openebs-cstor-disk replication.slaveReplicas=2 stable/postgresql
+   helm install --name my-release persistence.storageClass=openebs-cstor-disk replication.slaveReplicas=2 stable/postgresql
    ```
 
 <br>
