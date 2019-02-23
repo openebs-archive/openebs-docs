@@ -19,6 +19,8 @@ sidebar_label:Configure StoragePools
 
 [Creating a new pool](#creating-a-new-pool)
 
+[Pool policies](#pool-policies)
+
 [Day 2 operations on cStorPools](#day-2-operations-on-cstorpools)
 
 [Verifying pool status](#verifying-pool-status)
@@ -220,12 +222,59 @@ If the pool creation is successful, you will the example result as shown below.
 <br>
 
 <hr>
+<br>
+
+## Pool Policies
+
+This section captures the policies supported for cStorPools in `StoragePoolClaim` under `spec`  in the name and value pair format. 
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="PoolResourceLimits-Policy"></a>PoolResourceLimits Policy</h3>
+
+This feature allow you to set the limits on memory and cpu for pool pods. The resource and limit value should be in the same format as expected by Kubernetes. The `name` of SPC can be changed if you need.
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+spec:
+  - name: PoolResourceLimits
+    value: "none"
+```
+
+
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="PoolResourceRequests-Policy"></a>PoolResourceRequests Policy</h3>
+
+This feature allow you to specify resource requests that need to be available before scheduling the containers. If not specified, the default is to use the limits from PoolResourceLimits or the default requests set in the cluster. The `name` of SPC can be changed if you need.
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+spec:
+  - name: PoolResourceRequests
+    value: "none"
+```
+
+
+
+
+
+<br>
+
+<hr>
 
 <br>
 
 ## Day 2 operations on cStorPools
 
-In 0.8.0 , day2 operations are not supported. The day2 operations are under active development. See [cStor roadmap](docs/next/cstor.html#cstor-roadmap) for more details. 
+In 0.8.1 , only some day2 operations are supported. Many day2 operations are under active development. See [cStor roadmap](docs/next/cstor.html#cstor-roadmap) for more details. 
 
 **Note:** *All pools created using 0.8.1 will receive the pool expansion capabilities when those features are available in future releases.* 
 

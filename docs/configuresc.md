@@ -115,12 +115,12 @@ Below table lists the storage policies supported by cStor. These policies should
 | [TargetTolerations](#TargetTolerations)                  |           | Decided by Kubernetes scheduler         | Configuring the tolerations for target.                      |
 | [AuxResourceLimits](#AuxResourceLimits-Policy)           |           | Decided by Kubernetes scheduler         | Configuring resource limits on the pool and volume pod side-cars. |
 | [AuxResourceRequests](#AuxResourceRequests-Policy)       |           | Decided by Kubernetes scheduler         | Configure minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. |
-| [PoolResourceRequests](#PoolResourceRequests-Policy)     |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStorPool pod                       |
-| [PoolResourceLimits](#PoolResourceLimits-Policy)         |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStorPool pod                       |
 | [Target Affinity](#Target-Affinity-Policy)               |           | Decided by Kubernetes scheduler         | The policy specifies the label KV pair to be used both on the cStor target and on the application being used so that application pod and cStor target pod are scheduled on the same node. |
 | [Target Namespace](#Target-Namespace)                    |           | openebs                                 | When service account name is specified, the cStor target pod is scheduled in the application's namespace. |
 
+<br>
 
+<br>
 
 <h3><a class="anchor" aria-hidden="true" id="Replica-Count-Policy"></a>Replica Count Policy</h3>
 
@@ -327,33 +327,9 @@ metadata:
     openebs.io/cas-type: cstor
 ```
 
-<h3><a class="anchor" aria-hidden="true" id="PoolResourceLimits-Policy"></a>PoolResourceLimits Policy</h3>
 
-This feature allow you to set the limits on memory and cpu for pool pods. The resource and limit value should be in the same format as expected by Kubernetes. The `name` of SPC can be changed if you need.
 
-```
-apiVersion: openebs.io/v1alpha1
-kind: StoragePoolClaim
-metadata:
-  name: cstor-disk
-spec:
-  - name: PoolResourceLimits
-    value: "none"
-```
 
-<h3><a class="anchor" aria-hidden="true" id="PoolResourceRequests-Policy"></a>PoolResourceRequests Policy</h3>
-
-This feature allow you to specify resource requests that need to be available before scheduling the containers. If not specified, the default is to use the limits from PoolResourceLimits or the default requests set in the cluster. The `name` of SPC can be changed if you need.
-
-```
-apiVersion: openebs.io/v1alpha1
-kind: StoragePoolClaim
-metadata:
-  name: cstor-disk
-spec:
-  - name: PoolResourceRequests
-    value: "none"
-```
 
 <h3><a class="anchor" aria-hidden="true" id="Target-Affinity-Policy"></a>Target Affinity Policy</h3>
 
@@ -405,6 +381,8 @@ The sample service account can be found [here](https://github.com/openebs/openeb
 <br>
 
 ## See Also:
+
+[cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
 
 
 
