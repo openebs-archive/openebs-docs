@@ -13,7 +13,7 @@ sidebar_label: PostgreSQL
 
 <br>
 
-The PostgreSQL container used in the StatefulSet is sourced from [CrunchyData](https://github.com/CrunchyData/crunchy-containers). CrunchyData provides cloud agnostic PostgreSQL container technology that is designed for production workloads with cloud native High Availability, Disaster Recovery, and monitoring. PostgreSQL is deployed usually as a `statefulset` on Kubernetes and requires persistent storage for each instance of PostgreSQL StorageManager instance. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
+The PostgreSQL container is sourced from [CrunchyData](https://github.com/CrunchyData/crunchy-containers). CrunchyData provides cloud agnostic PostgreSQL container technology that is designed for production workloads with cloud native High Availability, Disaster Recovery, and monitoring. PostgreSQL is deployed usually as a `statefulset` on Kubernetes and requires persistent storage for each instance of PostgreSQL StorageManager instance. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
 
 <br>
 
@@ -65,15 +65,17 @@ As shown above, OpenEBS volumes need to be configured with single replica. This 
 
 4. **Create Storage Class**
 
-   You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. Since PostgreSQL is a StatefulSet application, it requires only one replication at the storage level. So cStor volume `replicaCount` is 1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 1 is provided in the configuration details below.
+   You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. In this solution,PostgreSQL is a deployment. Since it requires replication at the storage level so cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml** to consume cStor pool with cStorVolume Replica count as 3 is provided in the configuration details below.
 
 5. **Launch and test PostgreSQL**
 
-   Install PostgreSQL on OpenEBS volume using the following command.
+   Install PostgreSQL deployment on OpenEBS volume using the following command.
 
    ```
-   helm install --name my-release persistence.storageClass=openebs-cstor-disk replication.slaveReplicas=2 stable/postgresql
+   helm install --name my-release --set persistence.storageClass=openebs-cstor-sparse  stable/postgresql
    ```
+
+   This will create a PostgreSQL deployment  with 3 replica of cStor volume with a PVC size of 8Gi. More details can be read from [here](https://github.com/helm/charts/tree/master/stable/postgresql).
 
 <br>
 
@@ -176,7 +178,7 @@ metadata:
       - name: StoragePoolClaim
         value: "cstor-disk"
       - name: ReplicaCount
-        value: "1"       
+        value: "3"       
 provisioner: openebs.io/provisioner-iscsi
 reclaimPolicy: Delete
 ---
