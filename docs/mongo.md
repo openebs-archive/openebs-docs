@@ -64,7 +64,7 @@ MongoDB is a cross-platform document-oriented database. Classified as a NoSQL da
 
 5. **Launch and test MongoDB**
 
-   Use stable MongoDB chart with helm to deploy MongoDB application in your cluster using the following command. In the following command, it will create PVC with 8Gi size with a storage replication factor 1.
+   Use stable MongoDB chart with helm to install MongoDB deployment in your cluster using the following command. In the following command, it will create a PVC with 8Gi size with a storage replication factor 3.
 
    ```
    helm install --name my-release --set persistence.storageClass=openebs-cstor-disk stable/mongodb
