@@ -72,7 +72,7 @@ As shown above, OpenEBS volumes need to be configured with single replica. This 
    Install PostgreSQL deployment on OpenEBS volume using the following command.
 
    ```
-   helm install --name my-release --set persistence.storageClass=openebs-cstor-sparse  stable/postgresql
+   helm install --name my-release --set persistence.storageClass=openebs-cstor-disk  stable/postgresql
    ```
 
    This will create a PostgreSQL deployment  with 3 replica of cStor volume with a PVC size of 8Gi. More details can be read from [here](https://github.com/helm/charts/tree/master/stable/postgresql).
