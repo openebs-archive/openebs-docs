@@ -107,8 +107,6 @@ NuoDB’s distributed SQL database combines the elastic scale and continuous ava
 
 ## Reference at [openebs.ci](https://openebs.ci/)
 
-A live deployment of Minio using OpenEBS volumes as highly available object storage can be seen at the website [www.openebs.ci](https://openebs.ci/)
-
 Deployment YAML spec files for NuoDB and OpenEBS resources are found [here](https://github.com/openebs/litmus/blob/master/apps/nuodb/deployers/nuodb.yaml)
 
 [OpenEBS-CI dashboard of NuoDB](https://openebs.ci/nuodb-cstor)
