@@ -8,7 +8,7 @@ sidebar_label: Overview
 ##  <font size="6">Introduction</font>
 
 OpenEBS is the leading open-source project for container-attached and
-container-native storage on Kubernetes. OpenEBS adopts a
+container-native storage on Kubernetes. OpenEBS adopts
 Container Attached Storage (CAS) approach, where each workload is
 provided with a dedicated storage controller. OpenEBS
 implements granular storage policies and isolation that enable users
@@ -23,8 +23,8 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 
 - OpenEBS requires iSCSI client to be configured and iSCSI.d service
 running on the host nodes.
-[Verify if iSCSI service is up](/docs/next/prerequisites.html) and
-running before starting the installation
+Verify if [iSCSI service is up](/docs/next/prerequisites.html) and
+running before starting the installation.
 
 - Default installation works for most cases. As a Kubernetes
 cluster-admin, start the default installation using either
@@ -33,7 +33,7 @@ cluster-admin, start the default installation using either
   helm install --namespace openebs --name openebs stable/openebs
   ```
 
-  <font size="4">(OR)</font>
+  <font size="4">(or)</font>
 
   ```
   kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
@@ -42,8 +42,8 @@ cluster-admin, start the default installation using either
   For advanced installation steps, see 
 [Installation](/docs/next/installation.html) section. 
 
-- [Verify OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation)
-and start provisioning the OpenEBS volumes using the Kubernetes PVC
+- [Verify if OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation)
+and start provisioning OpenEBS volumes using the Kubernetes PVC
 interface by using `kubectl` command, for more details on how to
 provision OpenEBS volumes, see
 [provisioning OpenEBS volumes](/docs/next/provisionvols.html)
