@@ -11,23 +11,23 @@ This section is to describe about the graceful deletion/uninstall of your OpenEB
 
 The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
 
-- Delete all the OpenEBS PVCs that were created. You can check the status of PVC using the following command
+- Delete all the OpenEBS PVCs that were created. You can check the status of PVC using the following command. 
 
   ```
-  kubectl get pvc
+  kubectl get pvc -n <namespace>
   ```
 
   There should not have any entries of OpenEBS PVC.
 
-- Delete all the SPCs (In case of cStor storage engine)
+- Delete all the SPCs (In case of cStor storage engine).  You can check the status of SPC using the following command.
 
   ```
-  kubectl get spc -n openebs
+  kubectl get spc 
   ```
 
   There should not have any entries of OpenEBS SPC.
 
-- Ensure that no volume or pool pods are in terminating state . You can check the running status of Pods using the following command.
+- Ensure that no OpenEBS volume or pool pods are in terminating state . You can check the running status of Pods using the following command.
 
   ```
   kubectl get pods -n <openebs namespace>
@@ -39,9 +39,17 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl get cvr -n <openebs namespace>
   ```
 
-- Ensure to delete OpenEBS related `StorageClass`
+- Ensure to delete OpenEBS related `StorageClass`. You can check the status of OpenEBS related StorageClasses using the following command.
 
-- Delete the OpenEBS namespace either via helm purge or `kubectl delete ns openebs`.
+  ```
+  kubectl get sc
+  ```
+
+- Delete the OpenEBS namespace either via helm purge or `kubectl delete ns openebs` or you can delete the corresponding `openebs-operator` YAML using `kubectl delete -f <openebs-operator.yaml>`. You can check the status of OpenEBS namespace using the following command.
+
+  ```
+  kubectl get ns
+  ```
 
 - Uninstalling the OpenEBS doesn't automatically delete the CRDs that were created. If you would like to complete remove the CRDs and the associated objects, run the following commands:
 
@@ -57,7 +65,6 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
   ```
 
-  
 
 
 <br>
