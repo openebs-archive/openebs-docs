@@ -43,7 +43,7 @@ cluster-admin, start the default installation using either
 [Installation](/docs/next/installation.html) section. 
 
 - [Verify if OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation)
-and start provisioning OpenEBS volumes using the Kubernetes PVC
+and start provisioning OpenEBS volumes through Kubernetes PVC
 interface by using `kubectl` command, for more details on how to
 provision OpenEBS volumes, see
 [provisioning OpenEBS volumes](/docs/next/provisionvols.html)
