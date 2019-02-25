@@ -13,10 +13,15 @@ ul#languages-dropdown-items {
     display: block;
     background-color: #ffffff;
 }
+.stateful-applications_row {
+  justify-content: center;
 }
-
+}
 body{
   font-size: 16px;
+}
+.justify-content-center {
+  justify-content: center;
 }
 
 .mainContainer {
@@ -62,7 +67,7 @@ body{
     font-weight: 300;
 }
 
-/* Body */	
+/* Body */
 body {
     color : ##262B3E;
     background: #fff;
@@ -152,7 +157,7 @@ nav.toc .toggleNav ul li.navListItemActive {
     color: #f5f7fa;
 }
 nav.toc .toggleNav ul li a.navItemActive{
-    color: #f5f7fa;    
+    color: #f5f7fa;
 }
 nav.toc .toggleNav .navGroup.navGroupActive h3 {
     background:#f5f7fa;
@@ -187,7 +192,6 @@ nav.onPageNav > ul.toc-headings > li > a {
     margin-right: -15px;
     margin-left: -15px;
 }
-
 .col-md-3 {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 25%;
@@ -264,7 +268,7 @@ table tr th {
 }
 
 /* CSS for search bar */
-input#search_input_react 
+input#search_input_react
 {
     background-color: #7B787D;
     font-weight:400;
@@ -343,14 +347,14 @@ redoc .operation-type {
 
 .column2 {
   -webkit-column-width: 200px; /* Chrome, Safari, Opera */
-  -moz-column-width: 200px; /* Firefox */  
+  -moz-column-width: 200px; /* Firefox */
   column-width: 200px;
   padding-left: 15px;
 }
 
 .emphasize {
   -webkit-column-width: 800px; /* Chrome, Safari, Opera */
-  -moz-column-width: 800px; /* Firefox */  
+  -moz-column-width: 800px; /* Firefox */
   column-width: 800px;
   padding-left: 50px;
   font-size: 18px;
@@ -358,7 +362,7 @@ redoc .operation-type {
 
 .emphasize {
   -webkit-column-width: 800px; /* Chrome, Safari, Opera */
-  -moz-column-width: 800px; /* Firefox */  
+  -moz-column-width: 800px; /* Firefox */
   column-width: 800px;
   padding-left: 50px;
   font-size: 18px;
@@ -369,7 +373,7 @@ redoc .operation-type {
   float: left;
   width: 20%;
   padding: 50px;
-  height: 15px; 
+  height: 15px;
   font-size: 18px;
 }
 
@@ -387,7 +391,7 @@ redoc .operation-type {
 
 .co {
   -webkit-column-width: 700px; /* Chrome, Safari, Opera */
-  -moz-column-width: 700px; /* Firefox */  
+  -moz-column-width: 700px; /* Firefox */
   column-width: 700px;
   padding-left: 50px;
   padding-top: 10px;
