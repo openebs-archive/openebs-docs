@@ -9,14 +9,14 @@ Day2 operations on OpenEBS are broadly categorised as  :
 
 
 
-- <a href="/docs/next/operations.html#openebs-snapshots-and-clones">Taking snapshots/clones</a> 
+- <a href="/docs/next/operations.html#openebs-snapshots-and-clones">Taking Snapshots / Clones</a> 
 - <a href="/docs/next/backup.html">Backup and Restore</a>
-- <a href="#expanding-the-size-of-a-volume">Volume size increase</a>
+- <a href="#expanding-the-size-of-a-volume">Volume Size Increase</a>
 - <a href="#expanding-the-size-of-a-pool-instance">Add disks to existing pool instance</a>
 - <a href="#expanding-the-pool-to-more-nodes">Adding new pool instances to the current pool</a>
 - <a href="/docs/next/configuresc.html#creating-a-new-storageclass">Creating new storage classes</a>
 - <a href="/docs/next/upgrade.html">Upgrading OpenEBS</a>
-- <a href="/docs/next/k8supgrades.html">Upgrading stateful applications or Kubernetes</a>
+- <a href="/docs/next/k8supgrades.html">Upgrading Stateful applications or Kubernetes</a>
 
 
 
@@ -28,9 +28,7 @@ During installation of OpenEBS, a snapshot-controller and a snapshot-provisioner
 
 
 
-For managing snapshots with Jiva, refer to  <a href="/docs/next/jivaguide.html">Jiva user guide</a> 
-
-
+For managing snapshots with Jiva, refer to  <a href="/docs/next/jivaguide.html">Jiva user guide</a>.
 
 <br>
 
@@ -40,7 +38,7 @@ For managing snapshots with Jiva, refer to  <a href="/docs/next/jivaguide.html">
 
 - Copy the following YAML specification into a file called *snapshot.yaml* or download it from  <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/ci/maya/snapshot/cstor/snapshot.yaml" target="_blank">here</a> 
 
-- ```
+  ```
   apiVersion: volumesnapshot.external-storage.k8s.io/v1
   kind: VolumeSnapshot
   metadata:
@@ -50,36 +48,32 @@ For managing snapshots with Jiva, refer to  <a href="/docs/next/jivaguide.html">
     persistentVolumeClaimName: cstor-vol1-claim
   ```
 
-- Edit the YAML file to update  `name`  and  `persistentVolumeClaimName`
+- Edit the YAML file to update  `name` of Snapshot  and  `persistentVolumeClaimName` of the PVC  which you are going to take the snapshot. 
 
-- Run the following command to create snapshot
+- Run the following command to create snapshot.
 
-```
-kubectl apply -f snapshot-openebs-pvc.yaml
-```
+  ```
+  kubectl apply -f snapshot.yaml -n <namespace>
+  ```
 
-This command creates a snapshot of the cStor volume and two new CRDs. To list the snapshots, use the following command
+  This command creates a snapshot of the cStor volume and two new CRDs. To list the snapshots, use the following command
 
-```
-kubectl get volumesnapshot
-kubectl get volumesnapshotdata
-```
+  ```
+  kubectl get volumesnapshot
+  kubectl get volumesnapshotdata
+  ```
 
-*Note*: All cStor snapshots are created in the ` default` namespace. Also make sure that there is no stale entries of snapshot and snapshot data.
+  **Note**: All cStor snapshots are created in the ` default` namespace. Also make sure that there is no stale entries of snapshot and snapshot data.
 
-
-
-
-
-<br><br>
+<br>
 
 ### Cloning  a cStor Snapshot
 
 Once the snapshot is created, restoration from a snapshot or cloning the snapshot is done through a two step process. First create a PVC that refers to the snapshot and then use the PVC to create a new PV. This PVC should refer to a storage class called `openebs-snapshot-promoter`. 
 
-- Copy the following YAML specification into a file called *snapshot_claim.yaml* or download it from  <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/ci/maya/snapshot/cstor/snapshot_claim.yaml" target="_blank">here</a> 
+- Copy the following YAML specification into a file called *snapshot_claim.yaml* or download it from <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/ci/maya/snapshot/cstor/snapshot_claim.yaml" target="_blank">here</a>.
 
-- ```
+  ```
   apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
@@ -95,31 +89,31 @@ Once the snapshot is created, restoration from a snapshot or cloning the snapsho
         storage: 4G
   ```
 
+  
+
 - Edit the YAML file to update 
 
-  - name of the pvc
-  - the annotation `snapshot.alpha.kubernetes.io/snapshot:`
-  - size of the volume being cloned or restored
+  - `name` :- Name of the clone PVC
+  - The annotation `snapshot.alpha.kubernetes.io/snapshot` :- Name of the snapshot
+  - The size of the volume being cloned or restored.
 
-*Note:* Size and namespace should be same as the original volume from which the snapshot was created
+  **Note**: Size and namespace should be same as the original volume from which the snapshot was created.
 
-- Run the following command to create a PVC 
+- Run the following command to create a cloned PVC. 
 
-```
-kubectl apply -f snapshot_claim.yaml
-```
+  ```
+  kubectl apply -f snapshot_claim.yaml -n <namespace>
+  ```
 
-- Get the details of newly created PVC for the snapshot 
+- Get the details of newly created PVC for the snapshot.
 
-```
-kubectl get pvc -n <namespace>
-```
+  ```
+  kubectl get pvc -n <namespace>
+  ```
 
+- Mount the above PVC in an application YAML to browse the data from the clone.
 
-
-- Mount the above PVC in an application YAML to browse the data from the clone
-
-<br><br>
+<br>
 
 ### Deleting a cStor Snapshot
 
@@ -134,7 +128,6 @@ This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` that we
 <br>
 
 <hr>
-
 <br>
 
 
@@ -143,7 +136,7 @@ This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` that we
 
 A pool instance is local to a node. A pool instance can be started with as small as one disk (in `striped` mode) or two disks (in `mirrored`) mode. cStor pool instances support thin provisioning of data, which means that provisioning of any volume size will be successful from a given cstorPool config. 
 
-However, as the actual used capacity of the pool is utilized, more disks need to be added. In 0.8.0, the feature to add more disks to pool instance is not supported. This feature is under active development. See [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
+However, as the actual used capacity of the pool is utilized, more disks need to be added. In 0.8.0, the feature to add more disks to pool instance is not supported. This feature is under active development. See [Roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
 
 <br>
 
@@ -153,7 +146,15 @@ However, as the actual used capacity of the pool is utilized, more disks need to
 
 ## Expanding the pool to more nodes
 
-When a new node is added, you may want to expand the cStor pool config to extend to that node so that a new pool instance is created on the new node. Typical procedure would be to add new disk CRs to `diskList` and `kubectl` apply the `<castor-pool-config.yaml>`.  See [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
+When a new node is added, you may want to expand the cStor pool config to extend to that node so that a new pool instance is created on the new node. From 0.8.1 onwards, new cStor storage pool can be created on newly added Nodes using the existing StoragePoolClaim(SPC) by editing the corresponding SPC YAML. So that new Storage Pools will be created on new Nodes. This feature is available for the cStor storage pool creation using both auto and manual method.
+
+For manual method, you have to edit the existing SPC YAML configuration file by adding the required disks names, which is part of new node, under `diskList` and change the `maxPools` count to the required value.
+
+For auto method, you have to edit the existing SPC YAML configuration by changing the `maxPools` count to the required number.
+
+After the change,cStor pool will be created on the new Nodes. The cStor Storage Pool details can be get using the following command.
+
+    kubectl get csp
 
 <br>
 
@@ -164,9 +165,7 @@ When a new node is added, you may want to expand the cStor pool config to extend
 
 OpenEBS control plane does not support increasing the size of volume seamlessly. Increasing the size of a provisioned volume requires support from Kubernetes' kubelet as the existing connection has to be remounted to reflect the new volume size. This can also be tackled with the new CSI plugin where the responsibility of the mount, unmount and remount actions will be held with the vendor CSI plugin rather than the kubelet itself.
 
-
-
-OpenEBS team is working on both the CSI plugin as well as the feature to resize the provisioned volume when the PVC is patched for new volume size. See [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
+OpenEBS team is working on both the CSI plugin as well as the feature to resize the provisioned volume when the PVC is patched for new volume size. See [Roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
 
 <br>
 
@@ -180,7 +179,7 @@ OpenEBS team is working on both the CSI plugin as well as the feature to resize 
 
 <br>
 
-### [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
+### [cStor Roadmap](/docs/next/cstor.html#cstor-roadmap)
 
 ### [Understand cStorPools](/docs/next/cstor.html#cstor-pools)
 
