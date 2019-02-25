@@ -43,7 +43,7 @@ Once your cluster is connected to MayaOnline, start exploring your OpenEBS resou
 
 <br><br>
 
-## What information is sent from my Kubernetes to MayaOnline ?
+## What information is sent from my Kubernetes to MayaOnline?
 
 
 
