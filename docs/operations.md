@@ -146,15 +146,39 @@ However, as the actual used capacity of the pool is utilized, more disks need to
 
 ## Expanding the pool to more nodes
 
-When a new node is added, you may want to expand the cStor pool config to extend to that node so that a new pool instance is created on the new node. From 0.8.1 onwards, new cStor storage pool can be created on newly added Nodes using the existing StoragePoolClaim(SPC) by editing the corresponding SPC YAML. So that new Storage Pools will be created on new Nodes. This feature is available for the cStor storage pool creation using both auto and manual method.
+The pools can be horizontally scaled when a new node is added to the cluster and new pool will be created on the node once pool configuration is updated. This feature is added in 0.8.1.  The configuration changes is different based on how you have created the cStor pool initially using *by specifying diskList* or *without specifying diskList* in the pool configuration YAML. The operations for expanding the pool to new nodes is given below.
 
-For manual method, you have to edit the existing SPC YAML configuration file by adding the required disks names, which is part of new node, under `diskList` and change the `maxPools` count to the required value.
 
-For auto method, you have to edit the existing SPC YAML configuration by changing the `maxPools` count to the required number.
 
-After the change,cStor pool will be created on the new Nodes. The cStor Storage Pool details can be get using the following command.
+<h3><a class="anchor" aria-hidden="true" id="with-disklist"></a>With specifiying diskList</h3>
 
-    kubectl get csp
+With this approach, you have created cStor Pool initially using the steps provided [here](/docs/next/configurepools.html#manual-mode). With this approach, you have to add the required disks names under the `diskList` and update the `maxPools` count in the pool configuration(SPC) YAML. The expansion of the pool can be done using the following steps.
+
+**Step 1:** Edit the existing pool configuration YAML(SPC) . This can be done using `kubeclt edit spc <pool-config.yaml>`.
+
+**Step 2:** Add the new disks names from the new Nodes under the `diskList` . Disk name can be get from running `kubectl get disks`.
+
+**Step 3:** Update the `maxPools` count to the new value. If existing `maxPools` count is 3 and one new node is added, then `maxPools` will be 4.
+
+**Step 4:** Save the configuration file and this will automatically update the pool configuration YAML and create new cStor pool on the new node.
+
+**Step 5:** Verify the new pool name using the command `kubectl get csp`. It can see that new pool will be created on the new node.
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="without-disklist"></a>Without specifiying diskList</h3>
+
+With this approach, you have created cStor Pool initially using the steps provided [here](/docs/next/configurepools.html#auto-mode). With this approach, you have to update the `maxPools` count in the pool configuration YAML(SPC). The expansion of the pool can be done using the following steps.
+
+**Step 1:** Edit the existing pool configuration YAML(SPC) . This can be done using `kubeclt edit spc <pool-config.yaml`.
+
+**Step 2:** Update the `maxPools` count to the new value. If existing `maxPools` count is 3 and one new node is added, then `maxPools` will be 4.
+
+**Step 3:** Save the configuration file and this will automatically update the pool configuration YAML and create new cStor pool on the new node.
+
+**Step 4:** Verify the new pool name using the command `kubectl get csp`. It can see that new pool will be created on the new node.
+
+
 
 <br>
 
