@@ -146,7 +146,7 @@ However, as the actual used capacity of the pool is utilized, more disks need to
 
 ## Expanding the pool to more nodes
 
-The pools can be horizontally scaled when a new node is added to the cluster and new pool will be created on the node once pool configuration is updated. This feature is added in 0.8.1.  The configuration changes is different based on how you have created the cStor pool initially using *by specifying diskList* or *without specifying diskList* in the pool configuration YAML. The operations for expanding the pool to new nodes is given below.
+The pools can be horizontally scaled when a new node is added to the cluster and new pool will be created on the node once pool configuration is updated. This feature is added in 0.8.1.  The configuration changes is different based on how you have created the cStor pool initially using *by specifying diskList* or *without specifying diskList* in the pool configuration YAML. The operations for expanding the pool to new nodes is given below. Select the appropriate approach that you have followed during the initial cStor pool creation and do the steps one by one to expand the pool on new node.
 
 
 
