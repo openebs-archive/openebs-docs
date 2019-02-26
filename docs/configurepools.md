@@ -86,7 +86,7 @@ metadata:
             memory: 1Gi
       - name: PoolResourceLimits
         value: |-
-            memory: 2Gi
+            memory: 1Gi
 spec:
   name: cstor-pool1
   type: disk
@@ -194,7 +194,7 @@ metadata:
             memory: 1Gi
       - name: PoolResourceLimits
         value: |-
-            memory: 2Gi
+            memory: 1Gi
 spec:
   name: cstor-pool2
   type: disk
@@ -267,6 +267,7 @@ metadata:
             memory: 1Gi
 spec:
   name: cstor-pool-prom1
+  type: disk
 ```
 
 
@@ -286,9 +287,10 @@ metadata:
     cas.openebs.io/config: |
       - name: PoolResourceLimits
         value: |-
-            memory: 2Gi
+            memory: 1Gi
 spec:
   name: cstor-pool-prom1
+  type: disk
 ```
 
 
