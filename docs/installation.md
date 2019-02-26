@@ -85,6 +85,28 @@ Set the existing cluster-admin user context or the newly created context by usin
 
 <br>
 
+<h3><a class="anchor" aria-hidden="true" id="Setup-Helm-RBAC"></a>Setup Helm and RBAC</h3>
+
+**Setup Helm**
+
+You should have [configured helm](https://docs.helm.sh/using_helm/#from-script) on your Kubernetes cluster as a prerequisite.
+
+**Setup RBAC for Tiller before Installing OpenEBS Chart**
+
+```
+kubectl -n kube-system create sa tiller
+kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"spec": {"serviceAccountName": "tiller"}}}}'
+```
+
+Ensure that helm repo in your master node is updated to get the latest OpenEBS repository using the following command
+
+```
+helm repo update
+```
+
+
+
 In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace. 
 
 ```
@@ -99,11 +121,9 @@ As a next step [verify](#verifying-openebs-installation) your installation and d
 
 In the **custom installation mode**, you can achieve the following advanced configurations
 
-- Choose a set of nodes for OpenEBS control plane pods
-- Choose a set of nodes for OpenEBS storage pool
-- You can customise the disk filters that need to be excluded from being used
-
-
+- Choose a set of nodes for OpenEBS control plane pods.
+- Choose a set of nodes for OpenEBS storage pool.
+- You can customise the disk filters that need to be excluded from being used.
 
 Follow the below instructions to do any of the above configurations and then install OpenEBS through helm and values.yaml
 
