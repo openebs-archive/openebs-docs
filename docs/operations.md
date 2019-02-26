@@ -152,7 +152,7 @@ The pools can be horizontally scaled when a new node is added to the cluster and
 
 <h3><a class="anchor" aria-hidden="true" id="with-disklist"></a>With specifiying diskList</h3>
 
-With this approach, you have created cStor Pool initially using the steps provided [here](/docs/next/configurepools.html#manual-mode). With this approach, you have to add the required disks names under the `diskList` and update the `maxPools` count in the pool configuration(SPC) YAML. The expansion of the pool can be done using the following steps.
+With this approach, you have created cStor Pool initially using the steps provided [here](/docs/next/configurepools.html#manual-mode). For expanding pool on new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with the required disks names under the `diskList` and update the `maxPools` count . The expansion of the pool can be done using the following steps.
 
 **Step 1:** Edit the existing pool configuration YAML(SPC) . This can be done using `kubeclt edit spc <pool-config.yaml>`.
 
@@ -168,7 +168,7 @@ With this approach, you have created cStor Pool initially using the steps provid
 
 <h3><a class="anchor" aria-hidden="true" id="without-disklist"></a>Without specifiying diskList</h3>
 
-With this approach, you have created cStor Pool initially using the steps provided [here](/docs/next/configurepools.html#auto-mode). With this approach, you have to update the `maxPools` count in the pool configuration YAML(SPC). The expansion of the pool can be done using the following steps.
+With this approach, you have created cStor Pool initially using the steps provided [here](/docs/next/configurepools.html#auto-mode). For expanding pool on new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with updating the `maxPools` count. The expansion of the pool can be done using the following steps.
 
 **Step 1:** Edit the existing pool configuration YAML(SPC) . This can be done using `kubeclt edit spc <pool-config.yaml`.
 
