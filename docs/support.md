@@ -29,10 +29,6 @@ Community blogs are available at [https://blog.openebs.io](https://blog.openebs.
 
 <br>
 
-## See Also:
-
-<br>
-
 <hr>
 
 <br>
