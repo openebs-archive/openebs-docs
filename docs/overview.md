@@ -8,7 +8,7 @@ sidebar_label: Overview
 ##  <font size="6">Introduction</font>
 
 OpenEBS is the leading open-source project for container-attached and
-container-native storage on Kubernetes. OpenEBS adopts a
+container-native storage on Kubernetes. OpenEBS adopts
 Container Attached Storage (CAS) approach, where each workload is
 provided with a dedicated storage controller. OpenEBS
 implements granular storage policies and isolation that enable users
@@ -23,8 +23,8 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 
 - OpenEBS requires iSCSI client to be configured and iSCSI.d service
 running on the host nodes.
-[Verify if iSCSI service is up](/docs/next/prerequisites.html) and
-running before starting the installation
+Verify if [iSCSI service is up](/docs/next/prerequisites.html) and
+running before starting the installation.
 
 - Default installation works for most cases. As a Kubernetes
 cluster-admin, start the default installation using either
@@ -33,17 +33,17 @@ cluster-admin, start the default installation using either
   helm install --namespace openebs --name openebs stable/openebs
   ```
 
-  <font size="4">(OR)</font>
+  <font size="4">(or)</font>
 
   ```
   kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
   ```
 
-  For advanced installation steps, see 
-[Installation](/docs/next/installation.html) section. 
+  For advanced installation steps, see
+[Installation](/docs/next/installation.html) section.
 
-- [Verify OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation)
-and start provisioning the OpenEBS volumes using the Kubernetes PVC
+- [Verify if OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation)
+and start provisioning OpenEBS volumes through Kubernetes PVC
 interface by using `kubectl` command, for more details on how to
 provision OpenEBS volumes, see
 [provisioning OpenEBS volumes](/docs/next/provisionvols.html)
@@ -55,34 +55,34 @@ provision OpenEBS volumes, see
 <br>
 
 <div class="row">
-  <div class="column2">
+  <div class="">
 	<a href="/docs/next/architecture.html">
 		<img src="/docs/assets/intro-arch.png" alt="OpenEBS Architecture" style="float:left;width:250px;">
 	</a>
   </div>
-  <div class="column2">
+  <div class="">
 	<a href="/docs/next/quickstart.html">
 		<img src="/docs/assets/intro-gs.png" alt="OpenEBS quick start" style="float:left;width:250px;">
 	</a>
   </div>
-  <div class="column2">
+  <div class="">
 	<a href="/docs/next/prerequisites.html">
 		<img src="/docs/assets/intro-platforms.png" alt="OpenEBS platforms" style="float:left;width:250px;">
 	</a>
   </div>
 </div>
 <div class="row">
-  <div class="column2">
+  <div class="">
 	<a href="/docs/next/usecases.html">
 		<img src="/docs/assets/intro-uc.png" alt="OpenEBS use cases" style="float:left;width:250px;">
 	</a>
   </div>
-  <div class="column2">
+  <div class="">
 	<a href="/docs/next/mayaonline.html">
 		<img src="/docs/assets/intro-mo.png" alt="Connecting to MayaOnline" style="float:left;width:250px;">
 	</a>
   </div>
-  <div class="column2">
+  <div class="">
 	<a href="/docs/next/support.html">
 		<img src="/docs/assets/intro-support.png" alt="OpenEBS Support" style="float:left;width:250px;">
 	</a>
@@ -93,72 +93,72 @@ provision OpenEBS volumes, see
 ## <font size="6">Run stateful applications on OpenEBS</font>
 
 <br>
-<div class="row" width=60%>
-    <div class="column2">
+<div class="row stateful-applications_row">
+    <div class="">
 	<a href="/docs/next/prometheus.html" target="_blank">
 		<img src="/docs/assets/a-prometheus.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
-<div class="column2">
+<div class="">
 	<a href="/docs/next/gitlab.html" target="_blank">
 		<img src="/docs/assets/a-gitlab.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
-  <div class="column2">
+  <div class="">
 	<a href="/docs/next/cassandra.html" target="_blank">
 		<img src="/docs/assets/a-cassandra.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
 </div>
 <br>
-<div class="row" width=60%>
-<div class="column2">
+<div class="row stateful-applications_row">
+<div class="">
 	<a href="/docs/next/minio.html" target="_blank">
 		<img src="/docs/assets/a-minio.png" alt="OpenEBS Minio" style="float:left;width:100px;">
 	</a>
   </div>
-<div class="column2">
+<div class="">
 	<a href="/docs/next/redis.html" target="_blank">
 		<img src="/docs/assets/a-redis.png" alt="OpenEBS Redis" style="float:left;width:100px;">
 	</a>
   </div>  
-  <div class="column2">
+  <div class="">
 	<a href="/docs/next/rwm.html" target="_blank">
 		<img src="/docs/assets/a-nfs.png" alt="OpenEBS NFS" style="float:left;width:100px;">
 	</a>
   </div>
 </div>
 <br>
-<div class="row" width=60%>
-<div class="column2">
+<div class="row stateful-applications_row">
+<div class="">
 	<a href="/docs/next/elasticsearch.html" target="_blank">
 		<img src="/docs/assets/a-elastic.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
-<div class="column2">
+<div class="">
 	<a href="/docs/next/mysql.html" target="_blank">
 		<img src="/docs/assets/a-mysql.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>  
-  <div class="column2">
+  <div class="">
 	<a href="/docs/next/postgres.html" target="_blank">
 		<img src="/docs/assets/a-postgres.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
 </div>
 <br>
-<div class="row">
-  <div class="column2">
+<div class="row stateful-applications_row">
+  <div class="">
 	<a href="/docs/next/percona.html" target="_blank">
 		<img src="/docs/assets/a-percona.png" alt="OpenEBS for Percona" style="float:left;width:100px;">
 	</a>
   </div>
-  <div class="column2">
+  <div class="">
 	<a href="/docs/next/nuodb.html" target="_blank">
 		<img src="/docs/assets/a-nuodb.png" alt="OpenEBS for NuoDB" style="float:left;width:100px;">
 	</a>
   </div>
- <div class="column2">
+ <div class="">
 	<a href="/docs/next/mongo.html" target="_blank">
 		<img src="/docs/assets/svg/a-mongo.svg" alt="OpenEBS for MongoDB" style="float:left;width:100px;">
 	</a>

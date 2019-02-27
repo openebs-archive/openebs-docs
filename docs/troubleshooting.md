@@ -232,7 +232,7 @@ CRD=`kubectl get crd | grep cstorvolumereplica | cut -d" " -f1` && kubectl patch
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="jiva-deletion-scrub-job"></a>Whenever a Jiva PVC is deleted, a job will created and status is seeing and 'completed'</h3>
+<h3><a class="anchor" aria-hidden="true" id="jiva-deletion-scrub-job"></a>Whenever a Jiva PVC is deleted, a job will created and status is seeing as `completed`</h3>
 
 As part of deleting the Jiva Volumes, OpenEBS launches scrub jobs for clearing the data from the nodes. The completed jobs need to be cleared using the following command.
 

@@ -86,7 +86,7 @@ metadata:
             memory: 1Gi
       - name: PoolResourceLimits
         value: |-
-            memory: 2Gi
+            memory: 1Gi
 spec:
   name: cstor-pool1
   type: disk
@@ -151,8 +151,6 @@ In the above file, change the parameters as required
 
 After the pool YAML spec is created, run the following command to create the pool instances on nodes.
 
-
-
 ```
 kubectl apply -f cstor-pool1-config.yaml
 ```
@@ -161,7 +159,7 @@ If the pool creation is successful, you will the example result as shown below.
 
 <div class="co">storagepoolclaim.openebs.io "cstor-pool1" created</div>
 
-
+**Note:** You can horizontally scale up the cStor pool on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `diskList` and update the `maxPools` count. More details can be see [here](/docs/next/operations.html#with-disklist).
 
 <br>
 
@@ -196,7 +194,7 @@ metadata:
             memory: 1Gi
       - name: PoolResourceLimits
         value: |-
-            memory: 2Gi
+            memory: 1Gi
 spec:
   name: cstor-pool2
   type: disk
@@ -240,6 +238,8 @@ If the pool creation is successful, you will the example result as shown below.
 
 <div class="co">storagepoolclaim.openebs.io "cstor-pool2" created</div>
 
+**Note:** You can horizontally scale up the cStor pool on new OpenEBS Node by editing the corresponding pool configuration YAML with updating the `maxPools` count. More details can be see [here](/docs/next/operations.html#without-disklist).
+
 <br>
 
 <hr>
@@ -267,6 +267,7 @@ metadata:
             memory: 1Gi
 spec:
   name: cstor-pool-prom1
+  type: disk
 ```
 
 
@@ -286,9 +287,10 @@ metadata:
     cas.openebs.io/config: |
       - name: PoolResourceLimits
         value: |-
-            memory: 2Gi
+            memory: 1Gi
 spec:
   name: cstor-pool-prom1
+  type: disk
 ```
 
 

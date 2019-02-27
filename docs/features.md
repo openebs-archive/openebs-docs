@@ -6,7 +6,7 @@ sidebar_label: Features and Benefits
 
 ------
 
-<font size="6">OpenEBS features</font>
+<font size="6">OpenEBS Features</font>
 
 - [Containerized Storage for Containers](/docs/next/features.html#containerized-storage-for-containers)
 - [Synchronous replication](/docs/next/features.html#synchronous-replication)
@@ -16,7 +16,7 @@ sidebar_label: Features and Benefits
 
 
 
-<font size="6">OpenEBS benefits</font>
+<font size="6">OpenEBS Benefits</font>
 
 - [Granular policies per stateful workload](/docs/next/features.html#granular-policies-per-stateful-workload)
 
@@ -36,7 +36,7 @@ For more information on how OpenEBS is used in cloud native environments,  visit
 
 <br>
 
-## OpenEBS features
+## OpenEBS Features
 
 <br>
 
@@ -50,7 +50,7 @@ OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always
 
 <br>
 
-### Synchronous replication
+### Synchronous Replication
 
 <img src="/docs/assets/svg/f-replication.svg" alt="Smiley face" style="width:200px;">
 OpenEBS synchronously replicates the data volume replicas for high availability. The replication happens across Kubernetes zone resulting in the cloud native applications to be highly available in cross AZ setups. This feature is especially becomes useful to build highly available stateful applications using local disks on cloud providers services such as GKE, EKS and AKS 
@@ -61,7 +61,7 @@ OpenEBS synchronously replicates the data volume replicas for high availability.
 
 <br>
 
-### Snapshots and clones
+### Snapshots and Clones
 
 <img src="/docs/assets/svg/f-snapshots.svg" alt="Smiley face" style="width:200px;">
 
@@ -81,7 +81,7 @@ Backup and restore of OpenEBS volumes work with the recent Kubernetes backup and
 
 <br>
 
-### Prometheus metrics for workload tuning
+### Prometheus Metrics for Workload Tuning
 
 <img src="/docs/assets/svg/f-prometheus.svg" alt="Smiley face" style="width:200px;">
 
@@ -98,11 +98,11 @@ OpenEBS volumes are instrumented for granular data metrics such as volume IOPS, 
 
 
 
-## OpenEBS benefits
+## OpenEBS Benefits
 
 
 
-### Truely cloud native storage for Kubernetes
+### Truely Cloud Native Storage for Kubernetes
 
 <img src="/docs/assets/svg/b-cn.svg" alt="Smiley face" style="width:200px;"> 
 With CAS architecture and being completely in user space, OpenEBS is a truly cloud native storage for stateful applications on Kubernetes. This greatly simplifies how persistent storage is used and managed by developers and DevOps architects. They use the standard Kubernetes skills and utilities to configure, use and manage the persistent storage needs.
@@ -116,7 +116,7 @@ With CAS architecture and being completely in user space, OpenEBS is a truly clo
 
 <img src="/docs/assets/svg/b-no-lockin.svg" alt="Smiley face" style="width:200px;">
 
-Even with Kubernetes data gravity concerns exist on clouds. With Kubernetes stateful applications can can be moved across clouds, but with stateful applications, the data is written to cloud provider storage infrastructure and results in the cloud lock-in of the stateful applications. The OpenEBS, the data is written to the OpenEBS layer and it acts as the data abstraction layer. Using this data abstraction layer, data can be moved across Kubernetes layers eliminating the expensive cloud lock-in issue. 
+Even with Kubernetes, data gravity concerns exist on clouds. With Kubernetes Stateful applications can be moved across clouds. But with Stateful applications, the data is written to cloud provider storage infrastructure and results in the cloud lock-in of the Stateful applications. The OpenEBS, the data is written to the OpenEBS layer and it acts as the data abstraction layer. Using this data abstraction layer, data can be moved across Kubernetes layers eliminating the expensive cloud lock-in issue. 
 
 <hr>
 
@@ -124,7 +124,7 @@ Even with Kubernetes data gravity concerns exist on clouds. With Kubernetes stat
 
 
 
-### Granular policies per stateful workload
+### Granular Policies Per Stateful Workload
 
 <img src="/docs/assets/svg/b-granular.svg" alt="Smiley face" style="width:200px;">
 
@@ -137,7 +137,7 @@ Containerization of storage software and dedicating such controller for each vol
 
 
 
-### Reduced storage TCO upto 50% 
+### Reduced Storage TCO upto 50% 
 
  <img src="/docs/assets/svg/b-lowtco.svg" alt="Smiley face" style="width:200px;">
 
@@ -157,17 +157,17 @@ Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by u
 <br>
 
 
-### High availability 
+### High Availability 
 
 <img src="/docs/assets/svg/b-ha.svg" alt="High Availability" style="width:200px;"> 
 
-There is no blast radius effect. CAS architecture does not have the typical blast radius issue that is typically observed in the traditional storage systems. Metadata of the volume is not centralized and is kept local to the volume. Losing any node results in the loss of volume replicas present only on that node. As the volume data is synchronous replicated at least on to two other nodes, in the event of a node failure, 	the data continues to be available at the same performance levels.
+There is no blast radius effect. CAS architecture does not have the typical blast radius issue that is typically observed in the traditional storage systems. Metadata of the volume is not centralized and is kept local to the volume. Losing any node results in the loss of volume replicas present only on that node. As the volume data is synchronous replicated at least on to two other nodes, in the event of a node failure, the data continues to be available at the same performance levels.
 
 <hr>
 
 <br>
 
-### Free cross cloud visibility of stateful applications
+### Free Cross Cloud Visibility of Stateful Applications
 
 <img src="/docs/assets/svg/b-crosscloud.svg" alt="MayaOnline" style="width:200px;">
 

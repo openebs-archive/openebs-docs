@@ -66,7 +66,7 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
    Create a file called `percona-openebs-deployment.yaml` and add content from `percona-openebs-deployment.yaml` given in the configuration details section. Run `kubectl apply -f percona-openebs-deployment.yaml` to deploy Percona application. For more information, see Percona documentation. In other way,  you can use stable Percona image with helm to deploy Percona in your cluster using the following command.
 
    ```
-    helm install --name my-release --storage-class=openebs-cstor-disk stable/percona 
+   helm install --name my-release --set persistence.enabled=true,persistence.storageClass=openebs-cstor-disk stable/percona
    ```
 
 <br>

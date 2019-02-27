@@ -35,13 +35,9 @@ sidebar_label: Configuring StorageClasses
 
 During the installation, OpenEBS creates a StorageClass called `openebs-cstor-sparse` . You can use this StorageClass for creating a PVC (  `kind: PersistentVolumeClaim` for applications of `kind: Deployment`) or for creating a VolumeClaimTemplate (`volumeClaimTemplates:` for applications of `kind: StatefulSet`)
 
-Note that this StorageClass has cStor volumes `replicaCount` set as `3`. Sometimes it may not be necessary to have three storage replicas for each statefulset application replica. In such cases, you can create a new StorageClass that uses the existing sparse pool `cstor-sparse-pool` but with cStor volume's replicaCount=1 using the following command
+Note that this StorageClass has cStor volumes `replicaCount` set as `3`. Sometimes it may not be necessary to have three storage replicas for each statefulset application replica. In such cases, you can create a new StorageClass that uses the existing sparse pool `cstor-sparse-pool` but with cStor volume's replicaCount=1. This can be done by creating a new StorageClass YAML with mentioning single replica. You can create a new StorageClass YAML called  **openebs-sparse-sc-statefulset.yaml** and add content to it from below. 
 
-
-
-<div class="co">
-
-cat <<EOF | kubectl create -f -
+```
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -52,13 +48,10 @@ metadata:
       - name: StoragePoolClaim
         value: "cstor-sparse-pool"
       - name: ReplicaCount
-        value: "1"       
+        value: "1"
 provisioner: openebs.io/provisioner-iscsi
 reclaimPolicy: Delete
-EOF
-</div>
-
-
+```
 
 The above command creates storage class called `openebs-sparse-sc-statefulset` which you can use under volumeClaimTemplates. 
 

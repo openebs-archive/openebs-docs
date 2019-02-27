@@ -85,6 +85,10 @@ Set the existing cluster-admin user context or the newly created context by usin
 
 <br>
 
+Verify helm is installed and helm repo is updated. See <a href="https://docs.helm.sh/using_helm/#from-script" target="_blank">helm docs</a>  for setting up helm and  simple [instructions below](#helm-rbac) for setting up RBAC for tiller.
+
+
+
 In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace. 
 
 ```
@@ -99,11 +103,9 @@ As a next step [verify](#verifying-openebs-installation) your installation and d
 
 In the **custom installation mode**, you can achieve the following advanced configurations
 
-- Choose a set of nodes for OpenEBS control plane pods
-- Choose a set of nodes for OpenEBS storage pool
-- You can customise the disk filters that need to be excluded from being used
-
-
+- Choose a set of nodes for OpenEBS control plane pods.
+- Choose a set of nodes for OpenEBS storage pool.
+- You can customise the disk filters that need to be excluded from being used.
 
 Follow the below instructions to do any of the above configurations and then install OpenEBS through helm and values.yaml
 
@@ -398,6 +400,20 @@ To monitor the OpenEBS volumes and obtain corresponding logs, connect to the fre
 
 <br>
 
+<h4><a class="anchor" aria-hidden="true" id="helm-rbac"></a>Setup RBAC for Tiller before Installing OpenEBS Chart </h4>
+
+```
+kubectl -n kube-system create sa tiller
+kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"spec": {"serviceAccountName": "tiller"}}}}'
+```
+
+Ensure that helm repo in your master node is updated to get the latest OpenEBS repository using the following command
+
+```
+helm repo update
+```
+
 
 
 <h4><a class="anchor" aria-hidden="true" id="example-nodeselector-helm"></a>For nodeSelectors in values.yaml (helm) </h4>
@@ -436,7 +452,7 @@ In the `values.yaml`, find` ndm` section to update `excludeVendors:` and `exclud
 ```
 ndm:
   image: "quay.io/openebs/node-disk-manager-amd64"
-  imageTag: "v0.3.0"
+  imageTag: "v0.3.1"
   sparse:
     enabled: "true"
     path: "/var/openebs/sparse"
@@ -476,7 +492,7 @@ Download the values.yaml from  [here](https://github.com/helm/charts/blob/master
 | `snapshotOperator.controller.imageTag`  | Docker Image Tag for Snapshot Controller     | `0.8.1`                                   |
 | `snapshotOperator.replicas`             | Number of Snapshot Operator Replicas         | `1`                                       |
 | `ndm.image`                             | Docker Image for Node Disk Manager           | `openebs/openebs/node-disk-manager-amd64` |
-| `ndm.imageTag`                          | Docker Image Tag for Node Disk Manager       | `v0.3.0`                                  |
+| `ndm.imageTag`                          | Docker Image Tag for Node Disk Manager       | `v0.3.1`                                  |
 | `ndm.sparse.enabled`                    | Create Sparse files and cStor Sparse Pool    | `true`                                    |
 | `ndm.sparse.path`                       | Directory where Sparse files are created     | `/var/openebs/sparse`                     |
 | `ndm.sparse.size`                       | Size of the sparse file in bytes             | `10737418240`                             |
