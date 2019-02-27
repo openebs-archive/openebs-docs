@@ -85,25 +85,7 @@ Set the existing cluster-admin user context or the newly created context by usin
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="Setup-Helm-RBAC"></a>Setup Helm and RBAC</h3>
-
-**Setup Helm**
-
-You should have [configured helm](https://docs.helm.sh/using_helm/#from-script) on your Kubernetes cluster as a prerequisite.
-
-**Setup RBAC for Tiller before Installing OpenEBS Chart**
-
-```
-kubectl -n kube-system create sa tiller
-kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
-kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"spec": {"serviceAccountName": "tiller"}}}}'
-```
-
-Ensure that helm repo in your master node is updated to get the latest OpenEBS repository using the following command
-
-```
-helm repo update
-```
+Verify helm is installed and helm repo is updated. See <a href="https://docs.helm.sh/using_helm/#from-script" target="_blank">helm docs</a>  for setting up helm and  simple [instructions below](#helm-rbac) for setting up RBAC for tiller.
 
 
 
@@ -417,6 +399,20 @@ To monitor the OpenEBS volumes and obtain corresponding logs, connect to the fre
 ## Example configurations - helm
 
 <br>
+
+<h4><a class="anchor" aria-hidden="true" id="helm-rbac"></a>Setup RBAC for Tiller before Installing OpenEBS Chart </h4>
+
+```
+kubectl -n kube-system create sa tiller
+kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"spec": {"serviceAccountName": "tiller"}}}}'
+```
+
+Ensure that helm repo in your master node is updated to get the latest OpenEBS repository using the following command
+
+```
+helm repo update
+```
 
 
 
