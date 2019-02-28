@@ -445,7 +445,7 @@ modprobe iscsi_tcp
 ```
 
 You can verify the same from the command below. Now the output should
-be similar to the sample output mentioned above
+be similar to the sample output mentioned above.
 
 ```
 lsmod | grep iscsi
@@ -454,7 +454,7 @@ lsmod | grep iscsi
 **Persist iscsi_tcp module to load after reboot**
 
 You can also make the kernel to load `iscsi_tcp` automatically every
-time the node reboots by appending the line `iscsi_tcp` in `/etc/ modules`.
+time the node reboots by appending the line `iscsi_tcp`  in `/etc/modules`.
 
 <h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
 
