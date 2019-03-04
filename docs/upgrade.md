@@ -48,7 +48,12 @@ All steps described in this document must be performed on the Kubernetes master 
 
    **Note:** The upgrade  procedure uses the node labels to pin the Jiva replicas to the nodes where they are present. On node restart, these labels will disappear and can cause the replica to be un-scheduled.
 
-2. <h3><a class="anchor" aria-hidden="true" id="upgrade-operator"></a>Upgrade OpenEBS operator</h3>
+2. <h3><a class="anchor" aria-hidden="true" id="checking-openebs-labels"></a>Checking the  openebs labels</h3>
+
+   - Run `./pre-check.sh` to get all the openebs volume resources not having `openebs.io/version` tag.
+   - Run `./labeltagger.sh 0.8.0` to add `openebs.io/version` label to all the openebs volume resources.
+
+3. <h3><a class="anchor" aria-hidden="true" id="upgrade-operator"></a>Upgrade OpenEBS operator</h3>
 
    <h4><a class="anchor" aria-hidden="true" id="upgrade-operator-crds-deployment"></a>Upgrading OpenEBS Operator CRDs and Deployments</h4>
 
@@ -110,7 +115,7 @@ All steps described in this document must be performed on the Kubernetes master 
 
       openebs-charts PR [#2400](https://github.com/openebs/openebs/pull/2400) as reference.
 
-3. <h3><a class="anchor" aria-hidden="true" id="upgrade-volume"></a>Upgrade volumes one by one</h3>
+4. <h3><a class="anchor" aria-hidden="true" id="upgrade-volume"></a>Upgrade volumes one by one</h3>
 
    Even after the OpenEBS Operator has been upgraded to 0.8.1, the cStor Storage Pools and volumes (both Jiva and cStor) will continue to work with older versions. Use the following steps in the same order to upgrade cStor Pools and volumes.
 
