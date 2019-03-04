@@ -375,6 +375,7 @@ System.
 
 1. On Ubuntu/Debian
 2. On RHEL
+3. On Rancher OS
 
 OpenEBS target will use the iSCSI services inside the kubelet. It is
 recommended to remove iSCSI from the node if it presents on the node.
@@ -407,14 +408,6 @@ installed on the node.
 
 ```
 iscsiadm version 2.0–873
-```
-
-If output is similar to above, then you can remove the iSCSI from the
-node using the following command.
-
-```
-service iscsid stop
-sudo apt remove open-iscsi
 ```
 
 **Load iscsi_tcp module:**
@@ -455,6 +448,21 @@ lsmod | grep iscsi
 
 You can also make the kernel to load `iscsi_tcp` automatically every
 time the node reboots by appending the line `iscsi_tcp`  in `/etc/modules`.
+
+**Modify Kubelet container spec for binding iSCSI in Kubelet**
+
+Ensure that Kubelet is running with below config. 
+
+```
+kubelet: 
+   extra_binds: 
+     - "/etc/iscsi:/etc/iscsi"
+     - "/sbin/iscsiadm:/sbin/iscsiadm"
+     - "/var/lib/iscsi:/var/lib/iscsi"
+     - "/lib/modules"
+```
+
+
 
 <h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
 
@@ -524,6 +532,71 @@ kubelet:
     - "/var/lib/iscsi:/var/lib/iscsi"
     - "/lib/modules"
 ```
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="RancherOS"></a>On Rancher OS</h3>
+
+**Verify iSCSI services are configured**
+
+If an iSCSI initiator is already installed on your node, check that the
+initiator name is configured and iSCSI service is running using the
+following commands.
+
+```
+sudo ros s list | grep iscsi
+```
+
+If the output of the above command is similar to the following, then iSCSI service is enabled on the host.
+
+```
+enabled opene-iscsi
+```
+
+If the output of the above command is similar to the following, the iSCSI service is disabled on the host.
+
+```
+disabled open-iscsi
+```
+
+Also check the status of `iscsi_tcp` module using the following command.
+
+```
+lsmod | grep iscsi
+```
+
+The output of the above will be nothing if the `iscsi_tcp` is not loaded.
+
+**Enable the iSCSI module**
+
+If iSCSI service is disabled on the Node, You may have to enable the service using the following commands.
+
+```
+sudo ros s enable open-iscsi
+```
+
+Once the iSCSI service is loaded on the Node, then iSCSI service can be start using the following command.
+
+```
+sudo ros s up open-iscsi
+```
+
+Now check the status of `iscsi_tcp` module using the following command.
+
+```
+lsmod | grep iscsi
+```
+
+It will show following similar entries if `iscsi_tcp` module is loaded. These modules are must for mounting OpenEBS volume on application.
+
+```
+iscsi_tcp 20480 0
+libiscsi_tcp 24576 1 iscsi_tcp
+libiscsi 53248 2 libiscsi_tcp,iscsi_tcp
+scsi_transport_iscsi 98304 2 libiscsi,iscsi_tcp
+```
+
+
 
 <h3><a class="anchor" aria-hidden="true" id="icp"></a>IBM Cloud
 Private (ICP)</h3>
