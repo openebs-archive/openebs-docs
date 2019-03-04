@@ -53,7 +53,7 @@ All steps described in this document must be performed on the Kubernetes master 
    - Run `./pre-check.sh` to get all the openebs volume resources not having `openebs.io/version` tag.
    - Run `./labeltagger.sh 0.8.0` to add `openebs.io/version` label to all the openebs volume resources.
 
-   **Please make sure that all pods are back to running state before proceeding to Step 3**.
+   **Note:** Please make sure that all pods are back to running state before proceeding to Step 3.
 
 3. <h3><a class="anchor" aria-hidden="true" id="upgrade-operator"></a>Upgrade OpenEBS operator</h3>
 
@@ -126,7 +126,7 @@ All steps described in this document must be performed on the Kubernetes master 
    **Limitations:**
 
    1. This is a preliminary script only intended for using on volumes where data has been backed-up.
-   2. Have the following link handy in case the volume gets into read-only during upgrade https://docs.openebs.io/docs/next/readonlyvolumes.html
+   2. Have the following link handy in case the volume gets into read-only during upgrade https://docs.openebs.io/docs/next/troubleshooting.html#recovery-readonly-when-kubelet-is-container
    3. Automatic rollback option is not provided. To rollback, you need to update the controller, exporter and replica pod images to the previous version.
 
    In the process of running the below steps, if you run into issues, you can always reach us on [slack](https://slack.openebs.io).
