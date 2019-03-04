@@ -53,6 +53,8 @@ All steps described in this document must be performed on the Kubernetes master 
    - Run `./pre-check.sh` to get all the openebs volume resources not having `openebs.io/version` tag.
    - Run `./labeltagger.sh 0.8.0` to add `openebs.io/version` label to all the openebs volume resources.
 
+   **Please make sure that all pods are back to running state before proceeding to Step 3**.
+
 3. <h3><a class="anchor" aria-hidden="true" id="upgrade-operator"></a>Upgrade OpenEBS operator</h3>
 
    <h4><a class="anchor" aria-hidden="true" id="upgrade-operator-crds-deployment"></a>Upgrading OpenEBS Operator CRDs and Deployments</h4>
