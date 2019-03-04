@@ -406,6 +406,7 @@ To monitor the OpenEBS volumes and obtain corresponding logs, connect to the fre
 kubectl -n kube-system create sa tiller
 kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
 kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"spec": {"serviceAccountName": "tiller"}}}}'
+kubectl -n kube-system patch deployment tiller-deploy -p '{"spec": {"template": {"spec": {"automountServiceAccountToken": true}}}}'
 ```
 
 Ensure that helm repo in your master node is updated to get the latest OpenEBS repository using the following command
