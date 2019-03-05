@@ -377,8 +377,7 @@ System.
 2. On RHEL
 3. On Rancher OS
 
-OpenEBS target will use the iSCSI services inside the kubelet. It is
-recommended to remove iSCSI from the node if it presents on the node.
+OpenEBS target will use the iSCSI services inside the kubelet. 
 
 <h4><a class="anchor" aria-hidden="true" id="On-Ubuntu"></a>On Ubuntu</h4>
 
@@ -412,9 +411,7 @@ iscsiadm version 2.0–873
 
 **Load iscsi_tcp module:**
 
-The above step may remove the `iscsi_tcp` probe and hence after a
-reboot, then the node will not start the `iscsi_tcp` service and
-OpenEBS volume mount will fail. Check the same from the command below.
+It is recommended to load `iscsi_tcp` module to ensure the smooth volume mounting inside the Node. Check the status of the same from the command below.
 
 ```
 lsmod | grep iscsi
@@ -444,14 +441,9 @@ be similar to the sample output mentioned above.
 lsmod | grep iscsi
 ```
 
-**Persist iscsi_tcp module to load after reboot**
-
-You can also make the kernel to load `iscsi_tcp` automatically every
-time the node reboots by appending the line `iscsi_tcp`  in `/etc/modules`.
-
 **Modify Kubelet container spec for binding iSCSI in Kubelet**
 
-Ensure that Kubelet is running with below config. 
+Ensure that Kubelet is running with below config. This changes has to be done at the cluster.yaml.
 
 ```
 kubelet: 
@@ -569,7 +561,7 @@ The output of the above will be nothing if the `iscsi_tcp` is not loaded.
 
 **Enable the iSCSI module**
 
-If iSCSI service is disabled on the Node, You may have to enable the service using the following commands.
+If iSCSI service is disabled on the Node, You should enable the service using the following commands.
 
 ```
 sudo ros s enable open-iscsi
