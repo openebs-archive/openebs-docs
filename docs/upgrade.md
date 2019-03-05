@@ -90,10 +90,10 @@ All steps described in this document must be performed on the Kubernetes master 
 
   - Run `helm repo update` to update local cache with latest package.
 
-  - Run `helm ls` to get the OpenEBS `release-name`. Use the `release-nam` in the following upgrade command.
+  - Run `helm ls` to get the OpenEBS `release-name`. Use the `release-name` in the following upgrade command.
 
-  - Upgrade using `helm upgrade -f https://openebs.github.io/charts/openebs-operator-0.8.0.yaml <release-name> stable/openebs`.
-
+  - Upgrade using `helm upgrade --version 0.8.1 <release-name> stable/openebs`. In this command, `0.8.1` is the helm chart version that       corresponds to OpenEBS 0.8.0 version. More details of OpenEBS helm chart version `0.8.1` can be found [here](https://hub.kubeapps.com/charts/stable/openebs/0.8.1).
+   
     
 
   **Using Customized Operator YAML or Helm Chart.**
