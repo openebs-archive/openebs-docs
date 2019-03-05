@@ -592,8 +592,6 @@ scsi_transport_iscsi 98304 2 libiscsi,iscsi_tcp
 
 <h3><a class="anchor" aria-hidden="true" id="icp"></a>IBM Cloud
 Private (ICP)</h3>
-
-
 OpenEBS can be installed using ICP on the following Operating
 Systems. Latest tested ICP versions are 2.1.0.3 and 3.1.1.
 
