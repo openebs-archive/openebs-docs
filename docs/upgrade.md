@@ -99,14 +99,14 @@ All steps described in this document must be performed on the Kubernetes master 
    **Install/Upgrade using stable helm chart**
    The following procedure will work if you have installed OpenEBS with default values provided by stable helm chart.
 
-   1. Run helm repo update to update local cache with latest package.
+   1. Run `helm repo update` to update local cache with latest package.
 
-   2. Run helm ls to get the OpenEBS release-name. Use the release-nam in the following upgrade command.
+   2. Run `helm ls` to get the OpenEBS release-name. Use the release-name in the following upgrade command.
 
-   3. Upgrade using the following command.
+   3. Upgrade using the following command. In the following command,`openebs` is the release name. This name has to be changed as per the release name that is given during the initial deployment.
 
       ```
-      helm upgrade -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml <release-name> stable/openebs.
+      helm upgrade openebs stable/openebs
       ```
 
    **Using Customized Operator YAML or Helm Chart**
