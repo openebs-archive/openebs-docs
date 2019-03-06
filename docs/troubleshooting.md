@@ -45,7 +45,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 
 
-## Un-Install
+## Uninstall
 
 [cStor Volume Replicas are not getting deleted properly](#cvr-deletion-unsuccessful)
 
@@ -97,9 +97,9 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 <font size="6" color="blue">Installation</font>
 
-<h3><a class="anchor" aria-hidden="true" id="install-failed-user-rights"></a>Installation failed because insufficient user rights</h3>
+<h3><a class="anchor" aria-hidden="true" id="install-failed-user-rights"></a>Installation failed because of insufficient user rights</h3>
 
-During OpenEBS installation, it can failed in some cloud platform with showing following errors.
+OpenEBS installation can fail in some cloud platform with the following errors.
 
 ```
 namespace "openebs" created
@@ -116,15 +116,15 @@ Error from server (Forbidden): error when creating "https://raw.githubuserconten
 
 **Troubleshooting**
 
-You must enable RBAC before OpenEBS installation.  This can be done in the following way from the kubernetes master console.
+You must enable RBAC before OpenEBS installation. This can be done from the kubernetes master console by executing the following command.
 
 ```
-kubectl create clusterrolebinding  <cluster_name>-admin-binding --clusterrole=cluster-admin --user=<user-reigistered-email-with-the-provider>
+kubectl create clusterrolebinding  <cluster_name>-admin-binding --clusterrole=cluster-admin --user=<user-registered-email-with-the-provider>
 ```
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-iscsi-not-configured"></a>iSCSI client is not setup on Nodes. Pod is in ContainerCreating state.</h3>
 
-After OpenEBS installation, you may proceed with application installation which will provisioning on OpenEBS volume. This may fail due to the following errors showing while describe the application pod.
+After OpenEBS installation, you may proceed with application deployment which will provision OpenEBS volume. This may fail due to the following error. This can be found by describing the application pod.
 
 ```
 MountVolume.WaitForAttach failed for volume “pvc-ea5b871b-32d3-11e9-9bf5-0a8e969eb15a” : open /sys/class/iscsi_host: no such file or directory -
@@ -132,7 +132,7 @@ MountVolume.WaitForAttach failed for volume “pvc-ea5b871b-32d3-11e9-9bf5-0a8e9
 
 **Troubleshooting**
 
-This logs points that iscsid.service may not be enabled and running on you Nodes. Service you need  to check is `iscsid.service`. If the service is still not running you might have to `enable` and `start` the service. You can refer [prerequisites](/docs/next/prerequisites.html) section and choose your platform and get the steps to enable it.
+This logs points that iscsid.service may not be enabled and running on your Nodes. You need to check if the service `iscsid.service` is running. If it is not running, you have to `enable` and `start` the service. You can refer [prerequisites](/docs/next/prerequisites.html) section and choose your platform to get the steps for enabling it.
 
 <h3><a class="anchor" aria-hidden="true" id="openebs-provsioner-restart-continuously"></a>Why does OpenEBS provisioner pod restart continuously?</h3>
 
@@ -160,7 +160,7 @@ openebs       openebs-snapshot-operator-5b5f97dd7f-np79k   0/2       CrashLoopBa
 
 **Troubleshooting**
 
-Perform the following steps to verify if the issue is due to a misconfiguration while installing the network component.
+Perform the following steps to verify if the issue is due to misconfiguration while installing the network component.
 
 1. Check if your network related pods are running fine.
 2. Check if OpenEBS provisioner HTTPS requests are reaching the apiserver
@@ -169,7 +169,7 @@ Perform the following steps to verify if the issue is due to a misconfiguration 
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-azure-no-rbac-set"></a>OpenEBS installation fails on Azure</h3>
 
-On AKS, while installing OpenEBS using Helm,  you may seen the following error.
+On AKS, while installing OpenEBS using Helm,  you may see the following error.
 
 ```
 $ helm installstable/openebs --name openebs --namespace openebs
@@ -209,7 +209,7 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 <h3><a class="anchor" aria-hidden="true" id="cvr-deletion-unsuccessful"></a>cStor Volume Replicas are not getting deleted properly.</h3>
 
-Sometimes, there are chances that cStor volumes will not get deleted. Below workaround will resolve this issue. Perform the following command.
+Sometimes, there are chances that cStor volumes may not get deleted. Below workaround will resolve this issue. Perform the following command.
 
 ```
 kubectl edit cvr -n openebs
@@ -222,7 +222,7 @@ finalizers:
 - cstorvolumereplica.openebs.io/finalizer
 ```
 
-This will automatically remove the pending CVR entries and delete the cStor volume completely.
+This will automatically remove the pending CVR and delete the cStor volume completely.
 
 If there are multiple CVR entries need to be deleted,this can be done by using the following command.
 
@@ -232,9 +232,9 @@ CRD=`kubectl get crd | grep cstorvolumereplica | cut -d" " -f1` && kubectl patch
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="jiva-deletion-scrub-job"></a>Whenever a Jiva PVC is deleted, a job will created and status is seeing as `completed`</h3>
+<h3><a class="anchor" aria-hidden="true" id="jiva-deletion-scrub-job"></a>Whenever a Jiva based PVC is deleted, a new job gets created.</h3>
 
-As part of deleting the Jiva Volumes, OpenEBS launches scrub jobs for clearing the data from the nodes. The completed jobs need to be cleared using the following command.
+As part of deleting the Jiva Volumes, OpenEBS launches scrub jobs for clearing data from the nodes. The completed jobs can be cleared using following command.
 
 ```
 kubectl delete jobs -l openebs.io/cas-type=jiva -n <namespace>
@@ -253,7 +253,7 @@ kubectl delete jobs -l openebs.io/cas-type=jiva -n <namespace>
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="application-read-only"></a> Appliation complaining ReadOnly filesystem</h3>
+<h3><a class="anchor" aria-hidden="true" id="application-read-only"></a> Application complaining ReadOnly filesystem</h3>
 
 Application sometimes complain about the underlying filesystem has become ReadOnly.
 
