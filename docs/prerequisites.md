@@ -66,7 +66,11 @@ step to verify the iSCSI services and make sure that it is running on
 all the worker nodes. OpenEBS uses the iSCSI protocol to connect to the
 block volumes. 
 
+<br>
+
 <h3><a class="anchor" aria-hidden="true" id="ubuntu"></a>Ubuntu</h3>
+
+
 
 **Verify iSCSI services are configured**
 
@@ -103,6 +107,8 @@ systemctl status iscsid
            └─11187 /sbin/iscsid
 ```
 
+
+
 **Install the iSCSI tools**
 
 If an iSCSI initiator is not installed on your node, install
@@ -116,7 +122,11 @@ sudo service open-iscsi restart
 
 You can verify the iSCSI installation from above section.
 
+<br>
+
 <h3><a class="anchor" aria-hidden="true" id="rhel"></a>Red Hat Enterprise Linux</h3>
+
+
 
 **Verify iSCSI services are configured**
 
@@ -164,6 +174,8 @@ Feb 19 12:19:08 master-1550555590.mayalab.com systemd[1]: Started Open-iSCSI.
 Feb 19 12:19:09 master-1550555590.mayalab.com iscsid[2137]: iSCSI daemon with pid=2138 started!
 ```
 
+
+
 **Install the iSCSI tools** 
 
 If an iSCSI initiator is not installed on your node, install
@@ -175,7 +187,11 @@ yum install iscsi-initiator-utils -y
 
 You can verify the iSCSI installation from above section.
 
+<br>
+
 <h3><a class="anchor" aria-hidden="true" id="centos"></a>CentOS</h3>
+
+
 
 **Verify iSCSI services are configured**
 
@@ -199,6 +215,8 @@ start the iscsid service using the following command.
 sudo systemctl enable iscsid && sudo systemctl start iscsid
 ```
 
+
+
 **Install the iSCSI tools**
 
 If an iSCSI initiator is not installed on your node, install
@@ -210,16 +228,24 @@ yum install iscsi-initiator-utils -y
 
 You can verify the iSCSI installation from the above section.
 
+<br>
+
+<hr>
+
+<br>
+
 ## Managed Kubernetes Services on Public Cloud
+
+<br>
 
 <h3><a class="anchor" aria-hidden="true" id="eks"></a>Amazon Elastic
 Container Service for Kubernetes (EKS)</h3>
-
-
 Amazon EKS clusters can be brought up with either an AmazonLinux AMI
 or an Ubuntu 18.04 AMI.
 
 **For clusters running with the AmazonLinux AMI** 
+
+
 
 **Verify iSCSI services are configured**
 
@@ -243,6 +269,8 @@ start the iscsid service using the following command.
 sudo systemctl enable iscsid && sudo systemctl start iscsid
 ```
 
+
+
 **Install the iSCSI tools**
 
 If an iSCSI initiator is not installed on your node, install
@@ -259,9 +287,10 @@ You can verify the iSCSI installation from the above section.
 For setting up iSCSI clients on Ubuntu nodes, see the
 [instructions above.](#ubuntu)
 
+<br>
+
 <h3><a class="anchor" aria-hidden="true" id="gke"></a>Google Kubernetes
 Engine (GKE)</h3>
-
 GKE Container-Optimized OS does not come with an iSCSI client
 preinstalled and does not allow installation of an iSCSI client.
 Therefore, OpenEBS does not work on Kubernetes clusters which are
@@ -271,6 +300,8 @@ worker nodes.
 Select Ubuntu as the image version for the node pools in the custom
 settings. For setting up iSCSI clients on Ubuntu nodes, see the
 [instructions above.](#ubuntu)
+
+<br>
 
 <h3><a class="anchor" aria-hidden="true" id="aks"></a>Azure Kubernetes Service (AKS)</h3>
 
@@ -284,6 +315,8 @@ ssh azureuser@40.xx.yyy.zzz
 ```
 
 **Note**: `azureuser` is a default username.
+
+
 
 **Verify iSCSI services are configured**
 
@@ -319,6 +352,8 @@ Check the status of the iSCSI service by using the following command.
 service open-iscsi status
 ```
 
+
+
 **Install the iSCSI tools**
 
 You have to get the kubelet container ID using the steps mentioned in
@@ -346,7 +381,15 @@ exit
 
 You can verify the iSCSI installation from the above section.
 
+<br>
+
+<hr>
+
+<br>
+
 ## Kubernetes On-Prem Solutions
+
+<br>
 
 <h3><a class="anchor" aria-hidden="true" id="openshift"></a>Red Hat OpenShift</h3>
 
@@ -356,11 +399,15 @@ Systems. Tested OpenShift versions are 3.9 and 3.10.
 1. On RHEL 7
 2. On CentOS 7
 
+
+
 <h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
 
 Latest tested RHEL versions are 7.5, 7.6.
 
 For setting up iSCSI clients on RHEL nodes, see the [instructions above][#rhel].
+
+
 
 <h4><a class="anchor" aria-hidden="true" id="On-Centos"></a>On CentOS</h4>
 
@@ -368,21 +415,12 @@ Latest tested CentOS version is CentOS 7.
 
 For setting up iSCSI clients on CentOS nodes, see the [instructions above][#centOS].
 
-
-
 <br>
 
 <hr>
-
 <br>
 
-
-
-
-
-<h2><a class="anchor" aria-hidden="true" id="rancher"></a>Rancher</h2>
-
-
+<h3><a class="anchor" aria-hidden="true" id="rancher"></a>Rancher</h3>
 
 - If you are using RancherOS as the operating system for your Kubernetes cluster, you simply need to enable the iSCSI service and start it on all the hosts or nodes. 
 - If you are using Ubuntu or RHEL as the operating system for your Kubernetes cluster, you need to 
@@ -391,58 +429,42 @@ For setting up iSCSI clients on CentOS nodes, see the [instructions above][#cent
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services On RancherOS</h3>
+<h4><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services On RancherOS</h4>
 
 To run iSCSI services, execute the following commands on each of the cluster hosts or nodes.
 
-
-
 ```
 sudo ros s enable open-iscsi
-
 sudo ros s up open-iscsi
 ```
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services on RHEL or Ubuntu</h3>
+<h4><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services on RHEL or Ubuntu</h4>
 
-
-
-**Step1: Verify iSCSI initiator is installed and services are running**
+**Step1:** Verify iSCSI initiator is installed and services are running
 
 | Operating system | iSCSI Package         | Commands                                                     |
 | ---------------- | --------------------- | ------------------------------------------------------------ |
 | RHEL / CentOS    | iscsi-initiator-utils | yum install iscsi-initiator-utils -y <br />sudo systemctl enable iscsid && sudo systemctl start iscsid<br />modprobe iscsi_tcp |
 | Ubuntu/Debian    | open-iscsi            | sudo apt install open-iscsi<br />sudo systemctl enable iscsid && sudo systemctl start iscsid<br />modprobe iscsi_tcp |
 
-**Step2: Add extra_binds under kubelet service in cluster YAML**
+**Step2:** Add extra_binds under kubelet service in cluster YAML
 
 After installing the initiator tool on your nodes, edit the YAML for your cluster, editing the kubelet configuration to mount the iSCSI binary and configuration, as shown in the sample below. 
 
-
-
-services:
-
-kubelet: 
-  extra_binds: 
-
-    - "/etc/iscsi:/etc/iscsi"
-    - "/sbin/iscsiadm:/sbin/iscsiadm"
-    - "/var/lib/iscsi:/var/lib/iscsi"
-    - "/lib/modules"
+    services:
+      	kubelet: 
+          extra_binds: 
+        	- "/etc/iscsi:/etc/iscsi"
+        	- "/sbin/iscsiadm:/sbin/iscsiadm"
+        	- "/var/lib/iscsi:/var/lib/iscsi"
+        	- "/lib/modules"
 
 <br>
 
 <hr>
-
 <br>
-
-
-
-
-
-
 
 <h3><a class="anchor" aria-hidden="true" id="icp"></a>IBM Cloud
 Private (ICP)</h3>
@@ -450,7 +472,10 @@ OpenEBS can be installed using ICP on the following Operating
 Systems. Latest tested ICP versions are 2.1.0.3 and 3.1.1.
 
 1. On RHEL 7
+
 2. On Ubuntu
+
+   
 
 <h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
 
@@ -459,11 +484,13 @@ Latest tested RHEL versions are 7.5, 7.6.
 For setting up iSCSI clients on RHEL nodes, see the
 [instructions above](#rhel).
 
+
+
 <h4><a class="anchor" aria-hidden="true" id="On-Ubuntu"></a>On Ubuntu</h4>
 
 Latest tested Ubuntu version are Ubuntu 16.04 LTS and 18.04 LTS.
 
-For setting up iSCSI clients on CentOS nodes, see the
+For setting up iSCSI clients on Ubuntu nodes, see the
 [instructions above](#ubuntu).
 
 <br>
