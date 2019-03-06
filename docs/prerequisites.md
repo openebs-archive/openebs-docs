@@ -417,9 +417,6 @@ For setting up iSCSI clients on CentOS nodes, see the [instructions above][#cent
 
 <br>
 
-<hr>
-<br>
-
 <h3><a class="anchor" aria-hidden="true" id="rancher"></a>Rancher</h3>
 
 - If you are using RancherOS as the operating system for your Kubernetes cluster, you simply need to enable the iSCSI service and start it on all the hosts or nodes. 
@@ -461,9 +458,6 @@ After installing the initiator tool on your nodes, edit the YAML for your cluste
         	- "/var/lib/iscsi:/var/lib/iscsi"
         	- "/lib/modules"
 
-<br>
-
-<hr>
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="icp"></a>IBM Cloud
