@@ -66,7 +66,7 @@ step to verify the iSCSI services and make sure that it is running on
 all the worker nodes. OpenEBS uses the iSCSI protocol to connect to the
 block volumes. 
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="ubuntu"></a>Ubuntu</h3>
 
@@ -232,20 +232,16 @@ You can verify the iSCSI installation from the above section.
 
 <hr>
 
-<br>
-
 ## Managed Kubernetes Services on Public Cloud
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="eks"></a>Amazon Elastic
 Container Service for Kubernetes (EKS)</h3>
 Amazon EKS clusters can be brought up with either an AmazonLinux AMI
 or an Ubuntu 18.04 AMI.
 
-**For clusters running with the AmazonLinux AMI** 
-
-
+<h4><a class="anchor" aria-hidden="true" id="eks-linux-ami"></a>For clusters running with the AmazonLinux AMI</h4>
 
 **Verify iSCSI services are configured**
 
@@ -282,7 +278,9 @@ yum install iscsi-initiator-utils -y
 
 You can verify the iSCSI installation from the above section.
 
-**For clusters running with the Ubuntu 18.04 AMI**
+
+
+<h4><a class="anchor" aria-hidden="true" id="eks-linux-ami"></a>For clusters running with the Ubuntu 18.04 AMI</h4>
 
 For setting up iSCSI clients on Ubuntu nodes, see the
 [instructions above.](#ubuntu)
@@ -385,11 +383,9 @@ You can verify the iSCSI installation from the above section.
 
 <hr>
 
-<br>
-
 ## Kubernetes On-Prem Solutions
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="openshift"></a>Red Hat OpenShift</h3>
 
@@ -446,6 +442,8 @@ sudo ros s up open-iscsi
 | RHEL / CentOS    | iscsi-initiator-utils | yum install iscsi-initiator-utils -y <br />sudo systemctl enable iscsid && sudo systemctl start iscsid<br />modprobe iscsi_tcp |
 | Ubuntu/Debian    | open-iscsi            | sudo apt install open-iscsi<br />sudo systemctl enable iscsid && sudo systemctl start iscsid<br />modprobe iscsi_tcp |
 
+
+
 **Step2:** Add extra_binds under kubelet service in cluster YAML
 
 After installing the initiator tool on your nodes, edit the YAML for your cluster, editing the kubelet configuration to mount the iSCSI binary and configuration, as shown in the sample below. 
@@ -462,8 +460,9 @@ After installing the initiator tool on your nodes, edit the YAML for your cluste
 
 <h3><a class="anchor" aria-hidden="true" id="icp"></a>IBM Cloud
 Private (ICP)</h3>
-OpenEBS can be installed using ICP on the following Operating
-Systems. Latest tested ICP versions are 2.1.0.3 and 3.1.1.
+
+
+OpenEBS can be installed using ICP on the following Operating Systems. Latest tested ICP versions are 2.1.0.3 and 3.1.1.
 
 1. On RHEL 7
 
