@@ -368,225 +368,79 @@ Latest tested CentOS version is CentOS 7.
 
 For setting up iSCSI clients on CentOS nodes, see the [instructions above][#centOS].
 
-<h3><a class="anchor" aria-hidden="true" id="rancher"></a>Rancher</h3>
 
-OpenEBS can be installed using Rancher on the following Operating
-System.
 
-1. On Ubuntu/Debian
-2. On RHEL
-3. On Rancher OS
+<br>
 
-OpenEBS target will use the iSCSI services inside the kubelet. 
+<hr>
 
-<h4><a class="anchor" aria-hidden="true" id="On-Ubuntu"></a>On Ubuntu</h4>
+<br>
 
-**Verify iSCSI status on Node and Kubelet**
 
-Check the below commands on all worker nodes.
 
-```
-docker exec kubelet iscsiadm -V
-```
 
-If output of above command return similar to below, then iSCSI is
-installed on Kubelet. 
 
-```
-iscsiadm version 2.0–874
-```
+<h2><a class="anchor" aria-hidden="true" id="rancher"></a>Rancher</h2>
 
-Check the below commands on all worker nodes.
 
-```
-iscsiadm -V
-```
 
-If output of above command return similar to below, then iSCSI is
-installed on the node. 
+- If you are using RancherOS as the operating system for your Kubernetes cluster, you simply need to enable the iSCSI service and start it on all the hosts or nodes. 
+- If you are using Ubuntu or RHEL as the operating system for your Kubernetes cluster, you need to 
+  - Verify iSCSI initiators are installed on all nodes (and )
+  - Add the extra_binds under Kubelet service  in cluster YAML file to  mount the iSCSI binary and configuration inside the `Kubelet`.
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services On RancherOS</h3>
+
+To run iSCSI services, execute the following commands on each of the cluster hosts or nodes.
+
+
 
 ```
-iscsiadm version 2.0–873
-```
+sudo ros s enable open-iscsi
 
-**Load iscsi_tcp module:**
-
-It is recommended to load `iscsi_tcp` module to ensure the smooth volume mounting inside the Node. Check the status of the same from the command below.
-
-```
-lsmod | grep iscsi
-```
-
-The following is a sample Output:
-
-```
-iscsi_tcp 20480 0
-libiscsi_tcp 24576 1 iscsi_tcp
-libiscsi 53248 2 libiscsi_tcp,iscsi_tcp
-scsi_transport_iscsi 98304 2 libiscsi,iscsi_tcp
-```
-
-If your output is similar to the above sample then services are
-configured correctly. If your output doesn’t have `iscsi_tcp`, you
-need to follow below steps to load the `iscsi_tcp` module.
-
-```
-modprobe iscsi_tcp
-```
-
-You can verify the same from the command below. Now the output should
-be similar to the sample output mentioned above.
-
-```
-lsmod | grep iscsi
-```
-
-**Modify Kubelet container spec for binding iSCSI in Kubelet**
-
-Ensure that Kubelet is running with below config. This changes has to be done at the cluster.yaml.
-
-```
-kubelet: 
-   extra_binds: 
-     - "/etc/iscsi:/etc/iscsi"
-     - "/sbin/iscsiadm:/sbin/iscsiadm"
-     - "/var/lib/iscsi:/var/lib/iscsi"
-     - "/lib/modules"
+sudo ros s up open-iscsi
 ```
 
 
 
-<h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
+<h3><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services on RHEL or Ubuntu</h3>
 
-**Verify iSCSI services are configured**
 
-If an iSCSI initiator is already installed on the node, check that
-initiator name is configured using the following command. 
 
-```
- cat /etc/iscsi/initiatorname.iscsi
-```
+**Step1: Verify iSCSI initiator is installed and services are running**
 
-Check iSCSI service is running using the following command.
+| Operating system | iSCSI Package         | Commands                                                     |
+| ---------------- | --------------------- | ------------------------------------------------------------ |
+| RHEL / CentOS    | iscsi-initiator-utils | yum install iscsi-initiator-utils -y <br />sudo systemctl enable iscsid && sudo systemctl start iscsid<br />modprobe iscsi_tcp |
+| Ubuntu/Debian    | open-iscsi            | sudo apt install open-iscsi<br />sudo systemctl enable iscsid && sudo systemctl start iscsid<br />modprobe iscsi_tcp |
 
-```
- systemctl status iscsid
-```
+**Step2: Add extra_binds under kubelet service in cluster YAML**
 
-If the status is showing as `Inactive`, then you may have to *enable*
-and *start* the `iscsid` service using the following command.
+After installing the initiator tool on your nodes, edit the YAML for your cluster, editing the kubelet configuration to mount the iSCSI binary and configuration, as shown in the sample below. 
 
-```
-sudo systemctl enable iscsid && sudo systemctl start iscsid
-```
 
-**Install the iSCSI tools**
 
-If an iSCSI initiator is not installed on your node, then install
-`iscsi-initiator-utils` on each node using the following command. 
+services:
 
-```
-yum install iscsi-initiator-utils -y
-```
-
-The installation of the iSCSI initiator doesn't install
-`iscsi_tcp` driver. This can be installed on all worker nodes using
-the following command.
-
-```
-modprobe iscsi_tcp
-```
-
-You can verify the `iscsi_tcp` status on the node using the following
-command.
-
-```
-lsmod | grep iscsi
-```
-
-Output of above command will be similar to the following.
-
-```
-iscsi_tcp 20480 0
-libiscsi_tcp 28672 1
-iscsi_tcp libiscsi 57344 2 libiscsi_tcp,iscsi_tcp 
-scsi_transport_iscsi 110592 4 libiscsi_tcp,iscsi_tcp,libiscsi
-```
-
-Create a new custom cluster in Rancher and apply bind mounts to
-kubelet container spec:
-
-```
 kubelet: 
   extra_binds: 
+
     - "/etc/iscsi:/etc/iscsi"
     - "/sbin/iscsiadm:/sbin/iscsiadm"
     - "/var/lib/iscsi:/var/lib/iscsi"
     - "/lib/modules"
-```
+
+<br>
+
+<hr>
+
+<br>
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="RancherOS"></a>On Rancher OS</h3>
 
-**Verify iSCSI services are configured**
-
-If an iSCSI initiator is already installed on your node, check that the
-initiator name is configured and iSCSI service is running using the
-following commands.
-
-```
-sudo ros s list | grep iscsi
-```
-
-If the output of the above command is similar to the following, then iSCSI service is enabled on the host.
-
-```
-enabled opene-iscsi
-```
-
-If the output of the above command is similar to the following, the iSCSI service is disabled on the host.
-
-```
-disabled open-iscsi
-```
-
-Also check the status of `iscsi_tcp` module using the following command.
-
-```
-lsmod | grep iscsi
-```
-
-The output of the above will be nothing if the `iscsi_tcp` is not loaded.
-
-**Enable the iSCSI module**
-
-If iSCSI service is disabled on the Node, You should enable the service using the following commands.
-
-```
-sudo ros s enable open-iscsi
-```
-
-Once the iSCSI service is loaded on the Node, then iSCSI service can be start using the following command.
-
-```
-sudo ros s up open-iscsi
-```
-
-Now check the status of `iscsi_tcp` module using the following command.
-
-```
-lsmod | grep iscsi
-```
-
-It will show following similar entries if `iscsi_tcp` module is loaded. These modules are must for mounting OpenEBS volume on application.
-
-```
-iscsi_tcp 20480 0
-libiscsi_tcp 24576 1 iscsi_tcp
-libiscsi 53248 2 libiscsi_tcp,iscsi_tcp
-scsi_transport_iscsi 98304 2 libiscsi,iscsi_tcp
-```
 
 
 

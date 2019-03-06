@@ -546,7 +546,7 @@ sparse-5a92ced3e2ee21eac7b930f670b5eab5   10737418240   Active   10m
 
 <h3><a class="anchor" aria-hidden="true" id="encryption-rest"></a>Does OpenEBS support encryption at rest?</h3>
 
-OpenEBS currently support an alternate solution to provide encryption at rest, pointed out on the OpenEBS Slack Channel was to use LUKS in your host operating system to encrypt the volumes that you want encrypted-at-rest. Example tutorial for CentOS: <https://wiki.centos.org/HowTos/EncryptedFilesystem>.
+You can achieve encryption at rest using LUKS. Example tutorial for enabling LUKS on CentOS is at: <a  href="https://wiki.centos.org/HowTos/EncryptedFilesystem" target="_blank">https://wiki.centos.org/HowTos/EncryptedFilesystem</a>
 
 <br>
 
