@@ -48,7 +48,14 @@ All steps described in this document must be performed on the Kubernetes master 
 
    **Note:** The upgrade  procedure uses the node labels to pin the Jiva replicas to the nodes where they are present. On node restart, these labels will disappear and can cause the replica to be un-scheduled.
 
-2. <h3><a class="anchor" aria-hidden="true" id="upgrade-operator"></a>Upgrade OpenEBS operator</h3>
+2. <h3><a class="anchor" aria-hidden="true" id="checking-openebs-labels"></a>Checking the  openebs labels</h3>
+
+   - Run `./pre-check.sh` to get all the openebs volume resources not having `openebs.io/version` tag.
+   - Run `./labeltagger.sh 0.8.0` to add `openebs.io/version` label to all the openebs volume resources.
+
+   **Note:** Please make sure that all pods are back to running state before proceeding to Step 3.
+
+3. <h3><a class="anchor" aria-hidden="true" id="upgrade-operator"></a>Upgrade OpenEBS operator</h3>
 
    <h4><a class="anchor" aria-hidden="true" id="upgrade-operator-crds-deployment"></a>Upgrading OpenEBS Operator CRDs and Deployments</h4>
 
@@ -92,14 +99,14 @@ All steps described in this document must be performed on the Kubernetes master 
    **Install/Upgrade using stable helm chart**
    The following procedure will work if you have installed OpenEBS with default values provided by stable helm chart.
 
-   1. Run helm repo update to update local cache with latest package.
+   1. Run `helm repo update` to update local cache with latest package.
 
-   2. Run helm ls to get the OpenEBS release-name. Use the release-nam in the following upgrade command.
+   2. Run `helm ls` to get the OpenEBS release-name. Use the release-name in the following upgrade command.
 
-   3. Upgrade using the following command.
+   3. Upgrade using the following command. In the following command,`openebs` is the release name. This name has to be changed as per the release name that is given during the initial deployment.
 
       ```
-      helm upgrade -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml <release-name> stable/openebs.
+      helm upgrade openebs stable/openebs
       ```
 
    **Using Customized Operator YAML or Helm Chart**
@@ -110,7 +117,7 @@ All steps described in this document must be performed on the Kubernetes master 
 
       openebs-charts PR [#2400](https://github.com/openebs/openebs/pull/2400) as reference.
 
-3. <h3><a class="anchor" aria-hidden="true" id="upgrade-volume"></a>Upgrade volumes one by one</h3>
+4. <h3><a class="anchor" aria-hidden="true" id="upgrade-volume"></a>Upgrade volumes one by one</h3>
 
    Even after the OpenEBS Operator has been upgraded to 0.8.1, the cStor Storage Pools and volumes (both Jiva and cStor) will continue to work with older versions. Use the following steps in the same order to upgrade cStor Pools and volumes.
 
@@ -119,7 +126,7 @@ All steps described in this document must be performed on the Kubernetes master 
    **Limitations:**
 
    1. This is a preliminary script only intended for using on volumes where data has been backed-up.
-   2. Have the following link handy in case the volume gets into read-only during upgrade https://docs.openebs.io/docs/next/readonlyvolumes.html
+   2. Have the following link handy in case the volume gets into read-only during upgrade https://docs.openebs.io/docs/next/troubleshooting.html#recovery-readonly-when-kubelet-is-container
    3. Automatic rollback option is not provided. To rollback, you need to update the controller, exporter and replica pod images to the previous version.
 
    In the process of running the below steps, if you run into issues, you can always reach us on [slack](https://slack.openebs.io).

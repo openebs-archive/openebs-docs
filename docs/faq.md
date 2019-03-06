@@ -64,6 +64,8 @@ sidebar_label: FAQs
 
 [How to get the details of cStor Pool,cStor Volume Replica ,Cstor Volumes and Disks ?](#more-info-pool-cvr-cv-disk) 
 
+[Does OpenEBS support encryption at rest?](#encryption-rest)
+
 
 
 <br><br>
@@ -541,6 +543,10 @@ sparse-5a92ced3e2ee21eac7b930f670b5eab5   10737418240   Active   10m
 ```
 
 
+
+<h3><a class="anchor" aria-hidden="true" id="encryption-rest"></a>Does OpenEBS support encryption at rest?</h3>
+
+You can achieve encryption at rest using LUKS. Example tutorial for enabling LUKS on CentOS is at: <a  href="https://wiki.centos.org/HowTos/EncryptedFilesystem" target="_blank">https://wiki.centos.org/HowTos/EncryptedFilesystem</a>
 
 <br>
 
