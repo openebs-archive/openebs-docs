@@ -289,15 +289,9 @@ For setting up iSCSI clients on Ubuntu nodes, see the
 
 <h3><a class="anchor" aria-hidden="true" id="gke"></a>Google Kubernetes
 Engine (GKE)</h3>
-GKE Container-Optimized OS does not come with an iSCSI client
-preinstalled and does not allow installation of an iSCSI client.
-Therefore, OpenEBS does not work on Kubernetes clusters which are
-running GKE Container-Optimized OS version of the image on the
-worker nodes.
+GKE Container-Optimized OS does not come with an iSCSI client preinstalled and does not allow installation of an iSCSI client. Therefore, OpenEBS does not work on Kubernetes clusters which are running GKE Container-Optimized OS version of the image on the worker nodes.
 
-Select Ubuntu as the image version for the node pools in the custom
-settings. For setting up iSCSI clients on Ubuntu nodes, see the
-[instructions above.](#ubuntu)
+Select Ubuntu as the image version for the node pools in the custom settings. For setting up iSCSI clients on Ubuntu nodes, see the [instructions above.](#ubuntu)
 
 <br>
 
