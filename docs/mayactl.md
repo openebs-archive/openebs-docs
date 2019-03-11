@@ -275,7 +275,7 @@ The following command show the description of cStor pool.
 **Example Output:**
 
 <div class="co">Pool Details :
----------
+------ ------
 Storage Pool Name  : cstor-pool1-5lwv
 Node Name          : node3.mayalab.com
 CAS Template Used  : cstor-pool-create-default-0.8.1
@@ -285,7 +285,7 @@ UID                : fb2bd1d8-2f88-11e9-a23b-0050569331ce
 Pool Type          : striped
 Over Provisioning  : false
 Disk List :
----------
+------ ------
 disk-42b4fb20cd36896dfc2a486b977363de
 </div>
 
