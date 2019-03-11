@@ -9,17 +9,17 @@ The `mayactl` is the command line tool for interacting with OpenEBS volumes and 
 
 
 
-## Summary
+<h3><a class="anchor" aria-hidden="true" id="summary"></a>Summary</h3>
 
-### [Command used with mayactl](#Commands-used-with-mayactl)
+[Command used with mayactl](#Commands-used-with-mayactl)
 
-### [Accesssing mayactl](#Accesssing-mayactl)
+[Accesssing mayactl](#Accesssing-mayactl)
 
-### [Using mayactl](#Using-mayactl)
+[Using mayactl](#Using-mayactl)
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="Commands-used-with-mayactl"></a>Commands used with mayactl</h3>
+## Commands used with mayactl
 
 The following commands can be run using mayactl to get the details of OpenEBS volume, StoragePool and installed version.
 
@@ -33,7 +33,9 @@ The following commands can be run using mayactl to get the details of OpenEBS vo
 3. OpenEBS version related
    - mayactl version
 
-<h3><a class="anchor" aria-hidden="true" id="Accesssing-mayactl"></a>Accesssing mayactl</h3>
+
+
+## Accesssing mayactl
 
 For getting access to `mayactl` command line tool, you have to login or execute into the maya-apiserver pod on Kubernetes. The steps are outlined below.
 
@@ -61,7 +63,7 @@ For getting access to `mayactl` command line tool, you have to login or execute 
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="Using-mayactl"></a>Using mayactl</h3>
+## Using mayactl
 
 Once you are inside the maya -apiserver,use mayactl help command for more details.
 
@@ -82,7 +84,7 @@ Available Commands:
   volume      Provides operations related to a Volume</div>
 
 
-<h4><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Volume"></a>mayactl for OpenEBS Storage Volume</h4>
+<h3><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Volume"></a>mayactl for OpenEBS Storage Volume</h3>
 
 OpenEBS storage volume command usage examples are shown below.
 
@@ -187,7 +189,7 @@ LOGICAL(GB)      USED(GB)
 </div>
 
 
-<h4><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Pools"></a>mayactl for OpenEBS Storage Pools</h4>
+<h3><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Pools"></a>mayactl for OpenEBS Storage Pools</h3>
 
 OpenEBS storage pool command usage examples are shown below.
 
@@ -249,8 +251,7 @@ disk-42b4fb20cd36896dfc2a486b977363de
 </div>
 
 
-
-<h4><a class="anchor" aria-hidden="true" id="mayactl-Version"></a>mayactl Version</h4>
+<h3><a class="anchor" aria-hidden="true" id="mayactl-Version"></a>mayactl Version</h3>
 
 You can get the installed mayactl version by using the following command. This will show the OpenEBS released version also.
 
