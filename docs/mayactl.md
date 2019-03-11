@@ -43,7 +43,9 @@ For getting access to `mayactl` command line tool, you have to login or execute 
    kubectl get pod -n openebs | grep -i api
    ```
 
-   Following is an example output
+   Following is an example output.
+
+   <div class="co">maya-apiserver-7f5689b96b-tfssh                                   1/1       Running   0          10d</div>
 
    ```
    maya-apiserver-7f5689b96b-tfssh                                   1/1       Running   0          10d
@@ -58,6 +60,8 @@ For getting access to `mayactl` command line tool, you have to login or execute 
    You will get access to the bash shell of maya-apiserver pod like shown below.
 
    `bash-4.3# ` 
+
+   <div class="co">bash-4.3#</div>
 
 
 
@@ -183,6 +187,28 @@ The following command shows the description of a cStor volume.
 
 **Example Output:**
 
+<div class="co">Portal Details :
+----------------
+IQN               :   iqn.2016-09.com.openebs.cstor:pvc-448deccf-40d9-11e9-a23b-0050569331ce
+Volume            :   pvc-448deccf-40d9-11e9-a23b-0050569331ce
+Portal            :   172.28.9.26:3260
+Size              :   5G
+Controller Status :   running,running,running
+Controller Node   :   node7.mayalab.com
+Replica Count     :   3
+Application Details:
+--------------------
+Application Pod Name      : N/A
+Application Pod Namespace : N/A
+Replica Details :
+-----------------
+NAME                                                          STATUS      POOL NAME          	   NODE
+----                                                          ------      ---------           	   -----
+pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-5lwv     Running     cstor-pool1-5lwv     node3.mayalab.com
+pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-qba6     Running     cstor-pool1-qba6     node2.mayalab.com
+pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-v4oy     Running     cstor-pool1-v4oy     node4.mayalab.com
+</div>
+
 ```
 Portal Details :
 ----------------
@@ -294,13 +320,7 @@ cstor-pool1-qba6           node2.mayalab.com      striped
 cstor-pool1-v4oy           node4.mayalab.com      striped
 </div>
 
-```
-POOL NAME                  NODE NAME              POOL TYPE
----------                  ---------              ---------
-cstor-pool1-5lwv           node3.mayalab.com      striped
-cstor-pool1-qba6           node2.mayalab.com      striped
-cstor-pool1-v4oy           node4.mayalab.com      striped
-```
+
 
 The following command show the description of cStor pool.
 
