@@ -95,7 +95,7 @@ mayactl volume
 <div class="co">The following commands helps in operating a Volume such as create, list, and so on.
 Usage: mayactl volume <subcommand> [options] [args]
 Examples:
- # List Volumes:
+ <#> List Volumes: </#> 
    $ mayactl volume list
  # Statistics of a Volume:
    $ mayactl volume stats --volname <vol>
@@ -110,7 +110,9 @@ Usage:
 Available Commands:
   describe    Displays Openebs Volume information
   list        Displays status information about Volume(s)
-  stats       Displays the runtime statisics of Volume</div>
+  stats       Displays the runtime statisics of Volume
+</div>
+
 
 
 The following command shows the list all the OpenEBS volumes including both Jiva and cStor.
