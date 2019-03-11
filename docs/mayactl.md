@@ -13,7 +13,7 @@ The `mayactl` is the command line tool for interacting with OpenEBS volumes and 
 
 ### [Command used with mayactl](#Commands-used-with-mayactl)
 
-### [Accesssing mayactl](#Accesssing mayactl)
+### [Accesssing mayactl](#Accesssing-mayactl)
 
 ### [Using mayactl](#Using-mayactl)
 
@@ -141,7 +141,7 @@ Namespace   Name                                      Status   Type   Capacity  
 openebs     pvc-448deccf-40d9-11e9-a23b-0050569331ce  Running  cstor  5G        	cstor081-demo-pool1     ReadWriteOnce
 ```
 
-The following is an example output of description of a cStor volume.
+The following command shows the description of a cStor volume.
 
 ```
  mayactl volume describe --volname pvc-448deccf-40d9-11e9-a23b-0050569331ce -n openebs
@@ -175,7 +175,7 @@ pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-v4oy     Running     cstor-
 
 ```
 
-The following is an example output of statistics of cStor volume.
+The following command shows the live statistics of cStor volume.
 
 ```
 mayactl volume stats --volname pvc-448deccf-40d9-11e9-a23b-0050569331ce -n openebs
@@ -218,7 +218,6 @@ mayactl pool
 It will show the available commands which can run with `mayactl` for getting details of OpenEBS pools.
 
 ```
-
 Command provides operations related to a storage pools.
 
 Usage: mayactl pool <subcommand> [options] [args]
@@ -251,11 +250,17 @@ cstor-pool1-v4oy           node4.mayalab.com      striped
 The following command show the description of cStor pool.
 
 ```
+ mayactl pool describe --poolname cstor-pool1-5lwv
+```
+
+**Example Output:**
+
+```
 Pool Details :
 --------------
 Storage Pool Name  : cstor-pool1-5lwv
 Node Name          : node3.mayalab.com
-CAS Template Used  : cstor-pool-create-default-0.8.0
+CAS Template Used  : cstor-pool-create-default-0.8.1
 CAS Type           : cstor
 StoragePoolClaim   : cstor-pool1
 UID                : fb2bd1d8-2f88-11e9-a23b-0050569331ce
