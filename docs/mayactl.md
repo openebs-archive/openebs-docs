@@ -188,7 +188,7 @@ The following command shows the description of a cStor volume.
 **Example Output:**
 
 <div class="co">Portal Details :
-----------------
+------- ---------
 IQN               :   iqn.2016-09.com.openebs.cstor:pvc-448deccf-40d9-11e9-a23b-0050569331ce
 Volume            :   pvc-448deccf-40d9-11e9-a23b-0050569331ce
 Portal            :   172.28.9.26:3260
@@ -197,11 +197,11 @@ Controller Status :   running,running,running
 Controller Node   :   node7.mayalab.com
 Replica Count     :   3
 Application Details:
---------------------
+--------- -----------
 Application Pod Name      : N/A
 Application Pod Namespace : N/A
 Replica Details :
------------------
+--------- --------
 NAME                                                          STATUS      POOL NAME          	   NODE
 ----                                                          ------      ---------           	   -----
 pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-5lwv     Running     cstor-pool1-5lwv     node3.mayalab.com
