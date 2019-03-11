@@ -117,7 +117,7 @@ Available Commands:
 
 
 
-The following command shows the list all the OpenEBS volumes including both Jiva and cStor.
+The following command shows the list of all OpenEBS volumes including both Jiva and cStor.
 
 ```
  mayactl volume list
@@ -130,7 +130,7 @@ The following command shows the list all the OpenEBS volumes including both Jiva
 openebs     pvc-448deccf-40d9-11e9-a23b-0050569331ce  Running  cstor  5G        	cstor081-demo-pool1     ReadWriteOnce</div>
 
 
-The following command shows the description of a cStor volume.
+The following command shows the description of a OpenEBS volume.
 
 ```
  mayactl volume describe --volname pvc-448deccf-40d9-11e9-a23b-0050569331ce -n openebs
@@ -162,7 +162,7 @@ pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-v4oy     Running     cstor-
 
 
 
-The following command shows the live statistics of cStor volume.
+The following command shows the live statistics of OpenEBS volume.
 
 ```
 mayactl volume stats --volname pvc-448deccf-40d9-11e9-a23b-0050569331ce -n openebs
@@ -215,7 +215,7 @@ Available Commands:
 
 
 
-The following command shows the list all the OpenEBS cStor Pools.
+The following command shows the list of all OpenEBS StoragePools.
 
 ```
 mayactl pool list
@@ -232,7 +232,7 @@ cstor-pool1-v4oy           node4.mayalab.com      striped
 
 
 
-The following command show the description of cStor pool.
+The following command show the description of OpenEBS StoragePool.
 
 ```
  mayactl pool describe --poolname cstor-pool1-5lwv
@@ -258,7 +258,7 @@ disk-42b4fb20cd36896dfc2a486b977363de
 
 <h3><a class="anchor" aria-hidden="true" id="mayactl-Version"></a>mayactl Version</h3>
 
-You can get the installed mayactl version by using the following command. This will show the OpenEBS released version also.
+OpenEBS installed version can be obtained using the following command. This will show the status of maya-apiserver and its URL.
 
 ```
 mayactl version
