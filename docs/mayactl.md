@@ -200,7 +200,7 @@ It will show the available commands which can run with `mayactl` for getting det
 <div class="co">Command provides operations related to a storage pools.
 Usage: mayactl pool <subcommand> [options] [args]
 Examples:
-  # Lists pool:
+  > Lists pool:
     $ mayactl pool list
 Usage:
   mayactl pool [command]
@@ -208,6 +208,7 @@ Available Commands:
   describe    Describes the pools
   list        Lists all the pools
 </div>
+
 
 
 
@@ -274,9 +275,11 @@ m-apiserver status:  running
 
 ## See Also:
 
+### [Day 2 Operations](/docs/next/operations.html)
 
+### [Jiva User Guide](/docs/next/jivaguide.html)
 
-<br>
+### <br>
 
 <hr>
 
