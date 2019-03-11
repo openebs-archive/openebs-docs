@@ -47,9 +47,7 @@ For getting access to `mayactl` command line tool, you have to login or execute 
 
    <div class="co">maya-apiserver-7f5689b96b-tfssh                                   1/1       Running   0          10d</div>
 
-   ```
-   maya-apiserver-7f5689b96b-tfssh                                   1/1       Running   0          10d
-   ```
+   
 
 2. It is possible that there are multiple instances of maya-apiserver pods for scaling purposes. You can run mayactl in any one of them. Shell into one of the pods using ` kubectl exec` command . You can do as following way.
 
@@ -58,8 +56,6 @@ For getting access to `mayactl` command line tool, you have to login or execute 
    ```
 
    You will get access to the bash shell of maya-apiserver pod like shown below.
-
-   `bash-4.3# ` 
 
    <div class="co">bash-4.3#</div>
 
@@ -84,21 +80,6 @@ Available Commands:
   pool        Provides operations related to a storage pool
   version     Prints version and other details relevant to maya
   volume      Provides operations related to a Volume</div>
-
-```
-Maya means 'Magic' a tool for storage orchestration
-
-Usage:
-  mayactl [command]
-
-Available Commands:
-  completion  Outputs shell completion code for the specified shell (bash or zsh)
-  help        Help about any command
-  pool        Provides operations related to a storage pool
-  version     Prints version and other details relevant to maya
-  volume      Provides operations related to a Volume
-```
-
 
 
 <h4><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Volume"></a>mayactl for OpenEBS Storage Volume</h4>
@@ -131,35 +112,6 @@ Available Commands:
   list        Displays status information about Volume(s)
   stats       Displays the runtime statisics of Volume</div>
 
-```
-The following commands helps in operating a Volume such as create, list, and so on.
-
-Usage: mayactl volume <subcommand> [options] [args]
-
-Examples:
- # List Volumes:
-   $ mayactl volume list
-
- # Statistics of a Volume:
-   $ mayactl volume stats --volname <vol>
-
- # Statistics of a Volume created in 'test' namespace:
-   $ mayactl volume stats --volname <vol> --namespace test
-
- # Info of a Volume:
-   $ mayactl volume describe --volname <vol>
-
- # Info of a Volume created in 'test' namespace:
-   $ mayactl volume describe --volname <vol> --namespace test
-
-Usage:
-  mayactl volume [command]
-
-Available Commands:
-  describe    Displays Openebs Volume information
-  list        Displays status information about Volume(s)
-  stats       Displays the runtime statisics of Volume
-```
 
 The following command shows the list all the OpenEBS volumes including both Jiva and cStor.
 
@@ -173,11 +125,6 @@ The following command shows the list all the OpenEBS volumes including both Jiva
 ---------   ----                                      ------   ----   --------           -------------           -----------
 openebs     pvc-448deccf-40d9-11e9-a23b-0050569331ce  Running  cstor  5G        	cstor081-demo-pool1     ReadWriteOnce</div>
 
-```
-Namespace   Name                                      Status   Type   Capacity  StorageClass            Access Mode
----------   ----                                      ------   ----   --------           -------------           -----------
-openebs     pvc-448deccf-40d9-11e9-a23b-0050569331ce  Running  cstor  5G        	cstor081-demo-pool1     ReadWriteOnce
-```
 
 The following command shows the description of a cStor volume.
 
@@ -209,31 +156,7 @@ pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-qba6     Running     cstor-
 pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-v4oy     Running     cstor-pool1-v4oy     node4.mayalab.com
 </div>
 
-```
-Portal Details :
-----------------
-IQN               :   iqn.2016-09.com.openebs.cstor:pvc-448deccf-40d9-11e9-a23b-0050569331ce
-Volume            :   pvc-448deccf-40d9-11e9-a23b-0050569331ce
-Portal            :   172.28.9.26:3260
-Size              :   5G
-Controller Status :   running,running,running
-Controller Node   :   node7.mayalab.com
-Replica Count     :   3
 
-Application Details:
---------------------
-Application Pod Name      : N/A
-Application Pod Namespace : N/A
-
-Replica Details :
------------------
-NAME                                                          STATUS      POOL NAME          	   NODE
-----                                                          ------      ---------           	   -----
-pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-5lwv     Running     cstor-pool1-5lwv     node3.mayalab.com
-pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-qba6     Running     cstor-pool1-qba6     node2.mayalab.com
-pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-v4oy     Running     cstor-pool1-v4oy     node4.mayalab.com
-
-```
 
 The following command shows the live statistics of cStor volume.
 
@@ -260,29 +183,6 @@ LOGICAL(GB)      USED(GB)
 ------------     ---------
 0.000            3.246
 </div>
-
-```
-Portal Details :
----------------
-IQN     :
-Volume  :   pvc-448deccf-40d9-11e9-a23b-0050569331ce
-Portal  :
-Size    :   5.000000
-
-Performance Stats :
---------------------
-r/s      w/s      r(MB/s)      w(MB/s)      rLat(ms)      wLat(ms)
-----     ----     --------     --------     ---------     ---------
-0        121      0.000        0.013        0.000         9.495
-
-Capacity Stats :
----------------
-LOGICAL(GB)      USED(GB)
-------------     ---------
-0.000            3.246
-
-```
-
 
 
 <h4><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Pools"></a>mayactl for OpenEBS Storage Pools</h4>
