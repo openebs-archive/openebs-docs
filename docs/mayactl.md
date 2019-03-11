@@ -11,11 +11,11 @@ The `mayactl` is the command line tool for interacting with OpenEBS volumes and 
 
 ## Summary
 
-[Command used with mayactl](#Commands-used-with-mayactl)
+### [Command used with mayactl](#Commands-used-with-mayactl)
 
-[Accesssing mayactl](#Accesssing-mayactl)
+### [Accesssing mayactl](#Accesssing-mayactl)
 
-[Using mayactl](#Using-mayactl)
+### [Using mayactl](#Using-mayactl)
 
 
 
