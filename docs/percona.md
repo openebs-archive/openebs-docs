@@ -15,7 +15,7 @@ sidebar_label: Percona
 
 <br>
 
-Percona is highly scalable and requires underlying persistent storage to be euqally scalable and performing. OpenEBS provides scalable storage for Percona for providing a simple and scalable RDS like solution for both On-Premise and cloud environments.
+Percona is highly scalable and requires underlying persistent storage to be equally scalable and performing. OpenEBS provides scalable storage for Percona for providing a simple and scalable RDS like solution for both On-Premise and cloud environments.
 
 
 
