@@ -199,6 +199,8 @@ mayactl pool
 
 It will show the available commands which can run with `mayactl` for getting details of OpenEBS pools.
 
+
+
 <div class="co">Command provides operations related to a storage pools.
 Usage: mayactl pool <subcommand> [options] [args]
 Examples:
@@ -213,8 +215,11 @@ Available Commands:
 
 
 
-
 The following command shows the list all the OpenEBS cStor Pools.
+
+```
+mayactl pool list
+```
 
 **Example Output:**
 
