@@ -71,6 +71,16 @@ mayactl help
 
 **Example Output:**
 
+<div class="co">Maya means 'Magic' a tool for storage orchestration
+Usage:
+  mayactl [command]
+Available Commands:
+  completion  Outputs shell completion code for the specified shell (bash or zsh)
+  help        Help about any command
+  pool        Provides operations related to a storage pool
+  version     Prints version and other details relevant to maya
+  volume      Provides operations related to a Volume</div>
+
 ```
 Maya means 'Magic' a tool for storage orchestration
 
@@ -96,6 +106,26 @@ mayactl volume
 ```
 
  **Example Output:**
+
+<div class="co">The following commands helps in operating a Volume such as create, list, and so on.
+Usage: mayactl volume <subcommand> [options] [args]
+Examples:
+ # List Volumes:
+   $ mayactl volume list
+ # Statistics of a Volume:
+   $ mayactl volume stats --volname <vol>
+ # Statistics of a Volume created in 'test' namespace:
+   $ mayactl volume stats --volname <vol> --namespace test
+ # Info of a Volume:
+   $ mayactl volume describe --volname <vol>
+ # Info of a Volume created in 'test' namespace:
+   $ mayactl volume describe --volname <vol> --namespace test
+Usage:
+  mayactl volume [command]
+Available Commands:
+  describe    Displays Openebs Volume information
+  list        Displays status information about Volume(s)
+  stats       Displays the runtime statisics of Volume</div>
 
 ```
 The following commands helps in operating a Volume such as create, list, and so on.
@@ -134,6 +164,10 @@ The following command shows the list all the OpenEBS volumes including both Jiva
 ```
 
 **Example Output:**
+
+<div class="co">Namespace   Name                                      Status   Type   Capacity  StorageClass            Access Mode
+---------   ----                                      ------   ----   --------           -------------           -----------
+openebs     pvc-448deccf-40d9-11e9-a23b-0050569331ce  Running  cstor  5G        	cstor081-demo-pool1     ReadWriteOnce</div>
 
 ```
 Namespace   Name                                      Status   Type   Capacity  StorageClass            Access Mode
@@ -183,6 +217,24 @@ mayactl volume stats --volname pvc-448deccf-40d9-11e9-a23b-0050569331ce -n opene
 
 **Example Output:**
 
+<div class="co">Portal Details :
+------ ---------
+IQN     :
+Volume  :   pvc-448deccf-40d9-11e9-a23b-0050569331ce
+Portal  :
+Size    :   5.000000
+Performance Stats :
+------ ---------
+r/s      w/s      r(MB/s)      w(MB/s)      rLat(ms)      wLat(ms)
+----     ----     --------     --------     ---------     ---------
+0        121      0.000        0.013        0.000         9.495
+Capacity Stats :
+------ ---------
+LOGICAL(GB)      USED(GB)
+------------     ---------
+0.000            3.246
+</div>
+
 ```
 Portal Details :
 ---------------
@@ -229,23 +281,7 @@ Available Commands:
   list        Lists all the pools
 </div>
 
-```
-Command provides operations related to a storage pools.
 
-Usage: mayactl pool <subcommand> [options] [args]
-
-Examples:
-  # Lists pool:
-    $ mayactl pool list
-
-Usage:
-  mayactl pool [command]
-
-Available Commands:
-  describe    Describes the pools
-  list        Lists all the pools
-
-```
 
 The following command shows the list all the OpenEBS cStor Pools.
 
@@ -288,23 +324,6 @@ Disk List :
 ------ ------
 disk-42b4fb20cd36896dfc2a486b977363de
 </div>
-
-```
-Pool Details :
---------------
-Storage Pool Name  : cstor-pool1-5lwv
-Node Name          : node3.mayalab.com
-CAS Template Used  : cstor-pool-create-default-0.8.1
-CAS Type           : cstor
-StoragePoolClaim   : cstor-pool1
-UID                : fb2bd1d8-2f88-11e9-a23b-0050569331ce
-Pool Type          : striped
-Over Provisioning  : false
-
-Disk List :
------------
-disk-42b4fb20cd36896dfc2a486b977363de
-```
 
 
 
