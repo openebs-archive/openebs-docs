@@ -92,18 +92,18 @@ mayactl volume
 
  **Example Output:**
 
-<div class="co">The following commands helps in operating a Volume such as create, list, and so on.
+<div class="co" aria-hidden="true">The following commands helps in operating a Volume such as create, list, and so on.
 Usage: mayactl volume <subcommand> [options] [args]
 Examples:
- /# List Volumes: 
+ # List Volumes: 
    $ mayactl volume list
- /# Statistics of a Volume:
+ # Statistics of a Volume:
    $ mayactl volume stats --volname <vol>
- /# Statistics of a Volume created in 'test' namespace:
+ # Statistics of a Volume created in 'test' namespace:
    $ mayactl volume stats --volname <vol> --namespace test
- /# Info of a Volume:
+ # Info of a Volume:
    $ mayactl volume describe --volname <vol>
- /# Info of a Volume created in 'test' namespace:
+ # Info of a Volume created in 'test' namespace:
    $ mayactl volume describe --volname <vol> --namespace test
 Usage:
   mayactl volume [command]
