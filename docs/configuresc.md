@@ -117,7 +117,7 @@ Below table lists the storage policies supported by cStor. These policies should
 
 <h3><a class="anchor" aria-hidden="true" id="Replica-Count-Policy"></a>Replica Count Policy</h3>
 
-You can specify the cStor Pool replica count using the *value* for *ReplicaCount* property. In the following example, the ReplicaCount is specified as 3. Hence, three replicas for storage pool will be created.
+You can specify the cStor volume replica count using the *ReplicaCount* property. In the following example, the ReplicaCount is specified as 3. Hence, three cStor volume replicas will be created.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -162,7 +162,7 @@ metadata:
 
 <h3><a class="anchor" aria-hidden="true" id="Storage-Pool-Claim-Policy"></a>Storage Pool Claim Policy</h3>
 
-You can specify the cStor Pool Claim name using the *value* for *StoragePoolClaim* property. This will help you choose cStor storage pool name where OpenEBS volume will be created. Following is the default StorageClass template where cStor volume will be created on default cStor Sparse Pool.
+You can specify the cStor Pool Claim name using the *value* for *StoragePoolClaim* property. This will help you choose cStor storage pool where OpenEBS volume will be created. Following is the default StorageClass template where cStor volume will be created on default cStor Sparse Pool.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -207,7 +207,7 @@ metadata:
 
 <h3><a class="anchor" aria-hidden="true" id="Volume-File-System-Type-Policy"></a>Volume File System Type Policy</h3>
 
-You can specify the file system type for the cStor volume where application will consume the storage using *value* for *FSType*. The following is the sample storage class. Currently OpenEBS support ext4 as the default file system and it also supports XFS as filesystem.
+You can specify the file system type for the cStor volume where application will consume the storage using *value* for *FSType*. The following is the sample storage class. Currently OpenEBS support ext4 as the default file system and it also supports XFS.
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -222,7 +222,7 @@ metadata:
 
 <h3><a class="anchor" aria-hidden="true" id="Target-NodeSelector-Policy"></a>Target NodeSelector Policy</h3>
 
-You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: apnode `is the node label.
+You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: apnode ` is the node label.
 
 ```
 apiVersion: storage.k8s.io/v1
