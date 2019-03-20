@@ -77,6 +77,8 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [Unable to clone OpenEBS volume from snapshot](#unable-to-clone-from-snapshot)
 
+[Unable to mount XFS formatted volumes into Pod](#unable-to-mount-xfs-volume)
+
 <br>
 
 ## Kubernetes related
@@ -550,6 +552,57 @@ I0109 04:11:54.212249      1 snapshot-controller.go:197] [CONTROLLER] OnUpdate o
 **Resolution:**
 
 This can be happen due to the stale entries of snapshot and snapshot data. By deleting those entries will resolve this issue. 
+
+<h3><a class="anchor" aria-hidden="true" id="unable-to-mount-xfs-volume"></a>Unable to mount XFS formatted volumes into Pod</h3>
+
+I created PVC with FSType as `xfs`. OpenEBS PV is successfully created and I have verified that iSCSI initiator is available on the Application node. But application pod is  unable to mount the volume.
+
+**Troubleshooting:**
+
+Kubectl describe of the application pod is showing the following logs:
+
+```
+Events:
+  Type     Reason                  Age                From                     Message
+  ----     ------                  ----               ----                     -------
+  Warning  FailedScheduling        58s (x2 over 59s)  default-scheduler        pod has unbound PersistentVolumeClaims (repeated 4 times)
+  Normal   Scheduled               58s                default-scheduler        Successfully assigned redis-master-0 to node0
+  Normal   SuccessfulAttachVolume  58s                attachdetach-controller  AttachVolume.Attach succeeded for volume "pvc-a036d681-8fd4-11e8-ad96-de1a202c9007"
+  Normal   SuccessfulMountVolume   55s                kubelet, node0           MountVolume.SetUp succeeded for volume "default-token-ngjhh"
+  Warning  FailedMount             24s (x4 over 43s)  kubelet, node0           MountVolume.WaitForAttach failed for volume "pvc-a036d681-8fd4-11e8-ad96-de1a202c9007" : failed to get any path for iscsi disk, last err seen:
+iscsi: failed to sendtargets to portal 10.233.27.8:3260 output: iscsiadm: cannot make connection to 10.233.27.8: Connection refused
+iscsiadm: cannot make connection to 10.233.27.8: Connection refused
+iscsiadm: cannot make connection to 10.233.27.8: Connection refused
+iscsiadm: cannot make connection to 10.233.27.8: Connection refused
+iscsiadm: cannot make connection to 10.233.27.8: Connection refused
+iscsiadm: cannot make connection to 10.233.27.8: Connection refused
+iscsiadm: connection login retries (reopen_max) 5 exceeded
+iscsiadm: No portals found
+, err exit status 21
+  Warning  FailedMount  8s (x2 over 17s)  kubelet, node0  MountVolume.MountDevice failed for volume "pvc-a036d681-8fd4-11e8-ad96-de1a202c9007" : executable file not found in $PATH
+```
+
+The kubelet had the following errors during the mount process:
+```
+kubelet[687]: I0315 15:14:54.179765     687 mount_linux.go:453] `fsck` error fsck from util-linux 2.27.1
+kubelet[687]: fsck.ext2: Bad magic number in super-block while trying to open /dev/sdn
+kubelet[687]: /dev/sdn:
+kubelet[687]: The superblock could not be read or does not describe a valid ext2/ext3/ext4
+kubelet[687]: filesystem.  If the device is valid and it really contains an ext2/ext3/ext4
+```
+And dmesg was showing errors like:
+```
+[5985377.220132] XFS (sdn): Invalid superblock magic number
+[5985377.306931] XFS (sdn): Invalid superblock magic number
+```
+
+**Resolution:**
+
+This can be happen due to xfsrepair command failing on the application node. Make sure the application node has the `xfsprogs` installed. 
+
+```
+apt install xfsprogs
+```
 
 
 
