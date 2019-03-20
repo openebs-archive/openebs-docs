@@ -13,7 +13,7 @@ sidebar_label: PostgreSQL
 
 <br>
 
-The PostgreSQL container is sourced from [CrunchyData](https://github.com/CrunchyData/crunchy-containers). CrunchyData provides cloud agnostic PostgreSQL container technology that is designed for production workloads with cloud native High Availability, Disaster Recovery, and monitoring. PostgreSQL is deployed usually as a `statefulset` on Kubernetes and requires persistent storage for each instance of PostgreSQL StorageManager instance. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
+OpenEBS is deployed under PostgreSQL for a variety of reasons discussed below.  The basics are that PostgreSQL is typically deployed  as a `statefulset` on Kubernetes and requires persistent storage for each instance of PostgreSQL StorageManager. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
 
 <br>
 
@@ -23,11 +23,11 @@ The PostgreSQL container is sourced from [CrunchyData](https://github.com/Crunch
 - Large size PVs can be provisioned by OpenEBS and PostgreSQL
 - Start with small storage and add disks as needed on the fly. Sometimes PostgreSQL instances are scaled up because of capacity on the nodes. With OpenEBS persistent volumes, capacity can be thin provisioned and disks can be added to OpenEBS on the fly without disruption of service 
 - PostgreSQL sometimes need highly available storage, in such cases OpenEBS volumes can be configured with 3 replicas.
-- If required, take backup of the PostgreSQL data periodically and back them up to S3 or any object storage so that restoration of the same data is possible to the same or any other Kubernetes cluster
+- If required, OpenEBS can be used to take backups of the PostgreSQL data periodically and back them up to S3 or to any object storage or to other PVs backed by OpenEBS so that restoration of the same data is possible to the same or any other Kubernetes cluster
 
 <br>
 
-*Note: PostgreSQL can be deployed both as `deployment` or as `statefulset`. When PostgreSQL deployed as `statefulset`, you don't need to replicate the data again at OpenEBS level. When PostgreSQL is deployed as `deployment`, consider 3 OpenEBS replicas, choose the StorageClass accordingly.*
+*Note: PostgreSQL can be deployed both as `deployment` or as `statefulset`. When PostgreSQL deployed as `statefulset`, you would not typically also replicate the data at OpenEBS level. When PostgreSQL is deployed as a `deployment`, consider 3 OpenEBS replicas, and choose your the StorageClass accordingly.*
 
 <br>
 
@@ -41,7 +41,7 @@ The PostgreSQL container is sourced from [CrunchyData](https://github.com/Crunch
 
 <img src="/docs/assets/svg/postgresql-deployment.svg" alt="OpenEBS and ElasticSearch" style="width:100%;">
 
-As shown above, OpenEBS volumes need to be configured with single replica. This configuration work fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
+As shown above, OpenEBS volumes need to be configured with single replica. This configuration works fine when the nodes (hence the OpenEBS cStor pool) is deployed across Kubernetes zones.
 
 <br>
 
@@ -115,7 +115,7 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just PostgreSQL database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
+In some cases the cStor pool may not be dedicated to only the PostgreSQL database. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
 
 
 

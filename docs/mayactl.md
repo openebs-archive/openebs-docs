@@ -1,7 +1,7 @@
 ---
 id: mayactl
-title: Mayactl
-sidebar_label: Mayactl
+title: mayactl
+sidebar_label: mayactl
 ---
 ------
 
@@ -283,7 +283,7 @@ m-apiserver status:  running
 
 ### [Day 2 Operations](/docs/next/operations.html)
 
-### [Jiva User Guide](/docs/next/jivaguide.html)
+### [Troubleshooting Guide](/docs/next/troubleshooting.html)
 
 ### <br>
 

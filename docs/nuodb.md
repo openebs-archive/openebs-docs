@@ -20,7 +20,6 @@ NuoDB’s distributed SQL database combines the elastic scale and continuous ava
 - No need to manage the local disks, they are managed by OpenEBS
 - Large size PVs can be provisioned by OpenEBS and NuoDB
 - Start with small storage and add disks as needed on the fly. Sometimes NuoDB instances are scaled up because of capacity on the nodes. With OpenEBS persistent volumes, capacity can be thin provisioned and disks can be added to OpenEBS on the fly without disruption of service 
-- NuoDB sometimes need highly available storage, in such cases OpenEBS volumes can be configured with 3 replicas.
 - If required, take backup of the NuoDB data periodically and back them up to S3 or any object storage so that restoration of the same data is possible to the same or any other Kubernetes cluster
 
 <br>

@@ -152,7 +152,7 @@
 		<g>
 			<path class="st13" d="M1493.8,101H537c-7.3,0-13.2-5.1-13.2-11.5l0,0V49.1c0-6.4,5.9-11.5,13.2-11.5h956.6
 				c7.3,0,13.2,5.1,13.2,11.5v40.4C1506.9,95.8,1501.1,100.9,1493.8,101C1493.8,101,1493.8,101,1493.8,101z"/>
-			<text transform="matrix(0.94 0 0 1 575.3235 83.7618)" class="st4 st7 st14">NuoDB NoSQL distributed database with OpenEBS</text>
+			<text transform="matrix(0.94 0 0 1 575.3235 83.7618)" class="st4 st7 st14">NuoDB NewSQL distributed database with OpenEBS</text>
 		</g>
 		<text transform="matrix(0.94 0 0 1 843.6201 815.5402)" class="st4 st5 st6">cStorPool instance2</text>
 		<text transform="matrix(0.94 0 0 1 1184.5 811.67)" class="st4 st5 st6">cStorPool instance3</text>
