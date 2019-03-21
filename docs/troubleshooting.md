@@ -555,11 +555,11 @@ This can be happen due to the stale entries of snapshot and snapshot data. By de
 
 <h3><a class="anchor" aria-hidden="true" id="unable-to-mount-xfs-volume"></a>Unable to mount XFS formatted volumes into Pod</h3>
 
-I created PVC with FSType as `xfs`. OpenEBS PV is successfully created and I have verified that iSCSI initiator is available on the Application node. But application pod is  unable to mount the volume.
+I created PVC with FSType as `xfs`. OpenEBS PV is successfully created and I have verified that iSCSI initiator is available on the Application node. But application pod is unable to mount the volume.
 
 **Troubleshooting:**
 
-Kubectl describe of the application pod is showing the following logs:
+ Describing application pod is showing following error:
 
 ```
 Events:
@@ -582,7 +582,7 @@ iscsiadm: No portals found
   Warning  FailedMount  8s (x2 over 17s)  kubelet, node0  MountVolume.MountDevice failed for volume "pvc-a036d681-8fd4-11e8-ad96-de1a202c9007" : executable file not found in $PATH
 ```
 
-The kubelet had the following errors during the mount process:
+kubelet had following errors during mount process:
 ```
 kubelet[687]: I0315 15:14:54.179765     687 mount_linux.go:453] `fsck` error fsck from util-linux 2.27.1
 kubelet[687]: fsck.ext2: Bad magic number in super-block while trying to open /dev/sdn
@@ -598,7 +598,7 @@ And dmesg was showing errors like:
 
 **Resolution:**
 
-This can be happen due to xfsrepair command failing on the application node. Make sure the application node has the `xfsprogs` installed. 
+This can happen due to `xfs_repair` failure on the application node. Make sure that the application node has `xfsprogs` package installed. 
 
 ```
 apt install xfsprogs
