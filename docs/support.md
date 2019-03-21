@@ -17,7 +17,7 @@ Slack requires registration, but the OpenEBS team welcomes anyone to register at
 
 ## MayaOnline
 
-All community users by default are subscribed to a free plan on <a href="https://app.mayaonline.io" target="_blank">MayaOnline</a>. Enterprise support comes with various support subscription plans.
+All community users by default are subscribed to a free plan on <a href="https://mayaonline.io/" target="_blank">MayaOnline</a>. Enterprise support comes with various support subscription plans.
 
 
 
