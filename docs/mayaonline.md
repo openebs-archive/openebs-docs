@@ -12,7 +12,7 @@ sidebar_label: MayaOnline
 
 Users get access to Prometheus metrics, logs and topology view of OpenEBS volumes </font></div> <br>
 
-<a href="https://app.mayaonline.io" target="_blank">MayaOnline</a> offers visibility into OpenEBS persistent volumes present in Kubernetes. The basic services on this SaaS platform are free for OpenEBS community. A Kubernetes cluster can be connected to MayaOnline before or after OpenEBS installation. By connecting a Kubernetes cluster to MayaOnline, OpenEBS users get the following benefits.
+<a href="https://mayaonline.io" target="_blank">MayaOnline</a> offers visibility into OpenEBS persistent volumes present in Kubernetes. The basic services on this SaaS platform are free for OpenEBS community. A Kubernetes cluster can be connected to MayaOnline before or after OpenEBS installation. By connecting a Kubernetes cluster to MayaOnline, OpenEBS users get the following benefits.
 
 - Topology view of all Kubernetes resources related to Persistent Volumes. This granular visualization help users to understand the relationships between storage and pod resources, get the real-time status of such resources and easy to do troubleshooting during the debugging process. 
 - User can take snapshots/clones of OpenEBS persistent volumes on the fly with ease.
@@ -35,7 +35,7 @@ Users get access to Prometheus metrics, logs and topology view of OpenEBS volume
 
 ## Installing MayaOnline agents on Kubernetes
 
-1. Sign up at [app.mayaonline.io](https://app.mayaonline.io/login) using GitHub credentials.
+1. Sign up at [mayaonline.io](https://mayaonline.io/) using GitHub credentials.
 2. Create a project and choose the Kubernetes platform.
 3. Copy the kubectl command that is presented and run it in your Kubernetes environment.
 
@@ -63,7 +63,7 @@ User's data is never looked into or exported to MayaOnline by the agents.
 
 <br>
 
-[<img src="/docs/assets/mo-getstarted.png" width="400">](https://app.mayaonline.io/)
+[<img src="/docs/assets/mo-getstarted.png" width="400">](https://mayaonline.io/)
 
 <br>
 
@@ -101,7 +101,7 @@ User's data is never looked into or exported to MayaOnline by the agents.
 
 #### [cStor Overview](/docs/next/cstor.html)
 
-#### [Connect to MayaOnline](https://app.mayaonline.io)
+#### [Connect to MayaOnline](https://mayaonline.io)
 
 #### [MayaOnline Documentation](https://docs.mayaonline.io)
 
