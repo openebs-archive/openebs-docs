@@ -69,7 +69,7 @@ class Footer extends React.Component {
             </a>
             </div>
 	  <div>
-		<a href="https://app.mayaonline.io">Get OpenEBS support through MayaOnline</a>
+		<a href="https://mayaonline.io">Get OpenEBS support through MayaOnline</a>
           </div>
           </div>
         </section>
