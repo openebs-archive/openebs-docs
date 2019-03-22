@@ -53,7 +53,7 @@ class Footer extends React.Component {
             </a>
             </div>
 	  <div>
-		<a href="https://slack.openebs.io">Get in touch with OpenEBS community via Slack</a>
+		<a href="https://openebs.io/join-our-community" target="_blank">Get in touch with OpenEBS community via Slack</a>
           </div>
           </div>
           <div>
@@ -69,7 +69,7 @@ class Footer extends React.Component {
             </a>
             </div>
 	  <div>
-		<a href="https://mayaonline.io">Get OpenEBS support through MayaOnline</a>
+		<a href="https://mayaonline.io" target="_blank">Get OpenEBS support through MayaOnline</a>
           </div>
           </div>
         </section>
