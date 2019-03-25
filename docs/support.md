@@ -9,11 +9,9 @@ sidebar_label: Support
 
 ## Slack
 
-The OpenEBS team hangs out on Slack in the #openebs-users channel. To participate in discussions with the OpenEBS team go to [Slack OpenEBS Community](https://openebs-community.slack.com/messages/C3NPGQ6G3/).
+The OpenEBS team hangs out on Slack in the #openebs-users channel. To participate in discussions with the OpenEBS team go to <a href="https://openebs.io/join-our-community" target="_blank">Slack OpenEBS Community</a>
 
-Slack requires registration, but the OpenEBS team welcomes anyone to register at <http://slack.openebs.io/>. 
-
-
+Slack requires registration, but the OpenEBS team welcomes anyone to register at <a href="https://openebs.io/join-our-community" target="_blank">Slack OpenEBS Community</a>
 
 ## MayaOnline
 
