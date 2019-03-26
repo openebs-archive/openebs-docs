@@ -38,9 +38,9 @@ sidebar_label: FAQs
 
 <br>
 
-> ## Best Practices
+## Best Practices
 
-[What are the recommended iscsi timeout settings on the host?]()
+[What are the recommended iscsi timeout settings on the host?](#what-are-the-recommended-iscsi-timeout-settings-on-the-host)
 
 <br>
 
@@ -80,14 +80,12 @@ sidebar_label: FAQs
 
 <br><br>
 
-<hr>
 
 <font size="6" color="blue">General</font>
 
 <br>
 
-
-### What is most distinctive about the OpenEBS architecture?
+<font size="5">What is most distinctive about the OpenEBS architecture?</font>
 
 The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, a delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.
 
@@ -95,7 +93,7 @@ The OpenEBS architecture is an example of Container Attached Storage (CAS). Thes
 
 <br>
 
-### Why did you choose iSCSI? Does it introduce latency and decrease performance? 
+<font size="5">Why did you choose iSCSI? Does it introduce latency and decrease performance?</font> 
 
 We at OpenEBS strive to make OpenEBS simple to use using Kubernetes as much as possible to manage OpenEBS itself. iSCSI allows you to be more resilient in cases where the workload and the controller are not on the same host. In other words, the OpenEBS user or architect will not suffer an outage when the storage IO controller is not scheduled locally to the workload in need of storage. OpenEBS does a variety of things to improve performance elsewhere in the stack. More is to come via the cStor storage engine in order to have this level of flexibility.
 
@@ -103,7 +101,7 @@ We at OpenEBS strive to make OpenEBS simple to use using Kubernetes as much as p
 
 <br>
 
-### Where is my data stored and how can I see that?
+<font size="5">Where is my data stored and how can I see that?</font>
 
 OpenEBS stores data in a configurable number of replicas. These are placed to maximize resiliency. For example, they are placed in different racks or availability zones.
 
@@ -138,7 +136,7 @@ volumes:
 
 <br>
 
-### What changes are needed for Kubernetes or other subsystems to leverage OpenEBS?
+<font size="5">What changes are needed for Kubernetes or other subsystems to leverage OpenEBS?</font>
 
 One of the major differences of OpenEBS versus other similar approaches is that no changes are required to run OpenEBS on Kubernetes. However, OpenEBS itself is a workload and the easy management of it is crucial especially as the Container Attached Storage (CAS) approach entails putting containers that are IO controller and replica controllers.
 
@@ -148,7 +146,7 @@ You can access the OpenEBS IO controller via iSCSI, exposed as a service. The no
 
 <br>
 
-### How do you get started and what is the typical trial deployment?
+<font size="5">How do you get started and what is the typical trial deployment?</font>
 
 If you have a Kubernetes environment, you can deploy OpenEBS using the following command.
 
@@ -162,7 +160,7 @@ Register at <a href="https://mayaonline.io/" target="_blank">MayaOnline</a> to r
 
 <br>
 
-### What is most distinctive about the OpenEBS architecture?
+<font size="5">What is most distinctive about the OpenEBS architecture?</font>
 
 The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.
 
@@ -170,7 +168,7 @@ The OpenEBS architecture is an example of Container Attached Storage (CAS). Thes
 
 <br>
 
-### What is the default OpenEBS Reclaim policy?
+<font size="5">What is the default OpenEBS Reclaim policy?</font>
 
 The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim. In case of cStor volumes, data was being deleted as well. For jiva, from 0.8.0 version, the data is deleted via scrub jobs.
 
@@ -178,7 +176,7 @@ The default retention is the same used by K8s. For dynamically provisioned Persi
 
 <br>
 
-### Why NDM Daemon set required privileged mode?
+<font size="5">Why NDM Daemon set required privileged mode?</font>
 
 Currently, NDM Daemon set runs in the privileged mode. NDM requires privileged mode because it requires access to `/dev` and `/sys` directories for monitoring the devices attached and also to fetch the details of the attached device using various probes. 
 
