@@ -26,9 +26,9 @@ sidebar_label: FAQs
 
 [What is the default OpenEBS Reclaim policy?](/docs/next/faq.html#what-is-the-default-openebs-reclaim-policy)
 
-[Why NDM daemon set required privileged mode?]()
+[Why NDM daemon set required privileged mode?](#why-ndm-daemon-set-required-privileged-mode)
 
-
+<br>
 
 <font size="6">Data Protection</font>
 
@@ -36,13 +36,13 @@ sidebar_label: FAQs
 
 [How does OpenEBS provide high availability for stateful workloads?](/docs/next/faq.html#how-does-openebs-provide-high-availability-for-stateful-workloads)
 
-
+<br>
 
 <font size="6">Best Practices</font>
 
 [What are the recommended iscsi timeout settings on the host?]()
 
-
+<br>
 
 <font size="6">Miscellaneous</font>
 
@@ -91,7 +91,7 @@ The OpenEBS architecture is an example of Container Attached Storage (CAS). Thes
 
 <a href="#top">Go to top</a>
 
-
+<br>
 
 ### Why did you choose iSCSI? Does it introduce latency and decrease performance? 
 
@@ -99,7 +99,7 @@ We at OpenEBS strive to make OpenEBS simple to use using Kubernetes as much as p
 
 <a href="#top">Go to top</a>
 
-
+<br>
 
 ### Where is my data stored and how can I see that?
 
@@ -134,7 +134,7 @@ volumes:
 
 <a href="#top">Go to top</a>
 
-
+<br>
 
 ### What changes are needed for Kubernetes or other subsystems to leverage OpenEBS?
 
@@ -144,9 +144,7 @@ You can access the OpenEBS IO controller via iSCSI, exposed as a service. The no
 
 <a href="#top">Go to top</a>
 
-
-
-
+<br>
 
 ### How do you get started and what is the typical trial deployment?
 
@@ -156,13 +154,11 @@ If you have a Kubernetes environment, you can deploy OpenEBS using the following
 
 You can then begin running a workload against OpenEBS. There is a large and growing number of workload that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. If you seek for any help,You can join at <a href="https://openebs.io/join-our-community" target="_blank">Slack OpenEBS</a> community channel.
 
-
-
 Register at <a href="https://mayaonline.io/" target="_blank">MayaOnline</a> to receive free monitoring and a single view of stateful workloads of your Kubernetes environment. MayaOnline incorporates customized versions of Prometheus for monitoring, Grafana for metrics visualization and Scope to see the overall environment, and our MuleBot for ChatOps integration and more.  
 
 <a href="#top">Go to top</a>
 
-
+<br>
 
 ### What are the most common use case and most common workloads?
 
@@ -172,7 +168,7 @@ The OpenEBS architecture is an example of Container Attached Storage (CAS). Thes
 
 <a href="#top">Go to top</a>
 
-
+<br>
 
 ### What is the default OpenEBS Reclaim policy?
 
@@ -180,7 +176,7 @@ The default retention is the same used by K8s. For dynamically provisioned Persi
 
 <a href="#top">Go to top</a>
 
-
+<br>
 
 ### Why NDM Daemon set required privileged mode?
 
@@ -188,7 +184,7 @@ Currently, NDM Daemon set runs in the privileged mode. NDM requires privileged m
 
 <a href="#top">Go to top</a>
 
-
+<br>
 
 
 
