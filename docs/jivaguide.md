@@ -45,7 +45,7 @@ In this mode, local disks on each node need to be prepared and mounted at a dire
 
 ### Prepare disks and mount them
 
-If is is a cloud disk provision and mount on the node. If three replicas of Jiva volume are needed, provision three cloud disks and mount them on each node. The mount path needs to be same on all three nodes
+If it is a cloud disk provision and mount on the node. If three replicas of Jiva volume are needed, provision three cloud disks and mount them on each node. The mount path needs to be same on all three nodes
 
 **GPD example**
 
