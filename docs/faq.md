@@ -34,6 +34,14 @@ sidebar_label: FAQs
 
 [How does OpenEBS provide high availability for stateful workloads?](/docs/next/faq.html#how-does-openebs-provide-high-availability-for-stateful-workloads)
 
+
+
+<font size="6">Best Practices</font>
+
+[What are the recommended iscsi timeout settings on the host?]()
+
+
+
 <font size="6">Miscellaneous</font>
 
 [What changes must be made to the containers on which OpenEBS runs?](/docs/next/faq.html#what-changes-must-be-made-to-the-containers-on-which-openebs-runs)
@@ -71,7 +79,6 @@ sidebar_label: FAQs
 <br><br>
 
 <hr>
-
 <font size="6" color="blue">General</font>
 
 <hr>
@@ -214,6 +221,55 @@ An OpenEBS Jiva volume is a controller deployed during OpenEBS installation. Vol
   There is no storage downtime as the other available replica displays inputs/outputs. Policies are in place that does not allow rescheduling of crashed replica (as the replica is tied to a node’s resources) on any other node.
 
 <a href="#top">Go to top</a>
+
+
+
+
+
+
+
+<font size="6" color="maroon">Best Practices</font>
+
+<hr>
+
+### What are the recommended iscsi timeout settings on the host?
+
+There are cases when application pod and OpenEBS cStor target pod are running on different nodes. In such cases, there may be chances that application can go to read only when K8s takes around 5 mins to re-schedule OpenEBS target pod to a new Node. To avoid such scenarios,default iscsi timeout values can be configured to the recommended one. 
+
+<h4><a class="anchor" aria-hidden="true" id="configure-iscsi-timeout"></a>Configure the iscsi timeout value</h4>
+
+The following explains the configuration change for 2 different scenarios.
+
+1. For New iSCSI sessions
+2. For those sessions already logged in to iSCSI target.
+
+
+
+**For New iSCSI sessions**:
+
+Do below configuration settings on the host node to change the default iscsi timeout value.
+
+1. Edit iscsid.conf file.
+
+2. Modify **node.session.timeo.replacement_timeout** with 300 seconds.
+
+   
+
+**For those sessions already logged in to iSCSI target:**
+
+Below command can be used to change the setting for logged in sessions:
+
+```
+iscsiadm -m node -T <target> -p ip:port -o update -n node.session.timeo.replacement_timeout -v 300
+```
+
+
+
+<h4><a class="anchor" aria-hidden="true" id="verify-iscsi-timeout"></a>Verify the iscsi timeout settings </h4>
+
+Verify the configured value by running “iscsiadm -m session -P 3”  and check "Recovery Timeout" value under "Timeouts". It should be configured as 300.
+
+You may notice the change in the “Attached scsi disk” value. This causes volume to get unmounted and thus volume need to be remounted. Detailed steps for remounting volume are mentioned [here](https://blog.openebs.io/keeping-openebs-volumes-in-rw-state-during-node-down-scenarios-f2b54df94a32).
 
 
 
