@@ -74,6 +74,8 @@ sidebar_label: FAQs
 
 [Does OpenEBS support encryption at rest?](#encryption-rest)
 
+[How Can I create cStor Pools using partitioned disks?](#create-cstor-pool-partioned-disks)
+
 
 
 <br><br>
@@ -106,29 +108,32 @@ OpenEBS stores data in a configurable number of replicas. These are placed to ma
 To determine exactly where your data is physically stored, you can run the following kubectl commands.
 
 - Run `kubectl get pvc` to fetch the volume name. The volume name looks like: *pvc-ee171da3-07d5-11e8-a5be-42010a8001be*.
+
 - For each volume, you will notice one IO controller pod and one or more replicas (as per the storage class configuration). For the above PVC, run the following command to get the IO controller and replica pods. 
 
-```
-	 kubectl get pods --all-namespaces | grep pvc-ee171da3-07d5-11e8-a5be-42010a8001be
-```
+  ```
+  kubectl get pods --all-namespaces | grep pvc-ee171da3-07d5-11e8-a5be-42010a8001be
+  ```
 
-  	 The output displays the following pods.
+  The output displays the following pods.
 
-```
- 	 IO Controller: pvc-ee171da3-07d5-11e8-a5be-42010a8001be-ctrl-6798475d8c-7dcqd
- 	 Replica 1: pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-hls6s     
-	 Replica 2: pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-tr28f  
-```
+  ```
+  IO Controller: pvc-ee171da3-07d5-11e8-a5be-42010a8001be-ctrl-6798475d8c-7dcqd
+  Replica 1: pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-hls6s     
+  Replica 2: pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-tr28f  
+  ```
 
 - To check the location where the data is stored, get the details of the replica pod. For getting the details of Replica 1 above, use the `kubectl get pod -o yaml pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-hls6s` command. Check the volumes section.
 
-```
-	 volumes:
-  	   - hostPath:
-    	   path: /var/openebs/pvc-ee171da3-07d5-11e8-a5be-42010a8001be
-       	   type: ""
-       - name: openebs
-```
+  ```
+  volumes:
+    	   - hostPath:
+      	   path: /var/openebs/pvc-ee171da3-07d5-11e8-a5be-42010a8001be
+         	   type: ""
+         - name: openebs
+  ```
+
+  
 
 <a href="#top">Go to top</a>
 
@@ -601,6 +606,62 @@ sparse-5a92ced3e2ee21eac7b930f670b5eab5   10737418240   Active   10m
 <h3><a class="anchor" aria-hidden="true" id="encryption-rest"></a>Does OpenEBS support encryption at rest?</h3>
 
 You can achieve encryption at rest using LUKS. Example tutorial for enabling LUKS on CentOS is at: <a  href="https://wiki.centos.org/HowTos/EncryptedFilesystem" target="_blank">https://wiki.centos.org/HowTos/EncryptedFilesystem</a>
+
+<br>
+
+<h3><a class="anchor" aria-hidden="true" id="create-cstor-pool-partioned-disks"></a>How Can I create cStor Pools using partitioned disks?</h3>
+
+Currently,NDM is not selecting partition disks for creating device resource. But, you can create device resource for the partition disks manually. The following are the steps for the creation of device resource.
+
+1. Download the device CR YAML for creating the device CR manually. The sample device CR can be downloaded from [here](https://raw.githubusercontent.com/openebs/node-disk-manager/master/deploy/crds/openebs_v1alpha1_device_cr.yaml).
+
+2. Modify the downloaded device CR sample YAML with the partition disk information. Following is the sample device CR YAML.
+
+   ```
+   apiVersion: openebs.io/v1alpha1
+   kind: Device
+   metadata:
+     name: example-device
+     labels:
+       kubernetes.io/hostname: <host name in which disk/device is attached> # like gke-openebs-user-default-pool-044afcb8-bmc0
+       ndm.io/managed: "false" # for manual disk creation put false
+       ndm.io/disk-type: partition
+   status:
+     state: Active
+   spec:
+     capacity:
+       logicalSectorSize: <logical sector size of device> # like 512
+       storage: <total capacity in bits> #like 53687091200
+     details:
+       firmwareRevision: <firmware revision>
+       model: <model name of device> # like PersistentDisk
+       serial: <serial no of disk> # like google-disk-2
+       compliance: <compliance of disk> #like "SPC-4"
+       vendor: <vendor of disk> #like Google
+     devlinks:
+     - kind: by-id
+       links:
+       - <link1> # like /dev/disk/by-id/scsi-0Google_PersistentDisk_disk-2
+       - <link2> # like /dev/disk/by-id/google-disk-2
+     - kind: by-path
+       links:
+       - <link1> # like /dev/disk/by-path/virtio-pci-0000:00:03.0-scsi-0:0:2:0 
+     Partitioned: No
+     path: <devpath> # like /dev/sdb1
+   ```
+
+   In the above device CR sample spec, following field must be filled before applying the YAML.
+
+   * kubernetes.io/hostname
+   * logicalSectorSize
+   * storage
+   * links
+     * This is applicable for both `by-id` and `by-path`
+   * path
+
+3. Repeat the same step for each of the partitioned device that you have chosen for creating cStor pool.
+
+4. Get the diskname from `kubectl get disks` and add the disk name for cStor SPC YAML.
 
 <br>
 
