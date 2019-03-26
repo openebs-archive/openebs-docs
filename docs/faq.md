@@ -26,6 +26,8 @@ sidebar_label: FAQs
 
 [What is the default OpenEBS Reclaim policy?](/docs/next/faq.html#what-is-the-default-openebs-reclaim-policy)
 
+[Why NDM daemon set required privileged mode?]()
+
 
 
 <font size="6">Data Protection</font>
@@ -179,6 +181,12 @@ The default retention is the same used by K8s. For dynamically provisioned Persi
 <a href="#top">Go to top</a>
 
 
+
+### Why NDM Daemon set required privileged mode?
+
+Currently, NDM Daemon set runs in the privileged mode. NDM requires privileged mode because it requires access to `/dev` and `/sys` directories for monitoring the devices attached and also to fetch the details of the attached device using various probes. 
+
+<a href="#top">Go to top</a>
 
 
 
@@ -349,7 +357,9 @@ OpenEBS have two storage Engines, Jiva and cStor which can be used to provision 
 
 Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted). 
 
-cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is optional to wipe out the data from the disk if you use existing disks for cStor pool creation.
+cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is good to wipe out the disk if you use existing disks for cStor pool creation. 
+
+In case you need to use Local SSDs as block devices, you will have to first unmount them. On GKE, the Local SSDs are formatted with ext4 and mounted under /mnt/disks/. If local SSDs are not unmounted, the cStor pool creation will fail.
 
 <a href="#top">Go to top</a>
 
@@ -365,7 +375,7 @@ Node Disk Manager(NDM) forms the DISK CRs in the following way
 - Filter out any other disk patterns that are mentioned in `openebs-operator.yaml`.
 
 NDM do some filters on the disks to exclude, for example boot disk. 
-NDM is excluding following device path to avoid from creating cStor pools. This configuration is added in `openebs-ndm-config` under Configmap in `openebs-operator.yaml`.
+NDM is excluding following device path to avoid them for creating cStor pools. This configuration is added in `openebs-ndm-config` under Configmap in `openebs-operator.yaml`.
 
 ```
 /dev/loop - loop devices.
