@@ -22,8 +22,6 @@ sidebar_label: FAQs
 
 [How do you get started and what is the typical trial deployment?](#get-started)
 
-[What is most distinctive about the OpenEBS architecture?](#about-architectures)
-
 [What is the default OpenEBS Reclaim policy?](#default-reclaim-policy)
 
 [Why NDM daemon set required privileged mode?](#why-ndm-priviledged)
@@ -40,7 +38,7 @@ sidebar_label: FAQs
 
 ## Best Practices
 
-[What are the recommended iscsi timeout settings on the host?](what-are-the-recommended-iscsi-timeout-settings-on-the-host)
+[What are the recommended iscsi timeout settings on the host?](#what-are-the-recommended-iscsi-timeout-settings-on-the-host)
 
 <br>
 
@@ -393,7 +391,7 @@ Example:
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="provision-pvc-higher-than-physical-sapce"></a>Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?</h3>
+<h3><a class="anchor" aria-hidden="true" id="provision-pvc-higher-than-physical-sapce"></a> Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?</h3>
 
 As of 0.8.0, the user is allowed to create PVCs that cross the available capacity of the pools in the Nodes. In the future release, it will validate with an option `overProvisioning=false`, the PVC request should be denied if there is not enough available capacity to provision the volume.
 
