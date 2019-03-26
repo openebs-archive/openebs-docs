@@ -30,7 +30,7 @@ sidebar_label: FAQs
 
 <br>
 
-<font size="6">Data Protection</font>
+## Data Protection
 
 [How is data protected? What happens when a host, client workload, or a data center fails?](/docs/next/faq.html#how-is-data-protected-what-happens-when-a-host-client-workload-or-a-data-center-fails)
 
@@ -38,13 +38,13 @@ sidebar_label: FAQs
 
 <br>
 
-<font size="6">Best Practices</font>
+> ## Best Practices
 
 [What are the recommended iscsi timeout settings on the host?]()
 
 <br>
 
-<font size="6">Miscellaneous</font>
+## Miscellaneous
 
 [What changes must be made to the containers on which OpenEBS runs?](/docs/next/faq.html#what-changes-must-be-made-to-the-containers-on-which-openebs-runs)
 
@@ -81,10 +81,11 @@ sidebar_label: FAQs
 <br><br>
 
 <hr>
+
 <font size="6" color="blue">General</font>
 
-<hr>
 <br>
+
 
 ### What is most distinctive about the OpenEBS architecture?
 
