@@ -387,13 +387,13 @@ volumeBindingMode: WaitForFirstConsumer
 
 **Approach 2:**
 
-This approach is useful when user/tool does not have control over the StatefulSet spec. in this case, itrequires a new StorageClass per StatefulSet application.
+This approach is useful when user/tool does not have control over the StatefulSet spec. in this case, it requires a new StorageClass per StatefulSet application.
 
 Add following changes in the StorageClass that is referred to by the claimTemplates of this StatefulSet.
 
 *  Add openebs.io/sts-target-affinity: <.metadata.name of STS> label to the following fields.
   * metadata.labels
-* Set volumeBindingMode to WaitForFirstConsumer
+*  Set volumeBindingMode to WaitForFirstConsumer
 
 **Example snippet:**
 
@@ -470,6 +470,7 @@ Allow users to set available performance tunings in storage class based on their
 * cStor target worker threads
 * cStor volume replica worker threads
   * This Is associated with cStorVolumeReplica.
+
   * Defaults to the number of cores on the machine.
 
 **Note:**  These configuration can be only used during volume provisioning.
