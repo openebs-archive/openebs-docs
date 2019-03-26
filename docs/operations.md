@@ -113,6 +113,8 @@ Once the snapshot is created, restoration from a snapshot or cloning the snapsho
 
 - Mount the above PVC in an application YAML to browse the data from the clone.
 
+**Note:** For deleting the corresponding source volume, it is mandatory to delete the associated clone volumes of the source volume. The source volume deletion will fail if any associated clone volume is present on the cluster.
+
 <br>
 
 ### Deleting a cStor Snapshot
