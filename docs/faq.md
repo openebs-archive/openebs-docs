@@ -26,49 +26,49 @@ sidebar_label: FAQs
 
 [What is the default OpenEBS Reclaim policy?](#default-reclaim-policy)
 
-[Why NDM daemon set required privileged mode?](#why-ndm-daemon-set-required-privileged-mode)
+[Why NDM daemon set required privileged mode?](#why-ndm-priviledged)
 
 <br>
 
 ## Data Protection
 
-[How is data protected? What happens when a host, client workload, or a data center fails?](/docs/next/faq.html#how-is-data-protected-what-happens-when-a-host-client-workload-or-a-data-center-fails)
+[How is data protected? What happens when a host, client workload, or a data center fails?](#how-is-data-protected-what-happens-when-a-host-client-workload-or-a-data-center-fails)
 
-[How does OpenEBS provide high availability for stateful workloads?](/docs/next/faq.html#how-does-openebs-provide-high-availability-for-stateful-workloads)
+[How does OpenEBS provide high availability for stateful workloads?](#how-does-openebs-provide-high-availability-for-stateful-workloads)
 
 <br>
 
 ## Best Practices
 
-[What are the recommended iscsi timeout settings on the host?](#what-are-the-recommended-iscsi-timeout-settings-on-the-host)
+[What are the recommended iscsi timeout settings on the host?](what-are-the-recommended-iscsi-timeout-settings-on-the-host)
 
 <br>
 
 ## Miscellaneous
 
-[What changes must be made to the containers on which OpenEBS runs?](/docs/next/faq.html#what-changes-must-be-made-to-the-containers-on-which-openebs-runs)
+[What changes must be made to the containers on which OpenEBS runs?](#what-changes-must-be-made-to-the-containers-on-which-openebs-runs)
 
-[What are the minimum requirements and supported container orchestrators?](/docs/next/faq.html#what-are-the-minimum-requirements-and-supported-container-orchestrators)
+[What are the minimum requirements and supported container orchestrators?](#what-are-the-minimum-requirements-and-supported-container-orchestrators)
 
-[Why would you use OpenEBS on EBS?](/docs/next/faq.html#why-would-you-use-openebs-on-ebs)
+[Why would you use OpenEBS on EBS?](#why-would-you-use-openebs-on-ebs)
 
-[Can I use the same PVC for multiple Pods?](/docs/next/faq.html#can-i-use-the-same-pvc-for-multiple-pods)
+[Can I use the same PVC for multiple Pods?](#can-i-use-the-same-pvc-for-multiple-pods)
 
-[Warning Messages while Launching PVC](/docs/next/faq.html#warning-messages-while-launching-pvc)
+[Warning Messages while Launching PVC](#warning-messages-while-launching-pvc)
 
-[Why *OpenEBS_logical_size* and *OpenEBS_actual_used* are showing in different size?](/docs/next/faq.html#why-openebs-logical-size-and-openebs-actual-used-are-showing-in-different-size)
+[Why *OpenEBS_logical_size* and *OpenEBS_actual_used* are showing in different size?](#why-openebs-logical-size-and-openebs-actual-used-are-showing-in-different-size)
 
-[What must be the disk mount status on Node for provisioning OpenEBS volume?](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume)
+[What must be the disk mount status on Node for provisioning OpenEBS volume?](#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume)
 
-[How OpenEBS detects disks for creating cStor Pool?](/docs/next/faq.html#how-openebs-detects-disks-for-creating-cstor-pool)
+[How OpenEBS detects disks for creating cStor Pool?](#how-openebs-detects-disks-for-creating-cstor-pool)
 
 [Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?](#provision-pvc-higher-than-physical-sapce)
 
-[What is the difference between cStor Pool creation using manual method and auto method?](/docs/next/faq.html#what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method)
+[What is the difference between cStor Pool creation using manual method and auto method?](#what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method)
 
-[How the data is distributed when cStor maxPools count is 3 and replicaCount as 2 in StorageClass?](/docs/next/faq.html#how-the-data-is-distributed-when-cstor-maxpools-count-is-3-and-replicacount-as-2-in-storageclass)
+[How the data is distributed when cStor maxPools count is 3 and replicaCount as 2 in StorageClass?](#how-the-data-is-distributed-when-cstor-maxpools-count-is-3-and-replicacount-as-2-in-storageclass)
 
-[How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?](/docs/next/faq.html#how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions)
+[How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?](#how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions)
 
 [How to create a cStor volume on single cStor disk pool?](#create-cstor-volume-single-disk-pool)
 
@@ -160,14 +160,6 @@ Register at <a href="https://mayaonline.io/" target="_blank">MayaOnline</a> to r
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="about-architecture"></a>What is most distinctive about the OpenEBS architecture?</h3>
-
-The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.
-
-<a href="#top">Go to top</a>
-
-<br>
-
 <h3><a class="anchor" aria-hidden="true" id="default-reclaim-policy"></a>What is the default OpenEBS Reclaim policy?</h3>
 
 The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim. In case of cStor volumes, data was being deleted as well. For jiva, from 0.8.0 version, the data is deleted via scrub jobs.
@@ -192,7 +184,7 @@ Currently, NDM Daemon set runs in the privileged mode. NDM requires privileged m
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="-how-data-is-protected"></a>How is data protected? What happens when a host, client workload, or a data center fails?</h3>
+<h3><a class="anchor" aria-hidden="true" id="how-is-data-protected-what-happens-when-a-host-client-workload-or-a-data-center-fails"></a>How is data protected? What happens when a host, client workload, or a data center fails?</h3>
 
 Kubernetes provides many ways to enable resilience. OpenEBS leverages these wherever possible.  For example, say the IO container that has the iSCSI target fails. Well, it is spun back up by Kubernetes. The same applies to the underlying replica containers, where the data is actually stored. They are spun back up by Kubernetes. Now, the point of replicas is to ensure that when one or more of these replicas are being respun and then repopulated in the background by OpenEBS, the client applications still run.  OpenEBS takes a simple approach to ensuring that multiple replicas can be accessed by an IO controller using a configurable quorum or the minimum number of replica requirements. In addition, our new cStor checks for silent data corruption and in some cases can fix it in the background.  Silent data corruption, unfortunately, can occur from poorly engineered hardware and from other underlying conditions including those that your cloud provider is unlikely to report or identify.  
 
@@ -200,7 +192,7 @@ Kubernetes provides many ways to enable resilience. OpenEBS leverages these wher
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="how-openebs-ha"></a>How does OpenEBS provide high availability for stateful workloads?</h3>
+<h3><a class="anchor" aria-hidden="true" id="how-does-openebs-provide-high-availability-for-stateful-workloads"></a>How does OpenEBS provide high availability for stateful workloads?</h3>
 
 An OpenEBS Jiva volume is a controller deployed during OpenEBS installation. Volume replicas are defined by the parameter that you set. The controller is an iSCSI target while the replicas play the role of a disk. The controller exposes the iSCSI target while the actual data is written. The controller and each replica run inside a dedicated container. An OpenEBS Jiva volume controller exists as a single instance, but there can be multiple instances of OpenEBS Jiva volume replicas. Persistent data is synchronized between replicas. OpenEBS Jiva volume high availability is based on various scenarios as explained in the following sections. 
 
@@ -231,8 +223,10 @@ An OpenEBS Jiva volume is a controller deployed during OpenEBS installation. Vol
 <font size="6" color="maroon">Best Practices</font>
 
 <hr>
+
 <br>
-<h3><a class="anchor" aria-hidden="true" id="recommened-iscsi-timeout-on-host"></a>What are the recommended iscsi timeout settings on the host?</h3>
+
+<h3><a class="anchor" aria-hidden="true" id="what-are-the-recommended-iscsi-timeout-settings-on-the-host"></a>What are the recommended iscsi timeout settings on the host?</h3>
 
 There are cases when application pod and OpenEBS cStor target pod are running on different nodes. In such cases, there may be chances that application can go to read only when K8s takes around 5 mins to re-schedule OpenEBS target pod to a new Node. To avoid such scenarios,default iscsi timeout values can be configured to the recommended one. 
 
@@ -281,7 +275,7 @@ You may notice the change in the “Attached scsi disk” value. This causes vol
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="changes-for-containers-for-running-openebs"></a>What changes must be made to the containers on which OpenEBS runs?</h3>
+<h3><a class="anchor" aria-hidden="true" id="what-changes-must-be-made-to-the-containers-on-which-openebs-runs"></a>What changes must be made to the containers on which OpenEBS runs?</h3>
 
 OpenEBS has been engineered so that it does not require any changes to the containers on which it runs. Similarly, Kubernetes itself does not require to be altered and no additional external orchestrator is required. However, the workloads that need storage must be running on hosts that have iSCSI initiators, which is a default configuration in almost all operating systems.
 
@@ -289,7 +283,7 @@ OpenEBS has been engineered so that it does not require any changes to the conta
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="minimum-requirements-supported-container-orchestartors"></a>What are the minimum requirements and supported container orchestrators?</h3>
+<h3><a class="anchor" aria-hidden="true" id="what-are-the-minimum-requirements-and-supported-container-orchestrators"></a>What are the minimum requirements and supported container orchestrators?</h3>
 
 OpenEBS is currently tightly integrated into Kubernetes. Support for Docker Swarm is something OpenEBS is looking at in future releases.
 
@@ -303,9 +297,7 @@ For enabling high availability, OpenEBS recommends having a minimum of 3 nodes i
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="encryption-rest"></a>Does OpenEBS support encryption at rest?</h3>
-
-### Why would you use OpenEBS on EBS?
+<h3><a class="anchor" aria-hidden="true" id="why-would-you-use-openebs-on-ebs"></a>Why would you use OpenEBS on EBS?</h3>
 
 There are at least four common reasons for running OpenEBS on Amazon EBS that are listed as follows:
 
@@ -321,7 +313,7 @@ Other enterprise capabilities: OpenEBS adds other capabilities such as extremely
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="same-pvc-multiple-pods"></a>Can I use the same PVC for multiple Pods?</h3>
+<h3><a class="anchor" aria-hidden="true" id="can-i-use-the-same-pvc-for-multiple-pods"></a>Can I use the same PVC for multiple Pods?</h3>
 
 Jiva and cStor volumes are exposed via block storage using iSCSI. Currently, only RWO is supported.
 
@@ -339,7 +331,7 @@ The OpenEBS architecture is an example of Container Attached Storage (CAS). Thes
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="size-difference-logicalsize-actual-used"></a>Why OpenEBS_logical_size and OpenEBS_actual_used are showing in different size?</h3>
+<h3><a class="anchor" aria-hidden="true" id="why-openebs-logical-size-and-openebs-actual-used-are-showing-in-different-size"></a>Why OpenEBS_logical_size and OpenEBS_actual_used are showing in different size?</h3>
 
 The `OpenEBS_logical_size` and `OpenEBS_actual_used` parameters will start showing different sizes when there are replica node restarts and internal snapshots are created for synchronizing replicas.
 
@@ -347,7 +339,7 @@ The `OpenEBS_logical_size` and `OpenEBS_actual_used` parameters will start showi
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="disk-mount-status"></a>What must be the disk mount status on Node for provisioning OpenEBS volume?</h3>
+<h3><a class="anchor" aria-hidden="true" id="what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume"></a>What must be the disk mount status on Node for provisioning OpenEBS volume?</h3>
 
 OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume. 
 
@@ -361,7 +353,7 @@ In case you need to use Local SSDs as block devices, you will have to first unmo
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="how-openebs-detects-disks"></a>How OpenEBS detects disks for creating cStor Pool?</h3>
+<h3><a class="anchor" aria-hidden="true" id="how-openebs-detects-disks-for-creating-cstor-pool"></a>How OpenEBS detects disks for creating cStor Pool?</h3>
 
 Any block disks available on the node (that can be listed with say `lsblk`) will be discovered by OpenEBS. 
 Node Disk Manager(NDM) forms the DISK CRs in the following way
@@ -409,7 +401,7 @@ As of 0.8.0, the user is allowed to create PVCs that cross the available capacit
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="difference-manual-auto-pool-provision"></a>What is the difference between cStor Pool creation using manual method and auto method?</h3>
+<h3><a class="anchor" aria-hidden="true" id="what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method"></a>What is the difference between cStor Pool creation using manual method and auto method?</h3>
 
 By using manual method, you must give the selected disk name which is listed by NDM. This details has to be entered in the StoragePoolClaim YAML under `diskList`. See [storage pool](/docs/next/setupstoragepools.html#by-using-manual-method) for more info. 
 It is also possible to change `maxPools` count and `poolType` in the StoragePoolClaim YAML. 
@@ -430,7 +422,7 @@ If you set `maxPools` as 3 and `poolType` as `mirrored`, then Mirrored cStor poo
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="how-data-distribution-when-maxpool-3-replica-2"></a>How the data is distributed when cStor maxPools count is 3 and replicaCount as 2 in StorageClass?</h3>
+<h3><a class="anchor" aria-hidden="true" id="how-the-data-is-distributed-when-cstor-maxpools-count-is-3-and-replicacount-as-2-in-storageclass"></a>How the data is distributed when cStor maxPools count is 3 and replicaCount as 2 in StorageClass?</h3>
 
 If `maxPool` count is 3 in StoragePoolClaim, then 3 cStor storage pool will create if it meet the required number of Nodes,say 3 in this example.
 If `replicaCount` is 2 in StorageClass, then 2 OpenEBS volume will create on the top of any 2 cStor storage pool out of 3.
@@ -439,7 +431,7 @@ If `replicaCount` is 2 in StorageClass, then 2 OpenEBS volume will create on the
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="setup-psp-openebs"></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
+<h3><a class="anchor" aria-hidden="true" id="how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions"></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
 
 Apply the following YAML in your cluster.
 
