@@ -32,6 +32,8 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 ## Installation
 
+
+
 [Installation failed because insufficient user rights](#install-failed-user-rights)
 
 [iSCSI client is not setup on Nodes. Application Pod is in ContainerCreating state.](#install-failed-iscsi-not-configured)
@@ -47,7 +49,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 ## Uninstall
 
-[cStor Volume Replicas are not getting deleted properly](#cvr-deletion-unsuccessful)
+
 
 [Whenever a Jiva PVC is deleted, a job will created and status is seeing as `completed`](#jiva-deletion-scrub-job)
 
@@ -82,6 +84,8 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 <br>
 
 ## Kubernetes related
+
+
 
 [Kubernetes node reboots because of increase in memory consumed by Kubelet](#node-reboot-when-kubelet-memory-increases)
 
@@ -209,28 +213,7 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 <font size="6" color="maroon">Un-Install</font>
 
-<h3><a class="anchor" aria-hidden="true" id="cvr-deletion-unsuccessful"></a>cStor Volume Replicas are not getting deleted properly.</h3>
-
-Sometimes, there are chances that cStor volumes may not get deleted. Below workaround will resolve this issue. Perform the following command.
-
-```
-kubectl edit cvr -n openebs
-```
-
-And then remove finalizers from the corresponding CVR. Need to remove following entries and save it.
-
-```
-finalizers:
-- cstorvolumereplica.openebs.io/finalizer
-```
-
-This will automatically remove the pending CVR and delete the cStor volume completely.
-
-If there are multiple CVR entries need to be deleted,this can be done by using the following command.
-
-```
-CRD=`kubectl get crd | grep cstorvolumereplica | cut -d" " -f1` && kubectl patch crd $CRD -p '{"metadata":{"finalizers": [null]}}' --type=merge
-```
+<br>
 
 
 
