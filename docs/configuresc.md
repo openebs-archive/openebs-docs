@@ -110,7 +110,7 @@ Below table lists the storage policies supported by cStor. These policies should
 | [AuxResourceRequests](#AuxResourceRequests-Policy)       |           | Decided by Kubernetes scheduler                              | Configure minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. |
 | [Target Affinity](#Target-Affinity-Policy)               |           | Decided by Kubernetes scheduler                              | The policy specifies the label KV pair to be used both on the cStor target and on the application being used so that application pod and cStor target pod are scheduled on the same node. |
 | [Target Namespace](#Target-Namespace)                    |           | openebs                                                      | When service account name is specified, the cStor target pod is scheduled in the application's namespace. |
-| [Performance Tunings](#Performance-Tunings)              |           | QueueDepth: 32 <br />Luworkers: 6 <br />ZvolWorkers defaults to core of the machine | Allow users to set available performance tunings in StorageClass based on their workload. |
+| [Performance Tunings](#Performance-Tunings)              |           | QueueDepth: 32 <br />Luworkers: 6 <br />ZvolWorkers: < number of core of the machine > | Allow users to set available performance tunings in StorageClass based on their workload. |
 
 <br>
 
