@@ -262,11 +262,11 @@ metadata:
   name: cstor-disk
   annotations:
     cas.openebs.io/config: |
-      - name: PoolResourceRequests
+      - name: PoolResourceLimits
         value: |-
             memory: 1Gi
 spec:
-  name: cstor-pool-prom1
+  name: cstor-disk
   type: disk
 ```
 
@@ -285,11 +285,11 @@ metadata:
   name: cstor-disk
   annotations:
     cas.openebs.io/config: |
-      - name: PoolResourceLimits
+      - name: PoolResourceRequests
         value: |-
             memory: 1Gi
 spec:
-  name: cstor-pool-prom1
+  name: cstor-disk
   type: disk
 ```
 
@@ -305,7 +305,7 @@ cStor pool pods can be ensure that pods are not scheduled onto inappropriate nod
 apiVersion: openebs.io/v1alpha1
 kind: StoragePoolClaim
 metadata:
-  name: cstor-sparse-pool
+  name: cstor-disk
   annotations:
     cas.openebs.io/config: |
       - name: Tolerations
@@ -320,11 +320,53 @@ metadata:
             operator: Equal
             value: storage
 spec:
-  name: cstor-sparse-pool
-  type: sparse
+  name: cstor-disk
+  type: disk
   maxPools: 3
   poolSpec:
     poolType: striped
+```
+
+
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="AuxResourceLimits-Policy"></a>AuxResourceLimits Policy</h3>
+
+You can specify the *AuxResourceLimits* which allow you to set limits on side cars. 
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+  annotations:
+    cas.openebs.io/config: |
+      - name:  AuxResourceLimits
+        value: |-
+            memory: 0.5Gi
+            cpu: 50m
+    openebs.io/cas-type: cstor
+```
+
+
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="AuxResourceRequests-Policy"></a>AuxResourceRequests Policy</h3>
+
+This feature is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. `AuxResourceRequests` allow you to set requests on side cars. Requests have to be specified in the format expected by Kubernetes
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+  annotations:
+    cas.openebs.io/config: |
+      - name: AuxResourceRequests
+        value: "none"
+    openebs.io/cas-type: cstor
 ```
 
 
