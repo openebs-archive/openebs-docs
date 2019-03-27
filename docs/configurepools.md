@@ -297,6 +297,38 @@ spec:
 
 
 
+<h3><a class="anchor" aria-hidden="true" id="Tolerations"></a>Tolerations</h3>
+
+cStor pool pods can be ensure that pods are not scheduled onto inappropriate nodes. This can be acheived using taint and tolerations method. If Nodes are tainted to schedule the pods which are tolerating the taint, then cStor pool pods also can be scheduled using this method.  Tolerations are applied to cStor pool pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-sparse-pool
+  annotations:
+    cas.openebs.io/config: |
+      - name: Tolerations
+        value: |-
+          t1:
+            effect: NoSchedule
+            key: nodeA
+            operator: Equal
+          t2:
+            effect: NoSchedule
+            key: app
+            operator: Equal
+            value: storage
+spec:
+  name: cstor-sparse-pool
+  type: sparse
+  maxPools: 3
+  poolSpec:
+    poolType: striped
+```
+
+
+
 <br>
 
 <hr>
