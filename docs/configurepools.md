@@ -379,7 +379,7 @@ metadata:
 
 ## Day 2 operations on cStorPools
 
-In 0.8.1 , only some day2 operations are supported. Many day2 operations are under active development. See [cStor roadmap](docs/next/cstor.html#cstor-roadmap) for more details. 
+With latest release,only some day2 operations are supported. Many of day2 operations are under active development. See [cStor roadmap](docs/next/cstor.html#cstor-roadmap) for more details. 
 
 **Note:** *All pools created using 0.8.1 will receive the pool expansion capabilities when those features are available in future releases.* 
 
