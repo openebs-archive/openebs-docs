@@ -17,7 +17,7 @@ Follow the below steps to provision persistent volumes using Jiva storage engine
 
 <a href="/docs/next/installation.html" target="_blank">Verify</a> OpenEBS installation
 
-<a href="/docs/next/iscsiclient.html" target="_blank">Verify</a> iSCSI client is installed and iscsid service is running
+<a href="/docs/next/prerequisites.html" target="_blank">Verify</a> iSCSI client is installed and iscsid service is running
 
 If simple provisioning of jiva volumes is desired without any configuration see  <a href="/docs/next/jivaguide.html#simple-provisioning-of-jiva">here</a>
 
