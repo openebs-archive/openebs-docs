@@ -11,11 +11,11 @@ The `mayactl` is the command line tool for interacting with OpenEBS volumes and 
 
 <h3><a class="anchor" aria-hidden="true" id="summary"></a>Summary</h3>
 
-[Command used with mayactl](#Commands-used-with-mayactl)
+[Command used with mayactl](#commands-used-with-mayactl)
 
-[Accesssing mayactl](#Accesssing-mayactl)
+[Accesssing mayactl](#accesssing-mayactl)
 
-[Using mayactl](#Using-mayactl)
+[Using mayactl](#using-mayactl)
 
 
 
@@ -120,46 +120,48 @@ Available Commands:
 The following command shows the list of all OpenEBS volumes including both Jiva and cStor.
 
 ```
- mayactl volume list
+mayactl volume list
 ```
 
 **Example Output:**
 
-<div class="co">Namespace   Name                                      Status   Type   Capacity  StorageClass            Access Mode
----------   ----                                      ------   ----   --------           -------------           -----------
-openebs     pvc-448deccf-40d9-11e9-a23b-0050569331ce  Running  cstor  5G        	cstor081-demo-pool1     ReadWriteOnce</div>
+<div class="co">Namespace  Name                                      Status   Type   Capacity  StorageClass          Access Mode
+---------  ----                                      ------   ----   --------  -------------         -----------
+openebs    pvc-dc3cb979-51ec-11e9-803f-42010a800179  Running  cstor  8G        openebs-cstor-sparse  ReadWriteOnce</div>
+
 
 
 The following command shows the description of a OpenEBS volume.
 
 ```
- mayactl volume describe --volname pvc-448deccf-40d9-11e9-a23b-0050569331ce -n openebs
+mayactl volume describe --volname pvc-dc3cb979-51ec-11e9-803f-42010a800179 -n openebs
 ```
 
 **Example Output:**
 
 <div class="co">Portal Details :
-------- ---------
-IQN               :   iqn.2016-09.com.openebs.cstor:pvc-448deccf-40d9-11e9-a23b-0050569331ce
-Volume            :   pvc-448deccf-40d9-11e9-a23b-0050569331ce
-Portal            :   172.28.9.26:3260
-Size              :   5G
+-------- --------
+IQN               :   iqn.2016-09.com.openebs.cstor:pvc-dc3cb979-51ec-11e9-803f-42010a800179
+Volume            :   pvc-dc3cb979-51ec-11e9-803f-42010a800179
+Portal            :   10.67.247.34:3260
+Size              :   8G
 Controller Status :   running,running,running
-Controller Node   :   node7.mayalab.com
+Controller Node   :   gke-ranjith-082-default-pool-2cd2b6cb-l4ck
 Replica Count     :   3
+
 Application Details:
 --------- -----------
-Application Pod Name      : N/A
-Application Pod Namespace : N/A
+Application Pod Name      : my-release-mysql-65d89bd9c4-rzszj
+Application Pod Namespace : default
+
 Replica Details :
 --------- --------
-NAME                                                          STATUS      POOL NAME          	   NODE
-----                                                          ------      ---------           	   -----
-pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-5lwv     Running     cstor-pool1-5lwv     node3.mayalab.com
-pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-qba6     Running     cstor-pool1-qba6     node2.mayalab.com
-pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-v4oy     Running     cstor-pool1-v4oy     node4.mayalab.com
-</div>
-
+NAME                                                                STATUS      POOL NAME                  NODE
+----                                                                ------      ---------                  -----
+pvc-dc3cb979-51ec-11e9-803f-42010a800179-cstor-sparse-pool-ejs2     Running     cstor-sparse-pool-ejs2     gke-ranjith-082-default-pool-2cd2b6cb-dphl
+pvc-dc3cb979-51ec-11e9-803f-42010a800179-cstor-sparse-pool-gf1d     Running     cstor-sparse-pool-gf1d     gke-ranjith-082-default-pool-2cd2b6cb-l4ck
+pvc-dc3cb979-51ec-11e9-803f-42010a800179-cstor-sparse-pool-m8cy     Running     cstor-sparse-pool-m8cy     gke-ranjith-082-default-pool-2cd2b6cb-x571
+ </div>
 
 
 The following command shows the live statistics of OpenEBS volume.
@@ -172,9 +174,9 @@ mayactl volume stats --volname pvc-448deccf-40d9-11e9-a23b-0050569331ce -n opene
 
 <div class="co">Portal Details :
 ------ ---------
-IQN     :
-Volume  :   pvc-448deccf-40d9-11e9-a23b-0050569331ce
-Portal  :
+IQN     :   iqn.2016-09.com.openebs.cstor:pvc-dc3cb979-51ec-11e9-803f-42010a800179
+Volume  :   pvc-dc3cb979-51ec-11e9-803f-42010a800179
+Portal  :   10.67.247.34:3260
 Size    :   5.000000
 Performance Stats :
 ------ ---------
@@ -187,6 +189,7 @@ LOGICAL(GB)      USED(GB)
 ------------     ---------
 0.000            3.246
 </div>
+
 
 
 <h3><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Pools"></a>mayactl for OpenEBS Storage Pools</h3>
