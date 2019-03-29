@@ -148,12 +148,10 @@ Size              :   8G
 Controller Status :   running,running,running
 Controller Node   :   gke-ranjith-082-default-pool-2cd2b6cb-l4ck
 Replica Count     :   3
-
 Application Details:
 --------- -----------
 Application Pod Name      : my-release-mysql-65d89bd9c4-rzszj
 Application Pod Namespace : default
-
 Replica Details :
 --------- --------
 NAME                                                                STATUS      POOL NAME                  NODE
