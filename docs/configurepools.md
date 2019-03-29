@@ -70,7 +70,7 @@ Process of creating a new cStor storage pool
 
 **Step1:**
 
-Create a YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is limted to `1Gi` and `PoolResourceLimits` value is set to `2Gi`. These values can be changed as per the Node configuration.
+Create a YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is limted to `1Gi` and `PoolResourceLimits` value is set to `1Gi`. These values can be changed as per the Node configuration.
 
 ```
 #Use the following YAMLs to create a cStor Storage Pool.
@@ -119,13 +119,11 @@ In the above file, change the parameters as required
 
   This filed is not named very aptly. This field may be changed to `diskAggType` in future. This filed  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`
 
-  
-
   Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
 - `maxPools`
 
-  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`, then three nodes are randomly chosen by OpenEBS and one cStorPool instance each is created on them  with one disk (`striped`) or two disks (`mirrored`)
+  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`, then three nodes are randomly chosen by OpenEBS and one cStorPool instance each will be created on them with one disk (if poolType is `striped`) or two disks (if poolType is `mirrored`)
 
   This value should be less than or equal to the total number of Nodes in the cluster.
 
@@ -155,11 +153,11 @@ After the pool YAML spec is created, run the following command to create the poo
 kubectl apply -f cstor-pool1-config.yaml
 ```
 
-If the pool creation is successful, you will the example result as shown below.
+If the pool creation is successful, you will see the example result as shown below.
 
 <div class="co">storagepoolclaim.openebs.io "cstor-pool1" created</div>
 
-**Note:** You can horizontally scale up the cStor pool on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `diskList` and update the `maxPools` count. More details can be see [here](/docs/next/operations.html#with-disklist).
+**Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `diskList` and update the `maxPools` count accordingly. More details can be found [here](/docs/next/operations.html#with-disklist).
 
 <br>
 
@@ -179,7 +177,7 @@ Follow the below steps to create a quick cStorPool in this method.
 
 **Step1:**
 
-Create a YAML file called `cstor-pool-config2.yaml` with the following content.  In the following YAML, `PoolResourceRequests` value is limted to `1Gi` and `PoolResourceLimits` value is set to `2Gi`. These values can be changed as per the Node configuration.
+Create a YAML file called `cstor-pool-config2.yaml` with the following content.  In the following YAML, `PoolResourceRequests` value is limted to `1Gi` and `PoolResourceLimits` value is set to `1Gi`. These values can be changed as per the Node configuration.
 
 ```
 ---
@@ -234,7 +232,7 @@ After the pool YAML spec is created, run the following command to create the poo
 kubectl apply -f cstor-pool2-config.yaml
 ```
 
-If the pool creation is successful, you will the example result as shown below.
+If the pool creation is successful, you will see the example result as shown below.
 
 <div class="co">storagepoolclaim.openebs.io "cstor-pool2" created</div>
 

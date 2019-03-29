@@ -633,7 +633,7 @@ Currently,NDM is not selecting partition disks for creating device resource. But
        logicalSectorSize: <logical sector size of device> # like 512
        storage: <total capacity in bits> #like 53687091200
      details:
-       firmwareRevision: <firmware revision>
+       firmwareRevision: <firmware revision> #firmware version
        model: <model name of device> # like PersistentDisk
        serial: <serial no of disk> # like google-disk-2
        compliance: <compliance of disk> #like "SPC-4"
@@ -659,9 +659,9 @@ Currently,NDM is not selecting partition disks for creating device resource. But
      * This is applicable for both `by-id` and `by-path`
    * path
 
-3. Repeat the same step for each of the partitioned device that you have chosen for creating cStor pool.
+3. Repeat the same steps for each partitioned device that you have chosen for creating cStor pool.
 
-4. Get the diskname from `kubectl get disks` and add the disk name for cStor SPC YAML.
+4. Get the `diskname` from `kubectl get disks` command and add the `diskname` in cStor StoragePoolClaim YAML. The steps for the creation of cStorStoragePool can be read [here](/docs/next/configurepools.html#creating-a-new-pool).
 
 <br>
 
