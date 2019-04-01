@@ -271,16 +271,12 @@ pvc-adb79406-8e3e-11e8-a06a-001c42c2325f-rep-696b599894-vs97n    1/1       Runni
 
 **Troubleshooting**
 
-SCSI package is installed on both Host and RKE kubelet.
+Make sure the following prerequisites are done.
 
-```
-[root@node-34622 ~]# iscsiadm -V
-iscsiadm version 6.2.0.874-7
-[root@node-34622 ~]# docker exec kubelet iscsiadm -V
-iscsiadm version 2.0-874
-```
+1. Verify iSCSI initiator is installed on nodes and services are running. 
+2. Added extra_binds under kubelet service in cluster YAML
 
-If output returns iscsiadm version for both commands, then you have to remove iSCSI from the node. You will find the resolution method from [here](/docs/next/iscsiclient.html#aks).
+More details are mentioned [here](/docs/next/prerequisites.html#rancher).
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-stuck-after-deployment"></a>Application pod is stuck in ContainerCreating state after deployment</h3>
 
