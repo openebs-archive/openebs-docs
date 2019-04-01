@@ -112,7 +112,7 @@ Below table identifies few differences between the two engines.
 
 cStor is recommended most of the times as it commands more features and focussed development effort. cStor does offer robust features including snapshots/clones, storage pool features such as thin provisioning, on demand capacity additions etc.
 
-Jiva is recommended for a low capacity workloads which can be accommodated within the container image storage, for example 5 to 50G. Jiva is very easy to use, and provides enterprise grade container native storage without the need of dedicated hard disks. Consider using cStor instead of Jiva especially when snapshots and clones capabilities are needed.
+Jiva is recommended for a low capacity workloads which can be accommodated within the container image storage, for example 5 to 50G. Even though there is no space limitations for using Jiva, it is recommended for a low capacity workloads. Jiva is very easy to use, and provides enterprise grade container native storage without the need of dedicated hard disks. Consider using cStor instead of Jiva especially when snapshots and clones capabilities are needed.
 
 
 
