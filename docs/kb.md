@@ -8,15 +8,13 @@ sidebar_label: Knowledge Base
 
 <br>
 
-## Summary
+<font size="5">Summary</font>
 
-[How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC](#)
-
-
+[How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC](#how-do-i-reuse-an-existing-pv-after-re-creating-kubernetes-statefulset-and-its-pvc)
 
 
 
-## How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC
+<font size="5">How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</font>
 
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
 
@@ -140,23 +138,13 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 
    
 
-10. Apply the same StatefulSet application YAML. The pod will come back online by re-using the existing PVC. The application pod status can be get by following command
+10. Apply the same StatefulSet application YAML. The pod will come back online by re-using the existing PVC. The application pod status can be get by following command.
 
-   ```
-   kubectl get pod -n <namespace>
-   ```
+  ```
+  kubectl get pod -n <namespace>
+  ```
 
-<br>
-
-## See Also:
-
-### [Creating cStor Pool](/docs/next/configurepools.html)
-
-### [Provisioning cStor volumes](/docs/next/deploycstor.html)
-
-### [BackUp and Restore](/docs/next/backup.html)
-
-### [Uninstall](/docs/next/uninstall.html)
+  
 
 <br>
 
