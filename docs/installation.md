@@ -19,22 +19,23 @@ sidebar_label: Installation
 
 - Verify if [iSCSI.d](#verify-iscsi-client) service is running
 
-- Set Kubernetes [admin context](#set-cluster-admin-user-context) and RBAC
+- Set Kubernetes [admin context](#set-cluster-admin-user-context-and-rbac) and RBAC
 
 - Install through 
-  - **[helm](#example-configurations-helm) chart**  `(or)`
+  - **[helm](#installation-through-helm) chart**  `(or)`
 
   - **[kubectl yaml](#installation-through-kubectl) spec file**
 
 - [Verify](#verifying-openebs-installation) installation 
 
-- Installation [troubleshooting](/docs/next/troubleshooting.html) 
+- Installation [troubleshooting](/docs/next/troubleshooting.html#installation) 
 
 - [Post installation](#post-installation-considerations)
 
 <br>
 
 <hr>
+
 <br>
 
 ## Verify iSCSI client
@@ -57,31 +58,35 @@ iSCSI client is a pre-requisite for provisioning volumes and not for installatio
 
 For installation of OpenEBS, cluster-admin user context is a must. 
 
-If there is no cluster-admin user context already, create one and use it. 
+If there is no cluster-admin user context already, create one and use it. Use the following command to create the new context
 
-Use the following command to create the new context
+```
+kubectl config set-context NAME [--cluster=cluster_nickname] [--user=user_nickname] [--namespace=namespace]
+```
 
-`kubectl config set-context NAME [--cluster=cluster_nickname] [--user=user_nickname] [--namespace=namespace]`
+Example:
 
-*Example:*
-
-`kubectl config set-context admin-ctx --user=cluster-admin`
+```
+kubectl config set-context admin-ctx --cluster=gke_strong-eon-153112_us-central1-a_rocket-test2 --user=cluster-admin
+```
 
 
 
 Set the existing cluster-admin user context or the newly created context by using the following command
 
-*Example:*
+Example:
 
-`kubectl config use-context admin-ctx`
+```
+kubectl config use-context admin-ctx
+```
+
+
 
 If you are using GKE or any other cloud providers, you must enable RBAC before OpenEBS installation. This can be done from the kubernetes master console by executing the following command.
 
 ```
 kubectl create clusterrolebinding  <cluster_name>-admin-binding --clusterrole=cluster-admin --user=<user-registered-email-with-the-provider>
 ```
-
-
 
 <br>
 
@@ -121,7 +126,7 @@ Follow the below instructions to do any of the above configurations and then ins
 
 <font size="5">Setup nodeSelectors for OpenEBS control plane</font> 
 
-In a large Kubernetes cluster , you may choose to limit the scheduling of the OpenEBS control plane pods to two or three specific nodes. To do this, use nodeSelector field of PodSpec of OpenEBS control plane pods - *apiserver, volume provisioner and snapshot operator*.  
+In a large Kubernetes cluster, you may choose to limit the scheduling of the OpenEBS control plane pods to two or three specific nodes. To do this, use nodeSelector field of PodSpec of OpenEBS control plane pods - *apiserver, volume provisioner and snapshot operator*.  
 
 See the example [here](#example-nodeselector-helm). 
 
@@ -165,7 +170,7 @@ helm install --namespace <custom_namespace> --name openebs stable/openebs -f val
 
 
 
-As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation) steps.
+As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
 
 <br>
 
@@ -183,7 +188,7 @@ In the **default installation mode**, use the following command to install OpenE
 kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.2.yaml
 ```
 
-As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation) steps.
+As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
 
 <br>
 
@@ -198,13 +203,13 @@ In the **custom installation mode**, you can achieve the following advanced conf
 
 
 
-For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-0.8.2.yaml" target="_blank">download</a> the above file, update the above configurations using the instructions below and proceed to installation with  `kubectl` and updated file.
+For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-0.8.2.yaml" target="_blank">download</a> the **openebs-operator-0.8.2.yaml** file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
 
 
 
 <font size="5">Setup nodeSelectors for OpenEBS control plane</font> 
 
-In a large Kubernetes cluster , you may choose to limit the scheduling of the OpenEBS control plane pods to two or three specific nodes. To do this, specify a map of key-value pair and then attach the same key-value pair as labels to the required nodes on the cluster. 
+In a large Kubernetes cluster, you may choose to limit the scheduling of the OpenEBS control plane pods to two or three specific nodes. To do this, specify a map of key-value pair and then attach the same key-value pair as labels to the required nodes on the cluster. 
 
 Example nodeSelector configuration for OpenEBS control plane components is given [here](#example-nodeselector-yaml). 
 
@@ -234,7 +239,7 @@ See an example configuration [here](#example-diskfilter-yaml)
 
 <font size="5">Configure sparse pool and volume path</font> 
 
-Some of the  configurations related to sparse pool and cStor volume can be configured as environmental variable in the maya-apiserver deployment specification.The following are the availble sparse pool and cStor volume related configuration that can be added as environmental variable in the maya-apiserver deployment specification. This configuration might required where underlying host OS does not have write permission on default OpenEBS path(/var/openebs/).
+Some of the  configurations related to sparse pool and cStor volume can be configured as environmental variable in the maya-apiserver deployment specification.The following are the some of the cStor sparse pool and cStor volume related configuration that can be added as environmental variable in the maya-apiserver deployment specification. This configuration might required where underlying host OS does not have write permission on default OpenEBS path(/var/openebs/).
 
 <h4><a class="anchor" aria-hidden="true" id="SparseDir "></a>SparseDir</h4>
 
@@ -264,7 +269,9 @@ Target Dir is a hostPath directory for target pod. The default value is "/var/op
 
 <h4><a class="anchor" aria-hidden="true" id="Default-cStorSparsePool "></a>Default cStorSparsePool</h4>
 
-The OpenEBS installation will create defaul cstor sparse pool based on this configuration value. If "true" a default cstor sparse pool will be configured, if "false" it will not be configure a default cStor sparse pool.
+The OpenEBS installation will create defaul cstor sparse pool based on this configuration value. If "true", a default cstor sparse pool will be configured, if "false", it will not be configure a default cStor sparse pool. The default configured value is "false". The use of cStor sparse pool is for testing purposes only.
+
+**Example:**
 
 ```
 # environment variable
