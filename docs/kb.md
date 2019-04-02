@@ -135,9 +135,9 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 
 10. Apply the same StatefulSet application YAML. The pod will come back online by re-using the existing PVC. The application pod status can be get by following command.
 
-   ```
-   kubectl get pods -n <namespace>
-   ```
+    ```
+    kubectl get pods -n <namespace>
+    ```
 
    
 
