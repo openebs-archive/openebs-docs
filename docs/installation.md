@@ -264,15 +264,13 @@ Target Dir is a hostPath directory for target pod. The default value is "/var/op
 
 <h4><a class="anchor" aria-hidden="true" id="Default-cStorSparsePool "></a>Default cStorSparsePool</h4>
 
-The OpenEBS installation will create defaul cstor sparse pool based on this configuration value. If "true" a default cstor sparse pool will be configured, if "false" it will not be configured.
+The OpenEBS installation will create defaul cstor sparse pool based on this configuration value. If "true" a default cstor sparse pool will be configured, if "false" it will not be configure a default cStor sparse pool.
 
 ```
 # environment variable
 - name: OPENEBS_IO_INSTALL_DEFAULT_CSTOR_SPARSE_POOL
-          value: "true"
+  value: "false"
 ```
-
-
 
 <br>
 
