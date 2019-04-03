@@ -239,7 +239,7 @@ See an example configuration [here](#example-diskfilter-yaml)
 
 <font size="5">Configure sparse pool and volume path</font> 
 
-Some of the  configurations related to sparse pool and cStor volume can be configured as environmental variable in the maya-apiserver deployment specification.The following are the some of the cStor sparse pool and cStor volume related configuration that can be added as environmental variable in the maya-apiserver deployment specification. This configuration might required where underlying host OS does not have write permission on default OpenEBS path(/var/openebs/).
+Some of the  configurations related to sparse pool and cStor volume can be configured as environmental variable in the maya-apiserver deployment specification.The following are the some of the cStor sparse pool and cStor volume related configuration that can be added as environmental variable in the maya-apiserver deployment specification. 
 
 <h4><a class="anchor" aria-hidden="true" id="SparseDir "></a>SparseDir</h4>
 
@@ -253,30 +253,16 @@ SparseDir is a hostPath directory where to look for sparse files. The default va
 
 
 
-<h4><a class="anchor" aria-hidden="true" id="TargetDir "></a>TargetDir</h4>
-
-Target Dir is a hostPath directory for target pod. The default value is "/var/openebs". 
-
-**Example:**
-
-```
-# environment variable
-- name: OPENEBS_IO_CSTOR_TARGET_DIR
-  value: "/var/lib/overlay/openebs" 
-```
-
-
-
 <h4><a class="anchor" aria-hidden="true" id="Default-cStorSparsePool "></a>Default cStorSparsePool</h4>
 
-The OpenEBS installation will create defaul cstor sparse pool based on this configuration value. If "true", a default cstor sparse pool will be configured, if "false", it will not be configure a default cStor sparse pool. The default configured value is "false". The use of cStor sparse pool is for testing purposes only.
+The OpenEBS installation will create defaul cstor sparse pool based on this configuration value. If "true", a default cstor sparse pool will be configured, if "false", it will not be configure a default cStor sparse pool. The default configured value is "true". The use of cStor sparse pool is for testing purposes only.
 
 **Example:**
 
 ```
 # environment variable
 - name: OPENEBS_IO_INSTALL_DEFAULT_CSTOR_SPARSE_POOL
-  value: "false"
+  value: "true"
 ```
 
 <br>
