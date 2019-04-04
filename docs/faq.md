@@ -28,6 +28,15 @@ sidebar_label: FAQs
 
 
 
+<br>
+
+## Data Protection
+
+[How is data protected? What happens when a host, client workload, or a data center fails?](#how-is-data-protected-what-happens-when-a-host-client-workload-or-a-data-center-fails)
+
+[How does OpenEBS provide high availability for stateful workloads?](#how-does-openebs-provide-high-availability-for-stateful-workloads)
+
+
 <font size="6">Data Protection</font>
 
 [How is data protected? What happens when a host, client workload, or a data center fails?](/docs/next/faq.html#how-is-data-protected-what-happens-when-a-host-client-workload-or-a-data-center-fails)
@@ -170,8 +179,6 @@ The OpenEBS architecture is an example of Container Attached Storage (CAS). Thes
 The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim. In case of cStor volumes, data was being deleted as well. For jiva, from 0.8.0 version, the data is deleted via scrub jobs.
 
 <a href="#top">Go to top</a>
-
-
 
 
 
