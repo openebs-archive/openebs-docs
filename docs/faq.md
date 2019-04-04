@@ -361,12 +361,11 @@ In case you need to use Local SSDs as block devices, you will have to first unmo
 Any block disks available on the node (that can be listed with say `lsblk`) will be discovered by OpenEBS. 
 Node Disk Manager(NDM) forms the DISK CRs in the following way
 
-- Scan the list of disks that are unmounted
+- Scan the list of disks.
 - Filter out the OS disks
-- Filter out any other disk patterns that are mentioned in `openebs-operator.yaml`.
+- Filter out any other disk patterns that are mentioned in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
-NDM do some filters on the disks to exclude, for example boot disk. 
-NDM is excluding following device path to avoid them for creating cStor pools. This configuration is added in `openebs-ndm-config` under Configmap in `openebs-operator.yaml`.
+NDM do some filtering on the disks to exclude, for example boot disk. By default, NDM excludes the following device path to create disk CR. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
 ```
 /dev/loop - loop devices.
@@ -377,11 +376,9 @@ NDM is excluding following device path to avoid them for creating cStor pools. T
 /dev/md -multiple device ( software RAID devices).
 ```
 
-It is also possible to customize by adding more disk types associated with your nodes. For example, used disks, unwanted disks and so on. Following is the default filters added in `openebs-operator.yaml`. This change must be done in the 'openebs-operator.yaml' file that you have downloaded before OpenEBS installation.
+It is also possible to customize by adding more disk types associated with your nodes. For example, used disks, unwanted disks and so on. This change must be done in the 'openebs-operator.yaml' file that you have downloaded before OpenEBS installation.
 
-`exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"`
-
-Example:
+**Example:**
 
 ```
   filterconfigs:

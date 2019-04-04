@@ -70,7 +70,7 @@ Process of creating a new cStor storage pool
 
 **Step1:**
 
-Create a YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is limted to `1Gi` and `PoolResourceLimits` value is set to `1Gi`. These values can be changed as per the Node configuration.
+Create a YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is limted to `2Gi` and `PoolResourceLimits` value is set to `2Gi`. This will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration. 
 
 ```
 #Use the following YAMLs to create a cStor Storage Pool.
@@ -83,10 +83,10 @@ metadata:
     cas.openebs.io/config: |
       - name: PoolResourceRequests
         value: |-
-            memory: 1Gi
+            memory: 2Gi
       - name: PoolResourceLimits
         value: |-
-            memory: 1Gi
+            memory: 2Gi
 spec:
   name: cstor-pool1
   type: disk
@@ -177,7 +177,7 @@ Follow the below steps to create a quick cStorPool in this method.
 
 **Step1:**
 
-Create a YAML file called `cstor-pool-config2.yaml` with the following content.  In the following YAML, `PoolResourceRequests` value is limted to `1Gi` and `PoolResourceLimits` value is set to `1Gi`. These values can be changed as per the Node configuration.
+Create a YAML file called `cstor-pool-config2.yaml` with the following content.  In the following YAML, `PoolResourceRequests` value is limted to `2Gi` and `PoolResourceLimits` value is set to `2Gi`. This will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration.
 
 ```
 ---
@@ -189,10 +189,10 @@ metadata:
     cas.openebs.io/config: |
       - name: PoolResourceRequests
         value: |-
-            memory: 1Gi
+            memory: 2Gi
       - name: PoolResourceLimits
         value: |-
-            memory: 1Gi
+            memory: 2Gi
 spec:
   name: cstor-pool2
   type: disk
@@ -262,7 +262,7 @@ metadata:
     cas.openebs.io/config: |
       - name: PoolResourceLimits
         value: |-
-            memory: 1Gi
+            memory: 2Gi
 spec:
   name: cstor-disk
   type: disk
@@ -274,7 +274,7 @@ spec:
 
 <h3><a class="anchor" aria-hidden="true" id="PoolResourceRequests-Policy"></a>PoolResourceRequests Policy</h3>
 
-This feature allow you to specify resource requests that need to be available before scheduling the containers. If not specified, the default is to use the limits from PoolResourceLimits or the default requests set in the cluster. The `name` of SPC can be changed if you need.
+This feature allow you to specify resource requests that need to be available before scheduling the containers. If not specified, the default values are used. The `name` of SPC can be changed if you need.
 
 ```
 apiVersion: openebs.io/v1alpha1
@@ -285,7 +285,7 @@ metadata:
     cas.openebs.io/config: |
       - name: PoolResourceRequests
         value: |-
-            memory: 1Gi
+            memory: 2Gi
 spec:
   name: cstor-disk
   type: disk
