@@ -324,7 +324,7 @@ metadata:
 
 <h3><a class="anchor" aria-hidden="true" id="Target-Affinity-Policy"></a>Target Affinity Policy</h3>
 
-The StatefulSet workloads access the OpenEBS storage volume by connecting to the Volume Target Pod. This policy can be used to co-locate volume target pod on the same node as workload.
+The Stateful workloads access the OpenEBS storage volume by connecting to the Volume Target Pod. This policy can be used to co-locate volume target pod on the same node as workload.
 
 This feature makes use of the Kubernetes Pod Affinity feature that is dependent on the Pod labels. User will need to add the following label to both Application and PVC.
 
