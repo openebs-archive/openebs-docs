@@ -26,6 +26,8 @@ sidebar_label: FAQs
 
 [Why NDM daemon set required privileged mode?](#why-ndm-priviledged)
 
+[How to install OpenEBS in OpenShift environment without disabling SELinux?](#OpenEBS-install-openshift-without-SELinux-disabled)
+
 <br>
 
 ## Data Protection
@@ -176,6 +178,43 @@ The default retention is the same used by K8s. For dynamically provisioned Persi
 Currently, NDM Daemon set runs in the privileged mode. NDM requires privileged mode because it requires access to `/dev` and `/sys` directories for monitoring the devices attached and also to fetch the details of the attached device using various probes. 
 
 <a href="#top">Go to top</a>
+
+<br>
+
+<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-without-SELinux-disabled"></a>How to install OpenEBS in OpenShift environment without disabling SELinux?</h3>
+
+OpenEBS can be installed in OpenShift environment using the following steps.
+
+1. Add OpenEBS Service account to the privileged scc of OpenShift.
+
+   ```
+   oc adm policy add-scc-to-user privileged system:serviceaccount:openebs:openebs-maya-operator
+   ```
+
+2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. Latest OpenEBS version is 0.8.2. This can be downloaded using the following way.
+
+   ```
+   wget https://openebs.github.io/charts/openebs-operator-0.8.2.yaml
+   ```
+
+3. Edit the downloaded openebs-operator YAML file by changing the hostPath from "/proc/1/mounts" to
+   "/etc/mtab" under openebs-ndm DaemonSet spec.
+
+   Example snippet:**
+
+   ```
+   - name: procmount
+     hostPath:
+         path: /etc/mtab
+   ```
+
+4. Apply the modified the YAML using the following command. The OpenEBS operator YAML file name has to be changed based on the latest version.
+
+   ```
+   oc apply -f openebs-operator-0.8.1.yaml
+   ```
+
+5. Verify OpenEBS pods status by using `oc get pods -n openebs`
 
 <br>
 
