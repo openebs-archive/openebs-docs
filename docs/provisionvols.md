@@ -85,7 +85,7 @@ fio-cstor-sparse   1/1       Running   0          1m
 
 
 
-***Note:** The StorageClass `openebs-cstor-sparse` provisions volume on the `cstor-sparse-pool` which is constructed on sparse disks created on the node during OpenEBS installation. This is useful for testing applications, initial testing of OpenEBS etc. For production applicaitions, consider provisioning volumes on disk pools. See [below](#provision-from-a-disk-pool)* 
+***Note:** The StorageClass `openebs-cstor-sparse` provisions volume on the `cstor-sparse-pool` which is constructed on sparse disks created on the node during OpenEBS installation. This is useful for testing applications, initial testing of OpenEBS etc. For production applicaitions, consider provisioning volumes on disk pools. See [below](#provision-from-a-disk-pool).
 
 <br>
 
@@ -103,7 +103,7 @@ Use a similar PVC spec or volumeClaimTemplate to use a StorageClass that is poin
 
 **AccessModes:** cStor provides iSCSI targets, which are appropriate for RWO (ReadWriteOnce) access mode and is suitable for all types of databases. For webscale applications like WordPress or any for any other NFS needs, you need RWM (ReadWriteMany) access mode. For RWM, you need NFS provisioner to be deployed along with cStor. See <a href="/docs/next/rwm.html" target="_blank">how to provision RWM PVC with OpenEBS </a>.
 
-**Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release (OpenEBS 0.8.0) and is active development, see [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in the very short time period. 
+**Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release (OpenEBS 0.8.2) and is active development, see [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in the very short time period. 
 
 <font size="5">Example configuration for requesting OpenEBS volumes for a `deployment` </font>
 
