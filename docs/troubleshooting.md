@@ -689,7 +689,7 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 
 ### [Seek support or help](/docs/next/support.html)
 
-### [Latest release notes]()
+### [Latest release notes](/docs/next/releases.html)
 
 <br>
 

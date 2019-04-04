@@ -666,7 +666,7 @@ Currently,NDM is not selecting partition disks for creating device resource. But
 
 ### [Creating cStor Pool](/docs/next/configurepools.html)
 
-### [Provisioning cStor volumes](/docs/next/deploycstor.html)
+### [Provisioning cStor volumes](/docs/next/provisionvols.html)
 
 ### [BackUp and Restore](/docs/next/backup.html)
 
