@@ -148,17 +148,14 @@ Size              :   8G
 Controller Status :   running,running,running
 Controller Node   :   gke-ranjith-082-default-pool-2cd2b6cb-l4ck
 Replica Count     :   3
-
 Replica Details :
---------- --------
+-----------------
 NAME                                                                STATUS      POOL NAME                  NODE
-----                                                                ------      ---------                  -----
+----                                                                ------      ---------                  -----  
 pvc-dc3cb979-51ec-11e9-803f-42010a800179-cstor-sparse-pool-ejs2     Running     cstor-sparse-pool-ejs2     gke-ranjith-082-default-pool-2cd2b6cb-dphl
 pvc-dc3cb979-51ec-11e9-803f-42010a800179-cstor-sparse-pool-gf1d     Running     cstor-sparse-pool-gf1d     gke-ranjith-082-default-pool-2cd2b6cb-l4ck
 pvc-dc3cb979-51ec-11e9-803f-42010a800179-cstor-sparse-pool-m8cy     Running     cstor-sparse-pool-m8cy     gke-ranjith-082-default-pool-2cd2b6cb-x571
- </div>
-
-
+</div>
 
 The following command shows the live statistics of OpenEBS volume.
 
@@ -185,8 +182,6 @@ LOGICAL(GB)      USED(GB)
 ------------     ---------
 0.000            3.246
 </div>
-
-
 
 
 <h3><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Pools"></a>mayactl for OpenEBS Storage Pools</h3>
