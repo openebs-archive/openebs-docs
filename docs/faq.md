@@ -28,6 +28,10 @@ sidebar_label: FAQs
 
 [How to install OpenEBS in OpenShift environment without disabling SELinux?](#OpenEBS-install-openshift-without-SELinux-disabled)
 
+[What are the prerequisites other than general prerequisites for installing OpenEBS in Centos and OpenShift?](#OpenEBS-install-prerequisites-openshift-centos)
+
+
+
 <br>
 
 ## Data Protection
@@ -215,6 +219,12 @@ OpenEBS can be installed in OpenShift environment using the following steps.
    ```
 
 5. Verify OpenEBS pods status by using `oc get pods -n openebs`
+
+<br>
+
+<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-prerequisites-openshift-centos"></a>What are the prerequisites other than general prerequisites for installing OpenEBS in Centos and OpenShift?</h3>
+
+If you are installing OpenEBS in CentOS or OpenShift,you must need to grant privileges to ndm pods. For installing OpenEBS in OpenShift environment,more details can be read [here](#OpenEBS-install-openshift-without-SELinux-disabled).
 
 <br>
 
