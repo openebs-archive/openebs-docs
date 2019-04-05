@@ -58,9 +58,9 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 
 4. Delete StatefulSet application and associated PVCs.
 
-   ​    
+   
 
-5. Create a new PVC YAML named *newPVC.yaml* with same configuration. Specify old PV name belongs to volumename under the PVC spec.
+5. Create a new PVC YAML named *newPVC.yaml* with same configuration. Specify old PV name belongs to *volumeName* under the PVC spec.
 
    ```
    apiVersion: v1
@@ -133,11 +133,13 @@ There are some cases where it had to delete the StatefulSet and re-install a new
    mongo-persistent-storage-mongo-0   Bound     pvc-cc6767b4-52e8-11e9-b1ef-42010a800fe7   5G         RWO            mongo-pv-az    5m
    ```
 
+   
+
 10. Apply the same StatefulSet application YAML. The pod will come back online by re-using the existing PVC. The application pod status can be get by following command.
 
-    ```
-    kubectl get pods -n <namespace>
-    ```
+   ```
+   kubectl get pods -n <namespace>
+   ```
 
    
 
