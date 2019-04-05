@@ -50,7 +50,7 @@ All steps described in this document must be performed on the Kubernetes master 
    cd openebs/k8s/upgrades/0.8.1-0.8.2/
    ```
 
-   **Note:** The upgrade  procedure uses the node labels to pin the Jiva replicas to the nodes where they are present. On node restart, these labels will disappear and can cause the replica to be un-scheduled.
+   
 
 2. <h3><a class="anchor" aria-hidden="true" id="checking-openebs-labels"></a>Checking the  openebs labels</h3>
 
