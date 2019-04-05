@@ -71,12 +71,13 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
 
 ## See Also:
 
+### [FAQ](/docs/next/faq.html)
 
+### [Troubleshooting](/docs/next/troubleshooting.html)
 
 <br>
 
 <hr>
-
 <br>
 
 
