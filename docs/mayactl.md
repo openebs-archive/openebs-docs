@@ -148,10 +148,7 @@ Size              :   8G
 Controller Status :   running,running,running
 Controller Node   :   gke-ranjith-082-default-pool-2cd2b6cb-l4ck
 Replica Count     :   3
-Application Details:
---------- -----------
-Application Pod Name      : my-release-mysql-65d89bd9c4-rzszj
-Application Pod Namespace : default
+
 Replica Details :
 --------- --------
 NAME                                                                STATUS      POOL NAME                  NODE
@@ -160,6 +157,7 @@ pvc-dc3cb979-51ec-11e9-803f-42010a800179-cstor-sparse-pool-ejs2     Running     
 pvc-dc3cb979-51ec-11e9-803f-42010a800179-cstor-sparse-pool-gf1d     Running     cstor-sparse-pool-gf1d     gke-ranjith-082-default-pool-2cd2b6cb-l4ck
 pvc-dc3cb979-51ec-11e9-803f-42010a800179-cstor-sparse-pool-m8cy     Running     cstor-sparse-pool-m8cy     gke-ranjith-082-default-pool-2cd2b6cb-x571
  </div>
+
 
 
 The following command shows the live statistics of OpenEBS volume.
@@ -172,9 +170,9 @@ mayactl volume stats --volname pvc-448deccf-40d9-11e9-a23b-0050569331ce -n opene
 
 <div class="co">Portal Details :
 ------ ---------
-IQN     :   iqn.2016-09.com.openebs.cstor:pvc-dc3cb979-51ec-11e9-803f-42010a800179
+IQN     :   
 Volume  :   pvc-dc3cb979-51ec-11e9-803f-42010a800179
-Portal  :   10.67.247.34:3260
+Portal  :   
 Size    :   5.000000
 Performance Stats :
 ------ ---------
@@ -187,6 +185,7 @@ LOGICAL(GB)      USED(GB)
 ------------     ---------
 0.000            3.246
 </div>
+
 
 
 
@@ -245,7 +244,7 @@ The following command show the description of OpenEBS StoragePool.
 ------ ------
 Storage Pool Name  : cstor-pool1-5lwv
 Node Name          : node3.mayalab.com
-CAS Template Used  : cstor-pool-create-default-0.8.1
+CAS Template Used  : cstor-pool-create-default-0.8.2
 CAS Type           : cstor
 StoragePoolClaim   : cstor-pool1
 UID                : fb2bd1d8-2f88-11e9-a23b-0050569331ce
