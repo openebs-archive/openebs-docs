@@ -62,12 +62,12 @@ Deploy NFS server provisioner into the above namespace using stable helm chart. 
  - NFS StorageClass to be created which can be used by the web application PVCs
 
 ```
- helm install stable/nfs-server-provisioner --name=<provisioner-name> --set=persistence.enabled=true,persistence.storageClass=openebs-cstor-sparse,persistence.size=5Gi,storageClass.name=<nfs-sc-name>
+ helm install stable/nfs-server-provisioner --namespace=<ns-nfs-wordpress1> --name=<provisioner-name> --set=persistence.enabled=true,persistence.storageClass=openebs-cstor-sparse,persistence.size=5Gi,storageClass.name=<nfs-sc-name>
 ```
 
 An example helm install command is
 
-<font color="maroon" >```helm install stable/nfs-server-provisioner --name=openebs-nfs-wordpress --set=persistence.enabled=true,persistence.storageClass=openebs-sc-cstor-pool1,persistence.size=5Gi,storageClass.name=wordpress-nfs-sc1```</font>
+<font color="maroon" >```helm install stable/nfs-server-provisioner --namespace=nfs-wp-provisioner --name=openebs-nfs-wordpress --set=persistence.enabled=true,persistence.storageClass=openebs-sc-cstor-pool1,persistence.size=5Gi,storageClass.name=wordpress-nfs-sc1```</font>
 
 <br>
 
