@@ -56,10 +56,11 @@ kubectl create ns <ns-nfs-wordpress1>
 
 **Deploy NFS server provisioner**
 
-Deploy NFS server provisioner into the above namespace using stable helm chart. Pass the following two main parameter values 
+Deploy NFS server provisioner into the above namespace using stable helm chart. Pass the following main parameter values. 
 
  - OpenEBS StorageClass to be used for the persistent data storage
  - NFS StorageClass to be created which can be used by the web application PVCs
+ - Namespace for the NFS server provisioner which you have created in the previous section.
 
 ```
  helm install stable/nfs-server-provisioner --namespace=<ns-nfs-wordpress1> --name=<provisioner-name> --set=persistence.enabled=true,persistence.storageClass=openebs-cstor-sparse,persistence.size=5Gi,storageClass.name=<nfs-sc-name>
