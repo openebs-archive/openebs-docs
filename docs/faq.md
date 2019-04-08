@@ -26,7 +26,7 @@ sidebar_label: FAQs
 
 [Why NDM daemon set required privileged mode?](#why-ndm-priviledged)
 
-[How to install OpenEBS in OpenShift environment without disabling SELinux?](#OpenEBS-install-openshift-without-SELinux-disabled)
+[How to install OpenEBS in OpenShift environment?](#OpenEBS-install-openshift-without-SELinux-disabled)
 
 [What are the prerequisites other than general prerequisites for installing OpenEBS in Centos and OpenShift?](#OpenEBS-install-prerequisites-openshift-centos)
 
@@ -185,7 +185,7 @@ Currently, NDM Daemon set runs in the privileged mode. NDM requires privileged m
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-without-SELinux-disabled"></a>How to install OpenEBS in OpenShift environment without disabling SELinux?</h3>
+<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-without-SELinux-disabled"></a>How to install OpenEBS in OpenShift environment?</h3>
 
 OpenEBS can be installed in OpenShift environment using the following steps.
 
