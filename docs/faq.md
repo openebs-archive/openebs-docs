@@ -195,7 +195,7 @@ OpenEBS can be installed in OpenShift environment using the following steps.
    oc adm policy add-scc-to-user privileged system:serviceaccount:openebs:openebs-maya-operator
    ```
 
-2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. Latest OpenEBS version is 0.8.2. This can be downloaded using the following way.
+2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
 
    ```
    wget https://openebs.github.io/charts/openebs-operator-0.8.2.yaml
@@ -204,7 +204,7 @@ OpenEBS can be installed in OpenShift environment using the following steps.
 3. Edit the downloaded openebs-operator YAML file by changing the hostPath from "/proc/1/mounts" to
    "/etc/mtab" under openebs-ndm DaemonSet spec.
 
-   Example snippet:**
+   **Example snippet:**
 
    ```
    - name: procmount
@@ -215,7 +215,7 @@ OpenEBS can be installed in OpenShift environment using the following steps.
 4. Apply the modified the YAML using the following command. The OpenEBS operator YAML file name has to be changed based on the latest version.
 
    ```
-   oc apply -f openebs-operator-0.8.1.yaml
+   oc apply -f openebs-operator-0.8.2.yaml
    ```
 
 5. Verify OpenEBS pods status by using `oc get pods -n openebs`
