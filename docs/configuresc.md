@@ -345,7 +345,7 @@ You can specify the Target Affinity in both application and OpenEBS PVC using th
       openebs.io/target-affinity: fio-cstor
 ```
 
-**Note**: *This feature works only for cases where there is a 1-1 mapping between a application and PVC. It's not recommended for STS where PVC is specified as a template.*
+**Note**: *This feature works only for cases where there is a 1-1 mapping between a application and PVC. In the case of STS, this feature is supported only for single replica StatefulSet. Example YAML spec for STS can be get from [here](<https://github.com/openebs/openebs/blob/master/k8s/demo/mongodb/demo-mongo-cstor-taa.yaml>).*
 
 
 
