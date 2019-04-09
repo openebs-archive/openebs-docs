@@ -55,9 +55,12 @@ All steps described in this document must be performed on the Kubernetes master 
 2. <h3><a class="anchor" aria-hidden="true" id="checking-openebs-labels"></a>Checking the  openebs labels</h3>
 
    - Run `./pre-check.sh` to get all the openebs volume resources not having `openebs.io/version` tag.
-     - If there are no "unlabeled resources", then proceed with Step3.
+
+     - If there are no "unlabeled resources", then proceed with Step3. If there are some "unlabeled resources",perform following command.
+
    - Run `./labeltagger.sh 0.8.1` to add `openebs.io/version` label to all the OpenEBS volume resources.
-     - If there are some "unlabeled resources",perform following command.
+
+     
 
    **Note:** Please make sure that all pods are back to running state before proceeding to Step 3.
 
@@ -86,9 +89,7 @@ All steps described in this document must be performed on the Kubernetes master 
    kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.2.yaml
    ```
 
-   This will upgrade all OpenEBS components to latest image.
-
-   **Note:** If you have customized it for your cluster, you have to download the 0.8.2 openebs-operator.yaml using below command and customize it again. 
+   **Note:** If you have customized it for your cluster, then you have to download the 0.8.2 openebs-operator.yaml using below command and customize it again. 
 
    ```
    wget https://openebs.github.io/charts/openebs-operator-0.8.2.yaml
@@ -166,13 +167,19 @@ All steps described in this document must be performed on the Kubernetes master 
    pvc-48fb36a2-947f-11e8-b1f3-42010a800004   5G         RWO            Delete           Bound     percona-test/demo-vol1-claim   openebs-percona             8m
     ```
 
-   Using this PVC name, upgrade the particular volume using the following command. 	
+   Using this PV name, upgrade the particular volume using the following command. 
+
+   ```
+   ./jiva_volume_upgrade.sh <Jiva_PV_name>
+   ```
+
+   **Example:**
 
    ```
    ./jiva_volume_upgrade.sh pvc-48fb36a2-947f-11e8-b1f3-42010a800004
    ```
 
-   
+   **Note:** The script will check whether the node is already labelled or not, where corresponding Jiva Pod is running. If node is not labelled, then nodes will be labelled as `openebs-jiva`. 
 
    <h4><a class="anchor" aria-hidden="true" id="cStor-PV"></a>cStor PV</h4>
 
@@ -193,11 +200,19 @@ All steps described in this document must be performed on the Kubernetes master 
 
    Using the SPC name,upgrade the corresponding cStorStoragePool using the following command.
 
+   ```
+   ./cstor_pool_upgrade.sh <spc_name> <openebs-namepsace>
+   ```
+
+   **Example:**
+
     ```
    ./cstor_pool_upgrade.sh cstor-sparse-pool openebs
     ```
 
    Make sure that this step completes successfully before proceeding to next step.
+
+   
 
    **Upgrade cStor Volumes**
 
@@ -214,11 +229,19 @@ All steps described in this document must be performed on the Kubernetes master 
    pvc-1085415d-f84c-11e8-aadf-42010a8000bb   5G         RWO            Delete           Bound     default/demo-cstor-sparse-vol1-claim   openebs-cstor-sparse             22m
    ```
 
-     Using this PVC name, upgrade the particular volume using the following command.
+     Using this PV name, upgrade the particular volume using the following command.
+
+   ```
+   ./cstor_volume_upgrade.sh <cStor_PV_name> <openebs-namepsace>
+   ```
+
+   **Example:**
 
     ```
    ./cstor_volume_upgrade.sh pvc-1085415d-f84c-11e8-aadf-42010a8000bb openebs
     ```
+
+
 
 ## Verifying the Upgrade
 
