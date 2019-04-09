@@ -497,7 +497,7 @@ In the `values.yaml`, find` ndm` section to update `excludeVendors:` and `exclud
 ```
 ndm:
   image: "quay.io/openebs/node-disk-manager-amd64"
-  imageTag: "v0.3.3"
+  imageTag: "v0.3.4"
   sparse:
     enabled: "true"
     path: "/var/openebs/sparse"
@@ -537,7 +537,7 @@ Download the values.yaml from  [here](https://github.com/helm/charts/blob/master
 | `snapshotOperator.controller.imageTag`  | Docker Image Tag for Snapshot Controller     | `0.8.2`                                   |
 | `snapshotOperator.replicas`             | Number of Snapshot Operator Replicas         | `1`                                       |
 | `ndm.image`                             | Docker Image for Node Disk Manager           | `openebs/openebs/node-disk-manager-amd64` |
-| `ndm.imageTag`                          | Docker Image Tag for Node Disk Manager       | `v0.3.3`                                  |
+| `ndm.imageTag`                          | Docker Image Tag for Node Disk Manager       | `v0.3.4`                                  |
 | `ndm.sparse.enabled`                    | Create Sparse files and cStor Sparse Pool    | `true`                                    |
 | `ndm.sparse.path`                       | Directory where Sparse files are created     | `/var/openebs/sparse`                     |
 | `ndm.sparse.size`                       | Size of the sparse file in bytes             | `10737418240`                             |

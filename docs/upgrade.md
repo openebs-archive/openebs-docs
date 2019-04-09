@@ -278,10 +278,10 @@ kubectl get ds -o yaml  -n openebs| grep -i image |  grep -i quay | grep -v meta
 Output will be similar to the following.
 
 ```
-  image: quay.io/openebs/node-disk-manager-amd64:v0.3.2
+  image: quay.io/openebs/node-disk-manager-amd64:v0.3.4
 ```
 
-The image tag of NDM will be 0.3.3 in the above output.
+The image tag of NDM will be 0.3.4 in the above output.
 
 
 
