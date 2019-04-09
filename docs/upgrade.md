@@ -79,9 +79,7 @@ All steps described in this document must be performed on the Kubernetes master 
 
    
 
-   <font size="4">Install/Upgrade using kubectl (using openebs-operator.yaml )</font>
-
-   
+   <font size="4">**Install/Upgrade using kubectl (using openebs-operator.yaml )**</font>
 
    The following sample steps will work if you have installed OpenEBS cluster without modifying the default values in the openebs-operator.yaml file.  The following command will upgrade all the openebs-operator components to 0.8.2 version.  
 
@@ -105,9 +103,7 @@ All steps described in this document must be performed on the Kubernetes master 
 
    
 
-   <font size="4">Install/Upgrade using stable helm chart</font>
-
-   
+   <font size="4">**Install/Upgrade using stable helm chart**</font>
 
    The following procedure will work if you have installed OpenEBS with default values provided by stable helm chart.
 
@@ -123,9 +119,7 @@ All steps described in this document must be performed on the Kubernetes master 
 
    
 
-   <font size="3">Using Customized Operator YAML or Helm Chart</font>
-
-   
+   <font size="3">**Using Customized Operator YAML or Helm Char**t</font>
 
    As a first step, you must update your custom helm chart or YAML with 0.8.2 release tags and changes made in the values/templates.
    After updating the YAML or helm chart or helm chart values, you can use the above procedures to upgrade the OpenEBS Operator.
@@ -239,9 +233,9 @@ All steps described in this document must be performed on the Kubernetes master 
 
    **Example:**
 
-    ```
+   ```
    ./cstor_volume_upgrade.sh pvc-1085415d-f84c-11e8-aadf-42010a8000bb openebs
-    ```
+   ```
 
    
 
