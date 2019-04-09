@@ -197,8 +197,6 @@ All steps described in this document must be performed on the Kubernetes master 
 
    Make sure that this step completes successfully before proceeding to next step.
 
-   
-
    **Upgrade cStor Volumes**
 
    Extract the PV name using the following command.
