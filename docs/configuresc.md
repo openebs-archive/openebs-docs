@@ -333,7 +333,7 @@ labels:
     openebs.io/target-affinity: <application-unique-label>
 ```
 
-You can specify the Target Affinity in both application and OpenEBS PVC using the following way For Application Pod, it will be similar to the following
+You can specify the Target Affinity in both application and OpenEBS PVC using the following way. The following is a snippet of an application deployment YAML spec for implementing target affinity.
 
 ```
   apiVersion: v1
@@ -345,7 +345,20 @@ You can specify the Target Affinity in both application and OpenEBS PVC using th
       openebs.io/target-affinity: fio-cstor
 ```
 
-**Note**: *This feature works only for cases where there is a 1-1 mapping between a application and PVC. In the case of STS, this feature is supported only for single replica StatefulSet. Example YAML spec for STS can be get from [here](<https://github.com/openebs/openebs/blob/master/k8s/demo/mongodb/demo-mongo-cstor-taa.yaml>).*
+The following is the sample snippet of the PVC to use Target affinity.
+
+```
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: fio-cstor-claim
+  labels:
+    openebs.io/target-affinity: fio-cstor
+```
+
+
+
+**Note**: *This feature works only for cases where there is a single application pod instance associated to a PVC. In the case of STS, this feature is supported only for single replica StatefulSet. Example YAML spec for STS can be get from [here](<https://github.com/openebs/openebs/blob/master/k8s/demo/mongodb/demo-mongo-cstor-taa.yaml>).*
 
 
 
@@ -372,7 +385,7 @@ The sample service account can be found [here](https://github.com/openebs/openeb
 
 ## See Also:
 
-[cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
+### [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
 
 
 

@@ -552,9 +552,9 @@ The Stateful workloads access the OpenEBS storage volume by connecting to the Vo
     openebs.io/target-affinity: <application-unique-label>
   ```
 
-- You can specify the Target Affinity in both application and OpenEBS PVC using the following way
+- You can specify the Target Affinity in both application and OpenEBS PVC using the following way. 
 
-  For Application Pod, it will be similar to the following
+  The following is a snippet of an application deployment YAML spec for implementing target affinity. 
 
   ```
   apiVersion: v1
@@ -577,7 +577,7 @@ The Stateful workloads access the OpenEBS storage volume by connecting to the Vo
       openebs.io/target-affinity: fio-jiva
   ```
 
-**Note**: *This feature works only for cases where there is a 1-1 mapping between a application and PVC. It's not recommended for STS where PVC is specified as a template.*
+**Note**: *This feature works only for cases where there is a single application pod instance associated to a PVC.  Example YAML spec for application deployment can be get from [here](https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/fio/demo-fio-jiva-taa.yaml). In the case of STS, this feature is supported only for single replica StatefulSet.*
 
 <br>
 
