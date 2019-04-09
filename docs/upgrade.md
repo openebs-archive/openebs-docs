@@ -110,7 +110,7 @@ All steps described in this document must be performed on the Kubernetes master 
       helm upgrade openebs stable/openebs
       ```
 
-   <font size="3">**Using Customized Operator YAML or Helm Char**t</font>
+   <font size="3">Using Customized Operator YAML or Helm Chart</font>
 
    As a first step, you must update your custom helm chart or YAML with 0.8.2 release tags and changes made in the values/templates.
    After updating the YAML or helm chart or helm chart values, you can use the above procedures to upgrade the OpenEBS Operator.
