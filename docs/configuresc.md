@@ -358,7 +358,7 @@ metadata:
 
 
 
-**Note**: *This feature works only for cases where there is a single application pod instance associated to a PVC. In the case of STS, this feature is supported only for single replica StatefulSet. Example YAML spec for STS can be get from [here](<https://github.com/openebs/openebs/blob/master/k8s/demo/mongodb/demo-mongo-cstor-taa.yaml>).*
+**Note**: *This feature works only for cases where there is a single application pod instance associated to a PVC. In the case of STS, this feature is supported only for single replica StatefulSet. Example YAML spec for STS can be get from [here](<https://raw.githubusercontent.com/openebs/openebs/12be2bbdb244d50c8c0fd48b59d520f86aa3a4a6/k8s/demo/mongodb/demo-mongo-cstor-taa.yaml>).*
 
 
 
