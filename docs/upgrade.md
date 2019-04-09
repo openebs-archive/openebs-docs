@@ -164,7 +164,7 @@ All steps described in this document must be performed on the Kubernetes master 
    ./jiva_volume_upgrade.sh pvc-48fb36a2-947f-11e8-b1f3-42010a800004
    ```
 
-   **Note:** The script will check whether the node is already labelled or not, where corresponding Jiva Pod is running. If node is not labelled, then nodes will be labelled as `openebs-jiva`. 
+   **Note:** The script will check whether the node, where corresponding Jiva pod is running, is already labelled or not. If node is not labelled, then nodes will be labelled as `openebs-jiva`. 
 
    <h4><a class="anchor" aria-hidden="true" id="cStor-PV"></a>cStor PV</h4>
 
