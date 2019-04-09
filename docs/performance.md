@@ -9,7 +9,7 @@ sidebar_label: Performance testing
 
 **Setup cStorPool and StorageClass**
 
-Choose the appropriate disks (SSDs or SAS or Cloud disks) and [create pool](/docs/next/configurepools.html)  and [create StorageClass](/docs/next/sc.html). For performance testing, performance numbers vary based 
+Choose the appropriate disks (SSDs or SAS or Cloud disks) and [create pool](/docs/next/configurepools.html)  and [create StorageClass](/docs/next/configuresc.html). For performance testing, performance numbers vary based 
 
 - on the number of OpenEBS replicas (1 vs 3) (latency between cStor target and cStor replica)
 - on whether all the replicas are in one zone or across multiple zones
