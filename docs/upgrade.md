@@ -57,10 +57,7 @@ All steps described in this document must be performed on the Kubernetes master 
    - Run `./pre-check.sh` to get all the openebs volume resources not having `openebs.io/version` tag.
 
      - If there are no "unlabeled resources", then proceed with Step3. If there are some "unlabeled resources",perform following command.
-
    - Run `./labeltagger.sh 0.8.1` to add `openebs.io/version` label to all the OpenEBS volume resources.
-
-     
 
    **Note:** Please make sure that all pods are back to running state before proceeding to Step 3.
 
@@ -76,8 +73,6 @@ All steps described in this document must be performed on the Kubernetes master 
    2. Using helm
 
    Select the same approach that you have used for the installation of 0.8.1 version.
-
-   
 
    <font size="4">**Install/Upgrade using kubectl (using openebs-operator.yaml )**</font>
 
@@ -101,8 +96,6 @@ All steps described in this document must be performed on the Kubernetes master 
 
    **Note:** Starting with OpenEBS 0.6, all the components are installed in namespace `openebs` as opposed to default namespace in earlier releases.
 
-   
-
    <font size="4">**Install/Upgrade using stable helm chart**</font>
 
    The following procedure will work if you have installed OpenEBS with default values provided by stable helm chart.
@@ -116,8 +109,6 @@ All steps described in this document must be performed on the Kubernetes master 
       ```
       helm upgrade openebs stable/openebs
       ```
-
-   
 
    <font size="3">**Using Customized Operator YAML or Helm Char**t</font>
 
@@ -174,8 +165,6 @@ All steps described in this document must be performed on the Kubernetes master 
    ```
 
    **Note:** The script will check whether the node is already labelled or not, where corresponding Jiva Pod is running. If node is not labelled, then nodes will be labelled as `openebs-jiva`. 
-
-   
 
    <h4><a class="anchor" aria-hidden="true" id="cStor-PV"></a>cStor PV</h4>
 
