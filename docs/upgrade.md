@@ -117,7 +117,7 @@ All steps described in this document must be performed on the Kubernetes master 
 
    1. You can use the following as references to know about the changes in 0.8.2:
 
-      openebs-charts PR [#]() as reference.
+      openebs stable helm charts PR [#12944](<https://github.com/helm/charts/pull/12944>) as reference.
 
       
 

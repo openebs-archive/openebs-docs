@@ -110,7 +110,7 @@ helm install --namespace <custom_namespace> --name openebs stable/openebs
 
 
 
-As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation) steps.
+As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
 
 <br>
 
