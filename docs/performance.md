@@ -44,13 +44,15 @@ Choose the appropriate disks (SSDs or SAS or Cloud disks) and [create pool](/doc
      value: "60"
    ```
 
-3. Run the fio performance test
+3. Run the fio performance test.
 
    ```
    kubectl create -f run_litmus_test.yaml
    ```
 
-4. Observe the results at the end of the test
+4. Observe the results at the end of the test.
+
+   
 
 <font size="6">Support for Performance tuning </font>
 
