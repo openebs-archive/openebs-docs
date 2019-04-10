@@ -261,14 +261,15 @@ mayactl version
 
  **Example Output:**
 
-<div class="co">Version: 0.8.1-released
-Git commit: 43ad5ca8f3d36995afbce3914d0be8ecd8a8de13
+<div class="co">Version: 0.8.2-released
+Git commit: b9efd8eaad9aa14d3ac3b04a772240b6e11a59b3
 GO Version: go1.11.2
 GO ARCH: amd64
 GO OS: linux
-m-apiserver url:  http://192.29.0.188:5656
+m-apiserver url:  http://10.64.0.13:5656
 m-apiserver status:  running
 </div>
+
 
 
 
