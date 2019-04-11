@@ -277,7 +277,7 @@ kubectl apply -f <custom-openebs-operator-0.8.2.yaml>
 
 
 
-As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation) steps.
+As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
 
 <br>
 
