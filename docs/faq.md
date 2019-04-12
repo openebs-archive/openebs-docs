@@ -397,9 +397,9 @@ OpenEBS have two storage Engines, Jiva and cStor which can be used to provision 
 
 Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted). 
 
-cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is good to wipe out the disk if you use existing disks for cStor pool creation. 
+cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes which does not have any filesystem and it should be unmounted on the Node. It is good to wipe out the disk if you use existing disks for cStor pool creation. 
 
-In case you need to use Local SSDs as block devices, you will have to first unmount them. On GKE, the Local SSDs are formatted with ext4 and mounted under /mnt/disks/. If local SSDs are not unmounted, the cStor pool creation will fail.
+In case you need to use Local SSDs as block devices, you will have to first unmount them. On GKE, the Local SSDs are formatted with ext4 and mounted under "/mnt/disks/". If local SSDs are not unmounted, the cStor pool creation will fail.
 
 <a href="#top">Go to top</a>
 
