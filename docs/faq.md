@@ -399,7 +399,7 @@ Jiva requires the disk to be mounted (i.e., attached, formatted with a filesyste
 
 cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes which does not have any filesystem and it should be unmounted on the Node. It is good to wipe out the disk if you use existing disks for cStor pool creation. 
 
-In case you need to use Local SSDs as block devices, you will have to first unmount them. On GKE, the Local SSDs are formatted with ext4 and mounted under "/mnt/disks/". If local SSDs are not unmounted, the cStor pool creation will fail.
+In case you need to use Local SSDs as block devices, you will have to first unmount them and remove any the filesystem if it has. On GKE, the Local SSDs are formatted with ext4 and mounted under "/mnt/disks/". If local SSDs are not unmounted and not removed the file system, then cStor pool creation will fail.
 
 <a href="#top">Go to top</a>
 
@@ -412,6 +412,7 @@ Node Disk Manager(NDM) forms the DISK CRs in the following way
 
 - Scan the list of disks.
 - Filter out the OS disks
+- Filter out partitioned disks.
 - Filter out any other disk patterns that are mentioned in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
 NDM do some filtering on the disks to exclude, for example boot disk. By default, NDM excludes the following device path to create disk CR. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
