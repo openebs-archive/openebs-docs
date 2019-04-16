@@ -17,7 +17,7 @@ Follow the below steps to provision persistent volumes using Jiva storage engine
 
 <a href="/docs/next/installation.html" target="_blank">Verify</a> OpenEBS installation
 
-<a href="/docs/next/iscsiclient.html" target="_blank">Verify</a> iSCSI client is installed and iscsid service is running
+<a href="/docs/next/prerequisites.html" target="_blank">Verify</a> iSCSI client is installed and iscsid service is running
 
 If simple provisioning of jiva volumes is desired without any configuration see  <a href="/docs/next/jivaguide.html#simple-provisioning-of-jiva">here</a>
 
@@ -45,7 +45,7 @@ In this mode, local disks on each node need to be prepared and mounted at a dire
 
 ### Prepare disks and mount them
 
-If is is a cloud disk provision and mount on the node. If three replicas of Jiva volume are needed, provision three cloud disks and mount them on each node. The mount path needs to be same on all three nodes
+If it is a cloud disk provision and mount on the node. If three replicas of Jiva volume are needed, provision three cloud disks and mount them on each node. The mount path needs to be same on all three nodes
 
 **GPD example**
 
@@ -128,11 +128,11 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.8.1
+        value: openebs/jiva:0.8.2
       - name: ReplicaImage
-        value: openebs/jiva:0.8.1
+        value: openebs/jiva:0.8.2
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.8.1
+        value: openebs/m-exporter:0.8.2
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
@@ -224,11 +224,11 @@ Below table lists the storage policies supported by Jiva. These policies should 
 | CSTOR STORAGE POLICY                                   | MANDATORY | DEFAULT                           | PURPOSE                                                      |
 | ------------------------------------------------------ | --------- | --------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                  | No        | 3                                 | Defines the number of Jiva volume replicas                   |
-| [Replica Image](#Replica-Image-Policy)                 |           | quay.io/openebs/m-apiserver:0.8.1 | To use particular Jiva replica image                         |
-| [ControllerImage](#Controller-Image-Policy)            |           | quay.io/openebs/jiva:0.8.1        | To use particular Jiva Controller Image                      |
+| [Replica Image](#Replica-Image-Policy)                 |           | quay.io/openebs/m-apiserver:0.8.2 | To use particular Jiva replica image                         |
+| [ControllerImage](#Controller-Image-Policy)            |           | quay.io/openebs/jiva:0.8.2        | To use particular Jiva Controller Image                      |
 | [StoragePool](#Storage-Pool-Policy)                    | Yes       | default                           | A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on host OS or externally mounted disk. |
 | [VolumeMonitor](#Volume-Monitor-Policy)                |           | ON                                | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)  |           | quay.io/openebs/m-exporter:0.8.1  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)  |           | quay.io/openebs/m-exporter:0.8.2  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [Volume FSType](#Volume-File-System-Type-Policy)       |           | ext4                              | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)   |           | false                             | It will specify whether data need to be retained post PVC deletion. |
 | [TargetNodeSelector](#Targe-NodeSelector-Policy)       |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva target pod on the nodes that match label. |
@@ -271,7 +271,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ReplicaImage
-        value: quay.io/openebs/m-apiserver:0.8.1
+        value: quay.io/openebs/m-apiserver:0.8.2
 ```
 
 <h3><a class="anchor" aria-hidden="true" id="Controller-Image-Policy"></a>Controller Image Policy</h3>
@@ -287,7 +287,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: quay.io/openebs/jiva:0.8.1
+        value: quay.io/openebs/jiva:0.8.2
 ```
 
 <h3><a class="anchor" aria-hidden="true" id="Volume-Monitor-Policy"></a>Volume Monitor Policy</h3>
@@ -372,7 +372,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:0.8.1
+        value: quay.io/openebs/m-exporter:0.8.2
 ```
 
 <h3><a class="anchor" aria-hidden="true" id="Volume-Space-Reclaim-Policy"></a>Volume Space Reclaim Policy</h3>
@@ -543,7 +543,7 @@ metadata:
 
 <h3><a class="anchor" aria-hidden="true" id="Target-Affinity-Policy"></a>Target Affinity Policy</h3>
 
-The StatefulSet workloads access the OpenEBS storage volume by connecting to the Volume Target Pod. This policy can be used to co-locate volume target pod on the same node as workload.
+The Stateful workloads access the OpenEBS storage volume by connecting to the Volume Target Pod. This policy can be used to co-locate volume target pod on the same node as workload.
 
 - This feature makes use of the Kubernetes Pod Affinity feature that is dependent on the Pod labels. User will need to add the following label to both Application and PVC.
 
@@ -552,9 +552,9 @@ The StatefulSet workloads access the OpenEBS storage volume by connecting to the
     openebs.io/target-affinity: <application-unique-label>
   ```
 
-- You can specify the Target Affinity in both application and OpenEBS PVC using the following way
+- You can specify the Target Affinity in both application and OpenEBS PVC using the following way. 
 
-  For Application Pod, it will be similar to the following
+  The following is a snippet of an application deployment YAML spec for implementing target affinity. 
 
   ```
   apiVersion: v1
@@ -577,7 +577,7 @@ The StatefulSet workloads access the OpenEBS storage volume by connecting to the
       openebs.io/target-affinity: fio-jiva
   ```
 
-**Note**: *This feature works only for cases where there is a 1-1 mapping between a application and PVC. It's not recommended for STS where PVC is specified as a template.*
+**Note**: *This feature works only for cases where there is a single application pod instance associated to a PVC.  Example YAML spec for application deployment can be get from [here](https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/fio/demo-fio-jiva-taa.yaml). In the case of STS, this feature is supported only for single replica StatefulSet.*
 
 <br>
 

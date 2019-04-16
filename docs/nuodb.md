@@ -275,7 +275,7 @@ spec:
         affinity: admin
     spec:
       securityContext:
-        runAsUser: 1000
+        runAsUser: 0
         fsGroup: 0
       containers:
       - name: admin
@@ -519,7 +519,7 @@ spec:
         group: nuodb
     spec:
       securityContext:
-        runAsUser: 1000
+        runAsUser: 0
         fsGroup: 0
       containers:
       - name: sm

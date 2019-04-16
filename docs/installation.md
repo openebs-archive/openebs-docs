@@ -19,22 +19,23 @@ sidebar_label: Installation
 
 - Verify if [iSCSI.d](#verify-iscsi-client) service is running
 
-- Set Kubernetes [admin context](#set-cluster-admin-user-context) 
+- Set Kubernetes [admin context](#set-cluster-admin-user-context-and-rbac) and RBAC
 
 - Install through 
-  - **[helm](#example-configurations-helm) chart**  `(or)`
+  - **[helm](#installation-through-helm) chart**  `(or)`
 
   - **[kubectl yaml](#installation-through-kubectl) spec file**
 
 - [Verify](#verifying-openebs-installation) installation 
 
-- Installation [troubleshooting](/docs/next/troubleshooting.html) 
+- Installation [troubleshooting](/docs/next/troubleshooting.html#installation) 
 
 - [Post installation](#post-installation-considerations)
 
 <br>
 
 <hr>
+
 <br>
 
 ## Verify iSCSI client
@@ -51,29 +52,41 @@ iSCSI client is a pre-requisite for provisioning volumes and not for installatio
 
 
 
-## Set cluster-admin user context
+## Set cluster-admin user context and RBAC
 
 <br>
 
 For installation of OpenEBS, cluster-admin user context is a must. 
 
-If there is no cluster-admin user context already, create one and use it. 
+If there is no cluster-admin user context already, create one and use it. Use the following command to create the new context
 
-Use the following command to create the new context
+```
+kubectl config set-context NAME [--cluster=cluster_nickname] [--user=user_nickname] [--namespace=namespace]
+```
 
-`kubectl config set-context NAME [--cluster=cluster_nickname] [--user=user_nickname] [--namespace=namespace]`
+Example:
 
-*Example:*
-
-`kubectl config set-context admin-ctx --user=cluster-admin`
+```
+kubectl config set-context admin-ctx --cluster=gke_strong-eon-153112_us-central1-a_rocket-test2 --user=cluster-admin
+```
 
 
 
 Set the existing cluster-admin user context or the newly created context by using the following command
 
-*Example:*
+Example:
 
-`kubectl config use-context admin-ctx`
+```
+kubectl config use-context admin-ctx
+```
+
+
+
+If you are using GKE or any other cloud providers, you must enable RBAC before OpenEBS installation. This can be done from the kubernetes master console by executing the following command.
+
+```
+kubectl create clusterrolebinding  <cluster_name>-admin-binding --clusterrole=cluster-admin --user=<user-registered-email-with-the-provider>
+```
 
 <br>
 
@@ -97,7 +110,7 @@ helm install --namespace <custom_namespace> --name openebs stable/openebs
 
 
 
-As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation) steps.
+As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
 
 <br>
 
@@ -113,7 +126,7 @@ Follow the below instructions to do any of the above configurations and then ins
 
 <font size="5">Setup nodeSelectors for OpenEBS control plane</font> 
 
-In a large Kubernetes cluster , you may choose to limit the scheduling of the OpenEBS control plane pods to two or three specific nodes. To do this, use nodeSelector field of PodSpec of OpenEBS control plane pods - *apiserver, volume provisioner and snapshot operator*.  
+In a large Kubernetes cluster, you may choose to limit the scheduling of the OpenEBS control plane pods to two or three specific nodes. To do this, use nodeSelector field of PodSpec of OpenEBS control plane pods - *apiserver, volume provisioner and snapshot operator*.  
 
 See the example [here](#example-nodeselector-helm). 
 
@@ -157,7 +170,7 @@ helm install --namespace <custom_namespace> --name openebs stable/openebs -f val
 
 
 
-As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation) steps.
+As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
 
 <br>
 
@@ -172,10 +185,10 @@ As a next step [verify](#verifying-openebs-installation) your installation and d
 In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace. 
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.2.yaml
 ```
 
-As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation) steps.
+As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
 
 <br>
 
@@ -186,16 +199,17 @@ In the **custom installation mode**, you can achieve the following advanced conf
 - Choose a set of nodes for OpenEBS control plane pods
 - Choose a set of nodes for OpenEBS storage pool
 - You can customise the disk filters that need to be excluded from being used
+- (Optional)Configure volume related configuration as Environmental variable in the maya-apiserver deployment specification.
 
 
 
-For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-0.8.0.yaml" target="_blank">download</a> the above file, update the above configurations using the instructions below and proceed to installation with  `kubectl` and updated file.
+For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-0.8.2.yaml" target="_blank">download</a> the **openebs-operator-0.8.2.yaml** file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
 
 
 
 <font size="5">Setup nodeSelectors for OpenEBS control plane</font> 
 
-In a large Kubernetes cluster , you may choose to limit the scheduling of the OpenEBS control plane pods to two or three specific nodes. To do this, specify a map of key-value pair and then attach the same key-value pair as labels to the required nodes on the cluster. 
+In a large Kubernetes cluster, you may choose to limit the scheduling of the OpenEBS control plane pods to two or three specific nodes. To do this, specify a map of key-value pair and then attach the same key-value pair as labels to the required nodes on the cluster. 
 
 Example nodeSelector configuration for OpenEBS control plane components is given [here](#example-nodeselector-yaml). 
 
@@ -223,17 +237,47 @@ See an example configuration [here](#example-diskfilter-yaml)
 
 <br>
 
+<font size="5">Configure sparse pool and volume path</font> 
+
+Some of the  configurations related to sparse pool and cStor volume can be configured as environmental variable in the maya-apiserver deployment specification.The following are the some of the cStor sparse pool and cStor volume related configuration that can be added as environmental variable in the maya-apiserver deployment specification. 
+
+<h4><a class="anchor" aria-hidden="true" id="SparseDir "></a>SparseDir</h4>
+
+SparseDir is a hostPath directory where to look for sparse files. The default value is "/var/openebs/sparse".
+
+```
+ # environment variable
+ - name: SparseDir
+   value: "/var/lib/"
+```
+
+
+
+<h4><a class="anchor" aria-hidden="true" id="Default-cStorSparsePool "></a>Default cStorSparsePool</h4>
+
+The OpenEBS installation will create defaul cstor sparse pool based on this configuration value. If "true", a default cstor sparse pool will be configured, if "false", it will not be configure a default cStor sparse pool. The default configured value is "true". The use of cStor sparse pool is for testing purposes only.
+
+**Example:**
+
+```
+# environment variable
+- name: OPENEBS_IO_INSTALL_DEFAULT_CSTOR_SPARSE_POOL
+  value: "true"
+```
+
+<br>
+
 After doing the custom configuration in the downloaded openebs-operator.yaml file, run the below command to do the custom installation.
 
 
 
 ```
-kubectl apply -f <custom-openebs-operator-0.8.1.yaml>
+kubectl apply -f <custom-openebs-operator-0.8.2.yaml>
 ```
 
 
 
-As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation) steps.
+As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
 
 <br>
 
@@ -432,7 +476,7 @@ Find `apiServer`, `provisioner`, `snapshotOperator` and `ndm` sections in `value
 ```
 provisioner:
   image: "quay.io/openebs/openebs-k8s-provisioner"
-  imageTag: "0.8.1"
+  imageTag: "0.8.2"
   replicas: 1
   nodeSelector:
     node: openebs
@@ -453,7 +497,7 @@ In the `values.yaml`, find` ndm` section to update `excludeVendors:` and `exclud
 ```
 ndm:
   image: "quay.io/openebs/node-disk-manager-amd64"
-  imageTag: "v0.3.1"
+  imageTag: "v0.3.4"
   sparse:
     enabled: "true"
     path: "/var/openebs/sparse"
@@ -482,18 +526,18 @@ Download the values.yaml from  [here](https://github.com/helm/charts/blob/master
 | `rbac.create`                           | Enable RBAC Resources                        | `true`                                    |
 | `image.pullPolicy`                      | Container pull policy                        | `IfNotPresent`                            |
 | `apiserver.image`                       | Docker Image for API Server                  | `openebs/m-apiserver`                     |
-| `apiserver.imageTag`                    | Docker Image Tag for API Server              | `0.8.1`                                   |
+| `apiserver.imageTag`                    | Docker Image Tag for API Server              | `0.8.2`                                   |
 | `apiserver.replicas`                    | Number of API Server Replicas                | `1`                                       |
 | `provisioner.image`                     | Docker Image for Provisioner                 | `openebs/openebs-k8s-provisioner`         |
-| `provisioner.imageTag`                  | Docker Image Tag for Provisioner             | `0.8.1`                                   |
+| `provisioner.imageTag`                  | Docker Image Tag for Provisioner             | `0.8.2`                                   |
 | `provisioner.replicas`                  | Number of Provisioner Replicas               | `1`                                       |
 | `snapshotOperator.provisioner.image`    | Docker Image for Snapshot Provisioner        | `openebs/snapshot-provisioner`            |
-| `snapshotOperator.provisioner.imageTag` | Docker Image Tag for Snapshot Provisioner    | `0.8.1`                                   |
+| `snapshotOperator.provisioner.imageTag` | Docker Image Tag for Snapshot Provisioner    | `0.8.2`                                   |
 | `snapshotOperator.controller.image`     | Docker Image for Snapshot Controller         | `openebs/snapshot-controller`             |
-| `snapshotOperator.controller.imageTag`  | Docker Image Tag for Snapshot Controller     | `0.8.1`                                   |
+| `snapshotOperator.controller.imageTag`  | Docker Image Tag for Snapshot Controller     | `0.8.2`                                   |
 | `snapshotOperator.replicas`             | Number of Snapshot Operator Replicas         | `1`                                       |
 | `ndm.image`                             | Docker Image for Node Disk Manager           | `openebs/openebs/node-disk-manager-amd64` |
-| `ndm.imageTag`                          | Docker Image Tag for Node Disk Manager       | `v0.3.1`                                  |
+| `ndm.imageTag`                          | Docker Image Tag for Node Disk Manager       | `v0.3.4`                                  |
 | `ndm.sparse.enabled`                    | Create Sparse files and cStor Sparse Pool    | `true`                                    |
 | `ndm.sparse.path`                       | Directory where Sparse files are created     | `/var/openebs/sparse`                     |
 | `ndm.sparse.size`                       | Size of the sparse file in bytes             | `10737418240`                             |
@@ -502,18 +546,18 @@ Download the values.yaml from  [here](https://github.com/helm/charts/blob/master
 | `ndm.filters.excludePaths`              | Exclude devices with specified path patterns | `loop,fd0,sr0,/dev/ram,/dev/dm-,/dev/md`  |
 | `ndm.updateStrategy.type`               | Update strategy policy                       | `RollingUpdate`                           |
 | `jiva.image`                            | Docker Image for Jiva                        | `openebs/jiva`                            |
-| `jiva.imageTag`                         | Docker Image Tag for Jiva                    | `0.8.1`                                   |
+| `jiva.imageTag`                         | Docker Image Tag for Jiva                    | `0.8.2`                                   |
 | `jiva.replicas`                         | Number of Jiva Replicas                      | `3`                                       |
 | `cstor.pool.image`                      | Docker Image for cStor Pool                  | `openebs/cstor-pool`                      |
-| `cstor.pool.imageTag`                   | Docker Image Tag for cStor Pool              | `0.8.1`                                   |
+| `cstor.pool.imageTag`                   | Docker Image Tag for cStor Pool              | `0.8.2`                                   |
 | `cstor.poolMgmt.image`                  | Docker Image for cStor Pool Management       | `openebs/cstor-pool-mgmt`                 |
-| `cstor.poolMgmt.imageTag`               | Docker Image Tag for cStor Pool Management   | `0.8.1`                                   |
+| `cstor.poolMgmt.imageTag`               | Docker Image Tag for cStor Pool Management   | `0.8.2`                                   |
 | `cstor.target.image`                    | Docker Image for cStor Target                | `openebs/cstor-target`                    |
-| `cstor.target.imageTag`                 | Docker Image Tag for cStor Target            | `0.8.1`                                   |
+| `cstor.target.imageTag`                 | Docker Image Tag for cStor Target            | `0.8.2`                                   |
 | `cstor.volumeMgmt.image`                | Docker Image for cStor Volume Management     | `openebs/cstor-volume-mgmt`               |
-| `cstor.volumeMgmt.imageTag`             | Docker Image Tag for cStor Volume Management | `0.8.1`                                   |
+| `cstor.volumeMgmt.imageTag`             | Docker Image Tag for cStor Volume Management | `0.8.2`                                   |
 | `policies.monitoring.image`             | Docker Image for Prometheus Exporter         | `openebs/m-exporter`                      |
-| `policies.monitoring.imageTag`          | Docker Image Tag for Prometheus Exporter     | `0.8.1`                                   |
+| `policies.monitoring.imageTag`          | Docker Image Tag for Prometheus Exporter     | `0.8.2`                                   |
 | `analytics.pingInterval`                | Duration(hours) between sending ping stat    | `24h`                                     |
 | `HealthCheck.initialDelaySeconds`       | Delay before liveness probe is initiated     | `30`                                      |
 | `HealthCheck.periodSeconds`             | How often to perform the liveness probe      | `60`                                      |

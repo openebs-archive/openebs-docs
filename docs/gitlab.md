@@ -90,6 +90,8 @@ GitLab is a good solution for building On-Premise cloud native CI/CD platforms, 
 
    For more information on installation, see GitLab [documentation](https://docs.gitlab.com/ee/install/kubernetes/gitlab_chart.html#deployment-of-gitlab-to-kubernetes).
 
+   **Note:** You may be required to add "fsGroup:1000" under "spec.template.spec.securityContext" in corresponding gitlab-prometheus-server deployment spec for writing metrics to it.
+
 <br>
 
 <hr>

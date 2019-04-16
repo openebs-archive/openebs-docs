@@ -32,6 +32,8 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 ## Installation
 
+
+
 [Installation failed because insufficient user rights](#install-failed-user-rights)
 
 [iSCSI client is not setup on Nodes. Application Pod is in ContainerCreating state.](#install-failed-iscsi-not-configured)
@@ -47,7 +49,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 ## Uninstall
 
-[cStor Volume Replicas are not getting deleted properly](#cvr-deletion-unsuccessful)
+
 
 [Whenever a Jiva PVC is deleted, a job will created and status is seeing as `completed`](#jiva-deletion-scrub-job)
 
@@ -82,6 +84,8 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 <br>
 
 ## Kubernetes related
+
+
 
 [Kubernetes node reboots because of increase in memory consumed by Kubelet](#node-reboot-when-kubelet-memory-increases)
 
@@ -209,28 +213,7 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 <font size="6" color="maroon">Un-Install</font>
 
-<h3><a class="anchor" aria-hidden="true" id="cvr-deletion-unsuccessful"></a>cStor Volume Replicas are not getting deleted properly.</h3>
-
-Sometimes, there are chances that cStor volumes may not get deleted. Below workaround will resolve this issue. Perform the following command.
-
-```
-kubectl edit cvr -n openebs
-```
-
-And then remove finalizers from the corresponding CVR. Need to remove following entries and save it.
-
-```
-finalizers:
-- cstorvolumereplica.openebs.io/finalizer
-```
-
-This will automatically remove the pending CVR and delete the cStor volume completely.
-
-If there are multiple CVR entries need to be deleted,this can be done by using the following command.
-
-```
-CRD=`kubectl get crd | grep cstorvolumereplica | cut -d" " -f1` && kubectl patch crd $CRD -p '{"metadata":{"finalizers": [null]}}' --type=merge
-```
+<br>
 
 
 
@@ -288,16 +271,12 @@ pvc-adb79406-8e3e-11e8-a06a-001c42c2325f-rep-696b599894-vs97n    1/1       Runni
 
 **Troubleshooting**
 
-SCSI package is installed on both Host and RKE kubelet.
+Make sure the following prerequisites are done.
 
-```
-[root@node-34622 ~]# iscsiadm -V
-iscsiadm version 6.2.0.874-7
-[root@node-34622 ~]# docker exec kubelet iscsiadm -V
-iscsiadm version 2.0-874
-```
+1. Verify iSCSI initiator is installed on nodes and services are running. 
+2. Added extra_binds under kubelet service in cluster YAML
 
-If output returns iscsiadm version for both commands, then you have to remove iSCSI from the node. You will find the resolution method from [here](/docs/next/iscsiclient.html#aks).
+More details are mentioned [here](/docs/next/prerequisites.html#rancher).
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-stuck-after-deployment"></a>Application pod is stuck in ContainerCreating state after deployment</h3>
 
@@ -710,7 +689,7 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 
 ### [Seek support or help](/docs/next/support.html)
 
-### [Latest release notes]()
+### [Latest release notes](/docs/next/releases.html)
 
 <br>
 

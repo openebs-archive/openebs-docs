@@ -5,17 +5,19 @@ sidebar_label: Upgrade
 ---
 ------
 
-Latest version of OpenEBS is 0.8.1. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/0.8.1).  This section describes about the upgrade from OpenEBS 0.8.0 to 0.8.1.
+Latest version of OpenEBS is 0.8.2. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/0.8.2).  This section describes about the upgrade from OpenEBS 0.8.1 to 0.8.2.
 
 ## Supported upgrade paths
 
-Fomr 0.7.x to 0.8.0 - Get the steps from [here](https://v08-docs.openebs.io/docs/next/upgrade.html).
+From 0.8.0 to 0.8.1 - Get the steps from [here](https://v081-docs.openebs.io/docs/next/upgrade.html).
+
+From 0.7.x to 0.8.0 - Get the steps from [here](https://v08-docs.openebs.io/docs/next/upgrade.html).
 
 From 0.6.0 to 0.7.x - Get the steps from [here](https://v07-docs.openebs.io/docs/next/upgrade.html).
 
 From 0.5.3 or 0.5.4 to 0.6.0 - Get the steps from [here](https://v06-docs.openebs.io/docs/next/upgrade.html).
 
-Currently, Upgrade to latest OpenEBS 0.8.1 version is supported only from 0.8.0. You have to follow the above mentioned upgrade path to the next level from the previous version as per the supported path.
+Currently, Upgrade to latest OpenEBS 0.8.2 version is supported only from 0.8.1. You have to follow the above mentioned upgrade path to the next level from the previous version as per the supported path.
 
 ## Overview of the upgrade process
 
@@ -30,7 +32,7 @@ The upgrade of OpenEBS is a three step process:
 
 1. Download upgrade scripts
 2. Upgrade the OpenEBS Operator
-3. Upgrade OpenEBS Volumes that were created with older OpenEBS Operator (0.8.0), one at a time.
+3. Upgrade OpenEBS Volumes that were created with older OpenEBS Operator (0.8.1), one at a time.
 
 
 ## Upgrade steps 
@@ -42,18 +44,24 @@ All steps described in this document must be performed on the Kubernetes master 
    You can do git clone of the upgrade scripts.
 
    ```
+   mkdir upgrade-openebs
+   cd upgrade-openebs
    git clone https://github.com/openebs/openebs.git
-   cd openebs/k8s/upgrades/0.8.0-0.8.1/
+   cd openebs/k8s/upgrades/0.8.1-0.8.2/
    ```
 
-   **Note:** The upgrade  procedure uses the node labels to pin the Jiva replicas to the nodes where they are present. On node restart, these labels will disappear and can cause the replica to be un-scheduled.
+   
 
 2. <h3><a class="anchor" aria-hidden="true" id="checking-openebs-labels"></a>Checking the  openebs labels</h3>
 
    - Run `./pre-check.sh` to get all the openebs volume resources not having `openebs.io/version` tag.
-   - Run `./labeltagger.sh 0.8.0` to add `openebs.io/version` label to all the openebs volume resources.
+
+     - If there are no "unlabeled resources", then proceed with Step3. If there are some "unlabeled resources",perform following command.
+   - Run `./labeltagger.sh 0.8.1` to add `openebs.io/version` label to all the OpenEBS volume resources.
 
    **Note:** Please make sure that all pods are back to running state before proceeding to Step 3.
+
+   
 
 3. <h3><a class="anchor" aria-hidden="true" id="upgrade-operator"></a>Upgrade OpenEBS operator</h3>
 
@@ -64,39 +72,32 @@ All steps described in this document must be performed on the Kubernetes master 
    1. Using kubectl
    2. Using helm
 
-   Select the same approach that you have used for the installation of 0.8.0 version.
+   Select the same approach that you have used for the installation of 0.8.1 version.
 
-   **Install/Upgrade using kubectl (using openebs-operator.yaml )**
+   <font size="4">**Install/Upgrade using kubectl (using openebs-operator.yaml )**</font>
 
-   Before applying the latest YAML, change the updatStrategy of NDM daemonset from `OnDelete` to `RollingUpdate`. This patch can be done using the following command.
-
-   ```
-   kubectl patch ds openebs-ndm -n openebs --patch='{"spec":{"updateStrategy":{"type": "RollingUpdate"}}}'
-   ```
-
-   The following sample steps will work if you have installed OpenEBS cluster without modifying the default values in the openebs-operator.yaml file.  The following command will upgrade all the openebs-operator components to 0.8.1 version.  
+   The following sample steps will work if you have installed OpenEBS cluster without modifying the default values in the openebs-operator.yaml file.  The following command will upgrade all the openebs-operator components to 0.8.2 version.  
 
    ```
-   kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
+   kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.2.yaml
    ```
 
-   This will upgrade all OpenEBS components to latest image.
-
-   **Note:** If you have customized it for your cluster, you have to download the 0.8.1 openebs-operator.yaml using below command and customize it again. 
+   **Note:** If you have customized it for your cluster, then you have to download the 0.8.2 openebs-operator.yaml using below command and customize it again. 
 
    ```
-   wget https://openebs.github.io/charts/openebs-operator-0.8.1.yaml
+   wget https://openebs.github.io/charts/openebs-operator-0.8.2.yaml
    ```
 
    Customize the downloaded YAML file and apply the modified YAML using the following command.
 
    ```
-   kubectl apply -f openebs-operator-0.8.1.yaml
+   kubectl apply -f openebs-operator-0.8.2.yaml
    ```
 
    **Note:** Starting with OpenEBS 0.6, all the components are installed in namespace `openebs` as opposed to default namespace in earlier releases.
 
-   **Install/Upgrade using stable helm chart**
+   <font size="4">**Install/Upgrade using stable helm chart**</font>
+
    The following procedure will work if you have installed OpenEBS with default values provided by stable helm chart.
 
    1. Run `helm repo update` to update local cache with latest package.
@@ -109,17 +110,20 @@ All steps described in this document must be performed on the Kubernetes master 
       helm upgrade openebs stable/openebs
       ```
 
-   **Using Customized Operator YAML or Helm Chart**
-   As a first step, you must update your custom helm chart or YAML with 0.8.1 release tags and changes made in the values/templates.
-   After updating the YAML or helm chart or helm chart values, you can use the above procedures to upgrade the OpenEBS Operator.
+   <font size="4">Using Customized Operator YAML or Helm Chart</font>
 
-   1. You can use the following as references to know about the changes in 0.8.1:
+   As a first step, you must update your custom helm chart or YAML with 0.8.2 release tags and changes made in the values/templates. The changes in the latest release can be get from [here](https://github.com/helm/charts/blob/master/stable/openebs/values.yaml).
+   After updating the YAML or helm chart or helm chart values, you can use the following command to upgrade the OpenEBS Operator. In the following example, use the exact release name which you have used during the initial OpenEBS installation. 
 
-      openebs-charts PR [#2400](https://github.com/openebs/openebs/pull/2400) as reference.
+   ```
+   helm upgrade openebs -f values.yml stable/openebs
+   ```
+
+   
 
 4. <h3><a class="anchor" aria-hidden="true" id="upgrade-volume"></a>Upgrade volumes one by one</h3>
 
-   Even after the OpenEBS Operator has been upgraded to 0.8.1, the cStor Storage Pools and volumes (both Jiva and cStor) will continue to work with older versions. Use the following steps in the same order to upgrade cStor Pools and volumes.
+   Even after the OpenEBS Operator has been upgraded to 0.8.2, the cStor Storage Pools and volumes (both Jiva and cStor) will continue to work with older versions. Use the following steps in the same order to upgrade cStor Pools and volumes.
 
    **Note:** Upgrade functionality is still under active development. It is highly recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, make sure you have taken a backup of the data before starting the below upgrade procedure.
 
@@ -129,7 +133,7 @@ All steps described in this document must be performed on the Kubernetes master 
    2. Have the following link handy in case the volume gets into read-only during upgrade https://docs.openebs.io/docs/next/troubleshooting.html#recovery-readonly-when-kubelet-is-container
    3. Automatic rollback option is not provided. To rollback, you need to update the controller, exporter and replica pod images to the previous version.
 
-   In the process of running the below steps, if you run into issues, you can always reach us on [slack](https://slack.openebs.io).
+   In the process of running the below steps, if you run into issues, you can always reach us on <a href="https://openebs.io/join-our-community" target="_blank">Slack OpenEBS Community</a>
 
    <h4><a class="anchor" aria-hidden="true" id="Jiva-PV"></a>Jiva PV</h4>
 
@@ -145,14 +149,22 @@ All steps described in this document must be performed on the Kubernetes master 
 
     ```
    NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                          STORAGECLASS      REASON    AGE
-   pvc-48fb36a2-947f-11e8-b1f3-42010a800004   5G         RWO            Delete           Bound     percona-test/demo-vol1-claim
+   pvc-48fb36a2-947f-11e8-b1f3-42010a800004   5G         RWO            Delete           Bound     percona-test/demo-vol1-claim   openebs-percona             8m
     ```
 
-   Using this PVC name, upgrade the particular volume using the following command. 	
+   Using this PV name, upgrade the particular volume using the following command. 
+
+   ```
+   ./jiva_volume_upgrade.sh <Jiva_PV_name>
+   ```
+
+   **Example:**
 
    ```
    ./jiva_volume_upgrade.sh pvc-48fb36a2-947f-11e8-b1f3-42010a800004
    ```
+
+   **Note:** The script will check whether the node, where corresponding Jiva pod is running, is already labelled or not. If node is not labelled, then nodes will be labelled as `openebs-jiva`. 
 
    <h4><a class="anchor" aria-hidden="true" id="cStor-PV"></a>cStor PV</h4>
 
@@ -172,6 +184,12 @@ All steps described in this document must be performed on the Kubernetes master 
    ```
 
    Using the SPC name,upgrade the corresponding cStorStoragePool using the following command.
+
+   ```
+   ./cstor_pool_upgrade.sh <spc_name> <openebs-namepsace>
+   ```
+
+   **Example:**
 
     ```
    ./cstor_pool_upgrade.sh cstor-sparse-pool openebs
@@ -194,11 +212,19 @@ All steps described in this document must be performed on the Kubernetes master 
    pvc-1085415d-f84c-11e8-aadf-42010a8000bb   5G         RWO            Delete           Bound     default/demo-cstor-sparse-vol1-claim   openebs-cstor-sparse             22m
    ```
 
-     Using this PVC name, upgrade the particular volume using the following command.
+     Using this PV name, upgrade the particular volume using the following command.
 
-    ```
+   ```
+   ./cstor_volume_upgrade.sh <cStor_PV_name> <openebs-namepsace>
+   ```
+
+   **Example:**
+
+   ```
    ./cstor_volume_upgrade.sh pvc-1085415d-f84c-11e8-aadf-42010a8000bb openebs
-    ```
+   ```
+
+   
 
 ## Verifying the Upgrade
 
@@ -208,61 +234,49 @@ Upgrade can be verified using the following command.
 
 Output will be similar to the following.
 
-      image: quay.io/openebs/cstor-pool:v0.8.1
-      image: quay.io/openebs/cstor-pool-mgmt:v0.8.1
-      image: quay.io/openebs/cstor-pool:v0.8.1
-      image: quay.io/openebs/cstor-pool-mgmt:v0.8.1
-      image: quay.io/openebs/cstor-pool:v0.8.1
-      image: quay.io/openebs/cstor-pool-mgmt:v0.8.1
-      image: quay.io/openebs/m-apiserver:v0.8.1
-      image: quay.io/openebs/openebs-k8s-provisioner:v0.8.1
-      image: quay.io/openebs/snapshot-controller:v0.8.1
-      image: quay.io/openebs/snapshot-provisioner:v0.8.1
-    - image: quay.io/openebs/cstor-istgt:v0.8.1
-      image: quay.io/openebs/m-exporter:v0.8.1
-      image: quay.io/openebs/cstor-volume-mgmt:v0.8.1
+      image: quay.io/openebs/cstor-pool:v0.8.2
+      image: quay.io/openebs/cstor-pool-mgmt:v0.8.2
+      image: quay.io/openebs/cstor-pool:v0.8.2
+      image: quay.io/openebs/cstor-pool-mgmt:v0.8.2
+      image: quay.io/openebs/cstor-pool:v0.8.2
+      image: quay.io/openebs/cstor-pool-mgmt:v0.8.2
+      image: quay.io/openebs/m-apiserver:v0.8.2
+      image: quay.io/openebs/openebs-k8s-provisioner:v0.8.2
+      image: quay.io/openebs/snapshot-controller:v0.8.2
+      image: quay.io/openebs/snapshot-provisioner:v0.8.2
+    - image: quay.io/openebs/cstor-istgt:v0.8.2
+      image: quay.io/openebs/m-exporter:v0.8.2
+      image: quay.io/openebs/cstor-volume-mgmt:v0.8.2
 
-This will show the images of all the OpenEBS components after the upgrade. All image tag should in v0.8.1
+All image tag should in v0.8.2 in the above output.
 
-## Troubleshooting 
 
-If upgrade from 0.8 to 0.8.1 is done by manually without using upgrade script, observed following errors.
 
-**Symptom** 
+Check the NDM image using the following command.
 
- ```
-Warning  Unhealthy              1m (x3 over 1m)   kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Liveness probe failed:         cannot open 'cstor-5ff82ec7-2542-11e9-9965-42010a80013': dataset does not exist
-       Normal   Created                31s (x2 over 6m)  kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Created container
-       Normal   Started                31s (x2 over 6m)  kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Started container
-       Normal   Pulled                 31s (x2 over 6m)  kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Container image   "quay.io/openebs/cstor-pool:v0.8.x-ci" already present on machine
-       Normal   Killing                31s               kubelet, gke-sai-ephemeral-default-pool-6d5def84-ds90  Killing container with id    docker://cstor-pool:Container failed liveness probe.. Container will be killed and recreated.
- ```
+```
+kubectl get ds -o yaml  -n openebs| grep -i image |  grep -i quay | grep -v metadata
+```
 
-**Reason**
+Output will be similar to the following.
 
-In 0.8.1 liveness check for cStor pool is added. For every 5 minutes liveness probe will check whether cStor pool is alive or not. If not alive, liveness will kill the containers in corresponding deployment pod. The above error can come if the upgrade to 0.8.1 from 0.8.0 is not done through the upgrade script.
+```
+  image: quay.io/openebs/node-disk-manager-amd64:v0.3.4
+```
 
-**Resolution**
-The above error can be avoided by setting the correct csp_uuid in the corresponding deployment YAML. 
+The image tag of NDM will be 0.3.4 in the above output.
 
- ```
-"containers": [
-                  {
-                     "name": "cstor-pool",
-                     "image": "quay.io/openebs/cstor-pool:0.8.1",
-                     "env": [
-                         {
-                            "name": "OPENEBS_IO_CSTOR_ID",
-                            "value": "@csp_uuid"
-                         }
-                     ],
-                     "livenessProbe": {
-                        "exec": {
- ```
 
-The csp_uuid is the corresponding pool resource UID. 
+
+This will verify all the OpenEBS components are successfully upgraded to the latest image.
+
+<br>
 
 ## See Also:
+
+### [Releases](/docs/next/releases.html)
+
+### [MayaOnline](/docs/next/mayaonline.html)
 
 
 

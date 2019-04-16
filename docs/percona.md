@@ -21,7 +21,7 @@ Percona is highly scalable and requires underlying persistent storage to be equa
 
 **Advantages of using OpenEBS for Percona database:**
 
-- Storage is highly available. Data is replicated on to three different nodes,  even across zones. Node upgrades, node failures will not result in unavailability of persistent data. 
+- Storage is highly available. Data is replicated on to three different nodes, even across zones. Node upgrades, node failures will not result in unavailability of persistent data. 
 - For each database instance of Percona, a dedicated OpenEBS workload is allocated so that granular storage policies can be applied. OpenEBS storage controller can be tuned with resources such as memory, CPU and number/type of disks for optimal performance.
 - Take backup of the Prometheus metrics periodically and back them up to S3 or any object storage so that restoration of the same metrics is possible to the same or any other Kubernetes cluster
 
@@ -37,7 +37,7 @@ Percona is highly scalable and requires underlying persistent storage to be equa
 
 <img src="/docs/assets/svg/percona-deployment.svg" alt="OpenEBS and Percona" style="width:100%;">
 
-As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration work fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
+As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration works fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
 
 <br>
 

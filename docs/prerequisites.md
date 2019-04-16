@@ -426,6 +426,14 @@ sudo ros s enable open-iscsi
 sudo ros s up open-iscsi
 ```
 
+Run the below commands on all the nodes to make sure the below directories are persistent, by default these directories are ephemeral.
+
+```
+ros config set rancher.services.user-volumes.volumes  [/home:/home,/opt:/opt,/var/lib/kubelet:/var/lib/kubelet,/etc/kubernetes:/etc/kubernetes,/var/openebs]
+system-docker rm all-volumes
+reboot
+```
+
 
 
 <h4><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services on RHEL or Ubuntu</h4>

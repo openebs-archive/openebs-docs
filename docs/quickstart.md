@@ -19,11 +19,13 @@ sidebar_label: Quickstart
 
 <div class="emphasize">
     <ul>
+        <li>Kubernetes 1.9.7+ installed. Latest tested Kubernetes version is 1.13.4.</lili>
         <li>Understand the <a href="/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
         <li>Start <a href="/docs/next/installation.html">installation </a> either through helm or through OpenEBS operator. For ease of testing OpenEBS functionality, a default cStor sparse pool and a corresponding StorageClass are created </li>
         <li>For test deployments, use cStor-sparse-storage-class and start provisioning cStor OpenEBS volumes</li>
         <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses</li>
     </ul>
+
 
 </div>
 
