@@ -5,7 +5,7 @@ sidebar_label: Jira
 ---
 ------
 
-<img src="/docs/assets/o-postgres.png" alt="OpenEBS and Jira" style="width:400px;">	
+<img src="/docs/assets/o-jira.png" alt="OpenEBS and Jira" style="width:400px;">	
 
 ## Introduction
 
