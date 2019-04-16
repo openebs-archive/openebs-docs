@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1984.2 955.1" style="enable-background:new 0 0 1984.2 955.1;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0.45;fill:#C0E4D7;enable-background:new    ;}
+	.st1{fill:none;stroke:#F26724;stroke-width:2;stroke-miterlimit:10;stroke-dasharray:6,6;}
+	.st2{fill:none;stroke:#6E6F72;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;}
+	.st3{fill:none;stroke:#F26724;stroke-width:2;stroke-miterlimit:10;}
+	.st4{fill:#6E6F72;}
+	.st5{font-family:'Helvetica';}
+	.st6{font-size:22px;}
+	.st7{font-family:'Helvetica-Bold';}
+	.st8{font-size:24px;}
+	.st9{fill:none;stroke:#A8AAAD;stroke-width:2;stroke-miterlimit:10;}
+	.st10{fill:none;stroke:#A8AAAD;stroke-width:2;stroke-miterlimit:10;stroke-dasharray:9.02,9.02;}
+	.st11{fill:none;stroke:#A8AAAD;stroke-width:2;stroke-miterlimit:10;stroke-dasharray:9.22,9.22;}
+	.st12{fill:none;stroke:#F26724;stroke-width:2;stroke-miterlimit:10;stroke-dasharray:5.82,5.82;}
+	.st13{fill:#FFFFFF;stroke:#C0E4D7;stroke-miterlimit:10;}
+	.st14{font-size:36px;}
+	.st15{fill:none;stroke:#F26724;stroke-width:4;stroke-miterlimit:10;}
+	.st16{fill:#F26724;stroke:#F26724;stroke-width:2;stroke-miterlimit:10;}
+	.st17{fill:#F26724;}
+	.st18{font-size:18px;}
+	.st19{fill:#E55600;}
+	.st20{fill:none;stroke:#6E6F72;stroke-width:3;stroke-linecap:round;stroke-miterlimit:10;}
+	.st21{fill:none;stroke:#46B74B;stroke-width:2;stroke-miterlimit:10;}
+	.st22{fill:#2684FF;}
+	.st23{fill:url(#SVGID_1_);}
+	.st24{fill:url(#SVGID_2_);}
+</style>
+<path class="st0" d="M1826.1,540.3H221c-11,0-20-9-20-20V142.8c0-11,9-20,20-20h1605.1c11,0,20,9,20,20v377.5c0,11-8.9,20-19.9,20
+	C1826.2,540.3,1826.2,540.3,1826.1,540.3z"/>
+<path class="st1" d="M1869.7,908.7H187.1c-11,0-20-9-20-20V89.4c0-11,9-20,20-20h1682.6c11,0,20,9,20,20v799.3c0,11-8.9,20-19.9,20
+	C1869.8,908.7,1869.8,908.7,1869.7,908.7z"/>
+<ellipse class="st2" cx="511.6" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M530.3,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="492.9" y1="729.9" x2="492.9" y2="744.5"/>
+<line class="st2" x1="530.3" y1="729.9" x2="530.3" y2="744.5"/>
+<ellipse class="st2" cx="559.6" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M578.3,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="540.9" y1="729.9" x2="540.9" y2="744.5"/>
+<line class="st2" x1="578.3" y1="729.9" x2="578.3" y2="744.5"/>
+<ellipse class="st2" cx="607.6" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M626.3,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="588.9" y1="729.9" x2="588.9" y2="744.5"/>
+<line class="st2" x1="626.3" y1="729.9" x2="626.3" y2="744.5"/>
+<ellipse class="st2" cx="655.5" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M674.3,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="636.8" y1="729.9" x2="636.8" y2="744.5"/>
+<line class="st2" x1="674.3" y1="729.9" x2="674.3" y2="744.5"/>
+<path class="st3" d="M682.9,787.9H489.8c-3.1,0-5.7-2.6-5.7-5.7l0,0v-68.9c0-3.1,2.6-5.7,5.7-5.7h0h193.1c3.1,0,5.7,2.6,5.7,5.7l0,0
+	v68.9C688.6,785.3,686.1,787.9,682.9,787.9L682.9,787.9z"/>
+<text transform="matrix(0.94 0 0 1 501.5098 815.6202)" class="st4 st5 st6">cStorPool instance1</text>
+<ellipse class="st2" cx="861.6" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M880.4,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="842.9" y1="729.9" x2="842.9" y2="744.5"/>
+<line class="st2" x1="880.4" y1="729.9" x2="880.4" y2="744.5"/>
+<ellipse class="st2" cx="909.6" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M928.3,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="890.9" y1="729.9" x2="890.9" y2="744.5"/>
+<line class="st2" x1="928.3" y1="729.9" x2="928.3" y2="744.5"/>
+<ellipse class="st2" cx="957.6" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M976.3,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="938.9" y1="729.9" x2="938.9" y2="744.5"/>
+<line class="st2" x1="976.3" y1="729.9" x2="976.3" y2="744.5"/>
+<ellipse class="st2" cx="1005.6" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M1024.3,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="986.8" y1="729.9" x2="986.8" y2="744.5"/>
+<line class="st2" x1="1024.3" y1="729.9" x2="1024.3" y2="744.5"/>
+<path class="st3" d="M1032.9,787.9H839.8c-3.1,0-5.7-2.6-5.7-5.7l0,0v-68.9c0-3.1,2.6-5.7,5.7-5.7l0,0h193.1c3.1,0,5.7,2.6,5.7,5.7
+	v68.9c0,3.1-2.4,5.7-5.6,5.7C1033,787.9,1033,787.9,1032.9,787.9z"/>
+<ellipse class="st2" cx="1201.7" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M1220.4,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="1183" y1="729.9" x2="1183" y2="744.5"/>
+<line class="st2" x1="1220.4" y1="729.9" x2="1220.4" y2="744.5"/>
+<ellipse class="st2" cx="1249.6" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M1268.4,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="1230.9" y1="729.9" x2="1230.9" y2="744.5"/>
+<line class="st2" x1="1268.4" y1="729.9" x2="1268.4" y2="744.5"/>
+<ellipse class="st2" cx="1297.6" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M1316.3,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="1278.9" y1="729.9" x2="1278.9" y2="744.5"/>
+<line class="st2" x1="1316.3" y1="729.9" x2="1316.3" y2="744.5"/>
+<ellipse class="st2" cx="1345.6" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M1364.3,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="1326.9" y1="729.9" x2="1326.9" y2="744.5"/>
+<line class="st2" x1="1364.3" y1="729.9" x2="1364.3" y2="744.5"/>
+<path class="st3" d="M1373,787.9h-193.1c-3.1,0-5.7-2.6-5.7-5.7v-68.9c0-3.1,2.6-5.7,5.7-5.7H1373c3.1,0,5.7,2.6,5.7,5.7v68.9
+	C1378.7,785.3,1376.1,787.9,1373,787.9z"/>
+<ellipse class="st2" cx="1568.6" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M1587.3,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="1549.9" y1="729.9" x2="1549.9" y2="744.5"/>
+<line class="st2" x1="1587.3" y1="729.9" x2="1587.3" y2="744.5"/>
+<ellipse class="st2" cx="1616.6" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M1635.3,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="1597.8" y1="729.9" x2="1597.8" y2="744.5"/>
+<line class="st2" x1="1635.3" y1="729.9" x2="1635.3" y2="744.5"/>
+<ellipse class="st2" cx="1664.5" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M1683.3,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="1645.8" y1="729.9" x2="1645.8" y2="744.5"/>
+<line class="st2" x1="1683.3" y1="729.9" x2="1683.3" y2="744.5"/>
+<ellipse class="st2" cx="1712.5" cy="729.9" rx="18.7" ry="5.2"/>
+<path class="st2" d="M1731.2,744.5c0,2.9-8.4,5.2-18.7,5.2s-18.7-2.3-18.7-5.2"/>
+<line class="st2" x1="1693.8" y1="729.9" x2="1693.8" y2="744.5"/>
+<line class="st2" x1="1731.2" y1="729.9" x2="1731.2" y2="744.5"/>
+<path class="st3" d="M1739.9,787.9h-193.1c-3.1,0-5.7-2.6-5.7-5.7v-68.9c0-3.1,2.6-5.7,5.7-5.7h193.1c3.1,0,5.7,2.6,5.7,5.7v68.9
+	C1745.6,785.3,1743.1,787.9,1739.9,787.9z"/>
+<text transform="matrix(0.94 0 0 1 547.7002 867.0304)" class="st4 st7 st8">NODE 1</text>
+<text transform="matrix(0.94 0 0 1 899.7197 867.0304)" class="st4 st7 st8">NODE 2</text>
+<text transform="matrix(0.94 0 0 1 1230.9697 867.0304)" class="st4 st7 st8">NODE 3</text>
+<text transform="matrix(0.94 0 0 1 1622.2803 867.0304)" class="st4 st7 st8">NODE 4</text>
+<polyline class="st9" points="1827.2,830.5 1827.2,835 1822.7,835 "/>
+<line class="st10" x1="1813.7" y1="835" x2="428.8" y2="835"/>
+<polyline class="st9" points="424.3,835 419.8,835 419.8,830.5 "/>
+<line class="st11" x1="419.8" y1="821.3" x2="419.8" y2="696.9"/>
+<polyline class="st9" points="419.8,692.3 419.8,687.8 424.3,687.8 "/>
+<line class="st10" x1="433.3" y1="687.8" x2="1818.2" y2="687.8"/>
+<polyline class="st9" points="1822.7,687.8 1827.2,687.8 1827.2,692.3 "/>
+<line class="st11" x1="1827.2" y1="701.5" x2="1827.2" y2="825.9"/>
+<line class="st3" x1="418.7" y1="884.8" x2="418.7" y2="881.8"/>
+<line class="st12" x1="418.7" y1="876" x2="420.1" y2="692.6"/>
+<line class="st3" x1="420.1" y1="689.6" x2="420.2" y2="686.6"/>
+<line class="st3" x1="760.6" y1="884.8" x2="760.6" y2="881.8"/>
+<line class="st12" x1="760.7" y1="876" x2="762.1" y2="692.6"/>
+<line class="st3" x1="762.1" y1="689.6" x2="762.1" y2="686.6"/>
+<line class="st3" x1="1107.4" y1="884.8" x2="1107.5" y2="881.8"/>
+<line class="st12" x1="1107.5" y1="876" x2="1108.9" y2="692.6"/>
+<line class="st3" x1="1108.9" y1="689.6" x2="1108.9" y2="686.6"/>
+<line class="st3" x1="1454.2" y1="884.8" x2="1454.3" y2="881.8"/>
+<line class="st12" x1="1454.3" y1="876" x2="1455.7" y2="692.6"/>
+<line class="st3" x1="1455.7" y1="689.6" x2="1455.7" y2="686.6"/>
+<line class="st3" x1="1826.1" y1="884.8" x2="1826.1" y2="881.8"/>
+<line class="st12" x1="1826.2" y1="876" x2="1827.5" y2="692.6"/>
+<line class="st3" x1="1827.6" y1="689.6" x2="1827.6" y2="686.6"/>
+<path class="st13" d="M1455.4,101H621.9c-6.4,0-11.5-5.1-11.5-11.5l0,0V49.1c0-6.4,5.1-11.5,11.5-11.5h833.4
+	c6.4,0,11.5,5.1,11.5,11.5v40.4C1466.9,95.8,1461.8,100.9,1455.4,101C1455.5,101,1455.5,101,1455.4,101z"/>
+<text transform="matrix(0.94 0 0 1 682.8201 81.2276)" class="st4 st7 st14">OpenEBS as persistent storage for Jira</text>
+<g>
+	<g>
+		<line class="st15" x1="585" y1="626" x2="585" y2="683.4"/>
+		<g>
+			<path class="st16" d="M585.1,701.5c-3.2-8.5-8.6-19.1-14.3-25.6l14.3,5.2l14.3-5.2C593.7,682.4,588.3,693,585.1,701.5z"/>
+		</g>
+	</g>
+</g>
+<g>
+	<g>
+		<line class="st15" x1="939.1" y1="626" x2="939.1" y2="683.4"/>
+		<g>
+			<path class="st16" d="M939.2,701.5c-3.2-8.5-8.6-19.1-14.3-25.6l14.3,5.2l14.3-5.2C947.8,682.4,942.4,693,939.2,701.5z"/>
+		</g>
+	</g>
+</g>
+<g>
+	<g>
+		<line class="st15" x1="1300.2" y1="626" x2="1300.2" y2="683.4"/>
+		<g>
+			<path class="st16" d="M1300.3,701.5c-3.2-8.5-8.6-19.1-14.3-25.6l14.3,5.2l14.3-5.2C1308.9,682.4,1303.5,693,1300.3,701.5z"/>
+		</g>
+	</g>
+</g>
+<rect x="584" y="624.5" class="st3" width="717.2" height="1.5"/>
+<text transform="matrix(0.9445 0 0 1 611.9976 615.587)" class="st17 st5 st18">Jira volume replicated to 3 copies</text>
+<text transform="matrix(0.94 0 0 1 843.6201 815.5402)" class="st4 st5 st6">cStorPool instance2</text>
+<text transform="matrix(0.94 0 0 1 1184.5 811.67)" class="st4 st5 st6">cStorPool instance3</text>
+<text transform="matrix(0.94 0 0 1 1552.5 815.5402)" class="st4 st5 st6">cStorPool instance4</text>
+<text transform="matrix(0.94 0 0 1 513.6094 775.2404)" class="st4 st5 st6">volume replicas</text>
+<text transform="matrix(0.94 0 0 1 869.54 779.5997)" class="st4 st5 st6">volume replicas</text>
+<text transform="matrix(0.94 0 0 1 1204.6094 782.4796)" class="st4 st5 st6">volume replicas</text>
+<text transform="matrix(0.94 0 0 1 1574.5498 779.5997)" class="st4 st5 st6">volume replicas</text>
+<rect x="988.9" y="514.5" class="st3" width="2.2" height="110"/>
+<text transform="matrix(0.9445 0 0 1 953.8007 488.7574)" class="st4 st5 st6">cStor tgt</text>
+<path class="st3" d="M1067.9,514.3H917.1c-4.1,0-7.3-2.6-7.3-5.7v-48c0-3.2,3.3-5.7,7.3-5.7h150.8c4.1,0,7.3,2.6,7.3,5.7v48
+	C1075.2,511.7,1072,514.3,1067.9,514.3z"/>
+<text transform="matrix(0.9445 0 0 1 1007.4825 444.7593)" class="st17 st5 st18">OpenEBS PV</text>
+<text transform="matrix(0.9445 0 0 1 1006.5856 395.8786)" class="st19 st5 st18">PVC</text>
+<line class="st20" x1="991.5" y1="373.6" x2="991.5" y2="454.1"/>
+<path class="st21" d="M1095.6,373.7H890.7c-6.6,0-12-5.4-12-12V247.6c0-6.6,5.4-12,12-12h204.8c6.6,0,12,5.4,12,12v114.1
+	C1107.6,368.3,1102.2,373.7,1095.6,373.7z"/>
+<g id="VJpa7U.tif">
+	
+		<image style="overflow:visible;" width="509" height="497" id="Layer_0_2_" xlink:href="BC99D0D296B522D1.png"  transform="matrix(0.3137 0 0 0.3137 189.9474 593.8363)">
+	</image>
+</g>
+<g>
+	<g id="Blue">
+		<path class="st22" d="M1027.3,305.6L994.7,273l-3.2-3.2l0,0L967,294.4l0,0l-11.2,11.2c-1.2,1.2-1.2,3.1,0,4.2l22.4,22.4l13.3,13.3
+			l24.5-24.5l0.4-0.4l10.8-10.8C1028.4,308.7,1028.4,306.8,1027.3,305.6z M991.5,319l-11.2-11.2l11.2-11.2l11.2,11.2L991.5,319z"/>
+		
+			<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="989.4895" y1="670.5584" x2="973.8495" y2="654.9185" gradientTransform="matrix(1 0 0 -1 0 955.7795)">
+			<stop  offset="0.18" style="stop-color:#0052CC"/>
+			<stop  offset="1" style="stop-color:#2684FF"/>
+		</linearGradient>
+		<path class="st23" d="M991.5,296.6c-7.3-7.3-7.4-19.2-0.1-26.6l-24.5,24.5l13.3,13.3L991.5,296.6z"/>
+		
+			<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="993.6345" y1="625.6234" x2="1009.2445" y2="641.2335" gradientTransform="matrix(1 0 0 -1 0 955.7795)">
+			<stop  offset="0.18" style="stop-color:#0052CC"/>
+			<stop  offset="1" style="stop-color:#2684FF"/>
+		</linearGradient>
+		<path class="st24" d="M1002.7,307.7L991.5,319c7.4,7.4,7.4,19.3,0,26.7c0,0,0,0,0,0l0,0l24.6-24.6L1002.7,307.7z"/>
+	</g>
+</g>
+</svg>
