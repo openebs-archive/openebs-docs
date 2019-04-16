@@ -5,6 +5,12 @@ sidebar_label: Overview
 ---
 ------
 
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  Documentation for OpenEBS v0.8.1 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for the [latest](https://docs.openebs.io) version.
+</strong></p></center>
+
+------
+
 ##  <font size="6">Introduction</font>
 
 OpenEBS is the leading open-source project for container-attached and
