@@ -326,7 +326,7 @@ The StatefulSet workloads access the OpenEBS storage volume  by connecting to th
 
 The configuration for implementing this policy is different for deployment and StatefulSet applications.
 
-#### For StatefulSet Applications
+<h4><a class="anchor" aria-hidden="true" id="for-statefulset-applications"></a>For StatefulSet Applications</h4>
 
 In the case of provisioning StatfulSet applications with replication factor of  greater than "1" and volume replication factor of euqal to "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application resides. This feature can be achieved by using either of the following approaches.
 
@@ -414,7 +414,7 @@ volumeBindingMode: WaitForFirstConsumer
 
 **Note:** It is recommended to do application pod stickiness for seamless working of the above approaches. Example YAML spec for STS can be get from [here](https://raw.githubusercontent.com/openebs/openebs/12be2bbdb244d50c8c0fd48b59d520f86aa3a4a6/k8s/demo/mongodb/demo-mongo-cstor-taa.yaml).
 
-#### For Deployment Applications
+<h4><a class="anchor" aria-hidden="true" id="for-deployment-applications"></a>For Deployment Applications</h4>
 
 This feature makes use of the Kubernetes Pod Affinity feature that is dependent on the Pod labels. User will need to add the following label to both Application and PVC.
 
@@ -544,8 +544,8 @@ spec:
 
 <br>
 
-<hr>
-## Performance Tunings
+##  Performance Tunings
+
 
 Allow users to set available performance tunings in StorageClass based on their workload. Below are the tunings that are required:
 
