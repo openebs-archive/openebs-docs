@@ -328,9 +328,9 @@ The configuration for implementing this policy is different for deployment and S
 
 #### For StatefulSet Applications
 
-In the case of provisioning StatfulSet applications with replication factor of  **greater than** "1" and volume replication factor of **euqal to** "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application resides. This feature can be achieved by using either of the following approaches.
+In the case of provisioning StatfulSet applications with replication factor of  greater than "1" and volume replication factor of euqal to "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application resides. This feature can be achieved by using either of the following approaches.
 
-**Approach 1:**
+<h6>Approach 1:</h6>
 
 In this approach, modification is required on StatefulSet spec and corresponding StorageClass being referred in the StatefulSet spec. Add [openebs.io/sts-target-affinity](http://openebs.io/sts-target-affinity): <[metadata.name](http://metadata.name/) of STS> label in StatefulSet spec to the following fields.
 
@@ -382,7 +382,7 @@ provisioner: openebs.io/provisioner-iscsi
 volumeBindingMode: WaitForFirstConsumer
 ```
 
-**Approach 2:**
+<h6>Approach 2:</h6>
 
 This approach is useful when user/tool does not have control over the StatefulSet spec. in this case, it requires a new StorageClass per StatefulSet application.
 
