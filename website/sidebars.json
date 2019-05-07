@@ -4,6 +4,6 @@
     "Concepts": ["cas", "architecture", "casengines","cstor","jiva"],
     "User Guides": ["quickstart", "prerequisites", "installation", "configurepools", "configuresc", "provisionvols", "operations", "jivaguide", "mayactl","backup",  "upgrade", "uninstall" ],
     "Stateful Applications": ["mysql", "prometheus", "minio", "gitlab", "percona", "elasticsearch", "cassandra","nuodb", "postgres", "redis", "mongo", "jira", "rwm"],
-    "Advanced Topics": ["performance", "faq", "k8supgrades", "troubleshooting", "kb"]
+    "Advanced Topics": ["performance", "faq", "k8supgrades", "troubleshooting", "kb", "github"]
   }
 }

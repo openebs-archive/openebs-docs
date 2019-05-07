@@ -70,7 +70,7 @@ Process of creating a new cStor storage pool
 
 **Step1:**
 
-Create a YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is limted to `2Gi` and `PoolResourceLimits` value is set to `2Gi`. This will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration. 
+Create a YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is limted to `2Gi` and `PoolResourceLimits` value is set to `4Gi`. This will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration. 
 
 ```
 #Use the following YAMLs to create a cStor Storage Pool.
@@ -86,7 +86,7 @@ metadata:
             memory: 2Gi
       - name: PoolResourceLimits
         value: |-
-            memory: 2Gi
+            memory: 4Gi
 spec:
   name: cstor-pool1
   type: disk
@@ -177,7 +177,7 @@ Follow the below steps to create a quick cStorPool in this method.
 
 **Step1:**
 
-Create a YAML file called `cstor-pool-config2.yaml` with the following content.  In the following YAML, `PoolResourceRequests` value is limted to `2Gi` and `PoolResourceLimits` value is set to `2Gi`. This will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration.
+Create a YAML file called `cstor-pool-config2.yaml` with the following content.  In the following YAML, `PoolResourceRequests` value is limted to `2Gi` and `PoolResourceLimits` value is set to `4Gi`. This will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration.
 
 ```
 ---
@@ -192,7 +192,7 @@ metadata:
             memory: 2Gi
       - name: PoolResourceLimits
         value: |-
-            memory: 2Gi
+            memory: 4Gi
 spec:
   name: cstor-pool2
   type: disk
@@ -262,7 +262,7 @@ metadata:
     cas.openebs.io/config: |
       - name: PoolResourceLimits
         value: |-
-            memory: 2Gi
+            memory: 4Gi
 spec:
   name: cstor-disk
   type: disk
