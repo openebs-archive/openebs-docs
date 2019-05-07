@@ -19,7 +19,7 @@ sidebar_label: Configuring StorageClasses
 
 [cStor Storage Policies](#cstor-storage-policies)
 
-
+[Performance Tunings](#performance-tunings)
 
 *Note: This page describes how to create, use and maintain StorageClasses that use cStorPools. For details about StorageClasses that Jiva pools, see [Jiva user guide](/docs/next/jivaguide.html)* 
 
@@ -545,6 +545,42 @@ spec:
 <br>
 
 <hr>
+## Performance Tunings
+
+Allow users to set available performance tunings in StorageClass based on their workload. Below are the tunings that are required:
+
+- cStor target queue depth
+  - This limits the ongoing IO count from client. Default is 32.
+- cStor target worker threads
+  - Sets the **number of threads** that are working on above queue. Default is 6.
+- cStor volume replica worker threads
+  - This Is associated with cStorVolumeReplica.
+  - Defaults to the number of cores on the machine.
+
+**Note:**  These configuration can be only used during volume provisioning.
+
+**Example Configuration:**
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+name: openebs-cstor-pool
+annotations:
+  openebs.io/cas-type: cstor
+  cas.openebs.io/config: |
+    - name: StoragePoolClaim
+      value: "sparse-claim-auto"
+    - name: QueueDepth
+      value: "20"
+    - name: Luworkers
+      value: "10"
+    - name: ZvolWorkers
+      value: "4"
+provisioner: openebs.io/provisioner-iscsi
+```
+
+**Note:** Default values will be used in case of **invalid/None** values has been provided using config.
 
 <br>
 
