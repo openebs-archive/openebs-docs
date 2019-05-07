@@ -557,7 +557,7 @@ Allow users to set available performance tunings in StorageClass based on their 
   - This Is associated with cStorVolumeReplica.
   - Defaults to the number of cores on the machine.
 
-**Note:**  These configuration can be only used during volume provisioning.
+**Note:**  These configuration can be only used during volume provisioning. Default values will be used in case of **invalid/None** values has been provided using configuration.
 
 **Example Configuration:**
 
@@ -579,8 +579,6 @@ annotations:
       value: "4"
 provisioner: openebs.io/provisioner-iscsi
 ```
-
-**Note:** Default values will be used in case of **invalid/None** values has been provided using config.
 
 <br>
 
