@@ -330,7 +330,7 @@ The configuration for implementing this policy is different for deployment and S
 
 In the case of provisioning StatfulSet applications with replication factor of  greater than "1" and volume replication factor of euqal to "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application resides. This feature can be achieved by using either of the following approaches.
 
-<h6>Approach 1:</h6>
+**Approach 1:**
 
 In this approach, modification is required on StatefulSet spec and corresponding StorageClass being referred in the StatefulSet spec. Add [openebs.io/sts-target-affinity](http://openebs.io/sts-target-affinity): <[metadata.name](http://metadata.name/) of STS> label in StatefulSet spec to the following fields.
 
@@ -382,7 +382,7 @@ provisioner: openebs.io/provisioner-iscsi
 volumeBindingMode: WaitForFirstConsumer
 ```
 
-<h6>Approach 2:</h6>
+**Approach 2:**
 
 This approach is useful when user/tool does not have control over the StatefulSet spec. in this case, it requires a new StorageClass per StatefulSet application.
 
@@ -462,6 +462,85 @@ annotations:
 ```
 
 The sample service account can be found [here](https://github.com/openebs/openebs/blob/master/k8s/ci/maya/volume/cstor/service-account.yaml).
+
+<h3><a class="anchor" aria-hidden="true" id="cStorStoragePool-Anti-Affinity"></a>cStorStoragePool Anti-Affinity</h3>
+
+This policy will adds the ability in cStor to correlate and hence distribute single replica volumes across pools which are in turn deployed in separate nodes when application consuming all these volumes is deployed as a StatefulSet.
+
+Below are supported anti-affinity features:
+
+- `openebs.io/replica-anti-affinity: <unique_identification_of_app_in_cluster>`
+- `openebs.io/preferred-replica-anti-affinity: <unique_identification_of_app_in_cluster>`
+
+Below is an example of a statefulset YAML spec that makes use of `openebs.io/replica-anti-affinity`:
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
+      - name: ReplicaCount
+        value: "1"
+    openebs.io/cas-type: cstor
+  name: openebs-cstor-pool-sts
+provisioner: openebs.io/provisioner-iscsi
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: busybox1
+  name: busybox1
+spec:
+  clusterIP: None
+  selector:
+    app: busybox1
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: busybox1
+  labels:
+    app: busybox1
+spec:
+  serviceName: busybox1
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busybox1
+      openebs.io/replica-anti-affinity: busybox1
+  template:
+    metadata:
+      labels:
+        app: busybox1
+        openebs.io/replica-anti-affinity: busybox1
+    spec:
+      terminationGracePeriodSeconds: 1800
+      containers:
+      - name: busybox1
+        image: ubuntu
+        imagePullPolicy: IfNotPresent
+        command:
+          - sleep
+          - infinity
+        volumeMounts:
+        - name: busybox1
+          mountPath: /busybox1
+  volumeClaimTemplates:
+  - metadata:
+      name: busybox1
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: openebs-cstor-pool-sts
+      resources:
+        requests:
+          storage: 2Gi
+```
 
 <br>
 
