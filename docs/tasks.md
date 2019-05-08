@@ -1,7 +1,7 @@
 ---
-id: github
-title: Github Reference
-sidebar_label: Github Reference
+id: tasks
+title: Tasks
+sidebar_label: Tasks
 ---
 
 ------

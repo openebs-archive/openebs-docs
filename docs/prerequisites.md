@@ -404,7 +404,7 @@ For setting up iSCSI clients on RHEL nodes, see the [instructions above](#rhel).
 
 Latest tested CentOS version is CentOS 7.
 
-For setting up iSCSI clients on CentOS nodes, see the [instructions above][#centos].
+For setting up iSCSI clients on CentOS nodes, see the  [instructions above](#centos).
 
 <br>
 
