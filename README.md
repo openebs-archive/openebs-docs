@@ -1,4 +1,4 @@
-# OpenEBS-docs
+# OpenEBS Documentation
 
 [![Open Issues](https://img.shields.io/github/issues/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/issues)
 [![Open Pull Requests](https://img.shields.io/github/issues-pr/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/pulls)
@@ -63,4 +63,4 @@ The following procedure lists the tasks from the time you select an issue to pub
 
 ### License
 
-The project is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text. 
+The project is licensed under the Apache 2.0 License. See [LICENSE](LICENSE) for the full license text. 
