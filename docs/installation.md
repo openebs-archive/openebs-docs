@@ -239,11 +239,13 @@ See an example configuration [here](#example-diskfilter-yaml)
 
 <font size="5">Configure Environmental Variable</font> 
 
-Some of the configurations related to sparse pool and cStor volume can be configured as environmental variable in the maya-apiserver deployment specification. The following are the some of the cStor sparse pool and cStor volume related configuration that can be added as environmental variable in the maya-apiserver deployment specification. This change must be done before applying the OpenEBS operator YAMl file. 
+Some of the configurations related to default cStor sparse pool, cStor Target, Local PV Basepath, etc can be configured as environmental variable in the corresponding deployment specification. 
 
 <h4><a class="anchor" aria-hidden="true" id="SparseDir "></a>SparseDir</h4>
 
-SparseDir is a hostPath directory where to look for sparse files. The default value is "/var/openebs/sparse".
+SparseDir is a hostPath directory where to look for sparse files. The default value is "/var/openebs/sparse". 
+
+The following configuration must added as environmental variable in the maya-apiserver deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
 
 ```
  # environment variable
@@ -255,7 +257,9 @@ SparseDir is a hostPath directory where to look for sparse files. The default va
 
 <h4><a class="anchor" aria-hidden="true" id="Default-cStorSparsePool "></a>Default cStorSparsePool</h4>
 
-The OpenEBS installation will create defaul cstor sparse pool based on this configuration value. If "true", a default cstor sparse pool will be configured, if "false", it will not be configure a default cStor sparse pool. The default configured value is "false". The use of cStor sparse pool is for testing purposes only.
+The OpenEBS installation will create defaul cstor sparse pool based on this configuration value. If "true", a default cstor sparse pool will be configured, if "false", it will not be configure a default cStor sparse pool. The default configured value is "false". The use of cStor sparse pool is for testing purposes only. 
+
+The following configuration must added as environmental variable in the maya-apiserver deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
 
 **Example:**
 
@@ -267,9 +271,25 @@ The OpenEBS installation will create defaul cstor sparse pool based on this conf
 
 
 
+<h4><a class="anchor" aria-hidden="true" id="TargetDir"></a>TargetDir</h4>
+
+Target Dir is a hostPath directory for target pod. The default value is "/var/openebs".  This value can override the existing host path introducing a `OPENEBS_IO_CSTOR_TARGET_DIR` ENV in maya-apiserver deployment. This configuration might required where underlying host OS does not have write permission on default OpenEBS path(/var/openebs/). 
+
+The following configuration must added as environmental variable in the maya-apiserver deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
+
+**Example:**
+
+```
+# environment variable
+- name: OPENEBS_IO_CSTOR_TARGET_DIR
+  value: "/var/lib/overlay/openebs"
+```
+
+
+
 <h4><a class="anchor" aria-hidden="true" id="Basepath-for-OpenEBS-Local-PV "></a>Basepath for OpenEBS Local PV</h4>
 
-By default the hostpath is configured as `/var/openebs/local`, which can either be changed during the OpenEBS operator install by passing the `OPENEBS_IO_BASE_PATH` ENV parameter to the Local PV dynamic provisioner.
+By default the hostpath is configured as `/var/openebs/local`, which can either be changed during the OpenEBS operator install by passing the `OPENEBS_IO_BASE_PATH` ENV parameter to the Local PV dynamic provisioner deployment.
 
 ```
 # environment variable
