@@ -169,17 +169,17 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
    kubectl edit deploy pvc-4cfacfdd-76d7-11e9-9319-42010a800230-rep
    ```
 
-   Perform step 3 and 4 and then save the changes. This will modify the replica count and hostname details where the replica pod has to be scheduled.
+   Perform Step 3 and 4 and then save the changes. There will require to modify the replica count and required hostname details where the replica pod has to be scheduled.
 
 3. Edit `replicas` value under `spec` with the required number.  It was `replicas: 1` during the initial deployment. With following change, replicas count will change to 2. 
 
-   Example:
+   **Example:**
 
    ```
    replicas: 2
    ```
 
-4. Add corresponding hostnames under value in   `spec.template.spec.affinity.nodeAffinity.nodeSelectorTerms`
+4. Add corresponding hostnames under value in   `spec.template.spec.affinity.nodeAffinity.nodeSelectorTerms`. The following the sample snippet for adding the required hostnames.
 
    ```
        spec:
