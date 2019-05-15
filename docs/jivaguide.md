@@ -35,7 +35,7 @@ To quickly provision a jiva volume using the default pool and storageClass, use 
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-jiva-default.yaml
 ```
 
-In this mode, OpenEBS provisions a jiva volume with three replicas on three different nodes. The data in each replica is storage in the local container storage of the replica itself. The data is replicated and highly available and is suitable for quick testing of OpenEBS and simple application PoCs.
+In this mode, OpenEBS provisions a jiva volume with three replicas on three different nodes. The data in each replica is stored in the local container storage of the replica itself. The data is replicated and highly available and is suitable for quick testing of OpenEBS and simple application PoCs.
 
 ## Provisioning with local or cloud disks
 
@@ -155,7 +155,7 @@ kubectl get sc
 
 ### Provision Jiva Volumes
 
-Once the storage class is created, provision the volumes using the standard PVC interface. In the example below the `StorageClass` openebs-jiva-gpd-3repl is specified in the `PersistentVolumeClaim` specification
+Once the storage class is created, provision the volumes using the standard PVC interface. In the example below the `StorageClass` openebs-jiva-gpd-3repl is specified in the `PersistentVolumeClaim` specification. The raw file can be download from [here](<https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml>) or use the following spec.
 
 
 
@@ -163,35 +163,51 @@ Once the storage class is created, provision the volumes using the standard PVC 
 
 ```
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1beta1
+kind: Deployment
 metadata:
   name: percona
   labels:
     name: percona
 spec:
-  containers:
-  - resources:
-      limits:
-        cpu: 0.5
-    name: percona
-    image: percona
-    args:
-      - "--ignore-db-dir"
-      - "lost+found"
-    env:
-      - name: MYSQL_ROOT_PASSWORD
-        value: k8sDem0
-    ports:
-      - containerPort: 3306
+  replicas: 1
+  selector: 
+    matchLabels:
+      name: percona 
+  template: 
+    metadata:
+      labels: 
         name: percona
-    volumeMounts:
-    - mountPath: /var/lib/mysql
-      name: demo-vol1
-  volumes:
-  - name: demo-vol1
-    persistentVolumeClaim:
-      claimName: demo-vol1-claim
+    spec:
+      securityContext:
+        fsGroup: 999
+      tolerations:
+      - key: "ak"
+        value: "av"
+        operator: "Equal"
+        effect: "NoSchedule"
+      containers:
+        - resources:
+            limits:
+              cpu: 0.5
+          name: percona
+          image: percona
+          args:
+            - "--ignore-db-dir"
+            - "lost+found"
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: k8sDem0
+          ports:
+            - containerPort: 3306
+              name: percona
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: demo-vol1
+      volumes:
+        - name: demo-vol1
+          persistentVolumeClaim:
+            claimName: demo-vol1-claim
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -204,7 +220,19 @@ spec:
   resources:
     requests:
       storage: 5G
-
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: percona-mysql
+  labels:
+    name: percona-mysql
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+      name: percona
 ```
 
 Run the application using the following command.
@@ -221,26 +249,27 @@ Below table lists the storage policies supported by Jiva. These policies should 
 
 
 
-| CSTOR STORAGE POLICY                                   | MANDATORY | DEFAULT                           | PURPOSE                                                      |
-| ------------------------------------------------------ | --------- | --------------------------------- | ------------------------------------------------------------ |
-| [ReplicaCount](#Replica-Count-Policy)                  | No        | 3                                 | Defines the number of Jiva volume replicas                   |
-| [Replica Image](#Replica-Image-Policy)                 |           | quay.io/openebs/m-apiserver:0.8.2 | To use particular Jiva replica image                         |
-| [ControllerImage](#Controller-Image-Policy)            |           | quay.io/openebs/jiva:0.8.2        | To use particular Jiva Controller Image                      |
-| [StoragePool](#Storage-Pool-Policy)                    | Yes       | default                           | A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on host OS or externally mounted disk. |
-| [VolumeMonitor](#Volume-Monitor-Policy)                |           | ON                                | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)  |           | quay.io/openebs/m-exporter:0.8.2  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
-| [Volume FSType](#Volume-File-System-Type-Policy)       |           | ext4                              | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
-| [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)   |           | false                             | It will specify whether data need to be retained post PVC deletion. |
-| [TargetNodeSelector](#Targe-NodeSelector-Policy)       |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva target pod on the nodes that match label. |
-| [Replica NodeSelector](#Replica-NodeSelector-Policy)   |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva replica pods on the nodes that match label. |
-| [TargetTolerations](#TargetTolerations)                |           | Decided by Kubernetes scheduler   | Configuring the tolerations for Jiva Target pod.             |
-| [ReplicaTolerations](#ReplicaTolerations)              |           | Decided by Kubernetes scheduler   | Configuring the tolerations for Jiva Replica pods.           |
-| [TargetResourceLimits](#Target-ResourceLimits-Policy)  |           | Decided by Kubernetes scheduler   | CPU and Memory limits to Jiva Target pod                     |
-| [TargetResourceRequests](#TargetResourceRequests)      |           | Decided by Kubernetes scheduler   | Configuring resource requests that need to be available before scheduling the containers. |
-| [AuxResourceLimits](#AuxResourceLimits-Policy)         |           | Decided by Kubernetes scheduler   | configuring resource limits on the target pod.               |
-| [AuxResourceRequests](#AuxResourceRequests-Policy)     |           | Decided by Kubernetes scheduler   | Configure minimum requests like ephemeral storage to avoid erroneous eviction by K8s. |
-| [ReplicaResourceLimits](#ReplicaResourceLimits-Policy) |           | Decided by Kubernetes scheduler   | Allow you to specify resource limits for the Replica.        |
-| [Target Affinity](#Target-Affinity-Policy)             |           | Decided by Kubernetes scheduler   | The policy specifies the label `key: value` pair to be used both on the Jiva target and on the application being used so that application pod and Jiva target pod are scheduled on the same node. |
+| CSTOR STORAGE POLICY                                         | MANDATORY | DEFAULT                           | PURPOSE                                                      |
+| ------------------------------------------------------------ | --------- | --------------------------------- | ------------------------------------------------------------ |
+| [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                 | Defines the number of Jiva volume replicas                   |
+| [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:0.8.2 | To use particular Jiva replica image                         |
+| [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/jiva:0.8.2        | To use particular Jiva Controller Image                      |
+| [StoragePool](#Storage-Pool-Policy)                          | Yes       | default                           | A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on host OS or externally mounted disk. |
+| [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:0.8.2  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [Volume FSType](#Volume-File-System-Type-Policy)             |           | ext4                              | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
+| [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)         |           | false                             | It will specify whether data need to be retained post PVC deletion. |
+| [TargetNodeSelector](#Targe-NodeSelector-Policy)             |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva target pod on the nodes that match label. |
+| [Replica NodeSelector](#Replica-NodeSelector-Policy)         |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva replica pods on the nodes that match label. |
+| [TargetTolerations](#TargetTolerations)                      |           | Decided by Kubernetes scheduler   | Configuring the tolerations for Jiva Target pod.             |
+| [ReplicaTolerations](#ReplicaTolerations)                    |           | Decided by Kubernetes scheduler   | Configuring the tolerations for Jiva Replica pods.           |
+| [TargetResourceLimits](#Target-ResourceLimits-Policy)        |           | Decided by Kubernetes scheduler   | CPU and Memory limits to Jiva Target pod                     |
+| [TargetResourceRequests](#TargetResourceRequests)            |           | Decided by Kubernetes scheduler   | Configuring resource requests that need to be available before scheduling the containers. |
+| [AuxResourceLimits](#AuxResourceLimits-Policy)               |           | Decided by Kubernetes scheduler   | configuring resource limits on the target pod.               |
+| [AuxResourceRequests](#AuxResourceRequests-Policy)           |           | Decided by Kubernetes scheduler   | Configure minimum requests like ephemeral storage to avoid erroneous eviction by K8s. |
+| [ReplicaResourceLimits](#ReplicaResourceLimits-Policy)       |           | Decided by Kubernetes scheduler   | Allow you to specify resource limits for the Replica.        |
+| [Target Affinity](#Target-Affinity-Policy)                   |           | Decided by Kubernetes scheduler   | The policy specifies the label `key: value` pair to be used both on the Jiva target and on the application being used so that application pod and Jiva target pod are scheduled on the same node. |
+| [OpenEBS Namespace Policy for Jiva Pods](#deploy-in-openEBS-namespace) |           | false                             | Jiva Pod will be deployed in PVC name space by default. With the value as `true`, Jiva Pods will run in OpenEBS namespace. |
 
 <h3><a class="anchor" aria-hidden="true" id="Replica-Count-Policy"></a>Replica Count Policy</h3>
 
@@ -578,6 +607,31 @@ The Stateful workloads access the OpenEBS storage volume by connecting to the Vo
   ```
 
 **Note**: *This feature works only for cases where there is a single application pod instance associated to a PVC.  Example YAML spec for application deployment can be get from [here](https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/fio/demo-fio-jiva-taa.yaml). In the case of STS, this feature is supported only for single replica StatefulSet.*
+
+<h3><a class="anchor" aria-hidden="true" id="deploy-in-openEBS-namespace"></a>OpenEBS Namespace Policy for Jiva Pods</h3>
+
+This StorageClass Policy is for deploying the Jiva pods in OpenEBS Namespace. By default, the value is `false`, so Jiva Pods will deploy in PVC namespace. The following are the main requirement of running Jiva pods in OpenEBS namespace.
+
+* With default value, granting additional privileges to Jiva pods to access hostpath might involve granting privileges to the entire namespace of PVC. With enabling this value as`true` , Jiva pods will get additional privileges to access hostpath in OpenEBS namespace. 
+
+* To avoid duplicate Jiva Pod creation during the restoration using Velero.
+
+The following is a snippet of an StorageClass YAML spec for running Jiva pods in `openebs` namespace.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: jiva-pods-in-openebs-ns
+  annotations:
+    openebs.io/cas-type: jiva
+    cas.openebs.io/config: |
+      - name: DeployInOpenEBSNamespace
+        enabled: "true"
+provisioner: openebs.io/provisioner-iscsi
+```
+
+ 
 
 <br>
 
