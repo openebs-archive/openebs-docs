@@ -217,12 +217,16 @@ Example nodeSelector configuration for OpenEBS control plane components is given
 
 <font size="5">Setup nodeSelectors for Admission Controller</font> 
 
-From 0.9.0, new component has introduced called admission controller to intercepts the requests to the Kubernetes API server prior to persistence of the object, but after the request is authenticated and authorized. This openebs admission controller implements additional custom admission policies to validate the incoming request.
+The Admission controller to intercepts the requests to the Kubernetes API server prior to persistence of the object, but after the request is authenticated and authorized. This openebs admission controller implements additional custom admission policies to validate the incoming request. The following are the admission policies avaialble with the latest release.
 
 1. PersistentVolumeClaim delete requests validates if there is clone PersistentVolumeClaim exists.
-2. Clone PersistentVolumeClaim create requests validates requested claim capacity, has to be equal to snapshot size.
+2. Clone PersistentVolumeClaim create requests validates requested claim capacity. This has to be equal to snapshot size.
 
-The Admission Controller pod can be scheduled on particular node using nodeSelector method.
+The Admission Controller pod can be scheduled on particular node using nodeSelector method. 
+
+Example nodeSelector configuration for OpenEBS control plane components is given [here](#example-nodeselector-yaml). 
+
+<br>
 
 <font size="5">Setup nodeSelectors for Node Disk Manager (NDM)</font> 
 
