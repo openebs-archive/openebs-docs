@@ -203,7 +203,7 @@ In the **custom installation mode**, you can achieve the following advanced conf
 
 
 
-For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-0.8.2.yaml" target="_blank">download</a> the **openebs-operator-0.9.0.yaml** file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
+For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-0.9.0.yaml" target="_blank">download</a> the **openebs-operator-0.9.0.yaml** file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
 
 
 
@@ -583,7 +583,6 @@ Download the values.yaml from  [here](https://github.com/helm/charts/blob/master
 | `ndm.sparse.count`                      | Number of sparse files to be created         | `1`                                       |
 | `ndm.filters.excludeVendors`            | Exclude devices with specified vendor        | `CLOUDBYT,OpenEBS`                        |
 | `ndm.filters.excludePaths`              | Exclude devices with specified path patterns | `loop,fd0,sr0,/dev/ram,/dev/dm-,/dev/md`  |
-| `ndm.updateStrategy.type`               | Update strategy policy                       | `RollingUpdate`                           |
 | `jiva.image`                            | Docker Image for Jiva                        | `quay.io/openebs/jiva`                    |
 | `jiva.imageTag`                         | Docker Image Tag for Jiva                    | `0.9.0`                                   |
 | `jiva.replicas`                         | Number of Jiva Replicas                      | `3`                                       |
