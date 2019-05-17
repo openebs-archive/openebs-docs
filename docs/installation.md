@@ -339,17 +339,17 @@ kubectl get pods -n openebs
 
 In the successful installation of OpenEBS, you should see an example output like below.
 
-<div class="co">NAME                                        READY     STATUS    RESTARTS   AGE
-cstor-sparse-pool-lkf1-86d75bc764-h9jpp     2/2       Running   0          6h
-cstor-sparse-pool-n8nw-779f4cd9cd-8g24v     2/2       Running   0          6h
-cstor-sparse-pool-u4ak-5f47688bdd-pd7mq     2/2       Running   0          6h
-maya-apiserver-6bcc5d9b5f-29vnz             1/1       Running   0          6h
-openebs-ndm-52cl6                           1/1       Running   0          6h
-openebs-ndm-ddf2s                           1/1       Running   0          6h
-openebs-ndm-pg6lm                           1/1       Running   0          6h
-openebs-provisioner-5c65ff5d55-s45t8        1/1       Running   0          6h
-openebs-snapshot-operator-9898bbb95-lzhq5   2/2       Running   0          6h
+<div class="co">NAME                                          READY     STATUS    RESTARTS   AGE
+maya-apiserver-6d9858ffc9-x6rlp               1/1       Running   0          3h
+openebs-admission-server-56665784df-xwt8h     1/1       Running   0          3h
+openebs-localpv-provisioner-94f6477bb-fwmnm   1/1       Running   0          3h
+openebs-ndm-crz9z                             1/1       Running   0          3h
+openebs-ndm-l7mbd                             1/1       Running   0          3h
+openebs-ndm-nvlrg                             1/1       Running   0          3h
+openebs-provisioner-5dbd679f8c-pqphv          1/1       Running   0          3h
+openebs-snapshot-operator-66d89b9bcf-6dkj7    2/2       Running   0          3h
 </div>
+
 
 `openebs-ndm` is a daemonset, it should be running on all nodes or on the nodes that are selected through nodeSelector configuration.
 
@@ -370,11 +370,12 @@ kubectl get sc
 In the successful installation, you should 3 new StorageClasses
 
 <div class="co">NAME                        PROVISIONER                                                AGE
-openebs-cstor-sparse        openebs.io/provisioner-iscsi                               5h
-openebs-jiva-default        openebs.io/provisioner-iscsi                               5h
-openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   5h
-standard (default)          kubernetes.io/gce-pd                                       6h
+openebs-hostpath            openebs.io/local                                           3h
+openebs-jiva-default        openebs.io/provisioner-iscsi                               3h
+openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   3h
+standard (default)          kubernetes.io/gce-pd                                       4h
 </div>
+
 
 <br>
 
@@ -395,10 +396,15 @@ kubectl get disk
 
 Following is an example output.
 
-<div class="co">sparse-00e09b1655329b8b944133aa5208d967   5h
-sparse-a5750209eede7ace90e07f68c566d599   5h
-sparse-cdfe80cd52424759de4a88831cd85a33   5h
+<div class="co">NAME                                      SIZE          STATUS    AGE
+disk-acee6c6a32c780ebfba58db7b62ca3ab     42949672960   Active    1m
+disk-c43b6655194d59f05d970fa255682e2f     42949672960   Active    41s
+disk-f2356613045748aba5c94aa292a2efc9     42949672960   Active    15s
+sparse-022148a3ae5f0b8013a76b6e72c085f7   10737418240   Active    3h
+sparse-07d218e187b31953e3a14fd84ea6ed97   10737418240   Active    3h
+sparse-7e3639de27317d2060cf025a0cb9e64d   10737418240   Active    3h
 </div>
+
 
 To know which disk CR belongs to which node, check the node label set on the CR by doing 
 
@@ -406,31 +412,6 @@ To know which disk CR belongs to which node, check the node label set on the CR 
 kubectl describe disk <disk-cr>
 ```
 
-
-
-**Verify cStor default pool : cstor-sparse-pool**
-
-```
-kubectl get csp
-```
-
-Following is an example output.
-
-<div class="co">NAME                     AGE
-cstor-sparse-pool-io1y   5h
-cstor-sparse-pool-lsm9   5h
-cstor-sparse-pool-y8pf   5h
-</div>
-
-```
-kubectl get spc
-```
-
-Following is an example output.
-
-<div class="co">NAME                AGE
-cstor-sparse-pool   6h
-</div>
 
 
 
@@ -442,12 +423,10 @@ kubectl get sp
 
 Following is an example output.
 
-<div class="co">NAME                     AGE
-cstor-sparse-pool-io1y   5h
-cstor-sparse-pool-lsm9   5h
-cstor-sparse-pool-y8pf   5h
-default                  5h
+<div class="co">NAME      AGE
+default   3h
 </div>
+
 
 
 
