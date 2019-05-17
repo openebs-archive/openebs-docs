@@ -215,6 +215,15 @@ Example nodeSelector configuration for OpenEBS control plane components is given
 
 <br>
 
+<font size="5">Setup nodeSelectors for Admission Controller</font> 
+
+From 0.9.0, new component has introduced called admission controller to intercepts the requests to the Kubernetes API server prior to persistence of the object, but after the request is authenticated and authorized. This openebs admission controller implements additional custom admission policies to validate the incoming request.
+
+1. PersistentVolumeClaim delete requests validates if there is clone PersistentVolumeClaim exists.
+2. Clone PersistentVolumeClaim create requests validates requested claim capacity, has to be equal to snapshot size.
+
+The Admission Controller pod can be scheduled on particular node using nodeSelector method.
+
 <font size="5">Setup nodeSelectors for Node Disk Manager (NDM)</font> 
 
 OpenEBS cStorPool is constructed using the disk custom resources or disk CRs created by Node Disk Manager or NDM. If you want to consider only some nodes in Kubernetes cluster to be used for OpenEBS storage (for hosting cStor Storage Pool instances), then specify a map of key-value pair and then attach the same key-value pair as labels to the required nodes on the cluster. 
@@ -230,8 +239,6 @@ NDM by default filters out the below disk patterns and converts the rest of the 
 `"exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"`
 
 If your cluster nodes have different disk types that are to be filtered out (meaning that those should not be created as DISK CRs ), add the additional disk patterns to the exclude list in the yaml file. 
-
-
 
 See an example configuration [here](#example-diskfilter-yaml)
 
@@ -503,7 +510,7 @@ First, label the required nodes with an appropriate label. In the following comm
 kubectl label nodes <node-name> node=openebs
 ```
 
-Find `apiServer`, `provisioner`, `snapshotOperator` and `ndm` sections in `values.yaml` and update `nodeSelector` key. Example of the updated provisioner section looks like below where `node:openebs` is the `nodeSelector` label. 
+Find `apiServer`, `provisioner`, `snapshotOperator`, `admission-server` and `ndm` sections in `values.yaml` and update `nodeSelector` key. Example of the updated provisioner section in the following snippet  where `node:openebs` is the `nodeSelector` label. 
 
 ```
 provisioner:
