@@ -148,7 +148,7 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 
 From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity. For scaling up Jiva replica count, the following steps has to be performed.
 
-1. Get the deployment details of target and replica of corresponding Jiva volume using the following command. If it is deployed in namespace, use corresponding namespace.
+1. Get the deployment details of replica of corresponding Jiva volume using the following command. If it is deployed in `openebs` namespace, use corresponding namespace appropriately in the following commands.
 
    ```
    kubectl get deploy
@@ -158,20 +158,26 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
 
    ```
    NAME                                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-   percona                                         1         1         1            0           54s
+   percona                                         1         1         1            1           54s
    pvc-4cfacfdd-76d7-11e9-9319-42010a800230-ctrl   1         1         1            1           53s
    pvc-4cfacfdd-76d7-11e9-9319-42010a800230-rep    1         1         1            1           53s
    ```
 
-2. Edit the corresponding replica deployment of the Jiva volume similar the following command.
+2. Edit the corresponding replica deployment of the Jiva volume using the following command.
+
+   ```
+   kubectl edit deploy <replica_deployment_of_corresponding_volume>
+   ```
+
+   **Example:**
 
    ```
    kubectl edit deploy pvc-4cfacfdd-76d7-11e9-9319-42010a800230-rep
    ```
 
-   Perform Step 3 and 4 and then save the changes. There will require to modify the replica count and required hostname details where the replica pod has to be scheduled.
+   Perform Step 3 and 4 and then save the changes. It is required to modify the fields of replica count and hostname details where the replica pods has to be scheduled.
 
-3. Edit `replicas` value under `spec` with the required number.  It was `replicas: 1` during the initial deployment. With following change, replicas count will change to 2. 
+3. Edit `replicas` value under `spec` with the required number. In this example, it was `replicas: 1` during the initial deployment. With following change, replicas count will change to 2. 
 
    **Example:**
 
@@ -179,7 +185,7 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
    replicas: 2
    ```
 
-4. Add corresponding hostnames under value in   `spec.template.spec.affinity.nodeAffinity.nodeSelectorTerms`. The following the sample snippet for adding the required hostnames.
+4. Add corresponding hostnames under value in   `spec.template.spec.affinity.nodeAffinity.nodeSelectorTerms.key.values`. The following is the sample snippet for adding the required hostnames. In the following snippet, it is added the hostname of second node in the mentioned path.
 
    ```
        spec:
@@ -198,14 +204,14 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
 5. After modifying the above changes, save the configuration.  With this change , new replica pods will be running and following command will get the details of replica pods.
 
    ```
-   kubectl get pod
+   kubectl get pod -o wide
    ```
 
    The following is an example output.
 
    ```
-   NAME                                                             READY     STATUS    RESTARTS   AGE
-   percona-66b4fd4ddf-xvswn                                         1/1       Running   0          32m
+   NAME                                                             READY     STATUS    RESTARTS   AGE    IP           NODE                                   NOMINATED NODE  
+   percona-66b4fd4ddf-xvswn                                         1/1       Running   0          32m      
    pvc-4cfacfdd-76d7-11e9-9319-42010a800230-ctrl-68d94478df-drj6r   2/2       Running   0          32m
    pvc-4cfacfdd-76d7-11e9-9319-42010a800230-rep-f9ff69c6-6lcfz      1/1       Running   0          25s
    pvc-4cfacfdd-76d7-11e9-9319-42010a800230-rep-f9ff69c6-9jbfm      1/1       Running   0          25s
