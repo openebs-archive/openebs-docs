@@ -194,7 +194,7 @@ As a next step [verify](#verifying-openebs-installation) your installation and d
 
 
 
-In the **custom installation mode**, you can achieve the following advanced configurations
+In the **custom installation mode**, you can achieve the following advanced configurations.
 
 - Choose a set of nodes for OpenEBS control plane pods
 - Choose a set of nodes for OpenEBS storage pool
