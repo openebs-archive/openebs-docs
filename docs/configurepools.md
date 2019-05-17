@@ -403,10 +403,10 @@ At the moment, status of cStor pools is obtained via the standard `kubectl get` 
 
 Following is an example output. 
 
-<div class="co">NAME                AGE
-cstor-disk          1m
-cstor-sparse-pool   22m
+<div class="co">NAME          AGE
+cstor-pool2   1m
 </div>
+
 
 
 
@@ -422,14 +422,10 @@ kubectl get csp
 
 Following is an example output.
 
-<div class="co">NAME                     AGE
-cstor-disk-8qvy          5s
-cstor-disk-k6si          6s
-cstor-disk-tns6          6s
-cstor-sparse-pool-a8qk   21m
-cstor-sparse-pool-d1zm   21m
-cstor-sparse-pool-sbv5   21m
+<div class="co">NAME               ALLOCATED   FREE      CAPACITY   STATUS    TYPE      AGE
+cstor-pool2-ww4f   77K         39.7G     39.8G      Healthy   striped   53s
 </div>
+
 
 **cStorStoragePool pods status**
 
@@ -441,19 +437,16 @@ kubectl get pods -n openebs
 
 Following is an example output. 
 
-<div class="co">cstor-disk-2xtj-6748d7f57d-tbqrp           2/2       Running   0          38s
-cstor-disk-m7xa-6f7bd8447c-nr5z4           2/2       Running   0          38s
-cstor-disk-sn5y-5688f94888-hmgkf           2/2       Running   0          38s
-cstor-sparse-pool-io1y-88cbf9bc-c6g29      2/2       Running   0          21m
-cstor-sparse-pool-lsm9-766567747b-rfplx    2/2       Running   0          21m
-cstor-sparse-pool-y8pf-598d794ff4-jn8gg    2/2       Running   0          21m
-maya-apiserver-5f8899f44f-hbnj2            1/1       Running   0          22m
-openebs-ndm-6w68f                          1/1       Running   0          22m
-openebs-ndm-9ktvv                          1/1       Running   0          22m
-openebs-ndm-g4d6l                          1/1       Running   0          22m
-openebs-provisioner-69956599d5-jlnb4       1/1       Running   0          22m
-openebs-snapshot-operator-c88544f5-76px8   2/2       Running   0          22m
-</div>
+<div class="co">NAME                                          READY     STATUS    RESTARTS   AGE
+cstor-pool2-ww4f-74bc496f67-82m6z             3/3       Running   0          1m
+maya-apiserver-6d9858ffc9-x6rlp               1/1       Running   0          4h
+openebs-admission-server-56665784df-xwt8h     1/1       Running   0          4h
+openebs-localpv-provisioner-94f6477bb-fwmnm   1/1       Running   0          4h
+openebs-ndm-crz9z                             1/1       Running   0          4h
+openebs-ndm-l7mbd                             1/1       Running   1          4h
+openebs-ndm-nvlrg                             1/1       Running   0          4h
+openebs-provisioner-5dbd679f8c-pqphv          1/1       Running   0          4h
+openebs-snapshot-operator-66d89b9bcf-6dkj7    2/2       Running   0          4h
 
 In the above example output, name starts with `cstor-disk-\*` are the cStorStoragePool pods. It must be in running state to provision cStor Volumes.
 

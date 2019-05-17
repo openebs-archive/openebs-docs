@@ -126,7 +126,7 @@ Follow the below instructions to do any of the above configurations and then ins
 
 <font size="5">Setup nodeSelectors for OpenEBS control plane</font> 
 
-In a large Kubernetes cluster, you may choose to limit the scheduling of the OpenEBS control plane pods to two or three specific nodes. To do this, use nodeSelector field of PodSpec of OpenEBS control plane pods - *apiserver, volume provisioner and snapshot operator*.  
+In a large Kubernetes cluster, you may choose to limit the scheduling of the OpenEBS control plane pods to two or three specific nodes. To do this, use nodeSelector field of PodSpec of OpenEBS control plane pods - *apiserver, volume provisioner,admission-controller and snapshot operator*.  
 
 See the example [here](#example-nodeselector-helm). 
 
