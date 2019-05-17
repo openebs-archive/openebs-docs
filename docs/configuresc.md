@@ -13,8 +13,6 @@ sidebar_label: Configuring StorageClasses
 
 <font size="6">Summary:</font>
 
-[Using openebs-cstor-sparse StorageClass](#sparse-class)
-
 [Creating a new StorageClass for cStor](#creating-a-new-class)
 
 [cStor Storage Policies](#cstor-storage-policies)
@@ -26,34 +24,6 @@ sidebar_label: Configuring StorageClasses
 <br>
 
 <hr>
-
-<br>
-
-## Using sparse StorageClass
-
-<br>
-
-During the installation, OpenEBS creates a StorageClass called `openebs-cstor-sparse` . You can use this StorageClass for creating a PVC (  `kind: PersistentVolumeClaim` for applications of `kind: Deployment`) or for creating a VolumeClaimTemplate (`volumeClaimTemplates:` for applications of `kind: StatefulSet`)
-
-Note that this StorageClass has cStor volumes `replicaCount` set as `3`. Sometimes it may not be necessary to have three storage replicas for each statefulset application replica. In such cases, you can create a new StorageClass that uses the existing sparse pool `cstor-sparse-pool` but with cStor volume's replicaCount=1. This can be done by creating a new StorageClass YAML with mentioning single replica. You can create a new StorageClass YAML called  **openebs-sparse-sc-statefulset.yaml** and add content to it from below. 
-
-```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: openebs-sparse-sc-statefulset
-  annotations:
-    openebs.io/cas-type: cstor
-    cas.openebs.io/config: |
-      - name: StoragePoolClaim
-        value: "cstor-sparse-pool"
-      - name: ReplicaCount
-        value: "1"
-provisioner: openebs.io/provisioner-iscsi
-```
-
-The above command creates storage class called `openebs-sparse-sc-statefulset` which you can use under volumeClaimTemplates. 
-
 <br>
 
 <hr>
@@ -66,8 +36,6 @@ StorageClass definition is an important task in the planning and execution of Op
 
 <font size="5">Steps to create a cStor StorageClass</font>
 
-
-
 **Step1:** Decide the cStorPool
 
 **Step2:** Which application uses it? Decide the replicaCount based on it.
@@ -78,13 +46,32 @@ StorageClass definition is an important task in the planning and execution of Op
 
 **Step5:** Verify the newly created StorageClass using `kubectl describe sc <storage-class-name>`
 
+
+
+<font size="5">Example Configuration of OpenEBS StorageClass</font>
+
+You can create a new StorageClass YAML called **openebs-sc-rep1.yaml** and add content to it from below. The following will create a StorageClass of OpenEBS volume replica of `1`, Storage Pool as `cstor-pool2` and CAS type as `cstor`.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-sparse-sc-statefulset
+  annotations:
+    openebs.io/cas-type: cstor
+    cas.openebs.io/config: |
+      - name: StoragePoolClaim
+        value: "cstor-pool2"
+      - name: ReplicaCount
+        value: "1"
+provisioner: openebs.io/provisioner-iscsi
+```
+
 <br>
 
 <hr>
 
 <br>
-
-
 
 ## cStor storage policies
 
