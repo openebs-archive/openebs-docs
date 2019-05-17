@@ -14,6 +14,8 @@ sidebar_label: Knowledge Base
 
 [How to install OpenEBS in OpenShift environment?](#OpenEBS-install-openshift-without-SELinux-disabled)
 
+[How to enable Admission-Controller in OpenShift environment?](#enable-admission-controller-in-openshift)
+
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
 
@@ -245,6 +247,36 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
    ```
 
 4. Verify OpenEBS pods status by using `oc get pods -n openebs`
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="enable-admission-controller-in-openshift"></a>How to enable Admission-Controller in OpenShift 3.10 and above</h3>
+
+The following proceedure will help to enable admission-controller in OpenShift 3.10 and above.
+
+1. Update the `/etc/origin/master/master-config.yaml`  file with below configuration.
+
+   ```
+   admissionConfig:
+     pluginConfig:
+       ValidatingAdmissionWebhook: 
+         configuration:
+           kind: DefaultAdmissionConfig
+           apiVersion: v1
+           disable: false 
+       MutatingAdmissionWebhook: 
+         configuration:
+           kind: DefaultAdmissionConfig
+           apiVersion: v1
+           disable: false 
+   ```
+
+2. Restart the API and controller services using the following commands.
+
+   ```
+   # master-restart api
+   # master-restart controllers
+   ```
 
 <br>
 
