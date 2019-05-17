@@ -167,9 +167,7 @@ mayactl volume stats --volname pvc-448deccf-40d9-11e9-a23b-0050569331ce -n opene
 
 <div class="co">Portal Details :
 ------ ---------
-IQN     :   
 Volume  :   pvc-dc3cb979-51ec-11e9-803f-42010a800179
-Portal  :   
 Size    :   5.000000
 Performance Stats :
 ------ ---------
@@ -182,6 +180,7 @@ LOGICAL(GB)      USED(GB)
 ------------     ---------
 0.000            3.246
 </div>
+
 
 
 <h3><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Pools"></a>mayactl for OpenEBS Storage Pools</h3>
@@ -239,7 +238,7 @@ The following command show the description of OpenEBS StoragePool.
 ------ ------
 Storage Pool Name  : cstor-pool1-5lwv
 Node Name          : node3.mayalab.com
-CAS Template Used  : cstor-pool-create-default-0.8.2
+CAS Template Used  : cstor-pool-create-default-0.9.0
 CAS Type           : cstor
 StoragePoolClaim   : cstor-pool1
 UID                : fb2bd1d8-2f88-11e9-a23b-0050569331ce
@@ -249,6 +248,7 @@ Disk List :
 ------ ------
 disk-42b4fb20cd36896dfc2a486b977363de
 </div>
+
 
 
 <h3><a class="anchor" aria-hidden="true" id="mayactl-Version"></a>mayactl Version</h3>
@@ -261,14 +261,15 @@ mayactl version
 
  **Example Output:**
 
-<div class="co">Version: 0.8.2-released
-Git commit: b9efd8eaad9aa14d3ac3b04a772240b6e11a59b3
+<div class="co">Version: 0.9.0-released
+Git commit: e696a06dc4be38ea7d2f5689f2ed5bd30ee92e89
 GO Version: go1.11.2
 GO ARCH: amd64
 GO OS: linux
 m-apiserver url:  http://10.64.0.13:5656
 m-apiserver status:  running
 </div>
+
 
 
 

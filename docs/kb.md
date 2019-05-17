@@ -12,6 +12,8 @@ sidebar_label: Knowledge Base
 
 [How to scale up Jiva replica?](#how-to-scale-up-jiva-replica)
 
+[How to install OpenEBS in OpenShift environment?](#OpenEBS-install-openshift-without-SELinux-disabled)
+
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
 
@@ -217,7 +219,32 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
    pvc-4cfacfdd-76d7-11e9-9319-42010a800230-rep-f9ff69c6-9jbfm      1/1       Running   0          25s
    ```
 
-   
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-without-SELinux-disabled"></a>How to install OpenEBS in OpenShift environment?</h3>
+
+In earlier documentation, it was referred to install OpenEBS by disabling SELinux. But, you can install OpenEBS in OpenShift environment without disabling SELinux using the following steps.
+
+1. Add OpenEBS Service account to the privileged scc of OpenShift.
+
+   ```
+   oc adm policy add-scc-to-user privileged system:serviceaccount:openebs:openebs-maya-operator
+   ```
+
+2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
+
+   ```
+   wget https://openebs.github.io/charts/openebs-operator-0.9.0.yaml
+   ```
+
+3. Apply the modified the YAML using the following command. The OpenEBS operator YAML file name has to be changed based on the latest version.
+
+   ```
+   oc apply -f openebs-operator-0.9.0.yaml
+   ```
+
+4. Verify OpenEBS pods status by using `oc get pods -n openebs`
 
 <br>
 

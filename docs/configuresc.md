@@ -50,7 +50,6 @@ metadata:
       - name: ReplicaCount
         value: "1"
 provisioner: openebs.io/provisioner-iscsi
-reclaimPolicy: Delete
 ```
 
 The above command creates storage class called `openebs-sparse-sc-statefulset` which you can use under volumeClaimTemplates. 
@@ -71,7 +70,7 @@ StorageClass definition is an important task in the planning and execution of Op
 
 **Step1:** Decide the cStorPool
 
-**Step2:** Which application uses it? Decide the replicaCount based on it
+**Step2:** Which application uses it? Decide the replicaCount based on it.
 
 **Step3:** Are there any other storage policies to be applied to the StorageClass? Refer to the [storage policies section](#cstor-storage-policies) for more details on the storage policies applicable for cStor.
 
@@ -96,11 +95,11 @@ Below table lists the storage policies supported by cStor. These policies should
 | cStor Storage Policy                                     | Mandatory | Default                                 | Purpose                                                      |
 | -------------------------------------------------------- | --------- | --------------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                    | No        | 3                                       | Defines the number of cStor volume replicas                  |
-| [VolumeControllerImage](#Volume-Controller-Image-Policy) |           | quay.io/openebs/cstor-volume-mgmt:0.8.2 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
-| [VolumeTargetImage](#Volume-Target-Image-Policy)         |           | value:quay.io/openebs/cstor-istgt:0.8.2 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeControllerImage](#Volume-Controller-Image-Policy) |           | quay.io/openebs/cstor-volume-mgmt:0.9.0 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
+| [VolumeTargetImage](#Volume-Target-Image-Policy)         |           | value:quay.io/openebs/cstor-istgt:0.9.0 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
 | [StoragePoolClaim](#Storage-Pool-Claim-Policy)           | Yes       | N/A (a valid pool must be provided)     | The cStorPool on which the volume replicas should be provisioned |
 | [VolumeMonitor](#Volume-Monitor-Policy)                  |           | ON                                      | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)    |           | quay.io/openebs/m-exporter:0.8.2        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)    |           | quay.io/openebs/m-exporter:0.9.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [FSType](#Volume-File-System-Type-Policy)                |           | ext4                                    | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [TargetNodeSelector](#Target-NodeSelector-Policy)        |           | Decided by Kubernetes scheduler         | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
 | [TargetResourceLimits](#Target-ResourceLimits-Policy)    |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
@@ -141,7 +140,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeControllerImage
-        value: quay.io/openebs/cstor-volume-mgmt:0.8.2
+        value: quay.io/openebs/cstor-volume-mgmt:0.9.0
     openebs.io/cas-type: cstor
 ```
 
@@ -156,7 +155,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeTargetImage
-        value:quay.io/openebs/cstor-istgt:0.8.2
+        value:quay.io/openebs/cstor-istgt:0.9.0
     openebs.io/cas-type: cstor
 ```
 
@@ -201,7 +200,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:0.8.2
+        value: quay.io/openebs/m-exporter:0.9.0
     openebs.io/cas-type: cstor
 ```
 
@@ -465,7 +464,7 @@ The sample service account can be found [here](https://github.com/openebs/openeb
 
 <h3><a class="anchor" aria-hidden="true" id="cStorStoragePool-Anti-Affinity"></a>cStorStoragePool Anti-Affinity</h3>
 
-This policy will adds the ability in cStor to correlate and hence distribute single replica volumes across pools which are in turn deployed in separate nodes when application consuming all these volumes is deployed as a StatefulSet.
+This policy will adds the ability in cStor to correlate and hence distribute single replica volumes across pools which are in turn deployed in separate nodes when application consuming all these volumes is deployed as a StatefulSet.  
 
 Below are supported anti-affinity features:
 
@@ -552,12 +551,13 @@ Allow users to set available performance tunings in StorageClass based on their 
 - cStor target queue depth
   - This limits the ongoing IO count from client. Default is 32.
 - cStor target worker threads
-  - Sets the **number of threads** that are working on above queue. Default is 6.
+  - Sets the **number of threads** that are working on above queue. It is mentioned by `Luworkers`.Default value is 6.
 - cStor volume replica worker threads
   - This Is associated with cStorVolumeReplica.
+  - It is mentioned by `ZvolWorkers`.
   - Defaults to the number of cores on the machine.
 
-**Note:**  These configuration can be only used during volume provisioning. Default values will be used in case of **invalid/None** values has been provided using configuration.
+**Note:**  These configuration can be only used during volume provisioning. Default values will be used in case of "Invalid/None" values has been provided using configuration.
 
 **Example Configuration:**
 
@@ -579,6 +579,8 @@ annotations:
       value: "4"
 provisioner: openebs.io/provisioner-iscsi
 ```
+
+**Note:** For sequential workload, setting `luworkers` to 1 is good. For random workload,  default setting to 6 is good.
 
 <br>
 

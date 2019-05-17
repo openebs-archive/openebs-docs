@@ -103,7 +103,7 @@ Use a similar PVC spec or volumeClaimTemplate to use a StorageClass that is poin
 
 **AccessModes:** cStor provides iSCSI targets, which are appropriate for RWO (ReadWriteOnce) access mode and is suitable for all types of databases. For webscale applications like WordPress or any for any other NFS needs, you need RWM (ReadWriteMany) access mode. For RWM, you need NFS provisioner to be deployed along with cStor. See <a href="/docs/next/rwm.html" target="_blank">how to provision RWM PVC with OpenEBS </a>.
 
-**Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release (OpenEBS 0.8.2) and is active development, see [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in the very short time period. 
+**Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release (OpenEBS 0.9.0) and is active development, see [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in the very short time period. 
 
 <font size="5">Example configuration for requesting OpenEBS volumes for a `deployment` </font>
 
@@ -148,6 +148,41 @@ spec:
 <br>
 
 <hr>
+<br>
+
+## Monitor cStor Pool
+
+A new sidecar will run once a cStor pool pod is created.This sidecar will collect the metrics of the corresponding cStorStoragePool. Following metrics are supported by cStor to export the cStorStoragePool usage statistics as Prometheus metrics.
+
+```
+openebs_dispatched_io_count # Dispatched IO's count
+openebs_free_pool_capacity # Free capacity in pool
+openebs_inflight_io_count # Inflight IO's count
+openebs_maya_exporter_version # A metric with a constant '1' value labeled by commit and version from which maya-exporter was built.
+openebs_pool_size # Size of pool
+openebs_pool_status # Status of pool (0, 1, 2, 3, 4, 5, 6)= {"Offline", "Online", "Degraded", "Faulted", "Removed", "Unavail", "NoPoolsAvailable"}
+openebs_read_latency # Read latency on replica
+openebs_rebuild_bytes # Rebuild bytes
+openebs_rebuild_count # Rebuild count
+openebs_rebuild_status # Status of rebuild on replica (0, 1, 2, 3, 4, 5, 6)= {"INIT", "DONE", "SNAP REBUILD INPROGRESS", "ACTIVE DATASET REBUILD INPROGRESS", "ERRORED", "FAILED", "UNKNOWN"}
+openebs_sync_count # Total no of sync on replica
+openebs_sync_latency # Sync latency on replica
+openebs_total_failed_rebuild # Total no of failed rebuilds on replica
+openebs_total_read_bytes # Total read in bytes
+openebs_total_read_count # Total read io count
+openebs_total_rebuild_done # Total no of rebuild done on replica
+openebs_total_write_bytes # Total write in bytes
+openebs_total_write_count # Total write io count
+openebs_used_pool_capacity # Capacity used by pool
+openebs_used_pool_capacity_percent # Capacity used by pool in percent
+openebs_used_size Used # size of pool and volume
+openebs_volume_status # Status of volume (0, 1, 2, 3) = {"Offline", "Healthy", "Degraded", "Rebuilding"}
+openebs_write_latency # Write latency on replica
+openebs_zfs_command_error # zfs command error counter
+openebs_zfs_list_command_error # zfs list command error counter
+openebs_zfs_parse_error # zfs parse error counter
+openebs_zpool_command_error # zpool command error counter
+```
 
 <br>
 
@@ -201,7 +236,7 @@ Grafana charts can be built for the above Prometheus metrics. Some metrics OpenE
 
 <br>
 
-When a PVC is deleted, the OpenEBS PV is deleted including the data in it. In StorageClass, the parameter `ReclaimPolicy` is set to `Delete` by default. cStor currently does not support `Retain` feature. 
+When a PVC is deleted, the OpenEBS PV is deleted including the data in it. In StorageClass, the parameter `ReclaimPolicy` is set to `Delete` by default. If the data need to retain, it can be configured by changing `ReclaimPolicy` to `Retain` in the corresponding StorageClass or patching the corresponding PV is also possible. This is applicable only for Jiva volume. cStor currently does not support `Retain` feature. 
 
 <hr>
 

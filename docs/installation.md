@@ -185,7 +185,7 @@ As a next step [verify](#verifying-openebs-installation) your installation and d
 In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace. 
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.2.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.9.0.yaml
 ```
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
@@ -203,7 +203,7 @@ In the **custom installation mode**, you can achieve the following advanced conf
 
 
 
-For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-0.8.2.yaml" target="_blank">download</a> the **openebs-operator-0.8.2.yaml** file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
+For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-0.8.2.yaml" target="_blank">download</a> the **openebs-operator-0.9.0.yaml** file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
 
 
 
@@ -508,7 +508,7 @@ Find `apiServer`, `provisioner`, `snapshotOperator` and `ndm` sections in `value
 ```
 provisioner:
   image: "quay.io/openebs/openebs-k8s-provisioner"
-  imageTag: "0.8.2"
+  imageTag: "0.9.0"
   replicas: 1
   nodeSelector:
     node: openebs
@@ -529,7 +529,7 @@ In the `values.yaml`, find` ndm` section to update `excludeVendors:` and `exclud
 ```
 ndm:
   image: "quay.io/openebs/node-disk-manager-amd64"
-  imageTag: "v0.3.4"
+  imageTag: "v0.3.5"
   sparse:
     enabled: "true"
     path: "/var/openebs/sparse"
@@ -557,39 +557,46 @@ Download the values.yaml from  [here](https://github.com/helm/charts/blob/master
 | --------------------------------------- | -------------------------------------------- | ----------------------------------------- |
 | `rbac.create`                           | Enable RBAC Resources                        | `true`                                    |
 | `image.pullPolicy`                      | Container pull policy                        | `IfNotPresent`                            |
-| `apiserver.image`                       | Docker Image for API Server                  | `openebs/m-apiserver`                     |
-| `apiserver.imageTag`                    | Docker Image Tag for API Server              | `0.8.2`                                   |
+| `apiserver.image`                       | Docker Image for API Server                  | `quay.io/openebs/m-apiserver`             |
+| `apiserver.imageTag`                    | Docker Image Tag for API Server              | `0.9.0`                                   |
 | `apiserver.replicas`                    | Number of API Server Replicas                | `1`                                       |
-| `provisioner.image`                     | Docker Image for Provisioner                 | `openebs/openebs-k8s-provisioner`         |
-| `provisioner.imageTag`                  | Docker Image Tag for Provisioner             | `0.8.2`                                   |
+| `apiserver.sparse.enabled`              | Create Sparse Pool based on Sparsefile       | `false`                                   |
+| `provisioner.image`                     | Docker Image for Provisioner                 | `quay.io/openebs/openebs-k8s-provisioner` |
+| `provisioner.imageTag`                  | Docker Image Tag for Provisioner             | `0.9.0`                                   |
 | `provisioner.replicas`                  | Number of Provisioner Replicas               | `1`                                       |
-| `snapshotOperator.provisioner.image`    | Docker Image for Snapshot Provisioner        | `openebs/snapshot-provisioner`            |
-| `snapshotOperator.provisioner.imageTag` | Docker Image Tag for Snapshot Provisioner    | `0.8.2`                                   |
-| `snapshotOperator.controller.image`     | Docker Image for Snapshot Controller         | `openebs/snapshot-controller`             |
-| `snapshotOperator.controller.imageTag`  | Docker Image Tag for Snapshot Controller     | `0.8.2`                                   |
+| `localProvisioner.image`                | Image for localProvisioner                   | `quay.io/openebs/provisioner-localpv`     |
+| `localProvisioner.imageTag`             | Image Tag for localProvisioner               | `0.9.0`                                   |
+| `localProvisioner.replicas`             | Number of localProvisioner Replicas          | `1`                                       |
+| `localProvisioner.basePath`             | BasePath for hostPath volumes on Nodes       | `/var/openebs/local`                      |
+| `webhook.image`                         | Image for admision server                    | `quay.io/openebs/admission-server`        |
+| `webhook.imageTag`                      | Image Tag for admission server               | `0.9.0`                                   |
+| `webhook.replicas`                      | Number of admission server Replicas          | `1`                                       |
+| `snapshotOperator.provisioner.image`    | Docker Image for Snapshot Provisioner        | `quay.io/openebs/snapshot-provisioner`    |
+| `snapshotOperator.provisioner.imageTag` | Docker Image Tag for Snapshot Provisioner    | `0.9.0`                                   |
+| `snapshotOperator.controller.image`     | Docker Image for Snapshot Controller         | `quay.io/openebs/snapshot-controller`     |
+| `snapshotOperator.controller.imageTag`  | Docker Image Tag for Snapshot Controller     | `0.9.0`                                   |
 | `snapshotOperator.replicas`             | Number of Snapshot Operator Replicas         | `1`                                       |
-| `ndm.image`                             | Docker Image for Node Disk Manager           | `openebs/openebs/node-disk-manager-amd64` |
-| `ndm.imageTag`                          | Docker Image Tag for Node Disk Manager       | `v0.3.4`                                  |
-| `ndm.sparse.enabled`                    | Create Sparse files and cStor Sparse Pool    | `true`                                    |
+| `ndm.image`                             | Docker Image for Node Disk Manager           | `quay.io/openebs/node-disk-manager-amd64` |
+|                                         | Docker Image Tag for Node Disk Manager       | `v0.3.5`                                  |
 | `ndm.sparse.path`                       | Directory where Sparse files are created     | `/var/openebs/sparse`                     |
 | `ndm.sparse.size`                       | Size of the sparse file in bytes             | `10737418240`                             |
 | `ndm.sparse.count`                      | Number of sparse files to be created         | `1`                                       |
 | `ndm.filters.excludeVendors`            | Exclude devices with specified vendor        | `CLOUDBYT,OpenEBS`                        |
 | `ndm.filters.excludePaths`              | Exclude devices with specified path patterns | `loop,fd0,sr0,/dev/ram,/dev/dm-,/dev/md`  |
 | `ndm.updateStrategy.type`               | Update strategy policy                       | `RollingUpdate`                           |
-| `jiva.image`                            | Docker Image for Jiva                        | `openebs/jiva`                            |
-| `jiva.imageTag`                         | Docker Image Tag for Jiva                    | `0.8.2`                                   |
+| `jiva.image`                            | Docker Image for Jiva                        | `quay.io/openebs/jiva`                    |
+| `jiva.imageTag`                         | Docker Image Tag for Jiva                    | `0.9.0`                                   |
 | `jiva.replicas`                         | Number of Jiva Replicas                      | `3`                                       |
-| `cstor.pool.image`                      | Docker Image for cStor Pool                  | `openebs/cstor-pool`                      |
-| `cstor.pool.imageTag`                   | Docker Image Tag for cStor Pool              | `0.8.2`                                   |
-| `cstor.poolMgmt.image`                  | Docker Image for cStor Pool Management       | `openebs/cstor-pool-mgmt`                 |
-| `cstor.poolMgmt.imageTag`               | Docker Image Tag for cStor Pool Management   | `0.8.2`                                   |
-| `cstor.target.image`                    | Docker Image for cStor Target                | `openebs/cstor-target`                    |
-| `cstor.target.imageTag`                 | Docker Image Tag for cStor Target            | `0.8.2`                                   |
-| `cstor.volumeMgmt.image`                | Docker Image for cStor Volume Management     | `openebs/cstor-volume-mgmt`               |
-| `cstor.volumeMgmt.imageTag`             | Docker Image Tag for cStor Volume Management | `0.8.2`                                   |
-| `policies.monitoring.image`             | Docker Image for Prometheus Exporter         | `openebs/m-exporter`                      |
-| `policies.monitoring.imageTag`          | Docker Image Tag for Prometheus Exporter     | `0.8.2`                                   |
+| `cstor.pool.image`                      | Docker Image for cStor Pool                  | `quay.io/openebs/cstor-pool`              |
+| `cstor.pool.imageTag`                   | Docker Image Tag for cStor Pool              | `0.9.0`                                   |
+| `cstor.poolMgmt.image`                  | Docker Image for cStor Pool Management       | `quay.io/openebs/cstor-pool-mgmt`         |
+| `cstor.poolMgmt.imageTag`               | Docker Image Tag for cStor Pool Management   | `0.9.0`                                   |
+| `cstor.target.image`                    | Docker Image for cStor Target                | `quay.io/openebs/cstor-istgt`             |
+| `cstor.target.imageTag`                 | Docker Image Tag for cStor Target            | `0.9.0`                                   |
+| `cstor.volumeMgmt.image`                | Docker Image for cStor Volume Management     | `quay.io/openebs/cstor-volume-mgmt`       |
+| `cstor.volumeMgmt.imageTag`             | Docker Image Tag for cStor Volume Management | `0.9.0`                                   |
+| `policies.monitoring.image`             | Docker Image for Prometheus Exporter         | `quay.io/openebs/m-exporter`              |
+| `policies.monitoring.imageTag`          | Docker Image Tag for Prometheus Exporter     | `0.9.0`                                   |
 | `analytics.pingInterval`                | Duration(hours) between sending ping stat    | `24h`                                     |
 | `HealthCheck.initialDelaySeconds`       | Delay before liveness probe is initiated     | `30`                                      |
 | `HealthCheck.periodSeconds`             | How often to perform the liveness probe      | `60`                                      |
@@ -648,6 +655,9 @@ data:
     probeconfigs:
       - key: udev-probe
         name: udev probe
+        state: true
+      - key: seachest-probe
+        name: seachest probe
         state: true
       - key: smart-probe
         name: smart probe
