@@ -733,6 +733,16 @@ Apr 12 03:30:00 mos4 systemd[1]: Stopped Scrub btrfs filesystem, verify block ch
 Apr 12 03:30:00 mos4 systemd[1]: transactional-update.timer: Succeeded.
 ```
 
+You can get more details to see if the cause of reboot is due to transactional update using below command outputs.
+
+```
+systemctl status rebootmgr
+systemctl status transactional-update.timer
+cat /etc/rebootmgr.conf
+cat /usr/lib/systemd/system/transactional-update.timer
+cat /usr/etc/transactional-update.conf
+```
+
 **Workaround:**
 
 There are 2 possible solutions.
