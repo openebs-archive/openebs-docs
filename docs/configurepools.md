@@ -139,7 +139,7 @@ In the above file, change the parameters as required
 
   The number of selected disk CRs across nodes need not be same. The disk CRs can be added to the pool spec dynamically as the used capacity gets filled up. 
 
-  Note: Some of the pool expansion features of the cStorpools are under development. See [pool day2 operations](#day2-operations-on-cstorpools)
+  Note: Some of the pool expansion features of the cStorpools are under development. See [pool day2 operations](#day-2-operations-on-cstorpools)
 
 - `type`
 
@@ -343,7 +343,7 @@ metadata:
       - name:  AuxResourceLimits
         value: |-
             memory: 0.5Gi
-            cpu: 50m
+            cpu: 100m
     openebs.io/cas-type: cstor
 ```
 
@@ -363,7 +363,9 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: AuxResourceRequests
-        value: "none"
+        value: |-
+            memory: 0.5Gi
+            cpu: 100m
     openebs.io/cas-type: cstor
 ```
 
@@ -377,7 +379,7 @@ metadata:
 
 ## Day 2 operations on cStorPools
 
-With latest release,only some day2 operations are supported. Many of day2 operations are under active development. See [cStor roadmap](docs/next/cstor.html#cstor-roadmap) for more details. 
+With latest release,only some day2 operations are supported. Many of day2 operations are under active development. See [cStor roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. 
 
 **Note:** *All pools created using 0.8.1 will receive the pool expansion capabilities when those features are available in future releases.* 
 
