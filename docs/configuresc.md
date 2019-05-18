@@ -286,7 +286,7 @@ metadata:
       - name:  AuxResourceLimits
         value: |-
             memory: 0.5Gi
-            cpu: 50m
+            cpu: 100m
     openebs.io/cas-type: cstor
 ```
 
@@ -302,7 +302,9 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: AuxResourceRequests
-        value: "none"
+        value: |-
+            memory: 0.5Gi
+            cpu: 100m
     openebs.io/cas-type: cstor
 ```
 
