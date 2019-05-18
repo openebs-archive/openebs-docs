@@ -24,7 +24,7 @@ This document contains quick reference of the installation steps for both OpenEB
 
 
 
-## Install Velero (ARK)
+## Install Velero (Formerly known as ARK)
 
 Follow the instructions at <a href="https://heptio.github.io/velero/v0.10.0/" target="_blank">Velero documentation</a> to install and configure Velero. 
 
@@ -34,65 +34,67 @@ At the end of Velero setup, Restic will be successfully running and ready for ta
 
 ## Steps for backup
 
-`ark backup` command invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or <a href="/docs/next/minio.html" target="_blank">Minio</a>. 
+If you have configured Velero with restic then `velero backup` command invokes restic internally and  copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or <a href="/docs/next/minio.html" target="_blank">Minio</a>. 
 
-Take the backup using the below command 
+If you are using OpenEBS velero-plugin then `velero backup` command invokes velero-plugin internally and takes a snapshot of CStor volume data and send it to remote storage location as mentioned in  *volumesnapshotlocation*.
+
+Take the backup using the below command.
 
 ```
-ark backup create <backup-name> -l app=<app-label-selector>
+velero backup create <backup-name> -l app=<app-label-selector>
 ```
 
 Verify backup is taken successfully
 
 ```
-ark backup describe bbb-01
+velero backup describe bbb-01
 ```
 
 ## Steps for restore
 
-Ark backup can be restored onto a new cluster or to the same cluster. An OpenEBS PVC **with the same name as the original PVC** needs to be created and made available before the restore command is performed. The target cluster OpenEBS EBS PVC can be from a different StorageClass and cStorPool, only the PVC name has to be same.
+Velero backup can be restored onto a new cluster or to the same cluster. An OpenEBS PVC **with the same name as the original PVC** needs to be created and made available before the restore command is performed. The target cluster OpenEBS EBS PVC can be from a different StorageClass and cStorPool, but only the PVC name has to be same.
 
-
+If you are doing restore of CStor volume using OpenEBS velero-plugin, then you must need to create the same namespace and StorageClass configuration of the source PVC first in your target cluster.
 
 On the target cluster, restore the application using the below command
 
 ```
-ark restore create <restore-name> --from-backup <backup-name> -l app=<app-label-selector>
+velero restore create <restore-name> --from-backup <backup-name> -l app=<app-label-selector>
 ```
 
  Verify the restore 
 
 ```
-ark restore describe <restore-name> --volume-details
+velero restore describe <restore-name> --volume-details
 ```
-
-
 
 Once the restore is completed to the PVC, attach the PVC to the target application. 
 
-
+If you are doing restore with Velero-plugin then after restore, you need to update the target ip for CVR.
 
 ## Scheduling backups
 
-Using `ark schedule` command, periodic backups are taken. 
+Using `velero schedule` command, periodic backups are taken. 
+
+In case of velero-plugin, this periodic backups are incremental backups which saves storage space and backup time. To restore periodic backup with velero-plugin, refer [here](https://github.com/openebs/velero-plugin/blob/v0.9.x/README.md) for more details. The following command will schedule the backup as per the cron time mentioned .
 
 ```
-ark schedule create <backup-schedule-name> --schedule "0 * * * *" -l app=<app-label-selector>
+velero schedule create <backup-schedule-name> --schedule "0 * * * *" -l app=<app-label-selector>
 ```
 
 Get the details of backup using the following command
 
 ```
-ark backup get
+velero backup get
 ```
 
 
 
 ## Roadmap
 
-**OpenEBS ARK storage plugin** 
+**Support for more backup storage location**
 
-The above backup and restore procedure is done using Restic, where the entire data is copied and restored in a bulk manner. More efficient backup and restore possible through incremental data snapshots using the OpenEBS ARK storage plugin which is planned for OpenEBS 0.9 release
+Current velero-plugin supports S3 and GCP backup storage location only. Support for other storage location is planned in the future release.
 
 <br>
 
