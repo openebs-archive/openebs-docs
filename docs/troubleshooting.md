@@ -43,6 +43,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 [OpenEBS installation fails on Azure](#install-failed-azure-no-rbac-set).
 
 [A multipath.conf file claims all SCSI devices in OpenShift](#multipath-conf-claims-all-scsi-devices-openshift)
+
 <br>
 
 
@@ -92,6 +93,10 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 [Application and OpenEBS pods terminate/restart under heavy I/O load](#Pods-restart-terminate-when-heavy-load)
 
 
+
+## Miscellaneous
+
+[Nodes in the cluster reboots frequently almost everyday ](#nodes-in-the-cluster-reboots-frequently-almost-everyday)
 
 <br>
 
@@ -591,7 +596,6 @@ apt install xfsprogs
 <br>
 
 
-
 <font size="6" color="green">Kubernetes related</font>
 
 <br>
@@ -680,6 +684,73 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 <br>
 
 <hr>
+<font size="6" color="orange">Miscellaneous</font>
+
+<br>
+
+[Nodes in the cluster reboots frequently almost everyday ](#nodes-in-the-cluster-reboots-frequently-almost-everyday)
+
+Setup the cluster using RKE in MicroOS using CNI Plugin Cilium. Install OpenEBS, create a PVC and allocate to a fio job/ busybox. Run FIO test on the same. Observed nodes in the cluster getting restarted on a schedule basis.
+
+**Troubleshooting**
+
+Check journalctl logs of each nodes and check if similar logs are observed. In the following log snippets, showing the corresponding logs of 3 nodes.
+
+Node1:
+
+```
+Apr 12 00:21:01 mos2 transactional-update[7302]: /.snapshots/8/snapshot/root/.bash_history
+Apr 12 00:21:01 mos2 transactional-update[7302]: /.snapshots/8/snapshot/var/run/reboot-needed
+Apr 12 00:21:01 mos2 transactional-update[7302]: transactional-update finished - rebooting machine
+Apr 12 00:21:01 mos2 systemd-logind[1045]: System is rebooting.
+Apr 12 00:21:01 mos2 systemd[1]: transactional-update.service: Succeeded.
+Apr 12 00:21:01 mos2 systemd[1]: Stopped Update the system.
+```
+
+Node2: 
+
+```
+01:44:19 mos3 transactional-update[17442]: other mounts and will not be visible to the system:
+Apr 12 01:44:19 mos3 transactional-update[17442]: /.snapshots/8/snapshot/root/.bash_history
+Apr 12 01:44:19 mos3 transactional-update[17442]: /.snapshots/8/snapshot/var/run/reboot-needed
+Apr 12 01:44:19 mos3 transactional-update[17442]: transactional-update finished - rebooting machine
+Apr 12 01:44:20 mos3 systemd-logind[1056]: System is rebooting.
+Apr 12 01:44:20 mos3 systemd[1]: transactional-update.service: Succeeded.
+Apr 12 01:44:20 mos3 systemd[1]: Stopped Update the system.
+```
+
+Node3:
+
+```
+Apr 12 03:00:13 mos4 systemd[1]: snapper-timeline.service: Succeeded.
+Apr 12 03:30:00 mos4 rebootmgrd[1612]: rebootmgr: reboot triggered now!
+Apr 12 03:30:00 mos4 systemd[1]: rebootmgr.service: Succeeded.
+Apr 12 03:30:00 mos4 systemd-logind[1064]: System is rebooting.
+Apr 12 03:30:00 mos4 systemd[1]: Stopping open-vm-tools: vmtoolsd service for virtual machines hosted on VMware...
+Apr 12 03:30:00 mos4 systemd[1]: Stopped target Timers.
+Apr 12 03:30:00 mos4 systemd[1]: btrfs-scrub.timer: Succeeded.
+Apr 12 03:30:00 mos4 systemd[1]: Stopped Scrub btrfs filesystem, verify block checksums.
+Apr 12 03:30:00 mos4 systemd[1]: transactional-update.timer: Succeeded.
+```
+
+**Workaround:**
+
+There are 2 possible solutions.
+
+Approach1:
+
+DO the following on each nodes to stop the transactional update.
+
+```
+systemctl disable --now rebootmgr.service
+systemctl disable --now transactional-update.timer
+```
+
+This is the preferred approach.
+
+Approach2:
+
+Set the reboot timer schedule at different time i.e staggered at various interval of the day, so that only one nodes get rebooted at a time. 
 
 <br><br>
 
