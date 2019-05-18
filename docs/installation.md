@@ -108,7 +108,7 @@ In the **default installation mode**, use the following command to install OpenE
 helm install --namespace <custom_namespace> --name openebs stable/openebs
 ```
 
-**Note:** Since Kuberentes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installling OpenEBS. The example configuration can be get from [here](#example-configuration-Pod-resource-requets-and-limits). 
+**Note:** Since Kuberentes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installling OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requets-and-limits). 
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
 
@@ -188,7 +188,7 @@ In the **default installation mode**, use the following command to install OpenE
 kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.9.0.yaml
 ```
 
-**Note:** Since Kuberentes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installling OpenEBS. The example configuration can be get from [here](#example-configuration-Pod-resource-requets-and-limits). 
+**Note:** Since Kuberentes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installling OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requets-and-limits). 
 
 
 
