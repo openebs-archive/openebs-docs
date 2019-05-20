@@ -53,7 +53,6 @@ All steps described in this document must be performed on the Kubernetes master 
    ```
 
    
-
 2. <h3><a class="anchor" aria-hidden="true" id="upgrade-operator"></a>Upgrade OpenEBS operator</h3>
 
    <h4><a class="anchor" aria-hidden="true" id="upgrade-operator-crds-deployment"></a>Upgrading OpenEBS Operator CRDs and Deployments</h4>
@@ -111,7 +110,6 @@ All steps described in this document must be performed on the Kubernetes master 
    ```
 
    
-
 3. <h3><a class="anchor" aria-hidden="true" id="upgrade-volume"></a>Upgrade volumes one by one</h3>
 
    Even after the OpenEBS Operator has been upgraded to 0.9.0, the cStor Storage Pools and volumes (both Jiva and cStor) will continue to work with older versions. Use the following steps in the same order to upgrade cStor Pools and volumes.
@@ -141,52 +139,51 @@ All steps described in this document must be performed on the Kubernetes master 
    2. Run the following command to go inside of `jiva` folder.
 
       ```
-   cd jiva
+      cd jiva
       ```
    
    3. Apply the `cr.yaml` using the following command. It installs a custom resource definition for UpgradeResult custom resource. This custom resource is used to capture the upgrade related information such as success or failure status.
 
       ```
-   kubectl apply -f cr.yaml
+      kubectl apply -f cr.yaml
       ```
    
    
-**Upgrade the Jiva based OpenEBS PV**
+   **Upgrade the Jiva based OpenEBS PV**
    
-1. Extract the PV name using the following command. This output details is needed in Step 3.
+   1. Extract the PV name using the following command. This output details is needed in Step 3.
    
-   ```
+       ```
       kubectl get pv
-   ```
+       ```
    
       Output will be similar to the following.
    
-   ```
-      NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                    STORAGECLASS           REASON   AGE
-   pvc-fec1cf09-7adf-11e9-ae1c-42010a8000b4   30G        RWO            Delete                Bound    default/minio-pv-claim   openebs-jiva-default            5m51s
+      ```
+      NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                       STORAGECLASS           REASON   AGE
+      pvc-fec1cf09-7adf-11e9-ae1c-42010a8000b4   30G        RWO            Delete                Bound    default/minio-pv-claim   openebs-    jiva-default            5m51s
       ```
    
    2. Apply `jiva_upgrade_runtask.yaml` using the following command.
    
-   ```
+      ```
       kubectl apply -f jiva_upgrade_runtask.yaml
-   ```
-   
-   3. Edit `volume-upgrade-job.yaml` by adding the names of required Jiva volume names similar to the details showing in the following snippet.
-   
-   The following is the sample snippet where the Jiva volume details has to be entered in the similar manner.  Add the following snippet  in the `ConfigMap` section for each of the required Jiva volume under `data.upgrade.resources` field for each of the Jiva Volume.
-   
-   ```
-        - name: <Jiva_PV_Name>
-       kind: jiva-volume
-          namespace: default
       ```
    
+   3. Edit `volume-upgrade-job.yaml` by adding the names of required Jiva volume names similar to the details showing in the following   snippet.
+   
+       The following is the sample snippet where the Jiva volume details has to be entered in the similar manner.  Add the following snippet in the `ConfigMap` section for each of the required Jiva volume under `data.upgrade.resources` field for each of the Jiva Volume.
+   
+      ```
+      - name: <Jiva_PV_Name>
+        kind: jiva-volume
+        namespace: default
+      ```
       For the Jiva PV mentioned in Step1, the following will be an example snippet.
    
-   ```
+      ```
       data:
-     upgrade: |
+      upgrade: |
           casTemplate: jiva-volume-update-0.8.2-0.9.0
           resources:
           - name: pvc-fec1cf09-7adf-11e9-ae1c-42010a8000b4
@@ -196,106 +193,106 @@ All steps described in this document must be performed on the Kubernetes master 
    
    4. Apply the modified YAML file using the following command.
    
-   ```
-      kubectl apply -f volume-upgrade-job.yaml
-   ```
+     ```
+     kubectl apply -f volume-upgrade-job.yaml
+     ```   
+     
+   5. Check the status of the upgrading activity of Jiva volume using the following command.
    
-   5.  Check the status of the upgrading activity of Jiva volume using the following command.
-   
-   ```
-   kubectl get upgraderesult -o yaml
-   ```
-   
+      ```
+      kubectl get upgraderesult -o yaml
+      ```
+      
    6. Also upgrade job activity can be checked using the following command. Here check the Job name that is provided in the `volume-upgrade-job.yaml` file as part of Step 3.
    
-   ```
-      kubectl get job
-   ```
-   
-      If it is showing similar to the following output, then the upgrade Job is completed.
-   
-   ```
-      NAME             COMPLETIONS   DURATION   AGE
-   volume-upgrade   1/1           23s        2m24s
       ```
-   
+      kubectl get job
+      ```
+      
+      If it is showing similar to the following output, then the upgrade Job is completed.
+     
+      ```
+      NAME             COMPLETIONS   DURATION   AGE
+      volume-upgrade   1/1           23s        2m24s
+      ```
+      
    7. Verify the Jiva Pods running status using the following command.
    
-   ```
+      ```
       kubectl get pods
-   ```
+      ```
    
    8. Verify application status by checking corresponding pods.
    
-9. The completed jobs can be deleted using the following command.
+   9. The completed jobs can be deleted using the following command.
    
-   ```
+      ```
       kubectl delete job <job_name>
-   ```
+      ```
    
    <h4><a class="anchor" aria-hidden="true" id="cStor-PV"></a>cStor PV</h4>
    
-**Prerequisites**
+   **Prerequisites**
    
-1. Goto the particular upgrade script directory.
+   1. Goto the particular upgrade script directory.
    
-2. Run the following command to go inside of `cstor` folder.
+   2. Run the following command to go inside of `cstor` folder.
    
-   ```
+      ```
       cd cstor
-   ```
+      ```
    
-3.  Apply the `cr.yaml` using the following command. It installs a custom resource definition for UpgradeResult custom resource. This custom resource is used to capture upgrade related information for success or failure case.
+   3.  Apply the `cr.yaml` using the following command. It installs a custom resource definition for UpgradeResult custom resource. This  custom resource is used to capture upgrade related information for success or failure case.
    
       ```
       kubectl apply -f cr.yaml
-   ```
+      ```
    
-4. Apply `rbac.yaml` for having permission related reasons.
+   4. Apply `rbac.yaml` for having permission related reasons.
    
    **Upgrade cStor Pools**
    
-1. Extract the corresponding cStorStoragePool name using the following command. This output details is needed in Step 3.
+   1. Extract the corresponding cStorStoragePool name using the following command. This output details is needed in Step 3.
    
-   ```
+      ```
       kubectl get csp
-   ```
+      ```
    
-   Output will be similar to the following.
+      Output will be similar to the following.
    
-   ```
+      ```
       NAME                     ALLOCATED   FREE    CAPACITY   STATUS    TYPE      AGE
       cstor-pool2-n8fm         911K        39.7G   39.8G      Healthy   striped   2h
       cstor-sparse-pool-bue5   1.11M       9.94G   9.94G      Healthy   striped   2h
-   ```
+      ```
    
-2. Apply `cstor-pool-update-082-090.yaml` using the following command.
+   2. Apply `cstor-pool-update-082-090.yaml` using the following command.
    
       ```
       kubectl apply -f cstor-pool-update-082-090.yaml
       ```
    
-3. Edit `pool-upgrade-job.yaml` file and update the required pool names in the `ConfigMap` section. Save the configuration after the required modifications.
+   3. Edit `pool-upgrade-job.yaml` file and update the required pool names in the `ConfigMap` section. Save the configuration after the required modifications.
    
-   The following is the sample snippet where the pool name has to be entered.  Add the following snippet  in the `ConfigMap` section for each of the required pool under `data.upgrade.resources` field.
+      The following is the sample snippet where the pool name has to be entered.  Add the following snippet  in the `ConfigMap` section for each of the required pool under `data.upgrade.resources` field.
    
       ```
-          - name: cstor-pool2-n8fm
-         kind: cStorPool
-            namespace: openebs
-   ```
+      - name: cstor-pool2-n8fm
+        kind: cStorPool
+        namespace: openebs
+      ```
    
-   In this example scenarios, there is one more pool is running in the cluster. So it should create similar kind of entry for other pool also by changing the appropriate name of the pool. 
+      In this example scenarios, there is one more pool is running in the cluster. So it should create similar kind of entry for other pool also by changing the appropriate name of the pool. 
    
       The following is an example output of resource section after adding both pools details.
    
       ```
       resources:
-   # Put the name of cstor pool resource that you want to upgrade.
+      # Put the name of cstor pool resource that you want to upgrade.
       # Command to view the cstorpool resource :
-   # `kubectl get csp`
+      # `kubectl get csp`
       - name: cstor-pool2-n8fm
-     kind: cStorPool
+        kind: cStorPool
         namespace: openebs
       # Similiary, you can fill details below for other cstorpool upgrades.
       # If not required, delete it.
@@ -312,19 +309,19 @@ All steps described in this document must be performed on the Kubernetes master 
    
    5.  Check the status of the upgrade activity of cStorStoragePools using the following command.
    
-   ```
+      ```
       kubectl get upgraderesult -o yaml
       ```
    
-6.  Also upgrade job activity can be checked using the following command. Here check the Job name that is provided in the `pool-upgrade-job.yaml` file as part of Step 3.
+   6.  Also upgrade job activity can be checked using the following command. Here check the Job name that is provided in the `pool-upgrade-job.yaml` file as part of Step 3.
    
-   ```
+      ```
       kubectl get job
       ```
    
-   If it is showing similar to the following output, then the upgrade Job is completed.
+      If it is showing similar to the following output, then the upgrade Job is completed.
    
-   ```
+      ```
       NAME                            COMPLETIONS   DURATION   AGE
       spc-cstor-sparse-pool-upgrade   1/1           2m8s       6m29s
       ```
@@ -335,7 +332,7 @@ All steps described in this document must be performed on the Kubernetes master 
       kubectl delete job <job_name>
       ```
    
-8. Make sure that this step completes successfully before proceeding to next step.
+   8. Make sure that this step completes successfully before proceeding to next step.
    
 
    **Upgrade cStor Volumes**
@@ -343,25 +340,25 @@ All steps described in this document must be performed on the Kubernetes master 
    1. Apply `cstor-volume-update-082-090.yaml` using the following command.
 
       ```
-   kubectl apply -f cstor-volume-update-082-090.yaml
+      kubectl apply -f cstor-volume-update-082-090.yaml
       ```
 
    2. Get the cStorVolume details using the following command.
 
       ```
-   kubectl get cstorvolume -n openebs
+      kubectl get cstorvolume -n openebs
       ```
    
       Example Output:
 
       ```
-   NAME                                       STATUS   AGE
+      NAME                                       STATUS   AGE
       pvc-d7bed874-7abb-11e9-ae1c-42010a8000b4   Init     3h
       ```
    
-   **Note:** The above details can also be collected using `kubeclt get pv`.
+      **Note:** The above details can also be collected using `kubeclt get pv`.
    
-3. Edit `volume-upgrade-job.yaml` file and update the required volume names in the `ConfigMap` section. Save the configuration after the required modifications.
+   3. Edit `volume-upgrade-job.yaml` file and update the required volume names in the `ConfigMap` section. Save the configuration after the required modifications.
    
       The following is the sample snippet where the volume name has to be entered.  Add the following snippet  in the `ConfigMap` section for each of the required volumes under `data.upgrade.resources` field.
    
@@ -388,25 +385,25 @@ All steps described in this document must be performed on the Kubernetes master 
    5. Check the status of the upgrading activity of cStor volumes using the following command.
 
       ```
-   kubectl get upgraderesult -o yaml
+      kubectl get upgraderesult -o yaml
       ```
    
       Also upgrade job activity can be checked using the following command. Here check the job name that is provided in the `volume-upgrade-job.yaml` file as part of Step 3.
 
       ```
-   kubectl get job
+      kubectl get job
       ```
    
       If it is showing similar to the following output, then the upgrade Job for cStor Volume is completed.
 
       ```
-   NAME             COMPLETIONS   DURATION   AGE
+      NAME             COMPLETIONS   DURATION   AGE
       volume-upgrade   1/1           64s        4m47s	
       ```
    
-7. Verify application status by checking corresponding pods.
+   7. Verify application status by checking corresponding pods.
    
-8. The completed jobs can be deleted using the following command.
+   8. The completed jobs can be deleted using the following command.
    
       ```
       kubectl delete job <job_name>
