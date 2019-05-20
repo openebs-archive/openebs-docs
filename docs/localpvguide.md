@@ -33,7 +33,7 @@ Kubernetes 1.12 or higher is required to use OpenEBS Local PV.
 
 # How to Use OpenEBS Local PV
 
-The default StorageClass for OpenEBS Local PV will be created after applying latest OpenEBS operator YAML. The default StorageClass name is `openebs-hostpath`. The replica count is 3 by default . The default hostpath is configured as `/var/openebs/local`,  which can either be changed during the OpenEBS operator install by passing in the `OPENEBS_IO_BASE_PATH` ENV parameter to the Local PV dynamic provisioner or via the StorageClass. The example for both approaches are showing below..
+The default StorageClass for OpenEBS Local PV will be created after applying latest OpenEBS operator YAML. The default StorageClass name is `openebs-hostpath`. The default hostpath is configured as `/var/openebs/local`,  which can either be changed during the OpenEBS operator install by passing in the `OPENEBS_IO_BASE_PATH` ENV parameter to the Local PV dynamic provisioner or via the StorageClass. The example for both approaches are showing below..
 
 The example of changing the ENV variable  to the Local PV dynamic provisioner in the operator YAML.
 
