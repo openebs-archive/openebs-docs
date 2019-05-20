@@ -227,8 +227,6 @@ All steps described in this document must be performed on the Kubernetes master 
       kubectl delete job <job_name>
       ```
    
-   
-   
    <h4><a class="anchor" aria-hidden="true" id="cStor-PV"></a>cStor PV</h4>
    
    **Prerequisites**
@@ -321,34 +319,34 @@ All steps described in this document must be performed on the Kubernetes master 
       If it is showing similar to the following output, then the upgrade Job is completed.
    
       ```
-   NAME                            COMPLETIONS   DURATION   AGE
+      NAME                            COMPLETIONS   DURATION   AGE
       spc-cstor-sparse-pool-upgrade   1/1           2m8s       6m29s
    ```
    
-   7. The completed jobs can be deleted using the following command.
+7. The completed jobs can be deleted using the following command.
    
       ```
       kubectl delete job <job_name>
       ```
-
+   
    8. Make sure that this step completes successfully before proceeding to next step.
+
    
+   **Upgrade cStor Volumes**
    
-**Upgrade cStor Volumes**
+1. Apply `cstor-volume-update-082-090.yaml` using the following command.
    
-   1. Apply `cstor-volume-update-082-090.yaml` using the following command.
-   
-   ```
+      ```
       kubectl apply -f cstor-volume-update-082-090.yaml
    ```
    
-   2. Get the cStorVolume details using the following command.
+2. Get the cStorVolume details using the following command.
    
       ```
       kubectl get cstorvolume -n openebs
-   ```
+      ```
    
-      Example Output:
+   Example Output:
    
       ```
       NAME                                       STATUS   AGE
@@ -363,37 +361,37 @@ All steps described in this document must be performed on the Kubernetes master 
    
       ```
       - name: <cStor_PV_name>
-     kind: cstor-volume
+        kind: cstor-volume
         namespace: openebs
    ```
    
-      For the cStor PV showing in Step2, following will be the details has to be added in the mentioned field.
+   For the cStor PV showing in Step2, following will be the details has to be added in the mentioned field.
    
       ```
       - name: pvc-d7bed874-7abb-11e9-ae1c-42010a8000b4
-     kind: cstor-volume
+        kind: cstor-volume
         namespace: openebs
    ```
    
-   4. Apply the modified file which is saved in Step 3 using the following command.
+4. Apply the modified file which is saved in Step 3 using the following command.
    
       ```
       kubectl apply -f volume-upgrade-job.yaml
-   ```
+      ```
    
-   5. Check the status of the upgrading activity of cStor volumes using the following command.
+5. Check the status of the upgrading activity of cStor volumes using the following command.
    
       ```
       kubectl get upgraderesult -o yaml
-   ```
+      ```
    
-      Also upgrade job activity can be checked using the following command. Here check the job name that is provided in the `volume-upgrade-job.yaml` file as part of Step 3.
+   Also upgrade job activity can be checked using the following command. Here check the job name that is provided in the `volume-upgrade-job.yaml` file as part of Step 3.
    
       ```
       kubectl get job
-   ```
+      ```
    
-      If it is showing similar to the following output, then the upgrade Job for cStor Volume is completed.
+   If it is showing similar to the following output, then the upgrade Job for cStor Volume is completed.
    
       ```
       NAME             COMPLETIONS   DURATION   AGE
@@ -404,9 +402,9 @@ All steps described in this document must be performed on the Kubernetes master 
    
    8. The completed jobs can be deleted using the following command.
    
-   ```
-      kubectl delete job <job_name>
       ```
+      kubectl delete job <job_name>
+   ```
    
    <br>
 
