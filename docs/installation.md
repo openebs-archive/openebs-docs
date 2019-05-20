@@ -402,10 +402,8 @@ Following is an example output.
 disk-acee6c6a32c780ebfba58db7b62ca3ab     42949672960   Active    1m
 disk-c43b6655194d59f05d970fa255682e2f     42949672960   Active    41s
 disk-f2356613045748aba5c94aa292a2efc9     42949672960   Active    15s
-sparse-022148a3ae5f0b8013a76b6e72c085f7   10737418240   Active    3h
-sparse-07d218e187b31953e3a14fd84ea6ed97   10737418240   Active    3h
-sparse-7e3639de27317d2060cf025a0cb9e64d   10737418240   Active    3h
 </div>
+
 
 
 To know which disk CR belongs to which node, check the node label set on the CR by doing 

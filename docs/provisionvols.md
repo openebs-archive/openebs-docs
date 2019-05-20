@@ -35,64 +35,6 @@ sidebar_label: Provisioning Volumes
 
 <br>
 
-## Quick provisioning
-
-<br>
-
-After installation of OpenEBS, and making sure iSCSI client prerequisite is met, you can provision storage for the stateful application using the following PVC
-
-```
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: cstor-pvc-default
-spec:
-  storageClassName: openebs-cstor-sparse 
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5G
-```
-
-
-
-<font size="5">Example demo of OpenEBS cStor:</font>
-
-Run the following command to see OpenEBS storage being provisioned and FIO test being run on it
-
-```
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/fio/demo-fio-cstor-sparse.yaml
-```
-
-
-
-<div class="co">$ kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/fio/demo-fio-cstor-sparse.yaml
-pod/fio-cstor-sparse created
-persistentvolumeclaim/fio-cstor-sparse-claim created
-
-$ kubectl get pvc fio-cstor-sparse-claim
-NAME                     STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS           AGE
-fio-cstor-sparse-claim   Bound     pvc-0449b4e8-3323-11e9-a3ac-42010af00342   4G         RWO            openebs-cstor-sparse   1m
-    
-$ kubectl get pods fio-cstor-sparse
-NAME               READY     STATUS    RESTARTS   AGE
-fio-cstor-sparse   1/1       Running   0          1m
-
-</div>
-
-<br>
-
-
-
-***Note:** The StorageClass `openebs-cstor-sparse` provisions volume on the `cstor-sparse-pool` which is constructed on sparse disks created on the node during OpenEBS installation. This is useful for testing applications, initial testing of OpenEBS etc. For production applicaitions, consider provisioning volumes on disk pools. See [below](#provision-from-a-disk-pool).
-
-<br>
-
-<hr>
-
-<br>
-
 ## Provision from a disk pool
 
 <br>

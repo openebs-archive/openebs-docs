@@ -15,8 +15,6 @@ sidebar_label:Configure StoragePools
 
 <font size="6">Summary:</font>
 
-[Using default pool](#using-default-cstor-pool)
-
 [Creating a new pool](#creating-a-new-pool)
 
 [Pool policies](#pool-policies)
@@ -32,37 +30,14 @@ sidebar_label:Configure StoragePools
 <br>
 
 <hr>
-
-<br>
-
-## Using default cStor pool
-
-<br>
-
-`openebs-cstor-sparse` storageClass and `cstor-sparse-pool` are created for convenience and ease of use. The data stored to this pool is stored on the sparse disks created during installation. This storageClass can be used in test setups and learning OpenEBS but not for production. For production use, create cStorPools on read disks.
-
-If you want to know more details about sparse pools and disks, see [sparse pool deep dive](#sparse-pool-deepdive)
-
-<br>
-
-<hr>
-
-<br>
-
-
-
 ## Creating a new pool
-
-<br>
 
 Process of creating a new cStor storage pool
 
 - Create a YAML spec `cstor-pool-config.yaml`. You can create a cStorPool in two ways.
   - [By specifying disks list](#manual-mode) (or)
   - [Without specifying disks list](#auto-mode) method
-- Create pool config through `kubectl apply` 
-
-
+- Create pool config through `kubectl apply`  approach.
 
 <br>
 
@@ -162,10 +137,7 @@ If the pool creation is successful, you will see the example result as shown bel
 <br>
 
 <hr>
-
 <br>
-
-
 
 <h3><a class="anchor" aria-hidden="true" id="auto-mode"></a>Create a cStorPool WITHOUT specifying diskList </h3>
 
@@ -225,8 +197,6 @@ spec:
 **Step2:**
 
 After the pool YAML spec is created, run the following command to create the pool instances on nodes.
-
-
 
 ```
 kubectl apply -f cstor-pool2-config.yaml
@@ -410,10 +380,6 @@ cstor-pool2   1m
 </div>
 
 
-
-
-
-
 **cStorStoragePool status**
 
 Once StoragePoolClaim is created, corresponding cStorStoragePool will be created. This can be check using the following command.
@@ -460,14 +426,12 @@ In the above example output, name starts with `cstor-disk-\*` are the cStorStora
 
 <br>
 
-
-
 <h2><a class="anchor" aria-hidden="true" id="sparse-pool-deepdive"></a>Sparse Pool deep dive </h2>
 
 OpenEBS installation process creates the following defaults : 
 
-- One sparse disk is created on each node in the cluster  
-- A ready to use cStorPool config called `cstor-sparse-pool` .  This `cstor-sparse-pool` config has a `cStor Pool` instance on every node of the cluster. 
+- One sparse disk is created on each node in the cluster  once you enable the  `OPENEBS_IO_INSTALL_DEFAULT_CSTOR_SPARSE_POOL` ENV in the openebs operator YAML file before its is getting applied.
+- After the previous step, a ready to use cStorPool config called `cstor-sparse-pool` .  This `cstor-sparse-pool` config has a `cStor Pool` instance on every node of the cluster. 
 - One StorageClass called `openebs-cstor-sparse` that points to `cstor-sparse-pool` 
 
 <img src="/docs/assets/svg/sparsepool.svg" alt="OpenEBS configuration flow" style="width:100%">
@@ -475,7 +439,6 @@ OpenEBS installation process creates the following defaults :
 `kubectl describe StorageClass openebs-cstor-sparse` provides the relationship  details
 
 <div class="co">
-
 Name:            openebs-cstor-sparse
 IsDefaultClass:  No
 Annotations:     cas.openebs.io/config=- name: StoragePoolClaim
