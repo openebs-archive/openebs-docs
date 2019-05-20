@@ -193,9 +193,9 @@ All steps described in this document must be performed on the Kubernetes master 
    
    4. Apply the modified YAML file using the following command.
    
-     ```
-     kubectl apply -f volume-upgrade-job.yaml
-     ```   
+      ```
+      kubectl apply -f volume-upgrade-job.yaml
+      ```   
      
    5. Check the status of the upgrading activity of Jiva volume using the following command.
    
@@ -242,8 +242,8 @@ All steps described in this document must be performed on the Kubernetes master 
       cd cstor
       ```
    
-   3.  Apply the `cr.yaml` using the following command. It installs a custom resource definition for UpgradeResult custom resource. This  custom resource is used to capture upgrade related information for success or failure case.
-   
+   3. Apply the `cr.yaml` using the following command. It installs a custom resource definition for UpgradeResult custom resource. This  custom resource is used to capture upgrade related information for success or failure case.
+    
       ```
       kubectl apply -f cr.yaml
       ```
@@ -307,13 +307,13 @@ All steps described in this document must be performed on the Kubernetes master 
       kubectl apply -f pool-upgrade-job.yaml
       ```
    
-   5.  Check the status of the upgrade activity of cStorStoragePools using the following command.
+   5. Check the status of the upgrade activity of cStorStoragePools using the following command.
    
       ```
       kubectl get upgraderesult -o yaml
       ```
    
-   6.  Also upgrade job activity can be checked using the following command. Here check the Job name that is provided in the `pool-upgrade-job.yaml` file as part of Step 3.
+   6. Also upgrade job activity can be checked using the following command. Here check the Job name that is provided in the `pool-upgrade-job.yaml` file as part of Step 3.
    
       ```
       kubectl get job
@@ -363,17 +363,17 @@ All steps described in this document must be performed on the Kubernetes master 
       The following is the sample snippet where the volume name has to be entered.  Add the following snippet  in the `ConfigMap` section for each of the required volumes under `data.upgrade.resources` field.
    
       ```
-    - name: <cStor_PV_name>
-         kind: cstor-volume
-      namespace: openebs
+      - name: <cStor_PV_name>
+        kind: cstor-volume
+        namespace: openebs
       ```
 
       For the cStor PV showing in Step2, following will be the details has to be added in the mentioned field.
 
       ```
-       - name: pvc-d7bed874-7abb-11e9-ae1c-42010a8000b4
-         kind: cstor-volume
-         namespace: openebs
+      - name: pvc-d7bed874-7abb-11e9-ae1c-42010a8000b4
+        kind: cstor-volume
+        namespace: openebs
       ```
 
    4. Apply the modified file which is saved in Step 3 using the following command.
