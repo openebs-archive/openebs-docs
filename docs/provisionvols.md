@@ -13,8 +13,6 @@ sidebar_label: Provisioning Volumes
 
 <font size="6">Summary:</font>
 
-[Quick provisioning ](#quick-provisioning)
-
 [Provision from disk pool](#provision-from-a-disk-pool)
 
 [Monitor volumes](#monitor-volumes)
@@ -32,9 +30,6 @@ sidebar_label: Provisioning Volumes
 <br>
 
 <hr>
-
-<br>
-
 ## Provision from a disk pool
 
 <br>
