@@ -146,9 +146,7 @@ All steps described in this document must be performed on the Kubernetes master 
 
       ```
       kubectl apply -f cr.yaml
-      ```
-   
-   
+      ```   
    **Upgrade the Jiva based OpenEBS PV**
    
    1. Extract the PV name using the following command. This output details is needed in Step 3.
