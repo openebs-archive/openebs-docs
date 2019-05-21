@@ -61,12 +61,22 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl delete crd runtasks.openebs.io
   kubectl delete crd storagepoolclaims.openebs.io
   kubectl delete crd storagepools.openebs.io
-  kubectl delete crd disks.openebs.io
   kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
   kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
+  kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
+  kubectl delete crd disks.openebs.io
+  kubectl delete crd cstorbackups.openebs.io
+  kubectl delete crd cstorrestores.openebs.io
+  kubectl delete crd cstorcompletedbackups.openebs.io
   ```
 
 
+
+**Note**: As part of deleting the Jiva Volumes - OpenEBS launches scrub jobs for clearing the data from the nodes. The completed jobs need to be cleared using the following command.
+
+```
+kubectl delete jobs -l openebs.io/cas-type=jiva
+```
 
 <br>
 
