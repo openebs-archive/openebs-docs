@@ -388,7 +388,7 @@ NDM daemonset creates a disk CR for each disk that is discovered on the node wit
 - The disks that match the exclusions in 'vendor-filter'  and 'path-filter'
 - The disks that are already mounted in the node
 
-NDM also creates a new sparse-disk for each node on which it is running. These sparse disks are used in creating the default cStorPool called `cstor-sparse-pool` . 
+NDM also creates a new sparse-disk for each node on which it is running if the corresponding ENV variable is set to true. These sparse disks are used in creating cStorStoragePool called `cstor-sparse-pool` . 
 
 List the disk CRs to verify the CRs are appearing as expected
 
@@ -400,13 +400,14 @@ Following is an example output.
 
 <div class="co">NAME                                      SIZE          STATUS    AGE
 disk-acee6c6a32c780ebfba58db7b62ca3ab     42949672960   Active    1m
-disk-c43b6655194d59f05d970fa255682e2f     42949672960   Active    41s
-disk-f2356613045748aba5c94aa292a2efc9     42949672960   Active    15s
+disk-c43b6655194d59f05d970fa255682e2f     42949672960   Active    1m
+disk-f2356613045748aba5c94aa292a2efc9     42949672960   Active    1m
 </div>
 
 
 
-To know which disk CR belongs to which node, check the node label set on the CR by doing 
+
+To know which disk CR belongs to which node, check the node label set on the CR by doing the following command.
 
 ```
 kubectl describe disk <disk-cr>
@@ -461,20 +462,9 @@ To monitor the OpenEBS volumes and obtain corresponding logs, connect to the fre
 <hr>
 <br>
 
-## Example configuration- Pod resource requets and limits
+## Example configuration- Pod resource requets
 
-All openebs components should have resource requests & limits set against each of its pod containers. This should be added in the openebs operator YAML file before applying it.
-
-### AuxResourceLimits
-
-You can specify the *AuxResourceLimits* which allow you to set limits on side cars.
-
-```
-  - name:  AuxResourceLimits
-        value: |-
-            memory: 0.5Gi
-            cpu: 100m
-```
+All openebs components should have resource requests set against each of its pod containers. This should be added in the openebs operator YAML file before applying it. This setting is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s.
 
 ### AuxResourceRequests
 
@@ -598,7 +588,7 @@ Download the values.yaml from  [here](https://github.com/helm/charts/blob/master
 | `snapshotOperator.controller.imageTag`  | Docker Image Tag for Snapshot Controller     | `0.9.0`                                            |
 | `snapshotOperator.replicas`             | Number of Snapshot Operator Replicas         | `1`                                                |
 | `ndm.image`                             | Docker Image for Node Disk Manager           | `quay.io/openebs/node-disk-manager-amd64`          |
-|                                         | Docker Image Tag for Node Disk Manager       | `v0.3.5`                                           |
+| `ndm.imageTag`                          | Docker Image Tag for Node Disk Manager       | `v0.3.5`                                           |
 | `ndm.sparse.path`                       | Directory where Sparse files are created     | `/var/openebs/sparse`                              |
 | `ndm.sparse.size`                       | Size of the sparse file in bytes             | `10737418240`                                      |
 | `ndm.sparse.count`                      | Number of sparse files to be created         | `1`                                                |
@@ -617,6 +607,7 @@ Download the values.yaml from  [here](https://github.com/helm/charts/blob/master
 | `cstor.volumeMgmt.imageTag`             | Docker Image Tag for cStor Volume Management | `0.9.0`                                            |
 | `policies.monitoring.image`             | Docker Image for Prometheus Exporter         | `quay.io/openebs/m-exporter`                       |
 | `policies.monitoring.imageTag`          | Docker Image Tag for Prometheus Exporter     | `0.9.0`                                            |
+| `analytics.enabled`                     | Enable sending stats to Google Analytics     | `true`                                             |
 | `analytics.pingInterval`                | Duration(hours) between sending ping stat    | `24h`                                              |
 | `HealthCheck.initialDelaySeconds`       | Delay before liveness probe is initiated     | `30`                                               |
 | `HealthCheck.periodSeconds`             | How often to perform the liveness probe      | `60`                                               |
