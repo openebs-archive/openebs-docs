@@ -94,9 +94,9 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 
 
-## Miscellaneous
+## Others
 
-[Nodes in the cluster reboots frequently almost everyday ](#nodes-in-the-cluster-reboots-frequently-almost-everyday)
+[Nodes in the cluster reboots frequently almost everyday](#reboot-cluster-nodes)
 
 <br>
 
@@ -684,11 +684,11 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 <br>
 
 <hr>
-<font size="6" color="orange">Miscellaneous</font>
+<font size="6" color="orange">Others</font>
 
 <br>
 
-[Nodes in the cluster reboots frequently almost everyday ](#nodes-in-the-cluster-reboots-frequently-almost-everyday)
+<h3><a class="anchor" aria-hidden="true" id="reboot-cluster-nodes"></a>Nodes in the cluster reboots frequently almost everyday </h3>
 
 Setup the cluster using RKE in MicroOS using CNI Plugin Cilium. Install OpenEBS, create a PVC and allocate to a fio job/ busybox. Run FIO test on the same. Observed nodes in the cluster getting restarted on a schedule basis.
 
