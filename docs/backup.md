@@ -18,11 +18,15 @@ This document contains quick reference of the installation steps for both OpenEB
 
 
 - Mount propagation feature has to be enabled on Kubernetes, otherwise the data written from the pods
-  will not visible in the restic daemonset pod on the same node
-- Create required storage provider configuration to store the backup data
-- Create required OpenEBS storage pools and  storage classes 
+  will not visible in the restic daemonset pod on the same node.
+  
+- Latest tested Velero version is 0.11.0.
+  
+- Create required storage provider configuration to store the backup data.
 
+- Create required OpenEBS storage pools and  storage classes .
 
+  
 
 ## Install Velero (Formerly known as ARK)
 
@@ -34,7 +38,7 @@ At the end of Velero setup, Restic will be successfully running and ready for ta
 
 ## Steps for backup
 
-If you have configured Velero with restic then `velero backup` command invokes restic internally and  copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or <a href="/docs/next/minio.html" target="_blank">Minio</a>. 
+If you have configured Velero with restic then `velero backup` command invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or <a href="/docs/next/minio.html" target="_blank">Minio</a>. 
 
 If you are using OpenEBS velero-plugin then `velero backup` command invokes velero-plugin internally and takes a snapshot of CStor volume data and send it to remote storage location as mentioned in  *volumesnapshotlocation*.
 
@@ -49,6 +53,8 @@ Verify backup is taken successfully
 ```
 velero backup describe bbb-01
 ```
+
+
 
 ## Steps for restore
 
@@ -71,6 +77,8 @@ velero restore describe <restore-name> --volume-details
 Once the restore is completed to the PVC, attach the PVC to the target application. 
 
 If you are doing restore with Velero-plugin then after restore, you need to update the target ip for CVR.
+
+
 
 ## Scheduling backups
 

@@ -24,9 +24,7 @@ sidebar_label: Configuring StorageClasses
 <br>
 
 <hr>
-<br>
 
-<hr>
 
 ## Creating a new StorageClass
 
