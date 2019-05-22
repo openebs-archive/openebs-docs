@@ -82,15 +82,13 @@ Once the backup is completed you should see the backup marked as `Completed`.
 
 Velero backup can be restored onto a new cluster or to the same cluster. An OpenEBS PVC *with the same name as the original PVC* needs to be created and made available before the restore command is performed. The target cluster OpenEBS EBS PVC can be from a different StorageClass and cStorPool, but only the PVC name has to be same.
 
-If you are doing restore of CStor volume using OpenEBS velero-plugin, then you must need to create the same namespace and StorageClass configuration of the source PVC first in your target cluster.
-
-On the target cluster, restore the application using the below command
+If you are doing restore of cStor volume using OpenEBS velero-plugin, then you must need to create the same namespace and StorageClass configuration of the source PVC first in your target cluster. On the target cluster, restore the application using the below command
 
 ```
 velero restore create <restore-name> --from-backup <backup-name> -restore-volumes=true -l app=<app-label-selector> 
 ```
 
-With above command, plugin will create a CStor volume and the data from backup will be restored on this newly created volume.
+With above command, velero plugin will create a cStor volume and the data from backup will be restored on this newly created volume.
 
 **Note**: You need to mention `--restore-volumes=true` while doing a restore.
 
@@ -102,9 +100,7 @@ velero restore describe <restore-name> --volume-details
 
 Once the restore is completed to the PVC, attach the PVC to the target application. 
 
-If you are doing restore with Velero-plugin then after restore, you need to update the target ip for CVR.
-
-**Note:** After restore is completed, you need to set `targetip` for the volume in pool pod. Steps to update targetip is as follow:
+**Note:** If you are doing restore with Velero-plugin, then you need to set `targetip` for the volume in pool pod. Steps to update targetip is as follow:
 
 ```
 1. kubectl exec -it <POOL_POD> -c cstor-pool -n openebs -- bash
