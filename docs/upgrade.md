@@ -93,7 +93,7 @@ All steps described in this document must be performed on the Kubernetes master 
 
    2. Run `helm ls` to get the OpenEBS release-name. Use the release-name in the next step.
 
-   3. Upgrade using the following command. In the following command,`openebs` is the release name. This name has to be changed as per the release name that is given during the initial deployment.
+   3. Upgrade using the following command. In the following command, provide the release name as per the release name that is given during the initial deployment.
 
       ```
       helm upgrade <release name> stable/openebs
@@ -134,14 +134,20 @@ All steps described in this document must be performed on the Kubernetes master 
 
    1. Go to the particular upgrade script directory.
 
-   2. Run the following command to go inside of `jiva` folder.
+   2. Apply `rbac.yaml` for having permission related reasons. Use the following command to apply the same.
+
+      ```
+      kubectl apply -f rbac.yaml
+      ```
+   
+   3. Run the following command to go inside of `jiva` folder.
 
       ```
       cd jiva
       ```
    
-   3. Apply the `cr.yaml` using the following command. It installs a custom resource definition for UpgradeResult custom resource. This custom resource is used to capture the upgrade related information such as success or failure status.
-
+   4. Apply the `cr.yaml` using the following command. It installs a custom resource definition for UpgradeResult custom resource. This custom resource is used to capture the upgrade related information such as success or failure status.
+   
       ```
       kubectl apply -f cr.yaml
       ```
@@ -231,21 +237,25 @@ All steps described in this document must be performed on the Kubernetes master 
    
    **Prerequisites**
    
-   1. Goto the particular upgrade script directory.
+   1. Goto the particular upgrade script directory(openebs/k8s/upgrades/0.8.2-0.9.0/).
    
-   2. Run the following command to go inside of `cstor` folder.
+   2. Apply `rbac.yaml` for having permission related reasons. Use the following command to apply the same.
+   
+      ```
+      kubectl apply -f rbac.yaml
+      ```
+   
+   3. Run the following command to go inside of `cstor` folder.
    
       ```
       cd cstor
       ```
    
-   3. Apply the `cr.yaml` using the following command. It installs a custom resource definition for UpgradeResult custom resource. This  custom resource is used to capture upgrade related information for success or failure case.
+   4. Apply the `cr.yaml` using the following command. It installs a custom resource definition for UpgradeResult custom resource. This  custom resource is used to capture upgrade related information for success or failure case.
    
       ```
       kubectl apply -f cr.yaml
       ```
-   
-   4. Apply `rbac.yaml` for having permission related reasons.
    
    **Upgrade cStor Pools**
    
@@ -449,9 +459,19 @@ Output will be similar to the following.
 
 The image tag of NDM will be 0.3.5 in the above output.
 
-
-
 This will verify all the OpenEBS components are successfully upgraded to the latest image.
+
+
+
+## Post Upgrade 
+
+1. Go to the particular upgrade script directory(openebs/k8s/upgrades/0.8.2-0.9.0/).
+
+2. Delete ServiceAccount, ClusterRole and ClusterRoleBindings that are created for upgrade using the following command.
+
+   ```
+   kubectl delete -f rbac.yaml
+   ```
 
 <br>
 
@@ -466,7 +486,6 @@ This will verify all the OpenEBS components are successfully upgraded to the lat
 <br>
 
 <hr>
-
 <br>
 
 
