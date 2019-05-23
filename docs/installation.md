@@ -472,9 +472,9 @@ This setting is useful in cases where user has to specify minimum requests like 
 
 ```
  - name:  AuxResourceRequests
-        value: |-
-            memory: 0.5Gi
-            cpu: 100m
+   value: |-
+       memory: 0.5Gi
+       cpu: 100m
 ```
 
 <br>
