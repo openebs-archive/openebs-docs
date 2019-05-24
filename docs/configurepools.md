@@ -99,7 +99,7 @@ In the above file, change the parameters as required
 
 - `maxPools`
 
-  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`, then three nodes are randomly chosen by OpenEBS and one cStorPool instance each will be created on them with one disk (if poolType is `striped`) or two disks (if poolType is `mirrored`)
+  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`,  then three nodes are randomly chosen based on the disk name provided in `diskList` by OpenEBS and one cStorPool instance each will be created on them with provided disks. If even number of disks are available per Node and `poolType` as mirroed, then cStorPool instances will be created using mirrored manner. If many disks are added on each of the Node and chosen `poolType` as `striped` , the cStorPool instance will created using the mentioned disks on each Node.
 
   This value should be less than or equal to the total number of Nodes in the cluster.
 
