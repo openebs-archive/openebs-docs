@@ -5,11 +5,11 @@ sidebar_label: Upgrade
 ---
 ------
 
-Latest version of OpenEBS is 0.9.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/0.9.0).  This section describes about the upgrade from OpenEBS 0.8.2 to 0.9.0.
+Latest version of OpenEBS is 0.9.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/0.9).  This section describes about the upgrade from OpenEBS 0.8.2 to 0.9.0.
 
 ## Supported upgrade paths
 
-From 0.8.1 to 0.8.2 - Get the steps from [here](https://v082-docs.openebs.io/docs/next/upgrade.html).
+From 0.8.1 to 0.8.2 - Get the steps from [here](<https://github.com/openebs/openebs/blob/master/k8s/upgrades/0.8.1-0.8.2/README.md>).
 
 From 0.8.0 to 0.8.1 - Get the steps from [here](https://v081-docs.openebs.io/docs/next/upgrade.html).
 
@@ -429,11 +429,16 @@ Output will be similar to the following.
 
       image: quay.io/openebs/cstor-pool:0.9.0
       image: quay.io/openebs/cstor-pool-mgmt:0.9.0
+      image: quay.io/openebs/m-exporter:0.9.0
       image: quay.io/openebs/cstor-pool:0.9.0
       image: quay.io/openebs/cstor-pool-mgmt:0.9.0
+      image: quay.io/openebs/m-exporter:0.9.0
       image: quay.io/openebs/cstor-pool:0.9.0
       image: quay.io/openebs/cstor-pool-mgmt:0.9.0
+      image: quay.io/openebs/m-exporter:0.9.0
+      image: quay.io/openebs/admission-server:0.9.0
       image: quay.io/openebs/m-apiserver:0.9.0
+      image: quay.io/openebs/provisioner-localpv:0.9.0
       image: quay.io/openebs/openebs-k8s-provisioner:0.9.0
       image: quay.io/openebs/snapshot-controller:0.9.0
       image: quay.io/openebs/snapshot-provisioner:0.9.0
