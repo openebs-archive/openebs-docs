@@ -3,7 +3,11 @@ id: overview
 title: Welcome to OpenEBS Documentation
 sidebar_label: Overview
 ---
-------
+---
+
+Documentation for OpenEBS v0.8.2 is no longer actively maintained. The version you are currently viewing is a static snapshot. Click here for the [latest](https://docs.openebs.io) version.
+
+---
 
 ##  <font size="6">Introduction</font>
 
