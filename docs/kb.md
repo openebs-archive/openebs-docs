@@ -10,7 +10,11 @@ sidebar_label: Knowledge Base
 
 [How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC](#resuse-pv-after-recreating-sts)
 
+[How to scale up Jiva replica?](#how-to-scale-up-jiva-replica)
 
+[How to install OpenEBS in OpenShift environment?](#OpenEBS-install-openshift-without-SELinux-disabled)
+
+[How to enable Admission-Controller in OpenShift environment?](#enable-admission-controller-in-openshift)
 
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
@@ -141,7 +145,138 @@ There are some cases where it had to delete the StatefulSet and re-install a new
   kubectl get pods -n <namespace>
   ```
 
-  
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="how-to-scale-up-jiva-replica"></a>How to scale up Jiva replica?</h3>
+
+From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity. For scaling up Jiva replica count, the following steps has to be performed.
+
+1. Get the deployment details of replica of corresponding Jiva volume using the following command. If it is deployed in `openebs` namespace, use corresponding namespace appropriately in the following commands.
+
+   ```
+   kubectl get deploy
+   ```
+
+   Following is an example output.
+
+   ```
+   NAME                                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+   percona                                         1         1         1            1           54s
+   pvc-4cfacfdd-76d7-11e9-9319-42010a800230-ctrl   1         1         1            1           53s
+   pvc-4cfacfdd-76d7-11e9-9319-42010a800230-rep    1         1         1            1           53s
+   ```
+
+2. Edit the corresponding replica deployment of the Jiva volume using the following command.
+
+   ```
+   kubectl edit deploy <replica_deployment_of_corresponding_volume>
+   ```
+
+   **Example:**
+
+   ```
+   kubectl edit deploy pvc-4cfacfdd-76d7-11e9-9319-42010a800230-rep
+   ```
+
+   Perform Step 3 and 4 and then save the changes. It is required to modify the fields of replica count and hostname details where the replica pods has to be scheduled.
+
+3. Edit `replicas` value under `spec` with the required number. In this example, it was `replicas: 1` during the initial deployment. With following change, replicas count will change to 2. 
+
+   **Example:**
+
+   ```
+   replicas: 2
+   ```
+
+4. Add corresponding hostnames under value in   `spec.template.spec.affinity.nodeAffinity.nodeSelectorTerms.key.values`. The following is the sample snippet for adding the required hostnames. In the following snippet, it is added the hostname of second node in the mentioned path.
+
+   ```
+       spec:
+         affinity:
+           nodeAffinity:
+             requiredDuringSchedulingIgnoredDuringExecution:
+               nodeSelectorTerms:
+               - matchExpressions:
+                 - key: kubernetes.io/hostname
+                   operator: In
+                   values:
+                   - gke-md-jiva-default-pool-15a2475b-bxr5
+                   - gke-md-jiva-default-pool-15a2475b-gzx3
+   ```
+
+5. After modifying the above changes, save the configuration.  With this change , new replica pods will be running and following command will get the details of replica pods.
+
+   ```
+   kubectl get pod -o wide
+   ```
+
+   The following is an example output.
+
+   ```
+   NAME                                                             READY     STATUS    RESTARTS   AGE    IP           NODE                                   NOMINATED NODE  
+   percona-66b4fd4ddf-xvswn                                         1/1       Running   0          32m      
+   pvc-4cfacfdd-76d7-11e9-9319-42010a800230-ctrl-68d94478df-drj6r   2/2       Running   0          32m
+   pvc-4cfacfdd-76d7-11e9-9319-42010a800230-rep-f9ff69c6-6lcfz      1/1       Running   0          25s
+   pvc-4cfacfdd-76d7-11e9-9319-42010a800230-rep-f9ff69c6-9jbfm      1/1       Running   0          25s
+   ```
+
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-without-SELinux-disabled"></a>How to install OpenEBS in OpenShift environment?</h3>
+
+In earlier documentation, it was referred to install OpenEBS by disabling SELinux. But, you can install OpenEBS in OpenShift environment without disabling SELinux using the following steps.
+
+1. Add OpenEBS Service account to the privileged scc of OpenShift.
+
+   ```
+   oc adm policy add-scc-to-user privileged system:serviceaccount:openebs:openebs-maya-operator
+   ```
+
+2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
+
+   ```
+   wget https://openebs.github.io/charts/openebs-operator-0.9.0.yaml
+   ```
+
+3. Apply the modified the YAML using the following command. The OpenEBS operator YAML file name has to be changed based on the latest version.
+
+   ```
+   oc apply -f openebs-operator-0.9.0.yaml
+   ```
+
+4. Verify OpenEBS pods status by using `oc get pods -n openebs`
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="enable-admission-controller-in-openshift"></a>How to enable Admission-Controller in OpenShift 3.10 and above</h3>
+
+The following proceedure will help to enable admission-controller in OpenShift 3.10 and above.
+
+1. Update the `/etc/origin/master/master-config.yaml`  file with below configuration.
+
+   ```
+   admissionConfig:
+     pluginConfig:
+       ValidatingAdmissionWebhook: 
+         configuration:
+           kind: DefaultAdmissionConfig
+           apiVersion: v1
+           disable: false 
+       MutatingAdmissionWebhook: 
+         configuration:
+           kind: DefaultAdmissionConfig
+           apiVersion: v1
+           disable: false 
+   ```
+
+2. Restart the API and controller services using the following commands.
+
+   ```
+   # master-restart api
+   # master-restart controllers
+   ```
 
 <br>
 

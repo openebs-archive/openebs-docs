@@ -36,7 +36,7 @@ cluster-admin, start the default installation using either
   <font size="4">(or)</font>
 
   ```
-  kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.8.2.yaml
+  kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.9.0.yaml
   ```
 
   For advanced installation steps, see

@@ -45,7 +45,7 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl get sc
   ```
 
-- Delete the OpenEBS namespace either via helm purge or `kubectl delete ns openebs` or you can delete the corresponding `openebs-operator` YAML using `kubectl delete -f <openebs-operator.yaml>`. You can check the status of OpenEBS namespace using the following command.
+- Delete the OpenEBS namespace either via `helm delete <chart name> --purge` or `kubectl delete ns openebs` or you can delete the corresponding `openebs-operator` YAML using `kubectl delete -f <openebs-operator.yaml>`. You can check the status of OpenEBS namespace using the following command.
 
   ```
   kubectl get ns
@@ -63,9 +63,20 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl delete crd storagepools.openebs.io
   kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
   kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
+  kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
+  kubectl delete crd disks.openebs.io
+  kubectl delete crd cstorbackups.openebs.io
+  kubectl delete crd cstorrestores.openebs.io
+  kubectl delete crd cstorcompletedbackups.openebs.io
   ```
 
 
+
+**Note**: As part of deleting the Jiva Volumes - OpenEBS launches scrub jobs for clearing the data from the nodes. The completed jobs need to be cleared using the following command.
+
+```
+kubectl delete jobs -l openebs.io/cas-type=jiva
+```
 
 <br>
 

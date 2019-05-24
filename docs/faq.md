@@ -26,8 +26,6 @@ sidebar_label: FAQs
 
 [Why NDM daemon set required privileged mode?](#why-ndm-priviledged)
 
-[How to install OpenEBS in OpenShift environment?](#OpenEBS-install-openshift-without-SELinux-disabled)
-
 [What are the prerequisites other than general prerequisites for installing OpenEBS in Centos and OpenShift?](#OpenEBS-install-prerequisites-openshift-centos)
 
 
@@ -171,7 +169,11 @@ Register at <a href="https://mayaonline.io/" target="_blank">MayaOnline</a> to r
 
 <h3><a class="anchor" aria-hidden="true" id="default-reclaim-policy"></a>What is the default OpenEBS Reclaim policy?</h3>
 
-The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim. In case of cStor volumes, data was being deleted as well. For jiva, from 0.8.0 version, the data is deleted via scrub jobs.
+The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim. 
+
+In case of cStor volumes, data was being deleted as well. 
+
+For jiva, from 0.8.0 version, the data is deleted via scrub jobs. The completed job can be deleted using `kubectl delete job <job_name> -n <namespace>`
 
 <a href="#top">Go to top</a>
 
@@ -185,46 +187,11 @@ Currently, NDM Daemon set runs in the privileged mode. NDM requires privileged m
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-without-SELinux-disabled"></a>How to install OpenEBS in OpenShift environment?</h3>
-
-In earlier documentation, it was referred to install OpenEBS by disabling SELinux. But, you can install OpenEBS in OpenShift environment without disabling SELinux using the following steps.
-
-1. Add OpenEBS Service account to the privileged scc of OpenShift.
-
-   ```
-   oc adm policy add-scc-to-user privileged system:serviceaccount:openebs:openebs-maya-operator
-   ```
-
-2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
-
-   ```
-   wget https://openebs.github.io/charts/openebs-operator-0.8.2.yaml
-   ```
-
-3. Edit the downloaded openebs-operator YAML file by changing the hostPath from "/proc/1/mounts" to
-   "/etc/mtab" under openebs-ndm DaemonSet spec.
-
-   **Example snippet:**
-
-   ```
-   - name: procmount
-     hostPath:
-         path: /etc/mtab
-   ```
-
-4. Apply the modified the YAML using the following command. The OpenEBS operator YAML file name has to be changed based on the latest version.
-
-   ```
-   oc apply -f openebs-operator-0.8.2.yaml
-   ```
-
-5. Verify OpenEBS pods status by using `oc get pods -n openebs`
-
-<br>
-
 <h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-prerequisites-openshift-centos"></a>What are the prerequisites other than general prerequisites for installing OpenEBS in Centos and OpenShift?</h3>
 
-If you are installing OpenEBS in CentOS or OpenShift,you must need to grant privileges to ndm pods. For installing OpenEBS in OpenShift environment,more details can be read [here](#OpenEBS-install-openshift-without-SELinux-disabled).
+If you are installing OpenEBS in CentOS or OpenShift,you must need to grant privileges to ndm pods. For installing OpenEBS in OpenShift environment,more details can be read [here](/docs/next/kb.html#OpenEBS-install-openshift-without-SELinux-disabled).
+
+<a href="#top">Go to top</a>
 
 <br>
 

@@ -396,7 +396,7 @@ Systems. Tested OpenShift versions are 3.9 and 3.10.
 
 Latest tested RHEL versions are 7.5, 7.6.
 
-For setting up iSCSI clients on RHEL nodes, see the [instructions above][#rhel].
+For setting up iSCSI clients on RHEL nodes, see the [instructions above](#rhel).
 
 
 
@@ -404,7 +404,7 @@ For setting up iSCSI clients on RHEL nodes, see the [instructions above][#rhel].
 
 Latest tested CentOS version is CentOS 7.
 
-For setting up iSCSI clients on CentOS nodes, see the [instructions above][#centOS].
+For setting up iSCSI clients on CentOS nodes, see the  [instructions above](#centos).
 
 <br>
 

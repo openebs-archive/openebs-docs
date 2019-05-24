@@ -15,8 +15,6 @@ sidebar_label:Configure StoragePools
 
 <font size="6">Summary:</font>
 
-[Using default pool](#using-default-cstor-pool)
-
 [Creating a new pool](#creating-a-new-pool)
 
 [Pool policies](#pool-policies)
@@ -33,36 +31,14 @@ sidebar_label:Configure StoragePools
 
 <hr>
 
-<br>
-
-## Using default cStor pool
-
-<br>
-
-`openebs-cstor-sparse` storageClass and `cstor-sparse-pool` are created for convenience and ease of use. The data stored to this pool is stored on the sparse disks created during installation. This storageClass can be used in test setups and learning OpenEBS but not for production. For production use, create cStorPools on read disks.
-
-If you want to know more details about sparse pools and disks, see [sparse pool deep dive](#sparse-pool-deepdive)
-
-<br>
-
-<hr>
-
-<br>
-
-
-
 ## Creating a new pool
-
-<br>
 
 Process of creating a new cStor storage pool
 
 - Create a YAML spec `cstor-pool-config.yaml`. You can create a cStorPool in two ways.
   - [By specifying disks list](#manual-mode) (or)
   - [Without specifying disks list](#auto-mode) method
-- Create pool config through `kubectl apply` 
-
-
+- Apply `cstor-pool-config.yaml` through `kubectl apply`  approach.
 
 <br>
 
@@ -70,7 +46,7 @@ Process of creating a new cStor storage pool
 
 **Step1:**
 
-Create a YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is limted to `2Gi` and `PoolResourceLimits` value is set to `2Gi`. This will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration. 
+Create a YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is set to `2Gi` and `PoolResourceLimits` value is set to `4Gi`. This will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration. 
 
 ```
 #Use the following YAMLs to create a cStor Storage Pool.
@@ -86,7 +62,7 @@ metadata:
             memory: 2Gi
       - name: PoolResourceLimits
         value: |-
-            memory: 2Gi
+            memory: 4Gi
 spec:
   name: cstor-pool1
   type: disk
@@ -117,13 +93,13 @@ In the above file, change the parameters as required
 
 - `poolType`
 
-  This filed is not named very aptly. This field may be changed to `diskAggType` in future. This filed  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`
+  This filed is not named very aptly. This field may be changed to `diskAggType` in future. This filed  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`.
 
   Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
 - `maxPools`
 
-  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`, then three nodes are randomly chosen by OpenEBS and one cStorPool instance each will be created on them with one disk (if poolType is `striped`) or two disks (if poolType is `mirrored`)
+  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`,  then three nodes are randomly chosen based on the disk name provided in `diskList` by OpenEBS and one cStorPool instance each will be created on them with provided disks. If even number of disks are available per Node and `poolType` as mirroed, then cStorPool instances will be created using mirrored manner. If many disks are added on each of the Node and chosen `poolType` as `striped` , the cStorPool instance will created using the mentioned disks on each Node.
 
   This value should be less than or equal to the total number of Nodes in the cluster.
 
@@ -133,17 +109,17 @@ In the above file, change the parameters as required
 
   You must enter all the disk CRs manually together from the selected nodes. 
 
-  When the `poolType` = `mirrored` make sure the disk CRs selected from from each node are in even number.  The data is striped across mirrors. For example, if 4x1TB disks are selected on `node1`, the raw capacity of the pool instance of `cstor-pool1` on `node1` is 2TB. 
+  When the `poolType` = `mirrored` make sure the disk CRs selected from each node are in even number.  The data is striped across mirrors. For example, if 4x1TB disks are selected on `node1`, the raw capacity of the pool instance of `cstor-pool1` on `node1` is 2TB. 
 
   When the `pooltype` = `striped` the number of disk CRs from each node can be in any number, the data is striped across each disk. For example, if 4x1TB disks are selected on `node1`, the raw capacity of the pool instance of `cstor-pool1` on that `node1` is 4TB. 
 
   The number of selected disk CRs across nodes need not be same. The disk CRs can be added to the pool spec dynamically as the used capacity gets filled up. 
 
-  Note: Some of the pool expansion features of the cStorpools are under development. See [pool day2 operations](#day2-operations-on-cstorpools)
+  Note: Some of the pool expansion features of the cStorpools are under development. See [pool day2 operations](#day-2-operations-on-cstorpools)
 
 - `type`
 
-  This value can be either `sparse` or `disk`. 
+  This value can be either `sparse` or `disk`.  If you are creating a sparse pool using the sparse disks created as part of applying openebs operator YAML, then while configuring the `StoragePoolClaim`, choose type as `sparse`. For other disks, choose type as `disk`.
 
 **Step2:**
 
@@ -162,10 +138,7 @@ If the pool creation is successful, you will see the example result as shown bel
 <br>
 
 <hr>
-
 <br>
-
-
 
 <h3><a class="anchor" aria-hidden="true" id="auto-mode"></a>Create a cStorPool WITHOUT specifying diskList </h3>
 
@@ -177,7 +150,7 @@ Follow the below steps to create a quick cStorPool in this method.
 
 **Step1:**
 
-Create a YAML file called `cstor-pool-config2.yaml` with the following content.  In the following YAML, `PoolResourceRequests` value is limted to `2Gi` and `PoolResourceLimits` value is set to `2Gi`. This will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration.
+Create a YAML file called `cstor-pool-config2.yaml` with the following content.  In the following YAML, `PoolResourceRequests` value is set to `2Gi` and `PoolResourceLimits` value is set to `4Gi`. This will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration.
 
 ```
 ---
@@ -192,7 +165,7 @@ metadata:
             memory: 2Gi
       - name: PoolResourceLimits
         value: |-
-            memory: 2Gi
+            memory: 4Gi
 spec:
   name: cstor-pool2
   type: disk
@@ -206,7 +179,7 @@ spec:
 
 - `type`
 
-  This value can be either `sparse` or `disk`.
+  This value can be either `sparse` or `disk`.  If you are creating a sparse pool using the sparse disks created as part of applying openebs operator YAML, then while configuring the `StoragePoolClaim`, choose type as `sparse`. For other disks, choose type as `disk`
 
 - `maxPools`
 
@@ -216,7 +189,7 @@ spec:
 
 - `poolType`
 
-  This filed is not named very aptly. This field may be changed to `diskAggType` in future. This filed  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`
+  This filed is not named very aptly. This field may be changed to `diskAggType` in future. This field  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`.
 
   
 
@@ -225,8 +198,6 @@ spec:
 **Step2:**
 
 After the pool YAML spec is created, run the following command to create the pool instances on nodes.
-
-
 
 ```
 kubectl apply -f cstor-pool2-config.yaml
@@ -262,7 +233,7 @@ metadata:
     cas.openebs.io/config: |
       - name: PoolResourceLimits
         value: |-
-            memory: 2Gi
+            memory: 4Gi
 spec:
   name: cstor-disk
   type: disk
@@ -343,7 +314,7 @@ metadata:
       - name:  AuxResourceLimits
         value: |-
             memory: 0.5Gi
-            cpu: 50m
+            cpu: 100m
     openebs.io/cas-type: cstor
 ```
 
@@ -363,7 +334,9 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: AuxResourceRequests
-        value: "none"
+        value: |-
+            memory: 0.5Gi
+            cpu: 100m
     openebs.io/cas-type: cstor
 ```
 
@@ -377,7 +350,7 @@ metadata:
 
 ## Day 2 operations on cStorPools
 
-With latest release,only some day2 operations are supported. Many of day2 operations are under active development. See [cStor roadmap](docs/next/cstor.html#cstor-roadmap) for more details. 
+With latest release,only some day2 operations are supported. Many of day2 operations are under active development. See [cStor roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. 
 
 **Note:** *All pools created using 0.8.1 will receive the pool expansion capabilities when those features are available in future releases.* 
 
@@ -403,13 +376,9 @@ At the moment, status of cStor pools is obtained via the standard `kubectl get` 
 
 Following is an example output. 
 
-<div class="co">NAME                AGE
-cstor-disk          1m
-cstor-sparse-pool   22m
+<div class="co">NAME          AGE
+cstor-pool2   1m
 </div>
-
-
-
 
 
 **cStorStoragePool status**
@@ -422,14 +391,10 @@ kubectl get csp
 
 Following is an example output.
 
-<div class="co">NAME                     AGE
-cstor-disk-8qvy          5s
-cstor-disk-k6si          6s
-cstor-disk-tns6          6s
-cstor-sparse-pool-a8qk   21m
-cstor-sparse-pool-d1zm   21m
-cstor-sparse-pool-sbv5   21m
+<div class="co">NAME               ALLOCATED   FREE      CAPACITY   STATUS    TYPE      AGE
+cstor-pool2-ww4f   77K         39.7G     39.8G      Healthy   striped   53s
 </div>
+
 
 **cStorStoragePool pods status**
 
@@ -441,23 +406,24 @@ kubectl get pods -n openebs
 
 Following is an example output. 
 
-<div class="co">cstor-disk-2xtj-6748d7f57d-tbqrp           2/2       Running   0          38s
-cstor-disk-m7xa-6f7bd8447c-nr5z4           2/2       Running   0          38s
-cstor-disk-sn5y-5688f94888-hmgkf           2/2       Running   0          38s
-cstor-sparse-pool-io1y-88cbf9bc-c6g29      2/2       Running   0          21m
-cstor-sparse-pool-lsm9-766567747b-rfplx    2/2       Running   0          21m
-cstor-sparse-pool-y8pf-598d794ff4-jn8gg    2/2       Running   0          21m
-maya-apiserver-5f8899f44f-hbnj2            1/1       Running   0          22m
-openebs-ndm-6w68f                          1/1       Running   0          22m
-openebs-ndm-9ktvv                          1/1       Running   0          22m
-openebs-ndm-g4d6l                          1/1       Running   0          22m
-openebs-provisioner-69956599d5-jlnb4       1/1       Running   0          22m
-openebs-snapshot-operator-c88544f5-76px8   2/2       Running   0          22m
-</div>
+<div class="co">NAME                                          READY     STATUS    RESTARTS   AGE
+cstor-pool2-ww4f-74bc496f67-82m6z             3/3       Running   0          1m
+maya-apiserver-6d9858ffc9-x6rlp               1/1       Running   0          4h
+openebs-admission-server-56665784df-xwt8h     1/1       Running   0          4h
+openebs-localpv-provisioner-94f6477bb-fwmnm   1/1       Running   0          4h
+openebs-ndm-crz9z                             1/1       Running   0          4h
+openebs-ndm-l7mbd                             1/1       Running   1          4h
+openebs-ndm-nvlrg                             1/1       Running   0          4h
+openebs-provisioner-5dbd679f8c-pqphv          1/1       Running   0          4h
+openebs-snapshot-operator-66d89b9bcf-6dkj7    2/2       Running   0          4h
 
-In the above example output, name starts with `cstor-disk-\*` are the cStorStoragePool pods. It must be in running state to provision cStor Volumes.
+In the above example output, name starts with `cstor-pool2-\*` are the cStorStoragePool pods. It must be in running state to provision cStor Volumes.
 
 **Note:** By default, OpenEBS cStorStoragePool pods will be running in `openebs` namespace.
+
+
+
+cStor provides storage scalability along with ease of deployment and usage. cStor can handle multiple disks with different size per Node and create different storage pools. You can use these storage pools to create cStor volumes which you can utilize to run your stateful applications.
 
 <br>
 
@@ -465,22 +431,19 @@ In the above example output, name starts with `cstor-disk-\*` are the cStorStora
 
 <br>
 
-
-
 <h2><a class="anchor" aria-hidden="true" id="sparse-pool-deepdive"></a>Sparse Pool deep dive </h2>
 
 OpenEBS installation process creates the following defaults : 
 
-- One sparse disk is created on each node in the cluster  
-- A ready to use cStorPool config called `cstor-sparse-pool` .  This `cstor-sparse-pool` config has a `cStor Pool` instance on every node of the cluster. 
-- One StorageClass called `openebs-cstor-sparse` that points to `cstor-sparse-pool` 
+- One sparse disk is created on each node in the cluster  once you enable the  `OPENEBS_IO_INSTALL_DEFAULT_CSTOR_SPARSE_POOL` ENV in the openebs operator YAML file before it is getting applied.
+- After the previous step, a ready to use cStorPool config called `cstor-sparse-pool` .  This `cstor-sparse-pool` config has a `cStorStoragePool` instance on every node of the cluster. 
+- One StorageClass called `openebs-cstor-sparse` that points to `cstor-sparse-pool` will be created.
 
 <img src="/docs/assets/svg/sparsepool.svg" alt="OpenEBS configuration flow" style="width:100%">
 
 `kubectl describe StorageClass openebs-cstor-sparse` provides the relationship  details
 
 <div class="co">
-
 Name:            openebs-cstor-sparse
 IsDefaultClass:  No
 Annotations:     cas.openebs.io/config=- name: StoragePoolClaim
@@ -495,12 +458,7 @@ MountOptions:          <none>
 ReclaimPolicy:         Delete
 VolumeBindingMode:     Immediate
 Events:                <none>
-
 </div>
-
-
-
-cStor provides storage scalability along with ease of deployment and usage. cStor can handle multiple disks with different size per Node and create different storage pools. You can use these storage pools to create cStor volumes which you can utilize to run your stateful applications.
 
 <br>
 
