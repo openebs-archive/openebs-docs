@@ -109,7 +109,7 @@ In the above file, change the parameters as required
 
   You must enter all the disk CRs manually together from the selected nodes. 
 
-  When the `poolType` = `mirrored` make sure the disk CRs selected from from each node are in even number.  The data is striped across mirrors. For example, if 4x1TB disks are selected on `node1`, the raw capacity of the pool instance of `cstor-pool1` on `node1` is 2TB. 
+  When the `poolType` = `mirrored` make sure the disk CRs selected from each node are in even number.  The data is striped across mirrors. For example, if 4x1TB disks are selected on `node1`, the raw capacity of the pool instance of `cstor-pool1` on `node1` is 2TB. 
 
   When the `pooltype` = `striped` the number of disk CRs from each node can be in any number, the data is striped across each disk. For example, if 4x1TB disks are selected on `node1`, the raw capacity of the pool instance of `cstor-pool1` on that `node1` is 4TB. 
 
@@ -119,7 +119,7 @@ In the above file, change the parameters as required
 
 - `type`
 
-  This value can be either `sparse` or `disk`. 
+  This value can be either `sparse` or `disk`.  If you are creating a sparse pool using the sparse disks created as part of applying openebs operator YAML, then while configuring the `StoragePoolClaim`, choose type as `sparse`. For other disks, choose type as `disk`.
 
 **Step2:**
 
@@ -179,7 +179,7 @@ spec:
 
 - `type`
 
-  This value can be either `sparse` or `disk`.
+  This value can be either `sparse` or `disk`.  If you are creating a sparse pool using the sparse disks created as part of applying openebs operator YAML, then while configuring the `StoragePoolClaim`, choose type as `sparse`. For other disks, choose type as `disk`
 
 - `maxPools`
 
@@ -189,7 +189,7 @@ spec:
 
 - `poolType`
 
-  This filed is not named very aptly. This field may be changed to `diskAggType` in future. This filed  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`
+  This filed is not named very aptly. This field may be changed to `diskAggType` in future. This field  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`.
 
   
 
