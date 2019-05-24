@@ -32,16 +32,16 @@ Currently, upgrade to latest OpenEBS 0.9.0 version is supported only from 0.8.2.
 
 The upgrade of OpenEBS is a three step process:
 
-1. Download upgrade scripts
-2. Upgrade the OpenEBS Operator
-3. Upgrade OpenEBS Volumes that were created with older OpenEBS Operator (0.8.2), one at a time.
+1. Download the upgrade YAMLS.
+2. Upgrade the OpenEBS Operator.
+3. Upgrade OpenEBS Volumes that were created from previous OpenEBS version (0.8.2).
 
 
 ## Upgrade steps 
 
 All steps described in this document must be performed on the Kubernetes master or from a machine that has access to Kubernetes master.
 
-1. <h3><a class="anchor" aria-hidden="true" id="Download-scripts"></a>Download upgrade scripts</h3>
+1. <h3><a class="anchor" aria-hidden="true" id="Download-yamls"></a>Download upgrade YAMLs</h3>
 
    You can do git clone of the upgrade scripts.
 
@@ -105,7 +105,7 @@ All steps described in this document must be performed on the Kubernetes master 
    After updating the YAML or helm chart or helm chart values, you can use the following command to upgrade the OpenEBS Operator. In the following example, use the exact release name which you have used during the initial OpenEBS installation. 
 
    ```
-   helm upgrade openebs -f values.yml stable/openebs
+   helm upgrade <release name> -f values.yml stable/openebs
    ```
 
 3. <h3><a class="anchor" aria-hidden="true" id="upgrade-volume"></a>Upgrade volumes one by one</h3>
