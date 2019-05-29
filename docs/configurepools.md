@@ -15,13 +15,17 @@ sidebar_label:Configure StoragePools
 
 <font size="6">Summary:</font>
 
-[Creating a new pool](#creating-a-new-pool)
+[Creating a New Pool](#creating-a-new-pool)
 
-[Pool policies](#pool-policies)
+[Pool Policies](#pool-policies)
 
-[Day 2 operations on cStorPools](#day-2-operations-on-cstorpools)
+[Day 2 Operations on cStorPools](#day-2-operations-on-cstorpools)
 
-[Verifying pool status](#verifying-pool-status)
+[Verifying Pool Status](#verifying-pool-status)
+
+[Monitoring Pool](#monitoring-pool)
+
+[Sparse Pool Deep Drive](#sparse-pool-deepdive)
 
 
 
@@ -416,6 +420,7 @@ openebs-ndm-l7mbd                             1/1       Running   1          4h
 openebs-ndm-nvlrg                             1/1       Running   0          4h
 openebs-provisioner-5dbd679f8c-pqphv          1/1       Running   0          4h
 openebs-snapshot-operator-66d89b9bcf-6dkj7    2/2       Running   0          4h
+</div>
 
 In the above example output, name starts with `cstor-pool2-\*` are the cStorStoragePool pods. It must be in running state to provision cStor Volumes.
 
@@ -428,16 +433,54 @@ cStor provides storage scalability along with ease of deployment and usage. cSto
 <br>
 
 <hr>
-
 <br>
 
-<h2><a class="anchor" aria-hidden="true" id="sparse-pool-deepdive"></a>Sparse Pool deep dive </h2>
+<h2><a class="anchor" aria-hidden="true" id="monitoring-pool"></a>Monitor Pools</h2>
+
+A new sidecar will run once a cStor pool pod is created.This sidecar will collect the metrics of the corresponding cStorStoragePool. Following metrics are supported by cStor to export the cStorStoragePool usage statistics as Prometheus metrics.
+
+```
+openebs_dispatched_io_count # Dispatched IO's count
+openebs_free_pool_capacity # Free capacity in pool
+openebs_inflight_io_count # Inflight IO's count
+openebs_maya_exporter_version # A metric with a constant '1' value labeled by commit and version from which maya-exporter was built.
+openebs_pool_size # Size of pool
+openebs_pool_status # Status of pool (0, 1, 2, 3, 4, 5, 6)= {"Offline", "Online", "Degraded", "Faulted", "Removed", "Unavail", "NoPoolsAvailable"}
+openebs_read_latency # Read latency on replica
+openebs_rebuild_bytes # Rebuild bytes
+openebs_rebuild_count # Rebuild count
+openebs_rebuild_status # Status of rebuild on replica (0, 1, 2, 3, 4, 5, 6)= {"INIT", "DONE", "SNAP REBUILD INPROGRESS", "ACTIVE DATASET REBUILD INPROGRESS", "ERRORED", "FAILED", "UNKNOWN"}
+openebs_sync_count # Total no of sync on replica
+openebs_sync_latency # Sync latency on replica
+openebs_total_failed_rebuild # Total no of failed rebuilds on replica
+openebs_total_read_bytes # Total read in bytes
+openebs_total_read_count # Total read io count
+openebs_total_rebuild_done # Total no of rebuild done on replica
+openebs_total_write_bytes # Total write in bytes
+openebs_total_write_count # Total write io count
+openebs_used_pool_capacity # Capacity used by pool
+openebs_used_pool_capacity_percent # Capacity used by pool in percent
+openebs_used_size Used # size of pool and volume
+openebs_volume_status # Status of volume (0, 1, 2, 3) = {"Offline", "Healthy", "Degraded", "Rebuilding"}
+openebs_write_latency # Write latency on replica
+openebs_zfs_command_error # zfs command error counter
+openebs_zfs_list_command_error # zfs list command error counter
+openebs_zfs_parse_error # zfs parse error counter
+openebs_zpool_command_error # zpool command error counter
+```
+
+</br>
+
+<hr>
+
+<h2><a class="anchor" aria-hidden="true" id="sparse-pool-deepdive"></a>Sparse Pool Deep Dive</h2>
 
 OpenEBS installation process creates the following defaults : 
 
 - One sparse disk is created on each node in the cluster  once you enable the  `OPENEBS_IO_INSTALL_DEFAULT_CSTOR_SPARSE_POOL` ENV in the openebs operator YAML file before it is getting applied.
-- After the previous step, a ready to use cStorPool config called `cstor-sparse-pool` .  This `cstor-sparse-pool` config has a `cStorStoragePool` instance on every node of the cluster. 
+- After the previous step, a ready to use cStorPool config called `cstor-sparse-pool` will be created .  This `cstor-sparse-pool` config has a `cStorStoragePool` instance on every node of the cluster. 
 - One StorageClass called `openebs-cstor-sparse` that points to `cstor-sparse-pool` will be created.
+- This default StorageClass can be used for running application on cStorSparsePool.
 
 <img src="/docs/assets/svg/sparsepool.svg" alt="OpenEBS configuration flow" style="width:100%">
 
