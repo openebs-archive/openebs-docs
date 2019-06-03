@@ -40,8 +40,7 @@ sidebar_label:Configure StoragePools
 Process of creating a new cStor storage pool
 
 - Create a YAML spec `cstor-pool-config.yaml`. You can create a cStorPool in two ways.
-  - [By specifying disks list](#manual-mode) (or)
-  - [Without specifying disks list](#auto-mode) method
+  - [By specifying disks list](#manual-mode) 
 - Apply `cstor-pool-config.yaml` through `kubectl apply`  approach.
 
 <br>
@@ -138,80 +137,6 @@ If the pool creation is successful, you will see the example result as shown bel
 <div class="co">storagepoolclaim.openebs.io "cstor-pool1" created</div>
 
 **Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `diskList` and update the `maxPools` count accordingly. More details can be found [here](/docs/next/operations.html#with-disklist).
-
-<br>
-
-<hr>
-<br>
-
-<h3><a class="anchor" aria-hidden="true" id="auto-mode"></a>Create a cStorPool WITHOUT specifying diskList </h3>
-
-Sometimes for new users, identifying the correct disks CRs and node-citizenship could be time consuming.  To make the process of cStorPool creation simple for users to quickly test cStor with real disks, OpenEBS supports creation of a cStorPool even when `diskList` is not specified in the YAML specification.  In this case, one pool instance on each node is created  with just one striped disk or one mirrored group of disks. 
-
-Follow the below steps to create a quick cStorPool in this method.
-
-
-
-**Step1:**
-
-Create a YAML file called `cstor-pool-config2.yaml` with the following content.  In the following YAML, `PoolResourceRequests` value is set to `2Gi` and `PoolResourceLimits` value is set to `4Gi`. This will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration.
-
-```
----
-apiVersion: openebs.io/v1alpha1
-kind: StoragePoolClaim
-metadata:
-  name: cstor-pool2
-  annotations:
-    cas.openebs.io/config: |
-      - name: PoolResourceRequests
-        value: |-
-            memory: 2Gi
-      - name: PoolResourceLimits
-        value: |-
-            memory: 4Gi
-spec:
-  name: cstor-pool2
-  type: disk
-  maxPools: 3
-  poolSpec:
-    poolType: striped
----
-```
-
-
-
-- `type`
-
-  This value can be either `sparse` or `disk`.  If you are creating a sparse pool using the sparse disks created as part of applying openebs operator YAML, then while configuring the `StoragePoolClaim`, choose type as `sparse`. For other disks, choose type as `disk`
-
-- `maxPools`
-
-  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`, then three nodes are randomly chosen by OpenEBS and one cStorPool instance each is created on them  with one disk (`striped`) or two disks (`mirrored`)
-
-  This value should be less than or equal to the total number of Nodes in the cluster.
-
-- `poolType`
-
-  This filed is not named very aptly. This field may be changed to `diskAggType` in future. This field  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`.
-
-  
-
-  Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volmes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
-
-**Step2:**
-
-After the pool YAML spec is created, run the following command to create the pool instances on nodes.
-
-```
-kubectl apply -f cstor-pool2-config.yaml
-```
-
-If the pool creation is successful, you will see the example result as shown below.
-
-<div class="co">storagepoolclaim.openebs.io "cstor-pool2" created</div>
-
-**Note:** You can horizontally scale up the cStor pool on new OpenEBS Node by editing the corresponding pool configuration YAML with updating the `maxPools` count. More details can be see [here](/docs/next/operations.html#without-disklist).
 
 <br>
 
