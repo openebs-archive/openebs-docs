@@ -16,6 +16,12 @@ sidebar_label: Knowledge Base
 
 [How to enable Admission-Controller in OpenShift environment?](#enable-admission-controller-in-openshift)
 
+[How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?](#how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions)
+
+[How Can I create cStor Pools using partitioned disks?](#create-cstor-pool-partioned-disks)
+
+</br>
+
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
 
@@ -145,7 +151,9 @@ There are some cases where it had to delete the StatefulSet and re-install a new
   kubectl get pods -n <namespace>
   ```
 
+<a href="#top">Go to top</a>
 
+</br>
 
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-scale-up-jiva-replica"></a>How to scale up Jiva replica?</h3>
@@ -221,7 +229,9 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
    pvc-4cfacfdd-76d7-11e9-9319-42010a800230-rep-f9ff69c6-9jbfm      1/1       Running   0          25s
    ```
 
+<a href="#top">Go to top</a>
 
+</br>
 
 
 <h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-without-SELinux-disabled"></a>How to install OpenEBS in OpenShift environment?</h3>
@@ -248,7 +258,9 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
 
 4. Verify OpenEBS pods status by using `oc get pods -n openebs`
 
+<a href="#top">Go to top</a>
 
+</br>
 
 <h3><a class="anchor" aria-hidden="true" id="enable-admission-controller-in-openshift"></a>How to enable Admission-Controller in OpenShift 3.10 and above</h3>
 
@@ -278,7 +290,139 @@ The following proceedure will help to enable admission-controller in OpenShift 3
    # master-restart controllers
    ```
 
+<a href="#top">Go to top</a>
+
 <br>
+
+<h3><a class="anchor" aria-hidden="true" id="how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions"></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
+
+Apply the following YAML in your cluster.
+
+- Create a Privileged PSP
+
+  ```
+  apiVersion: extensions/v1beta1
+  kind: PodSecurityPolicy
+   metadata:
+     name: privileged
+     annotations:
+       seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
+   spec:
+     privileged: true
+     allowPrivilegeEscalation: true
+     allowedCapabilities:
+     - '*'
+     volumes:
+     - '*'
+     hostNetwork: true
+     hostPorts:
+     - min: 0
+       max: 65535
+     hostIPC: true
+     hostPID: true
+     runAsUser:
+       rule: 'RunAsAny'
+     seLinux:
+       rule: 'RunAsAny'
+     supplementalGroups:
+       rule: 'RunAsAny'
+     fsGroup:
+       rule: 'RunAsAny'    
+  ```
+
+- Associate the above PSP to a ClusterRole
+
+  ```
+  kind: ClusterRole
+  apiVersion: rbac.authorization.k8s.io/v1
+  metadata:
+    name: privilegedpsp
+  rules:
+  - apiGroups: ['extensions']
+    resources: ['podsecuritypolicies']
+    verbs:     ['use']
+    resourceNames:
+    - privileged
+  ```
+
+- Associate the above Privileged ClusterRole to OpenEBS Service Account
+
+  ```
+  apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    annotations:
+      rbac.authorization.kubernetes.io/autoupdate: "true"
+    name: openebspsp
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: privilegedpsp
+  subjects:
+  - kind: ServiceAccount
+    name: openebs-maya-operator
+    namespace: openebs
+  ```
+
+- Proceed to install the OpenEBS. Note that the namespace and service account name used by the OpenEBS should match what is provided in   the above ClusterRoleBinding.
+
+<a href="#top">Go to top</a>
+
+<br>
+
+<h3><a class="anchor" aria-hidden="true" id="create-cstor-pool-partioned-disks"></a>How Can I create cStor Pools using partitioned disks?</h3>
+
+Currently,NDM is not selecting partition disks for creating device resource. But, you can create device resource for the partition disks manually. The following are the steps for the creation of device resource.
+
+1. Download the device CR YAML for creating the device CR manually. The sample device CR can be downloaded from [here](https://raw.githubusercontent.com/openebs/node-disk-manager/master/deploy/crds/openebs_v1alpha1_device_cr.yaml).
+
+2. Modify the downloaded device CR sample YAML with the partition disk information. Following is the sample device CR YAML.
+
+   ```
+   apiVersion: openebs.io/v1alpha1
+   kind: Device
+   metadata:
+     name: example-device
+     labels:
+       kubernetes.io/hostname: <host name in which disk/device is attached> # like gke-openebs-user-default-pool-044afcb8-bmc0
+       ndm.io/managed: "false" # for manual disk creation put false
+       ndm.io/disk-type: partition
+   status:
+     state: Active
+   spec:
+     capacity:
+       logicalSectorSize: <logical sector size of device> # like 512
+       storage: <total capacity in bits> #like 53687091200
+     details:
+       firmwareRevision: <firmware revision> #firmware version
+       model: <model name of device> # like PersistentDisk
+       serial: <serial no of disk> # like google-disk-2
+       compliance: <compliance of disk> #like "SPC-4"
+       vendor: <vendor of disk> #like Google
+     devlinks:
+     - kind: by-id
+       links:
+       - <link1> # like /dev/disk/by-id/scsi-0Google_PersistentDisk_disk-2
+       - <link2> # like /dev/disk/by-id/google-disk-2
+     - kind: by-path
+       links:
+       - <link1> # like /dev/disk/by-path/virtio-pci-0000:00:03.0-scsi-0:0:2:0 
+     Partitioned: No
+     path: <devpath> # like /dev/sdb1
+   ```
+
+   In the above device CR sample spec, following field must be filled before applying the YAML.
+
+   - kubernetes.io/hostname
+   - logicalSectorSize
+   - storage
+   - links
+     - This is applicable for both `by-id` and `by-path`
+   - path
+
+3. Repeat the same steps for each partitioned device that you have chosen for creating cStor pool.
+
+4. Get the `diskname` from `kubectl get disks` command and add the `diskname` in cStor StoragePoolClaim YAML. The steps for the creation of cStorStoragePool can be read [here](/docs/next/configurepools.html#creating-a-new-pool).
 
 <hr>
 
