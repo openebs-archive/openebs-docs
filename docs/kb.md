@@ -20,6 +20,8 @@ sidebar_label: Knowledge Base
 
 [How Can I create cStor Pools using partitioned disks?](#create-cstor-pool-partioned-disks)
 
+[How to prevent container logs from exhausting disk space?](#enable-log-rotation-on-cluster-nodes)
+
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
@@ -428,7 +430,101 @@ Currently,NDM is not selecting partition disks for creating device resource. But
 
 <br>
 
+<h3><a class="anchor" aria-hidden="true" id="enable-log-rotation-on-cluster-nodes"></a>How to prevent container logs from exhausting disk space?</h3>
 
+Container logs, if left unchecked, can eat into the underlying disk space causing `disk-pressure` conditions
+leading to eviction of pods running on a given node. This can be prevented by performing log-rotation
+based on file-size while specifying retention count. One recommended way to do this is by configuring the
+docker logging driver on the individual cluster nodes. Follow the steps below to enable log-rotation.
+
+
+1. Configure the docker configuration file /etc/docker/daemon.json (create one if not already found) with the
+log-options similar to ones shown below (with desired driver, size at which logs are rotated, maximum logfile
+retention count & compression respectively):
+
+   ```
+   {
+     "log-driver": "json-file",
+     "log-opts": {
+        "max-size": "400k",
+        "max-file": "3",
+        "compress": "true"
+     }
+   }
+   ```
+
+2. Restart the docker daemon on the nodes. This may cause a temprary disruption of the running containers & cause
+the node to show up as `Not Ready` until the daemon has restarted successfully.
+
+   ```
+   systemctl daemon-reload
+   systemctl restart docker
+   ```
+
+3. To verify that the newly set log-options have taken effect, the following commands can be used:
+
+- At a node-level, the docker logging driver in use can be checked via the following command:
+
+   ```
+   docker info
+   ```
+   The `LogConfig` section of the output must show the desired values:
+
+   ```
+               "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+   ```
+
+- At the individual container level, the log options in use can be checked via the following command:
+
+  ```
+  docker inspect <container-id>
+  ```
+
+  The `LogConfig` section of the output must show the desired values:
+
+  ```
+         "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "3",
+                    "max-size": "400k",
+                    "compress": "true"
+                }
+            }
+  ```
+
+
+4. To view the current & compressed files, check the contents of the `/var/lib/docker/containers/<container-id>/`
+directory. The symlinks at `/var/log/containers/<container-name>` refer to the above.
+
+**NOTES:**
+
+- The steps are common for Linux distributions (tested on CentOS, RHEL, Ubuntu)
+
+- Log rotation via the specified procedure is supported by docker logging driver types: `json-file (default), local`
+
+- Ensure there are no dockerd cli flags specifying the `--log-opts` (verify via `ps -aux` or service definition
+  files in `/etc/init.d` or `/etc/systemd/system/docker.service.d`). The docker daemon fails to start if an option
+  is duplicated between the file and the flags, regardless their value.
+
+- These log-options are applicable only to the containers created after the dockerd restart (which is automatically
+  taken care by the kubelet)
+
+- The `kubectl log` reads the uncompressed files/symlinks at `/var/log/containers` and thereby show rotated/rolled-over
+  logs. If you would like to read the retained/compressed log content as well use `docker log` command on the nodes.
+  Note that reading from compressed logs can cause temporary increase in CPU utilization (on account of decompression
+  actions performed internally)
+
+- The log-opt `compress: true:` is supported from Docker version: 18.04.0. The `max-file` & `max-size` opts are supported
+  on earlier releases as well.
+
+<br>
+
+<hr>
+
+<br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
