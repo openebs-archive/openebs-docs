@@ -365,7 +365,8 @@ cStor provides storage scalability along with ease of deployment and usage. cSto
 A new sidecar will run once a cStor pool pod is created.This sidecar will collect the metrics of the corresponding cStorStoragePool. Following metrics are supported by cStor to export the cStorStoragePool usage statistics as Prometheus metrics.
 
 ```
-openebs_available_size #Available size of pool and volume
+openebs_volume_replica_available_size # Available size of volume replica on a pool
+openebs_volume_replica_used_size # Used size of volume replica on a pool
 openebs_dispatched_io_count # Dispatched IO's count
 openebs_free_pool_capacity # Free capacity in pool
 openebs_inflight_io_count # Inflight IO's count
@@ -377,13 +378,13 @@ openebs_rebuild_bytes # Rebuild bytes
 openebs_rebuild_count # Rebuild count
 openebs_rebuild_status # Status of rebuild on replica (0, 1, 2, 3, 4, 5, 6)= {"INIT", "DONE", "SNAP REBUILD INPROGRESS", "ACTIVE DATASET REBUILD INPROGRESS", "ERRORED", "FAILED", "UNKNOWN"}
 openebs_replica_status # Status of replica (0, 1, 2, 3) = {"Offline", "Healthy", "Degraded", "Rebuilding"}
-openebs_total_rebuild_done # Total no of rebuild done on replica
-openebs_sync_count # Total no of sync on replica
+openebs_total_rebuild_done # Total number of rebuild done on replica
+openebs_sync_count # Total number of sync on replica
 openebs_sync_latency # Sync latency on replica
-openebs_total_failed_rebuild # Total no of failed rebuilds on replica
+openebs_total_failed_rebuild # Total number of failed rebuilds on replica
 openebs_total_read_bytes # Total read in bytes
 openebs_total_read_count # Total read io count
-openebs_total_rebuild_done # Total no of rebuild done on replica
+openebs_total_rebuild_done # Total number of rebuild done on replica
 openebs_total_write_bytes # Total write in bytes
 openebs_total_write_count # Total write io count
 openebs_used_pool_capacity # Capacity used by pool
@@ -395,18 +396,18 @@ openebs_zfs_command_error # zfs command error counter
 openebs_zfs_list_command_error # zfs list command error counter
 openebs_zfs_parse_error # zfs parse error counter
 openebs_zfs_list_failed_to_initialize_libuzfs_client_error_counter # Total no of failed to initialize libuzfs client error in zfs list command
-openebs_zfs_list_no_dataset_available_error_counte #  Total no of no datasets error in zfs list command
-openebs_zfs_list_parse_error # Total no of zfs list parse errors 
-openebs_zfs_list_request_reject_count # Total no of rejected requests of zfs list
-openebs_zfs_stats_command_error # Total no of zfs command errors
-openebs_zfs_stats_parse_error_counter # Total no of zfs stats parse errors
-openebs_zfs_stats_reject_request_count # Total no of rejected requests of zfs stats
-openebs_zpool_command_error # zpool command error counter
-openebs_zpool_list_failed_to_initialize_libuzfs_client_error_counter # Total no of initialize libuzfs client error
-openebs_zpool_list_incomplete_stdout_error # Total no of incomplete stdout errors
+openebs_zfs_list_no_dataset_available_error_counter #  Total number of no datasets error in zfs list command
+openebs_zfs_list_parse_error # Total number of zfs list parse errors 
+openebs_zfs_list_request_reject_count # Total number of rejected requests of zfs list
+openebs_zfs_stats_command_error # Total number of zfs command errors
+openebs_zfs_stats_parse_error_counter # Total number of zfs stats parse errors
+openebs_zfs_stats_reject_request_count # Total number of rejected requests of zfs stats
+openebs_zpool_list_command_error # Total number of zpool command error counter
+openebs_zpool_list_failed_to_initialize_libuzfs_client_error_counter # Total number of initialize libuzfs client error
+openebs_zpool_list_incomplete_stdout_error # Total number of incomplete stdout errors
 openebs_zpool_list_no_pool_available_error  # Total number of no pool available errors
-openebs_zpool_list_parse_error_count # Total no of parsing errors
-openebs_zpool_list_reject_request_count # Total no of rejected requests of zpool command
+openebs_zpool_list_parse_error_count # Total number of parsing errors
+openebs_zpool_list_reject_request_count # Total number of rejected requests of zpool command
 ```
 
 </br>
