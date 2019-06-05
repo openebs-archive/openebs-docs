@@ -5,6 +5,10 @@ sidebar_label: Upgrade
 ---
 ------
 
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+Upgrade to 1.0-RC1 is currently not supported. Upgrade support from 0.9.0 will be available on 1.0-RC2 version.
+</strong></p></center>
+
 Latest version of OpenEBS is 0.9.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/0.9).  This section describes about the upgrade from OpenEBS 0.8.2 to 0.9.0.
 
 ## Supported upgrade paths
