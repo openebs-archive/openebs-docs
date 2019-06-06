@@ -82,17 +82,6 @@ You will need to modify the `sed` in this command to make it change the old size
 $ kubectl -n openebs exec -it <TARGET_POD> --container cstor-istgt -- sed -i 's/<OLD_SIZE>/<NEW_SIZE>/g' /usr/local/etc/istgt/istgt.conf; pkill istgt
 ```
 
-### Bounce Pool Pods
-
-```
-$ for pod in `kubectl -n openebs get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | grep <POOL_NAME>`; do kubectl -n openebs delete pod $pod; done
-
-pod "cstor-test-0wy0-6f97557b55-q4zgw" deleted
-pod "cstor-test-m8is-8556f5c664-259nj" deleted
-pod "cstor-test-pw1v-9984786bd-bsf4v" deleted
-```
-
-
 ### Rescan iscsi on node where application is running
 #### Find correct node
 
@@ -181,4 +170,11 @@ Now edit .spec.capacity.storage in the PV
 
 ```
 $ kubectl edit pv <PV>
+```
+
+#### Patch cStorVolume
+Edit asdfasdf in the cStorVolume
+
+```
+kubectl edit cstorvolume <cStorVolume>
 ```
