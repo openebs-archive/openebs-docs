@@ -121,7 +121,7 @@ spec:
     spec:
       containers:
         - name: jira
-          image: "gcr.io/hightowerlabs/jira:7.3.6-standalone"
+          image: "doriftoshoes/jira:7.3.6"
           resources:
             requests:
               cpu: "2"
