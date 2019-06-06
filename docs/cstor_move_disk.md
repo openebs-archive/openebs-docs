@@ -52,10 +52,6 @@
 	metadata:
 	  annotations:
 	    cstorpool.openebs.io/hostname: k8s-openebs-demo-node-3
-	    isRestoreVol: "false"
-	    openebs.io/storage-class-ref: |
-	      name: openebs-cstor-test
-	      resourceVersion: 3003
 	  labels:
 	    cstorpool.openebs.io/name: cstor-test-uko9
 	    cstorpool.openebs.io/uid: 4f477f5f-8846-11e9-afbe-42010a800fc7
@@ -68,7 +64,6 @@
 	spec:
 	  capacity: 8G
 	  targetIP: 10.101.169.188
-	  zvolWorkers: ""
 	```
 
 8. Delete the old CVR.
