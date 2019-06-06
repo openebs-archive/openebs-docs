@@ -184,7 +184,7 @@ As a next step [verify](#verifying-openebs-installation) your installation and d
 In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace. 
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.9.0.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.0-RC1.yaml
 ```
 
 **Note:** Since Kuberentes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installling OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requets). 
@@ -204,7 +204,7 @@ In the **custom installation mode**, you can achieve the following advanced conf
 
 
 
-For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-0.9.0.yaml" target="_blank">download</a> the **openebs-operator-0.9.0.yaml** file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
+For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-1.0-RC1.yaml" target="_blank">download</a> the **openebs-operator-1.0-RC1** file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
 
 
 
@@ -316,7 +316,7 @@ After doing the custom configuration in the downloaded openebs-operator.yaml fil
 
 
 ```
-kubectl apply -f <custom-openebs-operator-0.9.0.yaml>
+kubectl apply -f <custom-openebs-operator-1.0-RC1.yaml>
 ```
 
 
@@ -518,7 +518,7 @@ Find `apiServer`, `provisioner`, `snapshotOperator`, `admission-server` and `ndm
 ```
 provisioner:
   image: "quay.io/openebs/openebs-k8s-provisioner"
-  imageTag: "0.9.0"
+  imageTag: "1.0-RC1"
   replicas: 1
   nodeSelector:
     node: openebs

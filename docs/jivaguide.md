@@ -128,11 +128,11 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:0.9.0
+        value: openebs/jiva:1.0-RC1
       - name: ReplicaImage
-        value: openebs/jiva:0.9.0
+        value: openebs/jiva:1.0-RC1
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:0.9.0
+        value: openebs/m-exporter:1.0-RC1
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
@@ -249,27 +249,27 @@ Below table lists the storage policies supported by Jiva. These policies should 
 
 
 
-| CSTOR STORAGE POLICY                                         | MANDATORY | DEFAULT                           | PURPOSE                                                      |
-| ------------------------------------------------------------ | --------- | --------------------------------- | ------------------------------------------------------------ |
-| [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                 | Defines the number of Jiva volume replicas                   |
-| [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:0.9.0 | To use particular Jiva replica image                         |
-| [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/jiva:0.9.0        | To use particular Jiva Controller Image                      |
-| [StoragePool](#Storage-Pool-Policy)                          | Yes       | default                           | A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on host OS or externally mounted disk. |
-| [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:0.9.0  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
-| [Volume FSType](#Volume-File-System-Type-Policy)             |           | ext4                              | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
-| [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)         |           | false                             | It will specify whether data need to be retained post PVC deletion. |
-| [TargetNodeSelector](#Targe-NodeSelector-Policy)             |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva target pod on the nodes that match label. |
-| [Replica NodeSelector](#Replica-NodeSelector-Policy)         |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva replica pods on the nodes that match label. |
-| [TargetTolerations](#TargetTolerations)                      |           | Decided by Kubernetes scheduler   | Configuring the tolerations for Jiva Target pod.             |
-| [ReplicaTolerations](#ReplicaTolerations)                    |           | Decided by Kubernetes scheduler   | Configuring the tolerations for Jiva Replica pods.           |
-| [TargetResourceLimits](#Target-ResourceLimits-Policy)        |           | Decided by Kubernetes scheduler   | CPU and Memory limits to Jiva Target pod                     |
-| [TargetResourceRequests](#TargetResourceRequests)            |           | Decided by Kubernetes scheduler   | Configuring resource requests that need to be available before scheduling the containers. |
-| [AuxResourceLimits](#AuxResourceLimits-Policy)               |           | Decided by Kubernetes scheduler   | configuring resource limits on the target pod.               |
-| [AuxResourceRequests](#AuxResourceRequests-Policy)           |           | Decided by Kubernetes scheduler   | Configure minimum requests like ephemeral storage to avoid erroneous eviction by K8s. |
-| [ReplicaResourceLimits](#ReplicaResourceLimits-Policy)       |           | Decided by Kubernetes scheduler   | Allow you to specify resource limits for the Replica.        |
-| [Target Affinity](#Target-Affinity-Policy)                   |           | Decided by Kubernetes scheduler   | The policy specifies the label `key: value` pair to be used both on the Jiva target and on the application being used so that application pod and Jiva target pod are scheduled on the same node. |
-| [OpenEBS Namespace Policy for Jiva Pods](#deploy-in-openEBS-namespace) |           | false                             | Jiva Pod will be deployed in PVC name space by default. With the value as `true`, Jiva Pods will run in OpenEBS namespace. |
+| CSTOR STORAGE POLICY                                         | MANDATORY | DEFAULT                             | PURPOSE                                                      |
+| ------------------------------------------------------------ | --------- | ----------------------------------- | ------------------------------------------------------------ |
+| [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                   | Defines the number of Jiva volume replicas                   |
+| [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.0-RC1 | To use particular Jiva replica image                         |
+| [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/jiva:1.0-RC1        | To use particular Jiva Controller Image                      |
+| [StoragePool](#Storage-Pool-Policy)                          | Yes       | default                             | A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on host OS or externally mounted disk. |
+| [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                  | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.0-RC1  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [Volume FSType](#Volume-File-System-Type-Policy)             |           | ext4                                | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
+| [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)         |           | false                               | It will specify whether data need to be retained post PVC deletion. |
+| [TargetNodeSelector](#Targe-NodeSelector-Policy)             |           | Decided by Kubernetes scheduler     | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva target pod on the nodes that match label. |
+| [Replica NodeSelector](#Replica-NodeSelector-Policy)         |           | Decided by Kubernetes scheduler     | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva replica pods on the nodes that match label. |
+| [TargetTolerations](#TargetTolerations)                      |           | Decided by Kubernetes scheduler     | Configuring the tolerations for Jiva Target pod.             |
+| [ReplicaTolerations](#ReplicaTolerations)                    |           | Decided by Kubernetes scheduler     | Configuring the tolerations for Jiva Replica pods.           |
+| [TargetResourceLimits](#Target-ResourceLimits-Policy)        |           | Decided by Kubernetes scheduler     | CPU and Memory limits to Jiva Target pod                     |
+| [TargetResourceRequests](#TargetResourceRequests)            |           | Decided by Kubernetes scheduler     | Configuring resource requests that need to be available before scheduling the containers. |
+| [AuxResourceLimits](#AuxResourceLimits-Policy)               |           | Decided by Kubernetes scheduler     | configuring resource limits on the target pod.               |
+| [AuxResourceRequests](#AuxResourceRequests-Policy)           |           | Decided by Kubernetes scheduler     | Configure minimum requests like ephemeral storage to avoid erroneous eviction by K8s. |
+| [ReplicaResourceLimits](#ReplicaResourceLimits-Policy)       |           | Decided by Kubernetes scheduler     | Allow you to specify resource limits for the Replica.        |
+| [Target Affinity](#Target-Affinity-Policy)                   |           | Decided by Kubernetes scheduler     | The policy specifies the label `key: value` pair to be used both on the Jiva target and on the application being used so that application pod and Jiva target pod are scheduled on the same node. |
+| [OpenEBS Namespace Policy for Jiva Pods](#deploy-in-openEBS-namespace) |           | false                               | Jiva Pod will be deployed in PVC name space by default. With the value as `true`, Jiva Pods will run in OpenEBS namespace. |
 
 <h3><a class="anchor" aria-hidden="true" id="Replica-Count-Policy"></a>Replica Count Policy</h3>
 
@@ -300,7 +300,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ReplicaImage
-        value: quay.io/openebs/m-apiserver:0.9.0
+        value: quay.io/openebs/m-apiserver:1.0-RC1
 ```
 
 <h3><a class="anchor" aria-hidden="true" id="Controller-Image-Policy"></a>Controller Image Policy</h3>
@@ -316,7 +316,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: quay.io/openebs/jiva:0.9.0
+        value: quay.io/openebs/jiva:1.0-RC1
 ```
 
 <h3><a class="anchor" aria-hidden="true" id="Volume-Monitor-Policy"></a>Volume Monitor Policy</h3>
@@ -401,7 +401,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:0.9.0
+        value: quay.io/openebs/m-exporter:1.0-RC1
 ```
 
 <h3><a class="anchor" aria-hidden="true" id="Volume-Space-Reclaim-Policy"></a>Volume Space Reclaim Policy</h3>
