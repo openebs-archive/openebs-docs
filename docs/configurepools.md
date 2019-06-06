@@ -37,26 +37,26 @@ sidebar_label:Configure StoragePools
 
 ## Creating a new pool
 
-Process of creating a new cStor storage pool
-
-- Create a YAML spec `cstor-pool-config.yaml`. You can create a cStorPool in the following way.
-  - [By specifying disks list](#manual-mode) 
-- Apply `cstor-pool-config.yaml` through `kubectl apply`  approach.
-
-<br>
+The cStorStoragePool can be created by specifying the blockDeviceList. The following section will describe about the steps in detail. 
 
 <h3><a class="anchor" aria-hidden="true" id="manual-mode"></a>Create a cStorPool by specifying diskList </h3>
 
 <h4><a class="anchor" aria-hidden="true" id="overview-manual"></a>Overview </h4>
 
 1. Get the details of blockdevices attached in the cluster.
-2. Claim the required blockdevices
+2. Claim the required blockdevices for creating the cStorStoragePool.
 3. Create a StoragePoolClaim configuration YAML and update the reqruied details.
-4. Apply the StoragePoolClaim configuration YAML.
+4. Apply the StoragePoolClaim configuration YAML to create the cStorStoragePool.
 
 **Step1:**
 
-Get all the blockdevices attached in the cluster. The following command will ge the list of blockdevices attached in the cluster. Modify the following command  with appropriate namespace where the openebs is installed. the default openebs namespace is `openebs`.
+Get all the blockdevices attached in the cluster. The following command will get the list of blockdevices attached in the cluster. Modify the following command  with appropriate namespace where the openebs is installed. The default openebs namespace is `openebs`.
+
+```
+kubectl get blockdevice -n <openebs_namespace>
+```
+
+Example:
 
 ```
 kubectl get blockdevice -n openebs
@@ -64,26 +64,26 @@ kubectl get blockdevice -n openebs
 
 The output will be similar to the following.
 
-```
-NAME                                           SIZE          CLAIMSTATE   STATUS   AGE
+<div class="co">NAME                                           SIZE          CLAIMSTATE   STATUS   AGE
 blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   42949672960   Unclaimed    Active   1m
 blockdevice-77f834edba45b03318d9de5b79af0734   42949672960   Unclaimed    Active   1m
-blockdevice-936911c5c9b0218ed59e64009cc83c8f   42949672960   Unclaimed    Active   1m
-```
+blockdevice-936911c5c9b0218ed59e64009cc83c8f   42949672960   Unclaimed    Active   1m</div>
 
-The details of blockdevice can be get using the following command.
+The details of blockdevice can be get using the following command. 
 
 ```
  kubectl describe blockdevice <blockdevicename> -n <openebs_namespace>
 ```
 
-**Example**:
+Example:
 
 ```
 kubectl describe blockdevice blockdevice-77f834edba45b03318d9de5b79af0734 -n openebs 
 ```
 
-For doing Step2, get the hostname, associated for each blockdevice.
+From the output, you will get the hostaname and other blockdevice details such as State,Path,Claim State,Capacity etc.
+
+For doing Step2, get the hostname associated for each blockdevice.
 
 **Step2:**
 
@@ -96,9 +96,9 @@ Create a BlockDeviceClaim configuration YAML and update the required the details
 * driveType 
   * It should be HDD,SSD or sparse disks. For example, `HDD`
 * blockDeviceName
-  * Blockdevice name. For example, `blockdevice-77f834edba45b03318d9de5b79af0734`
+  * The name of the Blockdevice . For example, `blockdevice-77f834edba45b03318d9de5b79af0734`
 * hostName
-  * Hostname where the corresponding blockdevice is attached. For example,` gke-md-doc-default-pool-7e1d0504-bld4`
+  * The Hostname where the corresponding blockdevice is attached. For example,` gke-md-doc-default-pool-7e1d0504-bld4`
 * capacity 
   * This is the requesting capacity for the blockdevice. It is recommended to put value less than or equal to size of block device. For example, `10Gi`.
 
@@ -119,7 +119,7 @@ spec:
       capacity: <less than or equal to size of block device>
 ```
 
-**Note:** For claiming sparse based blockdevice, create a BlockDeviceClaim configuration YAML and update the required the details. 
+**Note:** For claiming sparse based blockdevice, create a BlockDeviceClaim configuration YAML which is given below and update the following required the details. 
 
 - name
   - Name for the BlockDeviceClaim. For example, `test-blockdeviceclaim3`
@@ -134,8 +134,8 @@ The following is the sample BlockDeviceClaim configuration YAML. Create BlockDev
 apiVersion: openebs.io/v1alpha1
 kind: BlockDeviceClaim
 metadata:
-  name: test-blockdeviceclaim3
-  namespace: openebs
+  name: <blockdeviceclaim_name>
+  namespace: <openebs_namespace>
 spec:
   driveType: sparse
   blockDeviceName: <blockedevice_name_of_sparse_disk>	 
@@ -143,7 +143,7 @@ spec:
 
 **Step3:** 
 
-Apply the updated BlockDeviceClaim configuration YAMl using the following command.
+Apply the updated BlockDeviceClaim configuration YAML using the following command.
 
 ```
 kubectl apply -f <BlockDeviceClaim_YAML>
@@ -157,15 +157,13 @@ kubectl apply -f bdc1.yaml
 
 The output will be similar to the following.
 
-```
-blockdeviceclaim.openebs.io/test-blockdeviceclaim1 created
-```
+<div class="co">blockdeviceclaim.openebs.io/test-blockdeviceclaim1 created</div>
 
-Repeat the above procedure for each of the required BlockDevices.
+Repeat the above procedure for each of the required BlockDevices which can be used for creating cStorStoragePool once the blockdevice is claimed. Only claimed blockdevice can be used for creating cStorStoragePool.
 
 **Step4:**
 
-Create a StoragePoolClaim configuration YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is set to `2Gi` and `PoolResourceLimits` value is set to `4Gi`. This will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration for better performance. 
+Create a StoragePoolClaim configuration YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is set to `2Gi` and `PoolResourceLimits` value is set to `4Gi`. The resources will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration for better performance. 
 
 ```
 #Use the following YAMLs to create a cStor Storage Pool.
@@ -195,7 +193,7 @@ spec:
 ---
 ```
 
-In the above file, change the parameters as required
+In the above file, change the following parameters as required.
 
 - `poolType`
 
@@ -205,19 +203,19 @@ In the above file, change the parameters as required
 
 - `maxPools`
 
-  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`,  then three nodes are randomly chosen based on the blockDevice name provided in `blockDeviceList` by OpenEBS and one cStorPool instance each will be created on them with provided blockDevice. If even number of blockDevices are available per Node and `poolType` as mirrored, then cStorPool instances will be created using mirrored manner. If many blockDevice are added on each of the Node and chosen `poolType` as `striped` , the cStorPool instance will created using the mentioned disks on each Node.
+  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`,  then three nodes are randomly chosen based on the blockDevice name provided in `blockDeviceList` by OpenEBS and one cStorPool instance each will be created on them with provided blockDevice. If even number of blockDevices are available per Node and `poolType` as mirrored, then cStorPool instances will be created using mirrored manner. If many blockDevices are added on each of the Node and chosen `poolType` as `striped` , the cStorPool instance will created using the mentioned disks on each Node.
 
   This value should be less than or equal to the total number of Nodes in the cluster.
 
 - `blockDeviceList`
 
-  Select the list of blockDevice CRs in each participating nodes and enter them under `blockDeviceList`. To get the list of blockDevice claimed CRs, use `kubectl get blockdeviceclaim -n openebs`. To know which node a given disk CR belongs, use `kubectl describe blockDevice <blockDevice-cr>`
+  Select the list of claimed blockDevice CRs in each participating nodes and enter them under `blockDeviceList`. To get the list of blockDevice claimed CRs, use `kubectl get blockdeviceclaim -n openebs`. To know which node a given claimed blockDevice CR belongs, use `kubectl describe blockDevice <blockDevice-cr>`
 
   You must enter all the blockDevice CRs manually together from the selected nodes. 
 
-  When the `poolType` = `mirrored` make sure the blockDevice CRs selected from each node are in even number.  The data is striped across mirrors. For example, if 4x1TB blockDevice are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on `node1` is 2TB. 
+  When the `poolType` = `mirrored` , ensure the blockDevice CRs selected from each node are in even number.  The data is striped across mirrors. For example, if 4x1TB blockDevice are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on `node1` is 2TB. 
 
-  When the `pooltype` = `striped` the number of blockDevice CRs from each node can be in any number, the data is striped across each blockDevice. For example, if 4x1TB blockDevice are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on that `node1` is 4TB. 
+  When the `pooltype` = `striped` the number of blockDevice CRs from each node can be in any number, the data is striped across each blockDevice. For example, if 4x1TB blockDevices are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on that `node1` is 4TB. 
 
   The number of selected blockDevice CRs across nodes need not be same. The claimed blockDevice CRs can be added to the pool spec dynamically as the used capacity gets filled up. 
 
@@ -225,7 +223,7 @@ In the above file, change the parameters as required
 
 - `type`
 
-  This value can be either `sparse` or `blockDevice`.  If you are creating a sparse pool using the sparse disk based blockDevice created as part of applying openebs operator YAML, then while configuring the `StoragePoolClaim`, choose type as `sparse`. For other blockDevices, choose type as `blockDevice`.
+  This value can be either `sparse` or `blockdevice`.  If you are creating a sparse pool using the sparse disk based blockDevice which are created as part of applying openebs operator YAML, then while configuring the `StoragePoolClaim`, choose type as `sparse`. For other blockDevices, choose type as `blockdevice`.
 
 **Step5:**
 
@@ -239,7 +237,7 @@ If the pool creation is successful, you will see the example result as shown bel
 
 <div class="co">storagepoolclaim.openebs.io "cstor-disk-pool" created</div>
 
-**Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` and update the `maxPools` count accordingly. More details can be found [here](/docs/next/operations.html#with-disklist).
+**Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` and update the `maxPools` count accordingly. More details can be found [here](/docs/next/operations.html#with-disklist). Some other pool expansion methods are listed [here](/docs/next/tasks.html) which is currently required manual intervention.
 
 <br>
 
