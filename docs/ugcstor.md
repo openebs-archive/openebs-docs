@@ -41,9 +41,9 @@ sidebar_label: cStor
 
 [Expanding cStor pool to a new node](#expanding-cStor-pool-to-a-new-node)
 
-[Expanding size of a cStor pool instance on a node by expanding the size of cloud disks](#expanding-size-of-a-cStor-pool-instance-on-a node-expand-disk)
+[Expanding size of a cStor pool instance on a node by expanding the size of cloud disks](#expanding-size-of-a-cStor-pool-instance-on-a-node-add)
 
-[Expanding size of a cStor pool instance on a node by add physical/virtual disks to a pool instance](#expanding-size-of-a-cStor-pool-instance-on-a-node-add-disk)
+[Expanding size of a cStor pool instance on a node by add physical or virtual disks to a pool instance](#expanding-size-of-a-cStor-pool-instance-on-a-node-add-disk)
 
 [Moving a Disk to a New Node](#Moving-a-disk-to-New-Node)
 
@@ -1120,7 +1120,7 @@ However, as the actual used capacity of the pool is utilized, more disks need to
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="expanding-size-of-a-cStor-pool-instance-on-a node-expand-disk)"></a>Expanding size of a cStor Pool Instance on a Node (by expanding the size of cloud disks)</h3>
+<h3><a class="anchor" aria-hidden="true" id="expanding-size-of-a-cStor-pool-instance-on-a-node-add)"></a>Expanding size of a cStor Pool Instance on a Node (by expanding the size of cloud disks)</h3>
 
 There are many cases where cStor Volume has to be increased. For example, capacity might be completely filled up and there by application pod will be in `crashloopbackoff` state of `running` state based on the liveness probe in the application. Another scenario is before starting more load on this volume, it can also expand the capacity of the volume to make sure the uninterrupted running of the application. the steps for expanding the cStor volume is mentioned [here](https://github.com/openebs/openebs-docs/blob/day_2_ops/docs/cstor_volume_resize.md).
 
