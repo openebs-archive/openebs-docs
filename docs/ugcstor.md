@@ -15,11 +15,11 @@ sidebar_label: cStor
 
 [Expanding a cStor Volume](#expanding-a-cStor-volume)
 
-Backup and Restore
+[Backup and Restore](#backup-and-restore)
 
 [Snapshot and Clone of a cStor Volume](#snapshot-and-clone-of-a-cStor-volume)
 
-Upgrading the software version of a cStor volume
+[Upgrading the software version of a cStor volume](#Upgrading-the-software-version-of-a-cStor-volume)
 
 [Deleting a cStor Volume](#deleting-a-cStor-volume)
 
@@ -35,15 +35,17 @@ Upgrading the software version of a cStor volume
 
 [Setting Storage Polices](#cstor-storage-policies)
 
-Upgrade the software version of a cStor pool
+[Setting Performance Tunings](#setting-performance-tunings)
 
-Expanding cStor pool to a new node
+[Upgrade the software version of a cStor pool](#Upgrade-the-software-version-of-a-cStor-pool)
 
-Expanding size of a cStor pool instance on a node (add physical/virtual disks to a pool instance)
+[Expanding cStor pool to a new node](#expanding-cStor-pool-to-a-new-node)
 
-Expanding size of a cStor pool instance on a node (expanding the size of cloud disks)
+[Expanding size of a cStor pool instance on a node (add physical/virtual disks to a pool instance)](#Expanding-size-of-a-cStor-pool-instance-on-a-node-add-disk)
 
-Deleting a pool instance
+[Expanding size of a cStor pool instance on a node (expanding the size of cloud disks)](#Expanding-size-of-a-cStor-pool-instance-on-a node-expand-disk)
+
+[Moving a Disk to a New Node](#Moving-a-disk-to-New-Node)
 
 
 
@@ -238,6 +240,26 @@ This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` that we
 
 
 
+<h3><a class="anchor" aria-hidden="true" id="expanding-a-cStor-volume"></a>Exapnding a cStor Volume</h3>
+
+OpenEBS control plane does not support increasing the size of volume seamlessly. Increasing the size of a provisioned volume requires support from Kubernetes kubelet as the existing connection has to be remounted to reflect the new volume size. This can also be tackled with the new CSI plugin where the responsibility of the mount, unmount and remount actions will be held with the vendor CSI plugin rather than the kubelet itself.
+
+OpenEBS team is working on both the CSI plugin as well as the feature to resize the provisioned volume when the PVC is patched for new volume size. See [Roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
+
+OpenEBS volume can be backed up and restore along with application using OpenEBS velero plugin. It helps for taking backup of OpenEBS volumes and then restoration of the data whenever it needed. The steps for taking backup and restore is given [here](/docs/next/backup.html).
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="Upgrading-the-software-version-of-a-cStor-volume"></a>Upgrading the software version of a cStor volume</h3>
+
+The steps are mentioned in Upgrade section. For upgrade cStorVolume, ensure that cStor Pool image is support this cStor volume image.  The steps for upgrading the cStor volume can be find from [here](docs/next/upgrade.html).
+
+
+
 <h3><a class="anchor" aria-hidden="true" id="deleting-a-cStor-volume"></a>Deleting a cStor Volume</h3>
 
 The cStor volume can be deleted by deleting the corresponding PVC. This can be done by using the following command.
@@ -266,13 +288,13 @@ Verify the cStorVolumeReplica(CVR) is deleted successfully using the following c
 kubectl get cvr -n <openebs_installed_namespace>
 ```
 
+Verify corresponding cStor Volume target also deleted successfully using the following command.
+
+```
+kubectl get pod -n <openebs_installed_namespace> | grep <pvc_name>
+```
 
 
-<h3><a class="anchor" aria-hidden="true" id="expanding-a-cStor-volume"></a>Exapnding a cStor Volume</h3>
-
-OpenEBS control plane does not support increasing the size of volume seamlessly. Increasing the size of a provisioned volume requires support from Kubernetes kubelet as the existing connection has to be remounted to reflect the new volume size. This can also be tackled with the new CSI plugin where the responsibility of the mount, unmount and remount actions will be held with the vendor CSI plugin rather than the kubelet itself.
-
-OpenEBS team is working on both the CSI plugin as well as the feature to resize the provisioned volume when the PVC is patched for new volume size. See [Roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
 
 <br>
 
@@ -297,7 +319,7 @@ The cStorStoragePool can be created by specifying the blockDeviceList. The follo
 
 **Step1:**
 
-Get all the blockdevices attached in the cluster. The following command will get the list of blockdevices attached in the cluster. Modify the following command  with appropriate namespace where the openebs is installed. The default openebs namespace is `openebs`.
+Get all the blockdevices attached in the cluster. The following command will get the list of blockdevices attached in the cluster. Modify the following command  with appropriate namespace where the openebs is installed. The default namespace where openebs is getting installed is `openebs`.
 
 ```
 kubectl get blockdevice -n <openebs_namespace>
@@ -328,9 +350,7 @@ Example:
 kubectl describe blockdevice blockdevice-77f834edba45b03318d9de5b79af0734 -n openebs 
 ```
 
-From the output, you will get the hostaname and other blockdevice details such as State,Path,Claim State,Capacity etc.
-
-For doing Step2, get the hostname associated for each blockdevice.
+From the output, you will get the hostname and other blockdevice details such as State,Path,Claim State,Capacity etc.
 
 **Step2:** 
 
@@ -1021,9 +1041,94 @@ spec:
 
 
 
-<br>
+<h3><a class="anchor" aria-hidden="true" id="Upgrade-the-software-version-of-a-cStor-pool"></a>Upgrade the Software Version of a cStor pool</h3>
+
+The steps for upgrading cStor Pool is mentioned in Upgrade section. Refer [Upgrade](docs/next/upgrade.html) section for more details.
 
 
+
+<h3><a class="anchor" aria-hidden="true" id="setting-performance-tunings"></a>Setting Performance Tunings</h3>
+
+Allow users to set available performance tunings in StorageClass based on their workload. Below are the tunings that are required:
+
+- cStor target queue depth
+  - This limits the ongoing IO count from client. Default is 32.
+- cStor target worker threads
+  - Sets the **number of threads** that are working on above queue. It is mentioned by `Luworkers`.Default value is 6.
+- cStor volume replica worker threads
+  - This Is associated with cStorVolumeReplica.
+  - It is mentioned by `ZvolWorkers`.
+  - Defaults to the number of cores on the machine.
+
+**Note:**  These configuration can be only used during volume provisioning. Default values will be used in case of "Invalid/None" values has been provided using configuration.
+
+**Example Configuration:**
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+name: openebs-cstor-pool
+annotations:
+  openebs.io/cas-type: cstor
+  cas.openebs.io/config: |
+    - name: StoragePoolClaim
+      value: "sparse-claim-auto"
+    - name: QueueDepth
+      value: "20"
+    - name: Luworkers
+      value: "10"
+    - name: ZvolWorkers
+      value: "4"
+provisioner: openebs.io/provisioner-iscsi
+```
+
+**Note:** For sequential workload, setting `luworkers` to 1 is good. For random workload,  default setting to 6 is good.
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="expanding-cStor-pool-to-a-new-node"></a>Expanding cStor Pool to a New Node</h3>
+
+cStorPools can be horizontally scaled when needed typically when a new Kubernetes node is added or when the existing cStorPool instances become full with cStorVolumes. This feature is added in 0.8.1.
+
+The steps for expanding the pool to new nodes is given below. 
+
+<h4><a class="anchor" aria-hidden="true" id="With-specifiying-blockDeviceList"></a>With specifiying blockDeviceList</h4>
+
+If you are following this approach, you should have created cStor Pool initially using the steps provided [here](https://staging-docs.openebs.io/docs/next/configurepools.html#manual-mode). For expanding pool onto a new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with the required disks names under the `blockDeviceList` and update the `maxPools` count .
+
+**Step 1:** Edit the existing pool configuration spec that you originally used and apply it (OR) directly edit the in-use spec file using `kubectl edit spc <SPC Name>`.
+
+**Step 2:** Add the new disks names from the new Nodes under the `blockDeviceList` . You can use `kubectl get blockdevice -n <openebs_namespace>`to obtains the disk CRs.
+
+**Step 3:** Update the `maxPools` count to the new value. If existing `maxPools` count is 3 and one new node is added, then `maxPools` will be 4.
+
+**Step 4:** Apply or save the configuration file and a new cStorPool instance will be created on the expected node.
+
+**Step 5:** Verify the new pool creation by checking
+
+- If a new cStor Pool POD is created (`kubectl get pods -n openebs | grep <pool name>`)
+- If a new cStorPool CR is created (`kubectl get csp`)
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="Expanding-size-of-a-cStor-pool-instance-on-a-node-add-disk"></a>Expanding Size of a cStor Pool Instance on a Node (by adding physical/virtual disks to a pool instance)</h3>
+
+A pool instance is local to a node. A pool instance can be started with as small as one disk (in `striped` mode) or two disks (in `mirrored`) mode. cStor pool instances support thin provisioning of data, which means that provisioning of any volume size will be successful from a given cstorPool config.
+
+However, as the actual used capacity of the pool is utilized, more disks need to be added. Currently the steps for adding more disks to the existing pool is done through manual operations.You can add more disks to the existing StoragePool with the steps provide [here](https://github.com/openebs/openebs-docs/blob/day_2_ops/docs/cstor_add_disks_to_spc.md). 
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="Expanding-size-of-a-cStor-pool-instance-on-a node-expand-disk (expanding the size of cloud disks)"></a>Expanding size of a cStor Pool Instance on a Node (by expanding the size of cloud disks)</h3>
+
+There are many cases where cStor Volume has to be increased. For example, capacity might be completely filled up and there by application pod will be in `crashloopbackoff` state of `running` state based on the liveness probe in the application. Another scenario is before starting more load on this volume, it can also expand the capacity of the volume to make sure the uninterrupted running of the application. the steps for expanding the cStor volume is mentioned [here](https://github.com/openebs/openebs-docs/blob/day_2_ops/docs/cstor_volume_resize.md).
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="Moving-a-disk-to-New-Node"></a>Moving a Disk to New Node</h3>
+
+This feature can be do by some set of manual steps. In this section, you can detach the disk from the old node (if necessary) and attach to the new node. This can be done from the steps provided [here](https://github.com/openebs/openebs-docs/blob/day_2_ops/docs/cstor_move_disk.md). 
 
 <br>
 
