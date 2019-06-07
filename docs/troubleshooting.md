@@ -23,16 +23,11 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 <br>
 
 <hr>
-
-
-
 <font size="6">Areas of troubleshooting</font>
 
 <br>
 
 ## Installation
-
-
 
 [Installation failed because insufficient user rights](#install-failed-user-rights)
 
@@ -46,19 +41,15 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 <br>
 
-
-
 ## Uninstall
-
-
 
 [Whenever a Jiva PVC is deleted, a job will created and status is seeing as `completed`](#jiva-deletion-scrub-job)
 
+[cStor Volume Replicas are not getting deleted properly](#cvr-deletion)
 
+<br>
 
 ## Volume provisioning
-
-
 
 [Application complaining ReadOnly filesystem](#application-read-only)
 
@@ -86,13 +77,11 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 ## Kubernetes related
 
-
-
 [Kubernetes node reboots because of increase in memory consumed by Kubelet](#node-reboot-when-kubelet-memory-increases)
 
 [Application and OpenEBS pods terminate/restart under heavy I/O load](#Pods-restart-terminate-when-heavy-load)
 
-
+<br>
 
 ## Others
 
@@ -101,12 +90,9 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 <br>
 
 <hr>
+<font size="6" color="blue">Installation</font>
 
 <br>
-
-
-
-<font size="6" color="blue">Installation</font>
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-user-rights"></a>Installation failed because of insufficient user rights</h3>
 
@@ -208,8 +194,6 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 2. Run `multipath -w /dev/sdc` command (replace the devname with your persistent devname).
 
-
-
 <br>
 
 <hr>
@@ -220,28 +204,40 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 <br>
 
-
-
 <h3><a class="anchor" aria-hidden="true" id="jiva-deletion-scrub-job"></a>Whenever a Jiva based PVC is deleted, a new job gets created.</h3>
 
-As part of deleting the Jiva Volumes, OpenEBS launches scrub jobs for clearing data from the nodes. The completed jobs can be cleared using following command.
+As part of deleting the Jiva Volumes, OpenEBS launches scrub jobs for clearing data from the nodes. This job will be running in OpenEBS installed namespace. The completed jobs can be cleared using following command.
 
 ```
-kubectl delete jobs -l openebs.io/cas-type=jiva -n <namespace>
+kubectl delete jobs -l openebs.io/cas-type=jiva -n <openebs_namespace>
 ```
 
+In addition, the job is set with a TTL to get cleaned up, if the cluster version is greater than 1.12. However, for the feature to work, the alpha feature needs to be enabled in the cluster. More information can be read from [here](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#clean-up-finished-jobs-automatically).
 
+<h3><a class="anchor" aria-hidden="true" id="jiva-deletion-scrub-job"></a>cStor Volume Replicas are not getting deleted properly</h3>
+
+Sometimes, there are chances that cStor volumes Replicas (CVR) may not get deleted properly if you delete the corresponding PVC. Below workaround will resolve this issue. Perform the following command.
+
+```
+kubectl edit cvr <cvr_name> -n openebs
+```
+
+And then remove finalizers from the corresponding CVR. Need to remove following entries and save it.
+
+```
+finalizers:
+- cstorvolumereplica.openebs.io/finalizer
+```
+
+This will automatically remove the pending CVR and delete the cStor volume completely.
 
 <br>
 
 <hr>
-<br>
 
 <font size="6" color="red"> Volume provisioning</font>
 
 <br>
-
-
 
 <h3><a class="anchor" aria-hidden="true" id="application-read-only"></a> Application complaining ReadOnly filesystem</h3>
 
@@ -258,8 +254,6 @@ This can happen for many reasons.
 - cStor target has lost quorum because of underlying node losses and target has marked the lun as ReadOnly
 
 Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kuberntes node reboots. 
-
-
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
 
@@ -438,7 +432,7 @@ The cStor disk pods are not coming up after it deploy with the YAML. On checking
 
 **Workaround:**
 
-cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is optional to wipe out the data from the disk if you use existing disks for cStor pool creation.
+cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is also recommended to wipe out the disks if you are using an used disk for cStor pool creation.
 
 <h3><a class="anchor" aria-hidden="true" id="Jiva-provisioning-failed-080"></a>OpenEBS Jiva PVC is not provisioning in 0.8.0</h3>
 
@@ -472,8 +466,6 @@ In case of `XFS` formatted volumes, perform the following steps once the iSCSI t
 - Unmount the volume again
 - Perform `xfs_repair /dev/<device>`. This fixes if any file system related errors on the device
 - Perform application pod deletion to facilitate fresh mount of the volume. At this point, the app pod may be stuck on `terminating` OR `containerCreating` state. This can be resolved by deleting the volume folder (w/ app content) on the local directory.
-
-
 
 <h3><a class="anchor" aria-hidden="true" id="unable-to-clone-from-snapshot"></a>Unable to clone OpenEBS volume from snapshot</h3>
 
@@ -588,19 +580,13 @@ This can happen due to `xfs_repair` failure on the application node. Make sure t
 apt install xfsprogs
 ```
 
-
-
 <br>
 
 <hr>
-<br>
-
 
 <font size="6" color="green">Kubernetes related</font>
 
 <br>
-
-
 
 
 <h3><a class="anchor" aria-hidden="true" id="node-reboot-when-kubelet-memory-increases"></a>Kubernetes node reboots because of increase in memory consumed by Kubelet</h3>
