@@ -41,9 +41,9 @@ sidebar_label: cStor
 
 [Expanding cStor pool to a new node](#expanding-cStor-pool-to-a-new-node)
 
-[Expanding size of a cStor pool instance on a node by expanding the size of cloud disks](#expanding-size-of-a-cStor-pool-instance-on-a-node-add)
+[Expanding size of a cStor pool instance on a node by expanding the size of cloud disks](#expanding-size-of-a-cStor-pool-instance-on-a node-expand-disk)
 
-[Expanding size of a cStor pool instance on a node by add physical or virtual disks to a pool instance](#expanding-size-of-a-cStor-pool-instance-on-a-node-add-disk)
+[Expanding size of a cStor pool instance on a node by add physical/virtual disks to a pool instance](#expanding-size-of-a-cStor-pool-instance-on-a-node-add-disk)
 
 [Moving a Disk to a New Node](#Moving-a-disk-to-New-Node)
 
