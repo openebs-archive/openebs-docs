@@ -1,7 +1,7 @@
 ---
 id: casengines
-title: OpenEBS Storage Engines - cStor and Jiva
-sidebar_label: CAS Engines (cStor & Jiva)
+title: OpenEBS Storage Engines - cStor, Jiva and LocalPV
+sidebar_label: CAS Engines
 ---
 
 ------

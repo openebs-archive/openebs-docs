@@ -1,8 +1,9 @@
 {
   "docs": {
     "Introduction": ["overview","features", "usecases", "releases", "support", "mayaonline"],
+    "Concepts": ["cas", "architecture", "casengines","cstor","jiva", "localpv", "ndm"],
+    "User Guides": ["quickstart", "prerequisites", "installation", "ugndm", "ugcstor", "jivaguide", "uglocalpv", "operations", "mayactl","backup",  "upgrade", "uninstall" ],
     "Concepts": ["cas", "architecture", "casengines","cstor","jiva"],
-    "User Guides": ["quickstart", "prerequisites", "installation", "configurepools", "configuresc", "provisionvols", "operations", "openebslocalpv", "jivaguide", "mayactl","backup",  "upgrade", "uninstall" ],
     "Stateful Applications": ["mysql", "prometheus", "minio", "gitlab", "percona", "elasticsearch", "cassandra","nuodb", "postgres", "redis", "mongo", "jira", "rwm"],
     "Advanced Topics": ["performance", "faq", "k8supgrades", "troubleshooting", "kb", "tasks"]
   }

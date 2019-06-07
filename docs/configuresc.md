@@ -1,6 +1,4 @@
 ---
-
-
 id: configuresc
 title: Configuring Storage Classes
 sidebar_label: Configuring StorageClasses
