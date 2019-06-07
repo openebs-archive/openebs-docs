@@ -1,7 +1,7 @@
 ---
 id: jivaguide
-title: Jiva user guide
-sidebar_label: Jiva user guide
+title: Jiva User Guide
+sidebar_label: Jiva
 ---
 ------
 
