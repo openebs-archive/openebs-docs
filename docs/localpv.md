@@ -25,6 +25,42 @@ OpenEBS LocalPVs are analogous to Kubernetes LocalPV. In addition, OpenEBS Local
 
 
 
+## How to use OpenEBS Local PVs
+
+OpenEBS supports two kinds of Local PVs. `StorageType=hostpath` and `StorageType=device` 
+
+End users or developers will provision the OpenEBS Local PVs like any other PV, by creating a PVC using a storage class provided by the admin user. 
+
+Admin user creates a storage class for `device` Local PV by using the following annotations
+
+```
+openebs.io/cas-type: local
+    cas.openebs.io/config: |
+      - name: StorageType
+        value: "device"
+provisioner: openebs.io/local
+```
+
+When a PVC is invoked using the above storage class, OpenEBS local provisioner uses NDM operator and reserves a matching disk on any worker node.
+
+
+
+Admin user creates a storage class for `hostpath` Local PV by using the following annotations
+
+```
+openebs.io/cas-type: local
+    cas.openebs.io/config: |
+    - name: BasePath
+        value: "/var/openebs/local"
+      - name: StorageType
+        value: "hostpath"
+provisioner: openebs.io/local
+```
+
+When a PVC is invoked using the above storage class, OpenEBS local provisioner uses NDM operator and creates a new sub directory inside the BasePath and maps it to the PV.
+
+
+
 ## When to use OpenEBS Local PVs
 
 - High performance is needed by those applications which manage their own replication, data protection and other features such as snapshots and clones.
