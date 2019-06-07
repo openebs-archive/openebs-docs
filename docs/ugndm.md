@@ -148,6 +148,8 @@ Currently, NDM is not selecting partition disks for creating device resource. Bu
 
 6. Repeat the same steps for each partitioned device and create blockdevice CR for each device.
 
+7. Get the blockdevice name from `kubectl get blockdevice -n openebs` command.
+
 <br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
