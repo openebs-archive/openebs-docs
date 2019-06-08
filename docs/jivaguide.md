@@ -8,7 +8,7 @@ sidebar_label: Jiva
 For details of how Jiva works, see <a href="/docs/next/jiva.html" >Jiva overview page</a>
 
 
-Jiva is a light weight storage engine that is recommended to use for low capacity workloads. The snapshot and storage management features of the other cStor engine are more advanced and is <a href="/docs/next/casengines.html#cstor-vs-jiva-features-comparison">recommended</a> when snapshots are a need.
+Jiva is a light weight storage engine that is recommended to use for low capacity workloads. The snapshot and storage management features of the other cStor engine are more advanced and is recommended when snapshots are a need. 
 
 <br>
 
