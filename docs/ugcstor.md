@@ -33,7 +33,7 @@ sidebar_label: cStor
 
 [Setting Storage Polices](#cstor-storage-policies)
 
-[Monitoring a cStor Pool](#monitoring-a-cStor-pool
+[Monitoring a cStor Pool](#monitoring-a-cStor-pool)
 
 [Setting Performance Tunings](#setting-performance-tunings)
 
