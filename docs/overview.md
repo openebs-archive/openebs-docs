@@ -32,7 +32,7 @@ cluster-admin, start the default installation using either
   ```
   helm install --namespace openebs --name openebs stable/openebs
   ```
-  **Note:**The helm based installation is only supported for main version releases. RC build are only supported through `kubectl apply` method.  
+  **Note:**The helm based installation is only supported for main version releases. Latest RC build are only supported through kubectl apply method. Current latest main version is 0.9.0.  
 
   <font size="4">(or)</font>
 
@@ -102,7 +102,7 @@ provision OpenEBS volumes, see
   </div>
 <div class="">
 	<a href="/docs/next/gitlab.html" target="_blank">
-		<img src="/docs/assets/a-gitlab.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+		<img src="/docs/assets/a-gitlab.png" alt="OpenEBS Archipdate ntecture" style="float:left;width:100px;">
 	</a>
   </div>
   <div class="">
