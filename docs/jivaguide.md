@@ -55,7 +55,7 @@ If it a single node cluster, then download the above YAML spec and change the re
 
 <h3><a class="anchor" aria-hidden="true" id="provisioning-with-local-or-cloud-disks"></a>Provisioning with Local or Cloud Disks</h3>
 
-In this mode, local disks on each node need to be prepared and mounted at a directory path for use by jiva. For jiva, the mount paths need to be setup and managed by the administrator. The steps for mounting a disk into a node and creating a Jiva storage pool is provided here. Once a StorageClass is created by mentioning 
+In this mode, local disks on each node need to be prepared and mounted at a directory path for use by jiva. For jiva, the mount paths need to be setup and managed by the administrator. The steps for mounting a disk into a node and creating a Jiva storage pool is provided [here](#create-a-pool). Once a StorageClass is created by mentioning this StoragePool name, then use this StorageClass in the PVC configuration.
 
 
 
