@@ -32,7 +32,7 @@ cluster-admin, start the default installation using either
   ```
   helm install --namespace openebs --name openebs stable/openebs
   ```
-  **Note:**The helm based installation is only supported for main version releases. Latest RC build are only supported through kubectl apply method. Current latest main version is 0.9.0.  
+  **Note:**The helm based installation is only supported for main version releases. Latest RC build installtion is only supported through `kubectl apply` method. Current latest main version is 0.9.0.  
 
   <font size="4">(or)</font>
 
