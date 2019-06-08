@@ -63,7 +63,7 @@ For provisioning a cStor Volume, it requires a cStor Storage Pool and a StorageC
 
 Use a similar PVC spec or volumeClaimTemplate to use a StorageClass that is pointing to a pool with real disks. Consider the following parameters while provisioning OpenEBS volumes on real disks.
 
-**AccessModes:** cStor provides iSCSI targets, which are appropriate for RWO (ReadWriteOnce) access mode and is suitable for all types of databases. For webscale applications like WordPress or any for any other NFS needs, you need RWM (ReadWriteMany) access mode. For RWM, you need NFS provisioner to be deployed along with cStor. See <a href="/docs/next/rwm.html" target="_blank">how to provision RWM PVC with OpenEBS </a>.
+**AccessModes:** cStor provides iSCSI targets, which are appropriate for RWO (ReadWriteOnce) access mode and is suitable for all types of databases. For webscale applications like WordPress or any for any other NFS needs, you need RWM (ReadWriteMany) access mode. For RWM, you need NFS provisioner to be deployed along with cStor. See how to provision <a href="/docs/next/rwm.html" target="_blank">RWM PVC with OpenEBS </a>.
 
 **Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release (OpenEBS 0.9.0) and is active development, see [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in the very short time period. 
 
@@ -132,8 +132,6 @@ openebs_writes # Write Input/Outputs on Volume
 
 Grafana charts can be built for the above Prometheus metrics. Some metrics OpenEBS volumes are available automatically at MayaOnline when you connect the Kubernetes cluster to it. See an example screenshot below.
 
-
-
 <img src="/docs/assets/svg/volume-monitor.svg" alt="OpenEBS configuration flow" style="width:100%">
 
 
@@ -144,7 +142,7 @@ An OpenEBS snapshot is a set of reference markers for data at a particular point
 
 During the installation of OpenEBS, a snapshot-controller and a snapshot-provisioner are setup which assist in taking the snapshots. During the snapshot creation, snapshot-controller creates `VolumeSnapshot` and `VolumeSnapshotData` custom resources. A snapshot-provisioner is used to restore a snapshot as a new Persistent Volume(PV) via dynamic provisioning.
 
-in this section the steps for the creation, clone and deletion a snapshot is provided.
+In this section the steps for the creation, clone and deletion a snapshot is provided.
 
 <h4><a class="anchor" aria-hidden="true" id="creating-a-cStor-snapshot"></a>Creating a cStor Snapshot</h4>
 
@@ -1165,7 +1163,7 @@ However, as the actual used capacity of the pool is utilized, more disks need to
 
 <h3><a class="anchor" aria-hidden="true" id="expanding-size-of-a-cStor-pool-instance-on-a-node-add"></a>Expanding size of a cStor Pool Instance on a Node (by expanding the size of cloud disks)</h3>
 
-When you have a cloud disk and which is used for the creation of cStor Storage pool and when you want to expand the existing cStor pool capacity, you can expand the size of the cloud disk and reflect the change in the correpsonding cStor storage pool. Ther by the cStor pool capacity can be increased. The steps for doing this activity is documented [here](#https://gist.github.com/prateekpandey14/f2a30b3f246fd5b44fdfb545185f78b4).
+When you have a cloud disk and which is used for the creation of cStor Storage pool and when you want to expand the existing cStor pool capacity, you can expand the size of the cloud disk and reflect the change in the correpsonding cStor storage pool. Ther by the cStor pool capacity can be increased. The steps for doing this activity is documented [here](https://gist.github.com/prateekpandey14/f2a30b3f246fd5b44fdfb545185f78b4).
 
 
 <h3><a class="anchor" aria-hidden="true" id="expanding-size-of-a-cStor-volume"></a>Expanding the cStor Volume Capacity</h3>
