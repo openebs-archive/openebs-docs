@@ -23,6 +23,7 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 
 
+
 <font size="5">Admin operations</font>
 
 [Create a Jiva Pool](#create-a-pool)
@@ -36,7 +37,8 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>User Operations</h2>
 
-<br>
+
+
 
 <h3><a class="anchor" aria-hidden="true" id="simple-provisioning-of-jiva"></a>Simple Provisioning of Jiva</h3>
 
@@ -149,7 +151,7 @@ Once the storage class is created, provision the volumes using the standard PVC 
 
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="create-a-pool"></a>Create a Jiva Pool</h3>
 
