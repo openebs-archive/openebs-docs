@@ -25,15 +25,15 @@ By doing all of the above, NDM contributes to overall ease of provisioning of pe
 
 <br>
 
-NDM is deployed as a daemonset during installation of OpenEBS. NDM daemonset discovers the disks on each node and creates a custom resource call Block Device or BD. `blockdevice` CR is newly introduced in 1.0 release of OpenEBS and the old `disk` CR will be slowly deprecated in the future releases. 
+NDM is deployed as a daemonset during installation of OpenEBS. NDM daemonset discovers the disks on each node and creates a custom resource called Block Device or BD. This custor CR `blockdevice` is newly introduced in 1.0 release of OpenEBS and the old `disk` CR will be slowly deprecated in the future releases. 
 
-`disk` CRs in SPC configuration specification of cStor Pools will continue to work as NDM is backward compatible. 
+The `disk` CRs in SPC configuration specification of cStor Pools will continue to work as NDM is backward compatible. 
 
 
 
 ## Privileged access
 
-NDM daemon runs in containers and has to access the underlying storage devices and run in Privileged mode. NDM requires privileged mode because it requires access to /dev and /sys directories for monitoring the devices attached and also to fetch the details of the attached device using various probes. NDM is responsible for discovery of the block devices and filtering out devices that should not be used by OpenEBS; for example the disk that has OS filesystem. Earlier, to detect the OS disk, the NDM pod by default mounted the `/proc/1/mounts` file, which is restricted on nodes that have SELinux=on. This is now fixed by mounting the `/proc` directory of the host inside the container and then loading the mount file.
+NDM daemon runs in containers and has to access the underlying storage devices and run in Privileged mode. NDM requires privileged mode because it requires access to /dev and /sys directories for monitoring the attached devices and also to fetch the details of the attached device using various probes. NDM is responsible for discovery of the block devices and filtering out devices that should not be used by OpenEBS; for example the disk that has OS filesystem. Earlier, to detect the OS disk, the NDM pod by default mounted the `/proc/1/mounts` file, which is restricted on nodes that have SELinux=on. This is now fixed by mounting the `/proc` directory of the host inside the container and then loading the mount file.
 
 So at a high level, to allow OpenEBS to run in privileged mode in selinux=on nodes, the cluster should be configured to grant privileged access to OpenEBS service account.
 
@@ -52,7 +52,7 @@ So at a high level, to allow OpenEBS to run in privileged mode in selinux=on nod
 - Add `Disk` as Kubernetes custom resource with following properties:
   - spec: The following will be updated if they are available.
     - Device Path
-    - Device Links ( by id, by name
+    - Device Links ( by id, by name)
     - Vendor and Model information
     - WWN and Serial
     - Capacity
@@ -74,7 +74,7 @@ So at a high level, to allow OpenEBS to run in privileged mode in selinux=on nod
   - If OpenEBS is installed using helm, update the filters in the configmap of values.yaml and do the helm upgrade
   - Or, directly edit NDM configmap using `kubectl edit` and update the filters
 
-
+More details can be find from [here](/docs/ugndm.md).
 
 ## NDM Roadmap:
 
