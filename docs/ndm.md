@@ -7,12 +7,99 @@ sidebar_label: NDM
 
 
 
-Overview
+Node Device Manager or NDM is an important component in the OpenEBS architecture. NDM treats block devices as resources that need to be monitored and managed just like other resources such as CPU, Memory and Network. It is a daemonset which runs on each node, detects attached block devices based on the filters and loads them as block devices custom resource into Kubernetes. These custom resources are aimed towards helping hyper-converged Storage Operators by providing abilities like:
+
+- Easy to access inventory of Block Devices available across the Kubernetes Cluster.
+- Predict failures on the Disks to help with taking preventive actions.
+- Allow for dynamically attaching/detaching Disks to a Storage Pod, without requiring a restart of it.
+
+
+
+By doing all of the above, NDM contributes to overall ease of provisioning of persistent volumes. 
+
+
+
+<br>
+
+<img src="/docs/assets/svg/ndm.svg" alt="OpenEBS configuration flow" style="width:80%">
+
+<br>
+
+NDM is deployed as a daemonset during installation of OpenEBS. NDM daemonset discovers the disks on each node and creates a custom resource call Block Device or BD. `blockdevice` CR is newly introduced in 1.0 release of OpenEBS and the old `disk` CR will be slowly deprecated in the future releases. 
+
+`disk` CRs in SPC configuration specification of cStor Pools will continue to work as NDM is backward compatible. 
+
+
+
+## Privileged access
+
+NDM daemon runs in containers and has to access the underlying storage devices and run in Privileged mode. NDM requires privileged mode because it requires access to /dev and /sys directories for monitoring the devices attached and also to fetch the details of the attached device using various probes. NDM is responsible for discovery of the block devices and filtering out devices that should not be used by OpenEBS; for example the disk that has OS filesystem. Earlier, to detect the OS disk, the NDM pod by default mounted the `/proc/1/mounts` file, which is restricted on nodes that have SELinux=on. This is now fixed by mounting the `/proc` directory of the host inside the container and then loading the mount file.
+
+So at a high level, to allow OpenEBS to run in privileged mode in selinux=on nodes, the cluster should be configured to grant privileged access to OpenEBS service account.
+
+
+
+
+
+## NDM daemonset functions:
+
+- *Discover* block devices attached to a Kubernetes Node
+  - Discover block devices on startup - create and/or update status.
+  - Maintain cluster-wide unique id of the disk using the following schemes:
+    - Hash of WWN, Serial, Vendor, Model ( if available and unique across nodes )
+    - Hash of Path, Hostname ( for ephemeral disks or if above values are unavailable)
+- Detect block device addition/removal from a node and update the status of disk
+- Add `Disk` as Kubernetes custom resource with following properties:
+  - spec: The following will be updated if they are available.
+    - Device Path
+    - Device Links ( by id, by name
+    - Vendor and Model information
+    - WWN and Serial
+    - Capacity
+    - Sector Size
+  - labels:
+    - hostname (kubernetes.io/hostname)
+    - disk-type (ndm.io/disk-type)
+    - Managed (ndm.io/managed)
+  - status can have the following values:
+    - Active : Disk is detected on the node
+    - Inactive : Disk was detected earlier but doesn't exist at the given node anymore
+    - Unknown : The NDM was stopped on the node where disk was last detected
+
+## Filters:
+
+- Configure filters for the type of disks to be added as Disks. The filters can be configured either via vendor type or via device path patterns or mount point.
+- Filters are of either `include filters` or `exclude filters` . They are configured as configmap. Admin user can configure these filters at the time of installation of OpenEBS by changing the NDM configmap either in the OpenEBS operator yaml file or in the helm values.yaml file. If these filters need to be updated after the installation, then one of the following methods can be followed.
+  - If OpenEBS is installed using operator.yaml file, update the filters in the configmap and apply the operator.yaml
+  - If OpenEBS is installed using helm, update the filters in the configmap of values.yaml and do the helm upgrade
+  - Or, directly edit NDM configmap using `kubectl edit` and update the filters
+
+
+
+## NDM Roadmap:
+
+- **Auto provisioning of disks using CSI drivers of external storage:** NDM provisioner will invoke the NDM agent which inturn will initiate the provisioning of an external disk through a corresponding CSI driver
+
+
+
+<br>
+
+<hr>
+
+<br>
+
+## See Also:
+
+### [OpenEBS Architecture](/docs/next/architecture.html)
+
+### [Local PV](/docs/next/localpv.html)
+
 
 
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};

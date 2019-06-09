@@ -41,7 +41,7 @@ openebs.io/cas-type: local
 provisioner: openebs.io/local
 ```
 
-When a PVC is invoked using the above storage class, OpenEBS local provisioner uses NDM operator and reserves a matching disk on any worker node.
+When a PVC is invoked using the above storage class, OpenEBS local provisioner uses NDM operator and reserves a matching disk on the worker node where application pod is being scheduled.
 
 
 
@@ -76,7 +76,7 @@ When a PVC is invoked using the above storage class, OpenEBS local provisioner u
 
   
 
-## Limitations (and Roadmap items ) OpenEBS Local PVs
+## Limitations (or Roadmap items ) OpenEBS Local PVs
 
 - In OpenEBS 1.0 RC1, the data on the disk or host path is not erased when a Local PV is deleted
 - Size of the LocalPV cannot be increased dynamically. LVM type of functionality inside Local PVs is a potential feature for roadmap
