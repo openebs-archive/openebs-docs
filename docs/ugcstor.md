@@ -419,9 +419,31 @@ After the StoragePoolClaim configuration YAML spec is created, run the following
 kubectl apply -f cstor-pool1-config.yaml
 ```
 
-If the pool creation is successful, you will see the example result as shown below.
+Verify cStor Pool configuration is created successfully using the following command.
 
-<div class="co">storagepoolclaim.openebs.io "cstor-disk-pool" created</div>
+```
+kubectl get spc
+```
+
+The following is an example output.
+
+```
+NAME AGE
+cstor-disk 13s
+```
+
+Verify cStor Pool is created successfully using the following command.
+
+```
+kubectl get csp
+```
+
+The following is an example output.
+
+```
+NAME ALLOCATED FREE CAPACITY STATUS TYPE AGE
+cstor-disk-4tfw 77K 39.7G 39.8G Healthy striped 42s
+```
 
 **Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` and update the `maxPools` count accordingly. More details can be found [here](/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node).
 
