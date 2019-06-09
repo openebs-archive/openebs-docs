@@ -55,7 +55,6 @@ sidebar_label: cStor
 
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>User Operations</h2>
 
-<br>
 
 <h3><a class="anchor" aria-hidden="true" id="provisioning-a-cStor-volume"></a>Provisioning a cStor volume</h3>
 
@@ -295,7 +294,6 @@ kubectl get pod -n <openebs_installed_namespace> | grep <pvc_name>
 
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
 
-<br>
 
 <h3><a class="anchor" aria-hidden="true" id="creating-cStor-storage-pools"></a>Creating cStor Storage Pools</h3>
 
@@ -1202,7 +1200,16 @@ This activity can be do by some set of manual steps. In this section, you can de
 
 <br>
 
-<hr>
+## See Also:
+
+
+
+### [Understand cStorPools ](/docs/next/cstor.html#cstor-pools)
+
+### [cStorPool use case for Prometheus](/docs/next/prometheus.html)
+
+### [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
+
 
 <br>
 
