@@ -39,7 +39,6 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 
 
-
 <h3><a class="anchor" aria-hidden="true" id="simple-provisioning-of-jiva"></a>Simple Provisioning of Jiva</h3>
 
 To quickly provision a jiva volume using the default pool and storageClass, use the following command
@@ -647,6 +646,8 @@ provisioner: openebs.io/provisioner-iscsi
  <br>
 
 ## See Also:
+
+### [Understanding Jiva](/docs/next/jiva.html)
 
 ### [Backup and Restore](/docs/next/backup.html)
 
