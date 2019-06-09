@@ -341,15 +341,16 @@ kubectl get pods -n openebs
 
 In the successful installation of OpenEBS, you should see an example output like below.
 
-<div class="co">NAME                                          READY     STATUS    RESTARTS   AGE
-maya-apiserver-6d9858ffc9-x6rlp               1/1       Running   0          3h
-openebs-admission-server-56665784df-xwt8h     1/1       Running   0          3h
-openebs-localpv-provisioner-94f6477bb-fwmnm   1/1       Running   0          3h
-openebs-ndm-crz9z                             1/1       Running   0          3h
-openebs-ndm-l7mbd                             1/1       Running   0          3h
-openebs-ndm-nvlrg                             1/1       Running   0          3h
-openebs-provisioner-5dbd679f8c-pqphv          1/1       Running   0          3h
-openebs-snapshot-operator-66d89b9bcf-6dkj7    2/2       Running   0          3h
+<div class="co">NAME READY STATUS RESTARTS AGE
+maya-apiserver-64b68fdb45-sxbwx 1/1 Running 0 4m22s
+openebs-admission-server-9b48bcf5f-l85rt 1/1 Running 0 4m16s
+openebs-localpv-provisioner-79c59bf5db-tkgln 1/1 Running 0 4m15s
+openebs-ndm-42446 1/1 Running 0 4m19s
+openebs-ndm-4s8x9 1/1 Running 0 4m19s
+openebs-ndm-knc9g 1/1 Running 0 4m19s
+openebs-ndm-operator-db4c77957-dgp4t 1/1 Running 0 4m18s
+openebs-provisioner-66f767bbf7-7t4vs 1/1 Running 0 4m21s
+openebs-snapshot-operator-656f6b7878-ghrgr 2/2 Running 0 4m20s
 </div>
 
 
@@ -371,11 +372,12 @@ kubectl get sc
 
 In the successful installation, you should 3 new StorageClasses
 
-<div class="co">NAME                        PROVISIONER                                                AGE
-openebs-hostpath            openebs.io/local                                           3h
-openebs-jiva-default        openebs.io/provisioner-iscsi                               3h
-openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   3h
-standard (default)          kubernetes.io/gce-pd                                       4h
+<div class="co">NAME PROVISIONER AGE
+openebs-device openebs.io/local 4m24s
+openebs-hostpath openebs.io/local 4m24s
+openebs-jiva-default openebs.io/provisioner-iscsi 4m25s
+openebs-snapshot-promoter volumesnapshot.external-storage.k8s.io/snapshot-promoter 4m25s
+standard (default) kubernetes.io/gce-pd 31m
 </div>
 
 
@@ -393,15 +395,16 @@ NDM also creates a new sparse-disk for each node on which it is running if the c
 List the disk CRs to verify the CRs are appearing as expected
 
 ```
-kubectl get disk
+kubectl get blockdevice -n openebs
 ```
 
 Following is an example output.
 
-<div class="co">NAME                                      SIZE          STATUS    AGE
-disk-acee6c6a32c780ebfba58db7b62ca3ab     42949672960   Active    1m
-disk-c43b6655194d59f05d970fa255682e2f     42949672960   Active    1m
-disk-f2356613045748aba5c94aa292a2efc9     42949672960   Active    1m
+<div class="co">NAME SIZE CLAIMSTATE STATUS AGE
+blockdevice-936911c5c9b0218ed59e64009cc83c8f 42949672960 Unclaimed Active 3m
+sparse-ae21597a20cd1beac18796ca7af46619 10737418240 Unclaimed Active 11m
+sparse-cd33249702d148b2f65ac45c63029b18 10737418240 Unclaimed Active 11m
+sparse-eb10951fecd8e067c533473eedc5a258 10737418240 Unclaimed Active 11m
 </div>
 
 
@@ -413,6 +416,18 @@ To know which disk CR belongs to which node, check the node label set on the CR 
 kubectl describe disk <disk-cr>
 ```
 
+
+**Verify cStor Storage pool**
+
+```
+kubectl get csp
+```
+
+Following is an example output.
+
+<div class="co">NAME ALLOCATED FREE CAPACITY STATUS TYPE AGE
+cstor-disk-4tfw 77K 39.7G 39.8G Healthy striped 42s
+</div>
 
 
 
