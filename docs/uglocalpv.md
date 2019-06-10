@@ -132,7 +132,7 @@ kubectl get pod
 The output will be similar to the following.
 
 <div class="co">NAME                       READY   STATUS    RESTARTS   AGE
-    percona-7b64956695-hs7tv   1/1     Running   0          21s</div>
+percona-7b64956695-hs7tv   1/1     Running   0          21s</div>
 
 Verify the PVC status using the following command.
 
@@ -143,7 +143,7 @@ kubectl get pvc
 The output will be similar to the following.
 
 <div class="co">NAME              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
-    demo-vol1-claim   Bound    pvc-2e4b123e-88ff-11e9-bc28-42010a8001ff   5G         RWO            openebs-hostpath   28s</div>
+demo-vol1-claim   Bound    pvc-2e4b123e-88ff-11e9-bc28-42010a8001ff   5G         RWO            openebs-hostpath   28s</div>
 
 Verify the PV status using the following command.
 
@@ -154,7 +154,7 @@ kubectl get pv
 The output will be similar to the following.
 
 <div class="co">NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS       REASON   AGE
-    pvc-2e4b123e-88ff-11e9-bc28-42010a8001ff   5G         RWO            Delete           Bound    default/demo-vol1-claim   openebs-hostpath            22s</div>
+pvc-2e4b123e-88ff-11e9-bc28-42010a8001ff   5G         RWO            Delete           Bound    default/demo-vol1-claim   openebs-hostpath            22s</div>
 
 
 
@@ -253,7 +253,7 @@ kubectl get pod
 The output will be similar to the following.
 
 <div class="co">NAME                       READY   STATUS    RESTARTS   AGE
-    percona-7b64956695-lnzq4   1/1     Running   0          46s</div>
+percona-7b64956695-lnzq4   1/1     Running   0          46s</div>
 
 Verify the PVC status using the following command.
 
@@ -264,7 +264,7 @@ kubectl get pvc
 The output will be similar to the following.
 
 <div class="co">NAME              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS     AGE
-    demo-vol1-claim   Bound    pvc-d0ea3a06-88fe-11e9-bc28-42010a8001ff   5G         RWO            openebs-device   38s</div>
+demo-vol1-claim   Bound    pvc-d0ea3a06-88fe-11e9-bc28-42010a8001ff   5G         RWO            openebs-device   38s</div>
 
 Verify the PV status using the following command.
 
@@ -275,7 +275,7 @@ kubectl get pv
 The output will be similar to the following.
 
 <div class="co">NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS     REASON   AGE
-    pvc-d0ea3a06-88fe-11e9-bc28-42010a8001ff   5G         RWO            Delete           Bound    default/demo-vol1-claim   openebs-device            35s</div>
+pvc-d0ea3a06-88fe-11e9-bc28-42010a8001ff   5G         RWO            Delete           Bound    default/demo-vol1-claim   openebs-device            35s</div>
 
 <br>
 
