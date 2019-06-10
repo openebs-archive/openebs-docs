@@ -5,6 +5,7 @@ sidebar_label: cStor
 ---
 ------
 
+This user guide section provides the operations need to performed by the User and the Admin for configuring cStor related tasks. 
 
 
 <font size="5">User operations</font>
@@ -241,7 +242,7 @@ This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` that we
 
 <h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
 
-OpenEBS volume can be backed up and restore along with application using OpenEBS velero plugin. It helps for taking backup of OpenEBS volumes and then restoration of the data whenever it needed. The steps for taking backup and restore is given [here](/docs/next/backup.html).
+OpenEBS volume can be backed up and restore along with application using OpenEBS velero plugin. It helps the user for taking backup of OpenEBS volumes to a thrid party storage location and then restoration of the data whenever it needed. The steps for taking backup and restore is given [here](/docs/next/backup.html).
 
 
 
