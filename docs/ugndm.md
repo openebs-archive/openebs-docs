@@ -141,14 +141,14 @@ Currently, NDM is not selecting partition disks for creating device resource. Bu
 4. - kubernetes.io/hostname
    - storage
    - links
-     - This field should be filed fo by-id and by-path. These details can be get from running `udevadm info -q property -n <device_path like /dev/sda1>` 
+     - This field should be filed for by-id and by-path. These details can be get from worker node by running `udevadm info -q property -n <device_path like /dev/sda1>` 
    - path
 
 5. Apply the modified YAML file to create the blockdevice CR for the provided partitioned device path.
 
 6. Repeat the same steps for each partitioned device and create blockdevice CR for each device.
 
-7. Get the blockdevice name from `kubectl get blockdevice -n openebs` command.
+7. Verify the blockdevice is created by running `kubectl get blockdevice -n openebs` command.
 
 <br>
 
