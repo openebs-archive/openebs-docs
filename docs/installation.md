@@ -23,6 +23,7 @@ sidebar_label: Installation
 
 - Install through 
   - **[helm](#installation-through-helm) chart**  `(or)`
+    Note: The latest OpenEBS version 1.0.0-RC1 build installation is only supported through kubectl apply method.
 
   - **[kubectl yaml](#installation-through-kubectl) spec file**
 
@@ -42,7 +43,7 @@ sidebar_label: Installation
 
 <br>
 
-iSCSI client is a pre-requisite for provisioning volumes and not for installation of OpenEBS. However, it is recommended that the [iSCSI client is setup](/docs/next/prerequisites.html) and iscsid service is running before proceeding with the installation
+iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However, it is recommended that the [iSCSI client is setup](/docs/next/prerequisites.html) and iscsid service is running on worker nodes before proceeding with the OpenEBS installation.
 
 <br>
 
