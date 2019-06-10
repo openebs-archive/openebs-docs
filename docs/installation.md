@@ -120,7 +120,7 @@ In the **custom installation mode**, you can achieve the following advanced conf
 
 - Choose a set of nodes for OpenEBS control plane pods.
 - Choose a set of nodes for OpenEBS storage pool.
-- You can customise the disk filters that need to be excluded from being used.
+- You can customise the block device filters that need to be excluded from being used.
 
 Follow the below instructions to do any of the above configurations and then install OpenEBS through helm and values.yaml
 
@@ -136,7 +136,7 @@ See the example [here](#example-nodeselector-helm).
 
 <font size="5">Setup nodeSelectors for Node Disk Manager (NDM)</font> 
 
-OpenEBS cStorPool is constructed using the disk custom resources or disk CRs created by Node Disk Manager or NDM. If you want to consider only some nodes in Kubernetes cluster to be used for OpenEBS storage (for hosting cStor Storage Pool instances), then use nodeSelector field of NDM PodSpec and dedicate those nodes to NDM.  
+OpenEBS cStorPool is constructed using the block device custom resources or block device CRs created by Node Disk Manager or NDM. If you want to consider only some nodes in Kubernetes cluster to be used for OpenEBS storage (for hosting cStor Storage Pool instances), then use nodeSelector field of NDM PodSpec and dedicate those nodes to NDM.  
 
 See an example [here](#example-nodeselector-helm). 
 
@@ -234,7 +234,7 @@ Example nodeSelector configuration for OpenEBS control plane components is given
 
 <font size="5">Setup nodeSelectors for Node Disk Manager (NDM)</font> 
 
-OpenEBS cStorPool is constructed using the disk custom resources or disk CRs created by Node Disk Manager or NDM. If you want to consider only some nodes in Kubernetes cluster to be used for OpenEBS storage (for hosting cStor Storage Pool instances), then specify a map of key-value pair and then attach the same key-value pair as labels to the required nodes on the cluster. 
+OpenEBS cStorPool is constructed using the block device custom resources or block device created by Node Disk Manager or NDM. If you want to consider only some nodes in Kubernetes cluster to be used for OpenEBS storage (for hosting cStor Storage Pool instances), then specify a map of key-value pair and then attach the same key-value pair as labels to the required nodes on the cluster. 
 
 Example nodeSelector configuration for OpenEBS control plane components is given [here](#example-nodeselector-yaml). 
 
@@ -385,9 +385,9 @@ standard (default) kubernetes.io/gce-pd 31m
 
 <br>
 
-**Verify DISK CRs** 
+**Verify Block Device CRs** 
 
-NDM daemonset creates a disk CR for each disk that is discovered on the node with two exceptions
+NDM daemonset creates a block device CR for each block devices that is discovered on the node with two exceptions
 
 - The disks that match the exclusions in 'vendor-filter'  and 'path-filter'
 - The disks that are already mounted in the node
