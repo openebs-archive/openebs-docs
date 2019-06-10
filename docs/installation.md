@@ -23,6 +23,7 @@ sidebar_label: Installation
 
 - Install through 
   - **[helm](#installation-through-helm) chart**  `(or)`
+    
     Note: The latest OpenEBS version 1.0.0-RC1 build installation is only supported through kubectl apply method.
 
   - **[kubectl yaml](#installation-through-kubectl) spec file**
@@ -273,7 +274,7 @@ The following configuration must added as environmental variable in the maya-api
 
 The OpenEBS installation will create default cStor sparse pool based on this configuration value. If "true", a default cstor sparse pool will be configured, if "false", it will not be configure a default cStor sparse pool. The default configured value is "false". The use of cStor sparse pool is for testing purposes only. 
 
-The following configuration must added as environmental variable in the maya-apiserver deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
+The following configuration must be added as environmental variable in the maya-apiserver deployment specification for the installation of cStor pool using sparse disks. This change must be done before applying the OpenEBS operator YAML file. 
 
 **Example:**
 
@@ -365,13 +366,13 @@ The control plane pods `openebs-provisioner`, `maya-apiserver` and `openebs-snap
 
 
 
-List the storage classes to check if OpenEBS has installed three new StorageClasses.
+List the storage classes to check if OpenEBS has installed with default StorageClasses.  
 
 ```
 kubectl get sc
 ```
 
-In the successful installation, you should 3 new StorageClasses
+In the successful installation, you should have the following StorageClasses are created.
 
 <div class="co">NAME PROVISIONER AGE
 openebs-device openebs.io/local 4m24s
@@ -391,9 +392,9 @@ NDM daemonset creates a disk CR for each disk that is discovered on the node wit
 - The disks that match the exclusions in 'vendor-filter'  and 'path-filter'
 - The disks that are already mounted in the node
 
-NDM also creates a new sparse-disk for each node on which it is running if the corresponding ENV variable is set to true. These sparse disks are used in creating cStorStoragePool called `cstor-sparse-pool` . 
+NDM also creates a new sparse-disk for each node on which it is running.These sparse disks are used in creating cStorStoragePool called `cstor-sparse-pool` if the corresponding ENV variable is set to true. More information about the setting of this ENV variable can be find from [here](#default-cstor-sparse-pool). 
 
-List the disk CRs to verify the CRs are appearing as expected
+List the block device  CRs to verify the CRs are appearing as expected.
 
 ```
 kubectl get blockdevice -n openebs
