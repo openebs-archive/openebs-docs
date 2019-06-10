@@ -17,7 +17,7 @@ sidebar_label: Installation
 
 
 
-- Verify if [iSCSI.d](#verify-iscsi-client) service is running
+- Verify if iSCSI client (#verify-iscsi-client) is running
 
 - Set Kubernetes [admin context](#set-cluster-admin-user-context-and-rbac) and RBAC
 
@@ -42,7 +42,7 @@ sidebar_label: Installation
 
 <br>
 
-iSCSI client is a pre-requisite for provisioning volumes and not for installation of OpenEBS. However, it is recommended that the [iSCSI client is setup](/docs/next/prerequisites.html) and iSCSI.d service is running before proceeding with the installation
+iSCSI client is a pre-requisite for provisioning volumes and not for installation of OpenEBS. However, it is recommended that the [iSCSI client is setup](/docs/next/prerequisites.html) and iscsid service is running before proceeding with the installation
 
 <br>
 
