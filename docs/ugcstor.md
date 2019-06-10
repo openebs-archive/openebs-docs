@@ -34,7 +34,7 @@ This user guide section provides the operations need to performed by the User an
 
 [Setting Storage Polices](#cstor-storage-policies)
 
-[Monitoring a cStor Pool](#monitoring-a-cStor-pool)
+[Monitoring a cStor Pool](#monitor-pool)
 
 [Setting Performance Tunings](#setting-performance-tunings)
 
