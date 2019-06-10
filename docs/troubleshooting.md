@@ -214,9 +214,9 @@ kubectl delete jobs -l openebs.io/cas-type=jiva -n <openebs_namespace>
 
 In addition, the job is set with a TTL to get cleaned up, if the cluster version is greater than 1.12. However, for the feature to work, the alpha feature needs to be enabled in the cluster. More information can be read from [here](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#clean-up-finished-jobs-automatically).
 
-<h3><a class="anchor" aria-hidden="true" id="jiva-deletion-scrub-job"></a>cStor Volume Replicas are not getting deleted properly</h3>
+<h3><a class="anchor" aria-hidden="true" id="cvr-deletion"></a>cStor Volume Replicas are not getting deleted properly</h3>
 
-Sometimes, there are chances that cStor volumes Replicas (CVR) may not get deleted properly if you delete the corresponding PVC. Below workaround will resolve this issue. Perform the following command.
+Sometimes, there are chances that cStor volumes Replicas (CVR) may not get deleted properly if you completeley delete the openebs installed namespace. Below workaround will resolve this issue. Perform the following command.
 
 ```
 kubectl edit cvr <cvr_name> -n openebs
