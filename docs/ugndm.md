@@ -42,7 +42,7 @@ filterconfigs:
 
 <h3><a class="anchor" aria-hidden="true" id="Exclude-filters"></a>Exclude filters</h3>
 
-NDM do some filtering on the disks to exclude, for example boot disk. By default, NDM excludes the following device path to create disk CR. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
+NDM do some filtering on the disks to exclude, for example boot disk. By default, NDM excludes the following device path to create block device CR. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
 ```
 /dev/loop - loop devices.
@@ -145,7 +145,6 @@ Currently, NDM is not selecting partition disks for creating device resource. Bu
 <br>
 
 ## See Also:
-
 
 
 ### [Understanding Node Disk Manager](/docs/next/ndm.html)
