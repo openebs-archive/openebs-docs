@@ -203,8 +203,7 @@ In the **custom installation mode**, you can achieve the following advanced conf
 - Choose a set of nodes for OpenEBS control plane pods
 - Choose a set of nodes for OpenEBS storage pool
 - You can customise the disk filters that need to be excluded from being used
-- (Optional)Configure volume related configuration as Environmental variable in the maya-apiserver deployment specification.
-
+- (Optional) Configure Environmental Variable in OpenEBS operator YAML
 
 
 For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-1.0.0-RC1.yaml" target="_blank">download</a> the **openebs-operator-1.0.0-RC1** file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
@@ -412,7 +411,7 @@ sparse-eb10951fecd8e067c533473eedc5a258 10737418240 Unclaimed Active 11m
 
 
 
-To know which disk CR belongs to which node, check the node label set on the CR by doing the following command.
+To know which block device CR belongs to which node, check the node label set on the CR by doing the following command.
 
 ```
 kubectl describe disk <disk-cr>
