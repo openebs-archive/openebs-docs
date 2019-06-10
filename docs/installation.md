@@ -17,7 +17,7 @@ sidebar_label: Installation
 
 
 
-- Verify if iSCSI client (#verify-iscsi-client) is running
+- Verify if [iSCSI client](#verify-iscsi-client) is running
 
 - Set Kubernetes [admin context](#set-cluster-admin-user-context-and-rbac) and RBAC
 
