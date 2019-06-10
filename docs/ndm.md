@@ -11,7 +11,7 @@ Node Device Manager or NDM is an important component in the OpenEBS architecture
 
 - Easy to access inventory of Block Devices available across the Kubernetes Cluster.
 - Predict failures on the Disks to help with taking preventive actions.
-- Allow for dynamically attaching/detaching Disks to a Storage Pod, without requiring a restart of it.
+- Allow for dynamically attaching/detaching Disks to a Storage Pod, without requiring a restart of corresponding NDM running on the Node where the disk is attache/detached. 
 
 
 
@@ -25,7 +25,7 @@ By doing all of the above, NDM contributes to overall ease of provisioning of pe
 
 <br>
 
-NDM is deployed as a daemonset during installation of OpenEBS. NDM daemonset discovers the disks on each node and creates a custom resource called Block Device or BD. This custor CR `blockdevice` is newly introduced in 1.0 release of OpenEBS and the old `disk` CR will be slowly deprecated in the future releases. 
+NDM is deployed as a daemonset during installation of OpenEBS. NDM daemonset discovers the disks on each node and creates a custom resource called Block Device or BD. This custor CR `blockdevice` is newly introduced in 1.0.0 release of OpenEBS and the old `disk` CR will be slowly deprecated in the future releases. 
 
 The `disk` CRs in SPC configuration specification of cStor Pools will continue to work as NDM is backward compatible. 
 
@@ -74,7 +74,7 @@ So at a high level, to allow OpenEBS to run in privileged mode in selinux=on nod
   - If OpenEBS is installed using helm, update the filters in the configmap of values.yaml and do the helm upgrade
   - Or, directly edit NDM configmap using `kubectl edit` and update the filters
 
-More details can be find from [here](/docs/next/ndm.html).
+More details can be find from [here](/docs/next/ugndm.html).
 
 ## NDM Roadmap:
 
@@ -93,6 +93,7 @@ More details can be find from [here](/docs/next/ndm.html).
 ### [OpenEBS Architecture](/docs/next/architecture.html)
 
 ### [Local PV](/docs/next/localpv.html)
+
 
 
 
