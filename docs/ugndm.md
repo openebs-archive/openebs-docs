@@ -156,7 +156,7 @@ Currently, NDM is not selecting partition disks for creating device resource. Bu
 
 
 
-### [Node Disk Manager User Guide](/docs/next/ndm.html)
+### [Understanding Node Disk Manager](/docs/next/ndm.html)
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
