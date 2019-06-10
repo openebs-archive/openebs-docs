@@ -24,7 +24,7 @@ sidebar_label: Installation
 - Install through 
   - **[helm](#installation-through-helm) chart**  `(or)`
     
-    Note: The latest OpenEBS version 1.0.0-RC1 build installation is only supported through kubectl apply method.
+    Note: The latest OpenEBS version 1.0.0-RC1 build installation is only supported through `kubectl apply` method.
 
   - **[kubectl yaml](#installation-through-kubectl) spec file**
 
@@ -73,7 +73,7 @@ kubectl config set-context admin-ctx --cluster=gke_strong-eon-153112_us-central1
 
 
 
-Set the existing cluster-admin user context or the newly created context by using the following command
+Set the existing cluster-admin user context or the newly created context by using the following command.
 
 Example:
 
