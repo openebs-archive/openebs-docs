@@ -58,19 +58,19 @@ The following is the snippet of NDM configuration file from openebs operator YAM
 ```
 filterconfigs:
   - key: os-disk-exclude-filter
-        name: os disk exclude filter
-        state: true
-        exclude: "/,/etc/hosts,/boot"
-      - key: vendor-filter
-        name: vendor filter
-        state: true
-        include: ""
-        exclude: "CLOUDBYT,OpenEBS"
-      - key: path-filter
-        name: path filter
-        state: true
-        include: ""
-        exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"    
+    name: os disk exclude filter
+    state: true
+    exclude: "/,/etc/hosts,/boot"
+  - key: vendor-filter
+    name: vendor filter
+    state: true
+    include: ""
+    exclude: "CLOUDBYT,OpenEBS"
+  - key: path-filter
+    name: path filter
+    state: true
+    include: ""
+    exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"    
 ```
 
 It is also possible to customize by adding more disk types associated with your nodes. For example, used disks, unwanted disks and so on. This change must be done in the 'openebs-operator.yaml' file that you have downloaded before OpenEBS installation. 
