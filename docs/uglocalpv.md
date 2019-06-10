@@ -356,7 +356,7 @@ kubectl describe sc openebs-hostpath
 
 ### [Understand OpenEBS Local PVs ](/docs/next/localpv.html)
 
-### [Node Disk Manager](/docs/next/ndm.html)
+### [Node Disk Manager](/docs/next/ugndm.html)
 
 
 <br>
