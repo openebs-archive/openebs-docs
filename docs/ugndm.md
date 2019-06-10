@@ -5,11 +5,8 @@ sidebar_label: NDM
 ---
 ------
 
-This section provides the operations need to performed by User and Admin for configuring NDM.
+This section provides the operations need to performed by the Admin for configuring NDM.
 
-<font size="5">User operations</font>
-
-None
 
 <font size="5">Admin operations</font>
 
@@ -21,11 +18,6 @@ None
 
 
 
-<h2><a class="anchor" aria-hidden="true" id="user-operations"></a>User Operations</h2>
-
-There is no operations has to be performed by a User regarding NDM.
-
-<br>
 
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
 
@@ -33,7 +25,7 @@ There is no operations has to be performed by a User regarding NDM.
 
 <h3><a class="anchor" aria-hidden="true" id="Include-filters"></a>Include filters</h3>
 
-There is a configuration for including selected disks also in the operator YAML file under NDM configuration section so that only these blockdevice will be taken for creation of blockdevice CR. Add the blockdevice path in the following configuration for specifying particular disks.
+There is a configuration for including selected disks in the operator YAML file under NDM configuration section so that only these blockdevice will be taken for the creation of blockdevice CR. Add the blockdevice path in the following configuration for specifying particular disks. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
 This change must be done in the `openebs-operator.yaml` file that you have downloaded before OpenEBS installation. 
 
