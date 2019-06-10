@@ -32,7 +32,7 @@ cluster-admin, start the default installation using either
   ```
   helm install --namespace openebs --name openebs stable/openebs
   ```
-  **Note:**The helm based installation is only supported for main version releases. Latest RC build installtion is only supported through `kubectl apply` method. Current latest main version is 0.9.0.  
+  **Note:** The helm based installation is only supported for main version releases. Latest 1.0.0-RC1 build installation is only supported through `kubectl apply` method. Current latest main version is 0.9.0.  
 
   <font size="4">(or)</font>
 
@@ -46,8 +46,7 @@ cluster-admin, start the default installation using either
 - [Verify if OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation)
 and start provisioning OpenEBS volumes through Kubernetes PVC
 interface by using `kubectl` command, for more details on how to
-provision OpenEBS volumes, see
-[provisioning OpenEBS volumes](/docs/next/provisionvols.html)
+provision different types of OpenEBS volumes see guides for [cStor volume](#/docs/next/ugcstor.html), [Jiva Volume](#/docs/next/jivaguide.html) and [OpenEBS local Volume](#/docs/next/uglocalpv.html).
 
 <br>
 
