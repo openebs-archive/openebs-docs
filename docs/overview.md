@@ -14,8 +14,8 @@ provided with a dedicated storage controller. OpenEBS
 implements granular storage policies and isolation that enable users
 to optimize storage for each specific workload. OpenEBS runs
 in user space and does not have any Linux kernel module dependencies.
-See OpenEBS  <a href="/docs/next/features.html">Features & Benefits</a>
-and <a href="/docs/next/usecases.html" target="">Use cases</a>.
+See OpenEBS  <a href="/1.0.0-RC1/docs/next/features.html">Features & Benefits</a>
+and <a href="/1.0.0-RC1/docs/next/usecases.html" target="">Use cases</a>.
 
 <br>
 
@@ -23,7 +23,7 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 
 - OpenEBS requires iSCSI client to be configured and iscsid service
   running on the host nodes.
-  Verify if [iSCSI service is up](/docs/next/prerequisites.html) and
+  Verify if [iSCSI service is up](/1.0.0-RC1/docs/next/prerequisites.html) and
   running before starting the installation.
 
 - **Installation**
@@ -34,12 +34,12 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
   kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.0.0-RC1.yaml
   ```
 
-  For advanced installation steps, see [Installation](/docs/next/installation.html) section.
+  For advanced installation steps, see [Installation](/1.0.0-RC1/docs/next/installation.html) section.
 
-- [Verify if OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation)
+- [Verify if OpenEBS is installed successfully](/1.0.0-RC1/docs/next/installation.html#verifying-openebs-installation)
   and start provisioning OpenEBS volumes through Kubernetes PVC
   interface by using `kubectl` command. For more details on how to
-  provision different types of OpenEBS volumes see guides for [cStor volume](/docs/next/ugcstor.html), [Jiva Volume](/docs/next/jivaguide.html) and [OpenEBS local Volume](/docs/next/uglocalpv.html).
+  provision different types of OpenEBS volumes see guides for [cStor volume](/1.0.0-RC1/docs/next/ugcstor.html), [Jiva Volume](/1.0.0-RC1/docs/next/jivaguide.html) and [OpenEBS local Volume](/1.0.0-RC1/docs/next/uglocalpv.html).
 
 <br>
 
@@ -161,11 +161,11 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 
 ## See Also:
 
-### [Container Attached Storage (CAS)](/docs/next/cas.html)
+### [Container Attached Storage (CAS)](/1.0.0-RC1/docs/next/cas.html)
 
 ### <a href="https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/" target="_blank">CNCF CAS Blog </a>
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/1.0.0-RC1/docs/next/architecture.html)
 
 <br><hr><br>
 
