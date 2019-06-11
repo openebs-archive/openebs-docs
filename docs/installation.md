@@ -11,7 +11,7 @@ sidebar_label: Installation
 
 <br>
 
-
+<div class="co">Helm installation will be supported in the 1.0 GA version. For RC1, use the operator.yaml file to proceed with the installation. Note that upgrades are also not supported for 1.0 RC1</div>
 
 <font size="6">Summary:</font>
 
@@ -21,11 +21,7 @@ sidebar_label: Installation
 
 - Set Kubernetes [admin context](#set-cluster-admin-user-context-and-rbac) and RBAC
 
-- Install through 
-  - **[helm](#installation-through-helm) chart**  `(or)`
-    
-    Note: The latest OpenEBS version 1.0.0-RC1 build installation is only supported through `kubectl apply` method.
-
+- Installation
   - **[kubectl yaml](#installation-through-kubectl) spec file**
 
 - [Verify](#verifying-openebs-installation) installation 
@@ -92,92 +88,6 @@ kubectl create clusterrolebinding  <cluster_name>-admin-binding --clusterrole=cl
 <br>
 
 <hr>
-
-<br>
-
-## Installation through helm
-
-<br>
-
-Verify helm is installed and helm repo is updated. See <a href="https://docs.helm.sh/using_helm/#from-script" target="_blank">helm docs</a>  for setting up helm and  simple [instructions below](#helm-rbac) for setting up RBAC for tiller.
-
-
-
-In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace. 
-
-```
-helm install --namespace <custom_namespace> --name openebs stable/openebs
-```
-**Note 1:**The helm based installation is only supported for main version releases. Latest 1.0.0-RC1 build installation is only supported through `kubectl apply` method. Current latest main version is 0.9.0.
-
-**Note 2:** Since Kuberentes 1.12,  if any pod containers does not set its resource requests values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests). 
-
-As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
-
-<br>
-
-In the **custom installation mode**, you can achieve the following advanced configurations
-
-- Choose a set of nodes for OpenEBS control plane pods.
-- Choose a set of nodes for OpenEBS storage pool.
-- You can customise the block device filters that need to be excluded from being used.
-
-Follow the below instructions to do any of the above configurations and then install OpenEBS through helm and values.yaml
-
-
-
-<font size="5">Setup nodeSelectors for OpenEBS control plane</font> 
-
-In a large Kubernetes cluster, you may choose to limit the scheduling of the OpenEBS control plane pods to two or three specific nodes. To do this, use nodeSelector field of PodSpec of OpenEBS control plane pods - *apiserver, volume provisioner,admission-controller and snapshot operator*.  
-
-See the example [here](#example-nodeselector-helm). 
-
-
-
-<font size="5">Setup nodeSelectors for Node Disk Manager (NDM)</font> 
-
-OpenEBS cStorPool is constructed using the block device custom resources or block device CRs created by Node Disk Manager or NDM. If you want to consider only some nodes in Kubernetes cluster to be used for OpenEBS storage (for hosting cStor Storage Pool instances), then use nodeSelector field of NDM PodSpec and dedicate those nodes to NDM.  
-
-See an example [here](#example-nodeselector-helm). 
-
-
-
-<font size="5">Setup disk filters for Node Disk Manager</font> 
-
-NDM by default filters out the below disk patterns and converts the rest of the disks discovered on a given node into DISK CRs as long as they are not mounted. 
-
-`"exclude":"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-"`
-
-If your cluster nodes have different disk types that are to be filtered out (meaning that those should not be created as DISK CRs ), add the additional disk patterns to the exclude list. 
-
-See an example configuration [here](#example-helm-diskfilter)
-
-
-
-<font size="5">Other values.yaml parameters</font>
-
-For customized configuration through helm, use values.yaml or command line parameters. 
-
-Default values for Helm Chart parameters are provided [below](#helm-values).
-
-<br>
-
-After doing the custom configuration in the values.yaml file, run the below command to do the custom installation.
-
-
-
-```
-helm install --namespace <custom_namespace> --name openebs stable/openebs -f values.yaml
-```
-
-
-
-As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
-
-<br>
-
-<hr>
-
 <br>
 
 ## Installation through kubectl 
