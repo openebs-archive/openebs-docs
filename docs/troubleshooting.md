@@ -216,7 +216,7 @@ In addition, the job is set with a TTL to get cleaned up, if the cluster version
 
 <h3><a class="anchor" aria-hidden="true" id="cvr-deletion"></a>cStor Volume Replicas are not getting deleted properly</h3>
 
-Sometimes, there are chances that cStor volumes Replicas (CVR) may not get deleted properly if you completeley delete the openebs installed namespace. Below workaround will resolve this issue. Perform the following command.
+Sometimes, there are chances that cStor volumes Replicas (CVR) may not be deleted properly if you delete the openebs installed namespace. To relsove this issue, perform the following command.
 
 ```
 kubectl edit cvr <cvr_name> -n openebs
