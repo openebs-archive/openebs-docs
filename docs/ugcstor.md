@@ -298,7 +298,7 @@ kubectl get pod -n <openebs_installed_namespace> | grep <pvc_name>
 
 <h3><a class="anchor" aria-hidden="true" id="creating-cStor-storage-pools"></a>Creating cStor Storage Pools</h3>
 
-The cStorStoragePool can be created by specifying the blockDeviceList. The following section will describe about the steps in detail. 
+The cStorStoragePool can be created by specifying the blockDeviceList. The following section will describe the steps in detail. 
 
 <h4><a class="anchor" aria-hidden="true" id="manual-mode"></a>Create a cStorPool by specifying blockDeviceList </h4>
 
@@ -379,13 +379,13 @@ In the above file, change the following parameters as required.
 
 - `poolType`
 
-  This filed  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`.
+  This field  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`.
 
   Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
 - `maxPools`
 
-  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`,  then three nodes are randomly chosen based on the blockDevice name provided in `blockDeviceList` by OpenEBS and one cStorPool instance each will be created on them with provided blockDevice. If even number of blockDevices are available per Node and `poolType` as mirrored, then cStorPool instances will be created using mirrored manner. If many blockDevices are added on each of the Node and chosen `poolType` as `striped` , the cStorPool instance will created using the mentioned disks on each Node.
+  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`,  then three nodes are randomly chosen based on the blockDevice name provided in `blockDeviceList` by OpenEBS and one cStorPool instance will be created on each node. If even number of blockDevices are available per Node and `poolType` as mirrored, then cStorPool instances will be created using mirrored manner. If many blockDevices are added on each of the Node and chosen `poolType` as `striped` , the cStorPool instance will created using the specified disks on each Node.
 
   This value should be less than or equal to the total number of Nodes in the cluster.
 
@@ -394,8 +394,6 @@ In the above file, change the following parameters as required.
   Select the list of unclaimed blockDevice CRs in each participating nodes and enter them under `blockDeviceList`. 
 
   To get the list of blockDevice CRs, use `kubectl get blockdevice -n openebs`. 
-
-  To know the details of the blockdevice such as hostname wher this disk is attached, claim status,  a given blockDevice is attached , use `kubectl describe blockdevice <blockDevice-cr>`.
 
   You must enter all the blockDevice CRs manually together from the selected nodes. 
 
@@ -431,7 +429,7 @@ NAME AGE
 cstor-disk 13s
 ```
 
-Verify cStor Pool is created successfully using the following command.
+Verify if cStor Pool is created successfully using the following command.
 
 ```
 kubectl get csp
