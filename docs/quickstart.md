@@ -23,10 +23,10 @@ sidebar_label: Quickstart
         <li>For using features like Local PV and Backup & Restore, you must require Kubernetes version 1.12.
         </li>
         <li>Understand the <a href="/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
-        <li>Start <a href="/docs/next/installation.html">installation </a> either through helm or through OpenEBS operator. For ease of testing OpenEBS functionality, a default cStor sparse pool and a corresponding StorageClass are created </li>
+        <li>Start <a href="/docs/next/installation.html">installation </a> through OpenEBS operator.</li>
         <li>For test deployments, use default cStor StorageClass called openebs-cstor-sparse and start provisioning cStor OpenEBS volumes. The default cStor pool and StorageClass is disabled by default. This can be enabled during the installation of OpenEBS operator YAML and more details about enabling this feature can be read from <a href="/docs/next/installation.html#default-cstor-sparse-pool">here</a>.</li>
         <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses. More details can be find [here](/docs/next/ugcstor.html)</li>
-        <li>For high performance needed applications which manage their own replication, data protection and other storage features, provision OpenEBS Local PV. More details can be find [here](/docs/next/uglocalpv.html)</li>
+        <li>For high performance required applications which manage their own replication, data protection and other storage features, provision OpenEBS Local PV. More details can be find [here](/docs/next/uglocalpv.html)</li>
     </ul>
 
 
