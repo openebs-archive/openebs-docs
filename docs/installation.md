@@ -110,7 +110,7 @@ helm install --namespace <custom_namespace> --name openebs stable/openebs
 ```
 **Note 1:**The helm based installation is only supported for main version releases. Latest 1.0.0-RC1 build installation is only supported through `kubectl apply` method. Current latest main version is 0.9.0.
 
-**Note 2:** Since Kuberentes 1.12,  if any pod containers does not set its resource requests values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requets). 
+**Note 2:** Since Kuberentes 1.12,  if any pod containers does not set its resource requests values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests). 
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
 
@@ -190,7 +190,7 @@ In the **default installation mode**, use the following command to install OpenE
 kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.0.0-RC1.yaml
 ```
 
-**Note:** Since Kuberentes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installling OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requets). 
+**Note:** Since Kuberentes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installling OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests). 
 
 
 
@@ -220,7 +220,7 @@ Example nodeSelector configuration for OpenEBS control plane components is given
 
 <font size="5">Setup nodeSelectors for Admission Controller</font> 
 
-The Admission controller to intercepts the requests to the Kubernetes API server prior to persistence of the object, but after the request is authenticated and authorized. This openebs admission controller implements additional custom admission policies to validate the incoming request. The following are the admission policies avaialble with the latest release.
+The Admission controller to intercepts the requests to the Kubernetes API server prior to persistence of the object, but after the request is authenticated and authorized. This openebs admission controller implements additional custom admission policies to validate the incoming request. The following are the admission policies avaialable with the latest main release.
 
 1. PersistentVolumeClaim delete requests validates if there is clone PersistentVolumeClaim exists.
 2. Clone PersistentVolumeClaim create requests validates requested claim capacity. This has to be equal to snapshot size.
@@ -465,7 +465,7 @@ For a simple testing of OpenEBS, you can use the below default storage classes
 - openebs-cstor-sparse (this uses cstor-sparse-pool as the storage pool and data is stored on sparse files that are created during installation)
 - openebs-jiva-default (this uses `default` pool which means the data replicas are created in the /mnt/openebs_disk directory of the Jiva replica pod)
 
-For using real disks, you have to [create cStorPools](/docs/next/configurepools.html) or [Jiva pools](/docs/next/jivaguide.html#create-a-jiva-pool) and then create StorageClasses to use them
+For using real disks, you have to [create cStorPools](/docs/next/configurepools.html) or [Jiva pools](/doc/next/jivaguide.html#create-a-jiva-pool) and then create StorageClasses to use them
 
 
 
@@ -478,7 +478,7 @@ To monitor the OpenEBS volumes and obtain corresponding logs, connect to the fre
 <hr>
 <br>
 
-## Example configuration- Pod resource requets
+## Example configuration- Pod resource requests
 
 All openebs components should have resource requests set against each of its pod containers. This should be added in the openebs operator YAML file before applying it. This setting is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s.
 
@@ -595,7 +595,7 @@ Download the values.yaml from  [here](https://github.com/helm/charts/blob/master
 | `localProvisioner.imageTag`             | Image Tag for localProvisioner               | `0.9.0`                                            |
 | `localProvisioner.replicas`             | Number of localProvisioner Replicas          | `1`                                                |
 | `localProvisioner.basePath`             | BasePath for hostPath volumes on Nodes       | `/var/openebs/local`                               |
-| `webhook.image`                         | Image for admision server                    | `quay.io/openebs/admission-server`                 |
+| `webhook.image`                         | Image for admission server                    | `quay.io/openebs/admission-server`                 |
 | `webhook.imageTag`                      | Image Tag for admission server               | `0.9.0`                                            |
 | `webhook.replicas`                      | Number of admission server Replicas          | `1`                                                |
 | `snapshotOperator.provisioner.image`    | Docker Image for Snapshot Provisioner        | `quay.io/openebs/snapshot-provisioner`             |
