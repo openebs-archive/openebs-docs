@@ -28,7 +28,7 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 
 - **Installation**
 
-  <div class="co">Helm installation will be supported in the 1.0 GA version. For RC1, use the below operator yaml file to proceed with the installation. Note that upgrades are also not supported for 1.0 RC1</div>
+  <div class="co">Helm installation will be supported in the 1.0.0 GA version. For 1.0.0-RC1, use the below operator yaml file to proceed with the installation. Note that upgrades are also not supported for 1.0.0-RC1</div>
 
   ```
   kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.0.0-RC1.yaml
