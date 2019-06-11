@@ -21,11 +21,11 @@ This section provides the operations need to performed by the Admin for configur
 
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="Include-filters"></a>Include filters</h3>
 
-There is a configuration for including selected disks in the operator YAML file under NDM configuration section so that only these blockdevice will be taken for the creation of blockdevice CR. Add the blockdevice path in the following configuration for specifying particular disks. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
+To include only selected disks for provisioning, update the operator YAML file with the required blockdevices under NDM configuration section so that only these blockdevice will be taken for the creation of blockdevice CR. Add the blockdevice path in the following configuration for specifying particular disks. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
 This change must be done in the `openebs-operator.yaml` file that you have downloaded before OpenEBS installation. 
 
@@ -88,7 +88,7 @@ filterconfigs:
 
 <h3><a class="anchor" aria-hidden="true" id="create-blockdevice-CRs-for-partitioned-disks"></a>Create blockdevice CRs for partitioned disks</h3>
 
-Currently, NDM is not selecting partition disks for creating device resource. But, you can create blockdevice resource for the partition disks manually. The following are the steps for the creation of blockdevice resource.
+Currently, NDM is not selecting partitioned disks for creating device resource. But, you can create blockdevice resource for the partitioned disks manually. The following are the steps for the creation of blockdevice resource.
 
 1. Download the blockdevice CR YAML for creating the blockdevice CR manually. The sample disk CR can be downloaded from [here](<https://raw.githubusercontent.com/openebs/node-disk-manager/master/deploy/crds/openebs_v1alpha1_blockdevice_cr.yaml>).
 
@@ -128,19 +128,19 @@ Currently, NDM is not selecting partition disks for creating device resource. Bu
      path: <devpath> # like /dev/sdb1
    ```
 
-3. In the above blockdevice CR sample spec, following field must be filled before applying the YAML.
+3. In the above blockdevice CR sample spec, following fields must be filled before applying the YAML.
 
-4. - kubernetes.io/hostname
+   - kubernetes.io/hostname
    - storage
    - links
-     - This field should be filed for by-id and by-path. These details can be get from worker node by running `udevadm info -q property -n <device_path like /dev/sda1>` 
+     - This field should be filled for by-id and by-path. These details can be obtained from worker node by running the following command `udevadm info -q property -n <device_path>` 
    - path
 
-5. Apply the modified YAML file to create the blockdevice CR for the provided partitioned device path.
+4. Apply the modified YAML file to create the blockdevice CR for the provided partitioned device path.
 
-6. Repeat the same steps for each partitioned device and create blockdevice CR for each device.
+5. Repeat the same steps for each partitioned device and create blockdevice CR for each device.
 
-7. Verify the blockdevice is created by running `kubectl get blockdevice -n openebs` command.
+6. Verify if the blockdevice is created by running the following `kubectl get blockdevice -n openebs` command.
 
 <br>
 
