@@ -11,7 +11,7 @@ OpenEBS Dynamic Local PV provisioner will help provisioning the Local PVs dynami
 
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>Prerequisites</h2>
 
-Kubernetes 1.12 or higher is required to use OpenEBS Local PV.
+- Kubernetes 1.12 or higher is required to use OpenEBS Local PV. 
 
 <br>
 
@@ -39,7 +39,8 @@ Kubernetes 1.12 or higher is required to use OpenEBS Local PV.
 
 <h3><a class="anchor" aria-hidden="true" id="Provision-OpenEBS-Local-PV-based-on-hostpath"></a>Provision OpenEBS Local PV based on hostpath</h3>
 
-The simplest way to provision an OpenEBS Local PV based on hotspath is to use the default StorageClass for hostapth which is created as part of latest 1.0.0-RC1 operator YAML. The default StorageClass name for hostpath configuration is `openebs-hostpath`. The default hostapth is configured as `/var/openebs/local`.
+The simplest way to provision an OpenEBS Local PV based on hostpath is to use the default StorageClass which is created as part of latest 1.0.0-RC1 operator YAML. The default StorageClass name for hostpath configuration is `openebs-hostpath`. The default hostpath is configured as `/var/openebs/local`. 
+
 
 The following is the sample deployment configuration of Percona application which is going to consume OpenEBS Local PV. For utilizing default OpenEBS Local PV based on hostpath, use StorageClass name as `openebs-hostpath` in the PVC spec of the Percona deployment.
 
@@ -117,16 +118,16 @@ spec:
       name: percona
 ```
 
-Run the application using the following command. In this example, the above configuration YAML spec is saved as `demo-percona-mysql-pvc.yaml`
+Deploy the application using the following command. In this example, the above configuration YAML spec is saved as `demo-percona-mysql-pvc.yaml`
 
 ```
 kubectl apply -f demo-percona-mysql-pvc.yaml
 ```
 
-The Percona application now runs using the OpenEBS local PV volume on hostpath. Verify the application running status using the following command.
+The Percona application will be running on the OpenEBS local PV on hostpath. Verify if the application is running using the following command.
 
 ```
-kubectl get pod
+kubectl get pod -n <namespace>
 ```
 
 The output will be similar to the following.
@@ -134,10 +135,10 @@ The output will be similar to the following.
 <div class="co">NAME                       READY   STATUS    RESTARTS   AGE
 percona-7b64956695-hs7tv   1/1     Running   0          21s</div>
 
-Verify the PVC status using the following command.
+Verify PVC status using the following command.
 
 ```
-kubectl get pvc
+kubectl get pvc -n <namespace>
 ```
 
 The output will be similar to the following.
@@ -145,7 +146,7 @@ The output will be similar to the following.
 <div class="co">NAME              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
 demo-vol1-claim   Bound    pvc-2e4b123e-88ff-11e9-bc28-42010a8001ff   5G         RWO            openebs-hostpath   28s</div>
 
-Verify the PV status using the following command.
+Verify PV status using the following command.
 
 ```
 kubectl get pv
@@ -160,9 +161,9 @@ pvc-2e4b123e-88ff-11e9-bc28-42010a8001ff   5G         RWO            Delete     
 
 <h3><a class="anchor" aria-hidden="true" id="Provision-OpenEBS-Local-PV-based-on-Device"></a>Provision OpenEBS Local PV based on Device</h3>
 
-The simplest way to provision an OpenEBS Local PV based on Device is to use the default StorageClass for Local PV based on device which is created as part of latest 1.0.0-RC1 operator YAML. The default StorageClass name for based on Device configuration is `openebs-device`. 
+The simplest way to provision an OpenEBS Local PV based on Device is to use the default StorageClass for Local PV which is created as part of latest 1.0.0-RC1 operator YAML. The default StorageClass name for Local PV based on Device configuration is `openebs-device`. 
 
-The following is the sample deployment configuration of Percona application which is going to consume OpenEBS Local PV based on Device. For utilizing default OpenEBS Local PV based device, use StorageClass name as `openebs-device` in the PVC spec of the Percona deployment.
+The following is the sample deployment configuration of Percona application which is going to consume OpenEBS Local PV based on Device. For utilizing default OpenEBS Local PV based device, use StorageClass name as `openebs-device` in the PVC spec of the Percona deployment. 
 
 ```
 ---
@@ -285,19 +286,19 @@ pvc-d0ea3a06-88fe-11e9-bc28-42010a8001ff   5G         RWO            Delete     
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="General-verification-for-disk-mount-status-for-Local-PV-based-on-device"></a>General Verification of disk mount status for Local PV based on device</h3>
+<h3><a class="anchor" aria-hidden="true" id="General-verification-for-disk-mount-status-for-Local-PV-based-on-device"></a>General Verification of Disk Mount Status for Local PV Based on Device</h3>
 
-The application can be provisioned using OpenEBS Local PV based on device. The general check need to be done about the status of disk is the following.
+The application can be provisioned using OpenEBS Local PV based on device. The prerequiites for provision Local Pv based of Device are as follows.
 
-* The disks should be already attached and mounted to the nodes.
+* The disks should be formatted and mounted on the node.
 
-* Verify that mount path are configured for disk using the following command. Blockdevice(BD) name can be get using `kubectl get blockdevice -n <openebs_installed_namespace>`
+* Verify that mount path are configured for disk using following command. Blockdevice(BD) name can be obtained the command using `kubectl get blockdevice -n <openebs_installed_namespace>`.
 
   ```
   kubectl get bd -o yaml -n openebs <blockdevice-name>
   ```
 
-  If the disk is mounted with a file system, then the output will be similar to the following.
+  If the disk is mounted, then the output will contain the following content under `filesystem` spec.
 
   <div class="co">filesystem:
       fsType: ext4
@@ -307,11 +308,11 @@ The application can be provisioned using OpenEBS Local PV based on device. The g
 
 <h3><a class="anchor" aria-hidden="true" id="configure-hostpath"></a>Configure hostpath</h3>
 
-The default hostpath is configured as `/var/openebs/local`,  which can either be changed during the OpenEBS operator install by passing in the `OPENEBS_IO_BASE_PATH` ENV parameter to the Local PV dynamic provisioner or via the StorageClass. The example for both approaches are showing below.
+The default hostpath is configured as `/var/openebs/local`,  which can either be changed during the OpenEBS operator install by passing in the `OPENEBS_IO_BASE_PATH` ENV parameter to the Local PV dynamic provisioner deployment spec or via the StorageClass. The example for both approaches are shown below.
 
 <h4><a class="anchor" aria-hidden="true" id="using-openebs-opeartor"></a>Using OpenEBS operator YAML</h3>
 
-The example of changing the ENV variable to the Local PV dynamic provisioner in the operator YAML. This has to be done before applying openebs operator YAML file.
+The example of changing the ENV variable to the Local PV dynamic provisioner deployment spec in the operator YAML. This has to be done before applying openebs operator YAML file.
 
 ```
 name: OPENEBS_IO_BASE_PATH
@@ -338,7 +339,7 @@ volumeBindingMode: WaitForFirstConsumer
 reclaimPolicy: Delete
 ```
 
-Apply the above StorageClass configuration after making the necessary changes and use this StorageClass name in the corresponding PVC specification to provision application on OpenEBS Local PV volume.
+Apply the above StorageClass configuration after making the necessary changes and use this StorageClass name in the corresponding PVC specification to provision application on OpenEBS Local PV based on the customized hostpath.
 
 Verify if the StorageClass is having the updated hostpath using the following command and verify the `value` is set properly for the `BasePath` config value.
 
