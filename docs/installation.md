@@ -462,10 +462,10 @@ Note that listing `sp` lists both `csp` and the `Jiva pool`.
 
 For a simple testing of OpenEBS, you can use the below default storage classes
 
-- openebs-cstor-sparse (this uses cstor-sparse-pool as the storage pool and data is stored on sparse files that are created during installation). The cStor Sparse Pool and Storage Class will be created if the corresponding ENV variable is set to true. More information about the setting of this ENV variable can be find from [here](#default-cstor-sparse-pool).
+- openebs-cstor-sparse (this uses cstor-sparse-pool as the storage pool and data is stored on sparse files that are created during installation). The default cStor Sparse Pool and default StorageClass for cStor Spares pool `openebs-cstor-sparse` will be created if the corresponding ENV variable is set to true. More information about the setting of this ENV variable can be find from [here](#default-cstor-sparse-pool).
 - openebs-jiva-default (this uses `default` pool which means the data replicas are created in the /mnt/openebs_disk directory of the Jiva replica pod)
 
-For using real disks, you have to create [cStorPools](/docs/next/configurepools.html) or [Jiva pools](/doc/next/jivaguide.html#create-a-jiva-pool) or [OpenEBS Local PV](#/docs/next/uglocalpv.html) and then create StorageClasses or use default StorageClasses to use them.
+For using real disks, you have to create [cStorPools](/docs/next/configurepools.html) or [Jiva pools](/doc/next/jivaguide.html#create-a-jiva-pool) or [OpenEBS Local PV](#/docs/next/uglocalpv.html) based on the requirement and then create correspodniong StorageClasses or use default StorageClasses to use them.
 
 
 
@@ -480,7 +480,7 @@ To monitor the OpenEBS volumes and obtain corresponding logs, connect to the fre
 
 ## Example configuration- Pod resource requests
 
-All openebs components should have resource requests set against each of its pod containers. This should be added in the openebs operator YAML file before applying it. This setting is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s.
+All openebs components should have resource requests set against each of its pod containers. This should be added in the openebs operator YAML file before applying it. This setting is useful in cases where user has to specify minimum requests like ephemeral storage etc, to avoid erroneous eviction by K8s.
 
 <h3><a class="anchor" aria-hidden="true" id="AuxResourceRequests"></a>AuxResourceRequests</h3>
 
@@ -512,7 +512,7 @@ kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"sp
 kubectl -n kube-system patch deployment tiller-deploy -p '{"spec": {"template": {"spec": {"automountServiceAccountToken": true}}}}'
 ```
 
-Ensure that helm repo in your master node is updated to get the latest OpenEBS repository using the following command
+Ensure that helm repo in your master node is updated to get the latest OpenEBS repository using the following command.
 
 ```
 helm repo update
