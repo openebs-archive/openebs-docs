@@ -48,7 +48,7 @@ This user guide section provides the operations need to performed by the User an
 
 [Expanding the cStor Volume Capacity](#expanding-size-of-a-cStor-volume)
 
-[Moving a Disk to a New Node](#Moving-a-disk-to-New-Node)
+[Moving Disks to New Node](#Moving-a-disk-to-New-Node)
 
 
 
@@ -1195,7 +1195,7 @@ OpenEBS team is working on both the CSI plugin as well as the feature to resize 
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="Moving-a-disk-to-New-Node"></a>Moving a Disk to New Node</h3>
+<h3><a class="anchor" aria-hidden="true" id="Moving-a-disk-to-New-Node"></a>Moving Disks to New Node</h3>
 
 This activity can be done by some set of manual steps. In this section, you can detach the disk from the old node (if necessary) and attach to the new node. This can be done from the steps provided [here](https://github.com/openebs/openebs-docs/blob/day_2_ops/docs/cstor_move_disk.md). 
 
