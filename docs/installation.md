@@ -462,10 +462,10 @@ Note that listing `sp` lists both `csp` and the `Jiva pool`.
 
 For a simple testing of OpenEBS, you can use the below default storage classes
 
-- openebs-cstor-sparse (this uses cstor-sparse-pool as the storage pool and data is stored on sparse files that are created during installation)
+- openebs-cstor-sparse (this uses cstor-sparse-pool as the storage pool and data is stored on sparse files that are created during installation). The cStor Sparse Pool and Storage Class will be created if the corresponding ENV variable is set to true. More information about the setting of this ENV variable can be find from [here](#default-cstor-sparse-pool).
 - openebs-jiva-default (this uses `default` pool which means the data replicas are created in the /mnt/openebs_disk directory of the Jiva replica pod)
 
-For using real disks, you have to [create cStorPools](/docs/next/configurepools.html) or [Jiva pools](/doc/next/jivaguide.html#create-a-jiva-pool) and then create StorageClasses to use them
+For using real disks, you have to create [cStorPools](/docs/next/configurepools.html) or [Jiva pools](/doc/next/jivaguide.html#create-a-jiva-pool) or [OpenEBS Local PV](#/docs/next/uglocalpv.html) and then create StorageClasses or use default StorageClasses to use them.
 
 
 
@@ -650,7 +650,7 @@ First, label the required nodes with an appropriate label. In the following comm
 kubectl label nodes <node-name> node=openebs
 ```
 
-Next, in the downloaded openebs-operator.yaml, find the PodSpec for `openebs-provisioner`, `maya-apiserver`, `openebs-snapshot-operator` and `openebs-ndm` pods and add the following key-value pair under `nodeSelector` field
+Next, in the downloaded openebs-operator.yaml, find the PodSpec for `openebs-provisioner`, `maya-apiserver`, `openebs-snapshot-operator`, `openebs-admission-server` and `openebs-ndm` pods and add the following key-value pair under `nodeSelector` field
 
 ```
 nodeSelector:
@@ -663,7 +663,7 @@ nodeSelector:
 
 <h4><a class="anchor" aria-hidden="true" id="example-diskfilter-yaml"></a>For disk filters in openebs-operator.yaml</h4>
 
-In the downloaded o`penebs-operator.yaml`, find `openebs-ndm-config` configmap and update the values for keys `path-filter` and `vendor-filter`
+In the downloaded `openebs-operator.yaml`, find `openebs-ndm-config` configmap and update the values for keys `path-filter` and `vendor-filter`
 
 ```
 ---
