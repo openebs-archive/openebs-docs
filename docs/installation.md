@@ -59,7 +59,7 @@ iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However
 
 For installation of OpenEBS, cluster-admin user context is a must. 
 
-If there is no cluster-admin user context already, create one and use it. Use the following command to create the new context
+If there is no cluster-admin user context already present, create one and use it. Use the following command to create the new context.
 
 ```
 kubectl config set-context NAME [--cluster=cluster_nickname] [--user=user_nickname] [--namespace=namespace]
