@@ -163,7 +163,7 @@ See an example configuration [here](#example-diskfilter-yaml)
 
 <font size="5">Configure Environmental Variable</font> 
 
-Some of the configurations related to default cStor sparse pool, cStor Target, Local PV Basepath, etc can be configured as environmental variable in the corresponding deployment specification. 
+Some of the configurations related to cStor Target, Local PV Basepath, etc can be configured as environmental variable in the corresponding deployment specification. 
 
 <h4><a class="anchor" aria-hidden="true" id="sparse-dir "></a>SparseDir</h4>
 
@@ -175,22 +175,6 @@ The following configuration must added as environmental variable in the maya-api
  # environment variable
  - name: SparseDir
    value: "/var/lib/"
-```
-
-
-
-<h4><a class="anchor" aria-hidden="true" id="default-cstor-sparse-pool"></a>Default cStorSparsePool</h4>
-
-The OpenEBS installation will create default cStor sparse pool based on this configuration value. If "true", a default cstor sparse pool will be configured, if "false", it will not be configure a default cStor sparse pool. The default configured value is "false". The use of cStor sparse pool is for testing purposes only. 
-
-The following configuration must be added as environmental variable in the maya-apiserver deployment specification for the installation of cStor pool using sparse disks. This change must be done before applying the OpenEBS operator YAML file. 
-
-**Example:**
-
-```
-# environment variable
-- name: OPENEBS_IO_INSTALL_DEFAULT_CSTOR_SPARSE_POOL
-  value: "false"
 ```
 
 
@@ -301,7 +285,6 @@ NDM daemonset creates a block device CR for each block devices that is discovere
 - The disks that match the exclusions in 'vendor-filter'  and 'path-filter'
 - The disks that are already mounted in the node
 
-NDM also creates a new sparse-disk for each node on which it is running.These sparse disks are used in creating cStorStoragePool called `cstor-sparse-pool` if the corresponding ENV variable is set to true. More information about the setting of this ENV variable can be find from [here](#default-cstor-sparse-pool). 
 
 List the block device  CRs to verify the CRs are appearing as expected.
 
@@ -313,11 +296,7 @@ Following is an example output.
 
 <div class="co">NAME SIZE CLAIMSTATE STATUS AGE
 blockdevice-936911c5c9b0218ed59e64009cc83c8f 42949672960 Unclaimed Active 3m
-sparse-ae21597a20cd1beac18796ca7af46619 10737418240 Unclaimed Active 11m
-sparse-cd33249702d148b2f65ac45c63029b18 10737418240 Unclaimed Active 11m
-sparse-eb10951fecd8e067c533473eedc5a258 10737418240 Unclaimed Active 11m
 </div>
-
 
 
 
@@ -372,8 +351,11 @@ Note that listing `sp` lists both `csp` and the `Jiva pool`.
 
 For a simple testing of OpenEBS, you can use the below default storage classes
 
-- openebs-cstor-sparse (this uses cstor-sparse-pool as the storage pool and data is stored on sparse files that are created during installation). The default cStor Sparse Pool and default StorageClass for cStor Spares pool `openebs-cstor-sparse` will be created if the corresponding ENV variable is set to true. More information about the setting of this ENV variable can be find from [here](#default-cstor-sparse-pool).
-- openebs-jiva-default (this uses `default` pool which means the data replicas are created in the /mnt/openebs_disk directory of the Jiva replica pod)
+- `openebs-jiva-default` for provisioning Jiva Volume (this uses `default` pool which means the data replicas are created in the /mnt/openebs_disk directory of the Jiva replica pod)
+
+- `openebs-hostpath` for provisioning Local PV on hostpath.
+
+- `openebs-device` for provisioning Local PV on device.
 
 For using real disks, you have to create [cStorPools](/docs/next/configurepools.html) or [Jiva pools](/doc/next/jivaguide.html#create-a-jiva-pool) or [OpenEBS Local PV](#/docs/next/uglocalpv.html) based on the requirement and then create correspodniong StorageClasses or use default StorageClasses to use them.
 
