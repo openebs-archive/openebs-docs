@@ -17,15 +17,15 @@ OpenEBS Dynamic Local PV provisioner will help provisioning the Local PVs dynami
 
 <font size="5">User operations</font>
 
-[Provision OpenEBS Local PV based on hostpath](#Provision-OpenEBS-Local-PV-based-on-hostpath)
+[Provision OpenEBS Local PV Based on hostpath](#Provision-OpenEBS-Local-PV-based-on-hostpath)
 
-[Provision OpenEBS Local PV based on Device](#Provision-OpenEBS-Local-PV-based-on-Device)
+[Provision OpenEBS Local PV Based on Device](#Provision-OpenEBS-Local-PV-based-on-Device)
 
 
 
 <font size="5">Admin operations</font>
 
-[General Verification of disk mount status for Local PV based on device](#General-verification-for-disk-mount-status-for-Local-PV-based-on-device)
+[General Verification of Block Device Mount Status for Local PV Based on Device](#General-verification-for-disk-mount-status-for-Local-PV-based-on-device)
 
 [Configure hostpath](#configure-hostpath)
 
@@ -39,7 +39,7 @@ OpenEBS Dynamic Local PV provisioner will help provisioning the Local PVs dynami
 
 <h3><a class="anchor" aria-hidden="true" id="Provision-OpenEBS-Local-PV-based-on-hostpath"></a>Provision OpenEBS Local PV based on hostpath</h3>
 
-The simplest way to provision an OpenEBS Local PV based on hostpath is to use the default StorageClass which is created as part of latest 1.0.0-RC1 operator YAML. The default StorageClass name for hostpath configuration is `openebs-hostpath`. The default hostpath is configured as `/var/openebs/local`. 
+The simplest way to provision an OpenEBS Local PV based on hostpath is to use the default StorageClass which is created as part of latest 1.0.0-RC2 operator YAML. The default StorageClass name for hostpath configuration is `openebs-hostpath`. The default hostpath is configured as `/var/openebs/local`. 
 
 
 The following is the sample deployment configuration of Percona application which is going to consume OpenEBS Local PV. For utilizing default OpenEBS Local PV based on hostpath, use StorageClass name as `openebs-hostpath` in the PVC spec of the Percona deployment.
@@ -161,7 +161,7 @@ pvc-2e4b123e-88ff-11e9-bc28-42010a8001ff   5G         RWO            Delete     
 
 <h3><a class="anchor" aria-hidden="true" id="Provision-OpenEBS-Local-PV-based-on-Device"></a>Provision OpenEBS Local PV based on Device</h3>
 
-The simplest way to provision an OpenEBS Local PV based on Device is to use the default StorageClass for Local PV which is created as part of latest 1.0.0-RC1 operator YAML. The default StorageClass name for Local PV based on Device configuration is `openebs-device`. 
+The simplest way to provision an OpenEBS Local PV based on Device is to use the default StorageClass for Local PV which is created as part of latest 1.0.0-RC2 operator YAML. The default StorageClass name for Local PV based on Device configuration is `openebs-device`. 
 
 The following is the sample deployment configuration of Percona application which is going to consume OpenEBS Local PV based on Device. For utilizing default OpenEBS Local PV based device, use StorageClass name as `openebs-device` in the PVC spec of the Percona deployment. 
 
@@ -286,25 +286,18 @@ pvc-d0ea3a06-88fe-11e9-bc28-42010a8001ff   5G         RWO            Delete     
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="General-verification-for-disk-mount-status-for-Local-PV-based-on-device"></a>General Verification of Disk Mount Status for Local PV Based on Device</h3>
+<h3><a class="anchor" aria-hidden="true" id="General-verification-for-disk-mount-status-for-Local-PV-based-on-device"></a>General Verification of Block Device Mount Status for Local PV Based on Device</h3>
 
-The application can be provisioned using OpenEBS Local PV based on device. The prerequiites for provision Local Pv based of Device are as follows.
+The application can be provisioned using OpenEBS Local PV based on device. For provisioning Local PV using the block devices attached to the nodes, then the block devices should be in one of the following states.
 
-* The disks should be formatted and mounted on the node.
+- User has attached the block device, formatted and mounted them.
+  - For Example: Local SSD in GKE.
+- User has attached the block device, un-formatted and not mounted them.
+  - For Example: GPD in GKE.
+-  User has attached the block device, but device has only device path and no dev links.
+  - For Example: VM with VMDK disks or AWS node with EBS
 
-* Verify that mount path are configured for disk using following command. Blockdevice(BD) name can be obtained the command using `kubectl get blockdevice -n <openebs_installed_namespace>`.
 
-  ```
-  kubectl get bd -o yaml -n openebs <blockdevice-name>
-  ```
-
-  If the disk is mounted, then the output will contain the following content under `filesystem` spec.
-
-  <div class="co">filesystem:
-      fsType: ext4
-      mountPoint: /mnt/disks/ssd0</div>
-
-  
 
 <h3><a class="anchor" aria-hidden="true" id="configure-hostpath"></a>Configure hostpath</h3>
 
