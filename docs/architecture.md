@@ -110,13 +110,17 @@ For those applications that do not need storage level replication, LocalPV may b
 
 
 
-## Node Disk Manager<a name="NDM"></a>
+## Node Device Manager<a name="NDM"></a>
 
 ------
 
 Node Disk Manager (NDM) fills a gap in the chain of tools required for managing persistent storage for stateful applications using Kubernetes. DevOps architects in the container era must serve the infrastructure needs of applications and of application developers in an automated way that delivers resilience and consistency across environments. These requirements mean that the storage stack must itself be extremely flexible so that Kubernetes and other software in the cloud-native ecosystem can easily use this stack. The NDM plays a foundational role in the storage stack for Kubernetes by unifying disparate disks and by providing the capability to pool them in part by identifying them as a Kubernetes object.  Also, NDM discovers, provisions, monitors, and manages the underlying disks in such a way that Kubernetes PV provisioners such as  OpenEBS and other storage systems and Prometheus can manage the disk subsystems. 
 
-![Node Disk Manager](/docs/assets/ndm.png)
+<br>
+
+<img src="/docs/assets/svg/ndm.svg" alt="NDM architecture" style="width:70%">
+
+<br>
 
 ## Integrations with Cloud-Native Tools <a name="CNTools"></a>
 

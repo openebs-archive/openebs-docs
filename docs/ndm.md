@@ -21,7 +21,7 @@ Inspite of doing all of the above, NDM contributes to overall ease of provisioni
 
 <br>
 
-<img src="/docs/assets/svg/ndm.svg" alt="OpenEBS configuration flow" style="width:80%">
+<img src="/docs/assets/svg/ndm.svg" alt="NDM Architecture" style="width:80%">
 
 <br>
 
