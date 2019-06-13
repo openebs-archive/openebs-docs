@@ -54,7 +54,7 @@ For provisioning Local PV using the block devices attached to the nodes, then bl
 
   - For Example: GPD in GKE.
 
--  User has attached the block device, but device has only device path and no dev links.
+- User has attached the block device, but device has only device path and no dev links.
 
   - For Example: VM with VMDK disks or AWS node with EBS.
 
