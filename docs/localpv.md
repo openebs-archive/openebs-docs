@@ -9,7 +9,7 @@ sidebar_label: Local PV
 
 ## Overview
 
-OpenEBS Local PV is a CAS engine that can create persistent volumes using either local disks or host paths on the worker nodes. With this CAS engine, the performance will be equivalent to local disk or the file system (host path) on which the volumes are created. Many cloud native applications may not require advanced storage features like replication ,snapshots and clones as they themselves can handles those. Such applications require access to a managed disks as persistent volumes. 
+OpenEBS Local PV is a CAS engine that can create persistent volumes using either local disks or host paths on the worker nodes. With this CAS engine, the performance will be equivalent to local disk or the file system (host path) on which the volumes are created. Many cloud native applications may not require advanced storage features like replication, snapshots and clones as they themselves can handles those. Such applications require access to a managed disks as persistent volumes. 
 
 
 
@@ -18,7 +18,6 @@ OpenEBS Local PV is a CAS engine that can create persistent volumes using either
 OpenEBS Local PVs are analogous to Kubernetes LocalPV. In addition, OpenEBS LocalPVs have the following benefits.
 
 - Local PVs are provisioned dynamically by OpenEBS Local PV provisioner. When the Local PV is of type "host path", the host path is created dynamically and mapped to the Local PV. When the Local PV is of type "device", one of the  matching disks on the node is reserved and mapped to the Local PV.
-- Enforce capacity and PVC resource quotas on the local disks or host paths. 
 - Disks for Local PVs are managed by OpenEBS. Disk IO metrics, SMART statistics and auto deletion of data when a disk is released from a Local PV are some of the advantages of managed disks.
 - Provisioning of Local PVs is done through the Kubernetes standards. Admin users create storage class to enforce the storage type (disk or host path) and put additional control through RBAC policies.
 - Pods are always scheduled on the same node. By specifying the node selector, the pods are pinned using OpenEBS LocalPV. It guarantees that the pod is rescheduled on the same node to retain the access to data all the time.
@@ -38,12 +37,28 @@ openebs.io/cas-type: local
     cas.openebs.io/config: |
       - name: StorageType
         value: "device"
+      - name: FSType
+        value: ext4
 provisioner: openebs.io/local
 ```
 
-When a PVC is invoked using the above storage class, OpenEBS Local PV Provisioner uses NDM operator and reserves a matching disk on the worker node where application pod is being scheduled.
+When a PVC is invoked using the above storage class, OpenEBS Local PV Provisioner uses NDM operator and reserves a matching disk which has a mounted path on the worker node where application pod is being scheduled. If no `FSType` is specified, Local PV will use default filesystem as **ext4** to format the block device if the block device does not have any filesystem.
 
+For provisioning Local PV using the block devices attached to the nodes, then block devices should be in one of the following states:
 
+- User has attached the block device, formatted and mounted them.
+
+  - For Example: Local SSD in GKE.
+
+- User has attached the block device, un-formatted and not mounted.
+
+  - For Example: GPD in GKE.
+
+-  User has attached the block device, but device has only device path and no dev links.
+
+  - For Example: VM with VMDK disks or AWS node with EBS.
+
+  
 
 Admin user creates a storage class for the type `hostpath` Local PV by using the following annotations
 
@@ -78,9 +93,10 @@ When a PVC is invoked using the above storage class, OpenEBS Local PV  provision
 
 ## Limitations (or Roadmap items ) of OpenEBS Local PVs
 
-- In OpenEBS 1.0.0-RC1, the data on the disk or host path is not erased when a Local PV is deleted.
-- Size of the LocalPV cannot be increased dynamically. LVM type of functionality inside Local PVs is a potential feature in roadmap.
+- Size of the Local PV cannot be increased dynamically. LVM type of functionality inside Local PVs is a potential feature in roadmap.
 - Disk quotas are not enforced by Local PV. An underlying disk or hostpath can have more data than requested by a PVC or storage class. Enforcing the capacity is a roadmap feature.
+- Enforce capacity and PVC resource quotas on the local disks or host paths.
+- SMART statistics of the managed disks is also a potential feature in roadmap.
 
 <br>
 
