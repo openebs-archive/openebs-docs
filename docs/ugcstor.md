@@ -363,8 +363,7 @@ metadata:
             memory: 4Gi
 spec:
   name: cstor-disk-pool
-  type: blockdevice
-  maxPools: 3
+  type: disk
   poolSpec:
     poolType: striped
   blockdevices:
@@ -383,12 +382,6 @@ In the above file, change the following parameters as required.
 
   Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
-- `maxPools`
-
-  This value represents the maximum number cStorPool instances to be created. In other words if `maxPools` is `3`,  then three nodes are randomly chosen based on the blockDevice name provided in `blockDeviceList` by OpenEBS and one cStorPool instance will be created on each node. If even number of blockDevices are available per Node and `poolType` as mirrored, then cStorPool instances will be created using mirrored manner. If many blockDevices are added on each of the Node and chosen `poolType` as `striped` , the cStorPool instance will created using the specified disks on each Node.
-
-  This value should be less than or equal to the total number of Nodes in the cluster.
-
 - `blockDeviceList`
 
   Select the list of unclaimed blockDevice CRs in each participating nodes and enter them under `blockDeviceList`. 
@@ -403,10 +396,10 @@ In the above file, change the following parameters as required.
 
   The number of selected blockDevice CRs across nodes need not be same. The claimed blockDevice CRs can be added to the pool spec dynamically as the used capacity gets filled up. 
 
- 
+
 - `type`
 
-  This value can be either `sparse` or `blockdevice`.  If you are creating a sparse pool using the sparse disk based blockDevice which are created as part of applying openebs operator YAML, then choose type as `sparse`. For other blockDevices, choose type as `blockdevice`.
+  This value can be either `sparse` or `disk`.  If you are creating a sparse pool using the sparse disk based blockDevice which are created as part of applying openebs operator YAML, then choose type as `sparse`. For other blockDevices, choose type as `disk`.
 
 **Step3:**
 
