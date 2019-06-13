@@ -104,6 +104,10 @@ Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. 
 
 cStor data engine is written in C and has a high performing iSCSI target and Copy-On-Write block system to provide data integrity,  data resiliency and  point-in-time snapshots and clones. cStor has a pool feature that aggregates the disks on a node in striped, mirrored or in RAIDZ mode to give larger units of capacity and performance. cStor also provides  the synchronous replication of data to multiple nodes even across zones so that node loss or node reboots do not cause unavailability of data. See [here](/docs/next/cstor.html) for more details on cStor features and architecture.
 
+### LocalPV
+
+For those applications that do not need storage level replication, LocalPV may be good option as it gives higher performance. OpenEBS LocalPV is similar to Kubernetes LocalPV except that it is dynamically provisioned by OpenEBS control plane, just like any other regular PV. OpenEBS LocalPV is of two types - `hostpath` LocalPV or `device` LocalPV. `hostpath` LocalPV refers to a subdirectory on the host and `device` LocalPV referes to a discovered disk (either directly attached or network attached) on the node. OpenEBS has introduced a LocalPV provisioner for selecting a matching disk or hostpath against some criteria in PVC and storage class specifications. For more details on OpenEBS LocalPV, see [here](/docs/next/localpv.html).
+
 
 
 ## Node Disk Manager<a name="NDM"></a>
