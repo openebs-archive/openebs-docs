@@ -5,7 +5,7 @@ sidebar_label: Jiva
 ---
 ------
 
-For details of how Jiva works, see <a href="/docs/next/jiva.html" >Jiva overview page</a>
+For details of how Jiva works, see <a href="/1.0.0-RC2/docs/next/jiva.html" >Jiva overview page</a>
 
 
 Jiva is a light weight storage engine that is recommended to use for low capacity workloads. The snapshot and storage management features of the other cStor engine are more advanced and is recommended when snapshots are a need. 
@@ -647,9 +647,9 @@ provisioner: openebs.io/provisioner-iscsi
 
 ## See Also:
 
-### [Understanding Jiva](/docs/next/jiva.html)
+### [Understanding Jiva](/1.0.0-RC2/docs/next/jiva.html)
 
-### [Backup and Restore](/docs/next/backup.html)
+### [Backup and Restore](/1.0.0-RC2/docs/next/backup.html)
 
 
 

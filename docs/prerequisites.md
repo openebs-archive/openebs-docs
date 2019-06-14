@@ -54,7 +54,6 @@ is installed and running or to find the steps to install the iSCSI client.
         <a href="/docs/next/prerequisites.html#icp"><img src="/docs/assets/l-icp.png" width="50px;">ICP</a>
     </div>
 </div>
-
 [Provide feedback](https://github.com/openebs/openebs-docs/edit/staging/docs/quickstart.md) if a platform is missing in the above list.
 
 ## Linux platforms
@@ -493,9 +492,9 @@ For setting up iSCSI clients on Ubuntu nodes, see the
 
 ## See Also:
 
-### [OpenEBS Installation](/docs/next/installation.html)
+### [OpenEBS Installation](/1.0.0-RC2/docs/next/installation.html)
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/1.0.0-RC2/docs/next/architecture.html)
 
 
 

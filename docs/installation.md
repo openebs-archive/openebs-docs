@@ -26,7 +26,7 @@ sidebar_label: Installation
 
 - [Verify](#verifying-openebs-installation) installation 
 
-- Installation [troubleshooting](/docs/next/troubleshooting.html#installation) 
+- Installation [troubleshooting](/1.0.0-RC2/docs/next/troubleshooting.html#installation) 
 
 - [Post installation](#post-installation-considerations)
 
@@ -40,7 +40,7 @@ sidebar_label: Installation
 
 <br>
 
-iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However, it is recommended that the [iSCSI client is setup](/docs/next/prerequisites.html) and iscsid service is running on worker nodes before proceeding with the OpenEBS installation.
+iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However, it is recommended that the [iSCSI client is setup](/1.0.0-RC2/docs/next/prerequisites.html) and iscsid service is running on worker nodes before proceeding with the OpenEBS installation.
 
 <br>
 
@@ -357,11 +357,11 @@ For a simple testing of OpenEBS, you can use the below default storage classes
 
 - `openebs-device` for provisioning Local PV on device.
 
-For using real disks, you have to create [cStorPools](/docs/next/configurepools.html) or [Jiva pools](/doc/next/jivaguide.html#create-a-jiva-pool) or [OpenEBS Local PV](#/docs/next/uglocalpv.html) based on the requirement and then create correspodniong StorageClasses or use default StorageClasses to use them.
+For using real disks, you have to create [cStorPools](/1.0.0-RC2/docs/next/configurepools.html) or [Jiva pools](/1.0.0-RC2/doc/next/jivaguide.html#create-a-jiva-pool) or [OpenEBS Local PV](/1.0.0-RC2/docs/next/uglocalpv.html) based on the requirement and then create corresponding StorageClasses or use default StorageClasses to use them.
 
 
 
-To monitor the OpenEBS volumes and obtain corresponding logs, connect to the free SaaS service MayaOnline. See connecting to [MayaOnline](/docs/next/mayaonline.html). 
+To monitor the OpenEBS volumes and obtain corresponding logs, connect to the free SaaS service MayaOnline. See connecting to [MayaOnline](/1.0.0-RC2/docs/next/mayaonline.html). 
 
 
 
@@ -470,11 +470,11 @@ data:
 
 ## See Also:
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/1.0.0-RC2/docs/next/architecture.html)
 
-### [Installation troubleshooting](/docs/next/troubleshooting.html)
+### [Installation troubleshooting](/1.0.0-RC2/docs/next/troubleshooting.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/1.0.0-RC2/docs/next/usecases.html)
 
 <br>
 
