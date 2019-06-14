@@ -18,8 +18,6 @@ sidebar_label: Knowledge Base
 
 [How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?](#how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions)
 
-[How Can I create cStor Pools using partitioned disks?](#create-cstor-pool-partioned-disks)
-
 [How to prevent container logs from exhausting disk space?](#enable-log-rotation-on-cluster-nodes)
 
 </br>
@@ -372,64 +370,6 @@ Apply the following YAML in your cluster.
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="create-cstor-pool-partioned-disks"></a>How Can I create cStor Pools using partitioned disks?</h3>
-
-Currently,NDM is not selecting partition disks for creating device resource. But, you can create device resource for the partition disks manually. The following are the steps for the creation of device resource.
-
-1. Download the device CR YAML for creating the device CR manually. The sample device CR can be downloaded from [here](https://raw.githubusercontent.com/openebs/node-disk-manager/master/deploy/crds/openebs_v1alpha1_device_cr.yaml).
-
-2. Modify the downloaded device CR sample YAML with the partition disk information. Following is the sample device CR YAML.
-
-   ```
-   apiVersion: openebs.io/v1alpha1
-   kind: Device
-   metadata:
-     name: example-device
-     labels:
-       kubernetes.io/hostname: <host name in which disk/device is attached> # like gke-openebs-user-default-pool-044afcb8-bmc0
-       ndm.io/managed: "false" # for manual disk creation put false
-       ndm.io/disk-type: partition
-   status:
-     state: Active
-   spec:
-     capacity:
-       logicalSectorSize: <logical sector size of device> # like 512
-       storage: <total capacity in bits> #like 53687091200
-     details:
-       firmwareRevision: <firmware revision> #firmware version
-       model: <model name of device> # like PersistentDisk
-       serial: <serial no of disk> # like google-disk-2
-       compliance: <compliance of disk> #like "SPC-4"
-       vendor: <vendor of disk> #like Google
-     devlinks:
-     - kind: by-id
-       links:
-       - <link1> # like /dev/disk/by-id/scsi-0Google_PersistentDisk_disk-2
-       - <link2> # like /dev/disk/by-id/google-disk-2
-     - kind: by-path
-       links:
-       - <link1> # like /dev/disk/by-path/virtio-pci-0000:00:03.0-scsi-0:0:2:0 
-     Partitioned: No
-     path: <devpath> # like /dev/sdb1
-   ```
-
-   In the above device CR sample spec, following field must be filled before applying the YAML.
-
-   - kubernetes.io/hostname
-   - logicalSectorSize
-   - storage
-   - links
-     - This is applicable for both `by-id` and `by-path`
-   - path
-
-3. Repeat the same steps for each partitioned device that you have chosen for creating cStor pool.
-
-4. Get the `diskname` from `kubectl get disks` command and add the `diskname` in cStor StoragePoolClaim YAML. The steps for the creation of cStorStoragePool can be read [here](/docs/next/configurepools.html#creating-a-new-pool).
-
-<hr>
-
-<br>
-
 <h3><a class="anchor" aria-hidden="true" id="enable-log-rotation-on-cluster-nodes"></a>How to prevent container logs from exhausting disk space?</h3>
 
 Container logs, if left unchecked, can eat into the underlying disk space causing `disk-pressure` conditions
@@ -463,41 +403,40 @@ the node to show up as `Not Ready` until the daemon has restarted successfully.
 
 3. To verify that the newly set log-options have taken effect, the following commands can be used:
 
-- At a node-level, the docker logging driver in use can be checked via the following command:
+   * At a node-level, the docker logging driver in use can be checked via the following command:
 
-   ```
-   docker info
-   ```
-   The `LogConfig` section of the output must show the desired values:
+     ```
+     docker info
+     ```
 
-   ```
-               "LogConfig": {
-                "Type": "json-file",
-                "Config": {}
-   ```
+     The `LogConfig` section of the output must show the desired values:
 
-- At the individual container level, the log options in use can be checked via the following command:
+     ```
+      "LogConfig": {
+      "Type": "json-file",
+      "Config": {}
+     ```
 
-  ```
-  docker inspect <container-id>
-  ```
+   - At the individual container level, the log options in use can be checked via the following command:
 
-  The `LogConfig` section of the output must show the desired values:
+     ```
+     docker inspect <container-id>
+     ```
 
-  ```
-         "LogConfig": {
-                "Type": "json-file",
-                "Config": {
-                    "max-file": "3",
-                    "max-size": "400k",
-                    "compress": "true"
-                }
-            }
-  ```
+     The `LogConfig` section of the output must show the desired values:
 
+     ```
+      "LogConfig": {
+             "Type": "json-file",
+             "Config": {
+                 "max-file": "3",
+                 "max-size": "400k",
+                 "compress": "true"
+              }
+      }      
+     ```
 
-4. To view the current & compressed files, check the contents of the `/var/lib/docker/containers/<container-id>/`
-directory. The symlinks at `/var/log/containers/<container-name>` refer to the above.
+4. To view the current & compressed files, check the contents of the `/var/lib/docker/containers/<container-id>/` directory. The symlinks at `/var/log/containers/<container-name>` refer to the above.
 
 **NOTES:**
 

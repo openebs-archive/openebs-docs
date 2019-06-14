@@ -1,7 +1,8 @@
 {
   "versions": {
-      "1.0.0-RC1": ["latest", "https://docs.openebs.io/1.0.0-RC1/"],	
       "0.9.0": ["v0.9.0", "https://docs.openebs.io/"],
+	  "1.0.0-RC2": ["v1.0.0-RC2", "https://docs.openebs.io/1.0.0-RC2/"],	
+      "1.0.0-RC1": ["v1.0.0-RC1", "https://docs.openebs.io/1.0.0-RC1/"],	
       "0.8.2": ["v0.8.2", "https://v08-docs.openebs.io/v082/"],
       "0.8.1": ["v0.8.1", "https://v081-docs.openebs.io/"],
       "0.8.0": ["v0.8", "https://v08-docs.openebs.io/"],
