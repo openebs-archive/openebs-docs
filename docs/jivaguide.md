@@ -170,7 +170,7 @@ If it is a cloud disk provision and mount on the node. If three replicas of Jiva
   ```
   
 - Attach the GPD to a node
- 
+
   ```
   gcloud compute instances attach-disk <Node Name> --disk disk1 --zone us-central1-a
   ```
@@ -232,11 +232,11 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:1.0.0-RC1
+        value: openebs/jiva:1.0.0-RC2
       - name: ReplicaImage
-        value: openebs/jiva:1.0.0-RC1
+        value: openebs/jiva:1.0.0-RC2
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:1.0.0-RC1
+        value: openebs/m-exporter:1.0.0-RC2
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
@@ -265,11 +265,11 @@ Below table lists the storage policies supported by Jiva. These policies can be 
 | CSTOR STORAGE POLICY                                         | MANDATORY | DEFAULT                               | PURPOSE                                                      |
 | ------------------------------------------------------------ | --------- | ------------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                     | Defines the number of Jiva volume replicas                   |
-| [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.0.0-RC1 | To use particular Jiva replica image                         |
-| [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/jiva:1.0.0-RC1        | To use particular Jiva Controller Image                      |
+| [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.0.0-RC2 | To use particular Jiva replica image                         |
+| [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/jiva:1.0.0-RC2        | To use particular Jiva Controller Image                      |
 | [StoragePool](#Storage-Pool-Policy)                          | Yes       | default                               | A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on host OS or externally mounted disk. |
 | [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                    | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.0.0-RC1  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.0.0-RC2  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [Volume FSType](#Volume-File-System-Type-Policy)             |           | ext4                                  | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)         |           | false                                 | It will specify whether data need to be retained post PVC deletion. |
 | [TargetNodeSelector](#Targe-NodeSelector-Policy)             |           | Decided by Kubernetes scheduler       | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva target pod on the nodes that match label. |
@@ -313,7 +313,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ReplicaImage
-        value: quay.io/openebs/m-apiserver:1.0.0-RC1
+        value: quay.io/openebs/m-apiserver:1.0.0-RC2
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Controller-Image-Policy"></a>Controller Image Policy</h4>
@@ -329,7 +329,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: quay.io/openebs/jiva:1.0.0-RC1
+        value: quay.io/openebs/jiva:1.0.0-RC2
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-Monitor-Policy"></a>Volume Monitor Policy</h4>
@@ -414,7 +414,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:1.0.0-RC1
+        value: quay.io/openebs/m-exporter:1.0.0-RC2
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-Space-Reclaim-Policy"></a>Volume Space Reclaim Policy</h4>

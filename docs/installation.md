@@ -11,7 +11,7 @@ sidebar_label: Installation
 
 <br>
 
-<div class="co">Helm installation will be supported in the 1.0.0 GA version. For 1.0.0-RC1, use the operator.yaml file to proceed with the installation. Note that upgrades are also not supported for 1.0.0-RC1</div>
+<div class="co">Helm installation will be supported in the 1.0.0 GA version. For 1.0.0-RC2, use the operator.yaml file to proceed with the installation.</div>
 
 <font size="6">Summary:</font>
 
@@ -97,7 +97,7 @@ kubectl create clusterrolebinding  <cluster_name>-admin-binding --clusterrole=cl
 In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace. 
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.0.0-RC1.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.0.0-RC2.yaml
 ```
 
 **Note:** Since Kuberentes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installling OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests). 
@@ -116,7 +116,7 @@ In the **custom installation mode**, you can achieve the following advanced conf
 - (Optional) Configure Environmental Variable in OpenEBS operator YAML
 
 
-For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-1.0.0-RC1.yaml" target="_blank">download</a> the **openebs-operator-1.0.0-RC1** file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
+For custom installation, <a href="https://openebs.github.io/charts/openebs-operator-1.0.0-RC2.yaml" target="_blank">download</a> the **openebs-operator-1.0.0-RC2** file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
 
 
 
@@ -212,7 +212,7 @@ After doing the custom configuration in the downloaded openebs-operator.yaml fil
 
 
 ```
-kubectl apply -f <custom-openebs-operator-1.0.0-RC1.yaml>
+kubectl apply -f <custom-openebs-operator-1.0.0-RC2.yaml>
 ```
 
 
