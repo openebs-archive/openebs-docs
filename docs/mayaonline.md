@@ -99,7 +99,7 @@ User's data is never looked into or exported to MayaOnline by the agents.
 
 ### See Also
 
-#### [cStor Overview](/docs/next/cstor.html)
+#### [cStor Overview](/1.0.0-RC2/docs/next/cstor.html)
 
 #### [Connect to MayaOnline](https://mayaonline.io)
 

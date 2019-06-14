@@ -129,7 +129,7 @@ MountVolume.WaitForAttach failed for volume “pvc-ea5b871b-32d3-11e9-9bf5-0a8e9
 
 **Troubleshooting**
 
-This logs points that iscsid.service may not be enabled and running on your Nodes. You need to check if the service `iscsid.service` is running. If it is not running, you have to `enable` and `start` the service. You can refer [prerequisites](/docs/next/prerequisites.html) section and choose your platform to get the steps for enabling it.
+This logs points that iscsid.service may not be enabled and running on your Nodes. You need to check if the service `iscsid.service` is running. If it is not running, you have to `enable` and `start` the service. You can refer [prerequisites](/1.0.0-RC2/docs/next/prerequisites.html) section and choose your platform to get the steps for enabling it.
 
 <h3><a class="anchor" aria-hidden="true" id="openebs-provsioner-restart-continuously"></a>Why does OpenEBS provisioner pod restart continuously?</h3>
 
@@ -175,7 +175,7 @@ Error: release openebsfailed: clusterroles.rbac.authorization.k8s.io "openebs" i
 
 **Troubleshooting**
 
-You must enable RBAC on Azure before OpenEBS installation. For more details, see [Prerequisites](/docs/next/prerequisites.html).
+You must enable RBAC on Azure before OpenEBS installation. For more details, see [Prerequisites](/1.0.0-RC2/docs/next/prerequisites.html).
 
 <h3><a class="anchor" aria-hidden="true" id="multipath-conf-claims-all-scsi-devices-openshift"></a>A multipath.conf file claims all SCSI devices in OpenShift</h3>
 
@@ -253,7 +253,7 @@ This can happen for many reasons.
 - Node is rebooted in adhoc manner (or unscheduled reboot) and Kubernetes is waiting for Kubelet to come backup to know that the node is rebooted and the pods on that node need to be rescheduled. Kubernetes can take upto 30 minutes as timeout before deciding the node does not comebackup and pods need to be rescheduled. During this time, the iSCSI initiator at the application pod has timeout and marked the underlying filesystem as ReadOnly
 - cStor target has lost quorum because of underlying node losses and target has marked the lun as ReadOnly
 
-Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kuberntes node reboots. 
+Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/1.0.0-RC2/docs/next/k8supgrades.html) is necessary during Kuberntes node reboots. 
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
 
@@ -275,7 +275,7 @@ Make sure the following prerequisites are done.
 1. Verify iSCSI initiator is installed on nodes and services are running. 
 2. Added extra_binds under kubelet service in cluster YAML
 
-More details are mentioned [here](/docs/next/prerequisites.html#rancher).
+More details are mentioned [here](/1.0.0-RC2/docs/next/prerequisites.html#rancher).
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-stuck-after-deployment"></a>Application pod is stuck in ContainerCreating state after deployment</h3>
 
@@ -752,11 +752,11 @@ Set the reboot timer schedule at different time i.e staggered at various interva
 
 ## See Also:
 
-### [FAQs](/docs/next/faq.html)
+### [FAQs](/1.0.0-RC2/docs/next/faq.html)
 
-### [Seek support or help](/docs/next/support.html)
+### [Seek support or help](/1.0.0-RC2/docs/next/support.html)
 
-### [Latest release notes](/docs/next/releases.html)
+### [Latest release notes](/1.0.0-RC2/docs/next/releases.html)
 
 <br>
 

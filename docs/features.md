@@ -8,27 +8,27 @@ sidebar_label: Features and Benefits
 
 <font size="6">OpenEBS Features</font>
 
-- [Containerized Storage for Containers](/docs/next/features.html#containerized-storage-for-containers)
-- [Synchronous replication](/docs/next/features.html#synchronous-replication)
-- [Snapshots and clones](/docs/next/features.html#snapshots-and-clones)
-- [Backup and Restore](/docs/next/features.html#backup-and-restore)
-- [Prometheus metrics and Grafana graphs](/docs/next/features.html#prometheus-metrics-for-workload-tuning)
+- [Containerized Storage for Containers](#containerized-storage-for-containers)
+- [Synchronous replication](#synchronous-replication)
+- [Snapshots and clones](#snapshots-and-clones)
+- [Backup and Restore](#backup-and-restore)
+- [Prometheus metrics and Grafana graphs](#prometheus-metrics-for-workload-tuning)
 
 
 
 <font size="6">OpenEBS Benefits</font>
 
-- [Granular policies per stateful workload](/docs/next/features.html#granular-policies-per-stateful-workload)
+- [Granular policies per stateful workload](#granular-policies-per-stateful-workload)
 
-- [Avoid Cloud Lock-in](/docs/next/features.html#avoid-cloud-lock-in)
-- [Reduced storage TCO upto 50%](/docs/next/features.html#reduced-storage-tco-upto-50)
-- [Native Hyperconvergence on Kubernetes](/docs/next/features.html#native-hyperconvergence-on-kubernetes)
+- [Avoid Cloud Lock-in](#avoid-cloud-lock-in)
+- [Reduced storage TCO upto 50%](#reduced-storage-tco-upto-50)
+- [Native Hyperconvergence on Kubernetes](#native-hyperconvergence-on-kubernetes)
 - [High availability - No Blast Radius](#high-availability)
-- [Free cross cloud visibility of stateful applications](/docs/next/features.html#free-cross-cloud-visibility-of-stateful-applications)
+- [Free cross cloud visibility of stateful applications](#free-cross-cloud-visibility-of-stateful-applications)
 
 
 
-For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/docs/next/usecases.html) section.
+For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/1.0.0-RC2/docs/next/usecases.html) section.
 
 
 
@@ -183,11 +183,11 @@ MayaOnline is the SaaS service for OpenEBS enabled Kubernetes clusters that prov
 
 ## See Also:
 
-### [Object Storage with OpenEBS](/docs/next/minio.html)
+### [Object Storage with OpenEBS](/1.0.0-RC2/docs/next/minio.html)
 
-### [RWM PVs with OpenEBS](/docs/next/rwm.html)
+### [RWM PVs with OpenEBS](/1.0.0-RC2/docs/next/rwm.html)
 
-### [Local storage for Prometheus ](/docs/next/prometheus.html)
+### [Local storage for Prometheus ](/1.0.0-RC2/docs/next/prometheus.html)
 
 <br>
 

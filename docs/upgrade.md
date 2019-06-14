@@ -6,8 +6,9 @@ sidebar_label: Upgrade
 ------
 
 <center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
-Upgrade to 1.0-RC1 is currently not supported. Upgrade support from 0.9.0 will be available on 1.0-RC2 version.
+Upgrade to 1.0-RC2 is currently not supported. Upgrade support from 0.9.0 will be available on 1.0.0 GA version.
 </strong></p></center>
+
 
 Latest stable version of OpenEBS is 0.9.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/0.9).  This section describes about the upgrade from OpenEBS 0.8.2 to 0.9.0.
 
@@ -121,7 +122,7 @@ All steps described in this document must be performed on the Kubernetes master 
    **Limitations:**
 
    1. This is a preliminary script only intended for using on volumes where data has been backed-up.
-   2. Have the following link handy in case the volume gets into read-only during upgrade https://docs.openebs.io/docs/next/troubleshooting.html#recovery-readonly-when-kubelet-is-container
+   2. Have the following link handy in case the volume gets into read-only during upgrade https://docs.openebs.io/1.0.0-RC2/docs/next/troubleshooting.html#recovery-readonly-when-kubelet-is-container
    3. Automatic rollback option is not provided. To rollback, you need to update the controller, exporter and replica pod images to the previous version.
 
    In the process of running the below steps, if you run into issues, you can always reach us on <a href="https://openebs.io/join-our-community" target="_blank">Slack OpenEBS Community</a>
@@ -486,9 +487,9 @@ This will verify all the OpenEBS components are successfully upgraded to the lat
 
 ## See Also:
 
-### [Releases](/docs/next/releases.html)
+### [Releases](/1.0.0-RC2/docs/next/releases.html)
 
-### [MayaOnline](/docs/next/mayaonline.html)
+### [MayaOnline](/1.0.0-RC2/docs/next/mayaonline.html)
 
 
 

@@ -546,13 +546,13 @@ You can achieve encryption at rest using LUKS. Example tutorial for enabling LUK
 
 ## See Also:
 
-### [Creating cStor Pool](/docs/next/configurepools.html)
+### [Creating cStor Pool](/1.0.0-RC2/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
-### [Provisioning cStor volumes](/docs/next/provisionvols.html)
+### [Provisioning cStor volumes](/1.0.0-RC2/docs/next/ugcstor.html#provisioning-a-cStor-volume)
 
-### [BackUp and Restore](/docs/next/backup.html)
+### [BackUp and Restore](/1.0.0-RC2/docs/next/backup.html)
 
-### [Uninstall](/docs/next/uninstall.html)
+### [Uninstall](/1.0.0-RC2/docs/next/uninstall.html)
 
 <br>
 
