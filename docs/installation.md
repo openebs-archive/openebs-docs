@@ -357,7 +357,7 @@ For a simple testing of OpenEBS, you can use the below default storage classes
 
 - `openebs-device` for provisioning Local PV on device.
 
-For using real disks, you have to create [cStorPools](/1.0.0-RC2/docs/next/configurepools.html) or [Jiva pools](/1.0.0-RC2/doc/next/jivaguide.html#create-a-jiva-pool) or [OpenEBS Local PV](/1.0.0-RC2/docs/next/uglocalpv.html) based on the requirement and then create corresponding StorageClasses or use default StorageClasses to use them.
+For using real disks, you have to create [cStorPools](/1.0.0-RC2/docs/next/ugcstor.html#creating-cStor-storage-pools) or [Jiva pools](/1.0.0-RC2/doc/next/jivaguide.html#create-a-jiva-pool) or [OpenEBS Local PV](/1.0.0-RC2/docs/next/uglocalpv.html) based on the requirement and then create corresponding StorageClasses or use default StorageClasses to use them.
 
 
 
