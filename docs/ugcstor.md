@@ -444,6 +444,36 @@ velero restore create --from-backup sched-20190513103534 --restore-volumes=true
 velero restore create --from-backup sched-20190513104034 --restore-volumes=true
 ```
 
+<h4><a class="anchor" aria-hidden="true" id="deletion-backup"></a>Deletion of Backups</h3>
+
+To delete a single backup which is not created from scheduled backup, use the following command.
+
+```
+velero backup delete <backup_name>
+```
+
+Note: the deletion of backup will not delete the snapshots created as part of backup from the cStor Storage pool. This can be deleted by following manual steps .
+
+1. First verify the cStor backups created for corresponding cStor volume. To obtain the cStor backups of cStor volume, use the following command by providing the corresponding backup name.
+
+   ```
+   kubectl get  cstorbackups  -n <backup_namespace> -l openebs.io/backup=<backup_name>  -o=jsonpath='{range .items[*]}{.metadata.labels.openebs\.io/persistent-volume}{"\n"}{end}'
+   ```
+
+2. Delete the corresponding cStor backups using the following command.
+
+   ```
+   kubectl delete cstorbackups -n <backup_namespace> -l openebs.io/backup=<backup_name>
+   ```
+
+3. To delete the cStor backup completed jobs, use the following command.
+
+   ```
+   kubectl delete cstorbackupcompleted -n <backup_namespace> -l openebs.io/backup=<backup_name>
+   ```
+
+The deletion of Velero backup schedule doesn't destroy the backup created during the schedule. User need to delete a scheduled backup manually. Use the above steps to delete the scheduled backups.
+
 
 
 <h3><a class="anchor" aria-hidden="true" id="Upgrading-the-software-version-of-a-cStor-volume"></a>Upgrading the software version of a cStor volume</h3>
