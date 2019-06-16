@@ -451,7 +451,7 @@ The application can be provisioned using OpenEBS Local PV based on device. For p
   - For Example: Local SSD in GKE.
 - User has attached the block device, un-formatted and not mounted them.
   - For Example: GPD in GKE.
--  User has attached the block device, but device has only device path and no dev links.
+- User has attached the block device, but device has only device path and no dev links.
   - For Example: VM with VMDK disks or AWS node with EBS
 
 
