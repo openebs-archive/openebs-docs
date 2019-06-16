@@ -588,7 +588,7 @@ In the above file, change the following parameters as required.
 
   To get the list of blockDevice CRs, use `kubectl get blockdevice -n openebs`. 
 
-  You must enter all the blockDevice CRs manually together from the selected nodes. 
+  You must enter all the unclaimed blockDevice CRs manually together from the selected nodes. 
 
   When the `poolType` = `mirrored` , ensure the blockDevice CRs selected from each node are in even number.  The data is striped across mirrors. For example, if 4x1TB blockDevice are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on `node1` is 2TB. 
 

@@ -76,6 +76,8 @@ sidebar_label: FAQs
 
 [Does OpenEBS support encryption at rest?](#encryption-rest)
 
+[Can the same BDC name be used for claiming a new block device?](#same-bdc-claim-new-bd)
+
 </br>
 
 <hr>
@@ -539,6 +541,12 @@ sparse-5a92ced3e2ee21eac7b930f670b5eab5   10737418240   Active   10m
 <h3><a class="anchor" aria-hidden="true" id="encryption-rest"></a>Does OpenEBS support encryption at rest?</h3>
 
 You can achieve encryption at rest using LUKS. Example tutorial for enabling LUKS on CentOS is at: <a  href="https://wiki.centos.org/HowTos/EncryptedFilesystem" target="_blank">https://wiki.centos.org/HowTos/EncryptedFilesystem</a>
+
+</br>
+
+<h3><a class="anchor" aria-hidden="true" id="same-bdc-claim-new-bd"></a>Can the same BDC name be used for claiming a new block device?</h3>
+
+No. It is recommended to create different BDC name for claiming an unclaimed disk manually.
 
 <br>
 
