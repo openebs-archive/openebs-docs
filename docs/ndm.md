@@ -48,8 +48,8 @@ So at a high level, to allow OpenEBS to run in privileged mode in selinux=on nod
   - Maintain cluster-wide unique id of the disk using the following schemes:
     - Hash of WWN, Serial, Vendor, Model ( if available and unique across nodes )
     - Hash of Path, Hostname ( for ephemeral disks or if above values are unavailable)
-- Detect block device addition/removal from a node and update the status of disk
-- Add `Disk` as Kubernetes custom resource with following properties:
+- Detect block device addition/removal from a node and update the status of Block device.
+- Add `blockDevice` as Kubernetes custom resource with following properties:
   - spec: The following will be updated if they are available.
     - Device Path
     - Device Links ( by id, by name)
@@ -59,12 +59,12 @@ So at a high level, to allow OpenEBS to run in privileged mode in selinux=on nod
     - Sector Size
   - labels:
     - hostname (kubernetes.io/hostname)
-    - disk-type (ndm.io/disk-type)
+    - blockdevice-type (ndm.io/blockdevice-type)
     - Managed (ndm.io/managed)
   - status can have the following values:
-    - Active : Disk is detected on the node
-    - Inactive : Disk was detected earlier but doesn't exist at the given node anymore
-    - Unknown : The NDM was stopped on the node where disk was last detected
+    - Active : Block device is detected on the node
+    - Inactive : Block device was detected earlier but doesn't exist at the given node anymore
+    - Unknown : The NDM was stopped on the node where Block device was last detected
 
 ## Filters:
 
@@ -90,9 +90,9 @@ More details can be find from [here](/docs/next/ugndm.html).
 
 ## See Also:
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/1.0.0-RC2/docs/next/architecture.html)
 
-### [Local PV](/docs/next/localpv.html)
+### [Local PV](/1.0.0-RC2/docs/next/localpv.html)
 
 
 
