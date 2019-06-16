@@ -397,11 +397,11 @@ Each discovered disk on a node is added as a disk CR. This is needed to identify
 
 ## See Also:
 
-### [Storage Engines in OpenEBS](/1.0.0-RC2/docs/next/storageengine.html)
+### [Storage Engines in OpenEBS](/1.0.0-RC2/docs/next/casengines.html)
 
-### [Creating cStor Pool](/1.0.0-RC2/docs/next/configurepools.html)
+### [Creating cStor Pool](/1.0.0-RC2/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
-### [Provisioning cStor volumes](/1.0.0-RC2/docs/next/deploycstor.html)
+### [Provisioning cStor volumes](/1.0.0-RC2/docs/next/ugcstor.html#provisioning-a-cStor-volume)
 
 
 
