@@ -283,7 +283,7 @@ pvc-d0ea3a06-88fe-11e9-bc28-42010a8001ff   5G         RWO            Delete     
 
 <h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
 
-OpenEBS volume can be backed up and restore along with application using OpenEBS velero plugin. It helps the user for taking backup of OpenEBS volumes to a third party storage location and then restoration of the data whenever it needed. The steps for taking backup and restore are following.
+OpenEBS volume can be backed up and restore along with application using velero plugin. It helps the user for taking backup of OpenEBS volumes to a third party storage location and then restoration of the data whenever it needed. The steps for taking backup and restore are following.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
 
@@ -297,9 +297,9 @@ OpenEBS volume can be backed up and restore along with application using OpenEBS
 
 Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.0.0/>) to install and configure Velero. 
 
-While installing velero plugin in your cluster,  specify `--use-restic` to enable restic support. 
+While installing Velero plugin in your cluster,  specify `--use-restic` to enable restic support. 
 
-Verify if restic pod and velero pod are running after installing velero with restic support using the following command.
+Verify using the following command if restic pod and Velero pod are running after installing velero with restic support.
 
 ```
 kubectl get pod -n velero
@@ -323,13 +323,13 @@ To take backup and restore of OpenEBS Local PV, configure Velero with restic and
 
 <h4><a class="anchor" aria-hidden="true" id="annotate-appliction"></a>Annotate Application Pod</h3>
 
-Run the following for each pod that contains a volume to back up.
+Run the following  to annotate each application pod that contains a volume to back up.
 
 ```
 kubectl -n YOUR_POD_NAMESPACE annotate pod/YOUR_POD_NAME backup.velero.io/backup-volumes=YOUR_VOLUME_NAME_1,YOUR_VOLUME_NAME_2,...
 ```
 
-where the volume names are the names of the volumes in the pod spec.
+In the above example command, where the volume names are the names of the volumes in the pod spec.
 
 Example Spec:
 
@@ -361,7 +361,7 @@ Take the backup using the below command.
 velero backup create hostpathbkp1
 ```
 
-After taking backup, Verify if backup is taken successfully by using following command.
+After taking backup, verify if backup is taken successfully by using following command.
 
 ```
 velero get backup
@@ -377,10 +377,10 @@ hostpathbkp1     Completed                   2019-06-14 14:57:01 +0530 IST   29d
 You will get more details about the backup using the following command.
 
 ```
-velero  backup describe hostpathbkp1
+velero backup describe hostpathbkp1
 ```
 
-Once the backup is completed you should see the `Phase` marked as `Completed`.
+Once the backup is completed you should see the `Phase` marked as `Completed` in the output of above command.
 
 <h4><a class="anchor" aria-hidden="true" id="steps-for-restore"></a>Steps for Restore</h3>
 
@@ -388,10 +388,9 @@ Velero backup can be restored onto a new cluster or to the same cluster. An Open
 
 **Prerequisites**
 
-- Create the same namespace and StorageClass configuration of the source PVC in your target cluster. 
-- Ensure at least one unclaimed block device is present on the destination cluster if `hostpath-device` as Storage Class in the PVC spec.
-
-If the restoration is happens on same cluster where Source PVC was created, then ensure that application and its corresponding components such as Service, PVC,PV and cStorVolumeReplicas are deleted successfully.
+- Create the same namespace and StorageClass configuration of the source PVC in your destination cluster. 
+- Ensure at least one unclaimed block device is present on the destination cluster if `hostpath-device` is used as Storage Class in the PVC spec.
+- If the restoration is happens on same cluster where Source PVC was created, then ensure that application and its corresponding components such as Service, PVC and PV are deleted successfully.
 
 On the target cluster, restore the application using the below command.
 
@@ -405,7 +404,7 @@ Example:
 velero restore create --from-backup hostpathbkp1
 ```
 
-Once the restore is completed you should see the restore marked as `Completed`. The following can be used to obtain the restore job status.
+Once the restore is completed you should see the status marked as `Completed`. The following can be used to obtain the restore job status.
 
 ```
 velero restore get
