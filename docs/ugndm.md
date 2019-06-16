@@ -90,11 +90,9 @@ filterconfigs:
 
 <h3><a class="anchor" aria-hidden="true" id="create-blockdevice-CRs-for-partitioned-disks"></a>Create blockdevice CRs for partitioned disks</h3>
 
-Currently, NDM is not selecting partitioned disks for creating device resource. But, you can create blockdevice resource for the partitioned disks manually. The following are the steps for the creation of blockdevice resource.
+Currently, NDM is not selecting partitioned disks for creating device resource. But, you can create block device resource for the partitioned disks manually. The following are the steps for the creation of block device resource.
 
-1. Download the blockdevice CR YAML for creating the blockdevice CR manually. The sample disk CR can be downloaded from [here](<https://raw.githubusercontent.com/openebs/node-disk-manager/master/deploy/crds/openebs_v1alpha1_blockdevice_cr.yaml>).
-
-2. Modify the downloaded blockdevice CR sample YAML with the partition disk information. Following is the sample disk CR YAML.
+1. Create the sample block device CR YAML using the following spec. Following is the sample block device CR YAML.
 
    ```
    apiVersion: openebs.io/v1alpha1
@@ -130,7 +128,7 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
      path: <devpath> # like /dev/sdb1
    ```
 
-3. In the above blockdevice CR sample spec, following fields must be filled before applying the YAML.
+2. Modify the created block device CR sample YAML with the partition disk information. In the above block device CR sample spec, following fields must be filled before applying the YAML.
 
    - kubernetes.io/hostname
    - storage
@@ -138,11 +136,11 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
      - This field should be filled for by-id and by-path. These details can be obtained from worker node by running the following command `udevadm info -q property -n <device_path>` 
    - path
 
-4. Apply the modified YAML file to create the blockdevice CR for the provided partitioned device path.
+3. Apply the modified YAML file to create the blockdevice CR for the provided partitioned device path.
 
-5. Repeat the same steps for each partitioned device and create blockdevice CR for each device.
+4. Repeat the same steps for each partitioned device and create blockdevice CR for each device.
 
-6. Verify if the blockdevice is created by running the following `kubectl get blockdevice -n openebs` command.
+5. Verify if the blockdevice is created by running the following `kubectl get blockdevice -n openebs` command.
 
 <br>
 
