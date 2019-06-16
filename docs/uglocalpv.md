@@ -293,9 +293,22 @@ OpenEBS volume can be backed up and restore along with application using velero 
 - Create required OpenEBS storage pools and storage classes on destination cluster.
 - Annotate each application pod that contains a volume to back up.
 
+<h4><a class="anchor" aria-hidden="true" id="overview"></a>Overview</h3>
+
+Velero is a utility to back up and restore your Kubernetes resource and persistent volumes. 
+
+To take backup and restore of OpenEBS Local PV, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Local PV which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](https://staging-docs.openebs.io/1.0.0-RC2/docs/next/minio.html).
+
+The following are the step by step procedure for taking backup and restore of application with OpenEBS Local PV.
+
+1. Install Velero
+2. Annotate Application Pod
+3. Creating and Managing Backups
+4. Steps for Restore
+
 <h4><a class="anchor" aria-hidden="true" id="install-velero"></a>Install Velero (Formerly known as ARK)</h3>
 
-Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.0.0/>) to install and configure Velero. 
+Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.0.0/>) to install and configure Velero and follow [restic integration documentation](https://velero.io/docs/v1.0.0/restic/) for setting up and usage of restic support.
 
 While installing Velero plugin in your cluster,  specify `--use-restic` to enable restic support. 
 
@@ -312,14 +325,6 @@ NAME                      READY   STATUS    RESTARTS   AGE
 restic-ksfqr              1/1     Running   0          21s
 velero-84b9b44d88-gn8dk   1/1     Running   0          25m
 ```
-
-
-
-<h4><a class="anchor" aria-hidden="true" id="steps-for-backup"></a>Steps for Backup</h3>
-
-Velero is a utility to back up and restore your Kubernetes resource and persistent volumes. 
-
-To take backup and restore of OpenEBS Local PV, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Local PV which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](https://staging-docs.openebs.io/1.0.0-RC2/docs/next/minio.html).
 
 <h4><a class="anchor" aria-hidden="true" id="annotate-appliction"></a>Annotate Application Pod</h3>
 
@@ -353,7 +358,8 @@ And if the application pod name is  `minio-deployment-7fc6cdfcdc-8r84h` , use th
 kubectl -n default annotate pod/minio-deployment-7fc6cdfcdc-p6hlq backup.velero.io/backup-volumes=storage
 ```
 
-<h4><a class="anchor" aria-hidden="true" id="managing-backup"></a>Managing Backups</h3>
+<h4><a class="anchor" aria-hidden="true" id="managing-backup"></a>Creating and Managing Backups</h3>
+
 
 Take the backup using the below command.
 
@@ -395,7 +401,7 @@ Velero backup can be restored onto a new cluster or to the same cluster. An Open
 On the target cluster, restore the application using the below command.
 
 ```
-velero restore create <restore-name> --from-backup <backup-name>
+velero restore create --from-backup <backup-name>
 ```
 
 Example:
