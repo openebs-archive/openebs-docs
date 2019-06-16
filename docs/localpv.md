@@ -30,6 +30,8 @@ OpenEBS supports two kinds of Local PVs such as `hostpath` and `device`.
 
 End users or developers will provision the OpenEBS Local PVs like any other PV, by creating a PVC using a storage class provided by the admin user. 
 
+<h4><a class="anchor" aria-hidden="true" id="openebs-localpv-device"></a>OpenEBS Local PV based on device</h4>
+
 Admin user creates a storage class for the type `device` Local PV by using the following annotations.
 
 ```
@@ -42,15 +44,15 @@ openebs.io/cas-type: local
 provisioner: openebs.io/local
 ```
 
-When a PVC is invoked using the above storage class, OpenEBS Local PV Provisioner uses NDM operator and reserves a matching disk which has a mounted path on the worker node where application pod is being scheduled. If no `FSType` is specified, Local PV will use default filesystem as **ext4** to format the block device if the block device does not have any filesystem.
+When a PVC is invoked using the above storage class, OpenEBS Local PV Provisioner uses NDM operator and reserves a matching disk from the worker node where application pod is being scheduled. If no `FSType` is specified, Local PV will use default filesystem as **ext4** to format the block device if the block device does not have any filesystem.
 
 For provisioning Local PV using the block devices attached to the nodes, then block devices should be in one of the following states:
 
-- User has attached the block device, formatted and mounted them.
+- User has attached the block device, formatted and mounted them. This means disk is already formatted and mounted the disk on the worker node.
 
   - For Example: Local SSD in GKE.
 
-- User has attached the block device, un-formatted and not mounted.
+- User has attached the block device, un-formatted and not mounted. This means disk is attached on the worker node without any file system.
 
   - For Example: GPD in GKE.
 
@@ -58,7 +60,8 @@ For provisioning Local PV using the block devices attached to the nodes, then bl
 
   - For Example: VM with VMDK disks or AWS node with EBS.
 
-  
+
+<h4><a class="anchor" aria-hidden="true" id="openebs-localpv-hostpath"></a>OpenEBS Local PV based on hostpath</h4>
 
 Admin user creates a storage class for the type `hostpath` Local PV by using the following annotations
 
