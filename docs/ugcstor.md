@@ -346,7 +346,7 @@ NAME             STATUS                      CREATED                         EXP
 new1             Completed                   2019-06-13 12:44:26 +0530 IST   29d       default            app=minio
 ```
 
-You will get more details about the backup using the following command
+You will get more details about the backup using the following command.
 
 ```
 velero backup describe <backup_name>
@@ -358,7 +358,7 @@ Example:
 velero backup describe new1
 ```
 
-Once the backup is completed you should see the `Phase` marked as `Completed` and `Persistent Volumes` backup status
+Once the backup is completed you should see the `Phase` marked as `Completed` and `Persistent Volumes` as the number of successful snapshots.
 
 <h4><a class="anchor" aria-hidden="true" id="steps-for-restore"></a>Steps for Restore</h3>
 
@@ -379,7 +379,7 @@ velero restore create <restore-name> --from-backup <backup-name> -restore-volume
 Example:
 
 ```
-velero restore create --from-backup first --restore-volumes=true 
+velero restore create --from-backup new1 --restore-volumes=true 
 ```
 
 Once the restore is completed you should see the restore marked as `Completed`.

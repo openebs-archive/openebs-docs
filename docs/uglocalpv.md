@@ -21,6 +21,8 @@ OpenEBS Dynamic Local PV provisioner will help provisioning the Local PVs dynami
 
 [Provision OpenEBS Local PV Based on Device](#Provision-OpenEBS-Local-PV-based-on-Device)
 
+[Backup and Restore](#backup-and-restore)
+
 
 
 <font size="5">Admin operations</font>
@@ -277,6 +279,156 @@ The output will be similar to the following.
 
 <div class="co">NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS     REASON   AGE
 pvc-d0ea3a06-88fe-11e9-bc28-42010a8001ff   5G         RWO            Delete           Bound    default/demo-vol1-claim   openebs-device            35s</div>
+
+
+<h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
+
+OpenEBS volume can be backed up and restore along with application using OpenEBS velero plugin. It helps the user for taking backup of OpenEBS volumes to a third party storage location and then restoration of the data whenever it needed. The steps for taking backup and restore are following.
+
+<h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
+
+- Mount propagation feature has to be enabled on Kubernetes, otherwise the data written from the pods will not visible in the restic daemonset pod on the same node.
+- Latest tested Velero version is 1.0.0.
+- Create required storage provider configuration to store the backup data.
+- Create required OpenEBS storage pools and storage classes on destination cluster.
+- Annotate each application pod that contains a volume to back up.
+
+<h4><a class="anchor" aria-hidden="true" id="install-velero"></a>Install Velero (Formerly known as ARK)</h3>
+
+Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.0.0/>) to install and configure Velero. 
+
+While installing velero plugin in your cluster,  specify `--use-restic` to enable restic support. 
+
+Verify if restic pod and velero pod are running after installing velero with restic support using the following command.
+
+```
+kubectl get pod -n velero
+```
+
+The following is an example output.
+
+```
+NAME                      READY   STATUS    RESTARTS   AGE
+restic-ksfqr              1/1     Running   0          21s
+velero-84b9b44d88-gn8dk   1/1     Running   0          25m
+```
+
+
+
+<h4><a class="anchor" aria-hidden="true" id="steps-for-backup"></a>Steps for Backup</h3>
+
+Velero is a utility to back up and restore your Kubernetes resource and persistent volumes. 
+
+To take backup and restore of OpenEBS Local PV, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Local PV which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](https://staging-docs.openebs.io/1.0.0-RC2/docs/next/minio.html).
+
+<h4><a class="anchor" aria-hidden="true" id="annotate-appliction"></a>Annotate Application Pod</h3>
+
+Run the following for each pod that contains a volume to back up.
+
+```
+kubectl -n YOUR_POD_NAMESPACE annotate pod/YOUR_POD_NAME backup.velero.io/backup-volumes=YOUR_VOLUME_NAME_1,YOUR_VOLUME_NAME_2,...
+```
+
+where the volume names are the names of the volumes in the pod spec.
+
+Example Spec:
+
+If application spec contains the volume name as mentioned below, then use volume name as `storage` in the above command.
+
+```
+    spec:
+      # Refer to the PVC created earlier
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          # Name of the PVC created earlier
+                claimName: minio-pv-claim
+      containers:
+      - name: minio
+```
+
+And if the application pod name is  `minio-deployment-7fc6cdfcdc-8r84h` , use the following command to annotate the application.
+
+```
+kubectl -n default annotate pod/minio-deployment-7fc6cdfcdc-p6hlq backup.velero.io/backup-volumes=storage
+```
+
+<h4><a class="anchor" aria-hidden="true" id="managing-backup"></a>Managing Backups</h3>
+
+Take the backup using the below command.
+
+```
+velero backup create hostpathbkp1
+```
+
+After taking backup, Verify if backup is taken successfully by using following command.
+
+```
+velero get backup
+```
+
+The following is a sample output.
+
+```
+NAME             STATUS                      CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
+hostpathbkp1     Completed                   2019-06-14 14:57:01 +0530 IST   29d       default            <none>
+```
+
+You will get more details about the backup using the following command.
+
+```
+velero  backup describe hostpathbkp1
+```
+
+Once the backup is completed you should see the `Phase` marked as `Completed`.
+
+<h4><a class="anchor" aria-hidden="true" id="steps-for-restore"></a>Steps for Restore</h3>
+
+Velero backup can be restored onto a new cluster or to the same cluster. An OpenEBS PVC *with the same name as the original PVC* will be created and application will run using the restored OpenEBS volume.
+
+**Prerequisites**
+
+- Create the same namespace and StorageClass configuration of the source PVC in your target cluster. 
+- Ensure at least one unclaimed block device is present on the destination cluster if `hostpath-device` as Storage Class in the PVC spec.
+
+If the restoration is happens on same cluster where Source PVC was created, then ensure that application and its corresponding components such as Service, PVC,PV and cStorVolumeReplicas are deleted successfully.
+
+On the target cluster, restore the application using the below command.
+
+```
+velero restore create <restore-name> --from-backup <backup-name>
+```
+
+Example:
+
+```
+velero restore create --from-backup hostpathbkp1
+```
+
+Once the restore is completed you should see the restore marked as `Completed`. The following can be used to obtain the restore job status.
+
+```
+velero restore get
+```
+
+The following is an example output.
+
+```
+NAME                            BACKUP           STATUS      WARNINGS   ERRORS   CREATED                         SELECTOR
+hostpathbkp1-20190614151818     hostpathbkp1     Completed   34         0        2019-06-14 15:18:19 +0530 IST   <none>
+```
+
+Verify application status using the following command
+
+```
+kubectl get pod -n <namespace>
+```
+
+Verify PVC status using the following command.
+
+```
+kubectl get pvc -n <namespace>
+```
 
 <br>
 
