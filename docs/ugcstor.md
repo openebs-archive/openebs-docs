@@ -246,7 +246,6 @@ OpenEBS volume can be backed up and restore along with application using OpenEBS
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
 
-- Mount propagation feature has to be enabled on Kubernetes, otherwise the data written from the pods will not visible in the restic daemonset pod on the same node.
 - Latest tested Velero version is 1.0.0.
 - Create required storage provider configuration to store the backup data.
 - Create required OpenEBS storage pools and storage classes on destination cluster.
