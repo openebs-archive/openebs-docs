@@ -259,11 +259,11 @@ Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.0.0
 
 Velero is a utility to back up and restore your Kubernetes resource and persistent volumes.
 
-To do backup/restore of OpenEBS CStor volumes through Velero utility, you need to install and configure OpenEBS velero-plugin. If you are using OpenEBS velero-plugin then `velero backup` command invokes velero-plugin internally and takes a snapshot of CStor volume data and send it to remote storage location as mentioned in `06-volumesnapshotlocation.yaml`.  The configuration of `06-volumesnapshotlocation.yaml` can be  done in the next section.
+To do backup/restore of OpenEBS CStor volumes through Velero utility, you need to install and configure OpenEBS velero-plugin. If you are using OpenEBS velero-plugin then `velero backup` command invokes velero-plugin internally and takes a snapshot of cStor volume data and send it to remote storage location as mentioned in `06-volumesnapshotlocation.yaml`.  The configuration of `06-volumesnapshotlocation.yaml` can be  done in the next section.
 
 <h4><a class="anchor" aria-hidden="true" id="configure-volumesnapshotlocation"></a>Configure Volumesnapshot Location</h3>
 
-To take a backup of CStor volume through Velero, configure `VolumeSnapshotLocation` with provider `openebs.io/cstor-blockstore`. Sample YAML file for volumesnapshotlocation can be found at `06-volumesnapshotlocation.yaml` from the `openebs/velero-plugin` [repo](https://github.com/openebs/velero-plugin/tree/master/example).
+To take a backup of cStor volume through Velero, configure `VolumeSnapshotLocation` with provider `openebs.io/cstor-blockstore`. Sample YAML file for volumesnapshotlocation can be found at `06-volumesnapshotlocation.yaml` from the `openebs/velero-plugin` [repo](https://github.com/openebs/velero-plugin/tree/master/example).
 
 Sample spec for configuring volume snapshot location.
 
@@ -325,7 +325,7 @@ Take the backup using the below command.
 velero backup create <backup-name> -l app=<app-label-selector> --snapshot-volumes --volume-snapshot-locations=<SNAPSHOT_LOCATION>
 ```
 
-**Note**: `SNAPSHOT_LOCATION` should be the same as you configured in the  `example/06-``volumesnapshotlocation.yaml`.
+**Note**: `SNAPSHOT_LOCATION` should be the same as you configured in the  `06-volumesnapshotlocation.yaml`.
 
 Example: 
 
@@ -333,7 +333,7 @@ Example:
 velero backup create new1 -l app=minio --snapshot-volumes --volume-snapshot-locations=gcp-default
 ```
 
-After taking backup, Verify if backup is taken successfully by using following command.
+After taking backup, verify if backup is taken successfully by using following command.
 
 ```
 velero get backup
@@ -349,7 +349,7 @@ new1             Completed                   2019-06-13 12:44:26 +0530 IST   29d
 You will get more details about the backup using the following command.
 
 ```
-velero backup describe <backup_name>
+velero backup describe <backup_name> 
 ```
 
 Example:
@@ -358,7 +358,7 @@ Example:
 velero backup describe new1
 ```
 
-Once the backup is completed you should see the `Phase` marked as `Completed` and `Persistent Volumes` as the number of successful snapshots.
+Once the backup is completed you should see the `Phase` marked as `Completed` and `Persistent Volumes` field shows the number of successful snapshots.
 
 <h4><a class="anchor" aria-hidden="true" id="steps-for-restore"></a>Steps for Restore</h3>
 
@@ -421,7 +421,7 @@ Get the details of backup using the following command
 velero backup get
 ```
 
-During the first backup iteration of a schedule, full data of the volume will be backed up. After taking the full backup in the first schedule, the it will take the incremental data as part of the further schedule.
+During the first backup iteration of a schedule, full data of the volume will be backed up. After taking the full backup in the first schedule, then it will take the incremental data as part of the further schedule.
 
 <h4><a class="anchor" aria-hidden="true" id="restore-from-schedule"></a>Restore from a schedule</h3>
 
@@ -436,7 +436,7 @@ sched-20190513103534   Completed   2019-05-13 16:05:34 +0530 IST   29d       gcp
 sched-20190513103034   Completed   2019-05-13 16:00:34 +0530 IST   29d       gcp                <none>
 ```
 
-Restore of data need to be done in following way:
+Restoration of data need to be done in following way:
 
 ```
 velero restore create --from-backup sched-20190513103034 --restore-volumes=true
