@@ -207,7 +207,7 @@ The following steps will help to verify the cStor volume running status.
    kubectl get pvc -n <namespace>
    ```
 
-2.  If PVC is created successfully, check corresponding PV is also created successfully.
+2. If PVC is created successfully, check corresponding PV is also created successfully.
 
    ```
    kubectl get pv
