@@ -227,13 +227,15 @@ The following steps will help to verify the cStor volume running status.
    kubectl get cstorvolume -n openebs
    ```
 
-   The output of above command will show status as `Healthy`, `Degraded` and `Offline`. Following are the definition for each of these status.
+   The output of above command will show status as `Offline`, `Degraded` and `Healthy`. Following are the definition for each of these status.
 
-   **Offline:** Replicas are unable to connect to its target pod and IOs can’t happen on this cStor volume. This can happen due to network issues.
+   **Offline:** Replicas may not able to connect to its target pod due to network issues. In this case, IOs will not happen on this cStor volume. 
 
-   **Degraded:** When replicas of the cStor volume is in degrade state, then corresponding volume will be running as degraded. In this case, IOs are ready to serve on this volume. 
+   **Degraded:** All replicas of the cStor volume are not in Healthy state, corresponding volume will be running as degraded. In this case, IOs can happen on this volume. Please refer next step for more details about CVR status.
 
-   **Healthy:**  When all the replicas of the cStor volume is fully synced with each other.
+   **Healthy:**  All replicas of the cStor volume are in Healthy state.
+
+   Note: If target pod of corresponding cStor volume is not running, then the status of cStor volume shown in the output of above command may be stale.
 
 5. Check the cStorVolumeReplica(CVR) status of the corresponding cStor volume using the following command.
 
@@ -241,13 +243,17 @@ The following steps will help to verify the cStor volume running status.
    kubectl get cvr -n openebs
    ```
 
-   The output of above command will show status as `Healthy`, `Degraded` and `Rebuilding`. Following are the definition for each of these status.
+   The output of above command will show status as `Offline`, `Degraded`, `Rebuilding` and `Healthy`. Following are the definition for each of these status.
 
-   **Degraded:** Replica is ready to serve IOs, but missing data need to synced from other replicas.
+   **Offline:** Replica is not connected to the target pod.
 
-   **Rebuilding:** Replica is ready to serve IOs and it is in rebuilding process by copying missing data from other replicas of the corresponding cStor volume.
+   **Degraded:** Replica of the cStor volume need to get synced from other replica of the corresponding volume. 
 
-   **Healthy:** When a replica of the cStor volume is fully synced the data from other replicas of this volume.
+   **Rebuilding:** Replica is in rebuilding state to sync up the data from other replicas of the corresponding volume.
+
+   **Healthy:** Replica is having full data.
+
+   Note: If pool pod corresponding to cStor volume replica is not running, then the status of CVR shown in the output of above command may be stale.
 
 </br>
 
