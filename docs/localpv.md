@@ -26,7 +26,7 @@ OpenEBS Local PVs are analogous to Kubernetes LocalPV. In addition, OpenEBS Loca
 
 ## How to use OpenEBS Local PVs
 
-OpenEBS supports two kinds of Local PVs such as `hostpath` and `device`.
+OpenEBS support two kinds of Local PVs such as `hostpath` and `device`.
 
 End users or developers will provision the OpenEBS Local PVs like any other PV, by creating a PVC using a storage class provided by the admin user. 
 
