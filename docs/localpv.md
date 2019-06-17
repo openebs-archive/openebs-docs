@@ -20,19 +20,19 @@ OpenEBS Local PVs are analogous to Kubernetes LocalPV. In addition, OpenEBS Loca
 - Local PVs are provisioned dynamically by OpenEBS Local PV provisioner. When the Local PV is of type "host path", the host path is created dynamically and mapped to the Local PV. When the Local PV is of type "device", one of the  matching disks on the node is reserved and mapped to the Local PV.
 - Disks for Local PVs are managed by OpenEBS. Disk IO metric of managed disks can be obtained with help of NDM.
 - Provisioning of Local PVs is done through the Kubernetes standards. Admin users create storage class to enforce the storage type (disk or host path) and put additional control through RBAC policies.
-- Pods are always scheduled on the same node. By specifying the node selector, the pods are pinned using OpenEBS LocalPV. It guarantees that the pod is rescheduled on the same node to retain the access to data all the time.
+- By specifying the node selector in the application spec YAML , the application pods are pinned using OpenEBS Local PV. It guarantees that the pod is rescheduled on the same node to retain the access to data all the time.
 
 
 
 ## How to use OpenEBS Local PVs
 
-OpenEBS support two kinds of Local PVs such as `hostpath` and `device`.
+OpenEBS create two Storage Classes of Local PVs by default as `openebs-hostpath` and `openebs-device`. For simple provisioning of OpenEBS Local PV, use these default Storage Classes. More details can be find from [here](/1.0.0-RC2/docs/next/uglocalpv.html).   
 
 End users or developers will provision the OpenEBS Local PVs like any other PV, by creating a PVC using a storage class provided by the admin user. 
 
 <h4><a class="anchor" aria-hidden="true" id="openebs-localpv-device"></a>OpenEBS Local PV based on device</h4>
 
-Admin user creates a storage class for the type `device` Local PV by using the following annotations.
+Admin user creates a storage class for the `StorageType` as `device` Local PV by using the following annotations.
 
 ```
 openebs.io/cas-type: local
@@ -63,7 +63,7 @@ For provisioning Local PV using the block devices attached to the nodes, then bl
 
 <h4><a class="anchor" aria-hidden="true" id="openebs-localpv-hostpath"></a>OpenEBS Local PV based on hostpath</h4>
 
-Admin user creates a storage class for the type `hostpath` Local PV by using the following annotations
+Admin user creates a storage class for the `StorageType` as `hostpath` Local PV by using the following annotations
 
 ```
 openebs.io/cas-type: local
@@ -76,6 +76,8 @@ provisioner: openebs.io/local
 ```
 
 When a PVC is invoked using the above storage class, OpenEBS Local PV  provisioner uses NDM operator and creates a new sub directory inside the BasePath and maps it to the PV.
+
+Note: If default Basepath needs to be changed by mentioning different hostpath, then the specified hostpath(directory) must be present of the Node.  
 
 
 
