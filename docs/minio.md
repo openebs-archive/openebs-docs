@@ -48,7 +48,7 @@ Cloud native Object storage is easy to deploy with Minio and OpenEBS. Both run i
 
    If OpenEBS is not installed in your K8s cluster, this can done from [here](/1.0.0-RC2/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
-2. **Connect to MayaOnline (Optional)** : Connecting the Kubernetes cluster to <a href="app.mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
+2. **Connect to MayaOnline (Optional)** : Connecting the Kubernetes cluster to <a href="https://mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
 
 3. **Configure cStor Pool**
 
