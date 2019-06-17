@@ -221,7 +221,7 @@ The following steps will help to verify the cStor volume running status.
 
    It should be in running state if all 3 container of the target pod are created and in running state.
 
-4.  Now check the status of cStor volume using the following command.
+4. Now check the status of cStor volume using the following command.
 
    ```
    kubectl get cstorvolume -n openebs
@@ -229,12 +229,12 @@ The following steps will help to verify the cStor volume running status.
 
    Here it will show status as `Healthy`, `Degarded`,`Init` and `Offline`. Following are the definition for each of these status.
 
-   **Offline:** Replicas are unable to connect to its target pod and IOs can’t happen on this cStor volume. This can happen due to network issues, connectivity issues between replicas and target pod etc. The information about the number of replicas connected to the target pod can be obtain by running `kubectl describe <cstor_volume> -n openebs `  and check the quorum value is satisfying the consistency factor.
-
+   **Offline:** Replicas are unable to connect to its target pod and IOs can’t happen on this cStor volume. This can happen due to network issues, connectivity issues between replicas and target pod etc. The information about the number of replicas connected to the target pod can be obtain by running `kubectl describe <cstor_volume> -n openebs` and check the quorum value is satisfying the consistency factor.
+   
    **Degraded:** Replica is ready to serve IOs, but, missing data sync process is yet to start.
 
    **Init:** Target pod is trying to connect with all the replicas of the cStor volume.
-
+  
    **Healthy:** cStor volume is fully synced with the data.
 
    Based on the status of the cStor volume, IOs can happen on the volume.
