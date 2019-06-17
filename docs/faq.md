@@ -28,6 +28,10 @@ sidebar_label: FAQs
 
 [What are the prerequisites other than general prerequisites for installing OpenEBS in Centos and OpenShift?](#OpenEBS-install-prerequisites-openshift-centos)
 
+[How to verify cStor volume is running fine?](#verify-cstor-volume-running-fine)
+
+
+
 
 
 <br>
@@ -192,6 +196,64 @@ If you are installing OpenEBS in CentOS or OpenShift,you must need to grant priv
 <a href="#top">Go to top</a>
 
 <br>
+
+<h3><a class="anchor" aria-hidden="true" id="verify-cstor-volume-running-fine"></a>How to verify cStor volume is running fine?</h3>
+
+The following steps will help to verify the cStor volume running status.
+
+1. Check PVC is created successfully using the following command.
+
+   ```
+   kubectl get pvc -n <namespace>
+   ```
+
+2.  If PVC is created successfully, check corresponding PV is also created successfully.
+
+   ```
+   kubectl get pv
+   ```
+
+3. If above outputs are fine, check the corresponding target pod of the cStor volume is running fine using the following command. 
+
+   ```
+   kubectl get pod -n openebs | grep -i <pv_name>
+   ```
+
+   It should be in running state if all 3 container of the target pod are created and in running state.
+
+4.  Now check the status of cStor volume using the following command.
+
+   ```
+   kubectl get cstorvolume -n openebs
+   ```
+
+   Here it will show status as `Healthy`, `Degarded`,`Init` and `Offline`. Following are the definition for each of these status.
+
+   **Offline:** Replicas are unable to connect to its target pod and IOs can’t happen on this cStor volume. This can happen due to network issues, connectivity issues between replicas and target pod etc. The information about the number of replicas connected to the target pod can be obtain by running `kubectl describe <cstor_volume> -n openebs `  and check the quorum value is satisfying the consistency factor.
+
+   **Degraded:** Replica is ready to serve IOs, but, missing data sync process is yet to start.
+
+   **Init:** Target pod is trying to connect with all the replicas of the cStor volume.
+
+   **Healthy:** cStor volume is fully synced with the data.
+
+   Based on the status of the cStor volume, IOs can happen on the volume.
+
+5. Check the cStorVolumeReplica(CVR) status of the corresponding cStor volume using the following command.
+
+   ```
+   kubectl get cvr -n openebs
+   ```
+
+   **Degraded:** Replica is ready to serve IOs, but, missing data sync process is yet to start.
+
+   **Rebuilding:** Replica is ready to serve IOs and is in rebuilding process. That means, missing data sync process is started.
+
+   **Healthy:** Replica is fully synced with the data.
+
+   **Error:** When the status of the backend dataset is empty or unable to run the corresponding  command to obtain the details.
+
+</br>
 
 <hr>
 

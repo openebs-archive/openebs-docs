@@ -73,8 +73,6 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [Unable to mount XFS formatted volumes into Pod](#unable-to-mount-xfs-volume)
 
-[cStor Volume Replicas are in Healthy and Degraded state and taking more time to complete the rebuild](#cvr-degraded-rebuilding)
-
 <br>
 
 ## Kubernetes related
@@ -218,7 +216,7 @@ In addition, the job is set with a TTL to get cleaned up, if the cluster version
 
 <h3><a class="anchor" aria-hidden="true" id="cvr-deletion"></a>cStor Volume Replicas are not getting deleted properly</h3>
 
-Sometimes, there are chances that cStor volumes Replicas (CVR) may not be deleted properly if you delete the openebs installed namespace. To relsove this issue, perform the following command.
+Sometimes, there are chances that cStor volumes Replicas (CVR) may not be deleted properly if some unforeseen scenarios happened such as network lost during the deletion of PVC. To resolve this issue, perform the following command.
 
 ```
 kubectl edit cvr <cvr_name> -n openebs
@@ -581,37 +579,6 @@ This can happen due to `xfs_repair` failure on the application node. Make sure t
 ```
 apt install xfsprogs
 ```
-
-<h3><a class="anchor" aria-hidden="true" id="cvr-degraded-rebuilding"></a>cStor Volume Replicas are in Rebuidling and Degraded state and taking more time to complete the rebuild</h3>
-
-After performing cStor volume expansion, observed that cStor Volume Replicas(CVR) of the cStor volume is in rebuilding and degraded state. Also observed that rebuilding is taking more time to complete.
-
-**Troubleshooting:**
-
-Check the CVR status of the corresponding volume using the following command.
-
-```
-kubectl get cvr -n openebs
-```
-
-If the output of above command is similar to the following, then it means one of the CVR of the  cStor volume is in rebuilding state.
-
-```
-NAME                                                       USED    ALLOCATED   STATUS       AGE
-pvc-803985e7-879e-11e9-836c-42010a8000b1-cstor-disk-gqe7   4.79G   4.68G       Rebuilding   15m
-pvc-803985e7-879e-11e9-836c-42010a8000b1-cstor-disk-lil8   4.79G   4.68G       Degraded     15m
-pvc-803985e7-879e-11e9-836c-42010a8000b1-cstor-disk-sw5k   4.79G   4.68G       Degraded     15m
-```
-
-More details of rebuilding operation can be checked on corresponding pool pod by checking the logs of the pod.
-
-For example, if the CVR name is `pvc-803985e7-879e-11e9-836c-42010a8000b1-cstor-disk-gqe7`, then its corresponding pool pod will be starts with `cstor-disk-gqe7` . It means,the name of the corresponding pool pod will be added at the end of the CVR name. Check the rebuilding status of the CVR using the following command.
-
-```
-kubectl logs -f <pool_pod> -n openebs
-```
-
-Application will be running state if one of the CVR of the corresponding cStor volume is in healthy state. Once rebuilding of one CVR is done, rebuilding for other CVRs are also will be performed. Currently, rebuilding process for cStor Volume Replicas are not fully optimized. This process will be optimized in the future releases. 
 
 <br>
 
