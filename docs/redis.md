@@ -25,6 +25,7 @@ Redis is an open source in-memory remote database that supports many different d
 <br>
 
 <hr>
+
 ## Configuration Design
 
 Redis is typically deployed as StatefulSet with persistent enabled with master-slave configuration and it requires a minimum of three nodes. Redis STS will run as one master and two slave format.
@@ -65,6 +66,7 @@ Redis is typically deployed as StatefulSet with persistent enabled with master-s
 <br>
 
 <hr>
+
 ### Verify the Redis Application and OpenEBS Volume
 
 After deploying Redis using helm command, you can verify the status of application and OpenEBS volume.
