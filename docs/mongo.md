@@ -8,30 +8,13 @@ sidebar_label: MongoDB
 
 ## Introduction
 
-<br>
+MongoDB is a cross-platform document-oriented database. Classified as a NoSQL database, MongoDB eschews the traditional table-based relational database structure in favor of JSON-like documents with dynamic schemas, making the integration of data in certain types of applications easier and faster. 
 
-MongoDB is a cross-platform document-oriented database. Classified as a NoSQL database, MongoDB eschews the traditional table-based relational database structure in favour of JSON-like documents with dynamic schemas, making the integration of data in certain types of applications easier and faster. MongoDB  is deployed usually as a `statefulset` on Kubernetes and requires persistent storage for each instance of MongoDB StorageManager instance. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
-
-<br>
-
-**Advantages of using OpenEBS for MongoDB:**
-
-- No need to manage the local disks, they are managed by OpenEBS
-- Large size PVs can be provisioned by OpenEBS and MongoDB
-- Start with small storage and add disks as needed on the fly. Sometimes MongoDB instances are scaled up because of capacity on the nodes. With OpenEBS persistent volumes, capacity can be thin provisioned and disks can be added to OpenEBS on the fly without disruption of service 
-- MongoDB sometimes need highly available storage, in such cases OpenEBS volumes can be configured with 3 replicas.
-- If required, take backup of the MongoDB data periodically and back them up to S3 or any object storage so that restoration of the same data is possible to the same or any other Kubernetes cluster
-
-<br>
-
-*Note: MongoDB can be deployed both as `deployment` or as `statefulset`. When MongoDB deployed as `statefulset`, you don't need to replicate the data again at OpenEBS level. When MongoDB is deployed as `deployment`, consider 3 OpenEBS replicas, choose the StorageClass accordingly.*
+MongoDB is usually deployed as `replicaset` in the production environment where it does not need replication at the storage level. You can deploy a standalone MongoDB instance also for testing and development purposes. In this latter case, persistent storage is required for each instance of MongoDB StorageManager instance. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
 
 <br>
 
 <hr>
-
-<br>
-
 ## Deployment model
 
 <br>
@@ -41,8 +24,18 @@ MongoDB is a cross-platform document-oriented database. Classified as a NoSQL da
 <br>
 
 <hr>
-
 <br>
+
+## Configuration Design
+
+| Condition for selecting CAS Engine                           | CAS engine               |
+| ------------------------------------------------------------ | ------------------------ |
+| Mongo DB can be deployed as a `replicaset` using device Local PV if the following conditions are met.<br>- Replication needs to be handled by the application itself.<br/>- Required disk equivalent performance.<br/>- The minimum unclaimed single disk is available on the nodes.<br/>- Dedicated disks usage for Mogo DB instances.<br/>- No other application can be provisioned is single disk is attached to the node.<br/>- Capacity usage is limited to the available disk capacity where the Local PV is provisioned. | OpenEBS device LocalPV   |
+| Mongo DB can be deployed as a `replicaset` using hostpath Local PV if the following conditions are met.<br/>- Replication needs to be handled by the application itself.<br/>- Required filesystem equivalent performance where the hostpath is created.<br/>- Capacity usage is limited to the underlying storage capacity where the Local PV is provisioned.<br/>- Provision on default hostpath or customized hostpath. | OpenEBS hostpath LocalPV |
+| Mongo DB can be deployed as a standalone server using cStor if the following conditions are met.<br/>- Replication at the storage level. <br/>- Required Medium performance and it is tunable based on workload pattern.<br/>- Capable of taking snapshot and clone of volumes.<br/>- Volume capacity expansion. <br/>- More disks are present in the Node. Thereby capacity of volume expansion is possible by             adding more disk. | cStor                    |
+| Mongo DB can be deployed as a standalone server using Jiva if the following conditions are met.<br/>- Replication at the storage level.<br/>- Required Medium performance.<br/>- Volume capacity expansion based on the available capacity on the provisioned disk.<br/>- Provision Jiva on an external disk that can be shared or a mounted filesystem path. | Jiva                     |
+
+</br>
 
 ## Configuration workflow
 
@@ -54,128 +47,135 @@ MongoDB is a cross-platform document-oriented database. Classified as a NoSQL da
 
 2. **Connect to MayaOnline (Optional)** : Connecting the Kubernetes cluster to <a href="https://mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
 
-3. **Configure cStor Pool**
+3. In this step, need to select the required CAS engine based on the requirement.
 
-   After OpenEBS installation, cStor pool has to be configured.If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/1.0.0-RC2/docs/next/ugcstor.html#creating-cStor-storage-pools).  During cStor Pool creation, make sure that the maxPools parameter is set to >=3. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. If cStor pool is already configured, go to the next step. 
+   - **OpenEBS Local PV**
 
-4. **Create Storage Class**
+     If OpenEBS Local PV is chosen as the CAS engine, perform below procedure. You can either use default StorageClass or create a new StorageClass with appropriate customization. Once the corresponding StorageClass is selected, perform step 4.
 
-   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  In this solution, MongoDB is installed as a Deployment. So it requires replication at the storage level. So cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml** to consume cStor pool with cStoveVolume Replica count as 3 is provided in the configuration details below.
+     - **Use default Storage Class**
 
-5. **Launch and test MongoDB**
+       OpenEBS create two Storage Classes of Local PVs by default as `openebs-hostpath` and `openebs-device`. One of these default StorageClass can be mentioned during the application provisioning with helm. More details can be read from [here](https://staging-docs.openebs.io/1.0.0-RC2/docs/next/uglocalpv.html).
 
-   Use stable MongoDB chart with helm to install MongoDB deployment in your cluster using the following command. In the following command, it will create a PVC with 8Gi size with a storage replication factor 3.
+     - **Create Storage Class**
+
+       A new StorageClass can be created for OpenEBS Local PV based hostpath by customizing different hostpath. 
+
+       (or)
+
+       A new StorageClass can be created for OpenEBS Local PV based device by customizing the required filesystem for formatting the disk. For more details read from [here](https://staging-docs.openebs.io/1.0.0-RC2/docs/next/localpv.html#how-to-use-openebs-local-pvs).
+
+   - **cStor**
+
+     If Local PV is chosen as CAS engine, perform below procedure.
+
+     - **Configure cStor Pool**
+
+       After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/1.0.0-RC2/docs/next/ugcstor.html#creating-cStor-storage-pools).  During cStor Pool creation, ensure that at least one block device is taken from 3 nodes. This is to ensure the replication at the storage level with replica count as 3. If cStor pool is already configured, configure StorageClass to include the corresponding StoragePoolClaim name. 
+
+     - **Create Storage Class**
+
+       You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. By using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. StorageClass can be done from [here](/1.0.0-RC2/docs/next/ugcstor.html#creating-cStor-storage-class). If MongoDB is installed as a standalone server, then it requires replication at the storage level. So cStor volume `replicaCount` is 3. Use appropriate Storage Class name in the helm command in step 4.
+
+   - **Jiva**
+
+     - Use default Storage Class
+
+       The default Storage Class for Jiva is `openebs-jiva-default`. Use this StorageClass for provisioning Jiva volume with replica count as 3.
+
+     - Create Storage Class
+
+       If you need to create a storage pool with an externally mounted disk and use this mounted path in new Storage Class for provisioning Jiva volume, this can be done from [here](/1.0.0-RC2/docs/next/jivaguide.html#create-a-pool). 
+
+4. **Launch and Test MongoDB**
+
+   In this example, Mongo DB is provisioned as `replicaset` and used `openebs-hostpath` as the StorageClass.
 
    ```
-   helm install --name my-release --set persistence.storageClass=openebs-cstor-disk stable/mongodb
+   helm install --name my-release stable/mongodb-replicaset --set persistentVolume.storageClass=openebs-hostpath 
    ```
 
-   For more information on installation, see MongoDB [documentation](https://github.com/helm/charts/tree/master/stable/mongodb).
-
-
-
-## Reference at [openebs.ci](https://openebs.ci/)
-
-<br>
-
-A live deployment of MongoDB using OpenEBS volumes can be seen at the website [www.openebs.ci](https://openebs.ci/)
-
-Deployment YAML spec files for MongoDB and OpenEBS resources are found [here](https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/mongo-cstor/mongo-cstor-mongo.yaml)
-
-[OpenEBS-CI dashboard of MongoDB](https://openebs.ci/mongo-cstor)
-
-
+   For more information on installation, see MongoDB [documentation](https://github.com/helm/charts/tree/master/stable/mongodb-replicaset).
 
 <br>
 
 <hr>
 
-<br>
+## Verify the Mongo DB Application and OpenEBS Volume
 
+After deploying Mongo DB using helm command, you can verify the status of application and OpenEBS volume. In this example, Mongo DB is provisioned as `replicaset` and used `openebs-hostpath` as the StorageClass.
 
-
-## Post deployment Operations
-
-<br>
-
-**Monitor OpenEBS Volume size** 
-
-It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
-
-**Monitor cStor Pool size**
-
-As in most cases, cStor pool may not be dedicated to just Mongo database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/1.0.0-RC2/docs/next/ugcstor.html#monitor-pool). 
-
-
-
-<br>
-
-<hr>
-
-<br>
-
-
-
-
-
-## Configuration details
-
-<br>
-
-**openebs-config.yaml**
+Verify application pod status using the following command.
 
 ```
-#Use the following YAMLs to create a cStor Storage Pool.
-# and associated storage class.
-apiVersion: openebs.io/v1alpha1
-kind: StoragePoolClaim
-metadata:
-  name: cstor-disk
-spec:
-  name: cstor-disk
-  type: disk
-  poolSpec:
-    poolType: striped
-  # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
-  #
-  # `Disk` is a custom resource supported by OpenEBS with `node-disk-manager`
-  # as the disk operator
-# Replace the following with actual disk CRs from your cluster `kubectl get disks`
-# Uncomment the below lines after updating the actual disk names.
-  disks:
-    diskList:
-# Replace the following with actual disk CRs from your cluster from `kubectl get disks`
-#   - disk-184d99015253054c48c4aa3f17d137b1
-#   - disk-2f6bced7ba9b2be230ca5138fd0b07f1
-#   - disk-806d3e77dd2e38f188fdaf9c46020bdc
-#   - disk-8b6fb58d0c4e0ff3ed74a5183556424d
-#   - disk-bad1863742ce905e67978d082a721d61
-#   - disk-d172a48ad8b0fb536b9984609b7ee653
----
+kubectl get pods
 ```
 
-**openebs-sc-disk.yaml**
+Output will be similar to the following.
 
 ```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: openebs-cstor-disk
-  annotations:
-    openebs.io/cas-type: cstor
-    cas.openebs.io/config: |
-      - name: StoragePoolClaim
-        value: "cstor-disk"
-      - name: ReplicaCount
-        value: "3"       
-provisioner: openebs.io/provisioner-iscsi
-reclaimPolicy: Delete
----
+NAME                              READY   STATUS    RESTARTS   AGE
+my-release-mongodb-replicaset-0   1/1     Running   0          3m27s
+my-release-mongodb-replicaset-1   1/1     Running   0          2m38s
+my-release-mongodb-replicaset-2   1/1     Running   0          119s
 ```
 
+Verify PVC status using the following command.
 
+```
+kubectl get pvc
+```
+
+Output will be similar to the following.
+
+```
+NAME                                      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
+datadir-my-release-mongodb-replicaset-0   Bound    pvc-873d1d37-926a-11e9-9664-42010a800254   10Gi       RWO            openebs-hostpath   2m23s
+datadir-my-release-mongodb-replicaset-1   Bound    pvc-a4b37f04-926a-11e9-9664-42010a800254   10Gi       RWO            openebs-hostpath   94s
+datadir-my-release-mongodb-replicaset-2   Bound    pvc-bbf53110-926a-11e9-9664-42010a800254   10Gi       RWO            openebs-hostpath   55s
+```
+
+Verify PV status using the following command.
+
+```
+kubectl get pv
+```
+
+Output will be similar to the following.
+
+```
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                             STORAGECLASS       REASON   AGE
+pvc-873d1d37-926a-11e9-9664-42010a800254   10Gi       RWO            Delete           Bound    default/datadir-my-release-mongodb-replicaset-0   openebs-hostpath            2m18s
+pvc-a4b37f04-926a-11e9-9664-42010a800254   10Gi       RWO            Delete           Bound    default/datadir-my-release-mongodb-replicaset-1   openebs-hostpath            87s
+pvc-bbf53110-926a-11e9-9664-42010a800254   10Gi       RWO            Delete           Bound    default/datadir-my-release-mongodb-replicaset-2   openebs-hostpath      
+```
+
+Verify service status of Mongo DB application.
+
+```
+kubectl get svc
+```
+
+Output will be similar to the following.
+
+```
+NAME                                   TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)     AGE
+kubernetes                             ClusterIP   10.0.0.1     <none>        443/TCP     3h7m
+my-release-mongodb-replicaset          ClusterIP   None         <none>        27017/TCP   4m1s
+my-release-mongodb-replicaset-client   ClusterIP   None         <none>        27017/TCP   4m1s
+```
 
 <br>
+
+## Post Deployment Operations
+
+<br>
+
+- cStor related operations can be obtained from [here](/1.0.0-RC2/docs/next/ugcstor.html).
+
+<br>
+
+
 
 ## See Also:
 
@@ -185,7 +185,11 @@ reclaimPolicy: Delete
 
 ### [OpenEBS use cases](/1.0.0-RC2/docs/next/usecases.html)
 
-### [cStor pools overview](/1.0.0-RC2/docs/next/cstor.html#cstor-pools)
+### [cStor User Guide](/1.0.0-RC2/docs/next/ugcstor.html)
+
+### [Local PV User Guide](/1.0.0-RC2/docs/next/uglocalpv.html)
+
+### [Jiva User Guide](/1.0.0-RC2/docs/next/jivaguide.html)
 
 
 
