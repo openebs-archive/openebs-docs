@@ -15,9 +15,8 @@ MongoDB is usually deployed as `replicaset` in the production environment where 
 <br>
 
 <hr>
-## Deployment model
 
-<br>
+## Deployment model
 
 <img src="/docs/assets/svg/mongo-deployment.svg" alt="OpenEBS and Mongo" style="width:100%;">
 
@@ -37,9 +36,9 @@ MongoDB is usually deployed as `replicaset` in the production environment where 
 
 </br>
 
-## Configuration workflow
+<hr>
 
-<br>
+## Configuration workflow
 
 1. **Install OpenEBS**
 
@@ -79,11 +78,11 @@ MongoDB is usually deployed as `replicaset` in the production environment where 
 
    - **Jiva**
 
-     - Use default Storage Class
+     - **Use default Storage Class**
 
        The default Storage Class for Jiva is `openebs-jiva-default`. Use this StorageClass for provisioning Jiva volume with replica count as 3.
 
-     - Create Storage Class
+     - **Create Storage Class**
 
        If you need to create a storage pool with an externally mounted disk and use this mounted path in new Storage Class for provisioning Jiva volume, this can be done from [here](/1.0.0-RC2/docs/next/jivaguide.html#create-a-pool). 
 
@@ -167,15 +166,17 @@ my-release-mongodb-replicaset-client   ClusterIP   None         <none>        27
 
 <br>
 
-## Post Deployment Operations
+<hr>
 
-<br>
+## Post Deployment Operations
 
 - cStor related operations can be obtained from [here](/1.0.0-RC2/docs/next/ugcstor.html).
 
 <br>
 
+<hr>
 
+<br>
 
 ## See Also:
 
