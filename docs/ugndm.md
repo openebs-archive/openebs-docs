@@ -86,8 +86,6 @@ filterconfigs:
     exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"
 ```
 
-
-
 <h3><a class="anchor" aria-hidden="true" id="create-blockdevice-CRs-for-partitioned-disks"></a>Create blockdevice CRs for partitioned disks</h3>
 
 Currently, NDM is not selecting partitioned disks for creating device resource. But, you can create block device resource for the partitioned disks manually. The following are the steps for the creation of block device resource.
@@ -141,6 +139,8 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
 4. Repeat the same steps for each partitioned device and create blockdevice CR for each device.
 
 5. Verify if the blockdevice is created by running the following `kubectl get blockdevice -n openebs` command.
+
+**Note:** If you are creating a block device CR for a partitioned device path, then you must add the corresponding disk in the exclude filter so that NDM will not select this disk for BD creation. For example, `/dev/sdb` have 2 partition, say `/dev/sdb1` and `/dev/sdb2`. If block device CR is creating for `/dev/sdb1` by manually, then you must add `/dev/sdb` in the exclude filter of NDM configuration. See [here](#Exclude-filters) for customizing the exclude filter in NDM configuration.
 
 <br>
 
