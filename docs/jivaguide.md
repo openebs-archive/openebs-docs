@@ -302,7 +302,7 @@ kubectl get pvc -n <namespace>
 Verify PV status using the following command.
 
 ```
-kubectl get pvc -n <namespace>
+kubectl get pv -n <namespace>
 ```
 
 
