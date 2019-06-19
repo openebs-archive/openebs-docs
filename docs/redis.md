@@ -67,7 +67,7 @@ Redis is typically deployed as StatefulSet with persistent enabled with master-s
 
 <hr>
 
-### Verify the Redis Application and OpenEBS Volume
+## Verify the Redis Application and OpenEBS Volume
 
 After deploying Redis using helm command, you can verify the status of application and OpenEBS volume.
 
