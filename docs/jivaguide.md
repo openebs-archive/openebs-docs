@@ -21,6 +21,8 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 [Provision Sample Application with Jiva Volume](#provision-sample-application-with-jiva-volume)
 
+[Backup and Restore](#backup-and-restore)
+
 
 
 
@@ -144,6 +146,165 @@ Once the storage class is created, provision the volumes using the standard PVC 
   kubectl apply -f demo-percona-mysql-pvc.yaml
   ```
   The Percona application now runs inside the `gpdpool` storage pool.
+
+<h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
+
+OpenEBS volume can be backed up and restore along with application using velero plugin. It helps the user for taking backup of OpenEBS volumes to a third party storage location and then restoration of the data whenever it needed. The steps for taking backup and restore are following.
+
+<h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
+
+- Mount propagation feature has to be enabled on Kubernetes, otherwise the data written from the pods will not visible in the restic daemonset pod on the same node.
+- Latest tested Velero version is 1.0.0.
+- Create required storage provider configuration to store the backup data.
+- Create required storage class on destination cluster.
+- Annotate required application pod that contains a volume to back up.
+
+<h4><a class="anchor" aria-hidden="true" id="overview"></a>Overview</h3>
+
+Velero is a utility to back up and restore your Kubernetes resource and persistent volumes. 
+
+To take backup and restore of Jiva volume, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Jiva volume which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](https://staging-docs.openebs.io/1.0.0-RC2/docs/next/minio.html).
+
+The following are the step by step procedure for taking backup and restore of application with Jiva.
+
+1. Install Velero
+2. Annotate Application Pod
+3. Creating and Managing Backups
+4. Steps for Restore
+
+<h4><a class="anchor" aria-hidden="true" id="install-velero"></a>Install Velero (Formerly known as ARK)</h3>
+
+Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.0.0/>) to install and configure Velero and follow [restic integration documentation](https://velero.io/docs/v1.0.0/restic/) for setting up and usage of restic support.
+
+While installing Velero plugin in your cluster,  specify `--use-restic` to enable restic support. 
+
+Verify using the following command if restic pod and Velero pod are running after installing velero with restic support.
+
+```
+kubectl get pod -n velero
+```
+
+The following is an example output.
+
+```
+NAME                    READY   STATUS    RESTARTS   AGE
+restic-8hxx8            1/1     Running   0          9s
+restic-nd9d9            1/1     Running   0          9s
+restic-zfggm            1/1     Running   0          9s
+velero-db6459bb-n2rff   1/1     Running   0          9s
+```
+
+<h4><a class="anchor" aria-hidden="true" id="annotate-appliction"></a>Annotate Application Pod</h3>
+
+Run the following  to annotate each application pod that contains a volume to back up.
+
+```
+kubectl -n YOUR_POD_NAMESPACE annotate pod/YOUR_POD_NAME backup.velero.io/backup-volumes=YOUR_VOLUME_NAME_1,YOUR_VOLUME_NAME_2,...
+```
+
+In the above example command, where the volume names are the names of the volumes specified in the application pod spec.
+
+Example Spec:
+
+If application spec contains the volume name as mentioned below, then use volume name as `demo-vol1` in the below command.
+
+```
+            volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: demo-vol1
+      volumes:
+        - name: demo-vol1
+          persistentVolumeClaim:
+            claimName: demo-vol1-claim
+```
+
+And if the application pod name is  `percona-7b64956695-dk95r` , use the following command to annotate the application.
+
+```
+kubectl -n default annotate pod/percona-7b64956695-dk95r backup.velero.io/backup-volumes=demo-vol1
+```
+
+<h4><a class="anchor" aria-hidden="true" id="managing-backup"></a>Creating and Managing Backups</h3>
+
+Take the backup using the below command. Here you should add the selector for avoiding Jiva controller and replica deployment from taking backup.
+
+```
+velero backup create hostpathbkp2 --selector '!openebs.io/controller,!openebs.io/replica'
+```
+
+After taking backup, verify if backup is taken successfully by using following command.
+
+```
+velero backup get
+```
+
+The following is a sample output.
+
+```
+NAME           STATUS      CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
+hostpathbkp2   Completed   2019-06-19 17:14:43 +0530 IST   29d       default            !openebs.io/controller,!openebs.io/replica
+```
+
+You will get more details about the backup using the following command.
+
+```
+velero backup describe hostpathbkp2 --details
+```
+
+Once the backup is completed you should see the `Phase` marked as `Completed` in the output of above command.
+
+<h4><a class="anchor" aria-hidden="true" id="steps-for-restore"></a>Steps for Restore</h3>
+
+Velero backup can be restored onto a new cluster or to the same cluster. An OpenEBS PVC *with the same name as the original PVC* will be created and application will run using the restored OpenEBS volume.
+
+**Prerequisites**
+
+- Create the same namespace and StorageClass configuration of the source PVC in your destination cluster. 
+- If the restoration is happens on same cluster where Source PVC was created, then ensure that application and its corresponding components such as Service, PVC and PV are deleted successfully.
+
+On the target cluster, restore the application using the below command.
+
+```
+velero restore create --from-backup <backup-name>
+```
+
+Example:
+
+```
+velero restore create --from-backup hostpathbkp2
+```
+
+The following can be used to obtain the restore job status.
+
+```
+velero restore get
+```
+
+The following is an example output. Once the restore is completed you should see the status marked as `Completed`.
+
+```
+NAME                          BACKUP         STATUS       WARNINGS   ERRORS   CREATED                         SELECTOR
+hostpathbkp2-20190619171932   hostpathbkp2   Completed    44          0        2019-06-19 17:19:33 +0530 IST   <none>
+```
+
+Verify application status using the following command.
+
+```
+kubectl get pod -n <namespace>
+```
+
+Verify PVC status using the following command.
+
+```
+kubectl get pvc -n <namespace>
+```
+
+Verify PV status using the following command.
+
+```
+kubectl get pvc -n <namespace>
+```
+
 
 
 <br>
