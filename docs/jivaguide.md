@@ -820,7 +820,7 @@ First, execute into the corresponding Jiva controller pod using the following co
 kubectl exec -it <jiva_controller_pod> -c <container_pod> bash
 ```
 
-Once it is logged into the container pod, list all the internal snapshots using the following command.
+Once logged into the container pod, list all the internal snapshots using the following command.
 
 ```
 jivactl snapshot ls
@@ -834,7 +834,7 @@ c074ff10-4780-4222-8042-86baffa3436f
 1adb9e8b-354b-4ce2-b1a2-04accaed77a2
 ```
 
-Get the details of snapshot using the following command.
+Get the details of snapshots using the following command.
 
 ```
 jivactl snapshot info
@@ -878,7 +878,7 @@ Example output:
 }
 ```
 
-You cannot delete latest snapshot from the list. Latest snapshot can be find by going to volume-head details and check the `parent` field. The value showing in `parent` field is the latest snapshot name . In the above, `c074ff10-4780-4222-8042-86baffa3436f` is the latest snapshot. You can delete remaining snapshots. 
+You cannot delete latest snapshot from the list. Latest snapshot can be found by going to volume-head details and check the `parent` field. The value displayed in `parent` field is the latest snapshot name . In the above snippet, `c074ff10-4780-4222-8042-86baffa3436f` is the latest snapshot. You can delete remaining snapshots. 
 
 Delete a snapshot using the following command
 

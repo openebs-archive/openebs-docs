@@ -283,11 +283,11 @@ pvc-d0ea3a06-88fe-11e9-bc28-42010a8001ff   5G         RWO            Delete     
 
 <h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
 
-OpenEBS volume can be backed up and restore along with application using velero plugin. It helps the user for taking backup of OpenEBS volumes to a third party storage location and then restoration of the data whenever it needed. The steps for taking backup and restore are following.
+OpenEBS volume can be backed up and restored along with the application using velero plugin. It helps the user for backing up the  OpenEBS volumes to a third party storage location and then restore the data whenever it is needed. The steps for taking backup and restore are as follows.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
 
-- Mount propagation feature has to be enabled on Kubernetes, otherwise the data written from the pods will not visible in the restic daemonset pod on the same node.
+- Mount propagation feature has to be enabled on Kubernetes, otherwise the data written from the pods will not visible in the restic daemonset pod on the same node. 
 - Latest tested Velero version is 1.0.0.
 - Create required storage provider configuration to store the backup data.
 - Create required storage class on destination cluster.
@@ -443,7 +443,7 @@ kubectl get pvc -n <namespace>
 
 <h3><a class="anchor" aria-hidden="true" id="General-verification-for-disk-mount-status-for-Local-PV-based-on-device"></a>General Verification of Block Device Mount Status for Local PV Based on Device</h3>
 
-The application can be provisioned using OpenEBS Local PV based on device. For provisioning OpenEBS Local PV using the block devices attached to the nodes, then the block devices should be in one of the following states.
+The application can be provisioned using OpenEBS Local PV based on device. For provisioning OpenEBS Local PV using the block devices attached to the nodes, the block devices should be in one of the following states.
 
 - User has attached the block device, formatted and mounted them.
   - For Example: Local SSD in GKE.
@@ -494,7 +494,7 @@ Verify if the StorageClass is having the updated hostpath using the following co
 kubectl describe sc openebs-hostpath
 ```
 
-**Note**: If you are using a mount path of an external device as  `Basepath` for the default hostpath Storage Class, then you must add the corresponding block device path in the exclude filter so that NDM will not select this disk for BD creation. For example, `/dev/sdb` is mounted as `/mnt/ext_device`, and if you are using `/mnt/ext_device` as Basepath in default StorageClass `openebs-hostpath`, then you must add `/dev/sdb` in the exclude filter of NDM configuration. See [here](/1.0.0-RC2/docs/next/ugndm.html#Exclude-filters) for customizing the exclude filter in NDM configuration.
+**Note**: If you are using a mount path of an external device as  `Basepath` for the default hostpath Storage Class, then you must add the corresponding block device path under **exclude** filter so that NDM will not select the particular disk for BD creation. For example, `/dev/sdb` is mounted as `/mnt/ext_device`, and if you are using `/mnt/ext_device` as Basepath in default StorageClass `openebs-hostpath`, then you must add `/dev/sdb` under **exclude** filter of NDM configuration. See [here](/1.0.0-RC2/docs/next/ugndm.html#Exclude-filters) for customizing the exclude filter in NDM configuration.
 
 <br>
 

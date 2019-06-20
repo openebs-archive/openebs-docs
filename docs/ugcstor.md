@@ -242,12 +242,12 @@ This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` that we
 
 <h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
 
-OpenEBS volume can be backed up and restore along with application using OpenEBS velero plugin. It helps the user for taking backup of OpenEBS volumes to a third party storage location and then restoration of the data whenever it needed. The steps for taking backup and restore are following.
+OpenEBS volume can be backed up and restored along with the application using OpenEBS velero plugin. It helps the user for backing up the OpenEBS volumes to third party storage location and restore the data whenever it is required. The steps for taking backup and restore are as follows.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
 
 - Latest tested Velero version is 1.0.0.
-- Create required storage provider configuration to store the backup data.
+- Create required storage provider(S3) configuration to store the backup.
 - Create required OpenEBS storage pools and storage classes on destination cluster.
 
 <h4><a class="anchor" aria-hidden="true" id="install-velero"></a>Install Velero (Formerly known as ARK)</h3>
@@ -258,7 +258,7 @@ Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.0.0
 
 Velero is a utility to back up and restore your Kubernetes resource and persistent volumes.
 
-To do backup/restore of OpenEBS CStor volumes through Velero utility, you need to install and configure OpenEBS velero-plugin. If you are using OpenEBS velero-plugin then `velero backup` command invokes velero-plugin internally and takes a snapshot of cStor volume data and send it to remote storage location as mentioned in `06-volumesnapshotlocation.yaml`.  The configuration of `06-volumesnapshotlocation.yaml` can be  done in the next section.
+To do backup/restore of OpenEBS cStor volumes through Velero utility, you need to install and configure OpenEBS velero-plugin. If you are using OpenEBS velero-plugin then `velero backup` command invokes velero-plugin internally and takes a snapshot of cStor volume data and send it to remote storage location as mentioned in `06-volumesnapshotlocation.yaml`.  The configuration of `06-volumesnapshotlocation.yaml` can be  done in the next section.
 
 <h4><a class="anchor" aria-hidden="true" id="configure-volumesnapshotlocation"></a>Configure Volumesnapshot Location</h3>
 
@@ -282,12 +282,12 @@ spec:
     region: <AWS_REGION>
 ```
 
-The following are the definition for each of the parameters.
+The following are the definition for each parameters.
 
-- name : Provide a snapshot location name. Ex: gcp-default
+- name : Provide a snapshot location name. Eg: gcp-default
 
 - bucket : Provide the bucket name created on the cloud provider. Eg: gcpbucket
-- prefix : Prefix for backup name
+- prefix : Prefix for backup name.
 - Provider : Provider name. Eg: gcp, aws,minio etc
 - region : Provide region name if cloud provider is AWS.
 
@@ -367,7 +367,7 @@ Velero backup can be restored onto a new cluster or to the same cluster. An Open
 
 - Create the same namespace and StorageClass configuration of the source PVC in your target cluster. 
 
-If the restoration is happens on same cluster where Source PVC was created, then ensure that application and its corresponding components such as Service, PVC,PV and cStorVolumeReplicas are deleted successfully.
+If the restoration happens on same cluster where Source PVC was created, then ensure that application and its corresponding components such as Service, PVC,PV and cStorVolumeReplicas are deleted successfully.
 
 On the target cluster, restore the application using the below command.
 
@@ -381,16 +381,35 @@ Example:
 velero restore create --from-backup new1 --restore-volumes=true 
 ```
 
-Once the restore is completed you should see the restore marked as `Completed`.
-
-**Note:** After restore is completed, you need to set targetip for the volume in pool pod. Steps to update target ip is as follow:
+The restoration job details can be obtained using the following command.
 
 ```
-1. kubectl exec -it <POOL_POD> -c cstor-pool -n openebs -- bash
-2. zfs set io.openebs:targetip=<PVC SERVICE IP> <POOL_NAME/VOLUME_NAME>
+velero restore get
 ```
 
-Verify application status using the following command
+Once the restore job is completed you should see the corresponding restore job is marked as `Completed`.
+
+**Note:** After restoring, you need to set `targetip` for the volume in pool pod. Steps to update `targetip` is as follows:
+
+```
+kubectl exec -it <POOL_POD> -c cstor-pool -n openebs -- bash 
+```
+
+After entering the `cstor-pool` container, get the dataset name from the output of following command.
+
+```
+zfs list | grep <pv_name>
+```
+
+Update the `targetip` for the corresponding dataset using the following command.
+
+```
+zfs set io.openebs:targetip=<PVC SERVICE IP> <POOL_NAME/VOLUME_NAME>
+```
+
+After executing the above command, exit from the container session.
+
+Verify application status using the following command. Now the application should be running.
 
 ```
 kubectl get pod -n <namespace>
@@ -420,9 +439,10 @@ Get the details of backup using the following command
 velero backup get
 ```
 
-During the first backup iteration of a schedule, full data of the volume will be backed up. After taking the full backup in the first schedule, then it will take the incremental data as part of the further schedule.
+During the first backup iteration of a schedule, full data of the volume will be backed up. After taking the full backup in the first schedule, then it will take the incremental backup as part of the next iteration.
 
-<h4><a class="anchor" aria-hidden="true" id="restore-from-schedule"></a>Restore from a schedule</h3>
+<h4><a class="anchor" aria-hidden="true" id="restore-from-schedule"></a>Restore from a Scheduled Backup</h3>
+
 
 Since the backups taken are incremental for a schedule, order of restoring data is important. You need to restore data in the order of the backups created.
 

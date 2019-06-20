@@ -216,7 +216,7 @@ In addition, the job is set with a TTL to get cleaned up, if the cluster version
 
 <h3><a class="anchor" aria-hidden="true" id="cvr-deletion"></a>cStor Volume Replicas are not getting deleted properly</h3>
 
-Sometimes, there are chances that cStor volumes Replicas (CVR) may not be deleted properly if some unforeseen scenarios happened such as network lost during the deletion of PVC. To resolve this issue, perform the following command.
+Sometimes, there are chances that cStor volumes Replicas (CVR) may not be deleted properly if some unforeseen scenarios happened such as network loss during the deletion of PVC. To resolve this issue, perform the following command.
 
 ```
 kubectl edit cvr <cvr_name> -n openebs

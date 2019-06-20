@@ -140,7 +140,7 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
 
 5. Verify if the blockdevice is created by running the following `kubectl get blockdevice -n openebs` command.
 
-**Note:** If you are creating a block device CR for a partitioned device path, then you must add the corresponding disk in the exclude filter so that NDM will not select this disk for BD creation. For example, `/dev/sdb` have 2 partition, say `/dev/sdb1` and `/dev/sdb2`. If block device CR is creating for `/dev/sdb1` by manually, then you must add `/dev/sdb` in the exclude filter of NDM configuration. See [here](#Exclude-filters) for customizing the exclude filter in NDM configuration.
+**Note:** If you are creating a block device CR for a partitioned device path, then you must add the corresponding disk under **exclude** filter so that NDM will not select the particular disk for BD creation. For example, `/dev/sdb` have 2 partitions, say `/dev/sdb1` and `/dev/sdb2`. If block device CR is creating for `/dev/sdb1` manually, then you must add `/dev/sdb` under **exclude** filter of NDM configuration. See [here](#Exclude-filters) for customizing the exclude filter in NDM configuration.
 
 <br>
 

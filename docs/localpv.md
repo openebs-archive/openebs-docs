@@ -44,9 +44,9 @@ openebs.io/cas-type: local
 provisioner: openebs.io/local
 ```
 
-When a PVC is invoked using the above storage class, OpenEBS Local PV Provisioner uses NDM operator and reserves a matching disk from the worker node where application pod is being scheduled. If no `FSType` is specified, Local PV will use default filesystem as **ext4** to format the block device if the block device does not have any filesystem.
+When a PVC is invoked using the above storage class, OpenEBS Local PV Provisioner uses NDM operator and reserves a matching disk from the worker node where application pod is being scheduled. If no `FSType` is specified, Local PV provisioner will use default filesystem as **ext4** to format the block device.
 
-For provisioning Local PV using the block devices attached to the nodes, then block devices should be in one of the following states:
+For provisioning Local PV using the block devices attached to the nodes, the block devices should be in one of the following states:
 
 - User has attached the block device, formatted and mounted them. This means disk is already formatted and mounted the disk on the worker node.
 
