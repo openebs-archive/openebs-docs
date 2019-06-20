@@ -26,6 +26,8 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 
 
+
+
 <font size="5">Admin operations</font>
 
 [Create a Jiva Pool](#create-a-pool)
@@ -876,6 +878,8 @@ Example output:
 }
 ```
 
+You cannot delete latest snapshot from the list. Latest snapshot can be find by going to volume-head details and check the `parent` field. The value showing in `parent` field is the latest snapshot name . In the above, `c074ff10-4780-4222-8042-86baffa3436f` is the latest snapshot. You can delete remaining snapshots. 
+
 Delete a snapshot using the following command
 
 ```
@@ -900,7 +904,13 @@ INFO[0005] Replace volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img with vol
 deleted 1adb9e8b-354b-4ce2-b1a2-04accaed77a2
 ```
 
- <br>
+ Multiple snapshots can be deleted together using the following command.
+
+```
+jivactl snapshot rm <snapshot1_name> <snapshot2_name> 
+```
+
+<br>
 
 ## See Also:
 
