@@ -34,6 +34,8 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 [Setting up Jiva Storage Policies](#setting-up-jiva-storage-policies)
 
+[Delete internal snapshots created due to the restart of replica pods]()
+
 
 
 
@@ -804,6 +806,100 @@ metadata:
         enabled: "true"
 provisioner: openebs.io/provisioner-iscsi
 ```
+
+
+<h3><a class="anchor" aria-hidden="true" id="delete-internal-snapshots"></a>Delete internal snapshots created due to the restart of replica pods</h3>
+
+This operation is carried out with `jivactl` command line tool. 
+
+First, execute into the corresponding Jiva controller pod using the following command. Use `openebs` namespace if Jiva pods are deployed in `openebs` namespace.
+
+```
+kubectl exec -it <jiva_controller_pod> -c <container_pod> bash
+```
+
+Once it is logged into the container pod, list all the internal snapshots using the following command.
+
+```
+jivactl snapshot ls
+```
+
+Example output:
+
+```
+ID
+c074ff10-4780-4222-8042-86baffa3436f
+1adb9e8b-354b-4ce2-b1a2-04accaed77a2
+```
+
+Get the details of snapshot using the following command.
+
+```
+jivactl snapshot info
+```
+
+Example output:
+
+```
+{
+    "1adb9e8b-354b-4ce2-b1a2-04accaed77a2": {
+        "name": "1adb9e8b-354b-4ce2-b1a2-04accaed77a2",
+        "parent": "",
+        "children": [
+            "c074ff10-4780-4222-8042-86baffa3436f"
+        ],
+        "removed": false,
+        "usercreated": false,
+        "created": "2019-06-19T11:50:21Z",
+        "size": "0"
+    },
+    "c074ff10-4780-4222-8042-86baffa3436f": {
+        "name": "c074ff10-4780-4222-8042-86baffa3436f",
+        "parent": "1adb9e8b-354b-4ce2-b1a2-04accaed77a2",
+        "children": [
+            "volume-head"
+        ],
+        "removed": false,
+        "usercreated": false,
+        "created": "2019-06-19T11:50:27Z",
+        "size": "30875648"
+    },
+    "volume-head": {
+        "name": "volume-head",
+        "parent": "c074ff10-4780-4222-8042-86baffa3436f",
+        "children": [],
+        "removed": false,
+        "usercreated": false,
+        "created": "2019-06-19T11:50:27Z",
+        "size": "266416128"
+    }
+}
+```
+
+Delete a snapshot using the following command
+
+```
+jivactl snapshot rm <snapshot _name>
+```
+
+Example:
+
+```
+jivactl snapshot rm 1adb9e8b-354b-4ce2-b1a2-04accaed77a2
+```
+
+Example output:
+
+```
+INFO[0000] Coalescing volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img to volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.2.33:9502 
+INFO[0001] Replace volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img with volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.2.33:9502 
+INFO[0001] Coalescing volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img to volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.1.30:9502 
+INFO[0003] Replace volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img with volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.1.30:9502 
+INFO[0003] Coalescing volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img to volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.0.27:9502 
+INFO[0005] Replace volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img with volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.0.27:9502 
+deleted 1adb9e8b-354b-4ce2-b1a2-04accaed77a2
+```
+
  <br>
 
 ## See Also:
