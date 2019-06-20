@@ -34,7 +34,7 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 [Setting up Jiva Storage Policies](#setting-up-jiva-storage-policies)
 
-[Delete internal snapshots created due to the restart of replica pods]()
+[Delete internal snapshots created due to the restart of replica pods](#delete-internal-snapshots)
 
 
 
