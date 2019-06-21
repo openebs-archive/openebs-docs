@@ -930,8 +930,6 @@ Deletion of Jiva internal snapshots are performed using `jivactl` command.
 
 ### [Understanding Jiva](/docs/next/jiva.html)
 
-### [Backup and Restore](/docs/next/backup.html)
-
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->

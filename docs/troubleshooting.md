@@ -13,7 +13,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 **Steps for troubleshooting:**
 
-- Join <a href="<https://openebs.org/community>" target="_blank">Slack OpenEBS Community</a>
+- Join <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a>
 - Connect Kubernetes cluster to MayaOnline and observe the following
   - Any alerts that may be relevant to the issue under troubleshooting 
   - Logs that throw up any errors

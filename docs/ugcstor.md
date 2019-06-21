@@ -1402,8 +1402,6 @@ metadata:
     cas.openebs.io/config: |
       - name: StoragePoolClaim
         value: "sparse-claim-auto"
-      - name: ReplicaCount
-        value: "1"
       - name: QueueDepth
         value: "20"
       - name: Luworkers

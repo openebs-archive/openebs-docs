@@ -21,7 +21,7 @@ sidebar_label: Installation
 
 - Installation
   - **[helm](#installation-through-helm) chart** `(or)`
-- **[kubectl yaml](#installation-through-kubectl) spec file**
+  - **[kubectl yaml](#installation-through-kubectl) spec file**
   
 - [Verify](#verifying-openebs-installation) installation 
 
@@ -438,7 +438,7 @@ For a simple testing of OpenEBS, you can use the below default storage classes
 
 - `openebs-device` for provisioning Local PV on device.
 
-For using real disks, you have to create [cStorPools](/docs/next/ugcstor.html#creating-cStor-storage-pools) or [Jiva pools](/doc/next/jivaguide.html#create-a-jiva-pool) or [OpenEBS Local PV](/docs/next/uglocalpv.html) based on the requirement and then create corresponding StorageClasses or use default StorageClasses to use them.
+For using real disks, you have to create [cStorPools](/docs/next/ugcstor.html#creating-cStor-storage-pools) or [Jiva pools](/doc/next/jivaguide.html#create-a-pool) or [OpenEBS Local PV](/docs/next/uglocalpv.html) based on the requirement and then create corresponding StorageClasses or use default StorageClasses to use them.
 
 
 
@@ -469,13 +469,12 @@ This setting is useful in cases where user has to specify minimum requests like 
 <br>
 
 <hr>
+
 ## Example configurations - helm
 
 
 
 #### Setup RBAC for Tiller before Installing OpenEBS Chart
-
-
 
 ```
 kubectl -n kube-system create sa tiller

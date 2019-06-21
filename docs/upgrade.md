@@ -72,20 +72,18 @@ All steps described in this document must be performed on the Kubernetes master 
 
      If the output shows that `Pre-Upgrade is successful `, then proceed with next step.
 
-     
-
      Verify blockdevice CR is created for each disks. The blockdevice status will show as `claimed` if the disk is used and status as `unclaimed` if it is unused.
 
      Obtain the blockdevice details using the following command.
 
      ```
-     kuebctl get bd -n openebs
+kuebctl get bd -n openebs
      ```
-
+     
      Output will be similar to the following.
 
      ```
-     NAME                                           SIZE          CLAIMSTATE   STATUS   AGE
+NAME                                           SIZE          CLAIMSTATE   STATUS   AGE
      blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   42949672960   Claimed      Active   3h
      blockdevice-77f834edba45b03318d9de5b79af0734   42949672960   Claimed      Active   1h
      blockdevice-936911c5c9b0218ed59e64009cc83c8f   42949672960   Claimed      Active   3h
@@ -93,7 +91,7 @@ All steps described in this document must be performed on the Kubernetes master 
      sparse-5807b1faae7b630f41351035d8431628        10737418240   Unclaimed    Active   3h
      sparse-df79dd23dc6843eead3f6030260b7c24        10737418240   Unclaimed    Active   3
      ```
-
+   
 2. <h3><a class="anchor" aria-hidden="true" id="Download-yamls"></a>Download upgrade YAMLs</h3>
 
    You can do git clone of the upgrade scripts.
@@ -172,29 +170,28 @@ All steps described in this document must be performed on the Kubernetes master 
    1. This is a preliminary script only intended for using on volumes where data has been backed-up.
    2. Have the following link handy in case the volume gets into read-only during upgrade <https://docs.openebs.io/docs/next/troubleshooting.html#recovery-readonly-when-kubelet-is-container>
    3. Automatic rollback option is not provided. To rollback, you need to update the controller, exporter and replica pod images to the previous version.
-4. In the process of running the below steps, if you run into issues, you can always reach us on <a href="<https://openebs.org/community>" target="_blank">Slack OpenEBS Community.
-   
+   4. In the process of running the below steps, if you run into issues, you can always reach us on <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community.
 <h4><a class="anchor" aria-hidden="true" id="Jiva-PV"></a>Jiva PV</h4>
-   
+
 1. Go to `jiva` folder.
-   
+  
    ```
-      cd jiva
+   cd jiva
    ```
    
    2. Obtain the PV name using the following command. 
    
    ```
-      kubectl get pv
+   kubectl get pv
    ```
    
       Output will be similar to the following.
    
    ```
-      NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS           REASON   AGE
+   NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS           REASON   AGE
    pvc-aeb93081-93d0-11e9-a7c6-42010a800fc0   5G         RWO            Delete           Bound    default/demo-vol1-claim   openebs-jiva-default            118m
-      ```
-      
+   ```
+   
    3. Select the appropriate Jiva volume one at a time and upgrade the particular PV using the following command. Use namespace where Jiva pods are running. If Jiva Pods are  running in `default` namespace, no need to mention in the following command.
    
       ```

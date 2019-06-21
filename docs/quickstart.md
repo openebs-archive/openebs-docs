@@ -45,6 +45,7 @@ sidebar_label: Quickstart
 <font size="5">As a first step, follow the instructions to setup or verify iSCSI clients on any of the platforms below </font>
 
 <div class="emphasize">
+
 [Ubuntu](/docs/next/prerequisites.html#ubuntu)
 
 [RHEL](/docs/next/prerequisites.html#rhel)
