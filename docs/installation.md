@@ -94,7 +94,7 @@ kubectl create clusterrolebinding  <cluster_name>-admin-binding --clusterrole=cl
 
 
 
-Verify helm is installed and helm repo is updated. See [helm docs](https://docs.helm.sh/using_helm/#from-script) for setting up helm and simple [instructions below](#helm-rbac) for setting up RBAC for tiller.
+Verify helm is installed and helm repo is updated. See [helm docs](https://docs.helm.sh/using_helm/#from-script) for setting up helm and simple [instructions below](#setup-rbac-for-tiller-before-installing-openebs-chart) for setting up RBAC for tiller.
 
 In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace.
 
@@ -474,7 +474,7 @@ This setting is useful in cases where user has to specify minimum requests like 
 
 
 
-#### Setup RBAC for Tiller before Installing OpenEBS Chart
+#### <font size="4">Setup RBAC for Tiller before Installing OpenEBS Chart</font>>
 
 ```
 kubectl -n kube-system create sa tiller
@@ -491,7 +491,7 @@ helm repo update
 
 
 
-#### For nodeSelectors in values.yaml (helm)
+#### <font size="4">For nodeSelectors in values.yaml (helm)</font>>
 
 
 
@@ -518,7 +518,7 @@ Copy
 
 
 
-#### For disk filters in values.yaml (helm)
+#### <font size="4">For disk filters in values.yaml (helm)</font>>
 
 
 
@@ -543,7 +543,7 @@ ndm:
 
 
 
-#### Default Values for Helm Chart Parameters
+#### <font size="4">Default Values for Helm Chart Parameters</font>>
 
 
 
