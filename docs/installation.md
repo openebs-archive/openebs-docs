@@ -102,7 +102,7 @@ In the **default installation mode**, use the following command to install OpenE
 helm install --namespace <custom_namespace> --name openebs stable/openebs
 ```
 
-**Note:** Since Kubernetes 1.12, if any containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requets).
+**Note:** Since Kubernetes 1.12, if any containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests).
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
 
