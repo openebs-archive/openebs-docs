@@ -474,7 +474,7 @@ This setting is useful in cases where user has to specify minimum requests like 
 
 
 
-#### <font size="4">Setup RBAC for Tiller before Installing OpenEBS Chart</font>>
+#### <font size="4">Setup RBAC for Tiller before Installing OpenEBS Chart</font>
 
 ```
 kubectl -n kube-system create sa tiller
@@ -491,7 +491,7 @@ helm repo update
 
 
 
-#### <font size="4">For nodeSelectors in values.yaml (helm)</font>>
+#### <font size="4">For nodeSelectors in values.yaml (helm)</font>
 
 
 
@@ -518,7 +518,7 @@ Copy
 
 
 
-#### <font size="4">For disk filters in values.yaml (helm)</font>>
+#### <font size="4">For disk filters in values.yaml (helm)</font>
 
 
 
@@ -543,7 +543,7 @@ ndm:
 
 
 
-#### <font size="4">Default Values for Helm Chart Parameters</font>>
+#### <font size="4">Default Values for Helm Chart Parameters</font>
 
 
 
