@@ -38,8 +38,6 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 [Steps to delete Jiva Internal Snapshots](#delete-internal-snapshots)
 
-[Steps to recover from meta file error](#recover-from-meta-file-error)
-
 
 
 
