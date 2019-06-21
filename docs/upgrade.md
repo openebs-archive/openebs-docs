@@ -363,7 +363,7 @@ The image tag of NDM will be 0.4.0 in the above output.
 
 This will verify all the OpenEBS components are successfully upgraded to the latest image.
 
-## 
+<hr>
 
 ## See Also:
 
