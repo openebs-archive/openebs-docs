@@ -46,7 +46,7 @@ All steps described in this document must be performed on the Kubernetes master 
 
 1.  <h3><a class="anchor" aria-hidden="true" id="Verify-prerequisites"></a>Verify Prerequisites</h3>
 
-   - OpenEBS current version should be 0.9.0. This can be done by using the following command.
+   - OpenEBS current version should be 0.9.0. This can be done by using the following command. Output will contain 0.9.0 as image for all the OpenEBS deployments.
 
      ```
      kubectl get deployment -o yaml -n openebs | grep -i image | grep -i quay | grep -v metadata
@@ -195,123 +195,122 @@ All steps described in this document must be performed on the Kubernetes master 
 
       ```
       NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS           REASON   AGE
-         openebs-cstor-disk              105m
       pvc-aeb93081-93d0-11e9-a7c6-42010a800fc0   5G         RWO            Delete           Bound    default/demo-vol1-claim   openebs-jiva-default            118m
       ```
-
-   3. Select the appropriate Jiva volume one at a time and upgrade the particular PV using the following command. Use namespace where Jiva pods are running. If Jiva Pods are  running in `default` namespace, no need to mention in the following command.
-
-      ```
+      
+3. Select the appropriate Jiva volume one at a time and upgrade the particular PV using the following command. Use namespace where Jiva pods are running. If Jiva Pods are  running in `default` namespace, no need to mention in the following command.
+   
+   ```
       ./jiva_volume_upgrade.sh <PV_name>
       ```
-
-      Eg:
-
-      ```
+   
+   Eg:
+   
+   ```
       ./jiva_volume_upgrade.sh pvc-aeb93081-93d0-11e9-a7c6-42010a800fc0
       ```
-
-      If the output shows that the corresponding PV is Successfully upgraded to 1.0.0, then particular Jiva PV is upgraded successfully. The same steps can be applied for other PVs one by one to upgrade the PV to 1.0.0. version.
-
-   4. Verify PV is bounded using the following command.
-
-      ```
+   
+   If the output shows that the corresponding PV is Successfully upgraded to 1.0.0, then particular Jiva PV is upgraded successfully. The same steps can be applied for other PVs one by one to upgrade the PV to 1.0.0. version.
+   
+4. Verify PV is bounded using the following command.
+   
+   ```
       kubectl get pv
       ```
-
-   5. Verify application pod is running using the following command.
-
-      ```
+   
+5. Verify application pod is running using the following command.
+   
+   ```
       kubectl get pod -n <namespace> 
       ```
-
-   <h4><a class="anchor" aria-hidden="true" id="cStor-PV"></a>cStor PV</h4>
-
-   Upgradation of cStor volume is a two step process. First step is to upgrade cStor pools one by one and then volumes one by one.
-
-   **Upgrade cStor Pools**
-
-   1. Obtain SPC name using the following command.
-
-      ```
+   
+<h4><a class="anchor" aria-hidden="true" id="cStor-PV"></a>cStor PV</h4>
+   
+Upgradation of cStor volume is a two step process. First step is to upgrade cStor pools one by one and then volumes one by one.
+   
+**Upgrade cStor Pools**
+   
+1. Obtain SPC name using the following command.
+   
+   ```
       kubectl get spc
       ```
-
-      Output will be similar to the following.
-
-      ```
+   
+   Output will be similar to the following.
+   
+   ```
       NAME          AGE
       cstor-pool1   3h
       ```
       
    2. Go to the particular upgrade script directory of `cstor`  using the following command.
-
-      ```
+   
+   ```
       cd cstor
       ```
-
-   3. Verify corresponding pool pod is running using the following command. The particular pool pod should be running before going to the next step.
-
-      ```
+   
+3. Verify corresponding pool pod is running using the following command. The particular pool pod should be running before going to the next step.
+   
+   ```
       kubectl get pod -n openebs | grep <pool_name>
       ```
-
-      Eg:
-
-      ```
+   
+   Eg:
+   
+   ```
       kubectl get pod -n openebs | grep cstor-pool1
       ```
-
-   4. Upgrade cStor pool using the following command.
-
-      ```
+   
+4. Upgrade cStor pool using the following command.
+   
+   ```
       ./cstor_pool_upgrade.sh <pool_name> <openebs_namespace>
       ```
-
-      where `<openebs_namespace>` is the namespace where OpenEBS control plane components are installed.
-
-      Eg:
-
-      ```
+   
+   where `<openebs_namespace>` is the namespace where OpenEBS control plane components are installed.
+   
+   Eg:
+   
+   ```
       ./cstor_pool_upgrade.sh cstor-pool1 openebs
       ```
-
-      If the output shows that the corresponding cStor pool is successfully upgraded to 1.0.0, then upgrade job is completed for the corresponding pool. The same steps can be applied to other cStor pools one by one to upgrade to 1.0.0. version.
-
-   5. Ensure that this step completes successfully before proceeding to the next step.
-
-   **Upgrade cStor Volumes**
-
-   1. Obtain the PV name using the following command
-
-      ```
+   
+   If the output shows that the corresponding cStor pool is successfully upgraded to 1.0.0, then upgrade job is completed for the corresponding pool. The same steps can be applied to other cStor pools one by one to upgrade to 1.0.0. version.
+   
+5. Ensure that this step completes successfully before proceeding to the next step.
+   
+**Upgrade cStor Volumes**
+   
+1. Obtain the PV name using the following command
+   
+   ```
       kubectl get pv
       ```
-
-      Output will be similar to the following.
-
-      ```
+   
+   Output will be similar to the following.
+   
+   ```
       NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS           REASON   AGE
       pvc-9b43e8a6-93d2-11e9-a7c6-42010a800fc0   2Gi        RWO            Delete           Bound    default/minio-pv-claim    openebs-cstor-disk              4h10m
       ```
-
-   2. Select the appropriate cStor volume one at a time and upgrade the particular PV using the following command. 
-
-      ```
+   
+2. Select the appropriate cStor volume one at a time and upgrade the particular PV using the following command. 
+   
+   ```
       ./cstor_volume_upgrade.sh <PV_name> <openebs_namespace>
       ```
-
-      where `<openebs_namespace>` is the namespace where OpenEBS control plane components are installed.
-
-      Eg:
-
-      ```
+   
+   where `<openebs_namespace>` is the namespace where OpenEBS control plane components are installed.
+   
+   Eg:
+   
+   ```
       ./cstor_volume_upgrade.sh pvc-9b43e8a6-93d2-11e9-a7c6-42010a800fc0 openebs
       ```
-
-      If the output shows that the corresponding PV is successfully upgraded to 1.0.0, then  upgrade job is completed for the corresponding cStor volume. The same steps can be applied for other PVs one by one to upgrade the PV to 1.0.0. version.
-
-   3. Verify application status by checking corresponding pods.
+   
+   If the output shows that the corresponding PV is successfully upgraded to 1.0.0, then  upgrade job is completed for the corresponding cStor volume. The same steps can be applied for other PVs one by one to upgrade the PV to 1.0.0. version.
+   
+3. Verify application status by checking corresponding pods.
 
 <br>
 
@@ -335,7 +334,7 @@ Output will be similar to the following.
               image: quay.io/openebs/m-apiserver:1.0.0
               image: quay.io/openebs/admission-server:1.0.0
               image: quay.io/openebs/provisioner-localpv:1.0.0
-              image: quay.io/openebs/node-disk-operator-amd64:v0.4.0
+              image: quay.io/openebs/node-disk-operator-amd64:0.4.0
               image: quay.io/openebs/openebs-k8s-provisioner:1.0.0
               image: quay.io/openebs/snapshot-controller:1.0.0
               image: quay.io/openebs/snapshot-provisioner:1.0.0
@@ -356,7 +355,7 @@ kubectl get ds -o yaml  -n openebs| grep -i image |  grep -i quay | grep -v meta
 Output will be similar to the following.
 
 ```
- image: quay.io/openebs/node-disk-manager-amd64:v0.4.0
+ image: quay.io/openebs/node-disk-manager-amd64:0.4.0
 ```
 
 The image tag of NDM will be 0.4.0 in the above output.
