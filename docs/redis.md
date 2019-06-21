@@ -13,25 +13,21 @@ sidebar_label: Redis
 
 <br>
 
-Redis is an open source in-memory remote database that supports many different data structures: strings, hashes, lists, sets, sorted sets, and more. It can be used as a database, a cache, and a message broker.  Redis is deployed either as a deployment or as a statefulset. When deployed as a deployment, the data of Redis StorageManager is usually replicated using cStor or Jiva. When deployed as statefulset, the replication and state management of data is managed by Redis itself and there is no replication required at the storage layer. Any CAS engine can be used for providing persistent volume to a statefulset instance depending on the expected performance and ease of use. 
+Redis is an open source (BSD licensed), in-memory **data structure store**, used as a database, cache and message broker.  Redis is deployed usually as a `statefulset` on Kubernetes and requires persistent storage for each instance of Redis StorageManager instance. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
 
+<br>
 
+**Advantages of using OpenEBS for Redis:**
 
-## Which engine to choose for Redis?
+- No need to manage the local disks, they are managed by OpenEBS
+- Large size PVs can be provisioned by OpenEBS and Redis
+- Start with small storage and add disks as needed on the fly. Sometimes Redis instances are scaled up because of capacity on the nodes. With OpenEBS persistent volumes, capacity can be thin provisioned and disks can be added to OpenEBS on the fly without disruption of service 
+- Redis sometimes need highly available storage, in such cases OpenEBS volumes can be configured with 3 replicas.
+- If required, take backup of the Redis data periodically and back them up to S3 or any object storage so that restoration of the same data is possible to the same or any other Kubernetes cluster
 
-The general guidelines for choosing a CAS engine is given [here](/docs/next/casengines.html#when-to-choose-which-cas-engine). In general, for production large scale deployments of Redis where low latency is a key requirement, OpenEBS hostpath LocalPV or OpenEBS device LocalPV is recommended.
+<br>
 
-[Deploying Redis using cStor](/docs/next/redis.html#deploying-redis-using-cstor)
-
-[Deploying Redis using Jiva](/docs/next/redis.html#deploying-redis-using-java)
-
-[Deploying Redis using OpenEBS hostpath LocalPV](/docs/next/redis.html#deploying-redis-using-openebs-hostpath-localpv)
-
-[Deploying Redis using OpenEBS device LocalPV](/docs/next/redis.html#deploying-redis-using-openebs-device-localpv)
-
-
-
-
+*Note: Redis can be deployed both as `deployment` or as `statefulset`. When Redis deployed as `statefulset`, you don't need to replicate the data again at OpenEBS level. When Redis is deployed as `deployment`, consider 3 OpenEBS replicas, choose the StorageClass accordingly.*
 
 <br>
 
@@ -39,124 +35,63 @@ The general guidelines for choosing a CAS engine is given [here](/docs/next/case
 
 <br>
 
-## Deploying Redis using cStor
+## Deployment model
 
-<img src="/docs/assets/svg/redis-cstor-deployment.svg" alt="OpenEBS and Redis" style="width:100%;">
+<br>
 
+<img src="/docs/assets/svg/redis-deployment.svg" alt="OpenEBS and Redis" style="width:100%;">
 
+<br>
 
-**Key points:**
+<hr>
 
-- Redis is deployed as `deployment` and cStor volumes have three replicas, with each replica on a cStorPool instance which is created of multiple disks in RAID or Stripe.
-- Capacity of cStor volumes can be thin provisioned or expanded dynamically.
-- Allocate enough memory for cStorPool pods to get good read performance. 
+<br>
 
-### Deployment workflow
+## Configuration workflow
+
+<br>
 
 1. **Install OpenEBS**
 
-   If OpenEBS is not installed in your K8s cluster, this can done from [here](/1.0.0-RC2/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
+   If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
-2. **Connect the cluster to MayaOnline (Optional)** : Connecting the Kubernetes cluster to <a href="https://mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various support options for enterprise customers.
+2. **Connect to MayaOnline (Optional)** : Connecting the Kubernetes cluster to <a href="https://mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
 
-3. **Create a cStorPool**
+3. **Configure cStor Pool**
 
-   If you already have a cStorPool and want to reuse it, you can simply create a new StorageClass refering to the same pool. Otherwise, create a new cStorPool with at least 3 pool instances. It is recommeded to provide at least 4GB of memory to cStorPools while running Redis volumes on them. 
+   After OpenEBS installation, cStor pool has to be configured.If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step. 
 
-4. **Create a cStor Storage Class**
+4. **Create Storage Class**
 
-   <<what storage policies need to be specified for Redis ? >>
+   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since Redis is a StatefulSet, it requires storage replication factor as 1. So cStor volume `replicaCount` is >=1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStoveVolume Replica count as 1 is provided in the configuration details below.
 
-   /docs/next/ugcstor.html#cstor-storage-policies
+5. **Launch and test Redis**
 
-   
+    Use stable Redis image with helm to deploy Redis in your cluster using the following command. In the following command, it will create a PVC with 8G size for data volume.
 
-5. **Launch and Test Redis**
+    ```
+    helm install --set master.persistence.storageClass=openebs-cstor-disk stable/redis
+    ```
 
-   Use stable Redis image with helm to deploy Redis STS in your cluster using the following command. In the following command, it will create a PVC with 8G size for data volume.
-
-   ```
-   helm install --name my-release stable/redis --set master.persistence.storageClass=<openebs_LocalPV_StorageClass>,slave.persistence.storageClass=<openebs_LocalPV_StorageClass>
-   ```
-
-   For more information on installation, see Redis [documentation](https://github.com/helm/charts/tree/master/stable/redis).
+    For more information on installation, see Redis [documentation](https://github.com/helm/charts/tree/master/stable/redis).
 
 <br>
 
-### Verifying Redis deployment
-
-After deploying Redis using helm command, you can verify the status of application and OpenEBS volume.
-
-Verify application pod status using the following command.
-
-```
-kubectl get pods
-```
-
-Output will be similar to the following.
-
-```
-NAME                        READY   STATUS    RESTARTS   AGE
-my-release-redis-master-0   1/1     Running   0          36m
-my-release-redis-slave-0    1/1     Running   0          36m
-my-release-redis-slave-1    1/1     Running   0          35m
-```
-
-Verify PVC status using the following command.
-
-```
-kubectl get pvc
-```
-
-Output will be similar to the following.
-
-```
-NAME                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
-redis-data-my-release-redis-master-0   Bound    pvc-b8730fe4-86d6-11e9-b316-42010a800052   8Gi        RWO            openebs-hostpath   36m
-redis-data-my-release-redis-slave-0    Bound    pvc-b8803f18-86d6-11e9-b316-42010a800052   8Gi        RWO            openebs-hostpath   36m
-redis-data-my-release-redis-slave-1    Bound    pvc-c13ccb54-86d6-11e9-b316-42010a800052   8Gi        RWO
-```
-
-Verify PV status using the following command.
-
-```
-kubectl get pv
-```
-
-Output will be similar to the following.
-
-```
-NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                          STORAGECLASS       REASON   AGE
-pvc-b8730fe4-86d6-11e9-b316-42010a800052   8Gi        RWO            Delete           Bound    default/redis-data-my-release-redis-master-0   openebs-hostpath            36m
-pvc-b8803f18-86d6-11e9-b316-42010a800052   8Gi        RWO            Delete           Bound    default/redis-data-my-release-redis-slave-0    openebs-hostpath            36m
-pvc-c13ccb54-86d6-11e9-b316-42010a800052   8Gi        RWO            Delete           Bound    default/redis-data-my-release-redis-slave-1    openebs-hostpath            36m
-```
-
-Verify service status of Redis application.
-
-```
-kubectl get svc
-```
-
-Output will be similar to the following.
-
-```
-NAME                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-kubernetes                  ClusterIP   10.43.240.1     <none>        443/TCP    5h13m
-my-release-redis-headless   ClusterIP   None            <none>        6379/TCP   36m
-my-release-redis-master     ClusterIP   10.43.245.246   <none>        6379/TCP   36m
-my-release-redis-slave      ClusterIP   10.43.244.9     <none>        6379/TCP   36m
-```
+<hr>
 
 <br>
 
-### Post Deployment Operations
+## Reference at [openebs.ci](https://openebs.ci/)
 
-##### Expand OpenEBS Volume size 
+<br>
 
-##### Expanding cStor Pool size
+A live deployment of Redis using OpenEBS volumes as highly available data storage can be seen at the website [www.openebs.ci](https://openebs.ci/)
 
-##### Backup and Restore
+Deployment YAML spec files for Redis and OpenEBS resources are found [here](https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/redis-cstor/redis-statefulset.yaml)
+
+[OpenEBS-CI dashboard of Redis](https://openebs.ci/redis-cstor)
+
+
 
 <br>
 
@@ -166,9 +101,19 @@ my-release-redis-slave      ClusterIP   10.43.244.9     <none>        6379/TCP  
 
 
 
-## Deploying Redis using Java
+## Post deployment Operations
 
-<img src="/docs/assets/svg/redis-jiva-deployment.svg" alt="OpenEBS and Redis" style="width:100%;">
+<br>
+
+**Monitor OpenEBS Volume size** 
+
+It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
+
+**Monitor cStor Pool size**
+
+As in most cases, cStor pool may not be dedicated to just Redis database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool).
+
+
 
 <br>
 
@@ -176,48 +121,80 @@ my-release-redis-slave      ClusterIP   10.43.244.9     <none>        6379/TCP  
 
 <br>
 
-## Deploying Redis using OpenEBS hostpath LocalPV
 
-<img src="/docs/assets/svg/redis-lpv-hp-deployment.svg" alt="OpenEBS and Redis" style="width:100%;">
+
+
+
+## Configuration details
+
+<br>
+
+**openebs-config.yaml**
+
+```
+#Use the following YAMLs to create a cStor Storage Pool.
+# and associated storage class.
+apiVersion: openebs.io/v1alpha1
+kind: StoragePoolClaim
+metadata:
+  name: cstor-disk
+spec:
+  name: cstor-disk
+  type: disk
+  poolSpec:
+    poolType: striped
+  # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
+  #
+  # `Disk` is a custom resource supported by OpenEBS with `node-disk-manager`
+  # as the disk operator
+# Replace the following with actual disk CRs from your cluster `kubectl get disks`
+# Uncomment the below lines after updating the actual disk names.
+  disks:
+    diskList:
+# Replace the following with actual disk CRs from your cluster from `kubectl get disks`
+#   - disk-184d99015253054c48c4aa3f17d137b1
+#   - disk-2f6bced7ba9b2be230ca5138fd0b07f1
+#   - disk-806d3e77dd2e38f188fdaf9c46020bdc
+#   - disk-8b6fb58d0c4e0ff3ed74a5183556424d
+#   - disk-bad1863742ce905e67978d082a721d61
+#   - disk-d172a48ad8b0fb536b9984609b7ee653
+---
+```
+
+**openebs-sc-disk.yaml**
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-cstor-disk
+  annotations:
+    openebs.io/cas-type: cstor
+    cas.openebs.io/config: |
+      - name: StoragePoolClaim
+        value: "cstor-disk"
+      - name: ReplicaCount
+        value: "1"       
+provisioner: openebs.io/provisioner-iscsi
+reclaimPolicy: Delete
+---
+```
 
 <br>
 
 <hr>
 
 <br>
-
-## Deploying Redis using OpenEBS device LocalPV
-
-<img src="/docs/assets/svg/redis-lpv-device-deployment.svg" alt="OpenEBS and Redis" style="width:100%;">
-
-<br>
-
-<hr>
-
-## Configuration Design
-
-Redis is typically deployed as StatefulSet with persistent enabled with master-slave configuration and it requires a minimum of three nodes. Redis STS will run as one master and two slave format.
-
-| Condition for selecting CAS Engine                           | CAS engine               |
-| ------------------------------------------------------------ | ------------------------ |
-| This option will provision one Redis STS application on a dedicated device attached to the node. Minimum one unclaimed disk should be present on all the 3 Nodes. With the dedicated disk, application can consume the entire disk space. If it is a cloud disk, volume space can be increased by expanding the underlying disk capacity. With this approach, the performance will be equivalent to the disk being used. Replication needs to be handle by the Redis STS itself. No other applications can be provisioned if the node is having a single disk. | OpenEBS device LocalPV   |
-| This option will provision one Redis STS application on the default hostpath or provided hostpath where the mount path must be exists on the Node. With this approach, the performance will be equivalent to the file system where the hostpath is created. Here volume capacity is limited to the capacity available on the disk where the hostpath is configured. Replication needs to be handle by the Redis STS itself. | OpenEBS hostpath LocalPV |
-
-</br>
-
-
 
 ## See Also:
 
 <br>
 
-### [OpenEBS architecture](/1.0.0-RC2/docs/next/architecture.html)
+### [OpenEBS architecture](/docs/next/architecture.html)
 
-### [OpenEBS use cases](/1.0.0-RC2/docs/next/usecases.html)
+### [OpenEBS use cases](/docs/next/usecases.html)
 
-### [Understanding Local PV Concepts](/1.0.0-RC2/docs/next/localpv.html)
-
-### [Local PV Guide](/1.0.0-RC2/docs/next/uglocalpv.html)
+### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
 
 
 
