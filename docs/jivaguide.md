@@ -36,7 +36,9 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 [Setting up Jiva Storage Policies](#setting-up-jiva-storage-policies)
 
-[Delete internal snapshots created due to the restart of replica pods](#delete-internal-snapshots)
+[Steps to delete Jiva Internal Snapshots](#delete-internal-snapshots)
+
+[Steps to recover from meta file error](#recover-from-meta-file-error)
 
 
 
@@ -809,7 +811,7 @@ metadata:
 provisioner: openebs.io/provisioner-iscsi
 ```
 
-<h3><a class="anchor" aria-hidden="true" id="delete-internal-snapshots"></a>Steps to delete Jiva Internal Snapshots </h3>
+<h3><a class="anchor" aria-hidden="true" id="delete-internal-snapshots"></a>Steps to delete Jiva Internal Snapshots</h3>
 
 Deletion of Jiva internal snapshots are performed using `jivactl` command.
 
@@ -909,6 +911,49 @@ Deletion of Jiva internal snapshots are performed using `jivactl` command.
 
   Please note that volume -head and its parent cannot be deleted.
 
+<h3><a class="anchor" aria-hidden="true" id="recover-from-meta-file-error"></a>Steps to recover from meta file error</h3>
+
+Jiva uses sparse files to store the data in `*.img` file. Each `*.img` file has corresponding meta file named as `*.img.meta`  . In some cases, meta files will not be availble for some of the `.img` files.  Due to that, replica pod will not be in healthy state. The status of each Jiva replica of a PV can be obtained by using `mayactl` command.  Status of healthy replica will be `RW`  and of unhealthy replica will be in `NA`. More information about the usage of `mayactl` can be read from [here](/docs/next/mayactl.html). This error can be resolved by following steps:
+
+-  Ensure all Jiva replica pods of the PV are running. Faulty replica pod will be in `crashloopBackoff` state from 1.0.0 version.
+
+- Go to the corresponding Nodes of healthy and faulty replica and list all then snapshots under **/var/openebs/<PV-name>**.
+
+  Example for Healthy replica:
+
+  ```
+  revision.counter                                           volume-snap-792e7036-877d-4807-9641-4843c987d0a5.img
+  volume-head-005.img                                        volume-snap-792e7036-877d-4807-9641-4843c987d0a5.img.meta
+  volume-head-005.img.meta                                   volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img
+  volume-snap-15660574-e47d-4217-ac92-1497e5b654a4.img       volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img.meta
+  volume-snap-15660574-e47d-4217-ac92-1497e5b654a4.img.meta  volume-snap-cce9eb61-8f8b-42bd-ba44-8479ada98cee.img
+  volume-snap-2ac410ca-2716-4255-94b1-39105b627270.img       volume-snap-cce9eb61-8f8b-42bd-ba44-8479ada98cee.img.meta
+  volume-snap-2ac410ca-2716-4255-94b1-39105b627270.img.meta  volume-snap-d9f8d3db-9434-4f16-a5a7-b1b120ceae94.img
+  volume-snap-466d32e7-c443-46dd-afdd-8412e76f348e.img       volume-snap-d9f8d3db-9434-4f16-a5a7-b1b120ceae94.img.meta
+  volume-snap-466d32e7-c443-46dd-afdd-8412e76f348e.img.meta  volume.meta
+  ```
+
+  Example of faulty replica:
+
+  ```
+  revision.counter                                           volume-snap-792e7036-877d-4807-9641-4843c987d0a5.img
+  volume-head-005.img                                        volume-snap-792e7036-877d-4807-9641-4843c987d0a5.img.meta
+  volume-head-005.img.meta                                   volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img
+  volume-snap-15660574-e47d-4217-ac92-1497e5b654a4.img       volume-snap-15660574-e47d-4217-ac92-1497e5b654a4.img.meta  volume-snap-cce9eb61-8f8b-42bd-ba44-8479ada98cee.img
+  volume-snap-2ac410ca-2716-4255-94b1-39105b627270.img       volume-snap-cce9eb61-8f8b-42bd-ba44-8479ada98cee.img.meta
+  volume-snap-2ac410ca-2716-4255-94b1-39105b627270.img.meta  volume-snap-d9f8d3db-9434-4f16-a5a7-b1b120ceae94.img
+  volume-snap-466d32e7-c443-46dd-afdd-8412e76f348e.img       volume-snap-d9f8d3db-9434-4f16-a5a7-b1b120ceae94.img.meta
+  volume-snap-466d32e7-c443-46dd-afdd-8412e76f348e.img.meta  volume.meta
+  ```
+
+  From above snippet of faulty replica, metadata for the following  snapshot `volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img` is not present.
+
+- If only one meta file is missing, then copy the  meta file name and copy the content to it from one of the healthy replica. 
+
+  For example, in this example, copy `volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img.meta` from healthy replica to faulty replica and restart the faulty replica. You can verify the logs of the new replica pod to ensure that there is no entry of missing meta file information. 
+
+- If multiple meta files are missing, then delete all files from replica pods and then restart the faulty replica pod to rebuild from fresh.
+
 <br>
 
 ## See Also:
@@ -916,7 +961,6 @@ Deletion of Jiva internal snapshots are performed using `jivactl` command.
 ### [Understanding Jiva](/1.0.0-RC2/docs/next/jiva.html)
 
 ### [Backup and Restore](/1.0.0-RC2/docs/next/backup.html)
-
 
 
 
