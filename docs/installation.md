@@ -512,8 +512,6 @@ provisioner:
     node: openebs
   tolerations: []
   affinity: {}
-
-Copy
 ```
 
 
