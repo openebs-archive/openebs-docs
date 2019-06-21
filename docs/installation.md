@@ -22,12 +22,12 @@ sidebar_label: Installation
 - Set Kubernetes [admin context](#set-cluster-admin-user-context-and-rbac) and RBAC
 
 - Installation
-  - **[helm](/docs/next/installation.html#installation-through-helm) chart** `(or)`
+  - **[helm](#installation-through-helm) chart** `(or)`
 - **[kubectl yaml](#installation-through-kubectl) spec file**
   
 - [Verify](#verifying-openebs-installation) installation 
 
-- Installation [troubleshooting](/1.0.0-RC2/docs/next/troubleshooting.html#installation) 
+- Installation [troubleshooting](/docs/next/troubleshooting.html#installation) 
 
 - [Post installation](#post-installation-considerations)
 
@@ -41,7 +41,7 @@ sidebar_label: Installation
 
 <br>
 
-iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However, it is recommended that the [iSCSI client is setup](/1.0.0-RC2/docs/next/prerequisites.html) and iscsid service is running on worker nodes before proceeding with the OpenEBS installation.
+iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However, it is recommended that the [iSCSI client is setup](/docs/next/prerequisites.html) and iscsid service is running on worker nodes before proceeding with the OpenEBS installation.
 
 <br>
 
@@ -160,6 +160,8 @@ As a next step [verify](#verifying-openebs-installation) your installation and d
 
 <br>
 
+<hr>
+
 ## Installation through kubectl 
 
 In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace. 
@@ -228,6 +230,8 @@ If your cluster nodes have different disk types that are to be filtered out (mea
 See an example configuration [here](#example-diskfilter-yaml)
 
 <br>
+
+
 
 <font size="5">Configure Environmental Variable</font> 
 

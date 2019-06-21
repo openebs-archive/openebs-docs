@@ -25,7 +25,7 @@ Users get access to Prometheus metrics, logs and topology view of OpenEBS volume
 
 - Installation of MayaOnline agents happen into `maya-system` namespace. On an average, the agents consume around 500mi node memory and 300-400m node cpu per node. 
 
-- Users can in general connect any Kubernetes cluster versioned above 1.10.x to MayaOnline and OpenShift versioned above 3.x. If you are facing troubles connecting your Kubernetes cluster, report the details in the <a href="https://openebs.io/join-our-community" target="_blank">Slack OpenEBS Community</a> .
+- Users can in general connect any Kubernetes cluster versioned above 1.10.x to MayaOnline and OpenShift versioned above 3.x. If you are facing troubles connecting your Kubernetes cluster, report the details in the <a href="<https://openebs.org/community>" target="_blank">Slack OpenEBS Community</a> .
 
 - Users need to authenticate to MayaOnline using their GitHub credentials.
 
@@ -99,7 +99,7 @@ User's data is never looked into or exported to MayaOnline by the agents.
 
 ### See Also
 
-#### [cStor Overview](/1.0.0-RC2/docs/next/cstor.html)
+#### [cStor Overview](/docs/next/cstor.html)
 
 #### [Connect to MayaOnline](https://mayaonline.io)
 

@@ -247,7 +247,7 @@ OpenEBS volume can be backed up and restored along with the application using Op
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
 
 - Latest tested Velero version is 1.0.0.
-- Create required storage provider(S3) configuration to store the backup.
+- Create required storage provider configuration to store the backup.
 - Create required OpenEBS storage pools and storage classes on destination cluster.
 
 <h4><a class="anchor" aria-hidden="true" id="install-velero"></a>Install Velero (Formerly known as ARK)</h3>

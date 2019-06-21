@@ -26,7 +26,7 @@ OpenEBS Local PVs are analogous to Kubernetes LocalPV. In addition, OpenEBS Loca
 
 ## How to use OpenEBS Local PVs
 
-OpenEBS create two Storage Classes of Local PVs by default as `openebs-hostpath` and `openebs-device`. For simple provisioning of OpenEBS Local PV, use these default Storage Classes. More details can be find from [here](/1.0.0-RC2/docs/next/uglocalpv.html).   
+OpenEBS create two Storage Classes of Local PVs by default as `openebs-hostpath` and `openebs-device`. For simple provisioning of OpenEBS Local PV, use these default Storage Classes. More details can be find from [here](/docs/next/uglocalpv.html).   
 
 End users or developers will provision the OpenEBS Local PVs like any other PV, by creating a PVC using a storage class provided by the admin user. 
 
@@ -110,11 +110,11 @@ Note: If default Basepath needs to be changed by mentioning different hostpath, 
 
 ## See Also:
 
-### [OpenEBS Architecture](/1.0.0-RC2/docs/next/architecture.html)
+### [OpenEBS Architecture](/docs/next/architecture.html)
 
-### [Understanding NDM](/1.0.0-RC2/docs/next/ndm.html)
+### [Understanding NDM](/docs/next/ndm.html)
 
-### [Local PV User Guide](/1.0.0-RC2/docs/next/uglocalpv.html)
+### [Local PV User Guide](/docs/next/uglocalpv.html)
 
 <br>
 

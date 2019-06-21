@@ -59,7 +59,7 @@ Similar to hyperconverged systems, storage and performance of a volume in CAS is
 
 ## See Also:
 
-### [OpenEBS architecture](/1.0.0-RC2/docs/next/architecture.html)
+### [OpenEBS architecture](/docs/next/architecture.html)
 
 ### [CAS blog on CNCF](https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/)
 

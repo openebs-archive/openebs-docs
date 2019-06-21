@@ -28,7 +28,7 @@ sidebar_label: Features and Benefits
 
 
 
-For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/1.0.0-RC2/docs/next/usecases.html) section.
+For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/docs/next/usecases.html) section.
 
 
 
@@ -183,11 +183,11 @@ MayaOnline is the SaaS service for OpenEBS enabled Kubernetes clusters that prov
 
 ## See Also:
 
-### [Object Storage with OpenEBS](/1.0.0-RC2/docs/next/minio.html)
+### [Object Storage with OpenEBS](/docs/next/minio.html)
 
-### [RWM PVs with OpenEBS](/1.0.0-RC2/docs/next/rwm.html)
+### [RWM PVs with OpenEBS](/docs/next/rwm.html)
 
-### [Local storage for Prometheus ](/1.0.0-RC2/docs/next/prometheus.html)
+### [Local storage for Prometheus ](/docs/next/prometheus.html)
 
 <br>
 

@@ -14,8 +14,8 @@ provided with a dedicated storage controller. OpenEBS
 implements granular storage policies and isolation that enable users
 to optimize storage for each specific workload. OpenEBS runs
 in user space and does not have any Linux kernel module dependencies.
-See OpenEBS  <a href="/1.0.0-RC2/docs/next/features.html">Features & Benefits</a>
-and <a href="/1.0.0-RC2/docs/next/usecases.html" target="">Use cases</a>.
+See OpenEBS  <a href="/docs/next/features.html">Features & Benefits</a>
+and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 
 <br>
 

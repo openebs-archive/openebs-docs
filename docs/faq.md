@@ -481,7 +481,7 @@ As of 0.8.0, the user is allowed to create PVCs that cross the available capacit
 
 <h3><a class="anchor" aria-hidden="true" id="what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method"></a>What is the difference between cStor Pool creation using manual method and auto method?</h3>
 
-By using manual method, you must give the selected disk name which is listed by NDM. This details has to be entered in the StoragePoolClaim YAML under `diskList`. See [storage pool](/docs/next/setupstoragepools.html#by-using-manual-method) for more info. 
+By using manual method, you must give the selected disk name which is listed by NDM. This details has to be entered in the StoragePoolClaim YAML under `diskList`. See [storage pool](/docs/next/ugcstor.html#creating-cStor-storage-pools) for more info. 
 It is also possible to change `maxPools` count and `poolType` in the StoragePoolClaim YAML. 
 Consider you have 4 nodes with 2 disks each. You can select `maxPools` count as 3, then cStor pool will create in any 3 nodes out of 4. The remaining disks belongs to 4th Node can be used for horizontal scale up in future.
 Advantage is that there is no restriction in the number of disks for the creation of cStor storage pool using `striped` or `mirrored` Type.
@@ -618,13 +618,13 @@ No. It is recommended to create different BDC name for claiming an unclaimed dis
 
 ## See Also:
 
-### [Creating cStor Pool](/1.0.0-RC2/docs/next/ugcstor.html#creating-cStor-storage-pools)
+### [Creating cStor Pool](/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
-### [Provisioning cStor volumes](/1.0.0-RC2/docs/next/ugcstor.html#provisioning-a-cStor-volume)
+### [Provisioning cStor volumes](/docs/next/ugcstor.html#provisioning-a-cStor-volume)
 
-### [BackUp and Restore](/1.0.0-RC2/docs/next/backup.html)
+### [BackUp and Restore](/docs/next/backup.html)
 
-### [Uninstall](/1.0.0-RC2/docs/next/uninstall.html)
+### [Uninstall](/docs/next/uninstall.html)
 
 <br>
 

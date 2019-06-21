@@ -42,7 +42,7 @@ MongoDB is usually deployed as `replicaset` in the production environment where 
 
 1. **Install OpenEBS**
 
-   If OpenEBS is not installed in your K8s cluster, this can done from [here](/1.0.0-RC2/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
+   If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
 2. **Connect to MayaOnline (Optional)** : Connecting the Kubernetes cluster to <a href="https://mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
 
@@ -70,7 +70,7 @@ MongoDB is usually deployed as `replicaset` in the production environment where 
 
      - **Configure cStor Pool**
 
-       After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/1.0.0-RC2/docs/next/ugcstor.html#creating-cStor-storage-pools).  During cStor Pool creation, ensure that at least one block device is taken from 3 nodes. This is to ensure the replication at the storage level with replica count as 3. If cStor pool is already configured, configure StorageClass to include the corresponding StoragePoolClaim name. 
+       After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools).  During cStor Pool creation, ensure that at least one block device is taken from 3 nodes. This is to ensure the replication at the storage level with replica count as 3. If cStor pool is already configured, configure StorageClass to include the corresponding StoragePoolClaim name. 
 
      - **Create Storage Class**
 
@@ -170,7 +170,7 @@ my-release-mongodb-replicaset-client   ClusterIP   None         <none>        27
 
 ## Post Deployment Operations
 
-- cStor related operations can be obtained from [here](/1.0.0-RC2/docs/next/ugcstor.html).
+- cStor related operations can be obtained from [here](/docs/next/ugcstor.html).
 
 <br>
 
@@ -182,15 +182,15 @@ my-release-mongodb-replicaset-client   ClusterIP   None         <none>        27
 
 <br>
 
-### [OpenEBS architecture](/1.0.0-RC2/docs/next/architecture.html)
+### [OpenEBS architecture](/docs/next/architecture.html)
 
-### [OpenEBS use cases](/1.0.0-RC2/docs/next/usecases.html)
+### [OpenEBS use cases](/docs/next/usecases.html)
 
-### [cStor User Guide](/1.0.0-RC2/docs/next/ugcstor.html)
+### [cStor User Guide](/docs/next/ugcstor.html)
 
-### [Local PV User Guide](/1.0.0-RC2/docs/next/uglocalpv.html)
+### [Local PV User Guide](/docs/next/uglocalpv.html)
 
-### [Jiva User Guide](/1.0.0-RC2/docs/next/jivaguide.html)
+### [Jiva User Guide](/docs/next/jivaguide.html)
 
 
 

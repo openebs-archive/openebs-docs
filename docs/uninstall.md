@@ -86,9 +86,9 @@ In addition, the job is set with a TTL to get cleaned up, if the cluster version
 
 ## See Also:
 
-### [FAQ](/1.0.0-RC2/docs/next/faq.html)
+### [FAQ](/docs/next/faq.html)
 
-### [Troubleshooting](/1.0.0-RC2/docs/next/troubleshooting.html)
+### [Troubleshooting](/docs/next/troubleshooting.html)
 
 <br>
 

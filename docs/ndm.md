@@ -90,9 +90,11 @@ More details can be find from [here](/docs/next/ugndm.html).
 
 ## See Also:
 
-### [OpenEBS Architecture](/1.0.0-RC2/docs/next/architecture.html)
+### [OpenEBS Architecture](/docs/next/architecture.html)
 
-### [Local PV](/1.0.0-RC2/docs/next/localpv.html)
+### [Local PV User Guide](/docs/next/uglocalpv.html)
+
+### [cStor User Guide](/docs/next/ugcstor.html)
 
 
 
