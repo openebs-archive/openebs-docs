@@ -122,13 +122,13 @@ In a large Kubernetes cluster, you may choose to limit the scheduling of the Ope
 
 See the example [here](#example-nodeselector-helm).
 
-<font size="5">Setup nodeSelectors for Node Disk Manager (NDM)</font>>
+<font size="5">Setup nodeSelectors for Node Disk Manager (NDM)</font>
 
 OpenEBS cStorPool is constructed using the disk custom resources or disk CRs created by Node Disk Manager or NDM. If you want to consider only some nodes in Kubernetes cluster to be used for OpenEBS storage (for hosting cStor Storage Pool instances), then use nodeSelector field of NDM PodSpec and dedicate those nodes to NDM.
 
 See an example [here](#example-nodeselector-helm).
 
-<font size="5">Setup disk filters for Node Disk Manager</font>>
+<font size="5">Setup disk filters for Node Disk Manager</font>
 
 NDM by default filters out the below disk patterns and converts the rest of the disks discovered on a given node into DISK CRs as long as they are not mounted.
 
@@ -140,7 +140,7 @@ If your cluster nodes have different disk types that are to be filtered out (mea
 
 See an example configuration [here](#example-helm-diskfilter)
 
-<font size="5">Other values.yaml parameters</font>>
+<font size="5">Other values.yaml parameters</font>
 
 For customized configuration through helm, use values.yaml or command line parameters.
 
@@ -474,7 +474,7 @@ This setting is useful in cases where user has to specify minimum requests like 
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="AuxResourceRequests"></a>Setup RBAC for Tiller before Installing OpenEBS Chart</h3>
+<h3><a class="anchor" aria-hidden="true" id="setup-rbac-for-tiller-before-installing-openebs-chart"></a>Setup RBAC for Tiller before Installing OpenEBS Chart</h3>
 
 ```
 kubectl -n kube-system create sa tiller
@@ -491,7 +491,7 @@ helm repo update
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="for-nodeselectors-in-valuesyaml-helm"></a>For nodeSelectors in values.yaml (helm)</h3>
+<h3><a class="anchor" aria-hidden="true" id="example-nodeselector-helm"></a>For nodeSelectors in values.yaml (helm)</h3>
 
 
 
@@ -516,7 +516,7 @@ provisioner:
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="for-nodeselectors-in-valuesyaml-helm"></a>For disk filters in values.yaml (helm)</h3>
+<h3><a class="anchor" aria-hidden="true" id="example-helm-diskfilter"></a>For disk filters in values.yaml (helm)</h3>
 
 
 
@@ -541,7 +541,7 @@ ndm:
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="default-values-for-helm-chart-parameters"></a>Default Values for Helm Chart Parameters</h3>
+<h3><a class="anchor" aria-hidden="true" id="helm-values"></a>Default Values for Helm Chart Parameters</h3>
 
 
 
