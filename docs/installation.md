@@ -11,8 +11,6 @@ sidebar_label: Installation
 
 <br>
 
-<div class="co">Helm installation will be supported in the 1.0.0 GA version. For 1.0.0-RC2, use the operator.yaml file to proceed with the installation. Note that upgrades are also not supported for 1.0.0-RC2</div>
-
 <font size="6">Summary:</font>
 
 

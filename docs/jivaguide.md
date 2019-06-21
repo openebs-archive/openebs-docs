@@ -159,7 +159,7 @@ OpenEBS volume can be backed up and restore along with application using velero 
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
 
-- Mount propagation feature has to be enabled on Kubernetes, otherwise the data written from the pods will not visible in the restic daemonset pod on the same node.
+- Mount propagation feature has to be enabled on Kubernetes, otherwise the data written from the pods will not visible in the restic daemonset pod on the same node. It is enabled by default on Kubernetes version 1.12. More details can be get from [here](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/). 
 - Latest tested Velero version is 1.0.0.
 - Create required storage provider configuration to store the backup data.
 - Create required storage class on destination cluster.
@@ -932,7 +932,7 @@ Jiva uses sparse files to store the data in `*.img` file. Each `*.img` file has 
 
 -  Ensure all Jiva replica pods of the PV are running. Faulty replica pod will be in `crashloopBackoff` state from 1.0.0 version.
 
-- Go to the corresponding Nodes of healthy and faulty replica and list all then snapshots under **/var/openebs/<PV-name>**.
+- Go to the corresponding Nodes of healthy and faulty replica and list all the snapshots under **/var/openebs/<PV-name>**.
 
   Example for Healthy replica:
 
