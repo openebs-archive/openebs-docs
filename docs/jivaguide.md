@@ -809,106 +809,105 @@ metadata:
 provisioner: openebs.io/provisioner-iscsi
 ```
 
+<h3><a class="anchor" aria-hidden="true" id="delete-internal-snapshots"></a>Steps to delete Jiva Internal Snapshots </h3>
 
-<h3><a class="anchor" aria-hidden="true" id="delete-internal-snapshots"></a>Delete internal snapshots created due to the restart of replica pods</h3>
+Deletion of Jiva internal snapshots are performed using `jivactl` command.
 
-This operation is carried out with `jivactl` command line tool. 
+- Login into the  Jiva controller pod using the following command. Use namespace where Jiva pods are running.
 
-First, execute into the corresponding Jiva controller pod using the following command. Use `openebs` namespace if Jiva pods are deployed in `openebs` namespace.
+  ```
+  kubectl exec -it <jiva_controller_pod> -c <container_pod> -n <namespace> --bash 
+  ```
 
-```
-kubectl exec -it <jiva_controller_pod> -c <container_pod> bash
-```
+- Once logged into the container , list all the internal snapshots using the following command.
 
-Once logged into the container pod, list all the internal snapshots using the following command.
+  ```
+  jivactl snapshot ls
+  ```
 
-```
-jivactl snapshot ls
-```
+  Example output:
 
-Example output:
+  ```
+  ID
+  c074ff10-4780-4222-8042-86baffa3436f
+  1adb9e8b-354b-4ce2-b1a2-04accaed77a2
+  ```
 
-```
-ID
-c074ff10-4780-4222-8042-86baffa3436f
-1adb9e8b-354b-4ce2-b1a2-04accaed77a2
-```
+  Tip: Command  to get the details of all snapshots:
 
-Get the details of snapshots using the following command.
+  ```
+  jivactl snapshot info
+  ```
 
-```
-jivactl snapshot info
-```
+  Example output:
 
-Example output:
+  ```
+  {
+      "1adb9e8b-354b-4ce2-b1a2-04accaed77a2": {
+          "name": "1adb9e8b-354b-4ce2-b1a2-04accaed77a2",
+          "parent": "",
+          "children": [
+              "c074ff10-4780-4222-8042-86baffa3436f"
+          ],
+          "removed": false,
+          "usercreated": false,
+          "created": "2019-06-19T11:50:21Z",
+          "size": "0"
+      },
+      "c074ff10-4780-4222-8042-86baffa3436f": {
+          "name": "c074ff10-4780-4222-8042-86baffa3436f",
+          "parent": "1adb9e8b-354b-4ce2-b1a2-04accaed77a2",
+          "children": [
+              "volume-head"
+          ],
+          "removed": false,
+          "usercreated": false,
+          "created": "2019-06-19T11:50:27Z",
+          "size": "30875648"
+      },
+      "volume-head": {
+          "name": "volume-head",
+          "parent": "c074ff10-4780-4222-8042-86baffa3436f",
+          "children": [],
+          "removed": false,
+          "usercreated": false,
+          "created": "2019-06-19T11:50:27Z",
+          "size": "266416128"
+      }
+  }
+  ```
 
-```
-{
-    "1adb9e8b-354b-4ce2-b1a2-04accaed77a2": {
-        "name": "1adb9e8b-354b-4ce2-b1a2-04accaed77a2",
-        "parent": "",
-        "children": [
-            "c074ff10-4780-4222-8042-86baffa3436f"
-        ],
-        "removed": false,
-        "usercreated": false,
-        "created": "2019-06-19T11:50:21Z",
-        "size": "0"
-    },
-    "c074ff10-4780-4222-8042-86baffa3436f": {
-        "name": "c074ff10-4780-4222-8042-86baffa3436f",
-        "parent": "1adb9e8b-354b-4ce2-b1a2-04accaed77a2",
-        "children": [
-            "volume-head"
-        ],
-        "removed": false,
-        "usercreated": false,
-        "created": "2019-06-19T11:50:27Z",
-        "size": "30875648"
-    },
-    "volume-head": {
-        "name": "volume-head",
-        "parent": "c074ff10-4780-4222-8042-86baffa3436f",
-        "children": [],
-        "removed": false,
-        "usercreated": false,
-        "created": "2019-06-19T11:50:27Z",
-        "size": "266416128"
-    }
-}
-```
+- Delete a snapshot using the following command
 
-You cannot delete latest snapshot from the list. Latest snapshot can be found by going to volume-head details and check the `parent` field. The value displayed in `parent` field is the latest snapshot name . In the above snippet, `c074ff10-4780-4222-8042-86baffa3436f` is the latest snapshot. You can delete remaining snapshots. 
+  ```
+  jivactl snapshot rm <snapshot _name>
+  ```
 
-Delete a snapshot using the following command
+  Example:
 
-```
-jivactl snapshot rm <snapshot _name>
-```
+  ```
+  jivactl snapshot rm 1adb9e8b-354b-4ce2-b1a2-04accaed77a2
+  ```
 
-Example:
+  Example output:
 
-```
-jivactl snapshot rm 1adb9e8b-354b-4ce2-b1a2-04accaed77a2
-```
+  ```
+  INFO[0000] Coalescing volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img to volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.2.33:9502 
+  INFO[0001] Replace volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img with volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.2.33:9502 
+  INFO[0001] Coalescing volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img to volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.1.30:9502 
+  INFO[0003] Replace volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img with volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.1.30:9502 
+  INFO[0003] Coalescing volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img to volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.0.27:9502 
+  INFO[0005] Replace volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img with volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.0.27:9502 
+  deleted 1adb9e8b-354b-4ce2-b1a2-04accaed77a2
+  ```
 
-Example output:
+   Multiple snapshots can be deleted together using the following command.
 
-```
-INFO[0000] Coalescing volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img to volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.2.33:9502 
-INFO[0001] Replace volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img with volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.2.33:9502 
-INFO[0001] Coalescing volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img to volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.1.30:9502 
-INFO[0003] Replace volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img with volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.1.30:9502 
-INFO[0003] Coalescing volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img to volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.0.27:9502 
-INFO[0005] Replace volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img with volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.0.27:9502 
-deleted 1adb9e8b-354b-4ce2-b1a2-04accaed77a2
-```
+  ```
+  jivactl snapshot rm <snapshot1_name> <snapshot2_name> 
+  ```
 
- Multiple snapshots can be deleted together using the following command.
-
-```
-jivactl snapshot rm <snapshot1_name> <snapshot2_name> 
-```
+  Please note that volume -head and its parent cannot be deleted.
 
 <br>
 
