@@ -232,11 +232,11 @@ The easiest way to monitor cStor pools and volumes is through MayaOnline. The vo
 
 Links to screenshots of some of the cStor resources in MayaOnline are shown below.
 
-[Pool topology view](/1.0.0-RC2/docs/next/mayaonline.html#cstor-pool-view)
+[Pool topology view](/docs/next/mayaonline.html#cstor-pool-view)
 
-[Volume POD topology view](/1.0.0-RC2/docs/next/mayaonline.html#cstor-volume-pod-view)
+[Volume POD topology view](/docs/next/mayaonline.html#cstor-volume-pod-view)
 
-[Volume CR topology view](/1.0.0-RC2/docs/next/mayaonline.html#cstor-custom-resources-view)
+[Volume CR topology view](/docs/next/mayaonline.html#cstor-custom-resources-view)
 
 <br>
 
@@ -295,7 +295,7 @@ Following are most commonly observed areas of troubleshooting
 
    **Resolution**: 
 
-   Install iSCSI tools and make sure iSCSI service is running. See [iSCSI installation](/1.0.0-RC2/docs/next/prerequisites.html)
+   Install iSCSI tools and make sure iSCSI service is running. See [iSCSI installation](/docs/next/prerequisites.html)
 
 2. **Multi-attach error is seen in the logs**
 
@@ -321,7 +321,7 @@ Following are most commonly observed areas of troubleshooting
 
    **Resolution**: 
 
-   This error eventually could get rectified on the further retries, volume gets mounted and application is started. This error is usually seen when cStor target takes some time to initialize  on low speed networks as it takes time to download cStor image binaries from repositories ( or )  or because the cstor target is waiting for the replicas to connect and establish quorum. If the error persists beyond 5 minutes, logs need to be verified, contact support or seek help on the <a href="https://openebs.io/join-our-community" target="_blank">Slack OpenEBS Community</a>.<br>
+   This error eventually could get rectified on the further retries, volume gets mounted and application is started. This error is usually seen when cStor target takes some time to initialize  on low speed networks as it takes time to download cStor image binaries from repositories ( or )  or because the cstor target is waiting for the replicas to connect and establish quorum. If the error persists beyond 5 minutes, logs need to be verified, contact support or seek help on the <a href="<https://openebs.org/community>" target="_blank">Slack OpenEBS Community</a>.<br>
 
 4. **Kubelet seen consuming high RAM usage with cStor volumes**
 
@@ -397,11 +397,11 @@ Each discovered disk on a node is added as a disk CR. This is needed to identify
 
 ## See Also:
 
-### [Storage Engines in OpenEBS](/1.0.0-RC2/docs/next/casengines.html)
+### [Storage Engines in OpenEBS](/docs/next/casengines.html)
 
-### [Creating cStor Pool](/1.0.0-RC2/docs/next/ugcstor.html#creating-cStor-storage-pools)
+### [Creating cStor Pool](/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
-### [Provisioning cStor volumes](/1.0.0-RC2/docs/next/ugcstor.html#provisioning-a-cStor-volume)
+### [Provisioning cStor volumes](/docs/next/ugcstor.html#provisioning-a-cStor-volume)
 
 
 

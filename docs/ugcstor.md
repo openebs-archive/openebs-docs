@@ -63,7 +63,7 @@ For provisioning a cStor Volume, it requires a cStor Storage Pool and a StorageC
 
 Use a similar PVC spec or volumeClaimTemplate to use a StorageClass that is pointing to a pool with real disks. Consider the following parameters while provisioning OpenEBS volumes on real disks.
 
-**AccessModes:** cStor provides iSCSI targets, which are appropriate for RWO (ReadWriteOnce) access mode and is suitable for all types of databases. For webscale applications like WordPress or any for any other NFS needs, you need RWM (ReadWriteMany) access mode. For RWM, you need NFS provisioner to be deployed along with cStor. See how to provision <a href="/1.0.0-RC2/docs/next/rwm.html" target="_blank">RWM PVC with OpenEBS </a>.
+**AccessModes:** cStor provides iSCSI targets, which are appropriate for RWO (ReadWriteOnce) access mode and is suitable for all types of databases. For webscale applications like WordPress or any for any other NFS needs, you need RWM (ReadWriteMany) access mode. For RWM, you need NFS provisioner to be deployed along with cStor. See how to provision <a href="/docs/next/rwm.html" target="_blank">RWM PVC with OpenEBS </a>.
 
 **Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release (OpenEBS 0.9.0) and is active development, see [roadmap](#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in the very short time period. 
 
@@ -497,7 +497,7 @@ The deletion of Velero backup schedule doesn't destroy the backup created during
 
 <h3><a class="anchor" aria-hidden="true" id="Upgrading-the-software-version-of-a-cStor-volume"></a>Upgrading the software version of a cStor volume</h3>
 
-The steps are mentioned in Upgrade section. For upgrade cStorVolume, ensure that cStor Pool image is support this cStor volume image.  The steps for upgrading the cStor volume can be find from [here](/1.0.0-RC2/docs/next/upgrade.html).
+The steps are mentioned in Upgrade section. For upgrade cStorVolume, ensure that cStor Pool image is support this cStor volume image.  The steps for upgrading the cStor volume can be find from [here](/docs/next/upgrade.html).
 
 
 
@@ -629,7 +629,7 @@ In the above file, change the following parameters as required.
 
   This field  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`.
 
-  Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volumes and pools relationship](/1.0.0-RC2/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
+  Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
 - `blockDeviceList`
 
@@ -684,7 +684,7 @@ NAME ALLOCATED FREE CAPACITY STATUS TYPE AGE
 cstor-disk-4tfw 77K 39.7G 39.8G Healthy striped 42s
 ```
 
-**Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` and update the `maxPools` count accordingly. More details can be found [here](/1.0.0-RC2/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node).
+**Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` and update the `maxPools` count accordingly. More details can be found [here](/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node).
 
 <br>
 
@@ -840,24 +840,24 @@ provisioner: openebs.io/provisioner-iscsi
 
 Below table lists the storage policies supported by cStor. These policies should be built into StorageClass and apply them through PersistentVolumeClaim or VolumeClaimTemplates interface.
 
-| cStor Storage Policy                                         | Mandatory | Default                                     | Purpose                                                      |
-| ------------------------------------------------------------ | --------- | ------------------------------------------- | ------------------------------------------------------------ |
-| [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                           | Defines the number of cStor volume replicas                  |
-| [VolumeControllerImage](#Volume-Controller-Image-Policy)     |           | quay.io/openebs/cstor-volume-mgmt:1.0.0-RC2 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
-| [VolumeTargetImage](#Volume-Target-Image-Policy)             |           | value:quay.io/openebs/cstor-istgt:1.0.0-RC2 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
-| [StoragePoolClaim](#Storage-Pool-Claim-Policy)               | Yes       | N/A (a valid pool must be provided)         | The cStorPool on which the volume replicas should be provisioned |
-| [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                          | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.0.0-RC2        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
-| [FSType](#Volume-File-System-Type-Policy)                    |           | ext4                                        | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
-| [TargetNodeSelector](#Target-NodeSelector-Policy)            |           | Decided by Kubernetes scheduler             | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
-| [TargetResourceLimits](#Target-ResourceLimits-Policy)        |           | Decided by Kubernetes scheduler             | CPU and Memory limits to cStor target pod                    |
-| [TargetResourceRequests](#TargetResourceRequests)            |           | Decided by Kubernetes scheduler             | Configuring resource requests that need to be available before scheduling the containers. |
-| [TargetTolerations](#TargetTolerations)                      |           | Decided by Kubernetes scheduler             | Configuring the tolerations for target.                      |
-| [AuxResourceLimits](#AuxResourceLimits-Policy)               |           | Decided by Kubernetes scheduler             | Configuring resource limits on the volume pod side-cars.     |
-| [AuxResourceRequests](#AuxResourceRequests-Policy)           |           | Decided by Kubernetes scheduler             | Configure minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. |
-| [Target Affinity](#Target-Affinity-Policy)                   |           | Decided by Kubernetes scheduler             | The policy specifies the label KV pair to be used both on the cStor target and on the application being used so that application pod and cStor target pod are scheduled on the same node. |
-| [Target Namespace](#Target-Namespace)                        |           | openebs                                     | When service account name is specified, the cStor target pod is scheduled in the application's namespace. |
-| [cStorStoragePool Replica Anti-Affinity](#cStorStoragePool-Anti-Affinity) |           | Decided by Kubernetes scheduler             | For StatefulSet applications, to distribute single replica volume on  separate nodes . |
+| cStor Storage Policy                                         | Mandatory | Default                                 | Purpose                                                      |
+| ------------------------------------------------------------ | --------- | --------------------------------------- | ------------------------------------------------------------ |
+| [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                       | Defines the number of cStor volume replicas                  |
+| [VolumeControllerImage](#Volume-Controller-Image-Policy)     |           | quay.io/openebs/cstor-volume-mgmt:1.0.0 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
+| [VolumeTargetImage](#Volume-Target-Image-Policy)             |           | value:quay.io/openebs/cstor-istgt:1.0.0 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
+| [StoragePoolClaim](#Storage-Pool-Claim-Policy)               | Yes       | N/A (a valid pool must be provided)     | The cStorPool on which the volume replicas should be provisioned |
+| [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                      | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.0.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [FSType](#Volume-File-System-Type-Policy)                    |           | ext4                                    | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
+| [TargetNodeSelector](#Target-NodeSelector-Policy)            |           | Decided by Kubernetes scheduler         | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
+| [TargetResourceLimits](#Target-ResourceLimits-Policy)        |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
+| [TargetResourceRequests](#TargetResourceRequests)            |           | Decided by Kubernetes scheduler         | Configuring resource requests that need to be available before scheduling the containers. |
+| [TargetTolerations](#TargetTolerations)                      |           | Decided by Kubernetes scheduler         | Configuring the tolerations for target.                      |
+| [AuxResourceLimits](#AuxResourceLimits-Policy)               |           | Decided by Kubernetes scheduler         | Configuring resource limits on the volume pod side-cars.     |
+| [AuxResourceRequests](#AuxResourceRequests-Policy)           |           | Decided by Kubernetes scheduler         | Configure minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. |
+| [Target Affinity](#Target-Affinity-Policy)                   |           | Decided by Kubernetes scheduler         | The policy specifies the label KV pair to be used both on the cStor target and on the application being used so that application pod and cStor target pod are scheduled on the same node. |
+| [Target Namespace](#Target-Namespace)                        |           | openebs                                 | When service account name is specified, the cStor target pod is scheduled in the application's namespace. |
+| [cStorStoragePool Replica Anti-Affinity](#cStorStoragePool-Anti-Affinity) |           | Decided by Kubernetes scheduler         | For StatefulSet applications, to distribute single replica volume on  separate nodes . |
 
 <br>
 
@@ -887,7 +887,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeControllerImage
-        value: quay.io/openebs/cstor-volume-mgmt:1.0.0-RC2
+        value: quay.io/openebs/cstor-volume-mgmt:1.0.0
     openebs.io/cas-type: cstor
 ```
 
@@ -902,7 +902,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeTargetImage
-        value:quay.io/openebs/cstor-istgt:1.0.0-RC2
+        value:quay.io/openebs/cstor-istgt:1.0.0
     openebs.io/cas-type: cstor
 ```
 
@@ -947,7 +947,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:1.0.0-RC2
+        value: quay.io/openebs/m-exporter:1.0.0
     openebs.io/cas-type: cstor
 ```
 
@@ -1081,7 +1081,7 @@ In the case of provisioning StatfulSet applications with replication factor of  
 
 **Approach 1:**
 
-In this approach, modification is required on StatefulSet spec and corresponding StorageClass being referred in the StatefulSet spec. Add [openebs.io/sts-target-affinity](http://openebs.io/sts-target-affinity): <[metadata.name](http://metadata.name/) of STS> label in StatefulSet spec to the following fields.
+In this approach, modification is required on StatefulSet spec and corresponding StorageClass being referred in the StatefulSet spec. Add openebs.io/sts-target-affinity: <metadata.name of STS> label in StatefulSet spec to the following fields.
 
 - spec.selector.matchLabels  
 - spec.template.labels
@@ -1137,7 +1137,7 @@ This approach is useful when user/tool does not have control over the StatefulSe
 
 Add following changes in the StorageClass that is referred to by the claimTemplates of this StatefulSet.
 
-- Add [openebs.io/sts-target-affinity](http://openebs.io/sts-target-affinity): <[metadata.name](http://metadata.name/) of STS> label to the following fields.
+- Add openebs.io/sts-target-affinity: <metadata.name of STS> label to the following fields.
   - metadata.labels
 - Set volumeBindingMode to WaitForFirstConsumer
 
@@ -1295,7 +1295,7 @@ spec:
 
 <h3><a class="anchor" aria-hidden="true" id="Upgrade-the-software-version-of-a-cStor-pool"></a>Upgrade the Software Version of a cStor pool</h3>
 
-The steps for upgrading cStor Pool is mentioned in Upgrade section. Refer [Upgrade](/1.0.0-RC2/docs/next/upgrade.html) section for more details.
+The steps for upgrading cStor Pool is mentioned in Upgrade section. Refer [Upgrade](/docs/next/upgrade.html) section for more details.
 
 
 <h3><a class="anchor" aria-hidden="true" id="monitor-pool"></a>Monitor a cStor Pool</h3>
@@ -1397,7 +1397,7 @@ The steps for expanding the pool to new nodes is given below.
 
 <h4><a class="anchor" aria-hidden="true" id="With-specifiying-blockDeviceList"></a>With specifiying blockDeviceList</h4>
 
-If you are following this approach, you should have created cStor Pool initially using the steps provided [here](/1.0.0-RC2/docs/next/ugcstor.html#creating-cStor-storage-pools). For expanding pool onto a new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with the required disks names under the `blockDeviceList` and update the `maxPools` count .
+If you are following this approach, you should have created cStor Pool initially using the steps provided [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). For expanding pool onto a new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with the required disks names under the `blockDeviceList` and update the `maxPools` count .
 
 **Step 1:** Edit the existing pool configuration spec that you originally used and apply it (OR) directly edit the in-use spec file using `kubectl edit spc <SPC Name>`.
 
@@ -1445,11 +1445,11 @@ This activity can be done by some set of manual steps. In this section, you can 
 
 
 
-### [Understand cStorPools ](/1.0.0-RC2/docs/next/cstor.html#cstor-pools)
+### [Understand cStorPools ](/docs/next/cstor.html#cstor-pools)
 
-### [cStorPool use case for Prometheus](/1.0.0-RC2/docs/next/prometheus.html)
+### [cStorPool use case for Prometheus](/docs/next/prometheus.html)
 
-### [cStor roadmap](/1.0.0-RC2/docs/next/cstor.html#cstor-roadmap)
+### [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
 
 
 <br>

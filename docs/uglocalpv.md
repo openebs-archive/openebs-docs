@@ -42,7 +42,7 @@ OpenEBS Dynamic Local PV provisioner will help provisioning the Local PVs dynami
 
 <h3><a class="anchor" aria-hidden="true" id="Provision-OpenEBS-Local-PV-based-on-hostpath"></a>Provision OpenEBS Local PV based on hostpath</h3>
 
-The simplest way to provision an OpenEBS Local PV based on hostpath is to use the default StorageClass which is created as part of latest 1.0.0-RC2 operator YAML. The default StorageClass name for hostpath configuration is `openebs-hostpath`. The default hostpath is configured as `/var/openebs/local`. 
+The simplest way to provision an OpenEBS Local PV based on hostpath is to use the default StorageClass which is created as part of latest 1.0.0 operator YAML. The default StorageClass name for hostpath configuration is `openebs-hostpath`. The default hostpath is configured as `/var/openebs/local`. 
 
 
 The following is the sample deployment configuration of Percona application which is going to consume OpenEBS Local PV. For utilizing OpenEBS Local PV based on hostpath, use default StorageClass name as `openebs-hostpath` in the PVC spec of the Percona deployment.
@@ -163,7 +163,7 @@ pvc-2e4b123e-88ff-11e9-bc28-42010a8001ff   5G         RWO            Delete     
 
 <h3><a class="anchor" aria-hidden="true" id="Provision-OpenEBS-Local-PV-based-on-Device"></a>Provision OpenEBS Local PV Based on Device</h3>
 
-The simplest way to provision an OpenEBS Local PV based on device is to use the default StorageClass for OpenEBS  Local PV based of device which is created as part of latest 1.0.0-RC2 operator YAML. The default StorageClass name for OpenEBS Local PV based on device configuration is `openebs-device`. 
+The simplest way to provision an OpenEBS Local PV based on device is to use the default StorageClass for OpenEBS  Local PV based of device which is created as part of latest 1.0.0 operator YAML. The default StorageClass name for OpenEBS Local PV based on device configuration is `openebs-device`. 
 
 The following is the sample deployment configuration of Percona application which is going to consume OpenEBS Local PV based on device. For utilizing default OpenEBS Local PV based on device, use default StorageClass name as `openebs-device` in the PVC spec of the Percona deployment. 
 
@@ -494,7 +494,7 @@ Verify if the StorageClass is having the updated hostpath using the following co
 kubectl describe sc openebs-hostpath
 ```
 
-**Note**: If you are using a mount path of an external device as  `Basepath` for the default hostpath Storage Class, then you must add the corresponding block device path under **exclude** filter so that NDM will not select the particular disk for BD creation. For example, `/dev/sdb` is mounted as `/mnt/ext_device`, and if you are using `/mnt/ext_device` as Basepath in default StorageClass `openebs-hostpath`, then you must add `/dev/sdb` under **exclude** filter of NDM configuration. See [here](/1.0.0-RC2/docs/next/ugndm.html#Exclude-filters) for customizing the exclude filter in NDM configuration.
+**Note**: If you are using a mount path of an external device as  `Basepath` for the default hostpath Storage Class, then you must add the corresponding block device path under **exclude** filter so that NDM will not select the particular disk for BD creation. For example, `/dev/sdb` is mounted as `/mnt/ext_device`, and if you are using `/mnt/ext_device` as Basepath in default StorageClass `openebs-hostpath`, then you must add `/dev/sdb` under **exclude** filter of NDM configuration. See [here](/docs/next/ugndm.html#Exclude-filters) for customizing the exclude filter in NDM configuration.
 
 <br>
 
@@ -502,10 +502,10 @@ kubectl describe sc openebs-hostpath
 
 
 
-### [Understand OpenEBS Local PVs ](/1.0.0-RC2/docs/next/localpv.html)
+### [Understand OpenEBS Local PVs ](/docs/next/localpv.html)
 
 
-### [Node Disk Manager](/1.0.0-RC2/docs/next/ugndm.html)
+### [Node Disk Manager](/docs/next/ugndm.html)
 
 
 <br>
