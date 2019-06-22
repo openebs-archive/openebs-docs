@@ -9,7 +9,7 @@ Latest stable version of OpenEBS is 1.0.0. Check the release notes [here](https:
 
 ## Supported upgrade paths
 
-From 0.8.2 to 0.9.0 - Get the steps from [here](<https://docs.openebs.io/090/docs/next/upgrade.html>).
+From 0.8.2 to 0.9.0 - Get the steps from [here](<https://docs.openebs.io/v090/docs/next/upgrade.html>).
 
 From 0.8.1 to 0.8.2 - Get the steps from [here](<https://v08-docs.openebs.io/v082/docs/next/upgrade.html>).
 
