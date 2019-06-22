@@ -148,13 +148,13 @@ Below table identifies few differences among the CAS engines.
 | Suitable for low capacity workloads       |  Yes  |   Yes    | Yes     |
 | Snapshots and cloning support             | Basic | Advanced | No      |
 | Data consistency                          |  Yes  |   Yes    | NA      |
-| Backup and Restore using ARK              |  Yes  |   Yes    | Yes     |
+| Backup and Restore using Velero           |  Yes  |   Yes    | Yes     |
 | Suitable for high capacity workloads      |       |   Yes    | Yes     |
 | Thin Provisioning                         |       |   Yes    | No      |
 | Disk pool or aggregate support            |       |   Yes    | No      |
 | On demand capacity expansion              |       |   Yes    | Yes*    |
 | Data resiliency (RAID support )           |       |   Yes    | No      |
-| Near disk performancd                     |  No   |    No    | Yes     |
+| Near disk performance                     |  No   |    No    | Yes     |
 
 
 
@@ -184,7 +184,7 @@ As indicated in the above table, each storage engine has it's own advantage. Cho
 - Jiva is easiest to manage as disk management or pool management is not in the scope of this engine. A Jiva pool is a mounted path of a local disk or a network disk or a virtual disk or a cloud disk. 
 - Jiva is a preferred engine than cStor when
   - Your application does not require snapshots and clones features.
-  - When you do not have free disks on the node. Jiva can be used on a` hostdir` and still achieve replication.
+  - When you do not have free disks on the node. Jiva can be used on a ` hostdir` and still achieve replication.
   - When you do not need to expand storage dynamically on local disk. Adding more disks to a Jiva pool is not possible, so the size of Jiva pool is fixed if it on a physical disk. However if the underlying disk is a virtual or network or cloud disk then, it is possible to change the Jiva pool size on the fly.
 - Capacity requirements are small. Large capacity applications typically require dynamic increase in the capacity and cStor is more suitable for such needs.
 
