@@ -28,6 +28,10 @@ sidebar_label: FAQs
 
 [What are the prerequisites other than general prerequisites for installing OpenEBS in Centos and OpenShift?](#OpenEBS-install-prerequisites-openshift-centos)
 
+[How to verify cStor volume is running fine?](#verify-cstor-volume-running-fine)
+
+
+
 
 
 <br>
@@ -70,22 +74,21 @@ sidebar_label: FAQs
 
 [How the data is distributed when cStor maxPools count is 3 and replicaCount as 2 in StorageClass?](#how-the-data-is-distributed-when-cstor-maxpools-count-is-3-and-replicacount-as-2-in-storageclass)
 
-[How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?](#how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions)
-
 [How to create a cStor volume on single cStor disk pool?](#create-cstor-volume-single-disk-pool)
 
 [How to get the details of cStor Pool,cStor Volume Replica ,Cstor Volumes and Disks ?](#more-info-pool-cvr-cv-disk) 
 
 [Does OpenEBS support encryption at rest?](#encryption-rest)
 
-[How Can I create cStor Pools using partitioned disks?](#create-cstor-pool-partioned-disks)
+[Can the same BDC name be used for claiming a new block device?](#same-bdc-claim-new-bd)
 
+</br>
 
-
-<br><br>
-
+<hr>
 
 <font size="6" color="blue">General</font>
+
+<hr>
 
 <br>
 
@@ -137,7 +140,6 @@ To determine exactly where your data is physically stored, you can run the follo
          - name: openebs
   ```
 
-  
 
 <a href="#top">Go to top</a>
 
@@ -195,7 +197,67 @@ If you are installing OpenEBS in CentOS or OpenShift,you must need to grant priv
 
 <br>
 
+<h3><a class="anchor" aria-hidden="true" id="verify-cstor-volume-running-fine"></a>How to verify cStor volume is running fine?</h3>
 
+The following steps will help to verify the cStor volume running status.
+
+1. Check PVC is created successfully using the following command.
+
+   ```
+   kubectl get pvc -n <namespace>
+   ```
+
+2. If PVC is created successfully, check corresponding PV is also created successfully.
+
+   ```
+   kubectl get pv
+   ```
+
+3. Check the corresponding target pod of the cStor volume is running using the following command. 
+
+   ```
+   kubectl get pod -n openebs 
+   ```
+
+   The target pod should be in running state.
+
+4. Now check the status of cStor volume using the following command.
+
+   ```
+   kubectl get cstorvolume -n openebs
+   ```
+
+   The output of above command will show status as `Offline`, `Degraded` and `Healthy`. Following are the definition for each of these status.
+
+   **Offline:** Replicas may not able to connect to its target pod due to network issues. In this case, IOs will not happen on this cStor volume. 
+
+   **Degraded:** All replicas of the cStor volume are not in Healthy state, corresponding volume will be running as degraded. In this case, IOs can happen on this volume. Please refer next step for more details about CVR status.
+
+   **Healthy:**  All replicas of the cStor volume are in Healthy state.
+
+   Note: If target pod of corresponding cStor volume is not running, then the status of cStor volume shown in the output of above command may be stale.
+
+5. Check the cStorVolumeReplica(CVR) status of the corresponding cStor volume using the following command.
+
+   ```
+   kubectl get cvr -n openebs
+   ```
+
+   The output of above command will show status as `Offline`, `Degraded`, `Rebuilding` and `Healthy`. Following are the definition for each of these status.
+
+   **Offline:** Replica is not connected to the target pod.
+
+   **Degraded:** Replica of the cStor volume need to get synced from other replica of the corresponding volume. 
+
+   **Rebuilding:** Replica is in rebuilding state to sync up the data from other replicas of the corresponding volume.
+
+   **Healthy:** Replica is having full data.
+
+   Note: If pool pod corresponding to cStor volume replica is not running, then the status of CVR shown in the output of above command may be stale.
+
+</br>
+
+<hr>
 
 <font size="6" color="orange">Data Protection</font>
 
@@ -237,12 +299,11 @@ An OpenEBS Jiva volume is a controller deployed during OpenEBS installation. Vol
 
 <br>
 
-
+<hr>
 
 <font size="6" color="maroon">Best Practices</font>
 
 <hr>
-
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="what-are-the-recommended-iscsi-timeout-settings-on-the-host"></a>What are the recommended iscsi timeout settings on the host?</h3>
@@ -286,7 +347,7 @@ You may notice the change in the “Attached scsi disk” value. This causes vol
 
 <br>
 
-
+<hr>
 
 <font size="6" color="red">Miscellaneous</font>
 
@@ -420,7 +481,7 @@ As of 0.8.0, the user is allowed to create PVCs that cross the available capacit
 
 <h3><a class="anchor" aria-hidden="true" id="what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method"></a>What is the difference between cStor Pool creation using manual method and auto method?</h3>
 
-By using manual method, you must give the selected disk name which is listed by NDM. This details has to be entered in the StoragePoolClaim YAML under `diskList`. See [storage pool](/docs/next/setupstoragepools.html#by-using-manual-method) for more info. 
+By using manual method, you must give the selected disk name which is listed by NDM. This details has to be entered in the StoragePoolClaim YAML under `diskList`. See [storage pool](/docs/next/ugcstor.html#creating-cStor-storage-pools) for more info. 
 It is also possible to change `maxPools` count and `poolType` in the StoragePoolClaim YAML. 
 Consider you have 4 nodes with 2 disks each. You can select `maxPools` count as 3, then cStor pool will create in any 3 nodes out of 4. The remaining disks belongs to 4th Node can be used for horizontal scale up in future.
 Advantage is that there is no restriction in the number of disks for the creation of cStor storage pool using `striped` or `mirrored` Type.
@@ -443,82 +504,6 @@ If you set `maxPools` as 3 and `poolType` as `mirrored`, then Mirrored cStor poo
 
 If `maxPool` count is 3 in StoragePoolClaim, then 3 cStor storage pool will create if it meet the required number of Nodes,say 3 in this example.
 If `replicaCount` is 2 in StorageClass, then 2 OpenEBS volume will create on the top of any 2 cStor storage pool out of 3.
-
-<a href="#top">Go to top</a>
-
-<br>
-
-<h3><a class="anchor" aria-hidden="true" id="how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions"></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
-
-Apply the following YAML in your cluster.
-
-- Create a Privileged PSP
-
-  ```
-  apiVersion: extensions/v1beta1
-  kind: PodSecurityPolicy
-   metadata:
-     name: privileged
-     annotations:
-       seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
-   spec:
-     privileged: true
-     allowPrivilegeEscalation: true
-     allowedCapabilities:
-     - '*'
-     volumes:
-     - '*'
-     hostNetwork: true
-     hostPorts:
-     - min: 0
-       max: 65535
-     hostIPC: true
-     hostPID: true
-     runAsUser:
-       rule: 'RunAsAny'
-     seLinux:
-       rule: 'RunAsAny'
-     supplementalGroups:
-       rule: 'RunAsAny'
-     fsGroup:
-       rule: 'RunAsAny'    
-  ```
-
-- Associate the above PSP to a ClusterRole
-
-  ```
-  kind: ClusterRole
-  apiVersion: rbac.authorization.k8s.io/v1
-  metadata:
-    name: privilegedpsp
-  rules:
-  - apiGroups: ['extensions']
-    resources: ['podsecuritypolicies']
-    verbs:     ['use']
-    resourceNames:
-    - privileged
-  ```
-
-- Associate the above Privileged ClusterRole to OpenEBS Service Account
-
-  ```
-  apiVersion: rbac.authorization.k8s.io/v1
-  kind: ClusterRoleBinding
-  metadata:
-    annotations:
-      rbac.authorization.kubernetes.io/autoupdate: "true"
-    name: openebspsp
-  roleRef:
-    apiGroup: rbac.authorization.k8s.io
-    kind: ClusterRole
-    name: privilegedpsp
-  subjects:
-  - kind: ServiceAccount
-    name: openebs-maya-operator
-    namespace: openebs
-  ```
-
-- Proceed to install the OpenEBS. Note that the namespace and service account name used by the OpenEBS should match what is provided in   the above ClusterRoleBinding.
 
 <a href="#top">Go to top</a>
 
@@ -621,69 +606,21 @@ sparse-5a92ced3e2ee21eac7b930f670b5eab5   10737418240   Active   10m
 
 You can achieve encryption at rest using LUKS. Example tutorial for enabling LUKS on CentOS is at: <a  href="https://wiki.centos.org/HowTos/EncryptedFilesystem" target="_blank">https://wiki.centos.org/HowTos/EncryptedFilesystem</a>
 
-<br>
+</br>
 
-<h3><a class="anchor" aria-hidden="true" id="create-cstor-pool-partioned-disks"></a>How Can I create cStor Pools using partitioned disks?</h3>
+<h3><a class="anchor" aria-hidden="true" id="same-bdc-claim-new-bd"></a>Can the same BDC name be used for claiming a new block device?</h3>
 
-Currently,NDM is not selecting partition disks for creating device resource. But, you can create device resource for the partition disks manually. The following are the steps for the creation of device resource.
-
-1. Download the device CR YAML for creating the device CR manually. The sample device CR can be downloaded from [here](https://raw.githubusercontent.com/openebs/node-disk-manager/master/deploy/crds/openebs_v1alpha1_device_cr.yaml).
-
-2. Modify the downloaded device CR sample YAML with the partition disk information. Following is the sample device CR YAML.
-
-   ```
-   apiVersion: openebs.io/v1alpha1
-   kind: Device
-   metadata:
-     name: example-device
-     labels:
-       kubernetes.io/hostname: <host name in which disk/device is attached> # like gke-openebs-user-default-pool-044afcb8-bmc0
-       ndm.io/managed: "false" # for manual disk creation put false
-       ndm.io/disk-type: partition
-   status:
-     state: Active
-   spec:
-     capacity:
-       logicalSectorSize: <logical sector size of device> # like 512
-       storage: <total capacity in bits> #like 53687091200
-     details:
-       firmwareRevision: <firmware revision> #firmware version
-       model: <model name of device> # like PersistentDisk
-       serial: <serial no of disk> # like google-disk-2
-       compliance: <compliance of disk> #like "SPC-4"
-       vendor: <vendor of disk> #like Google
-     devlinks:
-     - kind: by-id
-       links:
-       - <link1> # like /dev/disk/by-id/scsi-0Google_PersistentDisk_disk-2
-       - <link2> # like /dev/disk/by-id/google-disk-2
-     - kind: by-path
-       links:
-       - <link1> # like /dev/disk/by-path/virtio-pci-0000:00:03.0-scsi-0:0:2:0 
-     Partitioned: No
-     path: <devpath> # like /dev/sdb1
-   ```
-
-   In the above device CR sample spec, following field must be filled before applying the YAML.
-
-   * kubernetes.io/hostname
-   * logicalSectorSize
-   * storage
-   * links
-     * This is applicable for both `by-id` and `by-path`
-   * path
-
-3. Repeat the same steps for each partitioned device that you have chosen for creating cStor pool.
-
-4. Get the `diskname` from `kubectl get disks` command and add the `diskname` in cStor StoragePoolClaim YAML. The steps for the creation of cStorStoragePool can be read [here](/docs/next/configurepools.html#creating-a-new-pool).
+No. It is recommended to create different BDC name for claiming an unclaimed disk manually.
 
 <br>
+
+<hr>
 
 ## See Also:
 
-### [Creating cStor Pool](/docs/next/configurepools.html)
+### [Creating cStor Pool](/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
-### [Provisioning cStor volumes](/docs/next/provisionvols.html)
+### [Provisioning cStor volumes](/docs/next/ugcstor.html#provisioning-a-cStor-volume)
 
 ### [BackUp and Restore](/docs/next/backup.html)
 

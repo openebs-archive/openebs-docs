@@ -16,6 +16,12 @@ sidebar_label: Knowledge Base
 
 [How to enable Admission-Controller in OpenShift environment?](#enable-admission-controller-in-openshift)
 
+[How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?](#how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions)
+
+[How to prevent container logs from exhausting disk space?](#enable-log-rotation-on-cluster-nodes)
+
+</br>
+
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
 
@@ -145,7 +151,9 @@ There are some cases where it had to delete the StatefulSet and re-install a new
   kubectl get pods -n <namespace>
   ```
 
+<a href="#top">Go to top</a>
 
+</br>
 
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-scale-up-jiva-replica"></a>How to scale up Jiva replica?</h3>
@@ -221,7 +229,9 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
    pvc-4cfacfdd-76d7-11e9-9319-42010a800230-rep-f9ff69c6-9jbfm      1/1       Running   0          25s
    ```
 
+<a href="#top">Go to top</a>
 
+</br>
 
 
 <h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-without-SELinux-disabled"></a>How to install OpenEBS in OpenShift environment?</h3>
@@ -248,7 +258,9 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
 
 4. Verify OpenEBS pods status by using `oc get pods -n openebs`
 
+<a href="#top">Go to top</a>
 
+</br>
 
 <h3><a class="anchor" aria-hidden="true" id="enable-admission-controller-in-openshift"></a>How to enable Admission-Controller in OpenShift 3.10 and above</h3>
 
@@ -278,13 +290,180 @@ The following proceedure will help to enable admission-controller in OpenShift 3
    # master-restart controllers
    ```
 
+<a href="#top">Go to top</a>
+
+<br>
+
+<h3><a class="anchor" aria-hidden="true" id="how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions"></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
+
+Apply the following YAML in your cluster.
+
+- Create a Privileged PSP
+
+  ```
+  apiVersion: extensions/v1beta1
+  kind: PodSecurityPolicy
+   metadata:
+     name: privileged
+     annotations:
+       seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
+   spec:
+     privileged: true
+     allowPrivilegeEscalation: true
+     allowedCapabilities:
+     - '*'
+     volumes:
+     - '*'
+     hostNetwork: true
+     hostPorts:
+     - min: 0
+       max: 65535
+     hostIPC: true
+     hostPID: true
+     runAsUser:
+       rule: 'RunAsAny'
+     seLinux:
+       rule: 'RunAsAny'
+     supplementalGroups:
+       rule: 'RunAsAny'
+     fsGroup:
+       rule: 'RunAsAny'    
+  ```
+
+- Associate the above PSP to a ClusterRole
+
+  ```
+  kind: ClusterRole
+  apiVersion: rbac.authorization.k8s.io/v1
+  metadata:
+    name: privilegedpsp
+  rules:
+  - apiGroups: ['extensions']
+    resources: ['podsecuritypolicies']
+    verbs:     ['use']
+    resourceNames:
+    - privileged
+  ```
+
+- Associate the above Privileged ClusterRole to OpenEBS Service Account
+
+  ```
+  apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    annotations:
+      rbac.authorization.kubernetes.io/autoupdate: "true"
+    name: openebspsp
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: privilegedpsp
+  subjects:
+  - kind: ServiceAccount
+    name: openebs-maya-operator
+    namespace: openebs
+  ```
+
+- Proceed to install the OpenEBS. Note that the namespace and service account name used by the OpenEBS should match what is provided in   the above ClusterRoleBinding.
+
+<a href="#top">Go to top</a>
+
+<br>
+
+<h3><a class="anchor" aria-hidden="true" id="enable-log-rotation-on-cluster-nodes"></a>How to prevent container logs from exhausting disk space?</h3>
+
+Container logs, if left unchecked, can eat into the underlying disk space causing `disk-pressure` conditions
+leading to eviction of pods running on a given node. This can be prevented by performing log-rotation
+based on file-size while specifying retention count. One recommended way to do this is by configuring the
+docker logging driver on the individual cluster nodes. Follow the steps below to enable log-rotation.
+
+
+1. Configure the docker configuration file /etc/docker/daemon.json (create one if not already found) with the
+log-options similar to ones shown below (with desired driver, size at which logs are rotated, maximum logfile
+retention count & compression respectively):
+
+   ```
+   {
+     "log-driver": "json-file",
+     "log-opts": {
+        "max-size": "400k",
+        "max-file": "3",
+        "compress": "true"
+     }
+   }
+   ```
+
+2. Restart the docker daemon on the nodes. This may cause a temprary disruption of the running containers & cause
+the node to show up as `Not Ready` until the daemon has restarted successfully.
+
+   ```
+   systemctl daemon-reload
+   systemctl restart docker
+   ```
+
+3. To verify that the newly set log-options have taken effect, the following commands can be used:
+
+   * At a node-level, the docker logging driver in use can be checked via the following command:
+
+     ```
+     docker info
+     ```
+
+     The `LogConfig` section of the output must show the desired values:
+
+     ```
+      "LogConfig": {
+      "Type": "json-file",
+      "Config": {}
+     ```
+
+   - At the individual container level, the log options in use can be checked via the following command:
+
+     ```
+     docker inspect <container-id>
+     ```
+
+     The `LogConfig` section of the output must show the desired values:
+
+     ```
+      "LogConfig": {
+             "Type": "json-file",
+             "Config": {
+                 "max-file": "3",
+                 "max-size": "400k",
+                 "compress": "true"
+              }
+      }      
+     ```
+
+4. To view the current & compressed files, check the contents of the `/var/lib/docker/containers/<container-id>/` directory. The symlinks at `/var/log/containers/<container-name>` refer to the above.
+
+**NOTES:**
+
+- The steps are common for Linux distributions (tested on CentOS, RHEL, Ubuntu)
+
+- Log rotation via the specified procedure is supported by docker logging driver types: `json-file (default), local`
+
+- Ensure there are no dockerd cli flags specifying the `--log-opts` (verify via `ps -aux` or service definition
+  files in `/etc/init.d` or `/etc/systemd/system/docker.service.d`). The docker daemon fails to start if an option
+  is duplicated between the file and the flags, regardless their value.
+
+- These log-options are applicable only to the containers created after the dockerd restart (which is automatically
+  taken care by the kubelet)
+
+- The `kubectl log` reads the uncompressed files/symlinks at `/var/log/containers` and thereby show rotated/rolled-over
+  logs. If you would like to read the retained/compressed log content as well use `docker log` command on the nodes.
+  Note that reading from compressed logs can cause temporary increase in CPU utilization (on account of decompression
+  actions performed internally)
+
+- The log-opt `compress: true:` is supported from Docker version: 18.04.0. The `max-file` & `max-size` opts are supported
+  on earlier releases as well.
+
 <br>
 
 <hr>
 
 <br>
-
-
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 

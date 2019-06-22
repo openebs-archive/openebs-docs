@@ -11,7 +11,7 @@ sidebar_label: NuoDB
 
 ## Introduction
 
-NuoDB’s distributed SQL database combines the elastic scale and continuous availability of the cloud with the transactional consistency and durability that databases of record demand. NuoDB is deployed usually as a `statefulset` on Kubernetes and requires persistent storage for each instance of NuoDB StorageManager instance. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
+NuoDB’s distributed SQL database combines the elastic scale and continuous availability of the cloud with the transactional consistency and durability that databases of record demand. NuoDB is deployed usually as a `StatefulSet` on Kubernetes and requires persistent storage for each instance of NuoDB StorageManager instance. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
 
 <br>
 
@@ -60,11 +60,11 @@ NuoDB’s distributed SQL database combines the elastic scale and continuous ava
 
    If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
-2. **Connect to MayaOnline (Optional)** : Connecting the Kubernetes cluster to [MayaOnline](https://staging-docs.openebs.io/docs/next/app.mayaonline.io) provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
+2. **Connect to MayaOnline (Optional)** : Connecting the Kubernetes cluster to <a href="https://mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
 
 3. **Configure cStor Pool**
 
-   After OpenEBS installation, cStor pool has to be configured.If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html). Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step. 
+   After OpenEBS installation, cStor pool has to be configured.If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step. 
 
 4. **Create Storage Class**
 
@@ -134,7 +134,7 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just NuoDB database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
+As in most cases, cStor pool may not be dedicated to just NuoDB database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool) 
 
 
 

@@ -13,7 +13,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 **Steps for troubleshooting:**
 
-- Join <a href="https://openebs.io/join-our-community" target="_blank">Slack OpenEBS Community</a>
+- Join <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a>
 - Connect Kubernetes cluster to MayaOnline and observe the following
   - Any alerts that may be relevant to the issue under troubleshooting 
   - Logs that throw up any errors
@@ -23,16 +23,11 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 <br>
 
 <hr>
-
-
-
 <font size="6">Areas of troubleshooting</font>
 
 <br>
 
 ## Installation
-
-
 
 [Installation failed because insufficient user rights](#install-failed-user-rights)
 
@@ -46,19 +41,15 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 <br>
 
-
-
 ## Uninstall
-
-
 
 [Whenever a Jiva PVC is deleted, a job will created and status is seeing as `completed`](#jiva-deletion-scrub-job)
 
+[cStor Volume Replicas are not getting deleted properly](#cvr-deletion)
 
+<br>
 
 ## Volume provisioning
-
-
 
 [Application complaining ReadOnly filesystem](#application-read-only)
 
@@ -86,13 +77,17 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 ## Kubernetes related
 
-
-
 [Kubernetes node reboots because of increase in memory consumed by Kubelet](#node-reboot-when-kubelet-memory-increases)
 
 [Application and OpenEBS pods terminate/restart under heavy I/O load](#Pods-restart-terminate-when-heavy-load)
 
+<br>
 
+## Jiva Volume related
+
+[Jiva replica pod logs showing meta file missing entry](#replica-pod-meta-file-error)
+
+<br>
 
 ## Others
 
@@ -101,12 +96,9 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 <br>
 
 <hr>
+<font size="6" color="blue">Installation</font>
 
 <br>
-
-
-
-<font size="6" color="blue">Installation</font>
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-user-rights"></a>Installation failed because of insufficient user rights</h3>
 
@@ -208,8 +200,6 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 2. Run `multipath -w /dev/sdc` command (replace the devname with your persistent devname).
 
-
-
 <br>
 
 <hr>
@@ -220,28 +210,40 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 <br>
 
-
-
 <h3><a class="anchor" aria-hidden="true" id="jiva-deletion-scrub-job"></a>Whenever a Jiva based PVC is deleted, a new job gets created.</h3>
 
-As part of deleting the Jiva Volumes, OpenEBS launches scrub jobs for clearing data from the nodes. The completed jobs can be cleared using following command.
+As part of deleting the Jiva Volumes, OpenEBS launches scrub jobs for clearing data from the nodes. This job will be running in OpenEBS installed namespace. The completed jobs can be cleared using following command.
 
 ```
-kubectl delete jobs -l openebs.io/cas-type=jiva -n <namespace>
+kubectl delete jobs -l openebs.io/cas-type=jiva -n <openebs_namespace>
 ```
 
+In addition, the job is set with a TTL to get cleaned up, if the cluster version is greater than 1.12. However, for the feature to work, the alpha feature needs to be enabled in the cluster. More information can be read from [here](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#clean-up-finished-jobs-automatically).
 
+<h3><a class="anchor" aria-hidden="true" id="cvr-deletion"></a>cStor Volume Replicas are not getting deleted properly</h3>
+
+Sometimes, there are chances that cStor volumes Replicas (CVR) may not be deleted properly if some unforeseen scenarios happened such as network loss during the deletion of PVC. To resolve this issue, perform the following command.
+
+```
+kubectl edit cvr <cvr_name> -n openebs
+```
+
+And then remove finalizers from the corresponding CVR. Need to remove following entries and save it.
+
+```
+finalizers:
+- cstorvolumereplica.openebs.io/finalizer
+```
+
+This will automatically remove the pending CVR and delete the cStor volume completely.
 
 <br>
 
 <hr>
-<br>
 
 <font size="6" color="red"> Volume provisioning</font>
 
 <br>
-
-
 
 <h3><a class="anchor" aria-hidden="true" id="application-read-only"></a> Application complaining ReadOnly filesystem</h3>
 
@@ -258,8 +260,6 @@ This can happen for many reasons.
 - cStor target has lost quorum because of underlying node losses and target has marked the lun as ReadOnly
 
 Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kuberntes node reboots. 
-
-
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
 
@@ -438,7 +438,7 @@ The cStor disk pods are not coming up after it deploy with the YAML. On checking
 
 **Workaround:**
 
-cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is optional to wipe out the data from the disk if you use existing disks for cStor pool creation.
+cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is also recommended to wipe out the disks if you are using an used disk for cStor pool creation.
 
 <h3><a class="anchor" aria-hidden="true" id="Jiva-provisioning-failed-080"></a>OpenEBS Jiva PVC is not provisioning in 0.8.0</h3>
 
@@ -472,8 +472,6 @@ In case of `XFS` formatted volumes, perform the following steps once the iSCSI t
 - Unmount the volume again
 - Perform `xfs_repair /dev/<device>`. This fixes if any file system related errors on the device
 - Perform application pod deletion to facilitate fresh mount of the volume. At this point, the app pod may be stuck on `terminating` OR `containerCreating` state. This can be resolved by deleting the volume folder (w/ app content) on the local directory.
-
-
 
 <h3><a class="anchor" aria-hidden="true" id="unable-to-clone-from-snapshot"></a>Unable to clone OpenEBS volume from snapshot</h3>
 
@@ -588,19 +586,12 @@ This can happen due to `xfs_repair` failure on the application node. Make sure t
 apt install xfsprogs
 ```
 
-
-
 <br>
 
 <hr>
-<br>
-
-
 <font size="6" color="green">Kubernetes related</font>
 
 <br>
-
-
 
 
 <h3><a class="anchor" aria-hidden="true" id="node-reboot-when-kubelet-memory-increases"></a>Kubernetes node reboots because of increase in memory consumed by Kubelet</h3>
@@ -684,6 +675,68 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 <br>
 
 <hr>
+
+<font size="6" color="maroon">Jiva volume related</font>
+
+<h3><a class="anchor" aria-hidden="true" id="replica-pod-meta-file-error"></a>Jiva replica pod logs showing "Failed to find metadata"</h3>
+
+Jiva target pod may not be syncing data across all replicas when replica pod logs contains below kind of messages:
+
+```
+level=error msg="Error in request: Failed to find metadata for volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img"
+```
+
+**Troubleshooting**
+
+Perform following steps to restore the missing metadata file of internal snapshots.
+
+- Check all replica pods are in running state. Faulty replica pod will be in `crashloopBackoff` state in OpenEBS 1.0.0 version.
+
+- Find the replica in `RW` mode using mayactl command, consider it as healthy.
+
+- Consider the replica that have above kind of error messages in its logs as faulty.
+
+- Log in to the nodes of healthy and faulty replica and list all the snapshots under **/var/openebs/<PV-name>**.
+
+  Example snippet of Healthy replica:
+
+  ```
+  revision.counter                                           volume-snap-792e7036-877d-4807-9641-4843c987d0a5.img
+  volume-head-005.img                                        volume-snap-792e7036-877d-4807-9641-4843c987d0a5.img.meta
+  volume-head-005.img.meta                                   volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img
+  volume-snap-15660574-e47d-4217-ac92-1497e5b654a4.img       volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img.meta
+  volume-snap-15660574-e47d-4217-ac92-1497e5b654a4.img.meta  volume-snap-cce9eb61-8f8b-42bd-ba44-8479ada98cee.img
+  volume-snap-2ac410ca-2716-4255-94b1-39105b627270.img       volume-snap-cce9eb61-8f8b-42bd-ba44-8479ada98cee.img.meta
+  volume-snap-2ac410ca-2716-4255-94b1-39105b627270.img.meta  volume-snap-d9f8d3db-9434-4f16-a5a7-b1b120ceae94.img
+  volume-snap-466d32e7-c443-46dd-afdd-8412e76f348e.img       volume-snap-d9f8d3db-9434-4f16-a5a7-b1b120ceae94.img.meta
+  volume-snap-466d32e7-c443-46dd-afdd-8412e76f348e.img.meta  volume.meta
+  ```
+
+  Example snippet of of faulty replica:
+
+  ```
+  revision.counter                                           volume-snap-792e7036-877d-4807-9641-4843c987d0a5.img
+  volume-head-005.img                                        volume-snap-792e7036-877d-4807-9641-4843c987d0a5.img.meta
+  volume-head-005.img.meta                                   volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img
+  volume-snap-15660574-e47d-4217-ac92-1497e5b654a4.img       volume-snap-15660574-e47d-4217-ac92-1497e5b654a4.img.meta  volume-snap-cce9eb61-8f8b-42bd-ba44-8479ada98cee.img
+  volume-snap-2ac410ca-2716-4255-94b1-39105b627270.img       volume-snap-cce9eb61-8f8b-42bd-ba44-8479ada98cee.img.meta
+  volume-snap-2ac410ca-2716-4255-94b1-39105b627270.img.meta  volume-snap-d9f8d3db-9434-4f16-a5a7-b1b120ceae94.img
+  volume-snap-466d32e7-c443-46dd-afdd-8412e76f348e.img       volume-snap-d9f8d3db-9434-4f16-a5a7-b1b120ceae94.img.meta
+  volume-snap-466d32e7-c443-46dd-afdd-8412e76f348e.img.meta  volume.meta
+  ```
+
+  From above snippet of faulty replica, metadata for the `volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img`  snapshot is not present.
+
+- If only one meta file is missing, then copy meta file name and content from one of the healthy replica to the faulty replica.
+
+  For above case, copy `volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img.meta`from healthy replica to faulty replica and restart the faulty replica. You can verify the logs of the replica pod to ensure that there are no error messages as mentioned above. 
+
+- If multiple meta files are missing, then delete all files from replica pods and then restart the faulty replica pod to rebuild from healthy replica.
+
+<br>
+
+<hr>
+
 <font size="6" color="orange">Others</font>
 
 <br>

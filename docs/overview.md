@@ -21,32 +21,29 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 
 ## <font size="6">Quickstart</font>
 
-- OpenEBS requires iSCSI client to be configured and iSCSI.d service
-running on the host nodes.
-Verify if [iSCSI service is up](/docs/next/prerequisites.html) and
-running before starting the installation.
+- OpenEBS requires iSCSI client to be configured and iscsid service
+  running on the host nodes.
+  Verify if [iSCSI service is up](/docs/next/prerequisites.html) and
+  running before starting the installation.
 
-- Default installation works for most cases. As a Kubernetes
-cluster-admin, start the default installation using either
+- Default installation works for most cases. As a Kubernetes cluster-admin, start the default installation using either
 
   ```
   helm install --namespace openebs --name openebs stable/openebs
   ```
 
-  <font size="4">(or)</font>
+  (or)
 
   ```
-  kubectl apply -f https://openebs.github.io/charts/openebs-operator-0.9.0.yaml
+  kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.0.0.yaml
   ```
 
-  For advanced installation steps, see
-[Installation](/docs/next/installation.html) section.
+  For advanced installation steps, see [Installation](/docs/next/installation.html) section.
 
 - [Verify if OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation)
-and start provisioning OpenEBS volumes through Kubernetes PVC
-interface by using `kubectl` command, for more details on how to
-provision OpenEBS volumes, see
-[provisioning OpenEBS volumes](/docs/next/provisionvols.html)
+  and start provisioning OpenEBS volumes through Kubernetes PVC
+  interface by using `kubectl` command. For more details on how to
+  provision different types of OpenEBS volumes see guides for [cStor volume](/docs/next/ugcstor.html), [Jiva Volume](/docs/next/jivaguide.html) and [OpenEBS local Volume](/docs/next/uglocalpv.html).
 
 <br>
 
@@ -101,7 +98,7 @@ provision OpenEBS volumes, see
   </div>
 <div class="">
 	<a href="/docs/next/gitlab.html" target="_blank">
-		<img src="/docs/assets/a-gitlab.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+		<img src="/docs/assets/a-gitlab.png" alt="OpenEBS Archipdate ntecture" style="float:left;width:100px;">
 	</a>
   </div>
   <div class="">

@@ -58,7 +58,7 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
 1. **Install OpenEBS :** If OpenEBS is not installed on the Kubernetes already, start by <a href="/docs/next/installation.html" target="_blank">installing</a> OpenEBS on all or some of the cluster nodes. If OpenEBS is already installed, go to step 2.
 
-2. **Connect to MayaOnline (Optional)** : Connecting  the Kubernetes cluster to <a href="app.mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
+2. **Connect to MayaOnline (Optional)** : Connecting  the Kubernetes cluster to <a href="https://mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
 
 3. **Configure cStor Pool** : After OpenEBS installation,  cStor pool has to be configured. As prometheus TSDB needs high availability of data, OpenEBS cStor volume has to be configured with three replicas. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor Pool is already configured as required go to Step 4 to create Prometheus StorageClass. 
 
@@ -125,7 +125,7 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just Prometheus alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
+As in most cases, cStor pool may not be dedicated to just Prometheus alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool) 
 
 
 

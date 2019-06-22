@@ -8,23 +8,23 @@ sidebar_label: Features and Benefits
 
 <font size="6">OpenEBS Features</font>
 
-- [Containerized Storage for Containers](/docs/next/features.html#containerized-storage-for-containers)
-- [Synchronous replication](/docs/next/features.html#synchronous-replication)
-- [Snapshots and clones](/docs/next/features.html#snapshots-and-clones)
-- [Backup and Restore](/docs/next/features.html#backup-and-restore)
-- [Prometheus metrics and Grafana graphs](/docs/next/features.html#prometheus-metrics-for-workload-tuning)
+- [Containerized Storage for Containers](#containerized-storage-for-containers)
+- [Synchronous replication](#synchronous-replication)
+- [Snapshots and clones](#snapshots-and-clones)
+- [Backup and Restore](#backup-and-restore)
+- [Prometheus metrics and Grafana graphs](#prometheus-metrics-for-workload-tuning)
 
 
 
 <font size="6">OpenEBS Benefits</font>
 
-- [Granular policies per stateful workload](/docs/next/features.html#granular-policies-per-stateful-workload)
+- [Granular policies per stateful workload](#granular-policies-per-stateful-workload)
 
-- [Avoid Cloud Lock-in](/docs/next/features.html#avoid-cloud-lock-in)
-- [Reduced storage TCO upto 50%](/docs/next/features.html#reduced-storage-tco-upto-50)
-- [Native Hyperconvergence on Kubernetes](/docs/next/features.html#native-hyperconvergence-on-kubernetes)
+- [Avoid Cloud Lock-in](#avoid-cloud-lock-in)
+- [Reduced storage TCO upto 50%](#reduced-storage-tco-upto-50)
+- [Native Hyperconvergence on Kubernetes](#native-hyperconvergence-on-kubernetes)
 - [High availability - No Blast Radius](#high-availability)
-- [Free cross cloud visibility of stateful applications](/docs/next/features.html#free-cross-cloud-visibility-of-stateful-applications)
+- [Free cross cloud visibility of stateful applications](#free-cross-cloud-visibility-of-stateful-applications)
 
 
 

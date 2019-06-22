@@ -19,11 +19,11 @@ Jira is a product designed to provide issue tracking and assist in moving tasks 
 
 2. **Configure cStor Pool**
 
-   If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html).  Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the configuration details below. If cStor pool is already configured, go to the next step.
+   If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools).  Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the configuration details below. If cStor pool is already configured, go to the next step.
 
 3. **Create Storage Class**
 
-   You must configure a StorageClass to provision cStor volume on cStor pool. In this solution, we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. Since Jira is a deployment application, it requires three replication at the storage level. So cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml** to consume cStor pool with cStorVolume Replica count as 3 is provided in the configuration details below.
+   You must configure a StorageClass to provision cStor volume on cStor pool. In this solution, we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the Step 3. Since Jira is a deployment application, it requires three replication at the storage level. So cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml** to consume cStor pool with cStorVolume Replica count as 3 is provided in the configuration details below.
 
 ## Deployment of Jira with OpenEBS
 
@@ -121,7 +121,7 @@ spec:
     spec:
       containers:
         - name: jira
-          image: "gcr.io/hightowerlabs/jira:7.3.6-standalone"
+          image: "doriftoshoes/jira:7.3.6"
           resources:
             requests:
               cpu: "2"

@@ -36,19 +36,23 @@ For managing snapshots with Jiva, refer to  <a href="/docs/next/jivaguide.html">
 
 **Pre-requisites:** A sample YAML specification and the pvc name
 
-- Copy the following YAML specification into a file called *snapshot.yaml* or download it from  <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/ci/maya/snapshot/cstor/snapshot.yaml" target="_blank">here</a> 
+- Copy the following YAML specification into a file called *snapshot.yaml* .
 
   ```
   apiVersion: volumesnapshot.external-storage.k8s.io/v1
   kind: VolumeSnapshot
   metadata:
     name: snapshot-cstor-volume
-    namespace: default
+    namespace: <Source_PVC_namespace>
   spec:
     persistentVolumeClaimName: cstor-vol1-claim
   ```
 
-- Edit the YAML file to update  `name` of Snapshot  and  `persistentVolumeClaimName` of the PVC  which you are going to take the snapshot. 
+- Edit the YAML file to update 
+
+  - `name` :-  Name of snapshot which is going to create
+  - `namespace`  :- Namespace of source PVC 
+  - `persistentVolumeClaimName` :-  Source PVC  which you are going to take the snapshot. 
 
 - Run the following command to create snapshot.
 
@@ -63,7 +67,7 @@ For managing snapshots with Jiva, refer to  <a href="/docs/next/jivaguide.html">
   kubectl get volumesnapshotdata
   ```
 
-  **Note**: All cStor snapshots are created in the ` default` namespace. Also make sure that there is no stale entries of snapshot and snapshot data.
+  **Note**: All cStor snapshots should be created in the same namespace of source PVC.  Also make sure that there is no stale entries of snapshot and snapshot data.
 
 <br>
 
@@ -71,14 +75,14 @@ For managing snapshots with Jiva, refer to  <a href="/docs/next/jivaguide.html">
 
 Once the snapshot is created, restoration from a snapshot or cloning the snapshot is done through a two step process. First create a PVC that refers to the snapshot and then use the PVC to create a new PV. This PVC should refer to a storage class called `openebs-snapshot-promoter`. 
 
-- Copy the following YAML specification into a file called *snapshot_claim.yaml* or download it from <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/ci/maya/snapshot/cstor/snapshot_claim.yaml" target="_blank">here</a>.
+- Copy the following YAML specification into a file called *snapshot_claim.yaml*.
 
   ```
   apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
     name: vol-claim-cstor-snapshot
-    namespace: default
+    namespace: <Source_PVC_namespace>
     annotations:
       snapshot.alpha.kubernetes.io/snapshot: snapshot-cstor-volume
   spec:
@@ -94,10 +98,11 @@ Once the snapshot is created, restoration from a snapshot or cloning the snapsho
 - Edit the YAML file to update 
 
   - `name` :- Name of the clone PVC
+  - `namespace` :- Same namespace of source PVC 
   - The annotation `snapshot.alpha.kubernetes.io/snapshot` :- Name of the snapshot
-  - The size of the volume being cloned or restored.
+  - `storage` :- The size of the volume being cloned or restored. This should be same as source PVC.
 
-  **Note**: Size and namespace should be same as the original volume from which the snapshot was created.
+  **Note**: Size and namespace should be same as the original PVC from which the snapshot was created.
 
 - Run the following command to create a cloned PVC. 
 

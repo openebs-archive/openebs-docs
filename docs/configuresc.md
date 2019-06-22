@@ -77,24 +77,24 @@ provisioner: openebs.io/provisioner-iscsi
 
 Below table lists the storage policies supported by cStor. These policies should be built into StorageClass and apply them through PersistentVolumeClaim or VolumeClaimTemplates interface
 
-| cStor Storage Policy                                         | Mandatory | Default                                 | Purpose                                                      |
-| ------------------------------------------------------------ | --------- | --------------------------------------- | ------------------------------------------------------------ |
-| [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                       | Defines the number of cStor volume replicas                  |
-| [VolumeControllerImage](#Volume-Controller-Image-Policy)     |           | quay.io/openebs/cstor-volume-mgmt:0.9.0 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
-| [VolumeTargetImage](#Volume-Target-Image-Policy)             |           | value:quay.io/openebs/cstor-istgt:0.9.0 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
-| [StoragePoolClaim](#Storage-Pool-Claim-Policy)               | Yes       | N/A (a valid pool must be provided)     | The cStorPool on which the volume replicas should be provisioned |
-| [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                      | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:0.9.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
-| [FSType](#Volume-File-System-Type-Policy)                    |           | ext4                                    | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
-| [TargetNodeSelector](#Target-NodeSelector-Policy)            |           | Decided by Kubernetes scheduler         | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
-| [TargetResourceLimits](#Target-ResourceLimits-Policy)        |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
-| [TargetResourceRequests](#TargetResourceRequests)            |           | Decided by Kubernetes scheduler         | Configuring resource requests that need to be available before scheduling the containers. |
-| [TargetTolerations](#TargetTolerations)                      |           | Decided by Kubernetes scheduler         | Configuring the tolerations for target.                      |
-| [AuxResourceLimits](#AuxResourceLimits-Policy)               |           | Decided by Kubernetes scheduler         | Configuring resource limits on the volume pod side-cars.     |
-| [AuxResourceRequests](#AuxResourceRequests-Policy)           |           | Decided by Kubernetes scheduler         | Configure minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. |
-| [Target Affinity](#Target-Affinity-Policy)                   |           | Decided by Kubernetes scheduler         | The policy specifies the label KV pair to be used both on the cStor target and on the application being used so that application pod and cStor target pod are scheduled on the same node. |
-| [Target Namespace](#Target-Namespace)                        |           | openebs                                 | When service account name is specified, the cStor target pod is scheduled in the application's namespace. |
-| [cStorStoragePool Replica Anti-Affinity](#cStorStoragePool-Anti-Affinity) |           | Decided by Kubernetes scheduler         | For StatefulSet applications, to distribute single replica volume on  separate nodes . |
+| cStor Storage Policy                                         | Mandatory | Default                                     | Purpose                                                      |
+| ------------------------------------------------------------ | --------- | ------------------------------------------- | ------------------------------------------------------------ |
+| [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                           | Defines the number of cStor volume replicas                  |
+| [VolumeControllerImage](#Volume-Controller-Image-Policy)     |           | quay.io/openebs/cstor-volume-mgmt:1.0.0-RC1 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
+| [VolumeTargetImage](#Volume-Target-Image-Policy)             |           | value:quay.io/openebs/cstor-istgt:1.0.0-RC1 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
+| [StoragePoolClaim](#Storage-Pool-Claim-Policy)               | Yes       | N/A (a valid pool must be provided)         | The cStorPool on which the volume replicas should be provisioned |
+| [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                          | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.0.0-RC1        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [FSType](#Volume-File-System-Type-Policy)                    |           | ext4                                        | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
+| [TargetNodeSelector](#Target-NodeSelector-Policy)            |           | Decided by Kubernetes scheduler             | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
+| [TargetResourceLimits](#Target-ResourceLimits-Policy)        |           | Decided by Kubernetes scheduler             | CPU and Memory limits to cStor target pod                    |
+| [TargetResourceRequests](#TargetResourceRequests)            |           | Decided by Kubernetes scheduler             | Configuring resource requests that need to be available before scheduling the containers. |
+| [TargetTolerations](#TargetTolerations)                      |           | Decided by Kubernetes scheduler             | Configuring the tolerations for target.                      |
+| [AuxResourceLimits](#AuxResourceLimits-Policy)               |           | Decided by Kubernetes scheduler             | Configuring resource limits on the volume pod side-cars.     |
+| [AuxResourceRequests](#AuxResourceRequests-Policy)           |           | Decided by Kubernetes scheduler             | Configure minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. |
+| [Target Affinity](#Target-Affinity-Policy)                   |           | Decided by Kubernetes scheduler             | The policy specifies the label KV pair to be used both on the cStor target and on the application being used so that application pod and cStor target pod are scheduled on the same node. |
+| [Target Namespace](#Target-Namespace)                        |           | openebs                                     | When service account name is specified, the cStor target pod is scheduled in the application's namespace. |
+| [cStorStoragePool Replica Anti-Affinity](#cStorStoragePool-Anti-Affinity) |           | Decided by Kubernetes scheduler             | For StatefulSet applications, to distribute single replica volume on  separate nodes . |
 
 <br>
 
@@ -126,7 +126,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeControllerImage
-        value: quay.io/openebs/cstor-volume-mgmt:0.9.0
+        value: quay.io/openebs/cstor-volume-mgmt:1.0.0-RC1
     openebs.io/cas-type: cstor
 ```
 
@@ -141,7 +141,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeTargetImage
-        value:quay.io/openebs/cstor-istgt:0.9.0
+        value:quay.io/openebs/cstor-istgt:1.0.0-RC1
     openebs.io/cas-type: cstor
 ```
 
@@ -186,7 +186,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:0.9.0
+        value: quay.io/openebs/m-exporter:1.0.0-RC1
     openebs.io/cas-type: cstor
 ```
 
