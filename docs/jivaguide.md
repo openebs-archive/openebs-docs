@@ -831,7 +831,7 @@ Deletion of Jiva internal snapshots are performed using `jivactl` command.
 - Login into the  Jiva controller pod using the following command. Use namespace where Jiva pods are running.
 
   ```
-  kubectl exec -it <jiva_controller_pod> -c <container_pod> -n <namespace> --bash 
+  kubectl exec -it <jiva_controller_pod> -c <container_name> -n <namespace> bash 
   ```
 
 - Once logged into the container , list all the internal snapshots using the following command.
