@@ -626,6 +626,7 @@ metadata:
 spec:
   name: cstor-disk-pool
   type: disk
+  maxPools: 3
   poolSpec:
     poolType: striped
   blockdevices:
