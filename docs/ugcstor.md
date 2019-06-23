@@ -628,7 +628,7 @@ spec:
   type: disk
   poolSpec:
     poolType: striped
-  blockdevices:
+  blockDevices:
     blockDeviceList:
     - blockdevice-936911c5c9b0218ed59e64009cc83c8f
     - blockdevice-77f834edba45b03318d9de5b79af0734

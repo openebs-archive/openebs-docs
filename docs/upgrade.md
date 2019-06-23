@@ -9,7 +9,7 @@ Latest stable version of OpenEBS is 1.0.0. Check the release notes [here](https:
 
 ## Supported upgrade paths
 
-From 0.8.2 to 0.9.0 - Get the steps from [here](<https://docs.openebs.io/090/docs/next/upgrade.html>).
+From 0.8.2 to 0.9.0 - Get the steps from [here](<https://docs.openebs.io/v090/docs/next/upgrade.html>).
 
 From 0.8.1 to 0.8.2 - Get the steps from [here](<https://v08-docs.openebs.io/v082/docs/next/upgrade.html>).
 
@@ -77,13 +77,13 @@ All steps described in this document must be performed on the Kubernetes master 
      Obtain the blockdevice details using the following command.
 
      ```
-kuebctl get bd -n openebs
+     kuebctl get bd -n openebs
      ```
      
      Output will be similar to the following.
 
      ```
-NAME                                           SIZE          CLAIMSTATE   STATUS   AGE
+     NAME                                           SIZE          CLAIMSTATE   STATUS   AGE
      blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   42949672960   Claimed      Active   3h
      blockdevice-77f834edba45b03318d9de5b79af0734   42949672960   Claimed      Active   1h
      blockdevice-936911c5c9b0218ed59e64009cc83c8f   42949672960   Claimed      Active   3h
@@ -171,31 +171,31 @@ NAME                                           SIZE          CLAIMSTATE   STATUS
    2. Have the following link handy in case the volume gets into read-only during upgrade <https://docs.openebs.io/docs/next/troubleshooting.html#recovery-readonly-when-kubelet-is-container>
    3. Automatic rollback option is not provided. To rollback, you need to update the controller, exporter and replica pod images to the previous version.
    4. In the process of running the below steps, if you run into issues, you can always reach us on <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community.
-<h4><a class="anchor" aria-hidden="true" id="Jiva-PV"></a>Jiva PV</h4>
-
-1. Go to `jiva` folder.
-  
-   ```
-   cd jiva
-   ```
+   <h4><a class="anchor" aria-hidden="true" id="Jiva-PV"></a>Jiva PV</h4>
+   
+   1. Go to `jiva` folder.
+   
+      ```
+      cd jiva
+      ```
    
    2. Obtain the PV name using the following command. 
    
-   ```
-   kubectl get pv
-   ```
+      ```
+      kubectl get pv
+      ```
    
       Output will be similar to the following.
    
-   ```
-   NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS           REASON   AGE
-   pvc-aeb93081-93d0-11e9-a7c6-42010a800fc0   5G         RWO            Delete           Bound    default/demo-vol1-claim   openebs-jiva-default            118m
-   ```
+      ```
+      NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS           REASON   AGE
+      pvc-aeb93081-93d0-11e9-a7c6-42010a800fc0   5G         RWO            Delete           Bound    default/demo-vol1-claim   openebs-jiva-default            118m
+       ```
    
    3. Select the appropriate Jiva volume one at a time and upgrade the particular PV using the following command. Use namespace where Jiva pods are running. If Jiva Pods are  running in `default` namespace, no need to mention in the following command.
    
       ```
-      ./jiva_volume_upgrade.sh <PV_name>
+      ./jiva_volume_upgrade.sh <PV_name> <namespace>
       ```
    
       Eg:
@@ -336,7 +336,7 @@ Output will be similar to the following.
               image: quay.io/openebs/m-exporter:1.0.0
               image: quay.io/openebs/cstor-volume-mgmt:1.0.0
 
-All image tag should in 1.0.0 in the above output.
+All image tag should be in 1.0.0 except for ndm-disk-operator in the above output. For ndm-disk-operator, image tag should be 0.4.0.
 
 Check the NDM image using the following command.
 
