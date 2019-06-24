@@ -82,9 +82,9 @@ kubectl delete jobs -l openebs.io/cas-type=jiva
 
 ## See Also:
 
-### [FAQ](/docs/next/faq.html)
+### [FAQ](/v090/docs/next/faq.html)
 
-### [Troubleshooting](/docs/next/troubleshooting.html)
+### [Troubleshooting](/v090/docs/next/troubleshooting.html)
 
 <br>
 

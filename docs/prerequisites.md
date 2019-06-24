@@ -21,39 +21,40 @@ is installed and running or to find the steps to install the iSCSI client.
 
 <div class="divrow">
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#ubuntu"><img src="/docs/assets/l-ubuntu.png" width="50px;">Ubuntu</a>
+        <a href="/v090/docs/next/prerequisites.html#ubuntu"><img src="/docs/assets/l-ubuntu.png" width="50px;">Ubuntu</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#rhel"><img src="/docs/assets/l-rhel.png" width="50px;">RHEL</a>
+        <a href="/v090/docs/next/prerequisites.html#rhel"><img src="/docs/assets/l-rhel.png" width="50px;">RHEL</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#centos"><img src="/docs/assets/l-centos.png" width="50px;">CentOS</a>
+        <a href="/v090/docs/next/prerequisites.html#centos"><img src="/docs/assets/l-centos.png" width="50px;">CentOS</a>
     </div>
 </div>
 
 <div class="divrow">
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#eks"><img src="/docs/assets/l-eks.png" width="50px;">EKS</a>
+        <a href="/v090/docs/next/prerequisites.html#eks"><img src="/docs/assets/l-eks.png" width="50px;">EKS</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#gke"><img src="/docs/assets/l-gke.png" width="50px;">GKE</a>
+        <a href="/v090/docs/next/prerequisites.html#gke"><img src="/docs/assets/l-gke.png" width="50px;">GKE</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#aks"><img src="/docs/assets/l-aks.png" width="50px;">AKS</a>
+        <a href="/v090/docs/next/prerequisites.html#aks"><img src="/docs/assets/l-aks.png" width="50px;">AKS</a>
     </div>
 </div>
 
 <div class="divrow">
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#openshift"><img src="/docs/assets/l-openshift.png" width="50px;">OpenShift</a>
+        <a href="/v090/docs/next/prerequisites.html#openshift"><img src="/docs/assets/l-openshift.png" width="50px;">OpenShift</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#rancher"><img src="/docs/assets/l-rancher.png" width="50px;">Rancher</a>
+        <a href="/v090/docs/next/prerequisites.html#rancher"><img src="/docs/assets/l-rancher.png" width="50px;">Rancher</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#icp"><img src="/docs/assets/l-icp.png" width="50px;">ICP</a>
+        <a href="/v090/docs/next/prerequisites.html#icp"><img src="/docs/assets/l-icp.png" width="50px;">ICP</a>
     </div>
 </div>
+
 
 [Provide feedback](https://github.com/openebs/openebs-docs/edit/staging/docs/quickstart.md) if a platform is missing in the above list.
 
@@ -493,9 +494,9 @@ For setting up iSCSI clients on Ubuntu nodes, see the
 
 ## See Also:
 
-### [OpenEBS Installation](/docs/next/installation.html)
+### [OpenEBS Installation](/v090/docs/next/installation.html)
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v090/docs/next/architecture.html)
 
 
 

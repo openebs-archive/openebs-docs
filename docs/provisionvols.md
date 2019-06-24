@@ -25,7 +25,7 @@ sidebar_label: Provisioning Volumes
 
 
 
-*Note: This page describes how to provision volumes using cStor. For details about provisioning volumes using Jiva, see [Jiva user guide](/docs/next/jivaguide.html)* 
+*Note: This page describes how to provision volumes using cStor. For details about provisioning volumes using Jiva, see [Jiva user guide](/v090/docs/next/jivaguide.html)* 
 
 <br>
 
@@ -39,9 +39,9 @@ Use a similar PVC spec or volumeClaimTemplate to use a StorageClass that is poin
 
 
 
-**AccessModes:** cStor provides iSCSI targets, which are appropriate for RWO (ReadWriteOnce) access mode and is suitable for all types of databases. For webscale applications like WordPress or any for any other NFS needs, you need RWM (ReadWriteMany) access mode. For RWM, you need NFS provisioner to be deployed along with cStor. See <a href="/docs/next/rwm.html" target="_blank">how to provision RWM PVC with OpenEBS </a>.
+**AccessModes:** cStor provides iSCSI targets, which are appropriate for RWO (ReadWriteOnce) access mode and is suitable for all types of databases. For webscale applications like WordPress or any for any other NFS needs, you need RWM (ReadWriteMany) access mode. For RWM, you need NFS provisioner to be deployed along with cStor. See <a href="/v090/docs/next/rwm.html" target="_blank">how to provision RWM PVC with OpenEBS </a>.
 
-**Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release (OpenEBS 0.9.0) and is active development, see [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in the very short time period. 
+**Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release (OpenEBS 0.9.0) and is active development, see [roadmap](/v090/docs/next/cstor.html#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in the very short time period. 
 
 <font size="5">Example configuration for requesting OpenEBS volumes for a `deployment` </font>
 
@@ -134,7 +134,7 @@ Grafana charts can be built for the above Prometheus metrics. Some metrics OpenE
 
 <h2><a class="anchor" aria-hidden="true" id="snapshots-and-clones"></a>Snapshots and Clones</h2>
 
-An OpenEBS snapshot is a set of reference markers for data at a particular point in time. A snapshot acts as a detailed table of contents, with accessible copies of data that user can roll back to. Snapshots in OpenEBS are instantaneous and are managed through `kubectl`. More details about creating, cloning and deleting a snapshot is described [here](/docs/next/operations.html#openebs-snapshots-and-clones).
+An OpenEBS snapshot is a set of reference markers for data at a particular point in time. A snapshot acts as a detailed table of contents, with accessible copies of data that user can roll back to. Snapshots in OpenEBS are instantaneous and are managed through `kubectl`. More details about creating, cloning and deleting a snapshot is described [here](/v090/docs/next/operations.html#openebs-snapshots-and-clones).
 
 
 
@@ -156,7 +156,7 @@ When a PVC is deleted, the OpenEBS PV is deleted including the data in it. In St
 
 <br>
 
-More details about the upgrading of cStor volumes are mentioned in the Upgrade section. See [Upgrade](/docs/next/upgrade.html) section for details.
+More details about the upgrading of cStor volumes are mentioned in the Upgrade section. See [Upgrade](/v090/docs/next/upgrade.html) section for details.
 
 
 
@@ -172,11 +172,11 @@ More details about the upgrading of cStor volumes are mentioned in the Upgrade s
 
 <br>
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v090/docs/next/usecases.html)
 
-### [Troubleshooting guide](/docs/next/troubleshooting.html)
+### [Troubleshooting guide](/v090/docs/next/troubleshooting.html)
 
-### [Connecting to MayaOnline](/docs/next/mayaonline.html)
+### [Connecting to MayaOnline](/v090/docs/next/mayaonline.html)
 
 <hr>
 

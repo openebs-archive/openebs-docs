@@ -20,11 +20,12 @@ sidebar_label: Quickstart
 <div class="emphasize">
     <ul>
         <li>Kubernetes 1.9.7+ installed. Latest tested Kubernetes version is 1.13.4.</lili>
-        <li>Understand the <a href="/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
-        <li>Start <a href="/docs/next/installation.html">installation </a> either through helm or through OpenEBS operator. For ease of testing OpenEBS functionality, a default cStor sparse pool and a corresponding StorageClass are created </li>
+        <li>Understand the <a href="/v090/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
+        <li>Start <a href="/v090/docs/next/installation.html">installation </a> either through helm or through OpenEBS operator. For ease of testing OpenEBS functionality, a default cStor sparse pool and a corresponding StorageClass are created </li>
         <li>For test deployments, use cStor-sparse-storage-class and start provisioning cStor OpenEBS volumes</li>
         <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses</li>
     </ul>
+
 
 
 </div>
@@ -38,26 +39,23 @@ sidebar_label: Quickstart
 <font size="5">As a first step, follow the instructions to setup or verify iSCSI clients on any of the platforms below </font>
 
 <div class="emphasize">
+[Ubuntu](/v090/docs/next/prerequisites.html#ubuntu)
 
-[Ubuntu](/docs/next/prerequisites.html#ubuntu)
+[RHEL](/v090/docs/next/prerequisites.html#rhel)
 
-[RHEL](/docs/next/prerequisites.html#rhel)
+[CentOS](/v090/docs/next/prerequisites.html#centos)
 
-[CentOS](/docs/next/prerequisites.html#centos)
+[OpenShift](/v090/docs/next/prerequisites.html#openshift)
 
-[OpenShift](/docs/next/prerequisites.html#openshift)
+[Rancher](/v090/docs/next/prerequisites.html#rancher)
 
-[Rancher](/docs/next/prerequisites.html#rancher)
+[ICP](/v090/docs/next/prerequisites.html#icp)
 
-[ICP](/docs/next/prerequisites.html#icp)
+[EKS](/v090/docs/next/prerequisites.html#eks)
 
-[EKS](/docs/next/prerequisites.html#eks)
+[GKE](/v090/docs/next/prerequisites.html#gke)
 
-[GKE](/docs/next/prerequisites.html#gke)
-
-[AKS](/docs/next/prerequisites.html#aks)
-
-<br>
+[AKS](/v090/docs/next/prerequisites.html#aks)
 
 </div>
 
@@ -71,9 +69,13 @@ sidebar_label: Quickstart
 
 <br>
 
+## See Also:
 
+### [Configure cStor Storage Pool](/v090/docs/next/configurepools.html)
 
+### [Configure cStor StorageClass](/v090/docs/next/configuresc.html)
 
+### [Provisioning Volume](/v090/docs/next/provisionvols.html)
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

@@ -482,9 +482,9 @@ This will verify all the OpenEBS components are successfully upgraded to the lat
 
 ## See Also:
 
-### [Releases](/docs/next/releases.html)
+### [Releases](/v090/docs/next/releases.html)
 
-### [MayaOnline](/docs/next/mayaonline.html)
+### [MayaOnline](/v090/docs/next/mayaonline.html)
 
 
 

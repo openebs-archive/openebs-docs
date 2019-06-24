@@ -5,25 +5,25 @@ sidebar_label: Jiva user guide
 ---
 ------
 
-For details of how Jiva works, see <a href="/docs/next/jiva.html" >Jiva overview page</a>
+For details of how Jiva works, see <a href="/v090/docs/next/jiva.html" >Jiva overview page</a>
 
 
 
-Jiva is a light weight storage engine that is recommended to use for low capacity workloads. The snapshot and storage management features of the other cStor engine are more advanced and is <a href="http://localhost:3000/docs/next/casengines.html#cstor-vs-jiva-features-comparison">recommended</a> when snapshots are a need.
+Jiva is a light weight storage engine that is recommended to use for low capacity workloads. The snapshot and storage management features of the other cStor engine are more advanced and is <a href="/v090/docs/next/casengines.html#cstor-vs-jiva-features-comparison">recommended</a> when snapshots are a need.
 
 <br>
 
 Follow the below steps to provision persistent volumes using Jiva storage engine.
 
-<a href="/docs/next/installation.html" target="_blank">Verify</a> OpenEBS installation
+<a href="/v090/docs/next/installation.html" target="_blank">Verify</a> OpenEBS installation
 
-<a href="/docs/next/prerequisites.html" target="_blank">Verify</a> iSCSI client is installed and iscsid service is running
+<a href="/v090/docs/next/prerequisites.html" target="_blank">Verify</a> iSCSI client is installed and iscsid service is running
 
-If simple provisioning of jiva volumes is desired without any configuration see  <a href="/docs/next/jivaguide.html#simple-provisioning-of-jiva">here</a>
+If simple provisioning of Jiva volumes is desired without any configuration see  <a href="/v090/docs/next/jivaguide.html#simple-provisioning-of-jiva">here</a>
 
-For provisioning with local or cloud disks <a href="/docs/next/jivaguide.html#provisioning-with-local-or-cloud-disks">here</a>
+For provisioning with local or cloud disks <a href="/v090/docs/next/jivaguide.html#provisioning-with-local-or-cloud-disks">here</a>
 
-For configuring different storage policies on Jiva volume, see [here](/docs/next/jivaguide.html#jiva-storage-policies).
+For configuring different storage policies on Jiva volume, see [here](/v090/docs/next/jivaguide.html#jiva-storage-policies).
 
 <br>
 
@@ -635,7 +635,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 ## See Also:
 
-### [Backup and Restore](/docs/next/backup.html)
+### [Backup and Restore](/v090/docs/next/backup.html)
 
 <br>
 

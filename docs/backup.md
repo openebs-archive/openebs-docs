@@ -38,7 +38,7 @@ At the end of Velero setup, Restic will be successfully running and ready for ta
 
 ## Steps for backup
 
-If you have configured Velero with restic then `velero backup` command invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or <a href="/docs/next/minio.html" target="_blank">Minio</a>. 
+If you have configured Velero with restic then `velero backup` command invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or <a href="/v090/docs/next/minio.html" target="_blank">Minio</a>. 
 
 If you are using OpenEBS velero-plugin then `velero backup` command invokes velero-plugin internally and takes a snapshot of CStor volume data and send it to remote storage location as mentioned in  *volumesnapshotlocation*.
 
@@ -162,7 +162,7 @@ Current velero-plugin supports S3 and GCP backup storage location only. Support 
 
 ## See Also:
 
-### [Setting up On-Premise Minio using OpenEBS](/docs/next/minio.html)
+### [Setting up On-Premise Minio using OpenEBS](/v090/docs/next/minio.html)
 
 <br>
 

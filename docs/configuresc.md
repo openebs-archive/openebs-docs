@@ -19,7 +19,7 @@ sidebar_label: Configuring StorageClasses
 
 [Performance Tunings](#performance-tunings)
 
-*Note: This page describes how to create, use and maintain StorageClasses that use cStorPools. For details about StorageClasses that Jiva pools, see [Jiva user guide](/docs/next/jivaguide.html)* 
+*Note: This page describes how to create, use and maintain StorageClasses that use cStorPools. For details about StorageClasses that Jiva pools, see [Jiva user guide](/v090/docs/next/jivaguide.html)* 
 
 <br>
 
@@ -319,7 +319,7 @@ In the case of provisioning StatfulSet applications with replication factor of  
 
 **Approach 1:**
 
-In this approach, modification is required on StatefulSet spec and corresponding StorageClass being referred in the StatefulSet spec. Add [openebs.io/sts-target-affinity](http://openebs.io/sts-target-affinity): <[metadata.name](http://metadata.name/) of STS> label in StatefulSet spec to the following fields.
+In this approach, modification is required on StatefulSet spec and corresponding StorageClass being referred in the StatefulSet spec. Add openebs.io/sts-target-affinity: <metadata.name of STS> label in StatefulSet spec to the following fields.
 
 - spec.selector.matchLabels  
 - spec.template.labels
@@ -375,7 +375,7 @@ This approach is useful when user/tool does not have control over the StatefulSe
 
 Add following changes in the StorageClass that is referred to by the claimTemplates of this StatefulSet.
 
-- Add [openebs.io/sts-target-affinity](http://openebs.io/sts-target-affinity): <[metadata.name](http://metadata.name/) of STS> label to the following fields.
+- Add openebs.io/sts-target-affinity: <metadata.name of STS> label to the following fields.
   - metadata.labels
 - Set volumeBindingMode to WaitForFirstConsumer
 
@@ -574,7 +574,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 ## See Also:
 
-### [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
+### [cStor roadmap](/v090/docs/next/cstor.html#cstor-roadmap)
 
 
 
