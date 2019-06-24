@@ -51,14 +51,14 @@ All steps described in this document must be performed on the Kubernetes master 
 
 1.  <h3><a class="anchor" aria-hidden="true" id="Download-yamls"></a>Download upgrade YAMLs</h3>
 
-   You can do git clone of the upgrade scripts.
+    You can do git clone of the upgrade scripts.
 
-   ```
-   mkdir 0.9.0-1.0.0/
-   cd 0.9.0-1.0.0/
-git clone https://github.com/openebs/openebs.git
-   cd openebs/k8s/upgrades/0.9.0-1.0.0/
-```
+    ```
+    mkdir 0.9.0-1.0.0/
+    cd 0.9.0-1.0.0/
+    git clone https://github.com/openebs/openebs.git
+    cd openebs/k8s/upgrades/0.9.0-1.0.0/
+    ```
    
 2. <h3><a class="anchor" aria-hidden="true" id="Verify-prerequisites"></a>Verify Prerequisites</h3>
 
@@ -176,6 +176,7 @@ git clone https://github.com/openebs/openebs.git
    2. Have the following link handy in case the volume gets into read-only during upgrade <https://docs.openebs.io/docs/next/troubleshooting.html#recovery-readonly-when-kubelet-is-container>
    3. Automatic rollback option is not provided. To rollback, you need to update the controller, exporter and replica pod images to the previous version.
    4. In the process of running the below steps, if you run into issues, you can always reach us on <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community.
+   
    <h4><a class="anchor" aria-hidden="true" id="Jiva-PV"></a>Jiva PV</h4>
 
    1. Go to `jiva` folder.
