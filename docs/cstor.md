@@ -78,9 +78,9 @@ A cStor pool spec consists of
 - Number of pools
 - List of nodes that host the pools
 - List of disks on each node that constitute the pool on that given node
-- RAID type within the pool (currently stripe and mirror are supported). Refer to the [cStor Pool roadmap](/docs/next/cstor.html#cstor-roadmap) to find the status of RAIDz1 support
+- RAID type within the pool (currently stripe and mirror are supported). Refer to the [cStor Pool roadmap](#cstor-roadmap) to find the status of RAIDz1 support
 
-**Number of pools:** It is good to start with 3 pools as the number of volume replicas will be typically three or one. However, the number of pools are fixed in OpenEBS 0.8 version. Support for increasing the pool replicas on the fly is in the [cStor Pool roadmap](/docs/next/cstor.html#cstor-roadmap)  . At the time of cStor pool creation, individual and independent pools are created on the specified nodes. 
+**Number of pools:** It is good to start with 3 pools as the number of volume replicas will be typically three or one. However, the number of pools are fixed in OpenEBS 0.8 version. Support for increasing the pool replicas on the fly is in the [cStor Pool roadmap](#cstor-roadmap)  . At the time of cStor pool creation, individual and independent pools are created on the specified nodes. 
 
 **List of nodes that host the pools:** This information and the number of pool replicas are implicitly provided by analyzing the provided disk CRs in the spec file. For example, if the spec file has 3 disk CRs, which belong to 3 different nodes, it implicitly means the number of pool replicas are 3 and the list of nodes taken from the disk CR metadata.
 
@@ -105,15 +105,15 @@ cStor Pool is an important component in the storage management. It is fundamenta
 
 **Create a Pool :** Create a new pool with all the configuration. It is typical to start a pool with 3 pool instances on three nodes. Currently RAID types supported for a given pool instance are STRIPE and MIRROR. A pool needs to be created before storage classes are created. So, pool creation is the first configuration step in the OpenEBS configuration process.
 
-**Add a new pool instance** : (Not supported in OpenEBS 0.8, refer to the  [cStor roadmap](/docs/next/cstor.html#cstor-roadmap). A new pool instance may need to be added for many different reasons. Few example scenarios  are:
+**Add a new pool instance** : (Not supported in OpenEBS 0.8, refer to the  [cStor roadmap](#cstor-roadmap). A new pool instance may need to be added for many different reasons. Few example scenarios  are:
 
 - New node is being added to the Kubernetes cluster and the disks in the new node need to be considered for persistent volumes storage
 - An existing pool instance is full in capacity and it cannot be expanded as either local disks or network disks are not available. Hence, a new pool instance may be needed for hosting the new volume replicas.
 - An existing pool instance is fully utilized in performance and it cannot be expanded either because CPU is saturated or more local disks are not available or more network disks or not available. A new pool instance may be added and move some of the existing volumes to the new pool instance to free up some disk IOs on this instance. 
 
-**Expand a given pool instance :** (Not supported in OpenEBS 0.8, refer to the [cStor roadmap](/docs/next/cstor.html#cstor-roadmap).  cStor Pools support thin provisioning, which means that the volume replica that resides on a given cStor pool can be given much bigger size or quota than the physical storage capacity available in the pool. When the actual capacity becomes nearly full (80% or more for example), the pool instance is expanded by adding a set of disks to it. If the pool instance's disk RAID type is STRIPE, then the disks can be added in any multiples of disks (1 disk or more) at a time, but if the type is any of the RAIDZx, then the expansion is done by adding any multiples of RAIDZ groups (1 group or more). 
+**Expand a given pool instance :** (Not supported in OpenEBS 0.8, refer to the [cStor roadmap](#cstor-roadmap).  cStor Pools support thin provisioning, which means that the volume replica that resides on a given cStor pool can be given much bigger size or quota than the physical storage capacity available in the pool. When the actual capacity becomes nearly full (80% or more for example), the pool instance is expanded by adding a set of disks to it. If the pool instance's disk RAID type is STRIPE, then the disks can be added in any multiples of disks (1 disk or more) at a time, but if the type is any of the RAIDZx, then the expansion is done by adding any multiples of RAIDZ groups (1 group or more). 
 
-**Delete a pool instance** : (Not supported in OpenEBS 0.8, refer to the  [cStor roadmap](/docs/next/cstor.html#cstor-roadmap) . When a Kubernetes node needs to be drained in a planned manner, then the volume replicas in the pool instance that resides on that node need to be drained by moving them to other pool instance(s). Once all the volume replicas are drained, the pool instance is deleted.
+**Delete a pool instance** : (Not supported in OpenEBS 0.8, refer to the  [cStor roadmap](#cstor-roadmap) . When a Kubernetes node needs to be drained in a planned manner, then the volume replicas in the pool instance that resides on that node need to be drained by moving them to other pool instance(s). Once all the volume replicas are drained, the pool instance is deleted.
 
 
 ## cStor Volume snapshots
@@ -202,7 +202,7 @@ volumeClaimTemplates:
 | kubectl get csp                    | Get the list of storage pools (cstor storage pools). One SPC refers to one or more CSPs. If there are two pools - cstor-ssd-pool on 3 nodes and cstor-sas-pool on 4 nodes, then there will be two SPCs and 7 CSPs |
 | kubectl get disks --labels         | Get the list of all disk CRs in the entire cluster           |
 | kubectl get cStorVolume -n openebs | Get the list of cStor volumes in the entire cluster          |
-| kubectl get cvr -n openebs         | Get the list of cStor volumes in the entire cluster          |
+| kubectl get cvr -n openebs         | Get the list of cStor volume replicas in the entire cluster  |
 | kubectl get volumesnapshot         | Get the list of volumesnapshots in the entire cluster        |
 
 
@@ -232,11 +232,11 @@ The easiest way to monitor cStor pools and volumes is through MayaOnline. The vo
 
 Links to screenshots of some of the cStor resources in MayaOnline are shown below.
 
-[Pool topology view](/docs/next/mayaonline.html#cstor-pool-view)
+[Pool topology view](/v090/docs/next/mayaonline.html#cstor-pool-view)
 
-[Volume POD topology view](/docs/next/mayaonline.html#cstor-volume-pod-view)
+[Volume POD topology view](/v090/docs/next/mayaonline.html#cstor-volume-pod-view)
 
-[Volume CR topology view](/docs/next/mayaonline.html#cstor-custom-resources-view)
+[Volume CR topology view](/v090/docs/next/mayaonline.html#cstor-custom-resources-view)
 
 <br>
 
@@ -295,7 +295,7 @@ Following are most commonly observed areas of troubleshooting
 
    **Resolution**: 
 
-   Install iSCSI tools and make sure iSCSI service is running. See [iSCSI installation](/docs/next/prerequisites.html)
+   Install iSCSI tools and make sure iSCSI service is running. See [iSCSI installation](/v090/docs/next/prerequisites.html)
 
 2. **Multi-attach error is seen in the logs**
 
@@ -311,7 +311,7 @@ Following are most commonly observed areas of troubleshooting
 
    **Resolution :**
 
-   This is because of the Kubernetes limitation [explained above](/docs/next/cstor.html#known-limitations). OpenEBS CSI driver will resolve this issue. See [roadmap](/docs/next/cstor.html#cstor-roadmap). In this situation if the node is stuck in a non-responsive state and if the node has to be permanently deleted, remove it from the cluster.  
+   This is because of the Kubernetes limitation [explained above](/v090/docs/next/cstor.html#known-limitations). OpenEBS CSI driver will resolve this issue. See [roadmap](#cstor-roadmap). In this situation if the node is stuck in a non-responsive state and if the node has to be permanently deleted, remove it from the cluster.  
 
 3. **Application is in ContainerCreating state, observed connection refused error**
 
@@ -321,7 +321,7 @@ Following are most commonly observed areas of troubleshooting
 
    **Resolution**: 
 
-   This error eventually could get rectified on the further retries, volume gets mounted and application is started. This error is usually seen when cStor target takes some time to initialize  on low speed networks as it takes time to download cStor image binaries from repositories ( or )  or because the cstor target is waiting for the replicas to connect and establish quorum. If the error persists beyond 5 minutes, logs need to be verified, contact support or seek help on the <a href="https://openebs.io/join-our-community" target="_blank">Slack OpenEBS Community</a>.<br>
+   This error eventually could get rectified on the further retries, volume gets mounted and application is started. This error is usually seen when cStor target takes some time to initialize  on low speed networks as it takes time to download cStor image binaries from repositories ( or )  or because the cstor target is waiting for the replicas to connect and establish quorum. If the error persists beyond 5 minutes, logs need to be verified, contact support or seek help on the <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a>.<br>
 
 4. **Kubelet seen consuming high RAM usage with cStor volumes**
 
@@ -397,11 +397,11 @@ Each discovered disk on a node is added as a disk CR. This is needed to identify
 
 ## See Also:
 
-### [Storage Engines in OpenEBS](/docs/next/storageengine.html)
+### [Storage Engines in OpenEBS](/v090/docs/next/storageengine.html)
 
-### [Creating cStor Pool](/docs/next/configurepools.html)
+### [Creating cStor Pool](/v090/docs/next/configurepools.html)
 
-### [Provisioning cStor volumes](/docs/next/deploycstor.html)
+### [Provisioning cStor volumes](/v090/docs/next/deploycstor.html)
 
 
 
