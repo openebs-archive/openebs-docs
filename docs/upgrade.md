@@ -32,15 +32,15 @@ Currently, upgrade to latest OpenEBS 1.0.0 version is supported only from 0.9.0.
 
 <font size="5">Workflow</font>
 
-The upgrade of OpenEBS is a three step process:
+The upgrade of OpenEBS is a four step process:
 
-1. Download the upgrade YAMLS.
+1. Download the upgrade scripts.
 
 2. Verify prerequisites.
 
 3. Upgrade the OpenEBS Operator.
 
-4. Upgrade OpenEBS Volumes that were created from previous OpenEBS version (0.9.0).
+4. Upgrade OpenEBS Pools and Volumes that were created from previous OpenEBS version (0.9.0).
 
    
 
@@ -49,7 +49,7 @@ The upgrade of OpenEBS is a three step process:
 
 All steps described in this document must be performed on the Kubernetes master or from a machine that has access to Kubernetes master.
 
-1.  <h3><a class="anchor" aria-hidden="true" id="Download-yamls"></a>Download upgrade YAMLs</h3>
+1.  <h3><a class="anchor" aria-hidden="true" id="Download-yamls"></a>Download upgrade scripts</h3>
 
     You can do git clone of the upgrade scripts.
 
@@ -62,7 +62,7 @@ All steps described in this document must be performed on the Kubernetes master 
    
 2. <h3><a class="anchor" aria-hidden="true" id="Verify-prerequisites"></a>Verify Prerequisites</h3>
 
-   - OpenEBS current version should be 0.9.0. This can be done by using the following command. Output will contain 0.9.0 as image for all the OpenEBS deployments.
+   - OpenEBS current version should be 0.9.0. This can be verified by using the following command. Output will contain 0.9.0 as image for all the OpenEBS deployments.
 
      ```
      kubectl get deployment -o yaml -n openebs | grep -i image | grep -i quay | grep -v metadata
@@ -74,39 +74,46 @@ All steps described in this document must be performed on the Kubernetes master 
      kubectl get ds -o yaml  -n openebs| grep -i image |  grep -i quay | grep -v metadata
      ```
 
-   - Ensure that you are inside of upgrade script directory (openebs/k8s/upgrades/0.9.0-1.0.0/). This step will do the pre-upgrade job and install the blockdevice CR for each disks attached to the Node. Run below command to perform pre-upgrade operations on OpenEBS related components. 
+   - Before proceeding with below steps please make sure the daemonset `DESIRED` count is equal to `CURRENT` count. This can be checked by using the following command.
 
      ```
-     ./pre-upgrade.sh <openebs_installed_namespace>
+     kubectl get ds openebs-ndm -n <openebs-installed-namespace>
      ```
 
-     Eg: 
-
-     ```
-     ./pre-upgrade.sh openebs 
-     ```
-
-     If the output shows that `Pre-Upgrade is successful `, then proceed with next step.
-
-     Verify blockdevice CR is created for each disks. The blockdevice status will show as `claimed` if the disk is already used and status as `unclaimed` if it is unused.
-
-     Obtain the blockdevice details using the following command.
-
-     ```
-     kubectl get bd -n openebs
-     ```
-     
      Output will be similar to the following.
 
      ```
-     NAME                                           SIZE          CLAIMSTATE   STATUS   AGE
-     blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   42949672960   Claimed      Active   3h
-     blockdevice-77f834edba45b03318d9de5b79af0734   42949672960   Claimed      Active   3h
-     blockdevice-936911c5c9b0218ed59e64009cc83c8f   42949672960   Claimed      Active   3h
-     sparse-2b91c0a57ced6e356b4b3992c37bc23b        10737418240   Unclaimed    Active   3h
-     sparse-5807b1faae7b630f41351035d8431628        10737418240   Unclaimed    Active   3h
-     sparse-df79dd23dc6843eead3f6030260b7c24        10737418240   Unclaimed    Active   3h
+     NAME          DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+     openebs-ndm   3         3         3       3            3           <none>          7m6s
+   ```
+     
+   Sometimes, the `DESIRED` count may not equal to the `CURRENT` count. This may happen due in following cases:
+     
+   - If any NodeSelector has been used to deploy openebs related pods.
+     - Master or any Node has been tainted in k8s cluster.
+
+   - Ensure that you are inside of upgrade script directory (openebs/k8s/upgrades/0.9.0-1.0.0/). This step will update OpenEBS control plane components labels. Run below command to update OpenEBS control plane components labels.
+
      ```
+     ./pre-upgrade.sh <openebs_installed_namespace> <mode>
+     ```
+
+     Here, `<openebs_installed_namespace>` is the namespace where OpenEBS control plane components are installed. `<mode>` is the way how OpenEBS is installed. Provide mode as `helm` if OpenEBS is installed via helm (or) provide mode as `operator` if OpenEBS is installed via operator yaml.
+
+     Eg: 
+     
+     ```
+   ./pre-upgrade.sh openebs operator
+     ```
+
+     In the above example, 0.9.0 version of  openebs is installed via operator YAML method.
+
+     After executing the above command, if the output shows that `Pre-Upgrade is successful `, then proceed with next step.
+
+     **Notes:** 
+     
+     - No new SPC should be created after this step until the upgrade is complete. If it is created then execute `pre-upgrade.sh` again.
+     - It is mandatory to make sure that all OpenEBS control plane components are running at version 0.9.0 before the upgrade.
 
 3. <h3><a class="anchor" aria-hidden="true" id="upgrade-operator"></a>Upgrade OpenEBS operator</h3>
 
@@ -198,10 +205,10 @@ All steps described in this document must be performed on the Kubernetes master 
       pvc-aeb93081-93d0-11e9-a7c6-42010a800fc0   5G         RWO            Delete           Bound    default/demo-vol1-claim   openebs-jiva-default            118m
       ```
 
-   3. Select the appropriate Jiva volume one at a time and upgrade the particular PV using the following command. Use namespace where Jiva pods are running. If Jiva Pods are  running in `default` namespace, no need to mention in the following command.
+   3. Select the appropriate Jiva volume one at a time and upgrade the particular PV using the following command.
 
       ```
-      ./jiva_volume_upgrade.sh <PV_name> <namespace>
+      ./jiva_volume_upgrade.sh <PV_name>
       ```
 
       Eg:
@@ -249,10 +256,10 @@ All steps described in this document must be performed on the Kubernetes master 
       cd cstor
       ```
 
-   3. Verify corresponding pool pod is running using the following command. The particular pool pod should be running before going to the next step.
+   3. Verify corresponding pool pods are running using the following command. The particular pool pods should be running state before going to the next step.
 
       ```
-      kubectl get pod -n openebs | grep <pool_name>
+      kubectl get pod -n openebs | grep <spc_name>
       ```
 
       Eg:
@@ -264,10 +271,10 @@ All steps described in this document must be performed on the Kubernetes master 
    4. Upgrade cStor pool using the following command.
 
       ```
-      ./cstor_pool_upgrade.sh <pool_name> <openebs_namespace>
+      ./cstor_pool_upgrade.sh <spc_name> <openebs_installed_namespace>
       ```
 
-      where `<openebs_namespace>` is the namespace where OpenEBS control plane components are installed.
+      where `<openebs_installed_namespace>` is the namespace where OpenEBS control plane components are installed.
 
       Eg:
 
@@ -277,8 +284,14 @@ All steps described in this document must be performed on the Kubernetes master 
 
       If the output shows that the corresponding cStor pool is successfully upgraded to 1.0.0, then upgrade job is completed for the corresponding pool. The same steps can be applied to other cStor pools one by one.
 
-   5. Ensure that this step completes successfully before proceeding to the next step.
+   5. Verify cStor pool upgrade using following command.
 
+      ```
+   ./verify_pool_upgrade.sh <spc_name> <openebs_installed_namespace>
+      ```
+
+      
+   
    **Upgrade cStor Volumes**
 
    1. Obtain the PV name using the following command
@@ -286,10 +299,10 @@ All steps described in this document must be performed on the Kubernetes master 
       ```
       kubectl get pv
       ```
-
-      Output will be similar to the following.
-
-      ```
+   
+   Output will be similar to the following.
+   
+   ```
       NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS           REASON   AGE
       pvc-9b43e8a6-93d2-11e9-a7c6-42010a800fc0   2Gi        RWO            Delete           Bound    default/minio-pv-claim    openebs-cstor-disk              4h10m
       ```
@@ -297,19 +310,19 @@ All steps described in this document must be performed on the Kubernetes master 
    2. Select the appropriate cStor volume one at a time and upgrade the particular PV using the following command. 
 
       ```
-      ./cstor_volume_upgrade.sh <PV_name> <openebs_namespace>
+   ./cstor_volume_upgrade.sh <PV_name> <namespace>
       ```
-
-      where `<openebs_namespace>` is the namespace where OpenEBS control plane components are installed.
+   
+      where `<namespace>` is the namespace where OpenEBS  is installed.
 
       Eg:
 
       ```
       ./cstor_volume_upgrade.sh pvc-9b43e8a6-93d2-11e9-a7c6-42010a800fc0 openebs
       ```
-
+   
       If the output shows that the corresponding PV is successfully upgraded to 1.0.0, then  upgrade job is completed for the corresponding cStor volume. The same steps can be applied for other PVs one by one.
-
+   
    3. Verify application status by checking corresponding pods.
 
 <br>
