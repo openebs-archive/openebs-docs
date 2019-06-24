@@ -36,13 +36,13 @@ Below are advantage of using NFS provisioner over OpenEBS cStor volumes
 
 **Select or create a cStor pool**
 
-Select or <a href="/docs/next/configurepools.html">create a cStor pool</a> that satisfies the performance, and availability requirements
+Select or <a href="/v090/docs/next/configurepools.html">create a cStor pool</a> that satisfies the performance, and availability requirements
 
 <br>
 
 **Select or create a cStor storage Class**
 
-<a href="/docs/next/configuresc.html">Create a storage class</a> to point to the above selected pool and also select number of replicas and default size of the volume
+<a href="/v090/docs/next/configuresc.html">Create a storage class</a> to point to the above selected pool and also select number of replicas and default size of the volume
 
 <br>
 
@@ -108,11 +108,11 @@ When multiple NFS shares are needed, use multiple NFS provisioners. Each NFS ser
 
 ## See Also:
 
-### [cStor Overview](/docs/next/cstor.html)
+### [cStor Overview](/v090/docs/next/cstor.html)
 
-### [cStorPools](/docs/next/configurepools.html)
+### [cStorPools](/v090/docs/next/configurepools.html)
 
-### [Setting up Object Storage](/docs/next/minio.html)
+### [Setting up Object Storage](/v090/docs/next/minio.html)
 
 <br>
 

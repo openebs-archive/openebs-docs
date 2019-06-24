@@ -58,13 +58,13 @@ NuoDB’s distributed SQL database combines the elastic scale and continuous ava
 
 1. **Install OpenEBS**
 
-   If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
+   If OpenEBS is not installed in your K8s cluster, this can done from [here](/v090/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
-2. **Connect to MayaOnline (Optional)** : Connecting the Kubernetes cluster to [MayaOnline](https://staging-docs.openebs.io/docs/next/app.mayaonline.io) provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
+2. **Connect to MayaOnline (Optional)** : Connecting the Kubernetes cluster to [MayaOnline](/v090/docs/next/app.mayaonline.io) provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
 
 3. **Configure cStor Pool**
 
-   After OpenEBS installation, cStor pool has to be configured.If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html). Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step. 
+   After OpenEBS installation, cStor pool has to be configured.If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/v090/docs/next/configurepools.html). Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step. 
 
 4. **Create Storage Class**
 
@@ -650,11 +650,11 @@ spec:
 
 <br>
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v090/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v090/docs/next/usecases.html)
 
-### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
+### [cStor pools overview](/v090/docs/next/cstor.html#cstor-pools)
 
 
 

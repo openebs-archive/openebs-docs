@@ -143,7 +143,7 @@ MountVolume.WaitForAttach failed for volume “pvc-ea5b871b-32d3-11e9-9bf5-0a8e9
 
 **Troubleshooting**
 
-This logs points that iscsid.service may not be enabled and running on your Nodes. You need to check if the service `iscsid.service` is running. If it is not running, you have to `enable` and `start` the service. You can refer [prerequisites](/docs/next/prerequisites.html) section and choose your platform to get the steps for enabling it.
+This logs points that iscsid.service may not be enabled and running on your Nodes. You need to check if the service `iscsid.service` is running. If it is not running, you have to `enable` and `start` the service. You can refer [prerequisites](/v090/docs/next/prerequisites.html) section and choose your platform to get the steps for enabling it.
 
 <h3><a class="anchor" aria-hidden="true" id="openebs-provsioner-restart-continuously"></a>Why does OpenEBS provisioner pod restart continuously?</h3>
 
@@ -189,7 +189,7 @@ Error: release openebsfailed: clusterroles.rbac.authorization.k8s.io "openebs" i
 
 **Troubleshooting**
 
-You must enable RBAC on Azure before OpenEBS installation. For more details, see [Prerequisites](/docs/next/prerequisites.html).
+You must enable RBAC on Azure before OpenEBS installation. For more details, see [Prerequisites](/v090/docs/next/prerequisites.html).
 
 <h3><a class="anchor" aria-hidden="true" id="multipath-conf-claims-all-scsi-devices-openshift"></a>A multipath.conf file claims all SCSI devices in OpenShift</h3>
 
@@ -281,7 +281,7 @@ Make sure the following prerequisites are done.
 1. Verify iSCSI initiator is installed on nodes and services are running. 
 2. Added extra_binds under kubelet service in cluster YAML
 
-More details are mentioned [here](/docs/next/prerequisites.html#rancher).
+More details are mentioned [here](/v090/docs/next/prerequisites.html#rancher).
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-stuck-after-deployment"></a>Application pod is stuck in ContainerCreating state after deployment</h3>
 
@@ -766,11 +766,11 @@ Set the reboot timer schedule at different time i.e staggered at various interva
 
 ## See Also:
 
-### [FAQs](/docs/next/faq.html)
+### [FAQs](/v090/docs/next/faq.html)
 
-### [Seek support or help](/docs/next/support.html)
+### [Seek support or help](/v090/docs/next/support.html)
 
-### [Latest release notes](/docs/next/releases.html)
+### [Latest release notes](/v090/docs/next/releases.html)
 
 <br>
 

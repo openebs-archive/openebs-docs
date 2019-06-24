@@ -9,7 +9,7 @@ sidebar_label: Performance testing
 
 **Setup cStorPool and StorageClass**
 
-Choose the appropriate disks (SSDs or SAS or Cloud disks) and [create pool](/docs/next/configurepools.html)  and [create StorageClass](/docs/next/configuresc.html).  There are some performance tunings available and this configuration can be added in the corresponding StorageClass before provisioning the volume. The tunings are available in the [StorageClass](/docs/next/configuresc.html#performance-tunings) section. 
+Choose the appropriate disks (SSDs or SAS or Cloud disks) and [create pool](/v090/docs/next/configurepools.html)  and [create StorageClass](/v090/docs/next/configuresc.html).  There are some performance tunings available and this configuration can be added in the corresponding StorageClass before provisioning the volume. The tunings are available in the [StorageClass](/v090/docs/next/configuresc.html#performance-tunings) section. 
 
 For performance testing, performance numbers vary based on the following factors.
 
@@ -64,9 +64,9 @@ Support for performance tuning for specific workloads can be obtained through th
 
 ## See Also:
 
-### [Connecting to MayaOnline](/docs/next/mayaonline.html)
+### [Connecting to MayaOnline](/v090/docs/next/mayaonline.html)
 
-### [Seeking help](/docs/next/support.html)
+### [Seeking help](/v090/docs/next/support.html)
 
 <br>
 
