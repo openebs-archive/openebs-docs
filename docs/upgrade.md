@@ -74,7 +74,7 @@ All steps described in this document must be performed on the Kubernetes master 
      kubectl get ds -o yaml  -n openebs| grep -i image |  grep -i quay | grep -v metadata
      ```
 
-   - If OpenEBS has been deployed using openebs helm charts, it has to be in chart version `0.9.2` . Run `helm list` to verify the chart version. If not, you have to update openebs chart version to `0.9.2` using below commands.
+   - If OpenEBS has been deployed using stable helm charts, it has to be in chart version `0.9.2` . Run `helm list` to verify the chart version. If not, you have to update openebs chart version to `0.9.2` using below commands.
 
      - First, you have to delete the `admission-server` secret, which will be deployed again once we upgrade charts to `0.9.2` version using below command:
      
