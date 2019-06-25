@@ -79,7 +79,7 @@ All steps described in this document must be performed on the Kubernetes master 
      - First, you have to delete the `admission-server` secret, which will be deployed again once we upgrade charts to `0.9.2` version using below command:
      
        ```
-     kubectl delete secret admission-server-certs -n openebs
+       kubectl delete secret admission-server-certs -n openebs
        ```
 
      - Upgrade OpenEBS chart version to 0.9.2 using below command:
