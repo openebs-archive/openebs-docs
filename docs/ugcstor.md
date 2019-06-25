@@ -48,8 +48,6 @@ This user guide section provides the operations need to performed by the User an
 
 [Expanding the cStor Volume Capacity](#expanding-size-of-a-cStor-volume)
 
-[Moving Disks to New Node](#Moving-a-disk-to-New-Node)
-
 
 
 
@@ -1456,12 +1454,6 @@ When you have a cloud disk and which is used for the creation of cStor Storage p
 OpenEBS control plane does not support increasing the size of volume seamlessly. Increasing the size of a provisioned volume requires support from Kubernetes kubelet as the existing connection has to be remounted to reflect the new volume size. This can also be tackled with the new CSI plugin where the responsibility of the mount, unmount and remount actions will be held with the vendor CSI plugin rather than the kubelet itself.
 
 OpenEBS team is working on both the CSI plugin as well as the feature to resize the provisioned volume when the PVC is patched for new volume size. Currently this is a manual operation and the steps for expanding the cStor volume is mentioned [here](https://github.com/openebs/openebs-docs/blob/day_2_ops/docs/cstor_volume_resize.md).
-
-
-
-<h3><a class="anchor" aria-hidden="true" id="Moving-a-disk-to-New-Node"></a>Moving Disks to New Node</h3>
-
-This activity can be done by some set of manual steps. In this section, you can detach the disk from the old node (if necessary) and attach to the new node. This can be done from the steps provided [here](https://github.com/openebs/openebs-docs/blob/day_2_ops/docs/cstor_move_disk.md). 
 
 <br>
 
