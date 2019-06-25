@@ -74,7 +74,42 @@ All steps described in this document must be performed on the Kubernetes master 
      kubectl get ds -o yaml  -n openebs| grep -i image |  grep -i quay | grep -v metadata
      ```
 
-   - Before proceeding with below steps please make sure the daemonset `DESIRED` count is equal to `CURRENT` count. This can be checked by using the following command.
+   - If OpenEBS has been deployed using stable helm charts, it has to be in chart version `0.9.2` . Run `helm list` to verify the chart version. If not, you have to update openebs chart version to `0.9.2` using below commands.
+
+     - First, you have to delete the `admission-server` secret, which will be deployed again once you upgrade charts to `0.9.2` version using below command:
+     
+       ```
+       kubectl delete secret admission-server-certs -n openebs
+       ```
+
+     - Upgrade OpenEBS chart version to 0.9.2 using below command:
+     
+       Run below command to update local cache with latest package.
+     
+       ```
+       helm repo update
+       ```
+     
+       Upgrade openebs helm chart version to 0.9.2 using the following command.
+     
+       ```
+       helm upgrade <release-name> stable/openebs --version 0.9.2
+       ```
+     
+     - Run `helm list` to verify deployed OpenEBS chart version:
+     
+       ```
+       helm list
+       ```
+     
+       Output will be similar to the following:
+     
+       ```
+       NAME    REVISION        UPDATED                         STATUS          CHART           APP VERSION     NAMESPACE
+       openebs 3               Mon Jun 24 20:57:05 2019        DEPLOYED        openebs-0.9.2   0.9.0           openebs
+       ```
+     
+   - Before proceeding with below steps please make sure the NDM daemonset `DESIRED` count is equal to `CURRENT` count. This can be checked by using the following command.
 
      ```
      kubectl get ds openebs-ndm -n <openebs-installed-namespace>
