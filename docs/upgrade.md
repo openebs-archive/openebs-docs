@@ -76,7 +76,7 @@ All steps described in this document must be performed on the Kubernetes master 
 
    - If OpenEBS has been deployed using stable helm charts, it has to be in chart version `0.9.2` . Run `helm list` to verify the chart version. If not, you have to update openebs chart version to `0.9.2` using below commands.
 
-     - First, you have to delete the `admission-server` secret, which will be deployed again once we upgrade charts to `0.9.2` version using below command:
+     - First, you have to delete the `admission-server` secret, which will be deployed again once you upgrade charts to `0.9.2` version using below command:
      
        ```
        kubectl delete secret admission-server-certs -n openebs
