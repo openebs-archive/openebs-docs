@@ -200,7 +200,7 @@ All steps described in this document must be performed on the Kubernetes master 
 
    2. Run `helm ls` to get the OpenEBS release-name. Use the release-name in the next step.
 
-   3. Upgrade using the following command. In the following command, provide the release name as per the release name that is given during the initial deployment.
+   3. Upgrade using the following command. In the following command, provide the release name used for 0.9.0 version of OpenEBS installation time.
 
       ```
       helm upgrade <release name> stable/openebs
