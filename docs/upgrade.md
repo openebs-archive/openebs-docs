@@ -128,8 +128,6 @@ All steps described in this document must be performed on the Kubernetes master 
      
      - Master or any Node has been tainted in k8s cluster.
      
-   - If OpenEBS is installed using stable helm chart, ensure that you are in the latest OpenEBS helm chart version 0.9.2. If not, upgrade to the 0.9.2 helm chart version.
-
    - Ensure that you are inside of upgrade script directory (openebs/k8s/upgrades/0.9.0-1.0.0/). This step will update OpenEBS control plane components labels. Run below command to update OpenEBS control plane components labels.
 
      ```
@@ -139,17 +137,25 @@ All steps described in this document must be performed on the Kubernetes master 
      Here, `<openebs_installed_namespace>` is the namespace where OpenEBS control plane components are installed. `<mode>` is the way how OpenEBS is installed. Provide mode as `helm` if OpenEBS is installed via helm chart (or) provide mode as `operator` if OpenEBS is installed via operator yaml.
 
      Eg: 
-     
-     ```
-     ./pre-upgrade.sh openebs operator
-     ```
 
-     In the above example, 0.9.0 version of  openebs was installed via operator YAML method.
+     - If OpenEBS 0.9.0 version was installed via operator YAML method then run below command.
+
+       ```
+       ./pre-upgrade.sh openebs operator
+       ```
+
+     - If OpenEBS 0.9.0 version was installed via helm then run below command.
+
+       ```
+       ./pre-upgrade.sh openebs helm
+       ```
+
+     Choose appropriate command from above and complete the pre-upgrade procedure. 
 
      After executing the above command, if the output shows that `Pre-Upgrade is successful `, then proceed with next step.
 
      **Notes:** 
-     
+
      - No new SPC should be created after this step until the upgrade is completed. If it is created then execute `pre-upgrade.sh` again.
      - It is mandatory to make sure that all OpenEBS control plane components are running on version 0.9.0 before the upgrade.
 
