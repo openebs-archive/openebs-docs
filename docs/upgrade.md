@@ -96,7 +96,7 @@ All steps described in this document must be performed on the Kubernetes master 
    3. Upgrade using the following command. In the following command, provide the release name as per the release name that is given during the initial deployment.
 
       ```
-      helm upgrade <release name> stable/openebs
+      helm upgrade <release name> stable/openebs --version 0.9.2
       ```
 
    <font size="4">Using Customized Operator YAML or Helm Chart</font>
@@ -105,7 +105,7 @@ All steps described in this document must be performed on the Kubernetes master 
    After updating the YAML or helm chart or helm chart values, you can use the following command to upgrade the OpenEBS Operator. In the following example, use the exact release name which you have used during the initial OpenEBS installation. 
 
    ```
-   helm upgrade <release name> -f values.yml stable/openebs
+   helm upgrade <release name> --version 0.9.2 -f values.yml stable/openebs
    ```
 
 3. <h3><a class="anchor" aria-hidden="true" id="upgrade-volume"></a>Upgrade volumes one by one</h3>
