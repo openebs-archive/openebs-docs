@@ -334,15 +334,14 @@ Following are most commonly observed areas of troubleshooting
        iscsiadm: failed to send SendTargets PDU
        iscsiadm: connection login retries (reopen_max) 5 exceeded
        iscsiadm: Connection to Discovery Address 127.0.0.1 failed
-       iscsiadm: failed to send SendTargets PDU```
-       kubelet keeps taking this response and accumulates the memory.
-   More details can be seen [here](https://github.com/openebs/openebs/issues/2382).
-
-   **Resolution:**
-
-   This issue is fixed in 0.8.1 version.
-
+       iscsiadm: failed to send SendTargets PDU
+   kubelet keeps taking this response and accumulates the memory.More details can be seen [here](https://github.com/openebs/openebs/issues/2382).
    
+**Resolution:**
+   
+This issue is fixed in 0.8.1 version.
+   
+
 
 
 ## cStor roadmap

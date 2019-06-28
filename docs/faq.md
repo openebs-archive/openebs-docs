@@ -622,8 +622,6 @@ No. It is recommended to create different BDC name for claiming an unclaimed dis
 
 ### [Provisioning cStor volumes](/docs/next/ugcstor.html#provisioning-a-cStor-volume)
 
-### [BackUp and Restore](/docs/next/backup.html)
-
 ### [Uninstall](/docs/next/uninstall.html)
 
 <br>
