@@ -7,6 +7,6 @@
       "0.8.0": ["v0.8", "https://v08-docs.openebs.io/"],
       "0.7.0": ["v0.7", "https://v07-docs.openebs.io/"],
       "0.6.0": ["v0.6", "https://v06-docs.openebs.io/"],
-      "0.5.0": ["v0.5", "https://v05-docs.openebs.io/"]
+      "0.5.0": ["v0.5", "https://docs.openebs.io/v050/"]
   }
 }
