@@ -180,7 +180,7 @@ All steps described in this document must be performed on the Kubernetes master 
       ```
       - name: <Jiva_PV_Name>
         kind: jiva-volume
-        namespace: default
+        namespace: <PVC_namespace>
       ```
       For the Jiva PV mentioned in Step1, the following will be an example snippet.
    
@@ -191,7 +191,7 @@ All steps described in this document must be performed on the Kubernetes master 
           resources:
           - name: pvc-fec1cf09-7adf-11e9-ae1c-42010a8000b4
             kind: jiva-volume
-            namespace: default
+            namespace: <PVC_namespace>
       ```
    
    4. Apply the modified YAML file using the following command.
@@ -286,7 +286,7 @@ All steps described in this document must be performed on the Kubernetes master 
       ```
       - name: cstor-pool2-n8fm
         kind: cStorPool
-        namespace: openebs
+        namespace: <openebs_installed_namespace>
       ```
    
       In this example scenarios, there is one more pool is running in the cluster. So it should create similar kind of entry for other pool also by changing the appropriate name of the pool. 
@@ -359,10 +359,10 @@ All steps described in this document must be performed on the Kubernetes master 
    
       Example Output:
    
-         ```
+      ```
       NAME                                       STATUS   AGE
       pvc-d7bed874-7abb-11e9-ae1c-42010a8000b4   Init     3h
-         ```
+      ```
    
        **Note:** The above details can also be collected using `kubeclt get pv`.
    
@@ -373,7 +373,7 @@ All steps described in this document must be performed on the Kubernetes master 
       ```
       - name: <cStor_PV_name>
         kind: cstor-volume
-        namespace: openebs
+        namespace: <openebs_installed_namespace>
       ```
    
       For the cStor PV showing in Step2, following will be the details has to be added in the mentioned field.
@@ -386,9 +386,9 @@ All steps described in this document must be performed on the Kubernetes master 
    
    4. Apply the modified file which is saved in Step 3 using the following command.
    
-         ```
-         kubectl apply -f volume-upgrade-job.yaml
-         ```
+      ```
+      kubectl apply -f volume-upgrade-job.yaml
+      ```
    
    5. Check the status of the upgrading activity of cStor volumes using the following command.
    
@@ -398,16 +398,16 @@ All steps described in this document must be performed on the Kubernetes master 
    
       Also upgrade job activity can be checked using the following command. Here check the job name that is provided in the `volume-upgrade-job.yaml` file as part of Step 3.
    
-         ```
+      ```
       kubectl get job
-         ```
+      ```
    
       If it is showing similar to the following output, then the upgrade Job for cStor Volume is completed.
    
-         ```
+      ```
       NAME             COMPLETIONS   DURATION   AGE
       volume-upgrade   1/1           64s        4m47s	
-         ```
+      ```
    
    6. Verify application status by checking corresponding pods.
    
