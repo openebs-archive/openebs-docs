@@ -27,7 +27,7 @@ sidebar_label:Configure StoragePools
 
 
 
-*Note: This page describes how to create, use and maintain cStorPools. For details about Jiva pools, see [Jiva user guide](/docs/next/jivaguide.html)* 
+*Note: This page describes how to create, use and maintain cStorPools. For details about Jiva pools, see [Jiva user guide](/v082/docs/next/jivaguide.html)* 
 
 <br>
 
@@ -119,7 +119,7 @@ In the above file, change the parameters as required
 
   This filed is not named very aptly. This field may be changed to `diskAggType` in future. This filed  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`
 
-  Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
+  Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volumes and pools relationship](/v082/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
 - `maxPools`
 
@@ -157,7 +157,7 @@ If the pool creation is successful, you will see the example result as shown bel
 
 <div class="co">storagepoolclaim.openebs.io "cstor-pool1" created</div>
 
-**Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `diskList` and update the `maxPools` count accordingly. More details can be found [here](/docs/next/operations.html#with-disklist).
+**Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `diskList` and update the `maxPools` count accordingly. More details can be found [here](/v082/docs/next/operations.html#with-disklist).
 
 <br>
 
@@ -220,7 +220,7 @@ spec:
 
   
 
-  Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volmes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
+  Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volmes and pools relationship](/v082/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
 **Step2:**
 
@@ -377,7 +377,7 @@ metadata:
 
 ## Day 2 operations on cStorPools
 
-With latest release,only some day2 operations are supported. Many of day2 operations are under active development. See [cStor roadmap](docs/next/cstor.html#cstor-roadmap) for more details. 
+With latest release,only some day2 operations are supported. Many of day2 operations are under active development. See [cStor roadmap](/v082/docs/next/cstor.html#cstor-roadmap) for more details. 
 
 **Note:** *All pools created using 0.8.1 will receive the pool expansion capabilities when those features are available in future releases.* 
 
@@ -391,7 +391,7 @@ With latest release,only some day2 operations are supported. Many of day2 operat
 
 <br>
 
-Detailed metrics for cStorPool are under development. See [cStor Roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. 
+Detailed metrics for cStorPool are under development. See [cStor Roadmap](/v082/docs/next/cstor.html#cstor-roadmap) for more details. 
 
 At the moment, status of cStor pools is obtained via the standard `kubectl get` and `kubectl describe` commands of pool  custom resources (spc, csp)
 
@@ -512,11 +512,11 @@ cStor provides storage scalability along with ease of deployment and usage. cSto
 
 
 
-### [Understand cStorPools ](/docs/next/cstor.html#cstor-pools)
+### [Understand cStorPools ](/v082/docs/next/cstor.html#cstor-pools)
 
-### [cStorPool use case for Prometheus](/docs/next/prometheus.html)
+### [cStorPool use case for Prometheus](/v082/docs/next/prometheus.html)
 
-### [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
+### [cStor roadmap](/v082/docs/next/cstor.html#cstor-roadmap)
 
 
 

@@ -34,7 +34,7 @@ At the end of Velero setup, Restic will be successfully running and ready for ta
 
 ## Steps for backup
 
-`ark backup` command invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or <a href="/docs/next/minio.html" target="_blank">Minio</a>. 
+`ark backup` command invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or <a href="/v082/docs/next/minio.html" target="_blank">Minio</a>. 
 
 Take the backup using the below command 
 
@@ -98,7 +98,7 @@ The above backup and restore procedure is done using Restic, where the entire da
 
 ## See Also:
 
-### [Setting up On-Premise Minio using OpenEBS](/docs/next/minio.html)
+### [Setting up On-Premise Minio using OpenEBS](/v082/docs/next/minio.html)
 
 <br>
 

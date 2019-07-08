@@ -9,13 +9,13 @@ Latest version of OpenEBS is 0.8.2. Check the release notes [here](https://githu
 
 ## Supported upgrade paths
 
-From 0.8.0 to 0.8.1 - Get the steps from [here](https://v081-docs.openebs.io/docs/next/upgrade.html).
+From 0.8.0 to 0.8.1 - Get the steps from [here](https://docs.openebs.io/v081/docs/next/upgrade.html).
 
-From 0.7.x to 0.8.0 - Get the steps from [here](https://v08-docs.openebs.io/docs/next/upgrade.html).
+From 0.7.x to 0.8.0 - Get the steps from [here](https://docs.openebs.io/v080/docs/next/upgrade.html).
 
-From 0.6.0 to 0.7.x - Get the steps from [here](https://v07-docs.openebs.io/docs/next/upgrade.html).
+From 0.6.0 to 0.7.x - Get the steps from [here](https://docs.openebs.io/v070/docs/next/upgrade.html).
 
-From 0.5.3 or 0.5.4 to 0.6.0 - Get the steps from [here](https://v06-docs.openebs.io/docs/next/upgrade.html).
+From 0.5.3 or 0.5.4 to 0.6.0 - Get the steps from [here](https://docs.openebs.io/v060/docs/next/upgrade.html).
 
 Currently, Upgrade to latest OpenEBS 0.8.2 version is supported only from 0.8.1. You have to follow the above mentioned upgrade path to the next level from the previous version as per the supported path.
 
@@ -274,9 +274,9 @@ This will verify all the OpenEBS components are successfully upgraded to the lat
 
 ## See Also:
 
-### [Releases](/docs/next/releases.html)
+### [Releases](/v082/docs/next/releases.html)
 
-### [MayaOnline](/docs/next/mayaonline.html)
+### [MayaOnline](/v082/docs/next/mayaonline.html)
 
 
 

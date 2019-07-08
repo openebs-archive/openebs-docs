@@ -42,7 +42,7 @@ sidebar_label: Installation
 
 <br>
 
-iSCSI client is a pre-requisite for provisioning volumes and not for installation of OpenEBS. However, it is recommended that the [iSCSI client is setup](/docs/next/prerequisites.html) and iSCSI.d service is running before proceeding with the installation
+iSCSI client is a pre-requisite for provisioning volumes and not for installation of OpenEBS. However, it is recommended that the [iSCSI client is setup](/v082/docs/next/prerequisites.html) and iSCSI.d service is running before proceeding with the installation
 
 <br>
 
@@ -426,11 +426,11 @@ For a simple testing of OpenEBS, you can use the below default storage classes
 - openebs-cstor-sparse (this uses cstor-sparse-pool as the storage pool and data is stored on sparse files that are created during installation)
 - openebs-jiva-default (this uses `default` pool which means the data replicas are created in the /mnt/openebs_disk directory of the Jiva replica pod)
 
-For using real disks, you have to [create cStorPools](/docs/next/configurepools.html) or [Jiva pools](/docs/next/jivaguide.html#create-a-jiva-pool) and then create StorageClasses to use them
+For using real disks, you have to [create cStorPools](/v082/docs/next/configurepools.html) or [Jiva pools](/v082/docs/next/jivaguide.html#create-a-jiva-pool) and then create StorageClasses to use them
 
 
 
-To monitor the OpenEBS volumes and obtain corresponding logs, connect to the free SaaS service MayaOnline. See connecting to [MayaOnline](/docs/next/mayaonline.html). 
+To monitor the OpenEBS volumes and obtain corresponding logs, connect to the free SaaS service MayaOnline. See connecting to [MayaOnline](/v082/docs/next/mayaonline.html). 
 
 
 
@@ -649,11 +649,11 @@ data:
 
 ## See Also:
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v082/docs/next/architecture.html)
 
-### [Installation troubleshooting](/docs/next/troubleshooting.html)
+### [Installation troubleshooting](/v082/docs/next/troubleshooting.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v082/docs/next/usecases.html)
 
 <br>
 

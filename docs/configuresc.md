@@ -21,7 +21,7 @@ sidebar_label: Configuring StorageClasses
 
 
 
-*Note: This page describes how to create, use and maintain StorageClasses that use cStorPools. For details about StorageClasses that Jiva pools, see [Jiva user guide](/docs/next/jivaguide.html)* 
+*Note: This page describes how to create, use and maintain StorageClasses that use cStorPools. For details about StorageClasses that Jiva pools, see [Jiva user guide](/v082/docs/next/jivaguide.html)* 
 
 <br>
 
@@ -385,7 +385,7 @@ The sample service account can be found [here](https://github.com/openebs/openeb
 
 ## See Also:
 
-### [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
+### [cStor roadmap](/v082/docs/next/cstor.html#cstor-roadmap)
 
 
 

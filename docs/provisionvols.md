@@ -27,7 +27,7 @@ sidebar_label: Provisioning Volumes
 
 
 
-*Note: This page describes how to provision volumes using cStor. For details about provisioning volumes using Jiva, see [Jiva user guide](/docs/next/jivaguide.html)* 
+*Note: This page describes how to provision volumes using cStor. For details about provisioning volumes using Jiva, see [Jiva user guide](/v082/docs/next/jivaguide.html)* 
 
 <br>
 
@@ -211,7 +211,7 @@ When a PVC is deleted, the OpenEBS PV is deleted including the data in it. In St
 
 <br>
 
-[See Upgrade](/docs/next/upgrade.html)
+[See Upgrade](/v082/docs/next/upgrade.html)
 
 
 
@@ -227,11 +227,11 @@ When a PVC is deleted, the OpenEBS PV is deleted including the data in it. In St
 
 <br>
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v082/docs/next/usecases.html)
 
-### [Troubleshooting guide](/docs/next/troubleshooting.html)
+### [Troubleshooting guide](/v082/docs/next/troubleshooting.html)
 
-### [Connecting to MayaOnline](/docs/next/mayaonline.html)
+### [Connecting to MayaOnline](/v082/docs/next/mayaonline.html)
 
 <hr>
 

@@ -28,7 +28,7 @@ During installation of OpenEBS, a snapshot-controller and a snapshot-provisioner
 
 
 
-For managing snapshots with Jiva, refer to  <a href="/docs/next/jivaguide.html">Jiva user guide</a>.
+For managing snapshots with Jiva, refer to  <a href="/v082/docs/next/jivaguide.html">Jiva user guide</a>.
 
 <br>
 
@@ -138,7 +138,7 @@ This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` that we
 
 A pool instance is local to a node. A pool instance can be started with as small as one disk (in `striped` mode) or two disks (in `mirrored`) mode. cStor pool instances support thin provisioning of data, which means that provisioning of any volume size will be successful from a given cstorPool config. 
 
-However, as the actual used capacity of the pool is utilized, more disks need to be added. In 0.8.0, the feature to add more disks to pool instance is not supported. This feature is under active development. See [Roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
+However, as the actual used capacity of the pool is utilized, more disks need to be added. In 0.8.0, the feature to add more disks to pool instance is not supported. This feature is under active development. See [Roadmap](/v082/docs/next/cstor.html#cstor-roadmap) for more details.
 
 <br>
 
@@ -156,7 +156,7 @@ The steps for expanding the pool to new nodes is given below. Select the appropr
 
 <h3><a class="anchor" aria-hidden="true" id="with-disklist"></a>With specifiying diskList</h3>
 
-If you are following this approach, you should have created cStor Pool initially using the steps provided [here](/docs/next/configurepools.html#manual-mode). For expanding pool onto a new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with the required disks names under the `diskList` and update the `maxPools` count . 
+If you are following this approach, you should have created cStor Pool initially using the steps provided [here](/v082/docs/next/configurepools.html#manual-mode). For expanding pool onto a new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with the required disks names under the `diskList` and update the `maxPools` count . 
 
 
 
@@ -177,7 +177,7 @@ If you are following this approach, you should have created cStor Pool initially
 
 <h3><a class="anchor" aria-hidden="true" id="without-disklist"></a>Without specifiying diskList</h3>
 
-If you are following  this approach, you should have created cStor Pool initially using the steps provided [here](/docs/next/configurepools.html#auto-mode). For expanding pool on new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with updating the `maxPools` count. 
+If you are following  this approach, you should have created cStor Pool initially using the steps provided [here](/v082/docs/next/configurepools.html#auto-mode). For expanding pool on new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with updating the `maxPools` count. 
 
 **Step 1:** Edit the existing pool configuration spec that you originally used and apply it (OR) directly edit the in-use spec file  using `kubectl edit spc <SPC Name>`.
 
@@ -203,7 +203,7 @@ If you are following  this approach, you should have created cStor Pool initiall
 
 OpenEBS control plane does not support increasing the size of volume seamlessly. Increasing the size of a provisioned volume requires support from Kubernetes' kubelet as the existing connection has to be remounted to reflect the new volume size. This can also be tackled with the new CSI plugin where the responsibility of the mount, unmount and remount actions will be held with the vendor CSI plugin rather than the kubelet itself.
 
-OpenEBS team is working on both the CSI plugin as well as the feature to resize the provisioned volume when the PVC is patched for new volume size. See [Roadmap](/docs/next/cstor.html#cstor-roadmap) for more details.
+OpenEBS team is working on both the CSI plugin as well as the feature to resize the provisioned volume when the PVC is patched for new volume size. See [Roadmap](/v082/docs/next/cstor.html#cstor-roadmap) for more details.
 
 <br>
 
@@ -217,11 +217,11 @@ OpenEBS team is working on both the CSI plugin as well as the feature to resize 
 
 <br>
 
-### [cStor Roadmap](/docs/next/cstor.html#cstor-roadmap)
+### [cStor Roadmap](/v082/docs/next/cstor.html#cstor-roadmap)
 
-### [Understand cStorPools](/docs/next/cstor.html#cstor-pools)
+### [Understand cStorPools](/v082/docs/next/cstor.html#cstor-pools)
 
-### [Connecting to MayaOnline](/docs/next/mayaonline.html)
+### [Connecting to MayaOnline](/v082/docs/next/mayaonline.html)
 
 <br>
 

@@ -195,7 +195,7 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
    oc adm policy add-scc-to-user privileged system:serviceaccount:openebs:openebs-maya-operator
    ```
 
-2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
+2. Find the latest OpenEBS release version from [here](/v082/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
 
    ```
    wget https://openebs.github.io/charts/openebs-operator-0.8.2.yaml
@@ -453,12 +453,12 @@ As of 0.8.0, the user is allowed to create PVCs that cross the available capacit
 
 <h3><a class="anchor" aria-hidden="true" id="what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method"></a>What is the difference between cStor Pool creation using manual method and auto method?</h3>
 
-By using manual method, you must give the selected disk name which is listed by NDM. This details has to be entered in the StoragePoolClaim YAML under `diskList`. See [storage pool](/docs/next/setupstoragepools.html#by-using-manual-method) for more info. 
+By using manual method, you must give the selected disk name which is listed by NDM. This details has to be entered in the StoragePoolClaim YAML under `diskList`. See [storage pool](/v082/docs/next/setupstoragepools.html#by-using-manual-method) for more info. 
 It is also possible to change `maxPools` count and `poolType` in the StoragePoolClaim YAML. 
 Consider you have 4 nodes with 2 disks each. You can select `maxPools` count as 3, then cStor pool will create in any 3 nodes out of 4. The remaining disks belongs to 4th Node can be used for horizontal scale up in future.
 Advantage is that there is no restriction in the number of disks for the creation of cStor storage pool using `striped` or `mirrored` Type.
 
-By auto method, its not need to provide the disk details in the StoragePoolClaim YAML. You have to specify `maxPools` count to limit the storage pool creation in OpenEBS cluster and `poolType` for the type of storage pool such as Mirrored or Striped.  See [storage pool](/docs/next/setupstoragepools.html#by-using-auto-method) for more info.
+By auto method, its not need to provide the disk details in the StoragePoolClaim YAML. You have to specify `maxPools` count to limit the storage pool creation in OpenEBS cluster and `poolType` for the type of storage pool such as Mirrored or Striped.  See [storage pool](/v082/docs/next/setupstoragepools.html#by-using-auto-method) for more info.
 
 But the following are the limitations with this approach.
 
@@ -559,7 +559,7 @@ Apply the following YAML in your cluster.
 
 <h3><a class="anchor" aria-hidden="true" id="create-cstor-volume-single-disk-pool"></a>How to create a cStor volume on single cStor disk pool?</h3>
 
-You can give the maxPools count as 1 in StoragePoolClaim YAML and `replicaCount` as `1`in StorageClass YAML. In the following sample SPC and SC YAML, cStor pool is created using auto method. After applying this YAML, one cStor pool named cstor-disk will be created only in one Node and `StorageClass` named `openebs-cstor-disk`. Only requirement is that one node has at least one disk attached but unmounted. See [here](docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume) to understand more about disk mount status.
+You can give the maxPools count as 1 in StoragePoolClaim YAML and `replicaCount` as `1`in StorageClass YAML. In the following sample SPC and SC YAML, cStor pool is created using auto method. After applying this YAML, one cStor pool named cstor-disk will be created only in one Node and `StorageClass` named `openebs-cstor-disk`. Only requirement is that one node has at least one disk attached but unmounted. See [here](/v082/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume) to understand more about disk mount status.
 
 ```
 ---
@@ -714,13 +714,13 @@ Currently,NDM is not selecting partition disks for creating device resource. But
 
 ## See Also:
 
-### [Creating cStor Pool](/docs/next/configurepools.html)
+### [Creating cStor Pool](/v082/docs/next/configurepools.html)
 
-### [Provisioning cStor volumes](/docs/next/provisionvols.html)
+### [Provisioning cStor volumes](/v082/docs/next/provisionvols.html)
 
-### [BackUp and Restore](/docs/next/backup.html)
+### [BackUp and Restore](/v082/docs/next/backup.html)
 
-### [Uninstall](/docs/next/uninstall.html)
+### [Uninstall](/v082/docs/next/uninstall.html)
 
 <br>
 
