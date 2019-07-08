@@ -96,10 +96,10 @@ kubectl create clusterrolebinding  <cluster_name>-admin-binding --clusterrole=cl
 
 Verify helm is installed and helm repo is updated. See [helm docs](https://docs.helm.sh/using_helm/#from-script) for setting up helm and simple [instructions below](#setup-rbac-for-tiller-before-installing-openebs-chart) for setting up RBAC for tiller.
 
-In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace.
+In the **default installation mode**, use the following command to install OpenEBS in `openebs` namespace.
 
 ```
-helm install --namespace <custom_namespace> --name openebs stable/openebs
+helm install --namespace openebs --name openebs stable/openebs
 ```
 
 **Note:** Since Kubernetes 1.12, if any containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests).
@@ -113,6 +113,7 @@ In the **custom installation mode**, you can achieve the following advanced conf
 - Choose a set of nodes for OpenEBS control plane pods.
 - Choose a set of nodes for OpenEBS storage pool.
 - You can customise the disk filters that need to be excluded from being used.
+- You can choose custom namespace other than default namespace  `openebs`.
 
 Follow the below instructions to do any of the above configurations and then install OpenEBS through helm and values.yaml
 
