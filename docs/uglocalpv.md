@@ -394,7 +394,8 @@ Velero backup can be restored onto a new cluster or to the same cluster. An Open
 
 - Create the same namespace and StorageClass configuration of the source PVC in your destination cluster. 
 - Ensure at least one unclaimed block device is present on the destination cluster to restore OpenEBS Local PV provisioned with device.
-- If the restoration is happens on same cluster where Source PVC was created, then ensure that application and its corresponding components such as Service, PVC and PV are deleted successfully.
+- If restoration happens on a different cluster, ensure the same PVC configuration must be created. 
+- If restoration happens on the same cluster where Source PVC was created, then ensure that application and its corresponding components such as Service, PVC and PV are deleted successfully.
 
 On the target cluster, restore the application using the below command.
 
