@@ -356,7 +356,7 @@ The following output is displayed.
 
 ## Expanding Jiva Storage Volumes
 
-You can resize/expand the OpenEBS volume using the following procedure. Perform commands from step1 to step7 on Node where application pod is running with root privilege.                                                     
+You can resize/expand the OpenEBS volume using the following procedure. Perform all commands with root privilege mentioned from step1 to step7 on node where application pod is running.                                                    
 
 1. Obtain iSCSI target and disk details using the following command. 
   
