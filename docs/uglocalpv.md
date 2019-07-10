@@ -383,7 +383,7 @@ The following is a sample output.
 
 ```
 NAME             STATUS                      CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
-hostpathbkp1     Completed                   2019-06-14 14:57:01 +0530 IST   29d       default            <none>
+hostpathbkp1     Completed                   2019-06-14 14:57:01 +0530 IST   29d       default            app=minio
 ```
 
 You will get more details about the backup using the following command.
