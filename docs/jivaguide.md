@@ -21,6 +21,8 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 [Provision Sample Application with Jiva Volume](#provision-sample-application-with-jiva-volume)
 
+[Monitoring a Jiva Volume](#monitoring-a-jiva-volume)
+
 [Backup and Restore](#backup-and-restore)
 
 
@@ -144,12 +146,46 @@ Once the storage class is created, provision the volumes using the standard PVC 
     selector:
         name: percona
   ```
+  
 - Run the application using the following command.
 
   ```
   kubectl apply -f demo-percona-mysql-pvc.yaml
   ```
   The Percona application now runs inside the `gpdpool` storage pool.
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="monitoring-a-jiva-volume"></a>Monitoring a Jiva Volume</h3>
+
+By default `VolumeMonitor` is set to ON in the JIva StorageClass. Volume metrics are exported when this parameter is set to ON. Following metrics are supported by Jiva as of the current release.
+
+```
+openebs_actual_used # Actual volume size used
+openebs_connection_error_total # Total no of connection errors
+openebs_connection_retry_total # Total no of connection retry requests
+openebs_degraded_replica_count # Total no of degraded/ro replicas
+openebs_healthy_replica_count # Total no of healthy replicas
+openebs_logical_size # Logical size of volume
+openebs_parse_error_total # Total no of parsing errors
+openebs_read_block_count # Read Block count of volume
+openebs_read_time # Read time on volume
+openebs_reads # Read Input/Outputs on Volume
+openebs_sector_size # sector size of volume
+openebs_size_of_volume # Size of the volume requested
+openebs_total_replica_count # Total no of replicas connected to cas
+openebs_volume_status # Status of volume: (1, 2, 3, 4) = {Offline, Degraded, Healthy, Unknown}
+openebs_volume_uptime # Time since volume has registered
+openebs_write_block_count # Write Block count of volume
+openebs_write_time # Write time on volume
+openebs_writes # Write Input/Outputs on Volume
+```
+
+Grafana charts can be built for the above Prometheus metrics. Some metrics of OpenEBS volumes are available automatically at MayaOnline when you connect the Kubernetes cluster to it. See an example screenshot below.
+
+<img src="./" alt="OpenEBS configuration flow" style="width:100%">
+
+
 
 <h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
 
