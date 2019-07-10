@@ -359,10 +359,18 @@ kubectl -n default annotate pod/minio-deployment-7fc6cdfcdc-p6hlq backup.velero.
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="managing-backup"></a>Creating and Managing Backups</h3>
+
 Take the backup using the below command.
 
 ```
-velero backup create hostpathbkp1
+velero backup create <backup_name> -l <app-label-selector>
+```
+
+Example:
+
+
+```
+velero backup create hostpathbkp1 -l app=minio
 ```
 
 After taking backup, verify if backup is taken successfully by using following command.
