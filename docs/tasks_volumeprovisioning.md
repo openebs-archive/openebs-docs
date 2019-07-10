@@ -10,7 +10,7 @@ sidebar_label: Volume provisioning
 The following procedure must be performed for increasing number of replicas. You can increase the Jiva replica online if the current replica count is 2 or more. OpenEBS recommends you to perform the change with no load on the volume if current replica count is 1.
 
 1. Get the current  Jiva replica count using the following command.
- 
+
    ```
    kubectl get deploy
    ```
@@ -359,7 +359,7 @@ The following output is displayed.
 You can resize/expand the OpenEBS volume using the following procedure.                                                     
 
 1. Obtain iSCSI target and disk details using the following command.
-   
+  
    ```
    iscsiadm -m session -P 3
    ```
@@ -402,8 +402,14 @@ You can resize/expand the OpenEBS volume using the following procedure.
    Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful
    ```
 
-5. Get the volume ID using the following command. 
+5. Check the file system consistency using the following command. 
+  
+   ```
+   e2fsck -f /dev/sdb
+   ```
    
+6. Get the volume ID using the following command. 
+
    ```
    curl http://<Jiva_controller_ip>/v1/volumes
    ```
@@ -416,7 +422,7 @@ You can resize/expand the OpenEBS volume using the following procedure.
    {"data":[{"actions":{"revert":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=revert","shutdown":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=shutdown","snapshot":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=snapshot"},"id":"**cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==**","links":{"self":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg=="},"name":"pvc-8de2f9e7-64a3-11e8-994b000c2959d9a2","replicaCount":1,"type":"volume"}],"links":{"self":"http://10.106.254.221:9501/v1/volumes"},"resourceType":"volume","type":"collection"}
    ```
 
-6. Modify the volume capacity using the following command.
+7. Modify the volume capacity using the following command.
 
    ```
    curl -H "Content-Type: application/json" -X POST -d '{"name":"<volname>","size":"<new_size>"}' http://<Jiva_target ip>:9501/v1/volumes/<volume_id>?action=resize
@@ -426,7 +432,7 @@ You can resize/expand the OpenEBS volume using the following procedure.
    curl -H "Content-Type: application/json" -X POST -d '{"name":"pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2","size":"7G"}' http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=resize
    ```
 
-7. Get the Jiva pod details using the following command. 
+8. Get the Jiva pod details using the following command. 
    ```
    kubectl get pod
    ```
@@ -440,7 +446,7 @@ You can resize/expand the OpenEBS volume using the following procedure.
    pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq    1/1       Running   0          3h
    ```
 
-8. Restart the replica pod using following command. If replica count of the Jiva volume is more than 1, then you must delete all the replica pods of corresponding Jiva volume using the single command. 
+9. Restart the replica pod using following command. If replica count of the Jiva volume is more than 1, then you must delete all the replica pods of corresponding Jiva volume using the single command. 
    ```
    kubectl delete pod <replica_pod1> <replica_pod2> ... <replica_podn>
    ```
@@ -451,9 +457,10 @@ You can resize/expand the OpenEBS volume using the following procedure.
    Example output:
    ```
    pod "pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq" deleted
+   ```
 
-9. Perform following command from Node where application pod is running. Log in to the target using the following commands.
-    
+10. Perform following command from Node where application pod is running. Log in to the target using the following commands.
+
    ```
    iscsiadm -m discovery -t st -p <Jiva_target_ip>:3260
    ```
@@ -478,23 +485,23 @@ You can resize/expand the OpenEBS volume using the following procedure.
    Login to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful.
    ```
 
-10. Check the file system consistency using the following command. sdc is the device after logging.
+11. Verify the newly added disk details using the following command.
 
     ```
-    e2fsck -f /dev/sdc
+    lsblk
     ```
 
-11. Expand the file system using the following command.
+12. Expand the file system using the following command. In the following example, `/dev/sdc` is the newly added disk with expanded size.
 
     ```
     resize2fs /dev/sdc  
     ```
 
-12. Mount the file system using the following command.
- 
+13. Mount the file system using the following command. 
+
     ``` 
     mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.99.197.30:3260-iqn.2016-09.com.openebs.jiva:pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2-lun-0
-
+    
     mount /dev/sdc /var/lib/kubelet/pods/3d71c842-6893-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-3d6eb5dd-6893-11e8-994b-000c2959d9a2
     ```
 
@@ -502,7 +509,7 @@ You can resize/expand the OpenEBS volume using the following procedure.
 13. Restart the application pod using the following command.
 
     ```
-    kubectl delete pod percona-b98f87dbd-nqssn
+    kubectl delete pod percona
     ```
 
 
