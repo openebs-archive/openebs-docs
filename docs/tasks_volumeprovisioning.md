@@ -425,7 +425,10 @@ You can resize/expand the OpenEBS volume using the following procedure.
    ```
    curl -H "Content-Type: application/json" -X POST -d '{"name":"pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2","size":"7G"}' http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=resize
    ```
-
+   Example output:
+   ```
+   {"actions":{"revert":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=revert","shutdown":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=shutdown","snapshot":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=snapshot"},"id":"cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==","links":{"self":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg=="},"name":"pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2","readOnly":"false","replicaCount":1,"type":"volume"}
+   ```
 8. Get the Jiva pod details using the following command. 
    ```
    kubectl get pod
@@ -492,7 +495,7 @@ You can resize/expand the OpenEBS volume using the following procedure.
 11. Check the file system consistency using the following command. 
     
     ```
-      e2fsck -f <expanded_device_path>
+    e2fsck -f <expanded_device_path>
     ```
     In following example, `/dev/sdc` is the newly expanded disk.
 
