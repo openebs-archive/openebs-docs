@@ -183,7 +183,7 @@ openebs_writes # Write Input/Outputs on Volume
 
 Grafana charts can be built for the above Prometheus metrics. Some metrics of OpenEBS volumes are available automatically at MayaOnline when you connect the Kubernetes cluster to it. See an example screenshot below.
 
-![jiva-monitor](/assets/svg/volume-monitor.svg)
+![jiva-monitor](/docs/assets/svg/volume-monitor.svg)
 
 
 
