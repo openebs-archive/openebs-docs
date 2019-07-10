@@ -188,7 +188,7 @@ Verify using the following command if restic pod and Velero pod are running afte
 kubectl get pod -n velero
 ```
 
-The following is an example output.
+The following is an example output in a 3 Node cluster.
 
 ```
 NAME                    READY   STATUS    RESTARTS   AGE
@@ -225,12 +225,17 @@ If application spec contains the volume name as mentioned below, then use volume
 And if the application pod name is  `percona-7b64956695-dk95r` , use the following command to annotate the application.
 
 ```
-kubectl -n default annotate pod/percona-7b64956695-dk95r backup.velero.io/backup-volumes=demo-vol1
+kubectl -n default annotate pod/percona-7b64956695-dk95r backup.velero.io/backup-volumes=demo-vol1 
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="managing-backup"></a>Creating and Managing Backups</h3>
-
 Take the backup using the below command. Here you should add the selector for avoiding Jiva controller and replica deployment from taking backup.
+
+```
+velero backup create <backup_name> --selector '!openebs.io/controller,!openebs.io/replica'
+```
+
+Example:
 
 ```
 velero backup create hostpathbkp2 --selector '!openebs.io/controller,!openebs.io/replica'
@@ -306,7 +311,7 @@ kubectl get pvc -n <namespace>
 Verify PV status using the following command.
 
 ```
-kubectl get pv -n <namespace>
+kubectl get pv
 ```
 
 

@@ -318,7 +318,7 @@ Verify using the following command if restic pod and Velero pod are running afte
 kubectl get pod -n velero
 ```
 
-The following is an example output.
+The following is an example output in a single node cluster.
 
 ```
 NAME                      READY   STATUS    RESTARTS   AGE
