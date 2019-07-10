@@ -100,7 +100,7 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
      labels:
        kubernetes.io/hostname: <host name in which disk/blockdevice is attached> # like gke-openebs-user-default-pool-044afcb8-bmc0
        ndm.io/managed: "false" # for manual disk creation put false
-       ndm.io/blockdevice-type: <blockdevice type> # like disk, partition, sparse file
+       ndm.io/blockdevice-type: blockdevice
    status:
      claimState: Unclaimed
      state: Active
@@ -130,14 +130,12 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
 
    - kubernetes.io/hostname
      - Hostname where the blockdevice is attached.
-   - ndm.io/blockdevice-type
-     - The value should be `partition`
    - storage
    - links
      - This field should be filled for by-id and by-path. These details can be obtained from worker node by running the following command `udevadm info -q property -n <device_path>` 
    - path
      - The value should be like `/dev/sdb1` .
-
+   
 3. Apply the modified YAML file to create the blockdevice CR for the provided partitioned device path.
 
 4. Repeat the same steps for each partitioned device and create blockdevice CR for each device.
