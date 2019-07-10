@@ -455,47 +455,52 @@ You can resize/expand the OpenEBS volume using the following procedure.
 
 9. Perform following command from Node where application pod is running. Log in to the target using the following commands.
 
-  ```
-  iscsiadm -m discovery -t st -p <Jiva_target_ip>:3260
-  ```
+   ```
+   iscsiadm -m discovery -t st -p <Jiva_target_ip>:3260
+   ```
 
-  Example:
+   Example:
 
-  ```
-  iscsiadm -m discovery -t st -p 10.106.254.221:3260
-  ```
+   ```
+   iscsiadm -m discovery -t st -p 10.106.254.221:3260
+   ```
 
-  Example output:
-  ```
-  10.106.254.221:3260,1 iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2
-  ```
-  Now, Login to the target using the following command.
-  ```
-  iscsiadm -m node -T <iqn of target> -p <Jiva_target_ip>:3260 -l
-  ```
-  Example:
-  ```
-  iscsiadm -m node -T iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 -p 10.106.254.221:3260 -l
-  ```
-  Example output:
-  ```
-  Logging in to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] (multiple)
-  Login to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful.
-  ```
+   Example output:
+   ```
+   10.106.254.221:3260,1 iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2
+   ```
+   Now, Login to the target using the following command.
+   ```
+   iscsiadm -m node -T <iqn of target> -p <Jiva_target_ip>:3260 -l
+   ```
+   Example:
+   ```
+   iscsiadm -m node -T iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 -p 10.106.254.221:3260 -l
+   ```
+   Example output:
+   ```
+   Logging in to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] (multiple)
+   Login to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful.
+   ```
 
 10. Verify the newly added disk details using the following command.
 
-   ```
-   lsblk
-   ```
+    ```
+    lsblk
+    ```
 
 11. Check the file system consistency using the following command. 
+    
+    ```
+      e2fsck -f <expanded_device_path>
+    ```
+    In following example, `/dev/sdc` is the newly expanded disk.
 
     ```
-    e2fsck -f /dev/sdb
+    e2fsck -f /dev/sdc
     ```
 
-12. Expand the file system using the following command. In the following example, `/dev/sdc` is the newly added disk with expanded size.
+12. Expand the file system using the following command. In the following example, `/dev/sdc` is the newly expanded disk.
 
     ```
     resize2fs /dev/sdc  
