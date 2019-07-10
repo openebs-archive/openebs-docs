@@ -391,10 +391,14 @@ You can resize/expand the OpenEBS volume using the following procedure.
    umount /var/lib/kubelet/pods/8de04c10-64a3-11e8-994b000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2
    ```
 
-4. Logout from the iSCSI target using the following command.
+4. Logout from the particualr iSCSI target using the following command.
 
    ```
-   iscsiadm -m node -u
+   iscsiadm -m node -u -T <target_iqn>
+   ```
+   Example:
+   ```
+   iscsiadm -m node -u -T iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2
    ```
    Example Output:
    ```
