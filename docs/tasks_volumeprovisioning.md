@@ -359,13 +359,18 @@ The following output is displayed.
 You can resize/expand the OpenEBS volume using the following procedure.                                                     
 
 1. Obtain iSCSI target and disk details using the following command.
-
+   
    ```
    iscsiadm -m session -P 3
-   Target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 (non-flash)
-           Current Portal: 10.106.254.221:3260,1
-           Persistent Portal: 10.106.254.221:3260,1                  
-           Attached scsi disk sdb          State: running
+   ```
+   Example snippet of Output:
+   ```
+                ************************
+                Attached SCSI devices:
+                ************************
+                Host Number: 1  State: running
+                scsi1 Channel 00 Id 0 Lun: 0
+                        Attached scsi disk sdb          State: running
    ```
 
 2. Check the mount path on disk sdb using the following command.
@@ -373,7 +378,7 @@ You can resize/expand the OpenEBS volume using the following procedure.
    ```
    mount | grep /dev/sdb | more
    ```
-   Example Output:
+   Example snippet of Output:
    ```
    /dev/sdb on /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.106.254.221:3260-iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7- 64a3-11e8-994b-000c2959d9a2-lun-0 type ext4 (rw,relatime,data=ordered)
    /dev/sdb on /var/lib/kubelet/pods/8de04c10-64a3-11e8-994b-000c2959d9a2/volumes/kubernetes.io~iscsi/pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 type ext4 (rw,relatime,data=ordered)
@@ -397,8 +402,12 @@ You can resize/expand the OpenEBS volume using the following procedure.
    Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2, portal: 10.106.254.221,3260] successful
    ```
 
-5. Get the volume ID using the following command.
-
+5. Get the volume ID using the following command. 
+   
+   ```
+   curl http://<Jiva_controller_ip>/v1/volumes
+   ```
+   Example:
    ```
    curl http://10.106.254.221:9501/v1/volumes
    ```
@@ -410,7 +419,7 @@ You can resize/expand the OpenEBS volume using the following procedure.
 6. Modify the volume capacity using the following command.
 
    ```
-   curl -H "Content-Type: application/json" -X POST -d '{"name":"<volname>","size":"<size>"}' http://<target ip>:9501/v1/volumes/<id>?action=resize
+   curl -H "Content-Type: application/json" -X POST -d '{"name":"<volname>","size":"<new_size>"}' http://<Jiva_target ip>:9501/v1/volumes/<volume_id>?action=resize
    ```
    Example:
    ```
@@ -431,7 +440,11 @@ You can resize/expand the OpenEBS volume using the following procedure.
    pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq    1/1       Running   0          3h
    ```
 
-8. Restart the replica pod. You must delete all the replica pods of corresponding Jiva volume using a single command. In the above example, onle one replica is present.
+8. Restart the replica pod using following command. If replica count of the Jiva volume is more than 1, then you must delete all the replica pods of corresponding Jiva volume using the single command. 
+   ```
+   kubectl delete pod <replica_pod1> <replica_pod2> ... <replica_podn>
+   ```
+   In the above example, only one replica is present.This can be deleted using the foloowing command.
    ```
    kubectl delete pod pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq
    ```
@@ -439,16 +452,23 @@ You can resize/expand the OpenEBS volume using the following procedure.
    ```
    pod "pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq" deleted
 
-9. Log in to the target using the following commands.
-
+9. Perform following command from Node where application pod is running. Log in to the target using the following commands.
+    
    ```
-   iscsiadm -m discovery -t st -p 10.106.254.221:326
+   iscsiadm -m discovery -t st -p <Jiva_target_ip>:3260
+   ```
+   ```
+   iscsiadm -m discovery -t st -p 10.106.254.221:3260
    ```
    Example output:
    ```
    10.106.254.221:3260,1 iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2
    ```
-   Now, Login to the taregt using the following command.
+   Now, Login to the target using the following command.
+   ```
+   iscsiadm -m node -T <iqn of target> -p <Jiva_target_ip>:3260 -l
+   ```
+   Example:
    ```
    iscsiadm -m node -T iqn.2016-09.com.openebs.jiva:pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2 -p 10.106.254.221:3260 -l
    ```
