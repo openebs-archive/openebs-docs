@@ -356,9 +356,9 @@ The following output is displayed.
 
 ## Expanding Jiva Storage Volumes
 
-You can resize/expand the OpenEBS volume using the following procedure.                                                     
+You can resize/expand the OpenEBS volume using the following procedure. Perform commands from step1 to step7 on Node where application pod is running with root privilege.                                                     
 
-1. Obtain iSCSI target and disk details using the following command.
+1. Obtain iSCSI target and disk details using the following command. 
   
    ```
    iscsiadm -m session -P 3
@@ -419,7 +419,8 @@ You can resize/expand the OpenEBS volume using the following procedure.
    ```
    {"data":[{"actions":{"revert":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=revert","shutdown":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=shutdown","snapshot":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=snapshot"},"id":"**cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==**","links":{"self":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg=="},"name":"pvc-8de2f9e7-64a3-11e8-994b000c2959d9a2","replicaCount":1,"type":"volume"}],"links":{"self":"http://10.106.254.221:9501/v1/volumes"},"resourceType":"volume","type":"collection"}
    ```
-
+   From above example output volume id is `cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==`, Jiva target Ip is `10.106.254.221`, volume name is `pvc-8de2f9e7-64a3-11e8-994b000c2959d9a2`. These parameters need to be used in next step.
+   
 7. Modify the volume capacity using the following command.
 
    ```
@@ -433,6 +434,7 @@ You can resize/expand the OpenEBS volume using the following procedure.
    ```
    {"actions":{"revert":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=revert","shutdown":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=shutdown","snapshot":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==?action=snapshot"},"id":"cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg==","links":{"self":"http://10.106.254.221:9501/v1/volumes/cHZjLThkZTJmOWU3LTY0YTMtMTFlOC05OTRiLTAwMGMyOTU5ZDlhMg=="},"name":"pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2","readOnly":"false","replicaCount":1,"type":"volume"}
    ```
+ 
 8. Get the Jiva pod details using the following command. 
    ```
    kubectl get pod
@@ -460,7 +462,7 @@ You can resize/expand the OpenEBS volume using the following procedure.
    pod "pvc-8de2f9e7-64a3-11e8-994b-000c2959d9a2-rep-5f4d48987c-rmdbq" deleted
    ```
 
-9. Perform following command from Node where application pod is running. Log in to the target using the following commands.
+9. Perform following commands from Node where application pod is running. Log in to the target using the following commands.
 
    ```
    iscsiadm -m discovery -t st -p <Jiva_target_ip>:3260
