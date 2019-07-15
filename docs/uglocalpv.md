@@ -292,6 +292,7 @@ OpenEBS volume can be backed up and restored along with the application using ve
 - Create required storage provider configuration to store the backup data.
 - Create required storage class on destination cluster.
 - Annotate required application pod that contains a volume to back up.
+- Add a common label to all the resources associated to the application that you want to backup. For example, add an application label selector in associated components such as PVC,SVC etc.
 
 <h4><a class="anchor" aria-hidden="true" id="overview"></a>Overview</h3>
 
@@ -373,6 +374,10 @@ Example:
 velero backup create hostpathbkp1 -l app=minio
 ```
 
+The above command shown in example will take backup of all resources which has a common label `app=minio`.  
+
+**Note:** You can use `--selector` as a flag in backup command  to filter specific resources or use a combo of `--include-namespaces` and `--exclude-resources` to exclude specific resources in the specified namespace. More details can be read from [here](https://heptio.github.io/velero/v0.11.0/api-types/backup.html).
+
 After taking backup, verify if backup is taken successfully by using following command.
 
 ```
@@ -400,11 +405,8 @@ Velero backup can be restored onto a new cluster or to the same cluster. An Open
 
 **Prerequisites**
 
-- Ensure the same namespace and StorageClass configuration of the source PVC is created in your destination cluster. 
+- Ensure same namespace, StorageClass configuration and PVC configuration of the source PVC must be created in your destination cluster. 
 - Ensure at least one unclaimed block device is present on the destination to restore OpenEBS Local PV provisioned with device.
-- If restoration happens on a different cluster, then you should create the same PVC configuration on the destination.
-- If restoration happens on different node in the same cluster, then ensure that old configuration of application and its corresponding components such as Service, PVC and PV are deleted successfully. Also you should create the same PVC configuration on the destination node.
-- If restoration happens on the same node where Source PVC was created, then ensure that old configuration of application and its corresponding components such as Service, PVC and PV are deleted successfully.
 
 On the target cluster, restore the application using the below command.
 
