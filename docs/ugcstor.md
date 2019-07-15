@@ -572,7 +572,7 @@ The cStorStoragePool can be created by specifying the blockDeviceList. The follo
 
 **Step1:**
 
-Get all the blockdevices attached in the cluster with the following command. Modify the following command  with appropriate namespace where the openebs is installed. The default namespace where openebs is getting installed is `openebs`.
+Get all the blockdevices attached in the cluster with the following command. Modify the following command  with appropriate namespace where the OpenEBS is installed. The default namespace where OpenEBS is getting installed is `openebs`.
 
 ```
 kubectl get blockdevice -n <openebs_namespace>
@@ -604,6 +604,8 @@ kubectl describe blockdevice blockdevice-77f834edba45b03318d9de5b79af0734 -n ope
 ```
 
 From the output, you will get the hostname and other blockdevice details such as State,Path,Claim State,Capacity etc.
+
+**Note:** Identify block devices which are unclaimed, unmounted on node and does not contain any filesystem. The above command will help to find these information. More information about the disk mount status on node can be read from [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume).
 
 **Step2:** 
 
@@ -697,7 +699,7 @@ NAME ALLOCATED FREE CAPACITY STATUS TYPE AGE
 cstor-disk-4tfw 77K 39.7G 39.8G Healthy striped 42s
 ```
 
-**Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` . More details can be found [here](/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node).
+**Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` . More details can be found [here](/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node).  If you find any issues, check common issues added in [troubleshooting](/docs/next/troubleshooting.html) section.
 
 <br>
 
