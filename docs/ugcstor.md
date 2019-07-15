@@ -247,6 +247,7 @@ OpenEBS volume can be backed up and restored along with the application using Op
 - Latest tested Velero version is 1.0.0.
 - Create required storage provider configuration to store the backup.
 - Create required OpenEBS storage pools and storage classes on destination cluster.
+- Add a common label to all the resources associated to the application that you want to backup. For example, add an application label selector in associated components such as PVC,SVC etc.
 
 <h4><a class="anchor" aria-hidden="true" id="install-velero"></a>Install Velero (Formerly known as ARK)</h3>
 
@@ -322,13 +323,15 @@ Take the backup using the below command. Here, you need to get the label of the 
 velero backup create <backup-name> -l app=<app-label-selector> --snapshot-volumes --volume-snapshot-locations=<SNAPSHOT_LOCATION>
 ```
 
-**Note**: `SNAPSHOT_LOCATION` should be the same as you configured in the  `06-volumesnapshotlocation.yaml`.
+**Note**: `SNAPSHOT_LOCATION` should be the same as you configured in the  `06-volumesnapshotlocation.yaml`. You can use `--selector` as a flag in backup command  to filter specific resources or use a combo of `--include-namespaces` and `--exclude-resources` to exclude specific resources in the specified namespace. More details can be read from [here](https://heptio.github.io/velero/v0.11.0/api-types/backup.html).
 
 Example: 
 
 ```
 velero backup create new1 -l app=minio --snapshot-volumes --volume-snapshot-locations=gcp-default
 ```
+
+The above command shown in example will take backup of all resources which has a common label `app=minio`.  
 
 After taking backup, verify if backup is taken successfully by using following command.
 
@@ -364,13 +367,12 @@ Velero backup can be restored onto a new cluster or to the same cluster. An Open
 **Prerequisites**
 
 - Create the same namespace and StorageClass configuration of the source PVC in your target cluster. 
-
-If the restoration happens on same cluster where Source PVC was created, then ensure that application and its corresponding components such as Service, PVC,PV and cStorVolumeReplicas are deleted successfully.
+- If the restoration happens on same cluster where Source PVC was created, then ensure that application and its corresponding components such as Service, PVC,PV and cStorVolumeReplicas are deleted successfully.
 
 On the target cluster, restore the application using the below command. 
 
 ```
-velero restore create <restore-name> --from-backup <backup-name> --restore-volumes=true -l app=<app-label-selector> 
+velero restore create <restore-name> --from-backup <backup-name> --restore-volumes=true
 ```
 
 Example:
