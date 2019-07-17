@@ -468,7 +468,7 @@ Below table lists the storage policies supported by Jiva. These policies can be 
 
 
 
-| CSTOR STORAGE POLICY                                         | MANDATORY | DEFAULT                           | PURPOSE                                                      |
+| JIVA STORAGE POLICY                                          | MANDATORY | DEFAULT                           | PURPOSE                                                      |
 | ------------------------------------------------------------ | --------- | --------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                 | Defines the number of Jiva volume replicas                   |
 | [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.0.0 | To use particular Jiva replica image                         |
