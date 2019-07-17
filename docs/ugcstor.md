@@ -609,7 +609,7 @@ From the output, you will get the hostname and other blockdevice details such as
 
 **Step2:** 
 
-Create a StoragePoolClaim configuration YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is set to `2Gi` and `PoolResourceLimits` value is set to `4Gi`. The resources will be shared for all the volume replicas that resides on the pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for a better performance. These values can be changed as per the Node configuration for better performance. Refer [setting pool policies](#setting-pool-policies) for more details on the pool policies applicable for cStor.
+Create a StoragePoolClaim configuration YAML file called `cstor-pool1-config.yaml` with the following content. In the following YAML, `PoolResourceRequests` value is set to `2Gi` and `PoolResourceLimits` value is set to `4Gi`. The resources will be shared for all the volume replicas that reside on a pool. The value of these resources can be 2Gi to 4Gi per pool on a given node for better performance. These values can be changed as per the Node configuration for better performance. Refer [setting pool policies](#setting-pool-policies) for more details on the pool policies applicable for cStor.
 
 ```
 #Use the following YAMLs to create a cStor Storage Pool.
@@ -644,21 +644,21 @@ In the above file, change the following parameters as required.
 
   This field  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`.
 
-  Note: In OpenEBS, the pool instance do not extend beyond a node. The replication happens at volume level but not at pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
+  Note: In OpenEBS, the pool instance does not extend beyond a node. The replication happens at volume level but not at the pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
 - `blockDeviceList`
 
-  Select the list of unclaimed blockDevice CRs in each participating nodes and enter them under `blockDeviceList`. 
+  Select the list of selected unclaimed blockDevice CRs which are unmounted and does not contain a filesystem in each participating nodes and enter them under `blockDeviceList`. 
 
   To get the list of blockDevice CRs, use `kubectl get blockdevice -n openebs`. 
 
-  You must enter all the unclaimed blockDevice CRs manually together from the selected nodes. 
+  You must enter all selected blockDevice CRs manually together from the selected nodes. 
 
   When the `poolType` = `mirrored` , ensure the blockDevice CRs selected from each node are in even number.  The data is striped across mirrors. For example, if 4x1TB blockDevice are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on `node1` is 2TB. 
 
-  When the `pooltype` = `striped` the number of blockDevice CRs from each node can be in any number, the data is striped across each blockDevice. For example, if 4x1TB blockDevices are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on that `node1` is 4TB. 
+  When the `poolType` = `striped` the number of blockDevice CRs from each node can be in any number, the data is striped across each blockDevice. For example, if 4x1TB blockDevices are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on that `node1` is 4TB. 
 
-  The number of selected blockDevice CRs across nodes need not be same.  Unclaimed blockDevice CRs can be added to the pool spec dynamically as the used capacity gets filled up. 
+  The number of selected blockDevice CRs across nodes need not be the same.  Unclaimed blockDevice CRs can be added to the pool spec dynamically as the used capacity gets filled up. 
 
 
 - `type`
@@ -696,8 +696,32 @@ The following is an example output.
 
 ```
 NAME ALLOCATED FREE CAPACITY STATUS TYPE AGE
-cstor-disk-4tfw 77K 39.7G 39.8G Healthy striped 42s
+cstor-disk-4blm 77K 39.7G 39.8G Healthy striped 27s
+cstor-disk-4pfu 77K 39.7G 39.8G Healthy striped 26s
+cstor-disk-u1pn 77K 39.7G 39.8G Healthy striped 27s
 ```
+
+Verify if cStor pool pods are running using the following command.
+
+```
+kubectl get pod -n <openebs_installed_namespace> | grep -i <spc_name>
+```
+
+Example:
+
+```
+kubectl get pod -n openebs | grep cstor-disk
+```
+
+Example Output:
+
+```
+cstor-disk-4blm-5f86b8c6b-b24cq 3/3 Running 0 113s
+cstor-disk-4pfu-58b8c77655-6wpl6 3/3 Running 0 112s
+cstor-disk-u1pn-6dffdf6d7f-j7fsx 3/3 Running 0 113s
+```
+
+If all pods are showing are running, then you can use these cStor pools for creating cStor volumes.
 
 **Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` . More details can be found [here](/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node).  If you find any issues, check common issues added in [troubleshooting](/docs/next/troubleshooting.html) section.
 
