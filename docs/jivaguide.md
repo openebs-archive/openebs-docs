@@ -21,6 +21,8 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 [Provision Sample Application with Jiva Volume](#provision-sample-application-with-jiva-volume)
 
+[Monitoring a Jiva Volume](#monitoring-a-jiva-volume)
+
 [Backup and Restore](#backup-and-restore)
 
 
@@ -144,12 +146,46 @@ Once the storage class is created, provision the volumes using the standard PVC 
     selector:
         name: percona
   ```
+  
 - Run the application using the following command.
 
   ```
   kubectl apply -f demo-percona-mysql-pvc.yaml
   ```
   The Percona application now runs inside the `gpdpool` storage pool.
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="monitoring-a-jiva-volume"></a>Monitoring a Jiva Volume</h3>
+
+By default `VolumeMonitor` is set to ON in the JIva StorageClass. Volume metrics are exported when this parameter is set to ON. Following metrics are supported by Jiva as of the current release.
+
+```
+openebs_actual_used # Actual volume size used
+openebs_connection_error_total # Total no of connection errors
+openebs_connection_retry_total # Total no of connection retry requests
+openebs_degraded_replica_count # Total no of degraded/ro replicas
+openebs_healthy_replica_count # Total no of healthy replicas
+openebs_logical_size # Logical size of volume
+openebs_parse_error_total # Total no of parsing errors
+openebs_read_block_count # Read Block count of volume
+openebs_read_time # Read time on volume
+openebs_reads # Read Input/Outputs on Volume
+openebs_sector_size # sector size of volume
+openebs_size_of_volume # Size of the volume requested
+openebs_total_replica_count # Total no of replicas connected to cas
+openebs_volume_status # Status of volume: (1, 2, 3, 4) = {Offline, Degraded, Healthy, Unknown}
+openebs_volume_uptime # Time since volume has registered
+openebs_write_block_count # Write Block count of volume
+openebs_write_time # Write time on volume
+openebs_writes # Write Input/Outputs on Volume
+```
+
+Grafana charts can be built for the above Prometheus metrics. Some metrics of OpenEBS volumes are available automatically at MayaOnline when you connect the Kubernetes cluster to it. See an example screenshot below.
+
+![jiva-monitor](/docs/assets/svg/volume-monitor.svg)
+
+
 
 <h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
 
@@ -188,7 +224,7 @@ Verify using the following command if restic pod and Velero pod are running afte
 kubectl get pod -n velero
 ```
 
-The following is an example output.
+The following is an example output in a 3 Node cluster.
 
 ```
 NAME                    READY   STATUS    RESTARTS   AGE
@@ -225,12 +261,17 @@ If application spec contains the volume name as mentioned below, then use volume
 And if the application pod name is  `percona-7b64956695-dk95r` , use the following command to annotate the application.
 
 ```
-kubectl -n default annotate pod/percona-7b64956695-dk95r backup.velero.io/backup-volumes=demo-vol1
+kubectl -n default annotate pod/percona-7b64956695-dk95r backup.velero.io/backup-volumes=demo-vol1 
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="managing-backup"></a>Creating and Managing Backups</h3>
-
 Take the backup using the below command. Here you should add the selector for avoiding Jiva controller and replica deployment from taking backup.
+
+```
+velero backup create <backup_name> --selector '!openebs.io/controller,!openebs.io/replica'
+```
+
+Example:
 
 ```
 velero backup create hostpathbkp2 --selector '!openebs.io/controller,!openebs.io/replica'
@@ -306,7 +347,7 @@ kubectl get pvc -n <namespace>
 Verify PV status using the following command.
 
 ```
-kubectl get pv -n <namespace>
+kubectl get pv
 ```
 
 
@@ -427,7 +468,7 @@ Below table lists the storage policies supported by Jiva. These policies can be 
 
 
 
-| CSTOR STORAGE POLICY                                         | MANDATORY | DEFAULT                           | PURPOSE                                                      |
+| JIVA STORAGE POLICY                                          | MANDATORY | DEFAULT                           | PURPOSE                                                      |
 | ------------------------------------------------------------ | --------- | --------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                 | Defines the number of Jiva volume replicas                   |
 | [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.0.0 | To use particular Jiva replica image                         |

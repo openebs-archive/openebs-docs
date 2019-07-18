@@ -292,6 +292,7 @@ OpenEBS volume can be backed up and restored along with the application using ve
 - Create required storage provider configuration to store the backup data.
 - Create required storage class on destination cluster.
 - Annotate required application pod that contains a volume to back up.
+- Add a common label to all the resources associated to the application that you want to backup. For example, add an application label selector in associated components such as PVC,SVC etc.
 
 <h4><a class="anchor" aria-hidden="true" id="overview"></a>Overview</h3>
 
@@ -318,7 +319,7 @@ Verify using the following command if restic pod and Velero pod are running afte
 kubectl get pod -n velero
 ```
 
-The following is an example output.
+The following is an example output in a single node cluster.
 
 ```
 NAME                      READY   STATUS    RESTARTS   AGE
@@ -359,11 +360,23 @@ kubectl -n default annotate pod/minio-deployment-7fc6cdfcdc-p6hlq backup.velero.
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="managing-backup"></a>Creating and Managing Backups</h3>
+
 Take the backup using the below command.
 
 ```
-velero backup create hostpathbkp1
+velero backup create <backup_name> -l <app-label-selector>
 ```
+
+Example:
+
+
+```
+velero backup create hostpathbkp1 -l app=minio
+```
+
+The above command shown in example will take backup of all resources which has a common label `app=minio`.  
+
+**Note:** You can use `--selector` as a flag in backup command  to filter specific resources or use a combo of `--include-namespaces` and `--exclude-resources` to exclude specific resources in the specified namespace. More details can be read from [here](https://heptio.github.io/velero/v0.11.0/api-types/backup.html).
 
 After taking backup, verify if backup is taken successfully by using following command.
 
@@ -375,7 +388,7 @@ The following is a sample output.
 
 ```
 NAME             STATUS                      CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
-hostpathbkp1     Completed                   2019-06-14 14:57:01 +0530 IST   29d       default            <none>
+hostpathbkp1     Completed                   2019-06-14 14:57:01 +0530 IST   29d       default            app=minio
 ```
 
 You will get more details about the backup using the following command.
@@ -388,13 +401,12 @@ Once the backup is completed you should see the `Phase` marked as `Completed` in
 
 <h4><a class="anchor" aria-hidden="true" id="steps-for-restore"></a>Steps for Restore</h3>
 
-Velero backup can be restored onto a new cluster or to the same cluster. An OpenEBS PVC *with the same name as the original PVC* will be created and application will run using the restored OpenEBS volume.
+Velero backup can be restored onto a new cluster or to the same cluster. An OpenEBS PV *with the same name as the original PV* will be created and application will run using the restored OpenEBS volume.
 
 **Prerequisites**
 
-- Create the same namespace and StorageClass configuration of the source PVC in your destination cluster. 
-- Ensure at least one unclaimed block device is present on the destination cluster to restore OpenEBS Local PV provisioned with device.
-- If the restoration is happens on same cluster where Source PVC was created, then ensure that application and its corresponding components such as Service, PVC and PV are deleted successfully.
+- Ensure same namespace, StorageClass configuration and PVC configuration of the source PVC must be created in your destination cluster. 
+- Ensure at least one unclaimed block device is present on the destination to restore OpenEBS Local PV provisioned with device.
 
 On the target cluster, restore the application using the below command.
 
