@@ -58,25 +58,27 @@ kubectl create ns <ns-nfs-wordpress1>
 
 Deploy NFS server provisioner into the above namespace using stable helm chart. Pass the following main parameter values. 
 
- - OpenEBS StorageClass to be used for the persistent data storage
- - NFS StorageClass to be created which can be used by the web application PVCs
- - Namespace for the NFS server provisioner which you have created in the previous section.
+ - **namespace**:  Namespace for the NFS server provisioner which you have created in the previous section.
+ - **name:** Release name for helm installation.
+ - **persistence.storageClass:** StorageClass used for provisioning cStor volume.
+ - **persistence.size:** cStor volume size which will be used for running nfs provisioner.
+ - **storageClass.name:** Provide a name for NFS StorageClass to be created which can be used by the web application PVCs.
 
 ```
- helm install stable/nfs-server-provisioner --namespace=<ns-nfs-wordpress1> --name=<provisioner-name> --set=persistence.enabled=true,persistence.storageClass=openebs-cstor-sparse,persistence.size=5Gi,storageClass.name=<nfs-sc-name>
+ helm install stable/nfs-server-provisioner --namespace=<ns-nfs-wordpress1> --name=<release-name> --set=persistence.enabled=true,persistence.storageClass=<openebs-cstor-sc>,persistence.size=<cStor-volume-size>,storageClass.name=<nfs-sc-name>,storageClass.provisionerName=openebs.io/nfs
 ```
 
 An example helm install command is
 
-<font color="maroon" >```helm install stable/nfs-server-provisioner --namespace=nfs-wp-provisioner --name=openebs-nfs-wordpress --set=persistence.enabled=true,persistence.storageClass=openebs-sc-cstor-pool1,persistence.size=5Gi,storageClass.name=wordpress-nfs-sc1```</font>
+```
+helm install stable/nfs-server-provisioner --namespace=nfs-wp-provisioner --name=openebs-nfs-wordpress --set=persistence.enabled=true,persistence.storageClass=openebs-cstor-dis,persistence.size=5Gi,storageClass.name=wordpress-nfs-sc1,storageClass.provisionerName=openebs.io/nfs
+```
 
 <br>
 
 **Provision RWX volume using the PVC**
 
-Use the above storage class and create a new PVC and mount it inside the pod at a required mount point.
-
-
+Use the StorageClass which is created in above command and create a new PVC and mount it inside the pod at a required mount point.
 
 <br>
 
