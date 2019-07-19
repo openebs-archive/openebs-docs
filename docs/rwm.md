@@ -42,7 +42,7 @@ Select or <a href="/docs/next/ugcstor.html#creating-cStor-storage-pools">create 
 
 **Select or create a cStor storage Class**
 
-<a href="/docs/next/ugcstor.html#creating-cStor-storage-class">Create a storage class</a> to point to the above selected pool and also select number of replicas and default size of the volume
+<a href="/docs/next/ugcstor.html#creating-cStor-storage-class">Create a storage class</a> to point to the above selected pool and also select number of replicas and default size of the volume. 
 
 <br>
 
@@ -74,11 +74,13 @@ An example helm install command is
 helm install stable/nfs-server-provisioner --namespace=nfs-wp-provisioner --name=openebs-nfs-wordpress --set=persistence.enabled=true,persistence.storageClass=openebs-cstor-dis,persistence.size=5Gi,storageClass.name=wordpress-nfs-sc1,storageClass.provisionerName=openebs.io/nfs
 ```
 
+**Note:**  It is recommended that the OpenEBS storage class specifies 10% more space than what is required by the RWM PVC. For example, if RWM PVC requires 100G, then provision cStor volume with 110G.
+
 <br>
 
 **Provision RWX volume using the PVC**
 
-Use the StorageClass which is created in above command and create a new PVC and mount it inside the pod at a required mount point.
+Use the StorageClass which is created in above command and create a new PVC and use the volume in your applications.
 
 <br>
 
