@@ -22,6 +22,8 @@ This user guide section provides the operations need to performed by the User an
 
 [Deleting a cStor Volume](#deleting-a-cStor-volume)
 
+[Patching pool deployment by adding/modifying resource limit and requests](#patching-pool-deployment-resource-limit)
+
 
 
 <font size="5">Admin operations</font>
@@ -53,7 +55,6 @@ This user guide section provides the operations need to performed by the User an
 
 
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>User Operations</h2>
-
 <h3><a class="anchor" aria-hidden="true" id="provisioning-a-cStor-volume"></a>Provisioning a cStor volume</h3>
 For provisioning a cStor Volume, it requires a cStor Storage Pool and a StorageClass. The configuration and verification of a cStor Storage pool can be checked from [here](#creating-cStor-storage-pools). The configuration and verification of a StorageClass can be checked from [here](#creating-cStor-storage-class).
 
@@ -81,7 +82,7 @@ spec:
       storage: 500Gi
 ```
 
-<font size="4">**Example configuration for requesting OpenEBS volume for a StatefulSet**</font>
+<font size="4">**paExample configuration for requesting OpenEBS volume for a StatefulSet**</font>
 
 ```
 spec:
@@ -504,7 +505,7 @@ The deletion of Velero backup schedule doesn't destroy the backup created during
 
 
 <h3><a class="anchor" aria-hidden="true" id="Upgrading-the-software-version-of-a-cStor-volume"></a>Upgrading the software version of a cStor volume</h3>
-The steps are mentioned in Upgrade section. For upgrade cStorVolume, ensure that cStor Pool image is support this cStor volume image.  The steps for upgrading the cStor volume can be find from [here](/docs/next/upgrade.html).
+The steps are mentioned in Upgrade section. For upgrading cStorVolume, ensure that cStor Pool image is support this cStor volume image.  It should also recommended to upgrade the corresponding pool before upgrading cStor volume. The steps for upgrading the cStor volume can be find from [here](/docs/next/upgrade.html).
 
 
 
@@ -543,13 +544,49 @@ kubectl get pod -n <openebs_installed_namespace> | grep <pvc_name>
 
 
 
+<h3><a class="anchor" aria-hidden="true" id="patching-pool-deployment-resource-limit"></a>Patching pool deployment with adding/modifying resource limit and requests</h3>
+
+1. Create a patch file called "patch.yaml" and add the following content to it. You can change the values based on the Node configuration. Recommended values are 4Gi for limits and 2Gi for requests.
+
+  ```
+  spec:
+    template:
+      spec:
+        containers:
+        - name: cstor-pool
+          resources:
+            limits:
+              memory: 4Gi
+            requests:
+              memory: 2Gi
+  ```
+
+2. Get the pool deployment using the following command
+  
+   ```
+  kubectl get deploy -n openebs    
+   ```
+  
+3. Patch the corresponding pool deployment using the following command.
+
+   ```
+   kubectl patch deployment <pool_deployment_name> --patch "$(cat patch.yaml)" -n <openebs_installed_namespace>
+   ```
+
+   Eg: 
+
+   ```
+   kubectl patch deployment <pool_deployment_name> --patch "$(cat patch.yaml)" -n openebs
+   ```
+
+   **Note:** After patching, the existing pool pod will be terminated and a new pool pod will be created. Repeat the same process for other deployments of the same pool as well one by one once new pool pod is created.
+
 <br>
 
 <hr>
 <br>
 
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
-
 <h3><a class="anchor" aria-hidden="true" id="creating-cStor-storage-pools"></a>Creating cStor Storage Pools</h3>
 The cStorStoragePool can be created by specifying the blockDeviceList. The following section will describe the steps in detail. 
 
@@ -632,7 +669,7 @@ In the above file, change the following parameters as required.
 
 - `poolType`
 
-  This field  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped` or `mirrored`.
+  This field  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped`, `mirrored`, `raidz` and `raidz2`.
 
   Note: In OpenEBS, the pool instance does not extend beyond a node. The replication happens at volume level but not at the pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
@@ -648,7 +685,13 @@ In the above file, change the following parameters as required.
 
   When the `poolType` = `striped` the number of blockDevice CRs from each node can be in any number, the data is striped across each blockDevice. For example, if 4x1TB blockDevices are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on that `node1` is 4TB. 
 
-  The number of selected blockDevice CRs across nodes need not be the same.  Unclaimed blockDevice CRs can be added to the pool spec dynamically as the used capacity gets filled up. 
+  When the `poolType` = `raidz`, ensure that the number of  blockDevice CRs selected from each node are like 3,5,7 etc. The data is written with parity. For example, if 3x1TB blockDevice are selected on node1, the raw capacity of the pool instance of `cstor-disk-pool` on node1 is 2TB. 1 disk will be used as a parity disk.
+  
+  When the `poolType` = `raidz2`, ensure that the number of  blockDevice CRs selected from each node are like 6,8,10 etc. The data is written with dual parity. For example, if 6x1TB blockDevice are selected on node1, the raw capacity of the pool instance of `cstor-disk-pool` on node1 is 4TB. 2 disks will be used for parity.
+  
+  
+  
+  The number of selected blockDevice CRs across nodes need not be the same.  Unclaimed blockDevice CRs which are unmounted on nodes and does not contain any filesystem can be added to the pool spec dynamically as the used capacity gets filled up. 
 
 
 - `type`

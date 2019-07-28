@@ -22,9 +22,7 @@ This section provides the operations need to performed by the Admin for configur
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
 
 
-
 <h3><a class="anchor" aria-hidden="true" id="Include-filters"></a>Include filters</h3>
-
 To include only selected disks for provisioning, update the operator YAML file with the required blockdevices under NDM configuration section so that only these blockdevice will be taken for the creation of blockdevice CR. Add the blockdevice path in the following configuration for specifying particular disks. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
 This change must be done in the `openebs-operator.yaml` file that you have downloaded before OpenEBS installation. 
@@ -43,7 +41,6 @@ When the above configuration is used, only the block device `/dev/sda` will be u
 
 
 <h3><a class="anchor" aria-hidden="true" id="Exclude-filters"></a>Exclude filters</h3>
-
 NDM do some filtering on the disks to exclude, for example boot disk. By default, NDM excludes the following device path to create block device CR. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
 ```
@@ -86,8 +83,57 @@ filterconfigs:
     exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"
 ```
 
-<h3><a class="anchor" aria-hidden="true" id="create-blockdevice-CRs-for-partitioned-disks"></a>Create blockdevice CRs for partitioned disks</h3>
+**Note:** It is recommended to use OpenEBS provisioner alone in the cluster. If you are using other storage provider provisioner like `gce-pd` along with OpenEBS, use exclude filters to avoid those disks being consumed by OpenEBS. For example, if you are using the `standard` storage class in GKE with storage provisioner as [kubernetes.io/gce-pd](http://kubernetes.io/gce-pd), and when it creates a PVC, a GPD is attached to the node. This GPD will be detected by NDM and it may be used by OpenEBS for provisioning volume. To avoid this scenario, it is recommended to put the associated device path created on the node in the **exclude** field under **path-filter**. If GPD is attached as `/dev/sdc` , then add `/dev/sdc` in the above mentioned field.
 
+**Example snippet:**
+
+In the downloaded openebs-operator.yaml, find *openebs-ndm-config* configmap and update the values for **path-filter** and any other filters if required.
+
+```
+---
+# This is the node-disk-manager related config.
+# It can be used to customize the disks probes and filters
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: openebs-ndm-config
+ namespace: openebs
+data:
+ # udev-probe is default or primary probe which should be enabled to run ndm
+ # filterconfigs contails configs of filters - in their form fo include
+ # and exclude comma separated strings
+ node-disk-manager.config: |
+   probeconfigs:
+     - key: udev-probe
+       name: udev probe
+       state: true
+     - key: seachest-probe
+       name: seachest probe
+       state: true
+     - key: smart-probe
+       name: smart probe
+       state: true
+   filterconfigs:
+     - key: os-disk-exclude-filter
+       name: os disk exclude filter
+       state: true
+       exclude: "/,/etc/hosts,/boot"
+     - key: vendor-filter
+       name: vendor filter
+       state: true
+       include: ""
+       exclude: "CLOUDBYT,OpenEBS"
+     - key: path-filter
+       name: path filter
+       state: true
+       include: ""
+       exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md,/dev/sdc"
+---
+```
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="create-blockdevice-CRs-for-partitioned-disks"></a>Create blockdevice CRs for partitioned disks</h3>
 Currently, NDM is not selecting partitioned disks for creating device resource. But, you can create block device resource for the partitioned disks manually. The following are the steps for the creation of block device resource.
 
 1. Create the sample block device CR YAML using the following spec. Following is the sample block device CR YAML.
