@@ -291,7 +291,6 @@ By default the hostpath is configured as `/var/openebs/local` for Local PV based
 
 
 <h4><a class="anchor" aria-hidden="true" id="default-storage-configuration "></a>Default Storage Configuration</h4>
-
 OpenEBS comes with default storage configuration like Jiva and Local PV storage classes and so forth. Each of the storage engines in OpenEBS is highly configurable and the customization is done via the Storage Classes and associated Custom Resources. While the default storage configuration can be modified after installation, it is going to be overwritten by the OpenEBS API Server. The recommended approach for customizing is to have users create their own storage configuration using the default options as examples/guidance. 
 If you would like to use a customized configuration, you can disable the installation of the default storage configuration during the installation. The following configuration must be added as environmental variable in the `maya-apiserver` deployment specification to disable default storage configuration.
 
@@ -343,7 +342,6 @@ openebs-ndm-operator-db4c77957-dgp4t 1/1 Running 0 4m18s
 openebs-provisioner-66f767bbf7-7t4vs 1/1 Running 0 4m21s
 openebs-snapshot-operator-656f6b7878-ghrgr 2/2 Running 0 4m20s
 </div>
-
 
 `openebs-ndm` is a daemonset, it should be running on all nodes or on the nodes that are selected through nodeSelector configuration.
 
@@ -501,7 +499,6 @@ helm repo update
 
 <h3><a class="anchor" aria-hidden="true" id="example-nodeselector-helm"></a>For nodeSelectors in values.yaml (helm)</h3>
 
-
 First, label the required nodes with an appropriate label. In the following command, the required nodes for storage nodes are labelled as *node=openebs*
 
 ```
@@ -526,7 +523,6 @@ provisioner:
 
 
 <h3><a class="anchor" aria-hidden="true" id="example-helm-diskfilter"></a>For disk filters in values.yaml (helm)</h3>
-
 
 In the `values.yaml`, find`ndm` section to update `excludeVendors:` and `excludePaths:`
 
@@ -553,7 +549,6 @@ ndm:
 
 
 <h3><a class="anchor" aria-hidden="true" id="default-storage-configuration-helm"></a>Default Storage Configuration (helm)</h3>
-
 OpenEBS comes with default storage configuration like Jiva and Local PV storage classes and so forth. Each of the storage engines in OpenEBS is highly configurable and the customization is done via the Storage Classes and associated Custom Resources. While the default storage configuration can be modified after installation, it is going to be overwritten by the OpenEBS API Server. The recommended approach for customizing is to have users create their own storage configuration using the default options as examples/guidance. 
 If you would like to use a customized configuration, you can disable the installation of the default storage configuration during the installation.
 
@@ -567,7 +562,6 @@ apiserver:
 
 
 <h3><a class="anchor" aria-hidden="true" id="helm-values"></a>Default Values for Helm Chart Parameters</h3>
-
 
 Download the values.yaml from [here](https://github.com/helm/charts/blob/master/stable/openebs/values.yaml) and update them as per your needs. The configurable parameters are described here for reading convenience.
 

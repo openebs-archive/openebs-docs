@@ -21,7 +21,6 @@ This section provides the operations need to performed by the Admin for configur
 
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
 
-
 <h3><a class="anchor" aria-hidden="true" id="Include-filters"></a>Include filters</h3>
 To include only selected disks for provisioning, update the operator YAML file with the required blockdevices under NDM configuration section so that only these blockdevice will be taken for the creation of blockdevice CR. Add the blockdevice path in the following configuration for specifying particular disks. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
@@ -109,7 +108,7 @@ data:
        state: true
      - key: seachest-probe
        name: seachest probe
-       state: true
+       state: false
      - key: smart-probe
        name: smart probe
        state: true

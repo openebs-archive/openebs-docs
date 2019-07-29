@@ -12,7 +12,7 @@ sidebar_label: Knowledge Base
 
 [How to scale up Jiva replica?](#how-to-scale-up-jiva-replica)
 
-[How to install OpenEBS in OpenShift environment?](#OpenEBS-install-openshift-without-SELinux-disabled)
+[How to install OpenEBS in OpenShift 4.1?](#OpenEBS-install-openshift-4.1)
 
 [How to enable Admission-Controller in OpenShift environment?](#enable-admission-controller-in-openshift)
 
@@ -157,7 +157,6 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-scale-up-jiva-replica"></a>How to scale up Jiva replica?</h3>
-
 From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity. For scaling up Jiva replica count, the following steps has to be performed.
 
 1. Get the deployment details of replica of corresponding Jiva volume using the following command. If it is deployed in `openebs` namespace, use corresponding namespace appropriately in the following commands.
@@ -233,8 +232,7 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
 
 </br>
 
-
-<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-without-SELinux-disabled"></a>How to install OpenEBS in OpenShift environment?</h3>
+<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-4.1"></a>How to install OpenEBS in OpenShift 4.1</h3>
 
 In earlier documentation, it was referred to install OpenEBS by disabling SELinux. But, you can install OpenEBS in OpenShift environment without disabling SELinux using the following steps.
 
@@ -244,26 +242,101 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
    oc adm policy add-scc-to-user privileged system:serviceaccount:openebs:openebs-maya-operator
    ```
 
+   Example output:
+
+   ```
+   scc "privileged" added to: ["system:serviceaccount:openebs:default"]
+   ```
+
 2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
 
    ```
-   wget https://openebs.github.io/charts/openebs-operator-0.9.0.yaml
+   wget https://openebs.github.io/charts/openebs-operator-1.1.0.yaml
    ```
 
-3. Apply the modified the YAML using the following command. The OpenEBS operator YAML file name has to be changed based on the latest version.
+3. Apply the modified the YAML using the following command. 
 
    ```
-   oc apply -f openebs-operator-0.9.0.yaml
+   kubectl apply -f openebs-operator-1.1.0.yaml
    ```
 
-4. Verify OpenEBS pods status by using `oc get pods -n openebs`
+4. Verify OpenEBS pod status by using `kubectl get pods -n openebs`
+
+   <div class="co">NAME                                          READY   STATUS    RESTARTS   AGE
+   maya-apiserver-594699887-4x6bj                1/1     Running   0          60m
+   openebs-admission-server-544d8fb47b-lxd52     1/1     Running   0          60m
+   openebs-localpv-provisioner-59f96b699-dpf8l   1/1     Running   0          60m
+   openebs-ndm-4v6kj                             1/1     Running   0          60m
+   openebs-ndm-8g226                             1/1     Running   0          60m
+   openebs-ndm-kkpk7                             1/1     Running   0          60m
+   openebs-ndm-operator-74d9c78cdc-lbtqt         1/1     Running   0          60m
+   openebs-provisioner-5dfd95987b-nhwb9          1/1     Running   0          60m
+   openebs-snapshot-operator-5d58bd848b-94nnt    2/2     Running   0          60m </div>
+
+5. For provisioning OpenEBS volumes, you have to edit SCC to allow HostPath volumes and Privileged containers. This can be done in two ways. 
+
+   - Using “Restricted” SCC
+   - Using “Privileged” SCC
+
+   <font size="5">Using “Restricted” SCC</font>
+
+   By default, **any/all users** (manual, serviceaccount), use the “restricted” securityContextConstraint (SCC). This SCC doesn’t allow: 
+
+   - HostPath Volumes
+   - Privileged Containers
+
+   Following have to be set to ensure volume replica pods can run on the cluster:
+
+   ```
+   allowHostDirVolumePlugin: true
+   allowPrivilegeEscalation: true
+   allowPrivilegedContainer: true
+   ```
+
+   Run following command from OpenShift cluster.
+
+   ```
+   oc edit scc restricted
+   ```
+
+   It will show an output similar to the following.
+
+   <div class="co">could not be patched: the body of the request was in an unknown format - accepted media types include: application/json-patch+json, application/merge-patch+json
+   You can run `oc replace -f /tmp/oc-edit-vvh25.yaml` to try this update again.</div>
+
+   **Note:** The above command will not patch the SCC directly. It will generate a temporary file and you have to run the mentioned command in the output to update the restricted SCC.
+
+   <font size="5">Using “Privileged” SCC</font>
+
+   In openshift, the users are mapped to “Projects” & SCC are mapped to users (or serviceAccounts). This method is more preferred.
+   In case, where you want your application to run in privileged containers with particular user/serviceaccount, it can be added to the privileged SCC using following command from OpenShift cluster. 
+
+   ```
+   oc adm policy add-scc-to-user privileged system:serviceaccount:<project>:<serviceaccountname>  
+   ```
+
+   Example:
+
+   ```
+    oc adm policy add-scc-to-user privileged system:serviceaccount:openebs:default
+   ```
+
+   **Note:** 
+
+   - In OpenShift each namespace automatically creates a project - into which one or more users can be created.
+   - An `oc apply` from inside a `project` will cause all resources to get created with same, i.e., project namespace.
+
+    Example output:
+
+   <div class="co">scc "privileged" added to: ["system:serviceaccount:openebs:default"]</div>	
+
+6.  Now,you can provision OpenEBS volumes. More details for provisioning OpenEBS volumes can be obtained from the User Guide section.
 
 <a href="#top">Go to top</a>
 
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="enable-admission-controller-in-openshift"></a>How to enable Admission-Controller in OpenShift 3.10 and above</h3>
-
 The following proceedure will help to enable admission-controller in OpenShift 3.10 and above.
 
 1. Update the `/etc/origin/master/master-config.yaml`  file with below configuration.
@@ -295,7 +368,6 @@ The following proceedure will help to enable admission-controller in OpenShift 3
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions"></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
-
 Apply the following YAML in your cluster.
 
 - Create a Privileged PSP
@@ -371,7 +443,6 @@ Apply the following YAML in your cluster.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="enable-log-rotation-on-cluster-nodes"></a>How to prevent container logs from exhausting disk space?</h3>
-
 Container logs, if left unchecked, can eat into the underlying disk space causing `disk-pressure` conditions
 leading to eviction of pods running on a given node. This can be prevented by performing log-rotation
 based on file-size while specifying retention count. One recommended way to do this is by configuring the
