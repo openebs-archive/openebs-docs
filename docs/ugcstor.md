@@ -55,6 +55,7 @@ This user guide section provides the operations need to performed by the User an
 
 
 
+
 <h3><a class="anchor" aria-hidden="true" id="provisioning-a-cStor-volume"></a>Provisioning a cStor volume</h3>
 For provisioning a cStor Volume, it requires a cStor Storage Pool and a StorageClass. The configuration and verification of a cStor Storage pool can be checked from [here](#creating-cStor-storage-pools). The configuration and verification of a StorageClass can be checked from [here](#creating-cStor-storage-class).
 
@@ -101,7 +102,6 @@ spec:
 
 
 <h3><a class="anchor" aria-hidden="true" id="monitoring-a-cStor-Volume"></a>Monitoring a cStor Volume</h3>
-
 By default the `VolumeMonitor` is set to ON in the cStor StorageClass. Volume metrics are exported when this parameter is set to ON. Following metrics are supported by cStor as of the current release.
 
 ```
@@ -134,7 +134,6 @@ Grafana charts can be built for the above Prometheus metrics. Some metrics OpenE
 
 
 <h3><a class="anchor" aria-hidden="true" id="snapshot-and-clone-of-a-cStor-volume"></a>Snapshot and Clone of a cStor Volume</h3>
-
 An OpenEBS snapshot is a set of reference markers for data at a particular point in time. A snapshot act as a detailed table of contents, with accessible copies of data that user can roll back to the required point of instance. Snapshots in OpenEBS are instantaneous and are managed through `kubectl`.
 
 During the installation of OpenEBS, a snapshot-controller and a snapshot-provisioner are setup which assist in taking the snapshots. During the snapshot creation, snapshot-controller creates `VolumeSnapshot` and `VolumeSnapshotData` custom resources. A snapshot-provisioner is used to restore a snapshot as a new Persistent Volume(PV) via dynamic provisioning.
@@ -182,7 +181,6 @@ The following steps will help you to create a snapshot of a cStor volume. For cr
   
 
 <h4><a class="anchor" aria-hidden="true" id="Cloning-a-cStor-snapshot"></a>Cloning a cStor Snapshot</h4>
-
 Once the snapshot is created, restoration from a snapshot or cloning the snapshot is done through a two step process. First create a PVC that refers to the snapshot and then use the PVC to create a new PV. This PVC must refer to a storage class called `openebs-snapshot-promoter`. 
 
 - Copy the following YAML specification into a file called *snapshot_claim.yaml*.
@@ -231,7 +229,6 @@ Once the snapshot is created, restoration from a snapshot or cloning the snapsho
 
 
 <h4><a class="anchor" aria-hidden="true" id="deleting-a-cStor-Snapshot"></a>Deleting a cStor Snapshot</h4>
-
 Delete the snapshot using the kubectl command  by providing the the same YAML specification that was used to create the snapshot.
 
 ```
@@ -243,7 +240,6 @@ This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` that we
 
 
 <h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
-
 OpenEBS volume can be backed up and restored along with the application using OpenEBS velero plugin. It helps the user for backing up the OpenEBS volumes to third party storage location and restore the data whenever it is required. The steps for taking backup and restore are as follows.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
@@ -385,7 +381,7 @@ velero restore create <restore-name> --from-backup <backup-name> --restore-volum
 Example:
 
 ```
-velero restore create --from-backup new1 --restore-volumes=true 
+velero restore create new_restore --from-backup new1 --restore-volumes=true 
 ```
 
 The restoration job details can be obtained using the following command.
@@ -517,13 +513,11 @@ The deletion of Velero backup schedule doesn't destroy the backup created during
 
 
 <h3><a class="anchor" aria-hidden="true" id="Upgrading-the-software-version-of-a-cStor-volume"></a>Upgrading the software version of a cStor volume</h3>
-
 The steps are mentioned in Upgrade section. For upgrading cStorVolume, ensure that cStor Pool image is support this cStor volume image.  It should also recommended to upgrade the corresponding pool before upgrading cStor volume. The steps for upgrading the cStor volume can be find from [here](/docs/next/upgrade.html).
 
 
 
 <h3><a class="anchor" aria-hidden="true" id="deleting-a-cStor-volume"></a>Deleting a cStor Volume</h3>
-
 The cStor volume can be deleted by deleting the corresponding PVC. This can be done by using the following command.
 
 ```
@@ -603,7 +597,6 @@ kubectl get pod -n <openebs_installed_namespace> | grep <pvc_name>
 
 
 <h3><a class="anchor" aria-hidden="true" id="creating-cStor-storage-pools"></a>Creating cStor Storage Pools</h3>
-
 
 The cStorStoragePool can be created by specifying the blockDeviceList. The following section will describe the steps in detail. 
 
@@ -779,7 +772,6 @@ If all pods are showing are running, then you can use these cStor pools for crea
 
 <h3><a class="anchor" aria-hidden="true" id="setting-pool-policies"></a>Setting Pool Policies</h3>
 
-
 This section captures the policies supported for cStorPools in `StoragePoolClaim` under `cas.openebs.io/config` in the name and value pair format. 
 
 
@@ -935,7 +927,6 @@ provisioner: openebs.io/provisioner-iscsi
 
 
 <h3><a class="anchor" aria-hidden="true" id="cstor-storage-policies"></a>Setting Storage Policies</h3>
-
 
 Below table lists the storage policies supported by cStor. These policies should be built into StorageClass and apply them through PersistentVolumeClaim or VolumeClaimTemplates interface.
 
