@@ -20,7 +20,6 @@ This section provides the operations need to performed by the Admin for configur
 
 
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
-
 <h3><a class="anchor" aria-hidden="true" id="Include-filters"></a>Include filters</h3>
 To include only selected disks for provisioning, update the operator YAML file with the required blockdevices under NDM configuration section so that only these blockdevice will be taken for the creation of blockdevice CR. Add the blockdevice path in the following configuration for specifying particular disks. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
@@ -168,7 +167,7 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
        links:
        - <link1> # like /dev/disk/by-path/virtio-pci-0000:00:03.0-scsi-0:0:2:0 
      Partitioned: Yes
-     path: <devpath> # like /dev/sdb1 or /dev/sdb
+     path: <devpath> # like /dev/sdb1
    ```
 
 2. Modify the created block device CR sample YAML with the partition disk information. In the above block device CR sample spec, following fields must be filled before applying the YAML.
