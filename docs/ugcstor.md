@@ -22,7 +22,7 @@ This user guide section provides the operations need to performed by the User an
 
 [Deleting a cStor Volume](#deleting-a-cStor-volume)
 
-[Patching pool deployment by adding/modifying resource limit and requests](#patching-pool-deployment-resource-limit)
+[Patching pool deployment by adding or modifying resource limit and requests](#patching-pool-deployment-resource-limit)
 
 
 
@@ -56,8 +56,8 @@ This user guide section provides the operations need to performed by the User an
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="provisioning-a-cStor-volume"></a>Provisioning a cStor volume</h3>
 
+<h3><a class="anchor" aria-hidden="true" id="provisioning-a-cStor-volume"></a>Provisioning a cStor volume</h3>
 For provisioning a cStor Volume, it requires a cStor Storage Pool and a StorageClass. The configuration and verification of a cStor Storage pool can be checked from [here](#creating-cStor-storage-pools). The configuration and verification of a StorageClass can be checked from [here](#creating-cStor-storage-class).
 
 Use a similar PVC spec or volumeClaimTemplate to use a StorageClass that is pointing to a pool with real disks. Consider the following parameters while provisioning OpenEBS volumes on real disks.
@@ -103,6 +103,8 @@ spec:
 
 
 <h3><a class="anchor" aria-hidden="true" id="monitoring-a-cStor-Volume"></a>Monitoring a cStor Volume</h3>
+
+
 By default the `VolumeMonitor` is set to ON in the cStor StorageClass. Volume metrics are exported when this parameter is set to ON. Following metrics are supported by cStor as of the current release.
 
 ```
@@ -135,6 +137,8 @@ Grafana charts can be built for the above Prometheus metrics. Some metrics OpenE
 
 
 <h3><a class="anchor" aria-hidden="true" id="snapshot-and-clone-of-a-cStor-volume"></a>Snapshot and Clone of a cStor Volume</h3>
+
+
 An OpenEBS snapshot is a set of reference markers for data at a particular point in time. A snapshot act as a detailed table of contents, with accessible copies of data that user can roll back to the required point of instance. Snapshots in OpenEBS are instantaneous and are managed through `kubectl`.
 
 During the installation of OpenEBS, a snapshot-controller and a snapshot-provisioner are setup which assist in taking the snapshots. During the snapshot creation, snapshot-controller creates `VolumeSnapshot` and `VolumeSnapshotData` custom resources. A snapshot-provisioner is used to restore a snapshot as a new Persistent Volume(PV) via dynamic provisioning.
@@ -176,8 +180,12 @@ The following steps will help you to create a snapshot of a cStor volume. For cr
   ```
 
   **Note**: All cStor snapshots should be created in the same namespace of source PVC. 
+  
+  
 
 <h4><a class="anchor" aria-hidden="true" id="Cloning-a-cStor-snapshot"></a>Cloning a cStor Snapshot</h4>
+
+
 Once the snapshot is created, restoration from a snapshot or cloning the snapshot is done through a two step process. First create a PVC that refers to the snapshot and then use the PVC to create a new PV. This PVC must refer to a storage class called `openebs-snapshot-promoter`. 
 
 - Copy the following YAML specification into a file called *snapshot_claim.yaml*.
@@ -223,7 +231,11 @@ Once the snapshot is created, restoration from a snapshot or cloning the snapsho
 
 **Note:** For deleting the corresponding source volume, it is mandatory to delete the associated clone volumes of this source volume. The source volume deletion will fail if any associated clone volume is present on the cluster.
 
+
+
 <h4><a class="anchor" aria-hidden="true" id="deleting-a-cStor-Snapshot"></a>Deleting a cStor Snapshot</h4>
+
+
 Delete the snapshot using the kubectl command  by providing the the same YAML specification that was used to create the snapshot.
 
 ```
@@ -235,6 +247,8 @@ This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` that we
 
 
 <h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
+
+
 OpenEBS volume can be backed up and restored along with the application using OpenEBS velero plugin. It helps the user for backing up the OpenEBS volumes to third party storage location and restore the data whenever it is required. The steps for taking backup and restore are as follows.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
@@ -507,11 +521,15 @@ The deletion of Velero backup schedule doesn't destroy the backup created during
 
 
 <h3><a class="anchor" aria-hidden="true" id="Upgrading-the-software-version-of-a-cStor-volume"></a>Upgrading the software version of a cStor volume</h3>
+
+
 The steps are mentioned in Upgrade section. For upgrading cStorVolume, ensure that cStor Pool image is support this cStor volume image.  It should also recommended to upgrade the corresponding pool before upgrading cStor volume. The steps for upgrading the cStor volume can be find from [here](/docs/next/upgrade.html).
 
 
 
 <h3><a class="anchor" aria-hidden="true" id="deleting-a-cStor-volume"></a>Deleting a cStor Volume</h3>
+
+
 The cStor volume can be deleted by deleting the corresponding PVC. This can be done by using the following command.
 
 ```
@@ -546,7 +564,8 @@ kubectl get pod -n <openebs_installed_namespace> | grep <pvc_name>
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="patching-pool-deployment-resource-limit"></a>Patching pool deployment with adding/modifying resource limit and requests</h3>
+<h3><a class="anchor" aria-hidden="true" id="patching-pool-deployment-resource-limit"></a>Patching pool deployment by adding or modifying resource limit and requests</h3>
+
 1. Create a patch file called "patch.yaml" and add the following content to it. You can change the values based on the Node configuration. Recommended values are 4Gi for limits and 2Gi for requests.
 
    ```
