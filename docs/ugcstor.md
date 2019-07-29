@@ -52,10 +52,10 @@ This user guide section provides the operations need to performed by the User an
 
 
 
-
-
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>User Operations</h2>
+
 <h3><a class="anchor" aria-hidden="true" id="provisioning-a-cStor-volume"></a>Provisioning a cStor volume</h3>
+
 For provisioning a cStor Volume, it requires a cStor Storage Pool and a StorageClass. The configuration and verification of a cStor Storage pool can be checked from [here](#creating-cStor-storage-pools). The configuration and verification of a StorageClass can be checked from [here](#creating-cStor-storage-class).
 
 Use a similar PVC spec or volumeClaimTemplate to use a StorageClass that is pointing to a pool with real disks. Consider the following parameters while provisioning OpenEBS volumes on real disks.
@@ -82,7 +82,7 @@ spec:
       storage: 500Gi
 ```
 
-<font size="4">**paExample configuration for requesting OpenEBS volume for a StatefulSet**</font>
+<font size="4">**Example configuration for requesting OpenEBS volume for a StatefulSet**</font>
 
 ```
 spec:
