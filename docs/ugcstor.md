@@ -563,7 +563,7 @@ kubectl get pod -n <openebs_installed_namespace> | grep <pvc_name>
 2. Get the pool deployment using the following command:
   
    ```
-  kubectl get deploy -n openebs    
+   kubectl get deploy -n openebs    
    ```
   
 3. Patch the corresponding pool deployment using the following command.
