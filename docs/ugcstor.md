@@ -55,7 +55,6 @@ This user guide section provides the operations need to performed by the User an
 
 
 
-
 <h3><a class="anchor" aria-hidden="true" id="provisioning-a-cStor-volume"></a>Provisioning a cStor volume</h3>
 For provisioning a cStor Volume, it requires a cStor Storage Pool and a StorageClass. The configuration and verification of a cStor Storage pool can be checked from [here](#creating-cStor-storage-pools). The configuration and verification of a StorageClass can be checked from [here](#creating-cStor-storage-class).
 
@@ -278,7 +277,7 @@ spec:
     prefix: <PREFIX_FOR_BACKUP_NAME>
     backupPathPrefix: <PREFIX_FOR_BACKUP_PATH>
     provider: <GCP_OR_AWS>
-    region: <AWS_REGION>
+    region: <AWS_REGION or minio>
 ```
 
 The following are the definition for each parameters.
@@ -287,8 +286,10 @@ The following are the definition for each parameters.
 - bucket : Provide the bucket name created on the cloud provider. Eg: gcpbucket
 - prefix : Prefix for backup name. Eg: cstor
 - backupPathPrefix: Prefix for backup path. Eg: newbackup. This should be same as `prefix` mentioned in `05-backupstoragelocation.yaml` for keeping all backups at same path.  For more details , please refer [here](https://velero.io/docs/v1.0.0/api-types/backupstoragelocation/). 
-- Provider : Provider name. Eg: gcp, aws, minio, etc
-- region : Provide region name if cloud provider is AWS and MinIO.
+- Provider : Provider name. Eg: gcp, aws, etc
+- region : Provide region name if cloud provider is AWS or use `minio` if it is a MinIO bucket.
+
+For configuration parameter of `AWS/MinIO` in `volumesnapshotlocation`, refer `https://velero.io/docs/v1.0.0/api-types/backupstoragelocation/`.
 
 Example:
 
@@ -314,7 +315,7 @@ After creating the `06-volumesnapshotlocation.yaml` with the necessary details, 
 kubectl apply -f 06-volumesnapshotlocation.yaml
 ```
 
-Currently supported `volumesnapshotlocations` for velero-plugin are AWS and GCP.
+Currently supported `volumesnapshotlocations` for velero-plugin are AWS, GCP and MinIO.
 
 <h4><a class="anchor" aria-hidden="true" id="managing-backup"></a>Managing Backups</h3>
 
@@ -597,7 +598,6 @@ kubectl get pod -n <openebs_installed_namespace> | grep <pvc_name>
 
 
 <h3><a class="anchor" aria-hidden="true" id="creating-cStor-storage-pools"></a>Creating cStor Storage Pools</h3>
-
 The cStorStoragePool can be created by specifying the blockDeviceList. The following section will describe the steps in detail. 
 
 <h4><a class="anchor" aria-hidden="true" id="manual-mode"></a>Create a cStorPool by specifying blockDeviceList </h4>
@@ -771,7 +771,6 @@ If all pods are showing are running, then you can use these cStor pools for crea
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="setting-pool-policies"></a>Setting Pool Policies</h3>
-
 This section captures the policies supported for cStorPools in `StoragePoolClaim` under `cas.openebs.io/config` in the name and value pair format. 
 
 
@@ -927,7 +926,6 @@ provisioner: openebs.io/provisioner-iscsi
 
 
 <h3><a class="anchor" aria-hidden="true" id="cstor-storage-policies"></a>Setting Storage Policies</h3>
-
 Below table lists the storage policies supported by cStor. These policies should be built into StorageClass and apply them through PersistentVolumeClaim or VolumeClaimTemplates interface.
 
 | cStor Storage Policy                                         | Mandatory | Default                                 | Purpose                                                      |

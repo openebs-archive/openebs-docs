@@ -251,19 +251,16 @@ The following steps will help to verify the cStor volume running status.
 
 
 <h3><a class="anchor" aria-hidden="true" id="replica-count-2-in-a-single-node-cluster"></a>Can I use replica count as 2 in StorageClass if it is a single node cluster?</h3>
-
-In case user mention replica count as 2 in StorageClass in a single node cluster, OpenEBS will not schedule on the same node and it will not even create the volume from 0.9  version onwards. It is required to match number of replica count and number of nodes available in the cluster.
+In case user mention replica count as 2 in StorageClass in a single node cluster, OpenEBS will not create the volume from 0.9  version onwards. It is required to match number of replica count and number of nodes available in the cluster for provisioning OpenEBS Jiva and cStor volumes.
 
 
 
 <h3><a class="anchor" aria-hidden="true" id="backup-restore-openebs-volumes"></a>How backup and restore is working with OpenEBS volumes?</h3>
-
 OpenEBS cStor volume is working based on cStor/ZFS snapshot method using Velero. For OpenEBS Local PV and Jiva volume, it is based on restic method using Velero.
 
 
 
 <h3><a class="anchor" aria-hidden="true" id="customized-values-not-peristed-after-reboot"></a>Why customized parameter values set on default OpenEBS StorageClasses are not getting persisted after restarting maya-apiserver pod or restarting the node where maya-apiserver pod is running? </h3>
-
 StorageClass created by m-apiserver are owned by it and it tries to overwrite them upon its creation.
 
 </br>
