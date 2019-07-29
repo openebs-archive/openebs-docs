@@ -10,7 +10,6 @@ The `mayactl` is the command line tool for interacting with OpenEBS volumes and 
 
 
 <h3><a class="anchor" aria-hidden="true" id="summary"></a>Summary</h3>
-
 [Command used with mayactl](#commands-used-with-mayactl)
 
 [Accesssing mayactl](#accesssing-mayactl)
@@ -49,8 +48,6 @@ For getting access to `mayactl` command line tool, you have to login or execute 
 
    <div class="co">maya-apiserver-7f5689b96b-tfssh                                   1/1       Running   0          10d</div>
 
-   
-
 2. It is possible that there are multiple instances of maya-apiserver pods for scaling purposes. You can run mayactl in any one of them. Shell into one of the pods using ` kubectl exec` command . You can do as following way.
 
    ```
@@ -85,7 +82,6 @@ Available Commands:
 
 
 <h3><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Volume"></a>mayactl for OpenEBS Storage Volume</h3>
-
 OpenEBS storage volume command usage examples are shown below.
 
 ```
@@ -184,7 +180,6 @@ LOGICAL(GB)      USED(GB)
 
 
 <h3><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Pools"></a>mayactl for OpenEBS Storage Pools</h3>
-
 OpenEBS storage pool command usage examples are shown below.
 
 ```
@@ -252,7 +247,6 @@ disk-42b4fb20cd36896dfc2a486b977363de
 
 
 <h3><a class="anchor" aria-hidden="true" id="mayactl-Version"></a>mayactl Version</h3>
-
 OpenEBS installed version can be obtained using the following command. This will show the status of maya-apiserver and its URL.
 
 ```
@@ -261,7 +255,7 @@ mayactl version
 
  **Example Output:**
 
-<div class="co">Version: 1.0.0-released
+<div class="co">Version: 1.1.0-released
 Git commit: 338657c7ffccea2117dec79cb727e58f369f03d5
 GO Version: go1.11.2
 GO ARCH: amd64

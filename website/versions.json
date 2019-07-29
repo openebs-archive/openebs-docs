@@ -1,6 +1,7 @@
 {
   "versions": {
-      "1.0.0": ["v1.0.0", "https://docs.openebs.io/"],
+      "1.1.0": ["v1.1.0", "https://docs.openebs.io/"],
+      "1.0.0": ["v1.0.0", "https://docs.openebs.io/v100/"],
       "0.9.0": ["v0.9.0", "https://docs.openebs.io/v090/"],
       "0.8.2": ["v0.8.2", "https://docs.openebs.io/v082/"],
       "0.8.1": ["v0.8.1", "https://docs.openebs.io/v081/"],

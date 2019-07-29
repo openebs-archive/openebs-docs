@@ -35,7 +35,7 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
   (or)
 
   ```
-  kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.0.0.yaml
+  kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.1.0.yaml
   ```
 
   For advanced installation steps, see [Installation](/docs/next/installation.html) section.

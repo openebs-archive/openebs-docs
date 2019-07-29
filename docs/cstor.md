@@ -337,10 +337,11 @@ Following are most commonly observed areas of troubleshooting
        iscsiadm: failed to send SendTargets PDU
    kubelet keeps taking this response and accumulates the memory.More details can be seen [here](https://github.com/openebs/openebs/issues/2382).
    
+
 **Resolution:**
-   
+
 This issue is fixed in 0.8.1 version.
-   
+
 
 
 
@@ -352,15 +353,15 @@ This issue is fixed in 0.8.1 version.
 | cStor pool creation and initial use with either stripe mode or RAIDZ0 (mirror) mode | 0.8.0             |
 | Adding a new cStorPool instance to the existing cstor-pool-config(SPC) | 0.8.1             |
 | Ephemeral disk/pool support for rebuilding                   | 0.8.1             |
-| Disk replacement in a given cStor pool instance              | 1.1.0          |
-| Expanding a given pool replica (add disks to a pool after it is created) | 1.1.0          |
+| Disk replacement in a given cStor pool instance              | 1.2.0         |
+| Expanding a given pool replica (add disks to a pool after it is created) | 1.2.0          |
 | Support for RAIDZ1 in cStorPool                              | 1.1.0           |
 | Support for RAIDZ2 in cStorPool                              | 1.1.0           |
 | Deleting a pool replica                                      | Not scheduled yet |
 |                                                              |                   |
 | <font size="5">cStor volume features</font>                  |                   |
-| Expanding the size of a cStor volume                         | 1.1.0          |
-| CSI driver support                                           | 1.1.0          |
+| Expanding the size of a cStor volume                         | 1.2.0         |
+| CSI driver support(alpha)                                  | 1.1.0          |
 
 
 

@@ -302,12 +302,12 @@ If you would like to use a customized configuration, you can disable the install
 
 **Note:** Starting with 0.9, cStor Sparse pool and its Storage Class are not created by default. If you need to enable the cStor Sparse pool for development or test environments, you have to have the above Default Storage Configuration enabled as well as cStor sparse pool enabled using the instructions mentioned [here](#default-cstor-sparse-pool).
 
+
+
 After doing the custom configuration in the downloaded openebs-operator.yaml file, run the below command to do the custom installation.
 
-
-
 ```
-kubectl apply -f <custom-openebs-operator-1.0.0.yaml>
+kubectl apply -f <custom-openebs-operator-1.1.0.yaml>
 ```
 
 
@@ -498,7 +498,6 @@ helm repo update
 
 
 <h3><a class="anchor" aria-hidden="true" id="example-nodeselector-helm"></a>For nodeSelectors in values.yaml (helm)</h3>
-
 First, label the required nodes with an appropriate label. In the following command, the required nodes for storage nodes are labelled as *node=openebs*
 
 ```
@@ -523,7 +522,6 @@ provisioner:
 
 
 <h3><a class="anchor" aria-hidden="true" id="example-helm-diskfilter"></a>For disk filters in values.yaml (helm)</h3>
-
 In the `values.yaml`, find`ndm` section to update `excludeVendors:` and `excludePaths:`
 
 ```
@@ -562,7 +560,6 @@ apiserver:
 
 
 <h3><a class="anchor" aria-hidden="true" id="helm-values"></a>Default Values for Helm Chart Parameters</h3>
-
 Download the values.yaml from [here](https://github.com/helm/charts/blob/master/stable/openebs/values.yaml) and update them as per your needs. The configurable parameters are described here for reading convenience.
 
 | PARAMETER                               | DESCRIPTION                                  | DEFAULT                                            |

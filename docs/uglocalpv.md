@@ -10,7 +10,6 @@ A local PV represents a mounted local storage device such as a disk or a hostpat
 OpenEBS Dynamic Local PV provisioner will help provisioning the Local PVs dynamically by integrating into the features offered by OpenEBS Node Storage Device Manager, and also offers the flexibility to either select a complete storage device or a hostpath (or subpath) directory.
 
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>Prerequisites</h2>
-
 - Kubernetes 1.12 or higher is required to use OpenEBS Local PV. 
 - An unclaimed block device on worker node where application is going to schedule, for provisioning OpenEBS Local PV based device.
 
@@ -37,12 +36,10 @@ OpenEBS Dynamic Local PV provisioner will help provisioning the Local PVs dynami
 
 
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>User Operations</h2>
-
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="Provision-OpenEBS-Local-PV-based-on-hostpath"></a>Provision OpenEBS Local PV based on hostpath</h3>
-
-The simplest way to provision an OpenEBS Local PV based on hostpath is to use the default StorageClass which is created as part of latest 1.0.0 operator YAML. The default StorageClass name for hostpath configuration is `openebs-hostpath`. The default hostpath is configured as `/var/openebs/local`. 
+The simplest way to provision an OpenEBS Local PV based on hostpath is to use the default StorageClass which is created as part of latest operator YAML. The default StorageClass name for hostpath configuration is `openebs-hostpath`. The default hostpath is configured as `/var/openebs/local`. 
 
 
 The following is the sample deployment configuration of Percona application which is going to consume OpenEBS Local PV. For utilizing OpenEBS Local PV based on hostpath, use default StorageClass name as `openebs-hostpath` in the PVC spec of the Percona deployment.
@@ -162,8 +159,7 @@ pvc-2e4b123e-88ff-11e9-bc28-42010a8001ff   5G         RWO            Delete     
 
 
 <h3><a class="anchor" aria-hidden="true" id="Provision-OpenEBS-Local-PV-based-on-Device"></a>Provision OpenEBS Local PV Based on Device</h3>
-
-The simplest way to provision an OpenEBS Local PV based on device is to use the default StorageClass for OpenEBS  Local PV based of device which is created as part of latest 1.0.0 operator YAML. The default StorageClass name for OpenEBS Local PV based on device configuration is `openebs-device`. 
+The simplest way to provision an OpenEBS Local PV based on device is to use the default StorageClass for OpenEBS  Local PV based of device which is created as part of latest operator YAML. The default StorageClass name for OpenEBS Local PV based on device configuration is `openebs-device`. 
 
 The following is the sample deployment configuration of Percona application which is going to consume OpenEBS Local PV based on device. For utilizing default OpenEBS Local PV based on device, use default StorageClass name as `openebs-device` in the PVC spec of the Percona deployment. 
 
@@ -282,7 +278,6 @@ pvc-d0ea3a06-88fe-11e9-bc28-42010a8001ff   5G         RWO            Delete     
 
 
 <h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
-
 OpenEBS volume can be backed up and restored along with the application using velero plugin. It helps the user for backing up the  OpenEBS volumes to a third party storage location and then restore the data whenever it is needed. The steps for taking backup and restore are as follows.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
@@ -298,7 +293,7 @@ OpenEBS volume can be backed up and restored along with the application using ve
 
 Velero is a utility to back up and restore your Kubernetes resource and persistent volumes. 
 
-To take backup and restore of OpenEBS Local PV, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Local PV which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](https://staging-docs.openebs.io/1.0.0-RC2/docs/next/minio.html).
+To take backup and restore of OpenEBS Local PV, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Local PV which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](/docs/next/minio.html).
 
 The following are the step by step procedure for taking backup and restore of application with OpenEBS Local PV.
 
@@ -450,11 +445,9 @@ kubectl get pvc -n <namespace>
 <hr>
 
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
-
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="General-verification-for-disk-mount-status-for-Local-PV-based-on-device"></a>General Verification of Block Device Mount Status for Local PV Based on Device</h3>
-
 The application can be provisioned using OpenEBS Local PV based on device. For provisioning OpenEBS Local PV using the block devices attached to the nodes, the block devices should be in one of the following states.
 
 - User has attached the block device, formatted and mounted them.
@@ -467,7 +460,6 @@ The application can be provisioned using OpenEBS Local PV based on device. For p
 
 
 <h3><a class="anchor" aria-hidden="true" id="configure-hostpath"></a>Configure hostpath</h3>
-
 The default hostpath is configured as `/var/openebs/local`,  which can either be changed during the OpenEBS operator install by passing in the `OPENEBS_IO_BASE_PATH` ENV parameter to the OpenEBS Local PV dynamic provisioner deployment spec or via the StorageClass. The example for both approaches are shown below.
 
 <h4><a class="anchor" aria-hidden="true" id="using-openebs-opeartor"></a>Using OpenEBS operator YAML</h3>
