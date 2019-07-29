@@ -54,7 +54,6 @@ This user guide section provides the operations need to performed by the User an
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>User Operations</h2>
 
 
-
 <h3><a class="anchor" aria-hidden="true" id="provisioning-a-cStor-volume"></a>Provisioning a cStor volume</h3>
 For provisioning a cStor Volume, it requires a cStor Storage Pool and a StorageClass. The configuration and verification of a cStor Storage pool can be checked from [here](#creating-cStor-storage-pools). The configuration and verification of a StorageClass can be checked from [here](#creating-cStor-storage-class).
 
@@ -286,7 +285,7 @@ The following are the definition for each parameters.
 - bucket : Provide the bucket name created on the cloud provider. Eg: gcpbucket
 - prefix : Prefix for backup name. Eg: cstor
 - backupPathPrefix: Prefix for backup path. Eg: newbackup. This should be same as `prefix` mentioned in `05-backupstoragelocation.yaml` for keeping all backups at same path.  For more details , please refer [here](https://velero.io/docs/v1.0.0/api-types/backupstoragelocation/). 
-- Provider : Provider name. Eg: gcp, aws, etc
+- Provider : Provider name. Eg: gcp or aws
 - region : Provide region name if cloud provider is AWS or use `minio` if it is a MinIO bucket.
 
 For configuration parameter of `AWS/MinIO` in `volumesnapshotlocation`, refer `https://velero.io/docs/v1.0.0/api-types/backupstoragelocation/`.
