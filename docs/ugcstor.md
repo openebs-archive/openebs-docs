@@ -547,18 +547,18 @@ kubectl get pod -n <openebs_installed_namespace> | grep <pvc_name>
 <h3><a class="anchor" aria-hidden="true" id="patching-pool-deployment-resource-limit"></a>Patching pool deployment with adding/modifying resource limit and requests</h3>
 1. Create a patch file called "patch.yaml" and add the following content to it. You can change the values based on the Node configuration. Recommended values are 4Gi for limits and 2Gi for requests.
 
-  ```
-  spec:
-    template:
-      spec:
-        containers:
-        - name: cstor-pool
-          resources:
-            limits:
-              memory: 4Gi
-            requests:
-              memory: 2Gi
-  ```
+   ```
+   spec:
+     template:
+       spec:
+         containers:
+         - name: cstor-pool
+           resources:
+             limits:
+               memory: 4Gi
+             requests:
+               memory: 2Gi
+   ```
 
 2. Get the pool deployment using the following command:
   
