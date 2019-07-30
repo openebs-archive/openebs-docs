@@ -66,22 +66,12 @@ Example:
 kubectl config set-context admin-ctx --cluster=gke_strong-eon-153112_us-central1-a_rocket-test2 --user=cluster-admin
 ```
 
-
-
 Set the existing cluster-admin user context or the newly created context by using the following command.
 
 Example:
 
 ```
 kubectl config use-context admin-ctx
-```
-
-
-
-If you are using GKE or any other cloud providers, you must enable RBAC before OpenEBS installation. This can be done from the kubernetes master console by executing the following command.
-
-```
-kubectl create clusterrolebinding  <cluster_name>-admin-binding --clusterrole=cluster-admin --user=<user-registered-email-with-the-provider>
 ```
 
 <br>
