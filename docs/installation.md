@@ -89,7 +89,7 @@ Verify helm is installed and helm repo is updated. See [helm docs](https://docs.
 In the **default installation mode**, use the following command to install OpenEBS in `openebs` namespace.
 
 ```
-helm install --namespace openebs --name openebs stable/openebs
+helm install --namespace openebs --name openebs stable/openebs --version 1.1.0
 ```
 
 **Note:** Since Kubernetes 1.12, if any containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests).
@@ -102,7 +102,7 @@ In the **custom installation mode**, you can achieve the following advanced conf
 
 - Choose a set of nodes for OpenEBS control plane pods.
 - Choose a set of nodes for OpenEBS storage pool.
-- You can customise the disk filters that need to be excluded from being used.
+- You can customize the disk filters that need to be excluded from being used.
 - You can choose custom namespace other than default namespace  `openebs`.
 
 Follow the below instructions to do any of the above configurations and then install OpenEBS through helm and values.yaml
@@ -131,6 +131,8 @@ If your cluster nodes have different disk types that are to be filtered out (mea
 
 See an example configuration [here](#example-helm-diskfilter)
 
+
+
 <font size="5">Other values.yaml parameters</font>
 
 For customized configuration through helm, use values.yaml or command line parameters.
@@ -153,13 +155,13 @@ As a next step [verify](#verifying-openebs-installation) your installation and d
 
 ## Installation through kubectl 
 
-In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in openebs namespace. 
+In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in `openebs` namespace. 
 
 ```
 kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.1.0.yaml
 ```
 
-**Note:** Since Kuberentes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests). 
+**Note:** Since Kubernetes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests). 
 
 
 
@@ -189,7 +191,7 @@ Example nodeSelector configuration for OpenEBS control plane components is given
 
 <font size="5">Setup nodeSelectors for Admission Controller</font> 
 
-The Admission controller to intercepts the requests to the Kubernetes API server prior to persistence of the object, but after the request is authenticated and authorized. This openebs admission controller implements additional custom admission policies to validate the incoming request. The following are the admission policies avaialable with the latest main release.
+The Admission controller to intercepts the requests to the Kubernetes API server prior to persistence of the object, but after the request is authenticated and authorized. This openebs admission controller implements additional custom admission policies to validate the incoming request. The following are the admission policies available with the latest main release.
 
 1. PersistentVolumeClaim delete requests validates if there is clone PersistentVolumeClaim exists.
 2. Clone PersistentVolumeClaim create requests validates requested claim capacity. This has to be equal to snapshot size.
@@ -226,7 +228,11 @@ See an example configuration [here](#example-diskfilter-yaml)
 
 Some of the configurations related to cStor Target, default cStor sparse pool, default Storage configuration, Local PV Basepath, etc can be configured as environmental variable in the corresponding deployment specification. 
 
+
+
 <h4><a class="anchor" aria-hidden="true" id="sparse-dir "></a>SparseDir</h4>
+
+
 SparseDir is a hostPath directory where to look for sparse files. The default value is "/var/openebs/sparse". 
 
 The following configuration must added as environmental variable in the maya-apiserver deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
@@ -240,9 +246,11 @@ The following configuration must added as environmental variable in the maya-api
 
 
 <h4><a class="anchor" aria-hidden="true" id="default-cstor-sparse-pool"></a>Default cStorSparsePool</h4>
+
+
 The OpenEBS installation will create default cStor sparse pool based on this configuration value. If "true",  default cStor sparse pools will be configured, if "false", it will not be configure a default cStor sparse pool. The default configured value is "false". The use of cStor sparse pool is for testing purposes only. 
 
-The following configuration must be added as environmental variable in the maya-apiserver deployment specification for the installation of cStor pool using sparse disks. This change must be done before applying the OpenEBS operator YAML file. 
+The following configuration must be added as environmental variable in the `maya-apiserver` deployment specification for the installation of cStor pool using sparse disks. This change must be done before applying the OpenEBS operator YAML file. 
 
 **Example:**
 
@@ -255,9 +263,11 @@ The following configuration must be added as environmental variable in the maya-
 
 
 <h4><a class="anchor" aria-hidden="true" id="target-Dir"></a>TargetDir</h4>
+
+
 Target Dir is a hostPath directory for target pod. The default value is "/var/openebs".  This value can override the existing host path introducing a `OPENEBS_IO_CSTOR_TARGET_DIR` ENV in maya-apiserver deployment. This configuration might required where underlying host OS does not have write permission on default OpenEBS path(/var/openebs/). 
 
-The following configuration must added as environmental variable in the maya-apiserver deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
+The following configuration must added as environmental variable in the `maya-apiserver` deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
 
 **Example:**
 
@@ -270,6 +280,8 @@ The following configuration must added as environmental variable in the maya-api
 
 
 <h4><a class="anchor" aria-hidden="true" id="basepath-for-openEBS-local-pv "></a>Basepath for OpenEBS Local PV</h4>
+
+
 By default the hostpath is configured as `/var/openebs/local` for Local PV based on hostpath, which can be changed during the OpenEBS operator install by passing the `OPENEBS_IO_BASE_PATH` ENV parameter to the Local PV dynamic provisioner deployment. 
 
 ```
@@ -281,6 +293,8 @@ By default the hostpath is configured as `/var/openebs/local` for Local PV based
 
 
 <h4><a class="anchor" aria-hidden="true" id="default-storage-configuration "></a>Default Storage Configuration</h4>
+
+
 OpenEBS comes with default storage configuration like Jiva and Local PV storage classes and so forth. Each of the storage engines in OpenEBS is highly configurable and the customization is done via the Storage Classes and associated Custom Resources. While the default storage configuration can be modified after installation, it is going to be overwritten by the OpenEBS API Server. The recommended approach for customizing is to have users create their own storage configuration using the default options as examples/guidance. 
 If you would like to use a customized configuration, you can disable the installation of the default storage configuration during the installation. The following configuration must be added as environmental variable in the `maya-apiserver` deployment specification to disable default storage configuration.
 
@@ -333,7 +347,7 @@ openebs-provisioner-66f767bbf7-7t4vs 1/1 Running 0 4m21s
 openebs-snapshot-operator-656f6b7878-ghrgr 2/2 Running 0 4m20s
 </div>
 
-`openebs-ndm` is a daemonset, it should be running on all nodes or on the nodes that are selected through nodeSelector configuration.
+`openebs-ndm` is a daemon set, it should be running on all nodes or on the nodes that are selected through nodeSelector configuration.
 
 The control plane pods `openebs-provisioner`, `maya-apiserver` and `openebs-snapshot-operator` should be running. If you have configured nodeSelectors , check if they are scheduled on the appropriate nodes by listing the pods through `kubectl get pods -n openebs -o wide`
 
@@ -359,12 +373,11 @@ openebs-snapshot-promoter volumesnapshot.external-storage.k8s.io/snapshot-promot
 standard (default) kubernetes.io/gce-pd 31m
 </div>
 
-
 **Verify Block Device CRs** 
 
 
 
-NDM daemonset creates a block device CR for each block devices that is discovered on the node with two exceptions
+NDM daemon set creates a block device CR for each block devices that is discovered on the node with two exceptions
 
 - The disks that match the exclusions in 'vendor-filter'  and 'path-filter'
 - The disks that are already mounted in the node
@@ -536,19 +549,6 @@ ndm:
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="default-storage-configuration-helm"></a>Default Storage Configuration (helm)</h3>
-OpenEBS comes with default storage configuration like Jiva and Local PV storage classes and so forth. Each of the storage engines in OpenEBS is highly configurable and the customization is done via the Storage Classes and associated Custom Resources. While the default storage configuration can be modified after installation, it is going to be overwritten by the OpenEBS API Server. The recommended approach for customizing is to have users create their own storage configuration using the default options as examples/guidance. 
-If you would like to use a customized configuration, you can disable the installation of the default storage configuration during the installation.
-
-```
-# values.yaml
-apiserver: 
-  defaultStorageConfig:
-    enabled: "false"
-```
-
-
-
 <h3><a class="anchor" aria-hidden="true" id="helm-values"></a>Default Values for Helm Chart Parameters</h3>
 Download the values.yaml from [here](https://github.com/helm/charts/blob/master/stable/openebs/values.yaml) and update them as per your needs. The configurable parameters are described here for reading convenience.
 
@@ -567,7 +567,7 @@ Download the values.yaml from [here](https://github.com/helm/charts/blob/master/
 | `localProvisioner.imageTag`             | Image Tag for localProvisioner               | `1.1.0`                                            |
 | `localProvisioner.replicas`             | Number of localProvisioner Replicas          | `1`                                                |
 | `localProvisioner.basePath`             | BasePath for hostPath volumes on Nodes       | `/var/openebs/local`                               |
-| `webhook.image`                         | Image for admision server                    | `quay.io/openebs/admission-server`                 |
+| `webhook.image`                         | Image for admission server                   | `quay.io/openebs/admission-server`                 |
 | `webhook.imageTag`                      | Image Tag for admission server               | `1.1.0`                                            |
 | `webhook.replicas`                      | Number of admission server Replicas          | `1`                                                |
 | `snapshotOperator.provisioner.image`    | Docker Image for Snapshot Provisioner        | `quay.io/openebs/snapshot-provisioner`             |
@@ -602,7 +602,7 @@ Download the values.yaml from [here](https://github.com/helm/charts/blob/master/
 | `analytics.pingInterval`                | Duration(hours) between sending ping stat    | `24h`                                              |
 | `HealthCheck.initialDelaySeconds`       | Delay before liveness probe is initiated     | `30`                                               |
 | `HealthCheck.periodSeconds`             | How often to perform the liveness probe      | `60`                                               |
-| `defaultConfigs.StorageConfig.enabled`  | Enable deafult storage class installation    | `true`                                             |
+| `defaultConfigs.StorageConfig.enabled`  | Enable default storage class installation    | `true`                                             |
 
   
 

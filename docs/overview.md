@@ -29,7 +29,7 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 - Default installation works for most cases. As a Kubernetes cluster-admin, start the default installation using either
 
   ```
-  helm install --namespace openebs --name openebs stable/openebs
+  helm install --namespace openebs --name openebs stable/openebs --version 1.1.0
   ```
 
   (or)
