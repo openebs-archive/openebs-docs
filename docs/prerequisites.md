@@ -71,7 +71,6 @@ block volumes.
 
 <h3><a class="anchor" aria-hidden="true" id="ubuntu"></a>Ubuntu</h3>
 
-
 **Verify iSCSI services are configured**
 
 If an iSCSI initiator is already installed on your node, check that the
@@ -125,7 +124,6 @@ You can verify the iSCSI installation from above section.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="rhel"></a>Red Hat Enterprise Linux</h3>
-
 
 **Verify iSCSI services are configured**
 
@@ -189,7 +187,6 @@ You can verify the iSCSI installation from above section.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="centos"></a>CentOS</h3>
-
 
 **Verify iSCSI services are configured**
 
@@ -401,10 +398,10 @@ For setting up iSCSI clients on CentOS nodes, see the  [instructions above](#cen
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="rancher"></a>Rancher</h3>
-- If you are using RancherOS as the operating system for your Kubernetes cluster, you simply need to enable the iSCSI service and start it on all the hosts or nodes. 
-- If you are using Ubuntu or RHEL as the operating system for your Kubernetes cluster, you need to 
-  - Verify iSCSI initiators are installed on all nodes (and )
-  - Add the extra_binds under Kubelet service  in cluster YAML file to  mount the iSCSI binary and configuration inside the `Kubelet`.
+- If you are using RancherOS as the operating system, you need to enable the iSCSI service and start it on all the worker nodes. 
+- If you are using Ubuntu or RHEL as the operating system, you need to 
+  - Verify if iSCSI initiators are installed on all nodes (and )
+  - Add the `extra_binds` under Kubelet service  in cluster YAML file to  mount the iSCSI binary and configuration inside the `kubelet`.
 
 
 
@@ -427,7 +424,6 @@ reboot
 
 
 <h4><a class="anchor" aria-hidden="true" id="rancher-ubuntu-centos"></a>iSCSI services on RHEL or Ubuntu 16.04</h4>
-
 **Step1:** Verify iSCSI initiator is installed and services are running
 
 | Operating system      | iSCSI Package         | Commands                                                     |
@@ -450,8 +446,7 @@ After installing the initiator tool on your nodes, edit the YAML for your cluste
         	- "/lib/modules"
 
 <h4><a class="anchor" aria-hidden="true" id="rancher-ubuntu-18.04"></a>iSCSI services on Ubuntu 18.04</h4>
-
-**Step1:** iSCSI service is not present by default on Host. It will be running inside the kubelet. To verify presence of iSCSI service inside kubelet
+**Step1:** By default, iSCSI service is not present on worker node. It will be running inside the kubelet. To verify presence of iSCSI service inside kubelet, run the following command:
 
 ```
 docker exec kubelet iscsiadm -V
@@ -469,7 +464,7 @@ The following commands will enable the `iscsi_tcp` module and it will persist th
 | ---------------- | ------------- | ------------------------------------------------------------ |
 | Ubuntu 18.04     | open-iscsi    | modprobe iscsi_tcp <br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
 
-**Step 2:** If you are using Jiva or Local PV for provisioning OpenEBS volume,  Add `extra_binds` under kubelet service in cluster YAML. If the volume is using a mounted path on the host, then you must add the mounted path `under extra_binds` section. 
+**Step 2:** If you are using Jiva or Local PV for provisioning OpenEBS volume,  Add `extra_binds` under kubelet service in cluster YAML. If the volume is using a mounted path on the host, then you must add the mounted path under `extra_binds` section. 
 
 ```
 services:
@@ -478,7 +473,7 @@ services:
      - /var/openebs/local:/var/openebs/local
 ```
 
-In the above snippet, default hostpath which will be created on the Node for `LocalPV-hostpath`is added under `extra_binds`. This configuration will help to create default hostpath directory on Node for provisioning `LocalPV-hostpath` volume.
+In the above snippet, default hostpath which will be created on the worker node using `LocalPV-hostpath` StorageClass is added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `LocalPV-hostpath` volume.
 
 <br>
 

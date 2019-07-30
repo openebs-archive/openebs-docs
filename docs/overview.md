@@ -22,11 +22,11 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 ## <font size="6">Quickstart</font>
 
 - OpenEBS requires iSCSI client to be configured and iscsid service
-  running on the host nodes.
+  running on the worker nodes.
   Verify if [iSCSI service is up](/docs/next/prerequisites.html) and
   running before starting the installation.
 
-- Default installation works for most cases. As a Kubernetes cluster-admin, start the default installation using either
+- Default installation works in most  of the cases. As a Kubernetes cluster-admin, start the default installation using either
 
   ```
   helm install --namespace openebs --name openebs stable/openebs --version 1.1.0
@@ -43,7 +43,7 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 - [Verify if OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation)
   and start provisioning OpenEBS volumes through Kubernetes PVC
   interface by using `kubectl` command. For more details on how to
-  provision different types of OpenEBS volumes see guides for [cStor volume](/docs/next/ugcstor.html), [Jiva Volume](/docs/next/jivaguide.html) and [OpenEBS local Volume](/docs/next/uglocalpv.html).
+  provision different types of OpenEBS volumes, see guides for [cStor volume](/docs/next/ugcstor.html), [Jiva Volume](/docs/next/jivaguide.html) and [OpenEBS local Volume](/docs/next/uglocalpv.html).
 
 <br>
 

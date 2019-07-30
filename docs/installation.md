@@ -84,7 +84,7 @@ kubectl config use-context admin-ctx
 
 
 
-Verify helm is installed and helm repo is updated. See [helm docs](https://docs.helm.sh/using_helm/#from-script) for setting up helm and simple [instructions below](#setup-rbac-for-tiller-before-installing-openebs-chart) for setting up RBAC for tiller.
+Verify helm is installed and helm repo is updated. See [helm docs](https://docs.helm.sh/using_helm/#from-script) for setting up helm and [instructions](#setup-rbac-for-tiller-before-installing-openebs-chart) below for setting up RBAC for tiller.
 
 In the **default installation mode**, use the following command to install OpenEBS in `openebs` namespace.
 
@@ -92,7 +92,7 @@ In the **default installation mode**, use the following command to install OpenE
 helm install --namespace openebs --name openebs stable/openebs --version 1.1.0
 ```
 
-**Note:** Since Kubernetes 1.12, if any containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests).
+**Note:** Since Kubernetes 1.12, if any containers does not set its resource requests & limits values, it results into eviction. It is recommended to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be obtained from [here](#example-configuration-pod-resource-requests).
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
 
@@ -232,7 +232,6 @@ Some of the configurations related to cStor Target, default cStor sparse pool, d
 
 <h4><a class="anchor" aria-hidden="true" id="sparse-dir "></a>SparseDir</h4>
 
-
 SparseDir is a hostPath directory where to look for sparse files. The default value is "/var/openebs/sparse". 
 
 The following configuration must added as environmental variable in the maya-apiserver deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
@@ -246,7 +245,6 @@ The following configuration must added as environmental variable in the maya-api
 
 
 <h4><a class="anchor" aria-hidden="true" id="default-cstor-sparse-pool"></a>Default cStorSparsePool</h4>
-
 
 The OpenEBS installation will create default cStor sparse pool based on this configuration value. If "true",  default cStor sparse pools will be configured, if "false", it will not be configure a default cStor sparse pool. The default configured value is "false". The use of cStor sparse pool is for testing purposes only. 
 
@@ -264,7 +262,6 @@ The following configuration must be added as environmental variable in the `maya
 
 <h4><a class="anchor" aria-hidden="true" id="target-Dir"></a>TargetDir</h4>
 
-
 Target Dir is a hostPath directory for target pod. The default value is "/var/openebs".  This value can override the existing host path introducing a `OPENEBS_IO_CSTOR_TARGET_DIR` ENV in maya-apiserver deployment. This configuration might required where underlying host OS does not have write permission on default OpenEBS path(/var/openebs/). 
 
 The following configuration must added as environmental variable in the `maya-apiserver` deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
@@ -281,7 +278,6 @@ The following configuration must added as environmental variable in the `maya-ap
 
 <h4><a class="anchor" aria-hidden="true" id="basepath-for-openEBS-local-pv "></a>Basepath for OpenEBS Local PV</h4>
 
-
 By default the hostpath is configured as `/var/openebs/local` for Local PV based on hostpath, which can be changed during the OpenEBS operator install by passing the `OPENEBS_IO_BASE_PATH` ENV parameter to the Local PV dynamic provisioner deployment. 
 
 ```
@@ -294,8 +290,7 @@ By default the hostpath is configured as `/var/openebs/local` for Local PV based
 
 <h4><a class="anchor" aria-hidden="true" id="default-storage-configuration "></a>Default Storage Configuration</h4>
 
-
-OpenEBS comes with default storage configuration like Jiva and Local PV storage classes and so forth. Each of the storage engines in OpenEBS is highly configurable and the customization is done via the Storage Classes and associated Custom Resources. While the default storage configuration can be modified after installation, it is going to be overwritten by the OpenEBS API Server. The recommended approach for customizing is to have users create their own storage configuration using the default options as examples/guidance. 
+OpenEBS comes with default storage configuration like Jiva and Local PV storage classes and so forth. Each of the storage engines in OpenEBS is highly configurable and the customization is done via Storage Classes and associated Custom Resources. While the default storage configuration can be modified after installation, it is going to be overwritten by the OpenEBS API Server. The recommended approach for customizing is to have users create their own storage configuration using the default options as examples/guidance. 
 If you would like to use a customized configuration, you can disable the installation of the default storage configuration during the installation. The following configuration must be added as environmental variable in the `maya-apiserver` deployment specification to disable default storage configuration.
 
 ```
@@ -304,7 +299,7 @@ If you would like to use a customized configuration, you can disable the install
   value: "false"
 ```
 
-**Note:** Starting with 0.9, cStor Sparse pool and its Storage Class are not created by default. If you need to enable the cStor Sparse pool for development or test environments, you have to have the above Default Storage Configuration enabled as well as cStor sparse pool enabled using the instructions mentioned [here](#default-cstor-sparse-pool).
+**Note:** Starting with 0.9, cStor Sparse pool and its Storage Class are not created by default. If you need to enable the cStor Sparse pool for development or test environments, you should have the above Default Storage Configuration enabled as well as cStor sparse pool enabled using the instructions mentioned [here](#default-cstor-sparse-pool).
 
 
 

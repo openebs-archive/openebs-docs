@@ -19,11 +19,9 @@ This section provides the operations need to performed by the Admin for configur
 
 
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
-
 <hr>
 
 <h3><a class="anchor" aria-hidden="true" id="Include-filters"></a>Include filters</h3>
-
 To include only selected disks for provisioning, update the operator YAML file with the required blockdevices under NDM configuration section so that only these blockdevice will be taken for the creation of blockdevice CR. Add the blockdevice path in the following configuration for specifying particular disks. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
 This change must be done in the `openebs-operator.yaml` file that you have downloaded before OpenEBS installation. 
@@ -42,7 +40,7 @@ When the above configuration is used, only the block device `/dev/sda` will be u
 
 
 <h3><a class="anchor" aria-hidden="true" id="Exclude-filters"></a>Exclude filters</h3>
-NDM do some filtering on the disks to exclude, for example boot disk. By default, NDM excludes the following device path to create block device CR. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
+NDM do some filtering on the disks to exclude, for example boot disk. By default, NDM excludes the following device path while creating block device CR. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
 ```
 /dev/loop - loop devices.
@@ -84,7 +82,7 @@ filterconfigs:
     exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"
 ```
 
-**Note:** It is recommended to use OpenEBS provisioner alone in the cluster. If you are using other storage provider provisioner like `gce-pd` along with OpenEBS, use exclude filters to avoid those disks from being consumed by OpenEBS. For example, if you are using the `standard` storage class in GKE with storage provisioner as kubernetes.io/gce-pd, and when it creates a PVC, a GPD is attached to the node. This GPD will be detected by NDM and it may be used by OpenEBS for provisioning volume. To avoid this scenario, it is recommended to put the associated device path created on the node in the **exclude** field under **path-filter**. If GPD is attached as `/dev/sdc` , then add `/dev/sdc` in the above mentioned field.
+**Note:** It is recommended to use OpenEBS provisioner alone in the cluster. If you are using other storage provider provisioner like `gce-pd` along with OpenEBS, use exclude filters to avoid those disks from being consumed by OpenEBS. For example, if you are using the `standard` storage class in GKE with storage provisioner as **kubernetes.io/gce-pd**, and when it creates a PVC, a GPD is attached to the node. This GPD will be detected by NDM and it may be used by OpenEBS for provisioning volume. To avoid this scenario, it is recommended to put the associated device path created on the node in the **exclude** field under **path-filter**. If GPD is attached as `/dev/sdc` , then add `/dev/sdc` in the above mentioned field.
 
 **Example snippet:**
 
