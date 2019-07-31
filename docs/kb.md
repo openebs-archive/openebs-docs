@@ -23,6 +23,7 @@ sidebar_label: Knowledge Base
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
+
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
 
 1. Get the PV name by following command and use it in Step 2.
@@ -120,7 +121,7 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 
 7. Get the newly created PVC UID using `kubectl get pvc mongo-persistent-storage-mongo-0 -o yaml`.
 
-   ​    
+       
 
 8. Update the uid under the claimRef in the PV using the following command. The PVC will get attached to the PV after editing the pv with correct uid.
 
@@ -157,6 +158,7 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-scale-up-jiva-replica"></a>How to scale up Jiva replica?</h3>
+
 From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity. For scaling up Jiva replica count, the following steps has to be performed.
 
 1. Get the deployment details of replica of corresponding Jiva volume using the following command. If it is deployed in `openebs` namespace, use corresponding namespace appropriately in the following commands.
@@ -337,6 +339,7 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="enable-admission-controller-in-openshift"></a>How to enable Admission-Controller in OpenShift 3.10 and above</h3>
+
 The following proceedure will help to enable admission-controller in OpenShift 3.10 and above.
 
 1. Update the `/etc/origin/master/master-config.yaml`  file with below configuration.
@@ -368,6 +371,7 @@ The following proceedure will help to enable admission-controller in OpenShift 3
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions"></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
+
 Apply the following YAML in your cluster.
 
 - Create a Privileged PSP
@@ -443,6 +447,7 @@ Apply the following YAML in your cluster.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="enable-log-rotation-on-cluster-nodes"></a>How to prevent container logs from exhausting disk space?</h3>
+
 Container logs, if left unchecked, can eat into the underlying disk space causing `disk-pressure` conditions
 leading to eviction of pods running on a given node. This can be prevented by performing log-rotation
 based on file-size while specifying retention count. One recommended way to do this is by configuring the
