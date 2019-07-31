@@ -52,9 +52,9 @@ It is not very efficient to rebuild replicas from scratch. We can improve rebuil
 
 ## See Also:
 
-### [Which storage engine should I use ?](/docs/next/casengines.html#cstor-vs-jiva-vs-localpv-features-comparison)
+### [Which storage engine should I use ?](/v100/docs/next/casengines.html#cstor-vs-jiva-vs-localpv-features-comparison)
 
-### [Jiva User Guide ](/docs/next/jivaguide.html)
+### [Jiva User Guide ](/v100/docs/next/jivaguide.html)
 
 <br>
 

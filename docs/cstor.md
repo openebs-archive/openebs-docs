@@ -218,7 +218,7 @@ Ephermeral disk support is added to cStor in 0.8.1 version.
 
 Kubernetes services such as GKE, EKS and AKS have cloud VMs where when a node is lost a new replacement node is provided with  formatted new disks as part of their Auto Scaling policy which means that the data on local disks of the original node is lost permanently. However, with cStor, you can still build a reliable and highly available persistent storage solution using these ephemeral local disks by using cStor's replication feature. 
 
-For this to work, cStor StorageClass has to be configured with `ReplicaCount=3`. With this setting data on cStor volume is replicated to three copies on different nodes. In the ephemeral nodes scenario, when a node is lost, Kubernetes brings up a new node with the same label. Data of cStor volumes continues to be available and will be served from one of the two remaining replicas. OpenEBS detects that a new node has come up with all new disks and it automatically reconfigures the disk CRs to the existing StoragePoolClaim config or StoragePool configuration. The net effect is that  the cStorPool instance that was gone with the lost node is recreated on the newly replaced node. cStor will then start rebuilding the cStor volume replicas onto this new cStorPool instance. 
+For this to work, cStor StorageClass has to be configured with `ReplicaCount=3`. With this setting data on cStor volume will be replicated to three copies on different nodes. In the ephemeral nodes scenario, when a node is lost, Kubernetes brings up a new node with the same label. Data of cStor volumes continues to be available and will be served from one of the two remaining replicas. OpenEBS detects that a new node has come up with all new disks and it automatically reconfigures the disk CRs to the existing StoragePoolClaim config or StoragePool configuration. The net effect is that  the cStorPool instance that was gone with the lost node is recreated on the newly replaced node. cStor will then start rebuilding the cStor volume replicas onto this new cStorPool instance. 
 
 **Note:** Rebuilding of data onto the new cStorPool instance can take time depending on the size of data to be rebuilt. During this time the volume quorum needs to be maintained. In other words, during rebuilding time, the cStorPool is in an unprotected state where losing another node will cause permanent loss of data. Hence, during Kubernetes node upgrades, administrators need to make sure that the cStorPools are fully rebuilt and volumes are healthy/online before starting the upgrade of the next node.
 
@@ -232,11 +232,11 @@ The easiest way to monitor cStor pools and volumes is through MayaOnline. The vo
 
 Links to screenshots of some of the cStor resources in MayaOnline are shown below.
 
-[Pool topology view](/docs/next/mayaonline.html#cstor-pool-view)
+[Pool topology view](/v100/docs/next/mayaonline.html#cstor-pool-view)
 
-[Volume POD topology view](/docs/next/mayaonline.html#cstor-volume-pod-view)
+[Volume POD topology view](/v100/docs/next/mayaonline.html#cstor-volume-pod-view)
 
-[Volume CR topology view](/docs/next/mayaonline.html#cstor-custom-resources-view)
+[Volume CR topology view](/v100/docs/next/mayaonline.html#cstor-custom-resources-view)
 
 <br>
 
@@ -248,9 +248,9 @@ cStor supports thin provisioning of volumes. By default, a volume is provisioned
 
 ## Performance testing of cStor
 
-Performance testing includes setting up the pools, storage classes and iSCSI server tunables. Some best practices include 
+Performance testing includes setting up the pools, storage classes and iSCSI server tunable. Some best practices include 
 
-- Number of replicas - For statefulsets, when the application is doing the required replication, one replica at volume may be sufficient
+- Number of replicas - For StatefulSet, when the application is doing the required replication, one replica at volume may be sufficient
 
 - Network latency - Latency between the pods and zones (if the replicas are placed across AZs) plays a major role in the performance results and it needs to be in the expected range
 
@@ -295,7 +295,7 @@ Following are most commonly observed areas of troubleshooting
 
    **Resolution**: 
 
-   Install iSCSI tools and make sure iSCSI service is running. See [iSCSI installation](/docs/next/prerequisites.html)
+   Install iSCSI tools and make sure iSCSI service is running. See [iSCSI installation](/v100/docs/next/prerequisites.html)
 
 2. **Multi-attach error is seen in the logs**
 
@@ -337,10 +337,11 @@ Following are most commonly observed areas of troubleshooting
        iscsiadm: failed to send SendTargets PDU
    kubelet keeps taking this response and accumulates the memory.More details can be seen [here](https://github.com/openebs/openebs/issues/2382).
    
+
 **Resolution:**
-   
+
 This issue is fixed in 0.8.1 version.
-   
+
 
 
 
@@ -378,7 +379,7 @@ Pool specification or Pool aggregate that holds all CSPs together
 
 **cStor Storage Pool or CSP :** 
 
-Points to an individual cStor pool on one node. There will also be a cStor-Pool-Pod corresponding to each CSP custom resource. *When a new node is added to Kubernetes node and configured to host a cStor pool, a new CSP CR and cStor-Pool-Pod are provisioned on that node and CVRs are migrated from other nodes for volume rebalancing. (CSP auto scaling feature is in the roadmap)* 
+Points to an individual cStor pool on one node. There will also be a cStor-Pool-Pod corresponding to each CSP custom resource. When a new node is added to Kubernetes node and configured to host a cStor pool, a new CSP CR and cStor-Pool-Pod are provisioned on that node and CVRs are migrated from other nodes for volume rebalancing. (CSP auto scaling feature is in the roadmap).
 
 **cStor Volume or CV :** 
 
@@ -396,11 +397,11 @@ Each discovered disk on a node is added as a disk CR. This is needed to identify
 
 ## See Also:
 
-### [Storage Engines in OpenEBS](/docs/next/casengines.html)
+### [Storage Engines in OpenEBS](/v100/docs/next/casengines.html)
 
-### [Creating cStor Pool](/docs/next/ugcstor.html#creating-cStor-storage-pools)
+### [Creating cStor Pool](/v100/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
-### [Provisioning cStor volumes](/docs/next/ugcstor.html#provisioning-a-cStor-volume)
+### [Provisioning cStor volumes](/v100/docs/next/ugcstor.html#provisioning-a-cStor-volume)
 
 
 

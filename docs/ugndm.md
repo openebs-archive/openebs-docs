@@ -22,9 +22,7 @@ This section provides the operations need to performed by the Admin for configur
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
 
 
-
 <h3><a class="anchor" aria-hidden="true" id="Include-filters"></a>Include filters</h3>
-
 To include only selected disks for provisioning, update the operator YAML file with the required blockdevices under NDM configuration section so that only these blockdevice will be taken for the creation of blockdevice CR. Add the blockdevice path in the following configuration for specifying particular disks. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
 This change must be done in the `openebs-operator.yaml` file that you have downloaded before OpenEBS installation. 
@@ -43,7 +41,6 @@ When the above configuration is used, only the block device `/dev/sda` will be u
 
 
 <h3><a class="anchor" aria-hidden="true" id="Exclude-filters"></a>Exclude filters</h3>
-
 NDM do some filtering on the disks to exclude, for example boot disk. By default, NDM excludes the following device path to create block device CR. This configuration is added in `openebs-ndm-config` under `Configmap` in `openebs-operator.yaml`.
 
 ```
@@ -87,7 +84,6 @@ filterconfigs:
 ```
 
 <h3><a class="anchor" aria-hidden="true" id="create-blockdevice-CRs-for-partitioned-disks"></a>Create blockdevice CRs for partitioned disks</h3>
-
 Currently, NDM is not selecting partitioned disks for creating device resource. But, you can create block device resource for the partitioned disks manually. The following are the steps for the creation of block device resource.
 
 1. Create the sample block device CR YAML using the following spec. Following is the sample block device CR YAML.
@@ -149,7 +145,7 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
 ## See Also:
 
 
-### [Understanding Node Disk Manager](/docs/next/ndm.html)
+### [Understanding Node Disk Manager](/v100/docs/next/ndm.html)
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

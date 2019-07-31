@@ -50,39 +50,37 @@ The upgrade of OpenEBS is a four step process:
 All steps described in this document must be performed on the Kubernetes master or from a machine that has access to Kubernetes master.
 
 1.  <h3><a class="anchor" aria-hidden="true" id="Download-yamls"></a>Download upgrade scripts</h3>
-
-    You can do git clone of the upgrade scripts.
-
-    ```
+You can do git clone of the upgrade scripts.
+    
+```
     mkdir 0.9.0-1.0.0/
     cd 0.9.0-1.0.0/
     git clone https://github.com/openebs/openebs.git
     cd openebs/k8s/upgrades/0.9.0-1.0.0/
     ```
-   
+    
 2. <h3><a class="anchor" aria-hidden="true" id="Verify-prerequisites"></a>Verify Prerequisites</h3>
-
-   - OpenEBS current version should be 0.9.0. This can be verified by using the following command. Output will contain 0.9.0 as image for all the OpenEBS deployments.
-
-     ```
+- OpenEBS current version should be 0.9.0. This can be verified by using the following command. Output will contain 0.9.0 as image for all the OpenEBS deployments.
+   
+  ```
      kubectl get deployment -o yaml -n openebs | grep -i image | grep -i quay | grep -v metadata
      ```
-
-   - Verify current NDM image is 0.3.5 using the following command.
-
-     ```
+   
+- Verify current NDM image is 0.3.5 using the following command.
+   
+  ```
      kubectl get ds -o yaml  -n openebs| grep -i image |  grep -i quay | grep -v metadata
      ```
-
-   - If OpenEBS has been deployed using stable helm charts, it has to be in chart version `0.9.2` . Run `helm list` to verify the chart version. If not, you have to update openebs chart version to `0.9.2` using below commands.
-
-     - First, you have to delete the `admission-server` secret, which will be deployed again once you upgrade charts to `0.9.2` version using below command:
+   
+- If OpenEBS has been deployed using stable helm charts, it has to be in chart version `0.9.2` . Run `helm list` to verify the chart version. If not, you have to update openebs chart version to `0.9.2` using below commands.
+   
+  - First, you have to delete the `admission-server` secret, which will be deployed again once you upgrade charts to `0.9.2` version using below command:
      
        ```
        kubectl delete secret admission-server-certs -n openebs
        ```
-
-     - Upgrade OpenEBS chart version to 0.9.2 using below command:
+   
+  - Upgrade OpenEBS chart version to 0.9.2 using below command:
      
        Run below command to update local cache with latest package.
      
@@ -110,14 +108,14 @@ All steps described in this document must be performed on the Kubernetes master 
        ```
      
    - Before proceeding with below steps please make sure the NDM daemonset `DESIRED` count is equal to `CURRENT` count. This can be checked by using the following command.
-
-     ```
+   
+  ```
      kubectl get ds openebs-ndm -n <openebs-installed-namespace>
      ```
-
-     Output will be similar to the following.
-
-     ```
+   
+  Output will be similar to the following.
+   
+  ```
      NAME          DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
      openebs-ndm   3         3         3       3            3           <none>          7m6s
      ```
@@ -129,37 +127,39 @@ All steps described in this document must be performed on the Kubernetes master 
      - Master or any Node has been tainted in k8s cluster.
      
    - Ensure that you are inside of upgrade script directory (openebs/k8s/upgrades/0.9.0-1.0.0/). This step will update OpenEBS control plane components labels. Run below command to update OpenEBS control plane components labels.
-
-     ```
+   
+  ```
      ./pre-upgrade.sh <openebs_installed_namespace> <mode>
      ```
-
-     Here, `<openebs_installed_namespace>` is the namespace where OpenEBS control plane components are installed. `<mode>` is the way how OpenEBS is installed. Provide mode as `helm` if OpenEBS is installed via helm chart (or) provide mode as `operator` if OpenEBS is installed via operator yaml.
-
-     Eg: 
-
-     - If OpenEBS 0.9.0 version was installed via operator YAML method then run below command.
-
-       ```
+   
+  Here, `<openebs_installed_namespace>` is the namespace where OpenEBS control plane components are installed. `<mode>` is the way how OpenEBS is installed. Provide mode as `helm` if OpenEBS is installed via helm chart (or) provide mode as `operator` if OpenEBS is installed via operator yaml.
+   
+  Eg: 
+   
+  - If OpenEBS 0.9.0 version was installed via operator YAML method then run below command.
+   
+    ```
        ./pre-upgrade.sh openebs operator
        ```
-
-     - If OpenEBS 0.9.0 version was installed via helm then run below command.
-
-       ```
+   
+  - If OpenEBS 0.9.0 version was installed via helm then run below command.
+   
+    ```
        ./pre-upgrade.sh openebs helm
        ```
-
-     Choose appropriate command from above and complete the pre-upgrade procedure. 
-
-     After executing the above command, if the output shows that `Pre-Upgrade is successful `, then proceed with next step.
-
-     **Notes:** 
-
-     - No new SPC should be created after this step until the upgrade is completed. If it is created then execute `pre-upgrade.sh` again.
+   
+  Choose appropriate command from above and complete the pre-upgrade procedure. 
+   
+  After executing the above command, if the output shows that `Pre-Upgrade is successful `, then proceed with next step.
+   
+  **Notes:** 
+   
+  - No new SPC should be created after this step until the upgrade is completed. If it is created then execute `pre-upgrade.sh` again.
      - It is mandatory to make sure that all OpenEBS control plane components are running on version 0.9.0 before the upgrade.
-
+   
 3. <h3><a class="anchor" aria-hidden="true" id="upgrade-operator"></a>Upgrade OpenEBS operator</h3>
+
+   
 
    <h4><a class="anchor" aria-hidden="true" id="upgrade-operator-crds-deployment"></a>Upgrading OpenEBS Operator CRDs and Deployments</h4>
 
@@ -216,131 +216,128 @@ All steps described in this document must be performed on the Kubernetes master 
    ```
 
 4. <h3><a class="anchor" aria-hidden="true" id="upgrade-volume"></a>Upgrade volumes one by one</h3>
-
-   Even after the OpenEBS Operator has been upgraded to 1.0.0, the cStor Storage Pools and volumes (both Jiva and cStor) will continue to work with older versions. Use the following steps in the same order to upgrade cStor Pools and volumes.
-
-   **Note:** Upgrade functionality is still under active development. It is highly recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, make sure you have taken a backup of the data before starting the below upgrade procedure.
-
-   **Limitations:**
-
-   1. This is a preliminary script only intended for using on volumes where data has been backed-up.
+Even after the OpenEBS Operator has been upgraded to 1.0.0, the cStor Storage Pools and volumes (both Jiva and cStor) will continue to work with older versions. Use the following steps in the same order to upgrade cStor Pools and volumes.
+   
+**Note:** Upgrade functionality is still under active development. It is highly recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, make sure you have taken a backup of the data before starting the below upgrade procedure.
+   
+**Limitations:**
+   
+1. This is a preliminary script only intended for using on volumes where data has been backed-up.
    2. Have the following link handy in case the volume gets into read-only during upgrade <https://docs.openebs.io/docs/next/troubleshooting.html#recovery-readonly-when-kubelet-is-container>
    3. Automatic rollback option is not provided. To rollback, you need to update the controller, exporter and replica pod images to the previous version.
    4. In the process of running the below steps, if you run into issues, you can always reach us on <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community.
    
    <h4><a class="anchor" aria-hidden="true" id="Jiva-PV"></a>Jiva PV</h4>
-
    1. Go to `jiva` folder.
 
       ```
-      cd jiva
+   cd jiva
       ```
-
+   
    2. Obtain the PV name using the following command. 
 
       ```
-      kubectl get pv
+   kubectl get pv
       ```
-
+   
       Output will be similar to the following.
 
       ```
-      NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS           REASON   AGE
+   NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS           REASON   AGE
       pvc-aeb93081-93d0-11e9-a7c6-42010a800fc0   5G         RWO            Delete           Bound    default/demo-vol1-claim   openebs-jiva-default            118m
       ```
-
+   
    3. Select the appropriate Jiva volume one at a time and upgrade the particular PV using the following command.
 
       ```
-      ./jiva_volume_upgrade.sh <PV_name>
+   ./jiva_volume_upgrade.sh <PV_name>
       ```
-
+   
       Eg:
 
       ```
-      ./jiva_volume_upgrade.sh pvc-aeb93081-93d0-11e9-a7c6-42010a800fc0
+   ./jiva_volume_upgrade.sh pvc-aeb93081-93d0-11e9-a7c6-42010a800fc0
       ```
-
+   
       If the output shows that the corresponding PV is Successfully upgraded to 1.0.0, then particular Jiva PV is upgraded successfully. The same steps can be applied for other PVs one by one to upgrade the PV to 1.0.0. version.
 
    4. Verify PV is bounded using the following command.
 
       ```
-      kubectl get pv
+   kubectl get pv
       ```
-
+   
    5. Verify application pod is running using the following command.
 
       ```
-      kubectl get pod -n <namespace> 
+   kubectl get pod -n <namespace> 
       ```
-
+   
    <h4><a class="anchor" aria-hidden="true" id="cStor-PV"></a>cStor PV</h4>
-
-   Upgradation of cStor volume is a two step process. First step is to upgrade cStor pools one by one and then volumes one by one.
-
-   **Upgrade cStor Pools**
-
-   1. Obtain SPC name using the following command.
-
-      ```
+Upgradation of cStor volume is a two step process. First step is to upgrade cStor pools one by one and then volumes one by one.
+   
+**Upgrade cStor Pools**
+   
+1. Obtain SPC name using the following command.
+   
+   ```
       kubectl get spc
-      ```
-
+   ```
+   
       Output will be similar to the following.
-
-      ```
+   
+   ```
       NAME          AGE
-      cstor-pool1   3h	
+   cstor-pool1   3h	
       ```
-
+   
    2. Go to the particular upgrade script directory of `cstor`  using the following command.
-
-      ```
+   
+   ```
       cd cstor
-      ```
-
+   ```
+   
    3. Verify corresponding pool pods are running using the following command. The particular pool pods should be running state before going to the next step.
-
-      ```
+   
+   ```
       kubectl get pod -n openebs | grep <spc_name>
-      ```
-
+   ```
+   
       Eg:
-
-      ```
+   
+   ```
       kubectl get pod -n openebs | grep cstor-pool1
-      ```
-
+   ```
+   
    4. Upgrade cStor pool using the following command.
-
-      ```
+   
+   ```
       ./cstor_pool_upgrade.sh <spc_name> <openebs_installed_namespace>
-      ```
-
+   ```
+   
       where `<openebs_installed_namespace>` is the namespace where OpenEBS control plane components are installed.
-
-      Eg:
-
-      ```
+   
+   Eg:
+   
+   ```
       ./cstor_pool_upgrade.sh cstor-pool1 openebs
-      ```
-
+   ```
+   
       If the output shows that the corresponding cStor pool is successfully upgraded to 1.0.0, then upgrade job is completed for the corresponding pool. The same steps can be applied to other cStor pools one by one.
-
-   5. Verify cStor pool upgrade using following command.
-
-      ```
+   
+5. Verify cStor pool upgrade using following command.
+   
+   ```
       ./verify_pool_upgrade.sh <spc_name> <openebs_installed_namespace>
-      ```
-
+   ```
+   
    **Upgrade cStor Volumes**
    
-   1. Obtain PV name using the following command.
-
+1. Obtain PV name using the following command.
+   
       ```
       kubectl get pv
-      ```
+   ```
    
       Output will be similar to the following.
    
@@ -350,18 +347,18 @@ All steps described in this document must be performed on the Kubernetes master 
       ```
    
    2. Select the appropriate cStor volume one at a time and upgrade the particular PV using the following command. 
-
+   
       ```
       ./cstor_volume_upgrade.sh <PV_name> <namespace>
-      ```
-
+   ```
+   
       where `<namespace>` is the namespace where OpenEBS  is installed.
    
-      Eg:
-
+   Eg:
+   
       ```
       ./cstor_volume_upgrade.sh pvc-9b43e8a6-93d2-11e9-a7c6-42010a800fc0 openebs
-      ```
+   ```
    
       If the output shows that the corresponding PV is successfully upgraded to 1.0.0, then  upgrade job is completed for corresponding cStor volume. The same steps can be applied for other PVs one by one.
    
@@ -419,9 +416,9 @@ This will verify all the OpenEBS components are successfully upgraded to the lat
 
 ## See Also:
 
-### [Releases](/docs/next/releases.html)
+### [Releases](/v100/docs/next/releases.html)
 
-### [MayaOnline](/docs/next/mayaonline.html)
+### [MayaOnline](/v100/docs/next/mayaonline.html)
 
 
 

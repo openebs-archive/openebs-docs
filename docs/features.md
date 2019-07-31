@@ -28,7 +28,7 @@ sidebar_label: Features and Benefits
 
 
 
-For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/docs/next/usecases.html) section.
+For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/v100/docs/next/usecases.html) section.
 
 
 
@@ -75,7 +75,7 @@ Copy-on-write snapshots are a key feature of OpenEBS. The snapshots are created 
 
 <img src="/docs/assets/svg/f-backup.svg" alt="Smiley face" style="width:200px;">
 
-Backup and restore of OpenEBS volumes work with the recent Kubernetes backup and restore solution such as VMware velero (or HeptIO Ark). Data backup to object storage targets such as S3 or Minio can be built using OpenEBS incremental snapshot capability. This storage level snapshotting and backup saves a lot bandwidth and storage space as only the incremental data is used for backup.
+Backup and restore of OpenEBS volumes work with the recent Kubernetes backup and restore solution such as VMware velero (or HeptIO Ark). Data backup to object storage targets such as S3 or MinIO can be built using OpenEBS incremental snapshot capability. This storage level snapshotting and backup saves a lot bandwidth and storage space as only the incremental data is used for backup.
 
 <hr>
 
@@ -89,7 +89,6 @@ OpenEBS volumes are instrumented for granular data metrics such as volume IOPS, 
 
 <hr>
 <br>
-
 <br>
 
 <br>
@@ -141,7 +140,7 @@ Containerization of storage software and dedicating such controller for each vol
 
  <img src="/docs/assets/svg/b-lowtco.svg" alt="Smiley face" style="width:200px;">
 
-On most clouds, block storage on cloud is charged based on how much is purchased and not on how much is used. Thin provisioning feature of OpenEBS is useful in pooling the local storage or cloud storage and start giving out the data volumes to the stateful applications in whatever size they need. The storage can be added on the fly without any disruption to the volumes exposed to the workloads or applications. This process has shown cost savings of upto 50% in the medium to long term of running workloads on clouds
+On most clouds, block storage on cloud is charged based on how much is purchased and not on how much is used. Thin provisioning feature of OpenEBS is useful in pooling the local storage or cloud storage and start giving out the data volumes to the stateful applications in whatever size they need. The storage can be added on the fly without any disruption to the volumes exposed to the workloads or applications. This process has shown cost savings of up to 50% in the medium to long term of running workloads on clouds
 
 <hr>
 
@@ -183,11 +182,11 @@ MayaOnline is the SaaS service for OpenEBS enabled Kubernetes clusters that prov
 
 ## See Also:
 
-### [Object Storage with OpenEBS](/docs/next/minio.html)
+### [Object Storage with OpenEBS](/v100/docs/next/minio.html)
 
-### [RWM PVs with OpenEBS](/docs/next/rwm.html)
+### [RWM PVs with OpenEBS](/v100/docs/next/rwm.html)
 
-### [Local storage for Prometheus ](/docs/next/prometheus.html)
+### [Local storage for Prometheus ](/v100/docs/next/prometheus.html)
 
 <br>
 

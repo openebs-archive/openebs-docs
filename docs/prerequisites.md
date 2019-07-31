@@ -21,37 +21,37 @@ is installed and running or to find the steps to install the iSCSI client.
 
 <div class="divrow">
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#ubuntu"><img src="/docs/assets/l-ubuntu.png" width="50px;">Ubuntu</a>
+        <a href="/v100/docs/next/prerequisites.html#ubuntu"><img src="/docs/assets/l-ubuntu.png" width="50px;">Ubuntu</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#rhel"><img src="/docs/assets/l-rhel.png" width="50px;">RHEL</a>
+        <a href="/v100/docs/next/prerequisites.html#rhel"><img src="/docs/assets/l-rhel.png" width="50px;">RHEL</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#centos"><img src="/docs/assets/l-centos.png" width="50px;">CentOS</a>
-    </div>
-</div>
-
-<div class="divrow">
-    <div class="divcol">
-        <a href="/docs/next/prerequisites.html#eks"><img src="/docs/assets/l-eks.png" width="50px;">EKS</a>
-    </div>
-    <div class="divcol">
-        <a href="/docs/next/prerequisites.html#gke"><img src="/docs/assets/l-gke.png" width="50px;">GKE</a>
-    </div>
-    <div class="divcol">
-        <a href="/docs/next/prerequisites.html#aks"><img src="/docs/assets/l-aks.png" width="50px;">AKS</a>
+        <a href="/v100/docs/next/prerequisites.html#centos"><img src="/docs/assets/l-centos.png" width="50px;">CentOS</a>
     </div>
 </div>
 
 <div class="divrow">
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#openshift"><img src="/docs/assets/l-openshift.png" width="50px;">OpenShift</a>
+        <a href="/v100/docs/next/prerequisites.html#eks"><img src="/docs/assets/l-eks.png" width="50px;">EKS</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#rancher"><img src="/docs/assets/l-rancher.png" width="50px;">Rancher</a>
+        <a href="/v100/docs/next/prerequisites.html#gke"><img src="/docs/assets/l-gke.png" width="50px;">GKE</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#icp"><img src="/docs/assets/l-icp.png" width="50px;">ICP</a>
+        <a href="/v100/docs/next/prerequisites.html#aks"><img src="/docs/assets/l-aks.png" width="50px;">AKS</a>
+    </div>
+</div>
+
+<div class="divrow">
+    <div class="divcol">
+        <a href="/v100/docs/next/prerequisites.html#openshift"><img src="/docs/assets/l-openshift.png" width="50px;">OpenShift</a>
+    </div>
+    <div class="divcol">
+        <a href="/v100/docs/next/prerequisites.html#rancher"><img src="/docs/assets/l-rancher.png" width="50px;">Rancher</a>
+    </div>
+    <div class="divcol">
+        <a href="/v100/docs/next/prerequisites.html#icp"><img src="/docs/assets/l-icp.png" width="50px;">ICP</a>
     </div>
 </div>
 
@@ -70,7 +70,6 @@ block volumes.
 
 
 <h3><a class="anchor" aria-hidden="true" id="ubuntu"></a>Ubuntu</h3>
-
 
 
 **Verify iSCSI services are configured**
@@ -126,7 +125,6 @@ You can verify the iSCSI installation from above section.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="rhel"></a>Red Hat Enterprise Linux</h3>
-
 
 
 **Verify iSCSI services are configured**
@@ -193,7 +191,6 @@ You can verify the iSCSI installation from above section.
 <h3><a class="anchor" aria-hidden="true" id="centos"></a>CentOS</h3>
 
 
-
 **Verify iSCSI services are configured**
 
 If an iSCSI initiator is already installed on your node, check that
@@ -243,7 +240,6 @@ Amazon EKS clusters can be brought up with either an AmazonLinux AMI
 or an Ubuntu 18.04 AMI.
 
 <h4><a class="anchor" aria-hidden="true" id="eks-linux-ami"></a>For clusters running with the AmazonLinux AMI</h4>
-
 **Verify iSCSI services are configured**
 
 If an iSCSI initiator is already installed on your node, check that
@@ -282,7 +278,6 @@ You can verify the iSCSI installation from the above section.
 
 
 <h4><a class="anchor" aria-hidden="true" id="eks-linux-ami"></a>For clusters running with the Ubuntu 18.04 AMI</h4>
-
 For setting up iSCSI clients on Ubuntu nodes, see the
 [instructions above.](#ubuntu)
 
@@ -298,7 +293,6 @@ Select Ubuntu as the image version for the node pools in the custom settings. Fo
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="aks"></a>Azure Kubernetes Service (AKS)</h3>
-
 On Azure Kubernetes Service you need to verify that the `open-iscsi`
 packages are installed and running the service on the kubelet.
 This can be checked by connecting to the nodes through SSH using the
@@ -384,7 +378,6 @@ You can verify the iSCSI installation from the above section.
 
 
 <h3><a class="anchor" aria-hidden="true" id="openshift"></a>Red Hat OpenShift</h3>
-
 OpenEBS can be installed using Openshift on the following Operating
 Systems. Tested OpenShift versions are 3.9 and 3.10.
 
@@ -394,7 +387,6 @@ Systems. Tested OpenShift versions are 3.9 and 3.10.
 
 
 <h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
-
 Latest tested RHEL versions are 7.5, 7.6.
 
 For setting up iSCSI clients on RHEL nodes, see the [instructions above](#rhel).
@@ -402,7 +394,6 @@ For setting up iSCSI clients on RHEL nodes, see the [instructions above](#rhel).
 
 
 <h4><a class="anchor" aria-hidden="true" id="On-Centos"></a>On CentOS</h4>
-
 Latest tested CentOS version is CentOS 7.
 
 For setting up iSCSI clients on CentOS nodes, see the  [instructions above](#centos).
@@ -410,7 +401,6 @@ For setting up iSCSI clients on CentOS nodes, see the  [instructions above](#cen
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="rancher"></a>Rancher</h3>
-
 - If you are using RancherOS as the operating system for your Kubernetes cluster, you simply need to enable the iSCSI service and start it on all the hosts or nodes. 
 - If you are using Ubuntu or RHEL as the operating system for your Kubernetes cluster, you need to 
   - Verify iSCSI initiators are installed on all nodes (and )
@@ -419,7 +409,6 @@ For setting up iSCSI clients on CentOS nodes, see the  [instructions above](#cen
 
 
 <h4><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services On RancherOS</h4>
-
 To run iSCSI services, execute the following commands on each of the cluster hosts or nodes.
 
 ```
@@ -438,7 +427,6 @@ reboot
 
 
 <h4><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services on RHEL or Ubuntu</h4>
-
 **Step1:** Verify iSCSI initiator is installed and services are running
 
 | Operating system | iSCSI Package         | Commands                                                     |
@@ -475,7 +463,6 @@ OpenEBS can be installed using ICP on the following Operating Systems. Latest te
    
 
 <h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
-
 Latest tested RHEL versions are 7.5, 7.6.
 
 For setting up iSCSI clients on RHEL nodes, see the
@@ -484,7 +471,6 @@ For setting up iSCSI clients on RHEL nodes, see the
 
 
 <h4><a class="anchor" aria-hidden="true" id="On-Ubuntu"></a>On Ubuntu</h4>
-
 Latest tested Ubuntu version are Ubuntu 16.04 LTS and 18.04 LTS.
 
 For setting up iSCSI clients on Ubuntu nodes, see the
@@ -494,9 +480,9 @@ For setting up iSCSI clients on Ubuntu nodes, see the
 
 ## See Also:
 
-### [OpenEBS Installation](/docs/next/installation.html)
+### [OpenEBS Installation](/v100/docs/next/installation.html)
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v100/docs/next/architecture.html)
 
 
 

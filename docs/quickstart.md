@@ -22,11 +22,12 @@ sidebar_label: Quickstart
         <li>Kubernetes 1.9.7+ installed. Latest tested Kubernetes version is 1.13.4.</li>
         <li>For using features like Local PV and Backup & Restore, you must require Kubernetes version 1.12.
         </li>
-        <li>Understand the <a href="/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
-        <li>Start <a href="/docs/next/installation.html">installation </a> through OpenEBS operator.</li>
-        <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses. More details can be find from <a href="/docs/next/ugcstor.html">here.</a></li>
-        <li>For high performance required applications which manage their own replication, data protection and other storage features, provision OpenEBS Local PV. More details can be find from <a href="/docs/next/uglocalpv.html">here.</a></li>
+        <li>Understand the <a href="/v100/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
+        <li>Start <a href="/v100/docs/next/installation.html">installation </a> through OpenEBS operator.</li>
+        <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses. More details can be find from <a href="/v100/docs/next/ugcstor.html">here.</a></li>
+        <li>For high performance required applications which manage their own replication, data protection and other storage features, provision OpenEBS Local PV. More details can be find from <a href="/v100/docs/next/uglocalpv.html">here.</a></li>
     </ul>
+
 
 
 
@@ -46,24 +47,23 @@ sidebar_label: Quickstart
 <font size="5">As a first step, follow the instructions to setup or verify iSCSI clients on any of the platforms below </font>
 
 <div class="emphasize">
+[Ubuntu](/v100/docs/next/prerequisites.html#ubuntu)
 
-[Ubuntu](/docs/next/prerequisites.html#ubuntu)
+[RHEL](/v100/docs/next/prerequisites.html#rhel)
 
-[RHEL](/docs/next/prerequisites.html#rhel)
+[CentOS](/v100/docs/next/prerequisites.html#centos)
 
-[CentOS](/docs/next/prerequisites.html#centos)
+[OpenShift](/v100/docs/next/prerequisites.html#openshift)
 
-[OpenShift](/docs/next/prerequisites.html#openshift)
+[Rancher](/v100/docs/next/prerequisites.html#rancher)
 
-[Rancher](/docs/next/prerequisites.html#rancher)
+[ICP](/v100/docs/next/prerequisites.html#icp)
 
-[ICP](/docs/next/prerequisites.html#icp)
+[EKS](/v100/docs/next/prerequisites.html#eks)
 
-[EKS](/docs/next/prerequisites.html#eks)
+[GKE](/v100/docs/next/prerequisites.html#gke)
 
-[GKE](/docs/next/prerequisites.html#gke)
-
-[AKS](/docs/next/prerequisites.html#aks)
+[AKS](/v100/docs/next/prerequisites.html#aks)
 
 <br>
 
