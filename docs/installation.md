@@ -480,6 +480,7 @@ This setting is useful in cases where user has to specify minimum requests like 
 
 
 <h3><a class="anchor" aria-hidden="true" id="setup-rbac-for-tiller-before-installing-openebs-chart"></a>Setup RBAC for Tiller before Installing OpenEBS Chart</h3>
+
 ```
 kubectl -n kube-system create sa tiller
 kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
@@ -496,6 +497,7 @@ helm repo update
 
 
 <h3><a class="anchor" aria-hidden="true" id="example-nodeselector-helm"></a>For nodeSelectors in values.yaml (helm)</h3>
+
 First, label the required nodes with an appropriate label. In the following command, the required nodes for storage nodes are labelled as *node=openebs*
 
 ```
@@ -520,6 +522,7 @@ provisioner:
 
 
 <h3><a class="anchor" aria-hidden="true" id="example-helm-diskfilter"></a>For disk filters in values.yaml (helm)</h3>
+
 In the `values.yaml`, find`ndm` section to update `excludeVendors:` and `excludePaths:`
 
 ```
@@ -545,6 +548,7 @@ ndm:
 
 
 <h3><a class="anchor" aria-hidden="true" id="helm-values"></a>Default Values for Helm Chart Parameters</h3>
+
 Download the values.yaml from [here](https://github.com/helm/charts/blob/master/stable/openebs/values.yaml) and update them as per your needs. The configurable parameters are described here for reading convenience.
 
 | PARAMETER                               | DESCRIPTION                                  | DEFAULT                                            |
@@ -609,6 +613,7 @@ Download the values.yaml from [here](https://github.com/helm/charts/blob/master/
 
 
 <h4><a class="anchor" aria-hidden="true" id="example-nodeselector-yaml"></a>For nodeSelectors in openebs-operator.yaml</h4>
+
 First, label the required nodes with an appropriate label. In the following command, the required nodes for storage nodes are labelled as *node=openebs*.
 
 ```
@@ -625,6 +630,7 @@ nodeSelector:
 <br>
 
 <h4><a class="anchor" aria-hidden="true" id="example-diskfilter-yaml"></a>For disk filters in openebs-operator.yaml</h4>
+
 In the downloaded `openebs-operator.yaml`, find `openebs-ndm-config` configmap and update the values for keys `path-filter` and `vendor-filter`
 
 ```
