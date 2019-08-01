@@ -34,7 +34,7 @@ sidebar_label: FAQs
 
 [How backup and restore is working with OpenEBS volumes?](#backup-restore-openebs-volumes)
 
-[Why customized parameter values set on default OpenEBS StorageClasses are not getting persisted after restarting maya-apiserver pod or restarting the node where maya-apiserver pod is running?](#customized-values-not-peristed-after-reboot)
+[Why customized parameters set on default OpenEBS StorageClasses are not getting persisted?](#customized-values-not-peristed-after-reboot)
 
 <br>
 
@@ -270,7 +270,7 @@ OpenEBS cStor volume is working based on cStor/ZFS snapshot using Velero. For Op
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="customized-values-not-peristed-after-reboot"></a>Why customized parameters set on default OpenEBS StorageClasses are not getting persisted? </h3>
+<h3><a class="anchor" aria-hidden="true" id="customized-values-not-peristed-after-reboot"></a>Why customized parameters set on default OpenEBS StorageClasses are not getting persisted?</h3>
 
 
 The customized parameters set on default OpenEBS StorageClasses will not persist after restarting `maya-apiserver` pod or restarting the node where `maya-apiserver` pod is running. StorageClasses created by maya-apiserver are owned by it and it tries to overwrite them upon its creation.
