@@ -92,7 +92,12 @@ In the **default installation mode**, use the following command to install OpenE
 helm install --namespace openebs --name openebs stable/openebs --version 1.1.0
 ```
 
-**Note:** Since Kubernetes 1.12, if any containers does not set its resource requests & limits values, it results into eviction. It is recommended to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be obtained from [here](#example-configuration-pod-resource-requests).
+**Note:** 
+
+1. Since Kubernetes 1.12, if any containers does not set its resource requests & limits values, it results into eviction. It is recommended to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be obtained from [here](#example-configuration-pod-resource-requests).
+
+2. Check the blockdevice mount status on Node before installing OpenEBS operator. More details can be obtained from [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
+
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
 
@@ -140,7 +145,6 @@ For customized configuration through helm, use values.yaml or command line param
 Default values for Helm Chart parameters are provided [below](#helm-values).
 
 
-
 After doing the custom configuration in the values.yaml file, run the below command to do the custom installation.
 
 ```
@@ -163,8 +167,11 @@ In the **default installation mode**, use the following command to install OpenE
 kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.1.0.yaml
 ```
 
-**Note:** Since Kubernetes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests). 
+**Note:** 
 
+1. Since Kubernetes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests). 
+
+2. Check the blockdevice mount status on Node before installing OpenEBS operator. More details can be obtained from [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
 
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
