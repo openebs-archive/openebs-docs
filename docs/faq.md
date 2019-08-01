@@ -439,7 +439,7 @@ For LocalPV, details of disk mount status can be obtained from [here.](/docs/nex
 
 cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes which does not have any filesystem and it should be unmounted on the Node. It is good to wipe out the disk if you use existing disks for cStor pool creation. 
 
-In case you need to use Local SSDs as block devices for provisong cStor volume, you will have to first unmount them and remove any the filesystem if it has. On GKE, the Local SSDs are formatted with ext4 and mounted under "/mnt/disks/". If local SSDs are not unmounted and not removed the file system, then cStor pool creation will fail.
+In case you need to use Local SSDs as block devices for provisioning cStor volume, you will have to first unmount them and remove any the filesystem if it has. On GKE, the Local SSDs are formatted with ext4 and mounted under "/mnt/disks/". If local SSDs are not unmounted and not removed the file system, then cStor pool creation will fail.
 
 <a href="#top">Go to top</a>
 
