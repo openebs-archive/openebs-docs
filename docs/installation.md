@@ -144,7 +144,7 @@ Default values for Helm Chart parameters are provided [below](#helm-values).
 After doing the custom configuration in the values.yaml file, run the below command to do the custom installation.
 
 ```
-helm install --namespace <custom_namespace> --name openebs stable/openebs -f values.yaml
+helm install --namespace <custom_namespace> --name openebs stable/openebs -f values.yaml --version 1.1.0
 ```
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
