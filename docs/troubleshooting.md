@@ -772,13 +772,13 @@ sr0              11:0    1 1024M  0 rom
 
 **Troubleshooting:**
 
-Check `kubectl get blockdevice -o yaml` of one of the disks and check its serial number. Also ensure that serial number of other 2 disks are different. If the serial number of all disks are same, then NDM will detect only the first one.
+Check `kubectl get blockdevice -o yaml` of one of the disks and check its serial number. Also ensure that serial number of other 2 disks are different. If the serial number of all disks are same, then NDM will detect only the first one. For NDM to detect the disk uniquely, disks have to have at least one of WWN, Model, Serial or Vendor property must be unique.
 
 **Resolution:**
 
 Download custom blockdevice CR YAML file from [here](https://raw.githubusercontent.com/openebs/node-disk-manager/master/deploy/crds/openebs_v1alpha1_blockdevice_cr.yaml) and apply with the details of each block device. In the sample spec, `ndm.io/managed:` is set to false. So NDM will not mange this <br>blockdevice.
 
-Note: If you are creating a block device CR manually for a custom device path, then you must add the corresponding device path under `exclude` filter so that NDM will not select the particular device for BD creation. For example, if block device CR is creating for `/dev/sdb` manually, then you must add `/dev/sdb` under `exclude` filter of NDM configuration. See [here](#Exclude-filters) for customizing the exclude filter in NDM configuration.
+**Note:** If you are creating a block device CR manually for a custom device path, then you must add the corresponding device path under `exclude` filter so that NDM will not select the particular device for BD creation. For example, if block device CR is creating for `/dev/sdb` manually, then you must add `/dev/sdb` under `exclude` filter of NDM configuration. See [here](#Exclude-filters) for customizing the `exclude` filter in NDM configuration.
 
 
 <hr>
