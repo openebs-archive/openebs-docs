@@ -12,7 +12,7 @@ sidebar_label: Knowledge Base
 
 [How to scale up Jiva replica?](#how-to-scale-up-jiva-replica)
 
-[How to install OpenEBS in OpenShift environment?](#OpenEBS-install-openshift-without-SELinux-disabled)
+[How to install OpenEBS in OpenShift 4.1?](#OpenEBS-install-openshift-4.1)
 
 [How to enable Admission-Controller in OpenShift environment?](#enable-admission-controller-in-openshift)
 
@@ -23,6 +23,7 @@ sidebar_label: Knowledge Base
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
+
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
 
 1. Get the PV name by following command and use it in Step 2.
@@ -120,7 +121,7 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 
 7. Get the newly created PVC UID using `kubectl get pvc mongo-persistent-storage-mongo-0 -o yaml`.
 
-   ​    
+       
 
 8. Update the uid under the claimRef in the PV using the following command. The PVC will get attached to the PV after editing the pv with correct uid.
 
@@ -233,8 +234,7 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
 
 </br>
 
-
-<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-without-SELinux-disabled"></a>How to install OpenEBS in OpenShift environment?</h3>
+<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-4.1"></a>How to install OpenEBS in OpenShift 4.1</h3>
 
 In earlier documentation, it was referred to install OpenEBS by disabling SELinux. But, you can install OpenEBS in OpenShift environment without disabling SELinux using the following steps.
 
@@ -244,19 +244,95 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
    oc adm policy add-scc-to-user privileged system:serviceaccount:openebs:openebs-maya-operator
    ```
 
+   Example output:
+
+   ```
+   scc "privileged" added to: ["system:serviceaccount:openebs:default"]
+   ```
+
 2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
 
    ```
-   wget https://openebs.github.io/charts/openebs-operator-0.9.0.yaml
+   wget https://openebs.github.io/charts/openebs-operator-1.1.0.yaml
    ```
 
-3. Apply the modified the YAML using the following command. The OpenEBS operator YAML file name has to be changed based on the latest version.
+3. Apply the modified the YAML using the following command. 
 
    ```
-   oc apply -f openebs-operator-0.9.0.yaml
+   kubectl apply -f openebs-operator-1.1.0.yaml
    ```
 
-4. Verify OpenEBS pods status by using `oc get pods -n openebs`
+4. Verify OpenEBS pod status by using `kubectl get pods -n openebs`
+
+   <div class="co">NAME                                          READY   STATUS    RESTARTS   AGE
+   maya-apiserver-594699887-4x6bj                1/1     Running   0          60m
+   openebs-admission-server-544d8fb47b-lxd52     1/1     Running   0          60m
+   openebs-localpv-provisioner-59f96b699-dpf8l   1/1     Running   0          60m
+   openebs-ndm-4v6kj                             1/1     Running   0          60m
+   openebs-ndm-8g226                             1/1     Running   0          60m
+   openebs-ndm-kkpk7                             1/1     Running   0          60m
+   openebs-ndm-operator-74d9c78cdc-lbtqt         1/1     Running   0          60m
+   openebs-provisioner-5dfd95987b-nhwb9          1/1     Running   0          60m
+   openebs-snapshot-operator-5d58bd848b-94nnt    2/2     Running   0          60m </div>
+
+5. For provisioning OpenEBS volumes, you have to edit SCC to allow HostPath volumes and Privileged containers. This can be done in two ways. 
+
+   - Using “Restricted” SCC
+   - Using “Privileged” SCC
+
+   <font size="5">Using “Restricted” SCC</font>
+
+   By default, **any/all users** (manual, serviceaccount), use the “restricted” securityContextConstraint (SCC). This SCC doesn’t allow: 
+
+   - HostPath Volumes
+   - Privileged Containers
+
+   Following have to be set to ensure volume replica pods can run on the cluster:
+
+   ```
+   allowHostDirVolumePlugin: true
+   allowPrivilegeEscalation: true
+   allowPrivilegedContainer: true
+   ```
+
+   Run following command from OpenShift cluster.
+
+   ```
+   oc edit scc restricted
+   ```
+
+   It will show an output similar to the following.
+
+   <div class="co">could not be patched: the body of the request was in an unknown format - accepted media types include: application/json-patch+json, application/merge-patch+json
+   You can run `oc replace -f /tmp/oc-edit-vvh25.yaml` to try this update again.</div>
+
+   **Note:** The above command will not patch the SCC directly. It will generate a temporary file and you have to run the mentioned command in the output to update the restricted SCC.
+
+   <font size="5">Using “Privileged” SCC</font>
+
+   In openshift, the users are mapped to “Projects” & SCC are mapped to users (or serviceAccounts). This method is more preferred.
+   In case, where you want your application to run in privileged containers with particular user/serviceaccount, it can be added to the privileged SCC using following command from OpenShift cluster. 
+
+   ```
+   oc adm policy add-scc-to-user privileged system:serviceaccount:<project>:<serviceaccountname>  
+   ```
+
+   Example:
+
+   ```
+    oc adm policy add-scc-to-user privileged system:serviceaccount:openebs:default
+   ```
+
+   **Note:** 
+
+   - In OpenShift each namespace automatically creates a project - into which one or more users can be created.
+   - An `oc apply` from inside a `project` will cause all resources to get created with same, i.e., project namespace.
+
+    Example output:
+
+   <div class="co">scc "privileged" added to: ["system:serviceaccount:openebs:default"]</div>	
+
+6.  Now,you can provision OpenEBS volumes. More details for provisioning OpenEBS volumes can be obtained from the User Guide section.
 
 <a href="#top">Go to top</a>
 

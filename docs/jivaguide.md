@@ -38,13 +38,11 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 [Setting up Jiva Storage Policies](#setting-up-jiva-storage-policies)
 
-[Steps to delete Jiva Internal Snapshots](#delete-internal-snapshots)
 
 
 
 
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>User Operations</h2>
-
 
 
 <h3><a class="anchor" aria-hidden="true" id="simple-provisioning-of-jiva"></a>Simple Provisioning of Jiva</h3>
@@ -265,6 +263,7 @@ kubectl -n default annotate pod/percona-7b64956695-dk95r backup.velero.io/backup
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="managing-backup"></a>Creating and Managing Backups</h3>
+
 Take the backup using the below command. Here you should add the selector for avoiding Jiva controller and replica deployment from taking backup.
 
 ```
@@ -357,7 +356,6 @@ kubectl get pv
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
 
 
-
 <h3><a class="anchor" aria-hidden="true" id="create-a-pool"></a>Create a Jiva Pool</h3>
 
 The process of creating a Jiva pool include the following steps.
@@ -437,12 +435,6 @@ metadata:
   annotations:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
-      - name: ControllerImage
-        value: openebs/jiva:1.0.0
-      - name: ReplicaImage
-        value: openebs/jiva:1.0.0
-      - name: VolumeMonitorImage
-        value: openebs/m-exporter:1.0.0
       - name: ReplicaCount
         value: "3"
       - name: StoragePool
@@ -471,11 +463,11 @@ Below table lists the storage policies supported by Jiva. These policies can be 
 | JIVA STORAGE POLICY                                          | MANDATORY | DEFAULT                           | PURPOSE                                                      |
 | ------------------------------------------------------------ | --------- | --------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                 | Defines the number of Jiva volume replicas                   |
-| [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.0.0 | To use particular Jiva replica image                         |
-| [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/jiva:1.0.0        | To use particular Jiva Controller Image                      |
+| [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.1.0 | To use particular Jiva replica image                         |
+| [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/jiva:1.10         | To use particular Jiva Controller Image                      |
 | [StoragePool](#Storage-Pool-Policy)                          | Yes       | default                           | A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on host OS or externally mounted disk. |
 | [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.0.0  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.1.0  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [Volume FSType](#Volume-File-System-Type-Policy)             |           | ext4                              | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)         |           | false                             | It will specify whether data need to be retained post PVC deletion. |
 | [TargetNodeSelector](#Targe-NodeSelector-Policy)             |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva target pod on the nodes that match label. |
@@ -520,7 +512,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ReplicaImage
-        value: quay.io/openebs/m-apiserver:1.0.0
+        value: quay.io/openebs/m-apiserver:1.1.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
@@ -537,7 +529,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: quay.io/openebs/jiva:1.0.0
+        value: quay.io/openebs/jiva:1.1.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
@@ -626,7 +618,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:1.0.0
+        value: quay.io/openebs/m-exporter:1.1.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
@@ -865,105 +857,6 @@ metadata:
 provisioner: openebs.io/provisioner-iscsi
 ```
 
-<h3><a class="anchor" aria-hidden="true" id="delete-internal-snapshots"></a>Steps to delete Jiva Internal Snapshots</h3>
-
-Deletion of Jiva internal snapshots are performed using `jivactl` command.
-
-- Login into the  Jiva controller pod using the following command. Use namespace where Jiva pods are running.
-
-  ```
-  kubectl exec -it <jiva_controller_pod> -c <container_name> -n <namespace> bash 
-  ```
-
-- Once logged into the container , list all the internal snapshots using the following command.
-
-  ```
-  jivactl snapshot ls
-  ```
-
-  Example output:
-
-  ```
-  ID
-  c074ff10-4780-4222-8042-86baffa3436f
-  1adb9e8b-354b-4ce2-b1a2-04accaed77a2
-  ```
-
-  Tip: Command  to get the details of all snapshots:
-
-  ```
-  jivactl snapshot info
-  ```
-
-  Example output:
-
-  ```
-  {
-      "1adb9e8b-354b-4ce2-b1a2-04accaed77a2": {
-          "name": "1adb9e8b-354b-4ce2-b1a2-04accaed77a2",
-          "parent": "",
-          "children": [
-              "c074ff10-4780-4222-8042-86baffa3436f"
-          ],
-          "removed": false,
-          "usercreated": false,
-          "created": "2019-06-19T11:50:21Z",
-          "size": "0"
-      },
-      "c074ff10-4780-4222-8042-86baffa3436f": {
-          "name": "c074ff10-4780-4222-8042-86baffa3436f",
-          "parent": "1adb9e8b-354b-4ce2-b1a2-04accaed77a2",
-          "children": [
-              "volume-head"
-          ],
-          "removed": false,
-          "usercreated": false,
-          "created": "2019-06-19T11:50:27Z",
-          "size": "30875648"
-      },
-      "volume-head": {
-          "name": "volume-head",
-          "parent": "c074ff10-4780-4222-8042-86baffa3436f",
-          "children": [],
-          "removed": false,
-          "usercreated": false,
-          "created": "2019-06-19T11:50:27Z",
-          "size": "266416128"
-      }
-  }
-  ```
-
-- Delete a snapshot using the following command
-
-  ```
-  jivactl snapshot rm <snapshot _name>
-  ```
-
-  Example:
-
-  ```
-  jivactl snapshot rm 1adb9e8b-354b-4ce2-b1a2-04accaed77a2
-  ```
-
-  Example output:
-
-  ```
-  INFO[0000] Coalescing volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img to volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.2.33:9502 
-  INFO[0001] Replace volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img with volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.2.33:9502 
-  INFO[0001] Coalescing volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img to volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.1.30:9502 
-  INFO[0003] Replace volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img with volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.1.30:9502 
-  INFO[0003] Coalescing volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img to volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.0.27:9502 
-  INFO[0005] Replace volume-snap-c074ff10-4780-4222-8042-86baffa3436f.img with volume-snap-1adb9e8b-354b-4ce2-b1a2-04accaed77a2.img on tcp://10.32.0.27:9502 
-  deleted 1adb9e8b-354b-4ce2-b1a2-04accaed77a2
-  ```
-
-   Multiple snapshots can be deleted together using the following command.
-
-  ```
-  jivactl snapshot rm <snapshot1_name> <snapshot2_name> 
-  ```
-
-  Please note that volume -head and its parent cannot be deleted.
 
 <br>
 
