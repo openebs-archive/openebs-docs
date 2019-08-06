@@ -217,15 +217,19 @@ All steps described in this document must be performed on the Kubernetes master 
    ```
 
 4. <h3><a class="anchor" aria-hidden="true" id="upgrade-volume"></a>Upgrade volumes one by one</h3>
-Even after the OpenEBS Operator has been upgraded to 1.0.0, the cStor Storage Pools and volumes (both Jiva and cStor) will continue to work with older versions. Use the following steps in the same order to upgrade cStor Pools and volumes.
+
+   Even after the OpenEBS Operator has been upgraded to 1.0.0, the cStor Storage Pools and volumes (both Jiva and cStor) will continue to work with older versions. Use the following steps in the same order to upgrade cStor Pools and volumes.
    
-**Note:** Upgrade functionality is still under active development. It is highly recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, make sure you have taken a backup of the data before starting the below upgrade procedure.
+   **Note:** Upgrade functionality is still under active development. It is highly recommended to schedule a downtime for the application using the OpenEBS PV while performing this upgrade. Also, make sure you have taken a backup of the data before starting the below upgrade procedure.
    
-**Limitations:**
+   **Limitations:**
    
-1. This is a preliminary script only intended for using on volumes where data has been backed-up.
+   1. This is a preliminary script only intended for using on volumes where data has been backed-up.
+   
    2. Have the following link handy in case the volume gets into read-only during upgrade <https://docs.openebs.io/docs/next/troubleshooting.html#recovery-readonly-when-kubelet-is-container>
+   
    3. Automatic rollback option is not provided. To rollback, you need to update the controller, exporter and replica pod images to the previous version.
+   
    4. In the process of running the below steps, if you run into issues, you can always reach us on <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community.
    
    <h4><a class="anchor" aria-hidden="true" id="Jiva-PV"></a>Jiva PV</h4>
@@ -276,7 +280,8 @@ Even after the OpenEBS Operator has been upgraded to 1.0.0, the cStor Storage Po
       ```
    
    <h4><a class="anchor" aria-hidden="true" id="cStor-PV"></a>cStor PV</h4>
-Upgradation of cStor volume is a two step process. First step is to upgrade cStor pools one by one and then volumes one by one.
+   
+   Upgradation of cStor volume is a two step process. First step is to upgrade cStor pools one by one and then volumes one by one.
    
    **Upgrade cStor Pools**
    
