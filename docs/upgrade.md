@@ -50,9 +50,9 @@ The upgrade of OpenEBS is a four step process:
 All steps described in this document must be performed on the Kubernetes master or from a machine that has access to Kubernetes master.
 
 1.  <h3><a class="anchor" aria-hidden="true" id="Download-yamls"></a>Download upgrade scripts</h3>
-You can do git clone of the upgrade scripts.
+    You can do git clone of the upgrade scripts.
     
-```
+    ```
     mkdir 0.9.0-1.0.0/
     cd 0.9.0-1.0.0/
     git clone https://github.com/openebs/openebs.git
@@ -60,62 +60,63 @@ You can do git clone of the upgrade scripts.
     ```
     
 2. <h3><a class="anchor" aria-hidden="true" id="Verify-prerequisites"></a>Verify Prerequisites</h3>
-- OpenEBS current version should be 0.9.0. This can be verified by using the following command. Output will contain 0.9.0 as image for all the OpenEBS deployments.
+  
+   - OpenEBS current version should be 0.9.0. This can be verified by using the following command. Output will contain 0.9.0 as image for all the OpenEBS deployments.
    
-  ```
+     ```
      kubectl get deployment -o yaml -n openebs | grep -i image | grep -i quay | grep -v metadata
      ```
    
-- Verify current NDM image is 0.3.5 using the following command.
+   - Verify current NDM image is 0.3.5 using the following command.
    
-  ```
+     ```
      kubectl get ds -o yaml  -n openebs| grep -i image |  grep -i quay | grep -v metadata
      ```
    
-- If OpenEBS has been deployed using stable helm charts, it has to be in chart version `0.9.2` . Run `helm list` to verify the chart version. If not, you have to update openebs chart version to `0.9.2` using below commands.
+   - If OpenEBS has been deployed using stable helm charts, it has to be in chart version `0.9.2` . Run `helm list` to verify the chart version. If not, you have to update openebs chart version to `0.9.2` using below commands.
    
-  - First, you have to delete the `admission-server` secret, which will be deployed again once you upgrade charts to `0.9.2` version using below command:
+   - First, you have to delete the `admission-server` secret, which will be deployed again once you upgrade charts to `0.9.2` version using below command:
      
-       ```
-       kubectl delete secret admission-server-certs -n openebs
-       ```
+     ```
+     kubectl delete secret admission-server-certs -n openebs
+     ```
    
-  - Upgrade OpenEBS chart version to 0.9.2 using below command:
+   - Upgrade OpenEBS chart version to 0.9.2 using below command:
      
-       Run below command to update local cache with latest package.
+     Run below command to update local cache with latest package.
      
-       ```
-       helm repo update
-       ```
+     ```
+     helm repo update
+     ```
      
-       Upgrade openebs helm chart version to 0.9.2 using the following command.
+     Upgrade openebs helm chart version to 0.9.2 using the following command.
      
-       ```
-       helm upgrade <release-name> stable/openebs --version 0.9.2
-       ```
+     ```
+     helm upgrade <release-name> stable/openebs --version 0.9.2
+     ```
      
-     - Run `helm list` to verify deployed OpenEBS chart version:
+   - Run `helm list` to verify deployed OpenEBS chart version:
      
-       ```
-       helm list
-       ```
+     ```
+     helm list
+     ```
      
-       Output will be similar to the following:
+     Output will be similar to the following:
      
-       ```
-       NAME    REVISION        UPDATED                         STATUS          CHART           APP VERSION     NAMESPACE
-       openebs 3               Mon Jun 24 20:57:05 2019        DEPLOYED        openebs-0.9.2   0.9.0           openebs
-       ```
+     ```
+     NAME    REVISION        UPDATED                         STATUS          CHART           APP VERSION     NAMESPACE
+     openebs 3               Mon Jun 24 20:57:05 2019        DEPLOYED        openebs-0.9.2   0.9.0           openebs
+     ```
      
    - Before proceeding with below steps please make sure the NDM daemonset `DESIRED` count is equal to `CURRENT` count. This can be checked by using the following command.
    
-  ```
+     ```
      kubectl get ds openebs-ndm -n <openebs-installed-namespace>
      ```
    
-  Output will be similar to the following.
+     Output will be similar to the following.
    
-  ```
+     ```
      NAME          DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
      openebs-ndm   3         3         3       3            3           <none>          7m6s
      ```
@@ -128,34 +129,34 @@ You can do git clone of the upgrade scripts.
      
    - Ensure that you are inside of upgrade script directory (openebs/k8s/upgrades/0.9.0-1.0.0/). This step will update OpenEBS control plane components labels. Run below command to update OpenEBS control plane components labels.
    
-  ```
+     ```
      ./pre-upgrade.sh <openebs_installed_namespace> <mode>
      ```
    
-  Here, `<openebs_installed_namespace>` is the namespace where OpenEBS control plane components are installed. `<mode>` is the way how OpenEBS is installed. Provide mode as `helm` if OpenEBS is installed via helm chart (or) provide mode as `operator` if OpenEBS is installed via operator yaml.
+     Here, `<openebs_installed_namespace>` is the namespace where OpenEBS control plane components are installed. `<mode>` is the way how OpenEBS is installed. Provide mode as `helm` if OpenEBS is installed via helm chart (or) provide mode as `operator` if OpenEBS is installed via operator yaml.
    
-  Eg: 
+     Eg: 
    
-  - If OpenEBS 0.9.0 version was installed via operator YAML method then run below command.
+     - If OpenEBS 0.9.0 version was installed via operator YAML method then run below command.
    
-    ```
+       ```
        ./pre-upgrade.sh openebs operator
        ```
    
-  - If OpenEBS 0.9.0 version was installed via helm then run below command.
+     - If OpenEBS 0.9.0 version was installed via helm then run below command.
    
-    ```
+       ```
        ./pre-upgrade.sh openebs helm
        ```
    
-  Choose appropriate command from above and complete the pre-upgrade procedure. 
+     Choose appropriate command from above and complete the pre-upgrade procedure. 
    
-  After executing the above command, if the output shows that `Pre-Upgrade is successful `, then proceed with next step.
+     After executing the above command, if the output shows that `Pre-Upgrade is successful `, then proceed with next step.
    
-  **Notes:** 
+   **Notes:** 
    
-  - No new SPC should be created after this step until the upgrade is completed. If it is created then execute `pre-upgrade.sh` again.
-     - It is mandatory to make sure that all OpenEBS control plane components are running on version 0.9.0 before the upgrade.
+   - No new SPC should be created after this step until the upgrade is completed. If it is created then execute `pre-upgrade.sh` again.
+   - It is mandatory to make sure that all OpenEBS control plane components are running on version 0.9.0 before the upgrade.
    
 3. <h3><a class="anchor" aria-hidden="true" id="upgrade-operator"></a>Upgrade OpenEBS operator</h3>
 
