@@ -153,15 +153,13 @@ All steps described in this document must be performed on the Kubernetes master 
    
      After executing the above command, if the output shows that `Pre-Upgrade is successful `, then proceed with next step.
    
-     **Notes:** 
+   **Notes:** 
    
-     - No new SPC should be created after this step until the upgrade is completed. If it is created then execute `pre-upgrade.sh` again.
-     - It is mandatory to make sure that all OpenEBS control plane components are running on version 0.9.0 before the upgrade.
+   - No new SPC should be created after this step until the upgrade is completed. If it is created then execute `pre-upgrade.sh` again.
+   - It is mandatory to make sure that all OpenEBS control plane components are running on version 0.9.0 before the upgrade.
    
 3. <h3><a class="anchor" aria-hidden="true" id="upgrade-operator"></a>Upgrade OpenEBS operator</h3>
-
    
-
    <h4><a class="anchor" aria-hidden="true" id="upgrade-operator-crds-deployment"></a>Upgrading OpenEBS Operator CRDs and Deployments</h4>
 
    The upgrade steps may vary depending on the way OpenEBS was installed. You can upgrade your OpenEBS cluster if you have already deployed your cluster using one of the following approach.
@@ -210,6 +208,7 @@ All steps described in this document must be performed on the Kubernetes master 
    <font size="4">Using Customized Operator YAML or Helm Chart</font>
 
    As a first step, you must update your custom helm chart or YAML with 1.0.0 release tags and changes made in the values/templates. The changes in the latest release can be get from [here](https://github.com/helm/charts/blob/master/stable/openebs/values.yaml).
+ 
    After updating the YAML or helm chart or helm chart values, you can use the following command to upgrade the OpenEBS Operator. In the following example, use the exact release name which you have used during the initial OpenEBS installation. 
 
    ```
