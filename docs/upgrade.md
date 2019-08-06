@@ -381,7 +381,6 @@ kubectl get deployment -o yaml -n openebs | grep -i image | grep -i quay | grep 
 ```
 Output will be similar to the following.
 
-              ```
               image: quay.io/openebs/cstor-pool:1.0.0
               image: quay.io/openebs/cstor-pool-mgmt:1.0.0
               image: quay.io/openebs/m-exporter:1.0.0
@@ -401,7 +400,6 @@ Output will be similar to the following.
             - image: quay.io/openebs/cstor-istgt:1.0.0
               image: quay.io/openebs/m-exporter:1.0.0
               image: quay.io/openebs/cstor-volume-mgmt:1.0.0
-              ```
 
 All image tag should be in 1.0.0 except for ndm-disk-operator in the above output. For ndm-disk-operator, image tag should be 0.4.0.
 
