@@ -51,6 +51,8 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 ## Volume provisioning
 
+[Unable to create persistentVolumeClaim due to cert verification error](#admission-server-ca)
+
 [Application complaining ReadOnly filesystem](#application-read-only)
 
 [Application pods are not running when OpenEBS volumes are provisioned on Rancher](#application-pod-not-running-Rancher)
@@ -287,6 +289,20 @@ This can happen for many reasons.
 
 Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kuberntes node reboots. 
 
+
+<h3><a class="anchor" aria-hidden="true" id="admission-server-ca"></a>Unable to create persistentVolumeClaim due to cert verification error</h3>
+
+An issue can appear when creating a persistentVolumeClaim for the first time:
+
+```
+Internal error occurred: failed calling webhook "admission-webhook.openebs.io": Post https://admission-server-svc.openebs.svc:443/validate?timeout=30s: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "admission-server-ca")
+```
+
+This can be fixed by restarting the admission controller:
+
+```
+kubectl -n openebs get pods -o name | grep admission-server | xargs kubectl -n openebs delete
+```
 
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
