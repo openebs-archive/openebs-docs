@@ -13,18 +13,18 @@ const siteConfig = {
   url: 'https://docs.openebs.io' /* your website url */,
   baseUrl: '/v081/' /* base url for your project */,
   projectName: 'OpenEBS',
-
+/*
   algolia: {
     apiKey: "dc657dfe30f42f228671f557f49ced7a",
     indexName: "openebs",
     inputSelector: "### REPLACE ME ####",
     debug: true
     },
-
+*/
     headerLinks: [
        
         {
-            search: true
+            search: false
         },
     //{page: 'help', label: 'Help'},
   ],
