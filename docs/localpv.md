@@ -9,7 +9,7 @@ sidebar_label: Local PV
 
 ## Overview
 
-OpenEBS Local PV is a CAS engine that can create persistent volumes using either local disks or host paths on the worker nodes. With this CAS engine, the performance will be equivalent to local disk or the file system (host path) on which the volumes are created. Many cloud native applications may not require advanced storage features like replication, snapshots and clones as they themselves can handles those. Such applications require access to a managed disks as persistent volumes. 
+OpenEBS Local PV is a CAS engine that can create persistent volumes using either local disks or host paths on the worker nodes. With this CAS engine, the performance will be equivalent to local disk or the file system (host path) on which the volumes are created. Many cloud native applications may not require advanced storage features like replication, snapshots and clones as they themselves can handles those. Such applications require access to managed disks as persistent volumes. 
 
 
 
@@ -17,41 +17,51 @@ OpenEBS Local PV is a CAS engine that can create persistent volumes using either
 
 OpenEBS Local PVs are analogous to Kubernetes LocalPV. In addition, OpenEBS LocalPVs have the following benefits.
 
-- Local PVs are provisioned dynamically by OpenEBS Local PV provisioner. When the Local PV is provisioned with default StorageClass for the storage type `hostpath`, default host path is created dynamically and mapped to the Local PV. When the Local PV is provisioned with default StorageClass for the  storage type `device`, one of the  matching disks on the node is reserved and mapped to the Local PV.
-- Disks for Local PVs are managed by OpenEBS. Disk IO metric of managed disks can be obtained with help of NDM.
-- Provisioning of Local PVs is done through the Kubernetes standards. Admin users create storage class to enforce the storage type (disk or host path) and put additional control through RBAC policies.
-- By specifying the node selector in the application spec YAML , the application pods can be scheduled on the specified node. After the scheduling of application pod, OpenEBS Local PV will get deployed on the same Node. It guarantees that the pod is rescheduled on the same node to retain the access to data all the time.
+- Local PVs are provisioned dynamically by OpenEBS Local PV provisioner.  When the Local PV is provisioned with the default StorageClass with storage-type as :
+  -  `hostpath`, the default `BasePath` is created dynamically on the node and mapped to the Local PV. 
+  -  `device`,  one of the  matching BlockDevice on the node is claimed and mapped to the Local PV.
+- BlockDevice for Local PVs are managed by OpenEBS NDM. Disk IO metrics of managed devices can also be obtained with help of NDM.
+- Provisioning of Local PVs is done through the Kubernetes standards. Admin users create storage class to enforce the storage type (device or hostpath) and put additional control through RBAC policies.
+- By specifying the node selector in the application spec YAML , the application pods can be scheduled on specific nodes. After scheduling the application pod, OpenEBS Local PV will be deployed on the same node. It guarantees that the pod is always rescheduled on the same node to retain access to the data all the time.
 
 
 
 ## How to use OpenEBS Local PVs
 
-OpenEBS create two Storage Classes of Local PVs by default as `openebs-hostpath` and `openebs-device`. For simple provisioning of OpenEBS Local PV, use these default Storage Classes. More details can be find from [here](/docs/next/uglocalpv.html).   
+OpenEBS create two Storage Classes of Local PVs by default as `openebs-hostpath` and `openebs-device`. For simple provisioning of OpenEBS Local PV, these default Storage Classes can be used. More details can be found  [here](/docs/next/uglocalpv.html).   
 
-End users or developers will provision the OpenEBS Local PVs like any other PV, by creating a PVC using a storage class provided by the admin user. 
+End users or developers will provision the OpenEBS Local PVs like any other PV, by creating a PVC using a StorageClass provided by the admin user. 
 
 <h4><a class="anchor" aria-hidden="true" id="openebs-localpv-device"></a>OpenEBS Local PV based on device</h4>
-Admin user creates a storage class for the `StorageType` as `device` Local PV by using the following annotations.
+Admin user can create a customized storage class using the following sample configuration.
 
 ```
-openebs.io/cas-type: local
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    openebs.io/cas-type: local
     cas.openebs.io/config: |
       - name: StorageType
         value: "device"
       - name: FSType
         value: ext4
 provisioner: openebs.io/local
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
 ```
 
-When a PVC is invoked using the above storage class, OpenEBS Local PV Provisioner uses NDM operator and reserves a matching disk from the worker node where application pod is being scheduled. If no `FSType` is specified, Local PV provisioner will use default filesystem as **ext4** to format the block device.
+When a PVC is created using the above storage class, OpenEBS Local PV Provisioner uses NDM operator to  claim a matching BlockDevice from the worker node where the application pod is scheduled. 
 
-For provisioning Local PV using the block devices attached to the nodes, the block devices should be in one of the following states:
+Kubelet will format the block device with the filesystem specified in the StorageClass and then provision the Local PV.  `ext4` and `xfs` are the currently supported filesystems. If no `FSType` is specified, by default Kubelet will format the BlockDevice as `ext4` .
 
-- User has attached the block device, formatted and mounted them. This means disk is already formatted and mounted the disk on the worker node.
+For provisioning Local PV using the BlockDevice attached to the nodes, the BlockDevice should be in one of the following states:
+
+- User has attached the BlockDevice, formatted and mounted them. This means, the BlockDevice is already formatted and is mounted on the worker node.
 
   - For Example: Local SSD in GKE.
 
-- User has attached the block device, un-formatted and not mounted. This means disk is attached on the worker node without any file system.
+- User has attached the BlockDevice, un-formatted and not mounted. This means, the BlockDevice is attached on the worker node without any file system.
 
   - For Example: GPD in GKE.
 
@@ -61,21 +71,27 @@ For provisioning Local PV using the block devices attached to the nodes, the blo
 
 
 <h4><a class="anchor" aria-hidden="true" id="openebs-localpv-hostpath"></a>OpenEBS Local PV based on hostpath</h4>
-Admin user creates a storage class for the `StorageType` as `hostpath` Local PV by using the following annotations
+Admin user creates a customized storage class using the following sample configuration.
 
 ```
-openebs.io/cas-type: local
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    openebs.io/cas-type: local
     cas.openebs.io/config: |
       - name: BasePath
         value: "/var/openebs/local"
       - name: StorageType
         value: "hostpath"
 provisioner: openebs.io/local
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
 ```
 
-When a PVC is invoked using the above storage class, OpenEBS Local PV  provisioner will create a new sub directory inside the BasePath and maps it to the PV.
+When a PVC is created using the above StorageClass, OpenEBS Local PV  provisioner will create a new sub directory inside the `BasePath` and maps it to the PV.
 
-Note: If default Basepath needs to be changed by mentioning different hostpath, then the specified hostpath(directory) must be present of the Node.  
+**Note:** If default `Basepath` needs to be changed by mentioning different hostpath, then the specified hostpath(directory) must be present of the Node.  
 
 
 
@@ -97,7 +113,7 @@ Note: If default Basepath needs to be changed by mentioning different hostpath, 
 ## Limitations (or Roadmap items ) of OpenEBS Local PVs
 
 - Size of the Local PV cannot be increased dynamically. LVM type of functionality inside Local PVs is a potential feature in roadmap.
-- Disk quotas are not enforced by Local PV. An underlying disk or hostpath can have more data than requested by a PVC or storage class. Enforcing the capacity is a roadmap feature.
+- Disk quotas are not enforced by Local PV. An underlying device or hostpath can have more data than requested by a PVC or storage class. Enforcing the capacity is a roadmap feature.
 - Enforce capacity and PVC resource quotas on the local disks or host paths.
 - SMART statistics of the managed disks is also a potential feature in roadmap.
 
