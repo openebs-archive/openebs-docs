@@ -21,15 +21,16 @@ The steps for running FIO based Storage benchmarking and viewing the results are
 
 
 
+
 <font size="6">Support for Performance tuning </font>
 
-Support for performance tuning for specific workloads can be obtained through the premium plan on MayaOnline. Connect your cluster to <a href="https://mayaonline.io" target="_blank">MayaOnline</a>, start the cluster on evaluation plan and seek support for performance tuning. 
+Support for performance tuning for specific workloads can be obtained through the premium plan on DirectorOnline. Connect your cluster to <a href="https://director.mayadata.io" target="_blank">DirectorOnline</a>, start the cluster on evaluation plan and seek support for performance tuning. 
 
 <br>
 
 ## See Also:
 
-### [Connecting to MayaOnline](/docs/next/mayaonline.html)
+### [Connecting to DirectorOnline](/docs/next/mayaonline.html)
 
 ### [Seeking help](/docs/next/support.html)
 
