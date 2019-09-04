@@ -30,15 +30,17 @@ OpenEBS Local PVs are analogous to Kubernetes LocalPV. In addition, OpenEBS Loca
 
 OpenEBS create two Storage Classes of Local PVs by default as `openebs-hostpath` and `openebs-device`. For simple provisioning of OpenEBS Local PV, these default Storage Classes can be used. More details can be found  [here](/docs/next/uglocalpv.html).   
 
-End users or developers will provision the OpenEBS Local PVs like any other PV, by creating a PVC using a StorageClass provided by the admin user. 
+End users or developers will provision the OpenEBS Local PVs like any other PV, by creating a PVC using a StorageClass provided by the admin user. The StorageClass has `volumeBindingMode: WaitForFirstConsumer` which means delay volume binding until application pod is scheduled on the node.
 
 <h4><a class="anchor" aria-hidden="true" id="openebs-localpv-device"></a>OpenEBS Local PV based on device</h4>
-Admin user can create a customized storage class using the following sample configuration.
+
+Admin user can create a customized StorageClass using the following sample configuration.
 
 ```
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  name: openebs-device
   annotations:
     openebs.io/cas-type: local
     cas.openebs.io/config: |
@@ -51,7 +53,7 @@ reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
 ```
 
-When a PVC is created using the above storage class, OpenEBS Local PV Provisioner uses NDM operator to  claim a matching BlockDevice from the worker node where the application pod is scheduled. 
+When a PVC is created using the above StorageClass, OpenEBS Local PV Provisioner uses NDM operator to  claim a matching BlockDevice from the worker node where the application pod is scheduled. 
 
 Kubelet will format the block device with the filesystem specified in the StorageClass and then provision the Local PV.  Currently supported filesystems are`ext4` and `xfs`. If no `FSType` is specified, by default Kubelet will format the BlockDevice as `ext4` .
 
@@ -71,12 +73,14 @@ For provisioning Local PV using the BlockDevice attached to the nodes, the Block
 
 
 <h4><a class="anchor" aria-hidden="true" id="openebs-localpv-hostpath"></a>OpenEBS Local PV based on hostpath</h4>
-Admin user creates a customized storage class using the following sample configuration.
+
+Admin user creates a customized StorageClass using the following sample configuration.
 
 ```
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  name: openebs-hostpath
   annotations:
     openebs.io/cas-type: local
     cas.openebs.io/config: |
