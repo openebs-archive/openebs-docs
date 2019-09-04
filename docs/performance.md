@@ -17,54 +17,20 @@ For performance testing, performance numbers vary based on the following factors
 - Whether all the replicas are in one zone or across multiple zones
 - The network latency between the application pod and iSCSI target (cStor target)
 
-**Run fio test through OpenEBS Litmus** 
+The steps for running FIO based Storage benchmarking and viewing the results are explained in detail [here](https://github.com/openebs/performance-benchmark/tree/master/fio-benchmarks). 
 
-1. Clone litmus repository
 
-   ```
-   git clone https://github.com/openebs/litmus.git
-   cd litmus/apps/fio/tests/performance
-   ```
 
-2. Edit run_litmus_test.yaml and modify the following
-
-   ```
-   - name: PROVIDER_STORAGE_CLASS
-     value: openebs-standard
-    #value: local-storage
-   
-   - name: APP_NODE_SELECTOR
-     value: percona
-   
-   - name: FIO_TEST_PROFILE
-     value: standard-ssd
-   
-   - name: FIO_SAMPLE_SIZE
-     value: "128m"
-   
-   - name: FIO_TESTRUN_PERIOD
-     value: "60"
-   ```
-
-3. Run the fio performance test.
-
-   ```
-   kubectl create -f run_litmus_test.yaml
-   ```
-
-4. Observe the results at the end of the test.
-
-   
 
 <font size="6">Support for Performance tuning </font>
 
-Support for performance tuning for specific workloads can be obtained through the premium plan on MayaOnline. Connect your cluster to <a href="https://mayaonline.io" target="_blank">MayaOnline</a>, start the cluster on evaluation plan and seek support for performance tuning. 
+Support for performance tuning for specific workloads can be obtained through the premium plan on DirectorOnline. Connect your cluster to <a href="https://director.mayadata.io" target="_blank">DirectorOnline</a>, start the cluster on evaluation plan and seek support for performance tuning. 
 
 <br>
 
 ## See Also:
 
-### [Connecting to MayaOnline](/docs/next/mayaonline.html)
+### [Connecting to DirectorOnline](/docs/next/mayaonline.html)
 
 ### [Seeking help](/docs/next/support.html)
 

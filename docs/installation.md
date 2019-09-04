@@ -424,24 +424,7 @@ kubectl describe blockdevice <blockdevice-cr>
 
 
 
-**Verify cStor Storage pool**
-
-
-
-```
-kubectl get csp
-```
-
-Following is an example output.
-
-<div class="co">NAME ALLOCATED FREE CAPACITY STATUS TYPE AGE
-cstor-disk-4tfw 77K 39.7G 39.8G Healthy striped 42s
-</div>
-
-
-
 **Verify Jiva default pool - default**
-
 
 
 ```

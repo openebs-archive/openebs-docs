@@ -1475,11 +1475,12 @@ Allow users to set available performance tunings in StorageClass based on their 
 - cStor target queue depth
   - This limits the ongoing IO count from client. Default is 32.
 - cStor target worker threads
-  - Sets the **number of threads** that are working on above queue. It is mentioned by `Luworkers`.Default value is 6.
+  - Sets the **number of threads** that are working on above queue. It is mentioned by `Luworkers`. Default value is 6. In case of better number of cores and RAM, this value can be 16. This means 16 threads will be running for each volume. 
 - cStor volume replica worker threads
   - This Is associated with cStorVolumeReplica.
   - It is mentioned by `ZvolWorkers`.
   - Defaults to the number of cores on the machine.
+  - In case of better number of cores and RAM, this value can be 16.
 
 **Note:**  These configuration can be only used during volume provisioning. Default values will be used in case of "Invalid/None" values has been provided using configuration.
 
@@ -1496,11 +1497,11 @@ metadata:
       - name: StoragePoolClaim
         value: "sparse-claim-auto"
       - name: QueueDepth
-        value: "20"
+        value: "32"
       - name: Luworkers
-        value: "10"
+        value: "16"
       - name: ZvolWorkers
-        value: "4"
+        value: "16"
 provisioner: openebs.io/provisioner-iscsi
 ```
 
