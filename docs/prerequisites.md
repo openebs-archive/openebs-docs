@@ -71,6 +71,7 @@ block volumes.
 
 <h3><a class="anchor" aria-hidden="true" id="ubuntu"></a>Ubuntu</h3>
 
+
 **Verify iSCSI services are configured**
 
 If an iSCSI initiator is already installed on your node, check that the
@@ -124,6 +125,7 @@ You can verify the iSCSI installation from above section.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="rhel"></a>Red Hat Enterprise Linux</h3>
+
 
 **Verify iSCSI services are configured**
 
@@ -187,6 +189,7 @@ You can verify the iSCSI installation from above section.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="centos"></a>CentOS</h3>
+
 
 **Verify iSCSI services are configured**
 
@@ -428,8 +431,8 @@ reboot
 
 | Operating system      | iSCSI Package         | Commands                                                     |
 | --------------------- | --------------------- | ------------------------------------------------------------ |
-| RHEL / CentOS         | iscsi-initiator-utils | yum install iscsi-initiator-utils -y <br />sudo systemctl enable iscsid && sudo systemctl start iscsid<br />modprobe iscsi_tcp |
-| Ubuntu 16.04 / Debian | open-iscsi            | sudo apt install open-iscsi<br />sudo systemctl enable iscsid && sudo systemctl start iscsid<br />modprobe iscsi_tcp |
+| RHEL / CentOS         | iscsi-initiator-utils | yum install iscsi-initiator-utils -y <br />sudo systemctl enable iscsid && sudo systemctl start iscsid<br />modprobe iscsi_tcp<br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
+| Ubuntu 16.04 / Debian | open-iscsi            | sudo apt install open-iscsi<br />sudo systemctl enable iscsid && sudo systemctl start iscsid<br />modprobe iscsi_tcp<br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
 
 
 
@@ -445,7 +448,9 @@ After installing the initiator tool on your nodes, edit the YAML for your cluste
         	- "/var/lib/iscsi:/var/lib/iscsi"
         	- "/lib/modules"
 
-<h4><a class="anchor" aria-hidden="true" id="rancher-ubuntu-18.04"></a>iSCSI services on Ubuntu 18.04</h4>
+
+
+<h4><a class="anchor" aria-hidden="true" id="rancher-ubuntu-18.04"></a>iSCSI services on Ubuntu 18.04 or CentOS 7.6</h4>
 **Step1:** By default, iSCSI service is not present on worker node. It will be running inside the kubelet. To verify presence of iSCSI service inside kubelet, run the following command:
 
 ```
@@ -460,9 +465,10 @@ iscsiadm version 2.0-874
 
 The following commands will enable the `iscsi_tcp` module and it will persist this changes to the system.
 
-| Operating system | iSCSI Package | Commands                                                     |
-| ---------------- | ------------- | ------------------------------------------------------------ |
-| Ubuntu 18.04     | open-iscsi    | modprobe iscsi_tcp <br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
+| Operating system | iSCSI Package         | Commands                                                     |
+| ---------------- | --------------------- | ------------------------------------------------------------ |
+| Ubuntu 18.04     | open-iscsi            | modprobe iscsi_tcp <br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
+| CentOS 7.6       | iscsi-initiator-utils | modprobe iscsi_tcp <br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
 
 **Step 2:** If you are using Jiva or Local PV for provisioning OpenEBS volume,  Add `extra_binds` under kubelet service in cluster YAML. If the volume is using a mounted path on the host, then you must add the mounted path under `extra_binds` section. 
 
@@ -473,7 +479,7 @@ services:
      - /var/openebs/local:/var/openebs/local
 ```
 
-In the above snippet, default hostpath which will be created on the worker node using `LocalPV-hostpath` StorageClass is added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `LocalPV-hostpath` volume.
+In the above snippet default hostpath, which will be created on the worker node using `LocalPV-hostpath` StorageClass, should be added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `LocalPV-hostpath` volume.
 
 <br>
 

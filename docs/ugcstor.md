@@ -281,6 +281,7 @@ spec:
     bucket: <YOUR_BUCKET>
     prefix: <PREFIX_FOR_BACKUP_NAME>
     backupPathPrefix: <PREFIX_FOR_BACKUP_PATH>
+    namespace: <openebs_installed_namespace>
     provider: <GCP_OR_AWS>
     region: <AWS_REGION or minio>
 ```
@@ -291,6 +292,7 @@ The following are the definition for each parameters.
 - bucket : Provide the bucket name created on the cloud provider. Eg: gcpbucket
 - prefix : Prefix for backup name. Eg: cstor
 - backupPathPrefix: Prefix for backup path. Eg: newbackup. This should be same as `prefix` mentioned in `05-backupstoragelocation.yaml` for keeping all backups at same path.  For more details , please refer [here](https://velero.io/docs/v1.0.0/api-types/backupstoragelocation/). 
+- namespace : (Optional) Provide the namespace where OpenEBS is installed. OpenEBS velero plugin will automatically take the OpenEBS installed namespace in the absence of this parameter. 
 - Provider : Provider name. Eg: gcp or aws
 - region : Provide region name if cloud provider is AWS or use `minio` if it is a MinIO bucket.
 
@@ -310,6 +312,7 @@ spec:
   config:
     bucket: gcpbucket
     prefix: cstor
+    namespace: openebs
     backupPathPrefix: newbackup
     provider: gcp
 ```
