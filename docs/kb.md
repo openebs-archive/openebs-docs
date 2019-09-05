@@ -22,9 +22,12 @@ sidebar_label: Knowledge Base
 
 [How to create a BlockDeviceClaim for a particular BlockDevice?](#create-bdc-for-a-blockdevice) 
 
+[How to provision Local PV on K3OS?](#provision-localpv-on-k3os)
+
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
+
 
 
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
@@ -163,6 +166,7 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 <h3><a class="anchor" aria-hidden="true" id="how-to-scale-up-jiva-replica"></a>How to scale up Jiva replica?</h3>
 
 
+
 From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity. For scaling up Jiva replica count, the following steps has to be performed.
 
 1. Get the deployment details of replica of corresponding Jiva volume using the following command. If it is deployed in `openebs` namespace, use corresponding namespace appropriately in the following commands.
@@ -239,6 +243,7 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-4.1"></a>How to install OpenEBS in OpenShift 4.1</h3>
+
 
 
 In earlier documentation, it was referred to install OpenEBS by disabling SELinux. But, you can install OpenEBS in OpenShift environment without disabling SELinux using the following steps.
@@ -346,7 +351,8 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
 <h3><a class="anchor" aria-hidden="true" id="enable-admission-controller-in-openshift"></a>How to enable Admission-Controller in OpenShift 3.10 and above</h3>
 
 
-The following proceedure will help to enable admission-controller in OpenShift 3.10 and above.
+
+The following procedure will help to enable admission-controller in OpenShift 3.10 and above.
 
 1. Update the `/etc/origin/master/master-config.yaml`  file with below configuration.
 
@@ -377,6 +383,7 @@ The following proceedure will help to enable admission-controller in OpenShift 3
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions"></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
+
 
 
 Apply the following YAML in your cluster.
@@ -454,6 +461,7 @@ Apply the following YAML in your cluster.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="enable-log-rotation-on-cluster-nodes"></a>How to prevent container logs from exhausting disk space?</h3>
+
 
 
 Container logs, if left unchecked, can eat into the underlying disk space causing `disk-pressure` conditions
@@ -547,7 +555,7 @@ the node to show up as `Not Ready` until the daemon has restarted successfully.
 
 <a href="#top">Go to top</a>
 
-<h3><a class="anchor" aria-hidden="true" id="create-bdc-for-a-blockdevice"></a>How to create a BlockDeviceClaim for a particular BlockDevice? </h3>
+<h3><a class="anchor" aria-hidden="true" id="create-bdc-for-a-blockdevice"></a>How to create a BlockDeviceClaim for a particular BlockDevice?</h3>
 
 
 
@@ -572,6 +580,121 @@ There are certain use cases where the user does not need some of the BlockDevice
    ```
    kubectl get bdc -n <openebs_installed_namespace>
    ```
+
+<br>
+
+<a href="#top">Go to top</a>
+
+<h3><a class="anchor" aria-hidden="true" id="provision-localpv-on-k3os"></a>How to provision Local PV on K3OS?</h3>
+
+
+
+K3OS can be installed on any hypervisor The procedure for deploying K3OS on VMware environment is provided in the following section. There are 3 steps for provisioning OpenEBS Local PV on K3OS.
+
+1. Configure server(master)
+2. Configure agent(worker)
+3. Deploying OpenEBS
+
+The detailed information of each steps are provided below.
+
+- **Configure server(master)**
+
+  - Download the ISO file from the latest [release](https://github.com/rancher/k3os/releases) and create a virtual machine in VMware. Mount the ISO file into hypervisor and start a virtual machine.
+
+  - Select **Run k3OS LiveCD or Installation** and press <ENTER>.
+
+  - The system will boot-up and gives you the login prompt.
+
+  - Login as **rancher** user without providing password.
+
+  - Set a password for **rancher** user to enable connectivity from other machines by running `sudo passwd rancher`.
+
+  - Now, install K3OS into disk. This can be done by running the command `sudo os-config`.
+
+  - Choose the option 1.Install to disk . Answer the proceeding questions and provide rancher user password.
+
+  - As part of above command execution, you can configure the host as either server or agent. Select `1.server` to configure K3s master.
+
+  - While configuring server, set cluster secret which would be used while joining nodes to the server. After successful installation and server reboot, check the cluster status.
+
+  - Run following command to get the details of nodes:
+
+    ```
+    kubectl get nodes
+    ```
+
+    Example output:
+
+    ```
+    NAME         STATUS   ROLES    AGE     VERSION
+    k3os-14539   Ready    <none>   2m33s   v1.14.1-k3s.4
+    ```
+
+- **Configure agent(worker)**
+
+  - Follow the above steps till installing K3OS into disk in all the hosts that you want to be part of K3s cluster.
+
+  - To configure kubernetes agent with K3OS, select the option `2. agent` while running `sudo os-config` command. You need to provide URL of server and secret configured during server configuration.
+
+  - After performing this, Kubernetes agent will be configured as follows and it will be added to the server.
+
+  - Check the cluster configuration by checking the nodes using the following command:
+
+    ```
+    Kubectl get nodes
+    ```
+
+    Example output:
+
+    ```
+    NAME         STATUS   ROLES    AGE     VERSION
+    k3os-14539   Ready    <none>   5m16s   v1.14.1-k3s.4
+    k3os-32750   Ready    <none>   49m     v1.14.1-k3s.4
+    ```
+
+- **Installing OpenEBS**
+
+  - Run the following command to install OpenEBS from master console:
+
+    ```
+    kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.1.0.yaml
+    ```
+
+  - Check the OpenEBS components by running the following command:
+
+    ```
+    NAME                                           READY   STATUS              RESTARTS   AGE
+    maya-apiserver-78c966c446-zpvhh                1/1     Running             2          101s
+    openebs-admission-server-66f46564f5-8sz8c      1/1     Running             0          101s
+    openebs-localpv-provisioner-698496cf9b-wkf95   1/1     Running             0          101s
+    openebs-ndm-9kt4n                              0/1     ContainerCreating   0          101s
+    openebs-ndm-mxqcf                              0/1     ContainerCreating   0          101s
+    openebs-ndm-operator-7fb4894546-d2whz          1/1     Running             1          101s
+    openebs-provisioner-7f9c99cf9-9jlgc            1/1     Running             0          101s
+    openebs-snapshot-operator-79f7d56c7d-tk24k     2/2     Running             0          101s
+    ```
+
+    Note that `openebs-ndm` pods are in not created successfully. This is due to the lack of udev support in K3OS. More details can be found [here](https://github.com/openebs/openebs/issues/2686).
+
+  - Now user can install Local PV on this cluster. Check the StorageClasses created as part of OpenEBS deployment by running the following command.
+
+    ```
+    kubectl get sc
+    ```
+
+    Example output:
+
+    ```
+    NAME                        PROVISIONER                                                AGE
+    openebs-device              openebs.io/local                                           57m
+    openebs-hostpath            openebs.io/local                                           57m
+    openebs-jiva-default        openebs.io/provisioner-iscsi                               57m
+    openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   57m
+    ```
+
+  - The default StorageClass `openebs-hostpath` can be used to create local PV on the path `/var/openebs/local` in your Kubernetes node. You can either use `openebs-hostpath` storage class to create volumes or create new storage class by following the steps mentioned [here.]([https://docs.openebs.io/docs/next/uglocalpv.html](https://docs.openebs.io/1.0.0-RC1/docs/next/uglocalpv.html)) 
+
+    **Note:** OpenEBS local PV will not be bound until the application pod is scheduled as its **volumeBindingMode** is set to **WaitForFirstConsumer.** Once the application pod is scheduled on a certain node, OpenEBS Local PV will be bound on that node.
 
 <br>
 
