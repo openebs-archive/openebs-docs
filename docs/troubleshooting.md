@@ -51,7 +51,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 ## Volume provisioning
 
-[Unable to create persistentVolumeClaim due to cert verification error](#admission-server-ca)
+[Unable to create persistentVolumeClaim due to certificate verification error](#admission-server-ca)
 
 [Application complaining ReadOnly filesystem](#application-read-only)
 
@@ -74,6 +74,8 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 [Unable to clone OpenEBS volume from snapshot](#unable-to-clone-from-snapshot)
 
 [Unable to mount XFS formatted volumes into Pod](#unable-to-mount-xfs-volume)
+
+[Unable to create or delete a PVC](#unable-to-create-or-delete-a-pvc)
 
 <br>
 
@@ -113,6 +115,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-user-rights"></a>Installation failed because of insufficient user rights</h3>
 
+
 OpenEBS installation can fail in some cloud platform with the following errors.
 
 ```
@@ -140,6 +143,7 @@ kubectl create clusterrolebinding  <cluster_name>-admin-binding --clusterrole=cl
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-iscsi-not-configured"></a>iSCSI client is not setup on Nodes. Pod is in ContainerCreating state.</h3>
 
+
 After OpenEBS installation, you may proceed with application deployment which will provision OpenEBS volume. This may fail due to the following error. This can be found by describing the application pod.
 
 ```
@@ -153,6 +157,7 @@ This logs points that iscsid.service may not be enabled and running on your Node
 
 
 <h3><a class="anchor" aria-hidden="true" id="openebs-provsioner-restart-continuously"></a>Why does OpenEBS provisioner pod restart continuously?</h3>
+
 
 The following output displays the pod status of all namespaces in which the OpenEBS provisioner is restarting continuously.
 
@@ -188,6 +193,7 @@ Perform the following steps to verify if the issue is due to misconfiguration wh
 
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-azure-no-rbac-set"></a>OpenEBS installation fails on Azure</h3>
+
 
 
 On AKS, while installing OpenEBS using Helm,  you may see the following error.
@@ -289,14 +295,21 @@ This can happen for many reasons.
 
 Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kuberntes node reboots. 
 
+<h3><a class="anchor" aria-hidden="true" id="admission-server-ca"></a>Unable to create persistentVolumeClaim due to certificate verification error</h3>
 
-<h3><a class="anchor" aria-hidden="true" id="admission-server-ca"></a>Unable to create persistentVolumeClaim due to cert verification error</h3>
 
-An issue can appear when creating a persistentVolumeClaim for the first time:
+
+An issue can appear when creating a PersistentVolumeClaim:
 
 ```
-Internal error occurred: failed calling webhook "admission-webhook.openebs.io": Post https://admission-server-svc.openebs.svc:443/validate?timeout=30s: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "admission-server-ca")
+Error from server (InternalError):Internal error occurred: failed calling webhook "admission-webhook.openebs.io": Post https://admission-server-svc.openebs.svc:443/validate?timeout=30s: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "admission-server-ca")
 ```
+
+**Troubleshooting**
+
+By default OpenEBS chart generates TLS certificates used by the `openebs-admission-controller`, while this is handy, it requires the admission controller to restart on each `helm upgrade` command. For most of the use cases, the admission controller would have restarted to update the certificate configurations, if not , then user will get the above mentioned error.
+
+**Workaround**
 
 This can be fixed by restarting the admission controller:
 
@@ -309,7 +322,7 @@ kubectl -n openebs get pods -o name | grep admission-server | xargs kubectl -n o
 
 
 
-The setup environment where the issue occurs is rancher/rke with bare metal hosts running CentOS. After installing OpenEBS, OpenEBS pods are running, but application pod is in *ContainerCreating* state. It consume Jiva volume.The output of `kubectl get pods` is displayed as follows.
+The setup environment where the issue occurs is rancher/rke with bare metal hosts running CentOS. After installing OpenEBS, OpenEBS pods are running, but application pod is in *ContainerCreating* state. It consume Jiva volume. The output of `kubectl get pods` is displayed as follows.
 
 ```
 NAME                                                             READY     STATUS              RESTARTS   AGE
@@ -332,6 +345,7 @@ More details are mentioned [here](/docs/next/prerequisites.html#rancher).
 
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-stuck-after-deployment"></a>Application pod is stuck in ContainerCreating state after deployment</h3>
+
 
 **Troubleshooting**
 
@@ -668,6 +682,19 @@ apt install xfsprogs
 
 
 
+<h3><a class="anchor" aria-hidden="true" id="unable-to-create-or-delete-a-pvc"></a>Unable to create or delete a PVC</h3>
+
+User is unable to create a new PVC or delete an existing PVC. While doing any of these operation, the following error is coming on the PVC.
+
+```
+Error from server (InternalError): Internal error occurred: failed calling webhook "admission-webhook.openebs.io": Post https://admission-server-svc.openebs.svc:443/validate?timeout=30s: Bad Gateway
+```
+
+**Workaround:**
+
+When a user creates or deletes a PVC, there are validation triggers and a request has been intercepted by the admission webhook controller after authentication/authorization from kube-apiserver.
+By default admission webhook service has been configured to 443 port and the error above suggests that either port 443 is not allowed to use in cluster or admission webhook service has to be allowed in k8s cluster Proxy settings.
+
 <hr>
 
 <br>
@@ -807,6 +834,7 @@ Download custom blockdevice CR YAML file from [here](https://raw.githubuserconte
 
 
 <h3><a class="anchor" aria-hidden="true" id="replica-pod-meta-file-error"></a>Jiva replica pod logs showing "Failed to find metadata"</h3>
+
 
 
 Jiva target pod may not be syncing data across all replicas when replica pod logs contains below kind of messages:
