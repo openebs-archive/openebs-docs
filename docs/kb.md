@@ -285,38 +285,7 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
    openebs-provisioner-5dfd95987b-nhwb9          1/1     Running   0          60m
    openebs-snapshot-operator-5d58bd848b-94nnt    2/2     Running   0          60m </div>
 
-5. For provisioning OpenEBS volumes, you have to edit SCC to allow HostPath volumes and Privileged containers. This can be done in two ways. 
-
-   - Using “Restricted” SCC
-   - Using “Privileged” SCC
-
-   <font size="5">Using “Restricted” SCC</font>
-
-   By default, **any/all users** (manual, serviceaccount), use the “restricted” securityContextConstraint (SCC). This SCC doesn’t allow: 
-
-   - HostPath Volumes
-   - Privileged Containers
-
-   Following have to be set to ensure volume replica pods can run on the cluster:
-
-   ```
-   allowHostDirVolumePlugin: true
-   allowPrivilegeEscalation: true
-   allowPrivilegedContainer: true
-   ```
-
-   Run following command from OpenShift cluster.
-
-   ```
-   oc edit scc restricted
-   ```
-
-   It will show an output similar to the following.
-
-   <div class="co">could not be patched: the body of the request was in an unknown format - accepted media types include: application/json-patch+json, application/merge-patch+json
-   You can run `oc replace -f /tmp/oc-edit-vvh25.yaml` to try this update again.</div>
-
-   **Note:** The above command will not patch the SCC directly. It will generate a temporary file and you have to run the mentioned command in the output to update the restricted SCC.
+5. For provisioning OpenEBS volumes, you have to edit SCC to allow HostPath volumes and Privileged containers. This can be done by following way. 
 
    <font size="5">Using “Privileged” SCC</font>
 
