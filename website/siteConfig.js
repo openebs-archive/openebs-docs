@@ -17,6 +17,7 @@ const siteConfig = {
   algolia: {
     apiKey: "dc657dfe30f42f228671f557f49ced7a",
     indexName: "openebs",
+    startUrls: ["https://docs.openebs.io/docs/next"],
     inputSelector: "### REPLACE ME ####",
     debug: true
     },
