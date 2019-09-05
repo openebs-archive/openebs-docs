@@ -87,7 +87,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 ## NDM related
 
-[Blockdevice description is getting changed on node reboot](#bd-description-changed-on-node-reboot)
+[Blockdevices are not detected by NDM in some of the nodes](#bd-from-some-nodes-are-not-detected)
 
 <br>
 
@@ -769,11 +769,11 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="bd-description-changed-on-node-reboot"></a>Blockdevice description is getting changed on node reboot</h3>
+<h3><a class="anchor" aria-hidden="true" id="bd-from-some-nodes-are-not-detected"></a>Blockdevices are not detected by NDM from some of the nodes</h3>
 
 
 
-One disk is each attached per Node in a 3 Node cluster where Centos is underlying OS and `kubectl get blockdevice -n openebs`  return only one disk and if one node is restarted, the description of the disk attached to that node gets modified. `lsblk` output from one of the nodes:
+One disk is attached per Node in a 3 Node cluster in a VM Environment where CentOS is underlying OS and `kubectl get blockdevice -n openebs`  return only one disk. Also if the particular node is restarted, from where the disk is detected then the description of the disk attached to that node gets modified. `lsblk` output from one of the nodes:
 
 ```
 NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
@@ -788,11 +788,11 @@ sr0              11:0    1 1024M  0 rom
 
 **Troubleshooting:**
 
-Check `kubectl get blockdevice -o yaml` of one of the disks and check its serial number. Also ensure that serial number of other 2 disks are different. If the serial number of all disks are same, then NDM will detect only the first one. For NDM to detect the disk uniquely, disks have to have at least one of WWN, Model, Serial or Vendor property must be unique.
+Check `kubectl get blockdevice -o yaml` of one of the blockdevice and check its serial number. Also ensure that serial number of other 2 blockdevices are different. NDM detect and recognise the blockdevice based on their WWN, Model, Serial and Vendor. If the blockdevice have all the parameters same then NDM cannot differentiate the blockdevice and will create only 1 BlockdDevice CR for each unique parameter. To troubleshoot the same user has to make sure the blockdevices are having at least any one unique parameter from WWN, Model, Serial and Vendor. Usually this issue faced in virtualization environment like vSphere, KVM etc.
 
 **Resolution:**
 
-Download custom blockdevice CR YAML file from [here](https://raw.githubusercontent.com/openebs/node-disk-manager/master/deploy/crds/openebs_v1alpha1_blockdevice_cr.yaml) and apply with the details of each block device. In the sample spec, `ndm.io/managed:` is set to false. So NDM will not mange this <br>blockdevice.
+Download custom blockdevice CR YAML file from [here](https://raw.githubusercontent.com/openebs/node-disk-manager/master/deploy/crds/openebs_v1alpha1_blockdevice_cr.yaml) and apply with the details of each block device. In the sample spec, `ndm.io/managed:` is set to false. So NDM will not manage this <br>blockdevice.
 
 **Note:** If you are creating a block device CR manually for a custom device path, then you must add the corresponding device path under `exclude` filter so that NDM will not select the particular device for BD creation. For example, if block device CR is creating for `/dev/sdb` manually, then you must add `/dev/sdb` under `exclude` filter of NDM configuration. See [here](#Exclude-filters) for customizing the `exclude` filter in NDM configuration.
 
