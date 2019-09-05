@@ -20,9 +20,12 @@ sidebar_label: Knowledge Base
 
 [How to prevent container logs from exhausting disk space?](#enable-log-rotation-on-cluster-nodes)
 
+[How to create a BlockDeviceClaim for a particular BlockDevice?](#create-bdc-for-a-blockdevice) 
+
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
+
 
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
 
@@ -121,7 +124,7 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 
 7. Get the newly created PVC UID using `kubectl get pvc mongo-persistent-storage-mongo-0 -o yaml`.
 
-       
+  
 
 8. Update the uid under the claimRef in the PV using the following command. The PVC will get attached to the PV after editing the pv with correct uid.
 
@@ -158,6 +161,7 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-scale-up-jiva-replica"></a>How to scale up Jiva replica?</h3>
+
 
 From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity. For scaling up Jiva replica count, the following steps has to be performed.
 
@@ -235,6 +239,7 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-4.1"></a>How to install OpenEBS in OpenShift 4.1</h3>
+
 
 In earlier documentation, it was referred to install OpenEBS by disabling SELinux. But, you can install OpenEBS in OpenShift environment without disabling SELinux using the following steps.
 
@@ -340,6 +345,7 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
 
 <h3><a class="anchor" aria-hidden="true" id="enable-admission-controller-in-openshift"></a>How to enable Admission-Controller in OpenShift 3.10 and above</h3>
 
+
 The following proceedure will help to enable admission-controller in OpenShift 3.10 and above.
 
 1. Update the `/etc/origin/master/master-config.yaml`  file with below configuration.
@@ -371,6 +377,7 @@ The following proceedure will help to enable admission-controller in OpenShift 3
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions"></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
+
 
 Apply the following YAML in your cluster.
 
@@ -447,6 +454,7 @@ Apply the following YAML in your cluster.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="enable-log-rotation-on-cluster-nodes"></a>How to prevent container logs from exhausting disk space?</h3>
+
 
 Container logs, if left unchecked, can eat into the underlying disk space causing `disk-pressure` conditions
 leading to eviction of pods running on a given node. This can be prevented by performing log-rotation
@@ -534,6 +542,36 @@ the node to show up as `Not Ready` until the daemon has restarted successfully.
 
 - The log-opt `compress: true:` is supported from Docker version: 18.04.0. The `max-file` & `max-size` opts are supported
   on earlier releases as well.
+
+<br>
+
+<a href="#top">Go to top</a>
+
+<h3><a class="anchor" aria-hidden="true" id="create-bdc-for-a-blockdevice"></a>How to create a BlockDeviceClaim for a particular BlockDevice? </h3>
+
+
+
+There are certain use cases where the user does not need some of the BlockDevices discovered by OpenEBS to be used by any of the storage engines (cStor, LocalPV, etc.). In such scenarios, users can manually create a BlockDeviceClaim to claim that particular BlockDevice, so that it won't be used by cStor or Local PV. The following steps can be used  to claim a particular BlockDevice: 
+
+1. Download the BDC CR YAML from `node-disk-manager` repository.
+
+   ```
+   wget https://raw.githubusercontent.com/openebs/node-disk-manager/master/deploy/crds/openebs_v1alpha1_blockdeviceclaim_cr.yaml
+   ```
+
+2.  Provide the BD name of the corresponding BlockDevice which can be obtained by running `kubectl get bd -n <openebs_installed_namespace>` 
+
+3.  Apply the modified YAML spec using the following command:
+
+   ```
+   kubectl apply -f openebs_v1alpha1_blockdeviceclaim_cr.yaml
+   ```
+
+4.  Verify if particular BD is claimed using the following command:
+
+   ```
+   kubectl get bdc -n <openebs_installed_namespace>
+   ```
 
 <br>
 
