@@ -91,6 +91,8 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [Blockdevices are not detected by NDM in some of the nodes](#bd-from-some-nodes-are-not-detected)
 
+[Unable to discover some of disks in Proxmox servers by OpenEBS](#unable-to-discover-proxmox-disks)
+
 <br>
 
 ## Jiva Volume related
@@ -114,7 +116,6 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-user-rights"></a>Installation failed because of insufficient user rights</h3>
-
 
 OpenEBS installation can fail in some cloud platform with the following errors.
 
@@ -143,7 +144,6 @@ kubectl create clusterrolebinding  <cluster_name>-admin-binding --clusterrole=cl
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-iscsi-not-configured"></a>iSCSI client is not setup on Nodes. Pod is in ContainerCreating state.</h3>
 
-
 After OpenEBS installation, you may proceed with application deployment which will provision OpenEBS volume. This may fail due to the following error. This can be found by describing the application pod.
 
 ```
@@ -157,7 +157,6 @@ This logs points that iscsid.service may not be enabled and running on your Node
 
 
 <h3><a class="anchor" aria-hidden="true" id="openebs-provsioner-restart-continuously"></a>Why does OpenEBS provisioner pod restart continuously?</h3>
-
 
 The following output displays the pod status of all namespaces in which the OpenEBS provisioner is restarting continuously.
 
@@ -195,7 +194,6 @@ Perform the following steps to verify if the issue is due to misconfiguration wh
 <h3><a class="anchor" aria-hidden="true" id="install-failed-azure-no-rbac-set"></a>OpenEBS installation fails on Azure</h3>
 
 
-
 On AKS, while installing OpenEBS using Helm,  you may see the following error.
 
 ```
@@ -210,7 +208,6 @@ You must enable RBAC on Azure before OpenEBS installation. For more details, see
 
 
 <h3><a class="anchor" aria-hidden="true" id="multipath-conf-claims-all-scsi-devices-openshift"></a>A multipath.conf file claims all SCSI devices in OpenShift</h3>
-
 
 
 A multipath.conf file without either find_multipaths or a manual blacklist claims all SCSI devices.
@@ -240,7 +237,6 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 <h3><a class="anchor" aria-hidden="true" id="jiva-deletion-scrub-job"></a>Whenever a Jiva based PVC is deleted, a new job gets created.</h3>
 
 
-
 As part of deleting the Jiva Volumes, OpenEBS launches scrub jobs for clearing data from the nodes. This job will be running in OpenEBS installed namespace. The completed jobs can be cleared using following command.
 
 ```
@@ -252,7 +248,6 @@ In addition, the job is set with a TTL to get cleaned up, if the cluster version
 
 
 <h3><a class="anchor" aria-hidden="true" id="cvr-deletion"></a>cStor Volume Replicas are not getting deleted properly</h3>
-
 
 
 Sometimes, there are chances that cStor volumes Replicas (CVR) may not be deleted properly if some unforeseen scenarios happened such as network loss during the deletion of PVC. To resolve this issue, perform the following command.
@@ -282,7 +277,6 @@ This will automatically remove the pending CVR and delete the cStor volume compl
 <h3><a class="anchor" aria-hidden="true" id="application-read-only"></a> Application complaining ReadOnly filesystem</h3>
 
 
-
 Application sometimes complain about the underlying filesystem has become ReadOnly.
 
 **Troubleshooting**
@@ -296,7 +290,6 @@ This can happen for many reasons.
 Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kuberntes node reboots. 
 
 <h3><a class="anchor" aria-hidden="true" id="admission-server-ca"></a>Unable to create persistentVolumeClaim due to certificate verification error</h3>
-
 
 
 An issue can appear when creating a PersistentVolumeClaim:
@@ -319,7 +312,6 @@ kubectl -n openebs get pods -o name | grep admission-server | xargs kubectl -n o
 
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
-
 
 
 The setup environment where the issue occurs is rancher/rke with bare metal hosts running CentOS. After installing OpenEBS, OpenEBS pods are running, but application pod is in *ContainerCreating* state. It consume Jiva volume. The output of `kubectl get pods` is displayed as follows.
@@ -345,7 +337,6 @@ More details are mentioned [here](/docs/next/prerequisites.html#rancher).
 
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-stuck-after-deployment"></a>Application pod is stuck in ContainerCreating state after deployment</h3>
-
 
 **Troubleshooting**
 
@@ -381,7 +372,6 @@ More details are mentioned [here](/docs/next/prerequisites.html#rancher).
 
 
 <h3><a class="anchor" aria-hidden="true" id="cstor-pool-failed-centos-partion-disk"></a>Creating cStor pool fails on CentOS when there are partitions on the disk.</h3>
-
 
 
 Creating cStor pool fails with the following error message:
@@ -446,7 +436,6 @@ sdc           8:32   0 232.9G  0 disk
 <h3><a class="anchor" aria-hidden="true" id="application-crashloopbackoff"></a>Application pod enters CrashLoopBackOff states</h3>
 
 
-
 Application pod enters CrashLoopBackOff state
 
 This issue is due to failed application operations in the container. Typically this is caused due to failed writes on the mounted PV. To confirm this, check the status of the PV mount inside the application pod.
@@ -507,7 +496,6 @@ The procedure to ensure application recovery in the above cases is as follows:
 <h3><a class="anchor" aria-hidden="true" id="cstor-pool-pod-not-running"></a>cStor pool pods are not running</h3>
 
 
-
 The cStor disk pods are not coming up after it deploy with the YAML. On checking the pool pod logs, it says `/dev/xvdg is in use and contains a xfs filesystem.`
 
 **Workaround:**
@@ -519,7 +507,6 @@ cStor can consume disks that are attached (are visible to OS as SCSI devices) to
 <h3><a class="anchor" aria-hidden="true" id="Jiva-provisioning-failed-080"></a>OpenEBS Jiva PVC is not provisioning in 0.8.0</h3>
 
 
-
 Even all OpenEBS pods are in running state, unable to provision Jiva volume if you install through helm.
 
 **Troubleshooting:**
@@ -529,7 +516,6 @@ Check the latest logs showing in the OpenEBS provisioner logs. If the particular
 
 
 <h3><a class="anchor" aria-hidden="true" id="recovery-readonly-when-kubelet-is-container"></a>Recovery procedure for Read-only volume where kubelet is running in a container.</h3>
-
 
 
 In environments where the kubelet runs in a container, perform the following steps as part of the recovery procedure for a Volume-Read only issue.
@@ -550,7 +536,6 @@ In environments where the kubelet runs in a container, perform the following ste
 <h3><a class="anchor" aria-hidden="true" id="recovery-readonly-xfs-volume"></a>Recovery procedure for Read-only volume for XFS formatted volumes</h3>
 
 
-
 In case of `XFS` formatted volumes, perform the following steps once the iSCSI target is available in RW state & logged in:
 
 - Un-mount the iSCSI volume from the node in which the application pod is scheduled. This may cause the application to enter running state by using the local mount point.
@@ -562,7 +547,6 @@ In case of `XFS` formatted volumes, perform the following steps once the iSCSI t
 
 
 <h3><a class="anchor" aria-hidden="true" id="unable-to-clone-from-snapshot"></a>Unable to clone OpenEBS volume from snapshot</h3>
-
 
 
 Taken a snapshot of a PVC successfully. But unable to clone the volume from the snapshot.
@@ -630,7 +614,6 @@ This can be happen due to the stale entries of snapshot and snapshot data. By de
 <h3><a class="anchor" aria-hidden="true" id="unable-to-mount-xfs-volume"></a>Unable to mount XFS formatted volumes into Pod</h3>
 
 
-
 I created PVC with FSType as `xfs`. OpenEBS PV is successfully created and I have verified that iSCSI initiator is available on the Application node. But application pod is unable to mount the volume.
 
 **Troubleshooting:**
@@ -683,7 +666,6 @@ apt install xfsprogs
 
 
 <h3><a class="anchor" aria-hidden="true" id="unable-to-create-or-delete-a-pvc"></a>Unable to create or delete a PVC</h3>
-
 User is unable to create a new PVC or delete an existing PVC. While doing any of these operation, the following error is coming on the PVC.
 
 ```
@@ -705,7 +687,6 @@ By default admission webhook service has been configured to 443 port and the err
 
 
 <h3><a class="anchor" aria-hidden="true" id="node-reboot-when-kubelet-memory-increases"></a>Kubernetes node reboots because of increase in memory consumed by Kubelet</h3>
-
 
 
 Sometime it is observed that iscsiadm is  continuously fails and repeats rapidly and for some reason this causes the memory consumption of kubelet to grow until the node goes out-of-memory and needs to be rebooted. Following type of error can be observed in journalctl and cstor-istgt container.
@@ -777,7 +758,6 @@ Restart the corresponding istgt pod to avoid memory consumption.
 <h3><a class="anchor" aria-hidden="true" id="Pods-restart-terminate-when-heavy-load"></a>Application and OpenEBS pods terminate/restart under heavy I/O load</h3>
 
 
-
 This is caused due to lack of resources on the Kubernetes nodes, which causes the pods to evict under loaded conditions as the node becomes *unresponsive*. The pods transition from *Running* state to *unknown* state followed by *Terminating* before restarting again.
 
 **Troubleshooting**
@@ -797,7 +777,6 @@ You can resolve this issue by upgrading the Kubernetes cluster infrastructure re
 
 
 <h3><a class="anchor" aria-hidden="true" id="bd-from-some-nodes-are-not-detected"></a>Blockdevices are not detected by NDM from some of the nodes</h3>
-
 
 
 One disk is attached per Node in a 3 Node cluster in a VM Environment where CentOS is underlying OS and `kubectl get blockdevice -n openebs`  return only one disk. Also if the particular node is restarted, from where the disk is detected then the description of the disk attached to that node gets modified. `lsblk` output from one of the nodes:
@@ -823,8 +802,50 @@ Download custom blockdevice CR YAML file from [here](https://raw.githubuserconte
 
 **Note:** If you are creating a block device CR manually for a custom device path, then you must add the corresponding device path under `exclude` filter so that NDM will not select the particular device for BD creation. For example, if block device CR is creating for `/dev/sdb` manually, then you must add `/dev/sdb` under `exclude` filter of NDM configuration. See [here](#Exclude-filters) for customizing the `exclude` filter in NDM configuration.
 
+<br>
+
+<h3><a class="anchor" aria-hidden="true" id="unable-to-discover-proxmox-disks"></a>Unable to discover some of disks in Proxmox servers by OpenEBS</h3>
+
+User is having a 3 node cluster with 8 disks attached on each node. But `kubectl get bd -n openebs` is not detecting all the blockdevices. It is detecting some of the blockdevices from each node. This information can be obtained by running `kubectl describe bd <bd_cr_name> -n openebs`.
+
+**Troubleshooting:**
+
+Check `kubectl get blockdevice -o yaml` of one of the blockdevice and its serial number. Also, ensure that the serial number of other 2 blockdevices are different. NDM detect and recognize the blockdevice based on their WWN, Model, Serial and Vendor. If the blockdevice have all the parameters same then NDM cannot differentiate the blockdevice and will create only 1 BlockdDevice CR for each unique parameter. To troubleshoot the same user has to make sure the blockdevices are having at least anyone unique parameter from WWN, Model, Serial and Vendor. Usually this issue is faced in virtualization environment like vSphere, KVM etc. More details abour NDM daemon set functionalities can be read from [here](/docs/next/ndm.html#ndm-daemonset-functions).
+
+**Resolution:**
+
+This can be resolved this by modifying the configuration file of a VM:
+
+- Open conf file by following command
+
+  ```
+  vi /etc/pve/qemu-server/101.conf
+  ```
+
+- Add a serial number by following way:
+
+  ```
+  scsi1: 
+  images:vm-101-disk-1,cache=writeback,discard=on,size=120G,ssd=1,serial=**5fb20ba17c2f**
+  ```
+
+- Restart the VM:
+
+  ```
+  qm shutdown 101 && qm start 101
+  ```
+
+-  Verify the disk path for all the disks in a VM:
+
+  ```
+  ls -lah /dev/disk/by-id
+  ```
+
+- Repeat the same procedure on other nodes and ensure the uniqueness of disks in all the Nodes.
+
 
 <hr>
+
 
 <br>
 
@@ -834,7 +855,6 @@ Download custom blockdevice CR YAML file from [here](https://raw.githubuserconte
 
 
 <h3><a class="anchor" aria-hidden="true" id="replica-pod-meta-file-error"></a>Jiva replica pod logs showing "Failed to find metadata"</h3>
-
 
 
 Jiva target pod may not be syncing data across all replicas when replica pod logs contains below kind of messages:
@@ -899,7 +919,6 @@ Perform following steps to restore the missing metadata file of internal snapsho
 
 
 <h3><a class="anchor" aria-hidden="true" id="reboot-cluster-nodes"></a>Nodes in the cluster reboots frequently almost everyday </h3>
-
 
 
 Setup the cluster using RKE in MicroOS using CNI Plugin Cilium. Install OpenEBS, create a PVC and allocate to a fio job/ busybox. Run FIO test on the same. Observed nodes in the cluster getting restarted on a schedule basis.
