@@ -636,10 +636,13 @@ kubectl get blockdevice -n openebs
 
 The output will be similar to the following.
 
-<div class="co">NAME                                           SIZE          CLAIMSTATE   STATUS   AGE
-blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   42949672960   Unclaimed    Active   1m
-blockdevice-77f834edba45b03318d9de5b79af0734   42949672960   Unclaimed    Active   1m
-blockdevice-936911c5c9b0218ed59e64009cc83c8f   42949672960   Unclaimed    Active   1m</div>
+<div class="co">NAME                                           NODENAME                                     SIZE          CLAIMSTATE   STATUS   AGE
+blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   gke-ranjith-doc-default-pool-d42b4f66-f4h9   42949672960   Unclaimed    Active   2h
+blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-doc-default-pool-d42b4f66-657s   42949672960   Unclaimed    Active   2h
+blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-doc-default-pool-d42b4f66-2xjl   42949672960   Unclaimed    Active   2h
+sparse-594e4d85702609036152811ba95b0c79        gke-ranjith-doc-default-pool-d42b4f66-2xjl   10737418240   Unclaimed    Active   2h
+sparse-8ed8e05ac4d94f987f66109830a26923        gke-ranjith-doc-default-pool-d42b4f66-657s   10737418240   Unclaimed    Active   2h
+sparse-f560ead09869a194dbc84e3653b07d7b        gke-ranjith-doc-default-pool-d42b4f66-f4h9   10737418240   Unclaimed    Active   2h</div>
 
 The details of blockdevice can be get using the following command. 
 
@@ -738,8 +741,8 @@ kubectl get spc
 The following is an example output.
 
 ```
-NAME AGE
-cstor-disk 13s
+NAME              AGE
+cstor-disk-pool   20s
 ```
 
 Verify if cStor Pool is created successfully using the following command.
@@ -751,10 +754,10 @@ kubectl get csp
 The following is an example output.
 
 ```
-NAME ALLOCATED FREE CAPACITY STATUS TYPE AGE
-cstor-disk-4blm 77K 39.7G 39.8G Healthy striped 27s
-cstor-disk-4pfu 77K 39.7G 39.8G Healthy striped 26s
-cstor-disk-u1pn 77K 39.7G 39.8G Healthy striped 27s
+NAME                   ALLOCATED   FREE    CAPACITY   STATUS    TYPE      AGE
+cstor-disk-pool-2gcb   270K        39.7G   39.8G      Healthy   striped   1m
+cstor-disk-pool-9q2f   270K        39.7G   39.8G      Healthy   striped   1m
+cstor-disk-pool-ilz1   270K        39.7G   39.8G      Healthy   striped   1m
 ```
 
 Verify if cStor pool pods are running using the following command.
@@ -766,15 +769,15 @@ kubectl get pod -n <openebs_installed_namespace> | grep -i <spc_name>
 Example:
 
 ```
-kubectl get pod -n openebs | grep cstor-disk
+kubectl get pod -n openebs | grep cstor-disk-pool
 ```
 
 Example Output:
 
 ```
-cstor-disk-4blm-5f86b8c6b-b24cq 3/3 Running 0 113s
-cstor-disk-4pfu-58b8c77655-6wpl6 3/3 Running 0 112s
-cstor-disk-u1pn-6dffdf6d7f-j7fsx 3/3 Running 0 113s
+cstor-disk-pool-2gcb-64876b956b-q8fgp          3/3     Running   0          2m30s
+cstor-disk-pool-9q2f-b85ccf6f-6cpdm            3/3     Running   0          2m30s
+cstor-disk-pool-ilz1-5587ff79bf-6djjf          3/3     Running   0          2m31s
 ```
 
 If all pods are showing are running, then you can use these cStor pools for creating cStor volumes.
