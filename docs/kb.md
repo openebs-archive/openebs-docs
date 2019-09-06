@@ -533,15 +533,15 @@ There are certain use cases where the user does not need some of the BlockDevice
    wget https://raw.githubusercontent.com/openebs/node-disk-manager/master/deploy/crds/openebs_v1alpha1_blockdeviceclaim_cr.yaml
    ```
 
-2.  Provide the BD name of the corresponding BlockDevice which can be obtained by running `kubectl get bd -n <openebs_installed_namespace>` 
+2. Provide the BD name of the corresponding BlockDevice which can be obtained by running `kubectl get bd -n <openebs_installed_namespace>` 
 
-3.  Apply the modified YAML spec using the following command:
+3. Apply the modified YAML spec using the following command:
 
    ```
    kubectl apply -f openebs_v1alpha1_blockdeviceclaim_cr.yaml
    ```
 
-4.  Verify if particular BD is claimed using the following command:
+4. Verify if particular BD is claimed using the following command:
 
    ```
    kubectl get bdc -n <openebs_installed_namespace>
@@ -657,7 +657,7 @@ The detailed information of each steps are provided below.
     openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   57m
     ```
 
-  - The default StorageClass `openebs-hostpath` can be used to create local PV on the path `/var/openebs/local` in your Kubernetes node. You can either use `openebs-hostpath` storage class to create volumes or create new storage class by following the steps mentioned [here.]([https://docs.openebs.io/docs/next/uglocalpv.html](https://docs.openebs.io/1.0.0-RC1/docs/next/uglocalpv.html)) 
+  - The default StorageClass `openebs-hostpath` can be used to create local PV on the path `/var/openebs/local` in your Kubernetes node. You can either use `openebs-hostpath` storage class to create volumes or create new storage class by following the steps mentioned [here](/docs/next/uglocalpv.html).
 
     **Note:** OpenEBS local PV will not be bound until the application pod is scheduled as its **volumeBindingMode** is set to **WaitForFirstConsumer.** Once the application pod is scheduled on a certain node, OpenEBS Local PV will be bound on that node.
 
