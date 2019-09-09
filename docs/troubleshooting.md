@@ -835,7 +835,7 @@ This can be resolved this by modifying the configuration file of a VM:
   qm shutdown 101 && qm start 101
   ```
 
--  Verify the disk path for all the disks in a VM:
+- Verify the disk path for all the disks in a VM:
 
   ```
   ls -lah /dev/disk/by-id
