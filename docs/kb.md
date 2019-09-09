@@ -738,7 +738,7 @@ The detailed information of each steps are provided below.
        	replicaId: "3920180363968537568"
      ```
 
-     In the above snippet, one replica is in `Healthy` and the other two are in `Degraded` mode and cStor volume is in `Offline` state. Running IOs now on this cStor volume will get IO error on Node as below:
+     In the above snippet, quorum value of one replica is in `ON` and quorum value of other two are `OFF` mode and cStor volume is in `Offline` state. Running IOs now on this cStor volume will get IO error on Node as below:
 
      ```
      / # touch /mnt/store1/file2
@@ -910,7 +910,9 @@ The detailed information of each steps are provided below.
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-reconstruct-data-from-healthy-replica-to-replaced-ones"></a>How to reconstruct data from healthy replica to replaced one?</h3>
 
-To reconstruct data from healthy replica to the replaced ones can be performed using the following steps. To perform the following steps, cStor volume should be in `Online`. If cStor volume is not in `Online`, make it  online using the steps mentioned [here](#how-to-make-cstor-volume-online-if-replicas-2-of-are-lost).
+Consider the case where cStorVolumes have replication enabled, and one/few of its replicas got replaced, i.e., they are new and lost the data. In this case, cStor volume will be in Offline state and unable to recover data to the replaced replicas from healthy replica automatically.
+
+Reconstructing data from healthy replica to the replaced ones can be done using the following steps. To perform the following steps, cStor volume should be in `Online`. If cStor volume is not in `Online`, make it  online using the steps mentioned [here](#how-to-make-cstor-volume-online-if-replicas-2-of-are-lost).
 
 Run the following command to get the current state of CVR of a cStor volume.
 
@@ -933,7 +935,7 @@ In this example, R1 is `pvc-5c52d001-c6a1-11e9-be30-42010a800094-cstor-sparse-po
 
 The following are the steps to reconstruct data from healthy replica to a replaced replica:
 
-1. Take base snapshot on R.
+1. Take base snapshot on R1.
 2. Copy the base snapshot to R2’s node.
 3. Apply the base snapshot to the pool of R2.
 4. Take incremental snapshot on R1.
@@ -950,7 +952,7 @@ The following are the steps to reconstruct data from healthy replica to a replac
 15. Edit cStorVolume CR of this PVC to increase `ReplicationFactor` by 1 and to set `ConsistencyFactor` to (ReplicationFactor/2 + 1).
 16. Restart the cStor target pod deployment.
 
-**Step1:** Take base snapshot on R
+**Step1:** Take base snapshot on R1
 
 Exec into cstor-pool-mgt container of pool pod of R1 to run snapshot command:
 
@@ -991,13 +993,13 @@ There are multiple ways to do this. In this article, above created snapshot is s
 - Copy the streamed file to local machine:
 
   ```
-  gcloud compute --project "<project name>" scp --zone "us-central1-a" <user>@gke-vitta1-default-pool-0337597c-3b5d:/var/openebs/sparse/shared-cstor-sparse-pool/pvc-5c52d001-c6a1-11e9-be30-42010a800094_snap_data1 
+  gcloud compute --project "<project name>" scp --zone "us-central1-a" <user>@gke-test-default-pool-0337597c-3b5d:/var/openebs/sparse/shared-cstor-sparse-pool/pvc-5c52d001-c6a1-11e9-be30-42010a800094_snap_data1 
   ```
 
 - Copy the local copy of streamed file to another node:
 
   ```
-  gcloud beta compute --project "<project name>" scp --zone "us-central1-a" pvc-5c52d001-c6a1-11e9-be30-42010a800094_snap_data1 <user>@gke-vitta1-default-pool-0337597c-vdg1:/var/openebs/sparse/shared-cstor-sparse-pool/
+  gcloud beta compute --project "<project name>" scp --zone "us-central1-a" pvc-5c52d001-c6a1-11e9-be30-42010a800094_snap_data1 <user>@gke-test-default-pool-0337597c-vdg1:/var/openebs/sparse/shared-cstor-sparse-pool/
   ```
 
 **Step3:** Apply the base snapshot to the pool of R2
