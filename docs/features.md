@@ -28,7 +28,7 @@ sidebar_label: Features and Benefits
 
 
 
-For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/docs/next/usecases.html) section.
+For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/v110/docs/next/usecases.html) section.
 
 
 
@@ -44,7 +44,7 @@ For more information on how OpenEBS is used in cloud native environments,  visit
 
 <img src="/docs/assets/svg/f-cas.svg" alt="Smiley face" 		style="width:200px;">
 
-OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found <a href="/docs/next/cas.html" target="_blank">here</a>
+OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found <a href="/v110/docs/next/cas.html" target="_blank">here</a>
 
 <hr>
 
@@ -183,11 +183,11 @@ MayaOnline is the SaaS service for OpenEBS enabled Kubernetes clusters that prov
 
 ## See Also:
 
-### [Object Storage with OpenEBS](/docs/next/minio.html)
+### [Object Storage with OpenEBS](/v110/docs/next/minio.html)
 
-### [RWM PVs with OpenEBS](/docs/next/rwm.html)
+### [RWM PVs with OpenEBS](/v110/docs/next/rwm.html)
 
-### [Local storage for Prometheus ](/docs/next/prometheus.html)
+### [Local storage for Prometheus ](/v110/docs/next/prometheus.html)
 
 <br>
 
