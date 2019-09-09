@@ -250,7 +250,7 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
    scc "privileged" added to: ["system:serviceaccount:openebs:default"]
    ```
 
-2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
+2. Find the latest OpenEBS release version from [here](/v110/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
 
    ```
    wget https://openebs.github.io/charts/openebs-operator-1.1.0.yaml
