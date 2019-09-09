@@ -666,6 +666,7 @@ apt install xfsprogs
 
 
 <h3><a class="anchor" aria-hidden="true" id="unable-to-create-or-delete-a-pvc"></a>Unable to create or delete a PVC</h3>
+
 User is unable to create a new PVC or delete an existing PVC. While doing any of these operation, the following error is coming on the PVC.
 
 ```
@@ -835,7 +836,7 @@ This can be resolved this by modifying the configuration file of a VM:
   qm shutdown 101 && qm start 101
   ```
 
--  Verify the disk path for all the disks in a VM:
+- Verify the disk path for all the disks in a VM:
 
   ```
   ls -lah /dev/disk/by-id

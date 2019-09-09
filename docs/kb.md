@@ -32,7 +32,6 @@ sidebar_label: Knowledge Base
 
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
 
-
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
 
 1. Get the PV name by following command and use it in Step 2.
@@ -168,7 +167,6 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-scale-up-jiva-replica"></a>How to scale up Jiva replica?</h3>
 
-
 From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity. For scaling up Jiva replica count, the following steps has to be performed.
 
 1. Get the deployment details of replica of corresponding Jiva volume using the following command. If it is deployed in `openebs` namespace, use corresponding namespace appropriately in the following commands.
@@ -246,7 +244,6 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
 
 <h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-4.1"></a>How to install OpenEBS in OpenShift 4.1</h3>
 
-
 In earlier documentation, it was referred to install OpenEBS by disabling SELinux. But, you can install OpenEBS in OpenShift environment without disabling SELinux using the following steps.
 
 1. Add OpenEBS Service account to the privileged scc of OpenShift.
@@ -320,7 +317,6 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
 
 <h3><a class="anchor" aria-hidden="true" id="enable-admission-controller-in-openshift"></a>How to enable Admission-Controller in OpenShift 3.10 and above</h3>
 
-
 The following procedure will help to enable admission-controller in OpenShift 3.10 and above.
 
 1. Update the `/etc/origin/master/master-config.yaml`  file with below configuration.
@@ -352,7 +348,6 @@ The following procedure will help to enable admission-controller in OpenShift 3.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions"></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
-
 
 Apply the following YAML in your cluster.
 
@@ -429,7 +424,6 @@ Apply the following YAML in your cluster.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="enable-log-rotation-on-cluster-nodes"></a>How to prevent container logs from exhausting disk space?</h3>
-
 
 Container logs, if left unchecked, can eat into the underlying disk space causing `disk-pressure` conditions
 leading to eviction of pods running on a given node. This can be prevented by performing log-rotation
@@ -524,7 +518,6 @@ the node to show up as `Not Ready` until the daemon has restarted successfully.
 
 <h3><a class="anchor" aria-hidden="true" id="create-bdc-for-a-blockdevice"></a>How to create a BlockDeviceClaim for a particular BlockDevice?</h3>
 
-
 There are certain use cases where the user does not need some of the BlockDevices discovered by OpenEBS to be used by any of the storage engines (cStor, LocalPV, etc.). In such scenarios, users can manually create a BlockDeviceClaim to claim that particular BlockDevice, so that it won't be used by cStor or Local PV. The following steps can be used  to claim a particular BlockDevice: 
 
 1. Download the BDC CR YAML from `node-disk-manager` repository.
@@ -552,7 +545,6 @@ There are certain use cases where the user does not need some of the BlockDevice
 <a href="#top">Go to top</a>
 
 <h3><a class="anchor" aria-hidden="true" id="provision-localpv-on-k3os"></a>How to provision Local PV on K3OS?</h3>
-
 
 K3OS can be installed on any hypervisor The procedure for deploying K3OS on VMware environment is provided in the following section. There are 3 steps for provisioning OpenEBS Local PV on K3OS.
 
@@ -666,7 +658,6 @@ The detailed information of each steps are provided below.
 <h3><a class="anchor" aria-hidden="true" id="how-to-make-cstor-volume-online-if-replicas-2-of-are-lost"></a>How to make cStor volume online if 2 replicas of 3 are lost ?</h3>
 
 
-
 Application that is using cStor volume can run IOs, if at least 2 out of 3 replicas (i.e., > 50% of ReplicationFactor) have data with them. If 2 out of 3 replicas lost data, cStor volume goes into RO (read-only) mode, and, application can get into crashed state.
 This section is to provide the steps to bring back volume online by scaling down replicas to 1 with a consideration of ReplicationFactor as 3 in the examples.
 
@@ -738,7 +729,7 @@ The detailed information of each steps are provided below.
        	replicaId: "3920180363968537568"
      ```
 
-     In the above snippet, one replica is in `Healthy` and the other two are in `Degraded` mode and cStor volume is in `Offline` state. Running IOs now on this cStor volume will get IO error on Node as below:
+     In the above snippet, quorum value of one replica is in `ON` and quorum value of other two are `OFF` mode and cStor volume is in `Offline` state. Running IOs now on this cStor volume will get IO error on Node as below:
 
      ```
      / # touch /mnt/store1/file2
@@ -804,7 +795,7 @@ The detailed information of each steps are provided below.
 
    - If mount point of the volume went to RO, restart the application pod to bring back the mount point to RW state.
 
-   - If application still remains in `CrashLoopback` state due to RO mode of mount point (`kubectl describe` of application pod will show the reason), follow below steps to convert it into RW:
+   - If application still remains in `CrashLoopback` state due to RO mode of mount point (`kubectl describe` of application pod will show the reason), follow below steps to convert it into RW:
 
      - Login to node where application pod is running.
 
@@ -909,8 +900,9 @@ The detailed information of each steps are provided below.
 <a href="#top">Go to top</a>
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-reconstruct-data-from-healthy-replica-to-replaced-ones"></a>How to reconstruct data from healthy replica to replaced one?</h3>
+Consider the case where cStorVolumes have replication enabled, and one/few of its replicas got replaced, i.e., they are new and lost the data. In this case, cStor volume will be in Offline state and unable to recover data to the replaced replicas from healthy replica automatically.
 
-To reconstruct data from healthy replica to the replaced ones can be performed using the following steps. To perform the following steps, cStor volume should be in `Online`. If cStor volume is not in `Online`, make it  online using the steps mentioned [here](#how-to-make-cstor-volume-online-if-replicas-2-of-are-lost).
+Reconstructing data from healthy replica to the replaced ones can be done using the following steps. To perform the following steps, cStor volume should be in `Online`. If cStor volume is not in `Online`, make it  online using the steps mentioned [here](#how-to-make-cstor-volume-online-if-replicas-2-of-are-lost).
 
 Run the following command to get the current state of CVR of a cStor volume.
 
@@ -933,7 +925,7 @@ In this example, R1 is `pvc-5c52d001-c6a1-11e9-be30-42010a800094-cstor-sparse-po
 
 The following are the steps to reconstruct data from healthy replica to a replaced replica:
 
-1. Take base snapshot on R.
+1. Take base snapshot on R1.
 2. Copy the base snapshot to R2’s node.
 3. Apply the base snapshot to the pool of R2.
 4. Take incremental snapshot on R1.
@@ -950,27 +942,27 @@ The following are the steps to reconstruct data from healthy replica to a replac
 15. Edit cStorVolume CR of this PVC to increase `ReplicationFactor` by 1 and to set `ConsistencyFactor` to (ReplicationFactor/2 + 1).
 16. Restart the cStor target pod deployment.
 
-**Step1:** Take base snapshot on R
+**Step1:** Take base snapshot on R1.
 
-Exec into cstor-pool-mgt container of pool pod of R1 to run snapshot command:
+- Exec into cstor-pool-mgt container of pool pod of R1 to run snapshot command:
 
-```
-kubectl exec -it -n openebs -c cstor-pool-mgmt <pool pod name> -- bash
-```
+  ```
+  kubectl exec -it -n openebs -c cstor-pool-mgmt <pool pod name> -- bash
+  ```
 
-Run the following command inside the pool pod container to take the base snapshot 
+- Run the following command inside the pool pod container to take the base snapshot 
 
-```
-zfs snapshot <pool_name>/<PV name>@<base_snap_name>
-```
+  ```
+  zfs snapshot <pool_name>/<PV name>@<base_snap_name>
+  ```
 
-Example command:
+  Example command:
 
-```
-root@cstor-sparse-pool-sb1v-77658f4c85-jcgwc:/# zfs snapshot cstor-231fca0f-c6a1-11e9-be30-42010a800094/pvc-5c52d001-c6a1-11e9-be30-42010a800094@snap_data1
-```
+  ```
+  root@cstor-sparse-pool-sb1v-77658f4c85-jcgwc:/# zfs snapshot cstor-231fca0f-c6a1-11e9-be30-42010a800094/pvc-5c52d001-c6a1-11e9-be30-42010a800094@snap_data1
+  ```
 
-**Step2:** Copy the base snapshot to R2’s node
+**Step2:** Copy the base snapshot to R2’s node.
 
 There are multiple ways to do this. In this article, above created snapshot is streamed to a file. This streamed file is copied to node related to R2. As /tmp directory of the pool pod is mounted on the host node at `/var/openebs/sparse/shared-<spc name>`, streamed file will be created at R1 and copied at R2 to this location.
 
@@ -991,13 +983,13 @@ There are multiple ways to do this. In this article, above created snapshot is s
 - Copy the streamed file to local machine:
 
   ```
-  gcloud compute --project "<project name>" scp --zone "us-central1-a" <user>@gke-vitta1-default-pool-0337597c-3b5d:/var/openebs/sparse/shared-cstor-sparse-pool/pvc-5c52d001-c6a1-11e9-be30-42010a800094_snap_data1 
+  gcloud compute --project "<project name>" scp --zone "us-central1-a" <user>@gke-test-default-pool-0337597c-3b5d:/var/openebs/sparse/shared-cstor-sparse-pool/pvc-5c52d001-c6a1-11e9-be30-42010a800094_snap_data1 
   ```
 
 - Copy the local copy of streamed file to another node:
 
   ```
-  gcloud beta compute --project "<project name>" scp --zone "us-central1-a" pvc-5c52d001-c6a1-11e9-be30-42010a800094_snap_data1 <user>@gke-vitta1-default-pool-0337597c-vdg1:/var/openebs/sparse/shared-cstor-sparse-pool/
+  gcloud beta compute --project "<project name>" scp --zone "us-central1-a" pvc-5c52d001-c6a1-11e9-be30-42010a800094_snap_data1 <user>@gke-test-default-pool-0337597c-vdg1:/var/openebs/sparse/shared-cstor-sparse-pool/
   ```
 
 **Step3:** Apply the base snapshot to the pool of R2
@@ -1095,21 +1087,21 @@ Applying base snapshot to pool related to R2 involves setting a few parameters. 
 
 **Step4:** Take incremental snapshot on R1
 
-From `cstor-pool-mgmt` container of pool pod related to R1, perform following command:
+- From `cstor-pool-mgmt` container of pool pod related to R1, perform following command:
 
-```
-zfs snapshot <pool name>/<PV name>@<incr_snap_name>
-```
+  ```
+  zfs snapshot <pool name>/<PV name>@<incr_snap_name>
+  ```
 
-Example command:
+  Example command:
 
-```
-root@cstor-sparse-pool-sb1v-77658f4c85-jcgwc:/# zfs snapshot cstor-231fca0f-c6a1-11e9-be30-42010a800094/pvc-5c52d001-c6a1-11e9-be30-42010a800094@snap_data1_data2
-```
+  ```
+  root@cstor-sparse-pool-sb1v-77658f4c85-jcgwc:/# zfs snapshot cstor-231fca0f-c6a1-11e9-be30-42010a800094/pvc-5c52d001-c6a1-11e9-be30-42010a800094@snap_data1_data2
+  ```
 
-Please note that snapshot name which is <incr_snap_name> as mentioned above need to be different for each incremental snapshot. 
+  Please note that snapshot name which is <incr_snap_name> as mentioned above need to be different for each incremental snapshot. 
 
-**Step5:** Copy the data in incremental snapshot to R2’s node
+**Step5:** Copy the data in incremental snapshot to R2’s node
 
 This involves streaming the incremental data to a file, copying it to R2.
 
@@ -1131,35 +1123,35 @@ This involves streaming the incremental data to a file, copying it to R2.
 
 **Step6:** Apply the above incremental snapshot to pool of R2
 
-Exec into `cstor-pool-mgmt` container of pool pod of R2 to run:
+- Exec into `cstor-pool-mgmt` container of pool pod of R2 to run:
 
-```
-cat /tmp/<incr_snap_file1> | zfs recv <pool name>/<PV name>
-```
+  ```
+  cat /tmp/<incr_snap_file1> | zfs recv <pool name>/<PV name>
+  ```
 
-Example command to apply incremental snapshot:
+  Example command to apply incremental snapshot:
 
-```
-root@cstor-sparse-pool-a1ud-5dd8bb6fb6-f54md:/# cat /tmp/pvc-5c52d001-c6a1-11e9-be30-42010a800094_snap_data1_data2 | zfs recv cstor-2292c294-c6a1-11e9-be30-42010a800094/pvc-5c52d001-c6a1-11e9-be30-42010a800094
-```
+  ```
+  root@cstor-sparse-pool-a1ud-5dd8bb6fb6-f54md:/# cat /tmp/pvc-5c52d001-c6a1-11e9-be30-42010a800094_snap_data1_data2 | zfs recv cstor-2292c294-c6a1-11e9-be30-42010a800094/pvc-5c52d001-c6a1-11e9-be30-42010a800094
+  ```
 
-`zfs list -t all` should show the dataset related to this PVC with increased "USED" space.
+  `zfs list -t all` should show the dataset related to this PVC with increased "USED" space.
 
-Example command:
+  Example command:
 
-```
-root@cstor-sparse-pool-a1ud-5dd8bb6fb6-f54md:/# zfs list -t all
-```
+  ```
+  root@cstor-sparse-pool-a1ud-5dd8bb6fb6-f54md:/# zfs list -t all
+  ```
 
-Output will be similar to the following:
+  Output will be similar to the following:
 
-```
-NAME                                         USED   AVAIL   REFER  MOUNTPOINT
-cstor-2292c294-c6a1-11e9-be30-42010a800094   85.7M  9.54G   512B   /cstor-2292c294-c6a1-11e9-be30-42010a800094
-**cstor-2292c294-c6a1-11e9-be30-42010a800094/pvc-5c52d001-c6a1-11e9-be30-42010a800094**                                                84.9M  9.54G   84.9M   -
-cstor-2292c294-c6a1-11e9-be30-42010a800094/pvc-5c52d001-c6a1-11e9-be30-42010a800094@snap_data1    	                41.5K  -       4.12M  -
-cstor-2292c294-c6a1-11e9-be30-42010a800094/pvc-5c52d001-c6a1-11e9-be30-42010a800094@snap_data1_data2 				0B     -       84.9M  -
-```
+  ```
+  NAME                                         USED   AVAIL   REFER  MOUNTPOINT
+  cstor-2292c294-c6a1-11e9-be30-42010a800094   85.7M  9.54G   512B   /cstor-2292c294-c6a1-11e9-be30-42010a800094
+  **cstor-2292c294-c6a1-11e9-be30-42010a800094/pvc-5c52d001-c6a1-11e9-be30-42010a800094**                                                84.9M  9.54G   84.9M   -
+  cstor-2292c294-c6a1-11e9-be30-42010a800094/pvc-5c52d001-c6a1-11e9-be30-42010a800094@snap_data1    	                41.5K  -       4.12M  -
+  cstor-2292c294-c6a1-11e9-be30-42010a800094/pvc-5c52d001-c6a1-11e9-be30-42010a800094@snap_data1_data2 				0B     -       84.9M  -
+  ```
 
 **Step7:** Repeat steps 4, 5 and 6 till incremental snapshot is of lesser size
 
