@@ -5,7 +5,7 @@ sidebar_label: Jiva
 ---
 ------
 
-For details of how Jiva works, see <a href="/docs/next/jiva.html" >Jiva overview page</a>
+For details of how Jiva works, see <a href="/v110/docs/next/jiva.html" >Jiva overview page</a>
 
 
 Jiva is a light weight storage engine that is recommended to use for low capacity workloads. The snapshot and storage management features of the other cStor engine are more advanced and is recommended when snapshots are a need. 
@@ -201,7 +201,7 @@ OpenEBS volume can be backed up and restore along with application using velero 
 
 Velero is a utility to back up and restore your Kubernetes resource and persistent volumes. 
 
-To take backup and restore of Jiva volume, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Jiva volume which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](/docs/next/minio.html).
+To take backup and restore of Jiva volume, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Jiva volume which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](/v110/docs/next/minio.html).
 
 The following are the step by step procedure for taking backup and restore of application with Jiva.
 
@@ -862,7 +862,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 ## See Also:
 
-### [Understanding Jiva](/docs/next/jiva.html)
+### [Understanding Jiva](/v110/docs/next/jiva.html)
 
 
 
