@@ -827,7 +827,7 @@ This can be resolved this by modifying the configuration file of a VM:
 
   ```
   scsi1: 
-  images:vm-101-disk-1,cache=writeback,discard=on,size=120G,ssd=1,serial=**5fb20ba17c2f**
+  images:vm-101-disk-1,cache=writeback,discard=on,size=120G,ssd=1,serial=5fb20ba17c2f
   ```
 
 - Restart the VM:
