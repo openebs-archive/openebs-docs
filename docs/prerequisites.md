@@ -279,7 +279,7 @@ You can verify the iSCSI installation from the above section.
 
 <h4><a class="anchor" aria-hidden="true" id="eks-linux-ami"></a>For clusters running with the Ubuntu 18.04 AMI</h4>
 For setting up iSCSI clients on Ubuntu nodes, see the
-[instructions above.](#ubuntu)
+instructions [here.](#ubuntu)
 
 <br>
 
@@ -288,7 +288,7 @@ Engine (GKE)</h3>
 
 GKE Container-Optimized OS does not come with an iSCSI client preinstalled and does not allow installation of an iSCSI client. Therefore, OpenEBS does not work on Kubernetes clusters which are running GKE Container-Optimized OS version of the image on the worker nodes.
 
-Select Ubuntu as the image version for the node pools in the custom settings. For setting up iSCSI clients on Ubuntu nodes, see the [instructions above.](#ubuntu)
+Select Ubuntu as the image version for the node pools in the custom settings. For setting up iSCSI clients on Ubuntu nodes, see the instructions [here.](#ubuntu)
 
 <br>
 
@@ -389,14 +389,14 @@ Systems. Tested OpenShift versions are 3.9 and 3.10.
 <h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
 Latest tested RHEL versions are 7.5, 7.6.
 
-For setting up iSCSI clients on RHEL nodes, see the [instructions above](#rhel).
+For setting up iSCSI clients on RHEL nodes, see the instructions [here](#rhel).
 
 
 
 <h4><a class="anchor" aria-hidden="true" id="On-Centos"></a>On CentOS</h4>
 Latest tested CentOS version is CentOS 7.
 
-For setting up iSCSI clients on CentOS nodes, see the  [instructions above](#centos).
+For setting up iSCSI clients on CentOS nodes, see the instructions [here](#centos).
 
 <br>
 
@@ -499,7 +499,7 @@ OpenEBS can be installed using ICP on the following Operating Systems. Latest te
 Latest tested RHEL versions are 7.5, 7.6.
 
 For setting up iSCSI clients on RHEL nodes, see the
-[instructions above](#rhel).
+instructions [here](#rhel).
 
 
 
@@ -507,7 +507,7 @@ For setting up iSCSI clients on RHEL nodes, see the
 Latest tested Ubuntu version are Ubuntu 16.04 LTS and 18.04 LTS.
 
 For setting up iSCSI clients on Ubuntu nodes, see the
-[instructions above](#ubuntu).
+instructions [here](#ubuntu).
 
 <br>
 
