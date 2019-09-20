@@ -37,8 +37,8 @@ Users get access to Prometheus metrics, logs and topology view of OpenEBS volume
 
 1. Sign up at MayaData [account portal](https://account.mayadata.io/) using GitHub/Google credentials or with Local authentication .
 2. Click on **Go to Director Online** from portal page.  
-3. Create a project for the first time and choose the Kubernetes platform.
-4. Copy the kubectl command that is presented and run it in your Kubernetes environment.
+3. Create a profile and project for the first time and choose the Kubernetes platform.
+4. Copy the kubectl command that is presented on the screen and run it in your Kubernetes environment.
 
 Once your cluster is connected to Director Online, start exploring stateful applications and OpenEBS storage which are running in your cluster.  
 
