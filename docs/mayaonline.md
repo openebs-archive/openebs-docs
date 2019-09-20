@@ -1,5 +1,5 @@
 ---
-id: mayaonline
+id: directoronline
 title: Connecting OpenEBS to Director Online
 sidebar_label: Director Online
 ---
@@ -25,7 +25,7 @@ Users get access to Prometheus metrics, logs and topology view of OpenEBS volume
 
 - Installation of Director Online agents happen into `maya-system` namespace. On an average, the agents consume around 500mi node memory and 300-400m node cpu per node. 
 
-- Users can in general connect any Kubernetes cluster versioned above 1.10.x to Director Online and OpenShift versioned above 3.x. If you are facing troubles connecting your Kubernetes cluster, report the details in the <a href="<https://openebs.org/community>" target="_blank">Slack OpenEBS Community</a> .
+- Users can in general connect any Kubernetes cluster versioned above 1.10.x to Director Online and OpenShift versioned above 3.x. If you are facing troubles connecting your Kubernetes cluster, report the details in the <a href="<https://openebs.io/join-our-slack-community" target="_blank">Slack OpenEBS Community</a> .
 
 - Users need to authenticate to Director Online using their GitHub/Google credentials or with Local authenticaltion.
 
@@ -35,12 +35,12 @@ Users get access to Prometheus metrics, logs and topology view of OpenEBS volume
 
 ## Installing Director Online agents on Kubernetes
 
-1. Sign up at MayaData [accout portal](https://account.mayadata.io/) using GitHub/Google credentials or with Local authenticaltion .
-2. Click on `Go to Director Online` from portal page.  
-3. Create a project and choose the Kubernetes platform.
+1. Sign up at MayaData [account portal](https://account.mayadata.io/) using GitHub/Google credentials or with Local authentication .
+2. Click on **Go to Director Online** from portal page.  
+3. Create a project for the first time and choose the Kubernetes platform.
 4. Copy the kubectl command that is presented and run it in your Kubernetes environment.
 
-Once your cluster is connected to Director Online, start exploring stateful applications and OpenEBS storage running in your cluster.  
+Once your cluster is connected to Director Online, start exploring stateful applications and OpenEBS storage which are running in your cluster.  
 
 <br><br>
 

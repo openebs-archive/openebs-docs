@@ -9,13 +9,13 @@ sidebar_label: Support
 
 ## Slack
 
-The OpenEBS team hangs out on Slack in the `#openebs-users` channel. To participate in discussions with the OpenEBS team go to <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a>
+The OpenEBS team hangs out on Slack in the `#openebs-users` channel. To participate in discussions with the OpenEBS team go to <a href="https://openebs.io/join-our-slack-community" target="_blank">Slack OpenEBS Community</a>
 
-Slack requires registration, but the OpenEBS team welcomes anyone to register at <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a>
+Slack requires registration, but the OpenEBS team welcomes anyone to register at <a href="https://openebs.io/join-our-slack-community" target="_blank">Slack OpenEBS Community</a>
 
 ## MayaOnline
 
-All community users by default are subscribed to a free plan on <a href="https://mayaonline.io/" target="_blank">MayaOnline</a>. Enterprise support comes with various support subscription plans.
+All community users by default are subscribed to a free plan on <a href="https://director.mayadata.io/" target="_blank">Director Online</a>. Enterprise support comes with various support subscription plans.
 
 
 
