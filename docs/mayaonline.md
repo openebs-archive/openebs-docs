@@ -1,18 +1,18 @@
 ---
 id: mayaonline
-title: Connecting OpenEBS to MayaOnline
-sidebar_label: MayaOnline
+title: Connecting OpenEBS to Director Online
+sidebar_label: Director Online
 ---
 
 ------
 
 
 
-<br><br><div align="center"><font size="5">MayaOnline offers free visibility to OpenEBS. 
+<br><br><div align="center"><font size="5">Director Online offers free visibility to OpenEBS. 
 
 Users get access to Prometheus metrics, logs and topology view of OpenEBS volumes </font></div> <br>
 
-<a href="https://mayaonline.io" target="_blank">MayaOnline</a> offers visibility into OpenEBS persistent volumes present in Kubernetes. The basic services on this SaaS platform are free for OpenEBS community. A Kubernetes cluster can be connected to MayaOnline before or after OpenEBS installation. By connecting a Kubernetes cluster to MayaOnline, OpenEBS users get the following benefits.
+<a href="https://director.mayadata.io" target="_blank">Director Online</a> offers visibility into Stateful application and associated OpenEBS persistent volumes present on the Kubernetes cluster. The basic services on this SaaS platform are free for OpenEBS community. A Kubernetes cluster can be connected to Director Online before or after OpenEBS installation. By connecting a Kubernetes cluster to Director Online, OpenEBS users get the following benefits.
 
 - Topology view of all Kubernetes resources related to Persistent Volumes. This granular visualization help users to understand the relationships between storage and pod resources, get the real-time status of such resources and easy to do troubleshooting during the debugging process. 
 - User can take snapshots/clones of OpenEBS persistent volumes on the fly with ease.
@@ -23,75 +23,76 @@ Users get access to Prometheus metrics, logs and topology view of OpenEBS volume
 
 ## <br><br>System Requirements (or Resource Required)
 
-- Installation of MayaOnline agents happen into `maya-system` namespace. On an average, the agents consume around 500mi node memory and 300-400m node cpu per node. 
+- Installation of Director Online agents happen into `maya-system` namespace. On an average, the agents consume around 500mi node memory and 300-400m node cpu per node. 
 
-- Users can in general connect any Kubernetes cluster versioned above 1.10.x to MayaOnline and OpenShift versioned above 3.x. If you are facing troubles connecting your Kubernetes cluster, report the details in the <a href="<https://openebs.org/community>" target="_blank">Slack OpenEBS Community</a> .
+- Users can in general connect any Kubernetes cluster versioned above 1.10.x to Director Online and OpenShift versioned above 3.x. If you are facing troubles connecting your Kubernetes cluster, report the details in the <a href="<https://openebs.org/community>" target="_blank">Slack OpenEBS Community</a> .
 
-- Users need to authenticate to MayaOnline using their GitHub credentials.
+- Users need to authenticate to Director Online using their GitHub/Google credentials or with Local authenticaltion.
 
-- Users need to have access to Kubernetes admin context to install MayaOnline agents on Kubernetes.
+- Users need to have access to Kubernetes admin context to install Director Online agents on Kubernetes.
 
    
 
-## Installing MayaOnline agents on Kubernetes
+## Installing Director Online agents on Kubernetes
 
-1. Sign up at [mayaonline.io](https://mayaonline.io/) using GitHub credentials.
-2. Create a project and choose the Kubernetes platform.
-3. Copy the kubectl command that is presented and run it in your Kubernetes environment.
+1. Sign up at MayaData [accout portal](https://account.mayadata.io/) using GitHub/Google credentials or with Local authenticaltion .
+2. Click on `Go to Director Online` from portal page.  
+3. Create a project and choose the Kubernetes platform.
+4. Copy the kubectl command that is presented and run it in your Kubernetes environment.
 
-Once your cluster is connected to MayaOnline, start exploring your OpenEBS resources through the topology view of your cluster. 
-
-<br><br>
-
-## What information is sent from my Kubernetes to MayaOnline?
-
-
-
-<img src="/docs/assets/moconnect.png" alt="Secure connectivity between MayaOnline and K8s" width="700"/>
+Once your cluster is connected to Director Online, start exploring stateful applications and OpenEBS storage running in your cluster.  
 
 <br><br>
 
-MayaOnline agents are installed in a namespace called `maya-system`. These agents primarily include 
+## What information is sent from my Kubernetes to Director Online?
 
-- Prometheus client that collects metrics from OpenEBS volumes and export them to MayaOnline.
+
+
+<img src="/docs/assets/moconnect.png" alt="Secure connectivity between Director Online and K8s" width="700"/>
+
+<br><br>
+
+Director Online agents are installed in a namespace called `maya-system`. These agents primarily include 
+
+- Prometheus client that collects metrics from OpenEBS volumes and export them to Director Online.
 - Topology client that queries Kubernetes resources and send the status when requested.
-- Fluentd aggregators that export the logs to MayaOnline.
+- Fluentd aggregators that export the logs to Director Online.
 
-User's data is never looked into or exported to MayaOnline by the agents. 
+User's data is never looked into or exported to Director Online by the agents. 
 
-**Note**: MayaOnline administrators will have read-only access to the topology, metrics and logs that are exported to MayaOnline.  
-
-<br>
-
-[<img src="/docs/assets/mo-getstarted.png" width="400">](https://mayaonline.io/)
+**Note**: Director Online administrators will have read-only access to the topology, metrics and logs that are exported to Director Online.  
 
 <br>
 
+[<img src="/docs/assets/mo-getstarted.png" width="400">](https://director.mayadata.io)
+
+<br>
 
 
-## Example Dashboards at MayaOnline
+
+## Example Dashboards at Director Online
 
 ### Landing page
 
-<img src="/docs/assets/MO-import2.png" alt="Sample dashboard at MayaOnline" width="800"/>
+<img src="/docs/assets/MO-import2.png" alt="Sample dashboard at Director Online" width="800"/>
 
 <br><br>
 
 ### cStor pool view
 
-<img src="/docs/assets/mo-pool-view.png" alt="Sample dashboard at MayaOnline" width="800"/>
+<img src="/docs/assets/mo-pool-view.png" alt="Sample dashboard at Director Online" width="800"/>
 
 <br><br>
 
 ### cStor volume pod view
 
-<img src="/docs/assets/mo-pod-view.png" alt="Sample dashboard at MayaOnline" width="800"/>
+<img src="/docs/assets/mo-pod-view.png" alt="Sample dashboard at Director Online" width="800"/>
 
 <br><br>
 
 ### cStor custom resources view 
 
-<img src="/docs/assets/mo-cr-view.png" alt="Sample dashboard at MayaOnline" width="800"/>
+<img src="/docs/assets/mo-cr-view.png" alt="Sample dashboard at Director Online" width="800"/>
 
 <br><br>
 
@@ -99,11 +100,10 @@ User's data is never looked into or exported to MayaOnline by the agents.
 
 ### See Also
 
-#### [cStor Overview](/docs/next/cstor.html)
 
-#### [Connect to MayaOnline](https://mayaonline.io)
+#### [Connect to Director Online](https://director.mayadata.io/)
 
-#### [MayaOnline Documentation](https://docs.mayaonline.io)
+#### [Getting started with Director Online](https://help.mayadata.io/hc/en-us/articles/360033029212-Getting-started-with-DirectorOnline)
 
 <br>
 
