@@ -67,10 +67,10 @@ pvc-ce54b1ac-87b8-11e9-b062-42010a800014   20Gi       RWO            Delete     
 ```
 
 #### Find target pod name
-Use the name of the PVC from the previous command to find the appropriate pod.
+Use the name of the PV from the previous command to find the appropriate pod.
 
 ```
-$ kubectl -n openebs get pod | grep <PVC_NAME>
+$ kubectl -n openebs get pod | grep <PV_NAME>
 
 pvc-ce54b1ac-87b8-11e9-b062-42010a800014-target-6f9fc9b5f9vz9c9   3/3     Running   2          53m
 ```
@@ -81,6 +81,12 @@ You will need to modify the `sed` in this command to make it change the old size
 ```
 $ kubectl -n openebs exec -it <TARGET_POD> --container cstor-istgt -- sed -i 's/<OLD_SIZE>/<NEW_SIZE>/g' /usr/local/etc/istgt/istgt.conf; pkill istgt
 ```
+Ensure istgt process is killed and recreated new one with latest timestamp.
+```
+kubectl -n openebs exec -it <TARGET_POD> --container cstor-istgt bash
+
+```
+Then run `ps -auxwww | grep istgt`
 
 ### Rescan iscsi on node where application is running
 #### Find correct node
@@ -166,15 +172,15 @@ pvc-ce54b1ac-87b8-11e9-b062-42010a800014   8Gi       RWO            Delete      
 ```
 
 #### Patch PV
-Now edit .spec.capacity.storage in the PV
+Now edit `spec.capacity.storage` in the PV
 
 ```
 $ kubectl edit pv <PV>
 ```
 
 #### Patch cStorVolume
-Edit asdfasdf in the cStorVolume
+Now Edit `spec.capacity.storage` in the cStorVolume
 
 ```
-kubectl edit cstorvolume <cStorVolume>
+kubectl edit cstorvolume <cStorVolume> -n openebs
 ```
