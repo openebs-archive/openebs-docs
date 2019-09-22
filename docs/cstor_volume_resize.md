@@ -79,14 +79,21 @@ pvc-ce54b1ac-87b8-11e9-b062-42010a800014-target-6f9fc9b5f9vz9c9   3/3     Runnin
 You will need to modify the `sed` in this command to make it change the old size to the new size in istgt.conf.
 
 ```
-$ kubectl -n openebs exec -it <TARGET_POD> --container cstor-istgt -- sed -i 's/<OLD_SIZE>/<NEW_SIZE>/g' /usr/local/etc/istgt/istgt.conf; pkill istgt
+$ kubectl -n openebs exec -it <TARGET_POD> --container cstor-istgt -- sed -i 's/<OLD_SIZE>/<NEW_SIZE>/g' /usr/local/etc/istgt/istgt.conf
 ```
-Ensure istgt process is killed and recreated new one with latest timestamp.
-```
-kubectl -n openebs exec -it <TARGET_POD> --container cstor-istgt bash
+
+Exec into the `cstor-istgt` container using the following command:
 
 ```
-Then run `ps -auxwww | grep istgt`
+kubectl -n openebs exec -it <TARGET_POD> --container cstor-istgt bash
+```
+
+Kill istgt process using the following command. 
+```
+pkill istgt
+
+```
+Ensure new istgt process is created by running  `ps -auxwww | grep istgt`
 
 ### Rescan iscsi on node where application is running
 #### Find correct node
