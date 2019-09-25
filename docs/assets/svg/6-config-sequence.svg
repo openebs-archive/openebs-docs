@@ -104,12 +104,12 @@
   </g>
   <path class="cls-6" d="M535.91,334.7H383.21a19.8,19.8,0,0,1-19.7-19.7V178.4a19.8,19.8,0,0,1,19.7-19.7h152.7a19.8,19.8,0,0,1,19.7,19.7V315A19.8,19.8,0,0,1,535.91,334.7Z"/>
   <g class="cls-7">
-    <text class="cls-10" transform="translate(424.77 236.83) scale(0.94 1)">Install </text>
-    <text class="cls-10" transform="translate(407.19 265.63) scale(0.94 1)">OpenEBS</text>
+    <text class="cls-10" transform="translate(424.77 236.82) scale(0.94 1)">Install </text>
+    <text class="cls-10" transform="translate(407.19 265.62) scale(0.94 1)">OpenEBS</text>
   </g>
   <path class="cls-6" d="M806.11,334.7H653.31a19.8,19.8,0,0,1-19.7-19.7V178.4a19.8,19.8,0,0,1,19.7-19.7H806a19.8,19.8,0,0,1,19.7,19.7V315A19.65,19.65,0,0,1,806.11,334.7Z"/>
   <g class="cls-7">
-    <text class="cls-10" transform="translate(688.29 236.83) scale(0.94 1)">Choose <tspan x="-38.03" y="28.8">Storage Engine</tspan></text>
+    <text class="cls-10" transform="translate(688.29 236.82) scale(0.94 1)">Choose <tspan x="-38.03" y="28.8">Storage Engine</tspan></text>
   </g>
   <g>
     <path class="cls-6" d="M1609.13,334.7h-152.7a19.8,19.8,0,0,1-19.7-19.7V178.4a19.8,19.8,0,0,1,19.7-19.7h152.7a19.8,19.8,0,0,1,19.7,19.7V315A19.74,19.74,0,0,1,1609.13,334.7Z"/>
@@ -133,7 +133,6 @@
     <path class="cls-12" d="M910.31,246.49c-5.7,2.1-12.7,5.7-17.1,9.5l3.4-9.5-3.4-9.5C897.61,240.79,904.61,244.39,910.31,246.49Z"/>
   </g>
   <line class="cls-11" x1="831.01" y1="246.49" x2="856.04" y2="246.49"/>
-  <line class="cls-11" x1="1172.36" y1="246.38" x2="1371.32" y2="246.38"/>
   <g>
     <line class="cls-11" x1="854.47" y1="308.97" x2="898.67" y2="308.97"/>
     <path class="cls-12" d="M910.67,309c-5.7,2.1-12.7,5.7-17.1,9.5L897,309l-3.4-9.5C898,303.27,905,306.87,910.67,309Z"/>
@@ -142,13 +141,10 @@
     <line class="cls-11" x1="854.11" y1="184" x2="898.31" y2="184"/>
     <path class="cls-12" d="M910.31,184c-5.7,2.1-12.7,5.7-17.1,9.5l3.4-9.5-3.4-9.5C897.61,178.3,904.61,181.9,910.31,184Z"/>
   </g>
+  <line class="cls-11" x1="1009.38" y1="310.14" x2="1369.72" y2="310.14"/>
   <g>
-    <line class="cls-11" x1="1009.38" y1="246.38" x2="1053.58" y2="246.38"/>
-    <path class="cls-12" d="M1065.58,246.38c-5.7,2.1-12.7,5.7-17.1,9.5l3.4-9.5-3.4-9.5C1052.88,240.68,1059.88,244.28,1065.58,246.38Z"/>
-  </g>
-  <g>
-    <line class="cls-11" x1="1371.32" y1="246.38" x2="1415.52" y2="246.38"/>
-    <path class="cls-12" d="M1427.52,246.38c-5.7,2.1-12.7,5.7-17.1,9.5l3.4-9.5-3.4-9.5C1414.82,240.68,1421.82,244.28,1427.52,246.38Z"/>
+    <line class="cls-11" x1="1369.72" y1="310.14" x2="1413.92" y2="310.14"/>
+    <path class="cls-12" d="M1425.92,310.14c-5.7,2.1-12.7,5.7-17.1,9.5l3.4-9.5-3.4-9.5C1413.22,304.44,1420.22,308,1425.92,310.14Z"/>
   </g>
   <path class="cls-13" d="M1996.49,353H1658.94c-2.34,0-4.22-4.6-4.22-10.2V150.6c0-5.6,1.88-10.2,4.22-10.2h337.55c2.34,0,4.22,4.6,4.22,10.2V342.8c0,5.6-1.88,10.2-4.22,10.2Z"/>
   <text class="cls-5" transform="translate(1738.66 402.67) scale(0.94 1)">As any user</text>
@@ -166,23 +162,19 @@
   </g>
   <rect class="cls-14" x="915.06" y="158.7" width="89.45" height="50.6" rx="12"/>
   <rect class="cls-14" x="1241.7" y="158.7" width="122.92" height="68" rx="12"/>
-  <rect class="cls-6" x="1069.68" y="158.7" width="100.75" height="113.14" rx="12"/>
-  <rect class="cls-6" x="915.06" y="221.4" width="89.45" height="50.6" rx="12"/>
-  <rect class="cls-14" x="915.06" y="284.1" width="89.45" height="50.6" rx="12"/>
+  <rect class="cls-14" x="1069.68" y="158.7" width="100.75" height="113.14" rx="12"/>
+  <rect class="cls-14" x="915.06" y="221.4" width="89.45" height="50.6" rx="12"/>
+  <rect class="cls-6" x="915.06" y="284.1" width="89.45" height="50.6" rx="12"/>
   <line class="cls-11" x1="854.11" y1="183.02" x2="854.11" y2="309.99"/>
-  <text class="cls-15" transform="translate(937.43 192.55) scale(0.94 1)">cStor</text>
-  <g class="cls-7">
-    <text class="cls-10" transform="translate(1092.66 223.06) scale(0.94 1)">NDM</text>
-  </g>
+  <text class="cls-15" transform="translate(937.43 192.54) scale(0.94 1)">cStor</text>
+  <text class="cls-15" transform="translate(1092.66 223.06) scale(0.94 1)">NDM</text>
   <g class="cls-7">
     <text class="cls-16" transform="translate(1269.14 184.62) scale(0.94 1)">Create<tspan x="-19.34" y="28.8">cStor Pool</tspan></text>
   </g>
   <g class="cls-7">
-    <text class="cls-16" transform="translate(937.43 316.36) scale(0.94 1)">Jiva</text>
+    <text class="cls-10" transform="translate(937.43 316.36) scale(0.94 1)">Jiva</text>
   </g>
-  <g class="cls-7">
-    <text class="cls-10" transform="translate(917.25 253.79) scale(0.94 1)">LocalPV</text>
-  </g>
+  <text class="cls-15" transform="translate(917.25 253.79) scale(0.94 1)">LocalPV</text>
   <g>
     <line class="cls-17" x1="191.65" y1="324.15" x2="177.48" y2="308.31"/>
     <line class="cls-17" x1="185.74" y1="323.73" x2="217.61" y2="292.71"/>
@@ -190,10 +182,6 @@
   <g>
     <line class="cls-17" x1="455.66" y1="324.15" x2="441.49" y2="308.31"/>
     <line class="cls-17" x1="449.75" y1="323.73" x2="481.62" y2="292.71"/>
-  </g>
-  <g>
-    <line class="cls-17" x1="1114.07" y1="262.83" x2="1099.91" y2="246.98"/>
-    <line class="cls-17" x1="1108.17" y1="262.41" x2="1140.03" y2="231.39"/>
   </g>
   <line class="cls-18" x1="725.71" y1="315.23" x2="809.41" y2="315.23"/>
   <line class="cls-17" x1="649.91" y1="315.23" x2="758.51" y2="315.23"/>

@@ -7,7 +7,7 @@ sidebar_label: Quickstart
 
 <br>
 
-<img src="/docs/assets/svg/config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
+<a href="/docs/next/prerequisites.html"><img src="/docs/assets/svg/config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%"></a>
 
 
 
