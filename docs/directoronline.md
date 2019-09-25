@@ -48,7 +48,7 @@ Once your cluster is connected to Director Online, start exploring stateful appl
 
 
 
-<img src="/docs/assets/moconnect.png" alt="Secure connectivity between Director Online and K8s" width="700"/>
+<img src="/docs/assets/moconnect.svg" alt="Secure connectivity between Director Online and K8s" width="800"/>
 
 <br><br>
 
