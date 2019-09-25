@@ -71,7 +71,6 @@ block volumes.
 
 <h3><a class="anchor" aria-hidden="true" id="ubuntu"></a>Ubuntu</h3>
 
-
 **Verify iSCSI services are configured**
 
 If an iSCSI initiator is already installed on your node, check that the
@@ -125,7 +124,6 @@ You can verify the iSCSI installation from above section.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="rhel"></a>Red Hat Enterprise Linux</h3>
-
 
 **Verify iSCSI services are configured**
 
@@ -189,7 +187,6 @@ You can verify the iSCSI installation from above section.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="centos"></a>CentOS</h3>
-
 
 **Verify iSCSI services are configured**
 
