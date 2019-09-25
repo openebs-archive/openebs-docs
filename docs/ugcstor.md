@@ -7,7 +7,7 @@ sidebar_label: cStor
 
 <br>
 
-![](img src="/docs/assets/svg/3-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%")
+<img src="/docs/assets/svg/3-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
 
 <br>
 
@@ -601,7 +601,6 @@ kubectl get pod -n <openebs_installed_namespace> | grep <pvc_name>
 
 <br>
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
-
 
 <h3><a class="anchor" aria-hidden="true" id="creating-cStor-storage-pools"></a>Creating cStor Storage Pools</h3>
 The cStorStoragePool can be created by specifying the blockDeviceList. The following section will describe the steps in detail. 

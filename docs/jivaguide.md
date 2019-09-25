@@ -7,7 +7,7 @@ sidebar_label: Jiva
 
 <br>
 
-![](img src="/docs/assets/svg/6-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%")
+<img src="/docs/assets/svg/6-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
 
 <br>
 
@@ -50,14 +50,17 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>User Operations</h2>
 
+
+
 <h3><a class="anchor" aria-hidden="true" id="simple-provisioning-of-jiva"></a>Simple Provisioning of Jiva</h3>
-To quickly provision a jiva volume using the default pool and storageClass, use the following command
+
+To quickly provision a Jiva volume using the default pool and StorageClass, use the following command
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-jiva-default.yaml
 ```
 
-In this mode, OpenEBS provisions a jiva volume with three replicas on three different nodes. Ensure there are 3 Nodes in the cluster. The data in each replica is stored in the local container storage of the replica itself. The data is replicated and highly available and is suitable for quick testing of OpenEBS and simple application PoCs.
+In this mode, OpenEBS provisions a Jiva volume with three replicas on three different nodes. Ensure there are 3 Nodes in the cluster. The data in each replica is stored in the local container storage of the replica itself. The data is replicated and highly available and is suitable for quick testing of OpenEBS and simple application PoCs.
 If it a single node cluster, then download the above YAML spec and change the replica count and apply the modified YAML spec.
 
 
@@ -355,8 +358,12 @@ kubectl get pv
 
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
 
+
+
 <h3><a class="anchor" aria-hidden="true" id="create-a-pool"></a>Create a Jiva Pool</h3>
+
 The process of creating a Jiva pool include the following steps.
+
 1. Prepare disks and mount them
 
 2. Create a Jiva pool using the above mounted disk.
@@ -383,9 +390,9 @@ If it is a cloud disk provision and mount on the node. If three replicas of Jiva
 
   sudo mkfs.ext4 /dev/<device-name>
 
-  sudo mkdir /mnt/openebs-gpd
+  sudo mkdir /home/openebs-gpd
 
-  sudo mount /dev/sdb  /mnt/openebs-gpd
+  sudo mount /dev/sdb  /home/openebs-gpd
   ```
 
 - Repeat the above steps on other two nodes if this is a three replica case.
@@ -402,7 +409,7 @@ Jiva pool requires mount path to be prepared and available on the Node. Note tha
         name: gpdpool 			 
         type: hostdir
     spec:
-        path: "/mnt/openebs-gpd"   
+        path: "/home/openebs-gpd"   
   ```
 
 - Copy the above content to the into a file called `jiva-gpd-pool.yaml` and create the pool using the following command.
