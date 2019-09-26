@@ -53,6 +53,9 @@ is installed and running or to find the steps to install the iSCSI client.
     <div class="divcol">
         <a href="/docs/next/prerequisites.html#icp"><img src="/docs/assets/l-icp.png" width="50px;">ICP</a>
     </div>
+      <div class="divcol">
+        <a href="/docs/next/prerequisites.html#do"><img src="/docs/assets/DigitalOceanLogo.png" width="45px;">&nbsp;DigitalOcean</a>
+    </div>
 </div>
 
 
@@ -121,7 +124,7 @@ sudo service open-iscsi restart
 
 You can verify the iSCSI installation from above section.
 
-<br>
+<br> 
 
 <h3><a class="anchor" aria-hidden="true" id="rhel"></a>Red Hat Enterprise Linux</h3>
 
@@ -365,7 +368,69 @@ exit
 ```
 
 You can verify the iSCSI installation from the above section.
+<br>
+<br>
+<h3><a class="anchor" aria-hidden="true" id="do"></a>DigitalOcean</h3>
+<br>
 
+**Add extra_binds in Kubelet Service**
+
+ Add the following lines (volume mounts) to the file <code>/etc/systemd/system/kubelet.service</code> on each of the nodes:<br>
+ ```
+ -v /sbin/iscsiadm:/usr/bin/iscsiadm \
+ -v lib/x86_64-linux-gnu/libisns-nocrypto.so.0:/lib/x86_64-linux-gnu/libisns-nocrypto.so.0
+ ```
+So, the updated Kubelet Service File is as below:
+
+```
+[Unit]
+Description=Kubernetes Kubelet Server
+Documentation=https://kubernetes.io/docs/concepts/overview/components/#kubelet
+After=docker.service sys-fs-bpf.mount
+Requires=docker.service sys-fs-bpf.mount
+[Service]
+OOMScoreAdjust=-999
+ExecStartPre=/bin/mkdir -p /var/lib/kubelet
+ExecStartPre=/bin/mount — bind /var/lib/kubelet /var/lib/kubelet
+ExecStartPre=/bin/mount — make-shared /var/lib/kubelet
+ExecStart=/usr/bin/docker run — rm — net=host — pid=host — privileged — name kubelet \
+-v /dev:/dev \
+-v /sys:/sys \
+-v /var:/var \
+-v /var/lib/kubelet:/var/lib/kubelet:shared \
+-v /etc:/etc \
+-v /run:/run \
+-v /opt:/opt \
+-v /sbin/iscsiadm:/usr/bin/iscsiadm \
+-v /lib/x86_64-linux-gnu/libisns-nocrypto.so.0:/lib/x86_64-linux-gnu/libisns-nocrypto.so.0 \
+gcr.io/google-containers/hyperkube:v1.15.3 \
+/hyperkube kubelet \
+— config=/etc/kubernetes/kubelet.conf \
+— feature-gates=”RuntimeClass=false” \
+— logtostderr=true \
+— image-pull-progress-deadline=2m \
+— kubeconfig=/etc/kubernetes/kubelet.kubeconfig \
+— bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig \
+— rotate-certificates \
+— register-node=true \
+— node-labels=”doks.digitalocean.com/node-id=32559d91-cc04–4aac-bdc4–0566fa066802,doks.digitalocean.com/node-pool-id=d5714f37–627d-435a-b1c7-f0373ecd7593,doks.digitalocean.com/node-pool=pool-nuyzam6e8,doks.digitalocean.com/version=1.15.3-do.2" \
+— root-dir=/var/lib/kubelet \
+— v=2 \
+— cloud-provider=external \
+— network-plugin=cni \
+— provider-id=”digitalocean://160254521"
+Restart=on-failure
+RestartSec=5
+KillMode=process
+[Install]
+WantedBy=multi-user.target
+```
+
+ Next, you need to restart the Kubelet Service on each node using the following commands
+```
+systemctl daemon-reload
+service kubelet restart
+``` 
 <br>
 
 <hr>
@@ -420,6 +485,9 @@ ros config set rancher.services.user-volumes.volumes  [/home:/home,/opt:/opt,/va
 system-docker rm all-volumes
 reboot
 ```
+
+
+
 
 
 
@@ -507,6 +575,7 @@ For setting up iSCSI clients on Ubuntu nodes, see the
 instructions [here](#ubuntu).
 
 <br>
+
 
 ## See Also:
 
