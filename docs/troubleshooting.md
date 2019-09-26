@@ -77,6 +77,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [Unable to create or delete a PVC](#unable-to-create-or-delete-a-pvc)
 
+
 [Unable to provision cStor on DigitalOcean](#unable-to-provision-cStor-on-DigitalOcean)
 
 <br>
@@ -314,6 +315,22 @@ kubectl -n openebs get pods -o name | grep admission-server | xargs kubectl -n o
 
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
+
+
+By default OpenEBS chart generates TLS certificates used by the `openebs-admission-controller`, while this is handy, it requires the admission controller to restart on each `helm upgrade` command. For most of the use cases, the admission controller would have restarted to update the certificate configurations, if not , then user will get the above mentioned error.
+
+**Workaround**
+
+
+This can be fixed by restarting the admission controller:
+
+```
+kubectl -n openebs get pods -o name | grep admission-server | xargs kubectl -n openebs delete
+```
+
+
+<h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
+
 
 
 The setup environment where the issue occurs is rancher/rke with bare metal hosts running CentOS. After installing OpenEBS, OpenEBS pods are running, but application pod is in *ContainerCreating* state. It consume Jiva volume. The output of `kubectl get pods` is displayed as follows.
@@ -668,6 +685,21 @@ apt install xfsprogs
 
 
 <h3><a class="anchor" aria-hidden="true" id="unable-to-create-or-delete-a-pvc"></a>Unable to create or delete a PVC</h3>
+
+
+User is unable to create a new PVC or delete an existing PVC. While doing any of these operation, the following error is coming on the PVC.
+
+```
+Error from server (InternalError): Internal error occurred: failed calling webhook "admission-webhook.openebs.io": Post https://admission-server-svc.openebs.svc:443/validate?timeout=30s: Bad Gateway
+```
+
+**Workaround:**
+
+When a user creates or deletes a PVC, there are validation triggers and a request has been intercepted by the admission webhook controller after authentication/authorization from kube-apiserver.
+By default admission webhook service has been configured to 443 port and the error above suggests that either port 443 is not allowed to use in cluster or admission webhook service has to be allowed in k8s cluster Proxy settings.
+
+<hr>
+
 
 User is unable to create a new PVC or delete an existing PVC. While doing any of these operation, the following error is coming on the PVC.
 

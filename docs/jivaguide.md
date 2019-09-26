@@ -5,6 +5,12 @@ sidebar_label: Jiva
 ---
 ------
 
+<br>
+
+<img src="/docs/assets/svg/6-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
+
+<br>
+
 For details of how Jiva works, see <a href="/docs/next/jiva.html" >Jiva overview page</a>
 
 
@@ -45,27 +51,26 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>User Operations</h2>
 
 
+
 <h3><a class="anchor" aria-hidden="true" id="simple-provisioning-of-jiva"></a>Simple Provisioning of Jiva</h3>
 
-To quickly provision a jiva volume using the default pool and storageClass, use the following command
+To quickly provision a Jiva volume using the default pool and StorageClass, use the following command
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-jiva-default.yaml
 ```
 
-In this mode, OpenEBS provisions a jiva volume with three replicas on three different nodes. Ensure there are 3 Nodes in the cluster. The data in each replica is stored in the local container storage of the replica itself. The data is replicated and highly available and is suitable for quick testing of OpenEBS and simple application PoCs.
+In this mode, OpenEBS provisions a Jiva volume with three replicas on three different nodes. Ensure there are 3 Nodes in the cluster. The data in each replica is stored in the local container storage of the replica itself. The data is replicated and highly available and is suitable for quick testing of OpenEBS and simple application PoCs.
 If it a single node cluster, then download the above YAML spec and change the replica count and apply the modified YAML spec.
 
 
 
 <h3><a class="anchor" aria-hidden="true" id="provisioning-with-local-or-cloud-disks"></a>Provisioning with Local or Cloud Disks</h3>
-
 In this mode, local disks on each node need to be prepared and mounted at a directory path for use by jiva. For jiva, the mount paths need to be setup and managed by the administrator. The steps for mounting a disk into a node and creating a Jiva storage pool is provided [here](#create-a-pool). Once a StorageClass is created by mentioning this StoragePool name, then use this StorageClass in the PVC configuration.
 
 
 
 <h3><a class="anchor" aria-hidden="true" id="provision-sample-application-with-jiva-volume"></a>Provision Sample Application with Jiva Volume</h3>
-
 Once the storage class is created, provision the volumes using the standard PVC interface. In the following example, the `StorageClass` openebs-jiva-gpd-3repl is specified in the `PersistentVolumeClaim` specification. The raw file of this example spec can be download from [here](<https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml>) or use the following spec.
 
 
@@ -155,7 +160,6 @@ Once the storage class is created, provision the volumes using the standard PVC 
 
 
 <h3><a class="anchor" aria-hidden="true" id="monitoring-a-jiva-volume"></a>Monitoring a Jiva Volume</h3>
-
 By default `VolumeMonitor` is set to ON in the JIva StorageClass. Volume metrics are exported when this parameter is set to ON. Following metrics are supported by Jiva as of the current release.
 
 ```
@@ -186,7 +190,6 @@ Grafana charts can be built for the above Prometheus metrics. Some metrics of Op
 
 
 <h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
-
 OpenEBS volume can be backed up and restore along with application using velero plugin. It helps the user for taking backup of OpenEBS volumes to a third party storage location and then restoration of the data whenever it needed. The steps for taking backup and restore are following.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
@@ -356,15 +359,16 @@ kubectl get pv
 <h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
 
 
+
 <h3><a class="anchor" aria-hidden="true" id="create-a-pool"></a>Create a Jiva Pool</h3>
 
 The process of creating a Jiva pool include the following steps.
+
 1. Prepare disks and mount them
 
 2. Create a Jiva pool using the above mounted disk.
 
 <h4><a class="anchor" aria-hidden="true" id="prepare-disk-mount"></a>Prepare disks and mount them</h4>
-
 If it is a cloud disk provision and mount on the node. If three replicas of Jiva volume are needed, provision three cloud disks and mount them on each node. The mount path needs to be same on all three nodes. The following is the steps for creating a GPD disk on Google cloud and mounthing to the node.
 
 - Create a GPD
@@ -386,15 +390,14 @@ If it is a cloud disk provision and mount on the node. If three replicas of Jiva
 
   sudo mkfs.ext4 /dev/<device-name>
 
-  sudo mkdir /mnt/openebs-gpd
+  sudo mkdir /home/openebs-gpd
 
-  sudo mount /dev/sdb  /mnt/openebs-gpd
+  sudo mount /dev/sdb  /home/openebs-gpd
   ```
 
 - Repeat the above steps on other two nodes if this is a three replica case.
 
 <h4><a class="anchor" aria-hidden="true" id="create-jiva-pool-with-mounted-disk"></a>Create a Jiva Pool using the mounted disk</h4>
-
 Jiva pool requires mount path to be prepared and available on the Node. Note that if the mount path is not pointing a real disk, then a local directory is created with this mount path and the replica data goes to the container image disk (similar to the case of `default` pool).
 
 - YAML specification to create the Jiva pool is shown below
@@ -406,7 +409,7 @@ Jiva pool requires mount path to be prepared and available on the Node. Note tha
         name: gpdpool 			 
         type: hostdir
     spec:
-        path: "/mnt/openebs-gpd"   
+        path: "/home/openebs-gpd"   
   ```
 
 - Copy the above content to the into a file called `jiva-gpd-pool.yaml` and create the pool using the following command.
@@ -423,7 +426,6 @@ Jiva pool requires mount path to be prepared and available on the Node. Note tha
 
 
 <h3><a class="anchor" aria-hidden="true" id="create-a-sc"></a>Create a StorageClass</h3>
-
 This StorageClass is mainly for using the Jiva Storagepool created with a mounted disk. Jiva volume can be provision using default Jiva StorageClass named `openebs-jiva-default` in the correponding PVC spec. The default StorageClass has replica count as 3.
 The steps for creating Jiva Storage pool is mentioned in the above section. Specify the Jiva pool in the `StoragePool` annotation of StorageClass. Example StorageClass specification is given below.
 
@@ -455,7 +457,6 @@ provisioner: openebs.io/provisioner-iscsi
   ```
 
 <h3><a class="anchor" aria-hidden="true" id="setting-up-jiva-storage-policies"></a>Setting up Jiva Storage Policies</h3>
-
 Below table lists the storage policies supported by Jiva. These policies can be added into *StorageClass* and apply them through *PersistentVolumeClaim* or *VolumeClaimTemplates* interface.
 
 
@@ -463,11 +464,11 @@ Below table lists the storage policies supported by Jiva. These policies can be 
 | JIVA STORAGE POLICY                                          | MANDATORY | DEFAULT                           | PURPOSE                                                      |
 | ------------------------------------------------------------ | --------- | --------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                 | Defines the number of Jiva volume replicas                   |
-| [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.1.0 | To use particular Jiva replica image                         |
+| [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.2.0 | To use particular Jiva replica image                         |
 | [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/jiva:1.10         | To use particular Jiva Controller Image                      |
 | [StoragePool](#Storage-Pool-Policy)                          | Yes       | default                           | A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on host OS or externally mounted disk. |
 | [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.1.0  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.2.0  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [Volume FSType](#Volume-File-System-Type-Policy)             |           | ext4                              | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)         |           | false                             | It will specify whether data need to be retained post PVC deletion. |
 | [TargetNodeSelector](#Targe-NodeSelector-Policy)             |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva target pod on the nodes that match label. |
@@ -483,7 +484,6 @@ Below table lists the storage policies supported by Jiva. These policies can be 
 | [OpenEBS Namespace Policy for Jiva Pods](#deploy-in-openEBS-namespace) |           | false                             | Jiva Pod will be deployed in PVC name space by default. With the value as `true`, Jiva Pods will run in OpenEBS namespace. |
 
 <h4><a class="anchor" aria-hidden="true" id="Replica-Count-Policy"></a>Replica Count Policy</h4>
-
 You can specify the Jiva replica count using the *value* for *ReplicaCount* property. In the following example, the jiva-replica-count is specified as 3. Hence, three replicas are created.
 
 ```
@@ -500,7 +500,6 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Replica-Image-Policy"></a>Replica Image Policy</h4>
-
 You can specify the jiva replica image using *value* for *ReplicaImage* property.
 
 ```
@@ -512,12 +511,11 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ReplicaImage
-        value: quay.io/openebs/m-apiserver:1.1.0
+        value: quay.io/openebs/m-apiserver:1.2.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Controller-Image-Policy"></a>Controller Image Policy</h4>
-
 You can specify the jiva controller image using the *value* for *ControllerImage* property.
 
 ```
@@ -529,12 +527,11 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: quay.io/openebs/jiva:1.1.0
+        value: quay.io/openebs/jiva:1.2.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-Monitor-Policy"></a>Volume Monitor Policy</h4>
-
 You can specify the jiva volume monitor feature which can be set using *value* for *VolumeMonitor* property.
 
 ```
@@ -551,7 +548,6 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Storage-Pool-Policy"></a>Storage Pool Policy</h4>
-
 A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on any of the following.
 
 - host-os or
@@ -587,7 +583,6 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-File-System-Type-Policy"></a>Volume File System Type Policy</h4>
-
 You can specify a storage class policy where you can specify the file system type. By default, OpenEBS comes with ext4 file system. However, you can also use the xfs file system.
 
 Following is a sample setting.
@@ -606,7 +601,6 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-Monitoring-Image-Policy"></a>Volume Monitoring Image Policy</h4>
-
 You can specify the monitoring image policy for a particular volume using *value* for *VolumeMonitorImage*property. The following Kubernetes storage class sample uses the Volume Monitoring policy. By default, volume monitor is enabled.
 
 ```
@@ -618,12 +612,11 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:1.1.0
+        value: quay.io/openebs/m-exporter:1.2.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-Space-Reclaim-Policy"></a>Volume Space Reclaim Policy</h4>
-
 Support for a storage policy that can disable the Jiva Volume Space reclaim. You can specify the jiva volume space reclaim feature setting using the *value* for *RetainReplicaData* property. In the following example, the jiva volume space reclaim feature is enabled as true. Hence, retain the volume data post PVC deletion.
 
 ```
@@ -640,7 +633,6 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Targe-NodeSelector-Policy"></a>Target  NodeSelector Policy</h4>
-
 You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: apnode`is the node label.
 
 ```
@@ -657,7 +649,6 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Replica-NodeSelector-Policy"></a>Replica NodeSelector Policy</h4>
-
 You can specify the *ReplicaNodeSelector* where replica pods has to be scheduled using the *value* for *ReplicaNodeSelector* . In following sample storage class yaml, `node: openebs` is the node label.
 
 ```
@@ -674,7 +665,6 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="TargetTolerations"></a>TargetTolerations Policy</h4>
-
 You can specify the *TargetTolerations* to specify the tolerations for Jiva target. 
 
 ```
@@ -693,7 +683,6 @@ You can specify the *TargetTolerations* to specify the tolerations for Jiva targ
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="ReplicaTolerations"></a>ReplicaTolerations Policy</h4>
-
 You can specify the *ReplicaTolerations* to specify the tolerations for Replica.
 
 ```
@@ -712,7 +701,6 @@ You can specify the *ReplicaTolerations* to specify the tolerations for Replica.
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="TargetResourceRequests"></a>TargetResourceRequests Policy</h4>
-
 You can specify the *TargetResourceRequests* to specify resource requests that need to be available before scheduling the containers. 
 
 ```
@@ -728,7 +716,6 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Target-ResourceLimits-Policy"></a>Target ResourceLimits Policy</h4>
-
 You can specify the *TargetResourceLimits* to restrict the memory and cpu usage of Jiva target pod within the given limit using the *value* for *TargetResourceLimits* .
 
 ```
@@ -746,7 +733,6 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="AuxResourceLimits-Policy"></a>AuxResourceLimits Policy</h4>
-
 You can specify the *AuxResourceLimits* which allow you to set limits on side cars.
 
 ```
@@ -764,7 +750,6 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="AuxResourceRequests-Policy"></a>AuxResourceRequests Policy</h4>
-
 This feature is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. `AuxResourceRequests` allow you to set requests on side cars. Requests have to be specified in the format expected by Kubernetes.
 
 ```
@@ -780,7 +765,6 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="ReplicaResourceLimits-Policy"></a>ReplicaResourceLimits Policy</h4>
-
 You can specify the *ReplicaResourceLimits* to restrict the memory usage of replica pod within the given limit using the *value* for *ReplicaResourceLimits*.
 
 ```
@@ -797,7 +781,6 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Target-Affinity-Policy"></a>Target Affinity Policy</h4>
-
 The Stateful workloads access the OpenEBS storage volume by connecting to the Volume Target Pod. This policy can be used to co-locate volume target pod on the same node as workload.
 
 - This feature makes use of the Kubernetes Pod Affinity feature that is dependent on the Pod labels. User will need to add the following label to both Application and PVC.
@@ -835,7 +818,6 @@ The Stateful workloads access the OpenEBS storage volume by connecting to the Vo
 **Note**: *This feature works only for cases where there is a single application pod instance associated to a PVC.  Example YAML spec for application deployment can be get from [here](https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/fio/demo-fio-jiva-taa.yaml). In the case of STS, this feature is supported only for single replica StatefulSet.*
 
 <h4><a class="anchor" aria-hidden="true" id="deploy-in-openEBS-namespace"></a>OpenEBS Namespace Policy for Jiva Pods</h4>
-
 This StorageClass Policy is for deploying the Jiva pods in OpenEBS Namespace. By default, the value is `false`, so Jiva Pods will deploy in PVC namespace. The following are the main requirement of running Jiva pods in OpenEBS namespace.
 
 * With default value, granting additional privileges to Jiva pods to access hostpath might involve granting privileges to the entire namespace of PVC. With enabling this value as`true` , Jiva pods will get additional privileges to access hostpath in OpenEBS namespace. 
