@@ -372,6 +372,7 @@ You can verify the iSCSI installation from the above section.
 <br>
 <h3><a class="anchor" aria-hidden="true" id="do"></a>DigitalOcean</h3>
 <br>
+
 **Add extra_binds in Kubelet Service**
 
  Add the following lines (volume mounts) to the file <code>/etc/systemd/system/kubelet.service</code> on each of the nodes:<br>
@@ -380,7 +381,7 @@ You can verify the iSCSI installation from the above section.
  -v lib/x86_64-linux-gnu/libisns-nocrypto.so.0:/lib/x86_64-linux-gnu/libisns-nocrypto.so.0
  ```
 So, the updated Kubelet Service File is as below:
-&nbsp;&nbsp;
+
 ```
 [Unit]
 Description=Kubernetes Kubelet Server
