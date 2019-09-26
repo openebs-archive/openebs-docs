@@ -77,8 +77,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [Unable to create or delete a PVC](#unable-to-create-or-delete-a-pvc)
 
-
-[Unable to provision cStor on DigitalOcean](#unable-to-provision-cStor-on-DigitalOcean)
+[Unable to provision cStor on DigitalOcean](#unable-to-provision-openebs-volume-on-DigitalOcean)
 
 <br>
 
@@ -714,9 +713,9 @@ By default admission webhook service has been configured to 443 port and the err
 
 
 <br>
-<h3><a class="anchor" aria-hidden="true" id="unable-to-provision-cStor-on-DigitalOcean"></a>Unable to provision OpenEBS volume on DigitalOcean</h3>
+<h3><a class="anchor" aria-hidden="true" id="unable-to-provision-openebs-volume-on-DigitalOcean"></a>Unable to provision OpenEBS volume on DigitalOcean</h3>
 <br>
-User in unable to provision cStor or jiva volume on DigitalcOcean, encountering error thrown from iSCSI PVs: 
+User is unable to provision cStor or jiva volume on DigitalcOcean, encountering error thrown from iSCSI PVs: 
 <br>
 
 ```
