@@ -689,7 +689,8 @@ User in unable to provision cStor or jiva volume on DigitalcOcean, encountering 
 ```
 MountVolume.WaitForAttach failed for volume “pvc-293d3560-a5c3–41d5–8911–67f33115b8ee” : executable file not found in $PATH
 ```
-#### Resolution :
+
+**Resolution :**
 
 To avoid this issue, the Kubelet Service needs to be updated to mount the required packages to establish iSCSI connection to the target. Kubelet Service on all the nodes in the cluster should be updated.
 <blockquote>
