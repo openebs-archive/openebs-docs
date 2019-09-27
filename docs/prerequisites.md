@@ -378,7 +378,7 @@ You can verify the iSCSI installation from the above section.
  Add the following lines (volume mounts) to the file <code>/etc/systemd/system/kubelet.service</code> on each of the nodes:<br>
  ```
  -v /sbin/iscsiadm:/usr/bin/iscsiadm \
- -v lib/x86_64-linux-gnu/libisns-nocrypto.so.0:/lib/x86_64-linux-gnu/libisns-nocrypto.so.0
+ -v /lib/x86_64-linux-gnu/libisns-nocrypto.so.0:/lib/x86_64-linux-gnu/libisns-nocrypto.so.0 \
  ```
 So, the updated Kubelet Service File is as below:
 

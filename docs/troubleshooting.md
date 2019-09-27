@@ -739,7 +739,7 @@ To avoid this issue, the Kubelet Service needs to be updated to mount the requir
  ```
 ```
 -v /sbin/iscsiadm:/usr/bin/iscsiadm \
--v lib/x86_64-linux-gnu/libisns-nocrypto.so.0:/lib/x86_64-linux-gnu/libisns-nocrypto.so.0
+-v /lib/x86_64-linux-gnu/libisns-nocrypto.so.0:/lib/x86_64-linux-gnu/libisns-nocrypto.so.0 \
 ```
 
 <b>Restart the kubelet service using the following commands:</b>
