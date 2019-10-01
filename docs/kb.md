@@ -452,7 +452,7 @@ retention count & compression respectively):
    }
    ```
 
-2. Restart the docker daemon on the nodes. This may cause a temprary disruption of the running containers & cause
+2. Restart the docker daemon on the nodes. This may cause a temporary disruption of the running containers & cause
 the node to show up as `Not Ready` until the daemon has restarted successfully.
 
    ```
