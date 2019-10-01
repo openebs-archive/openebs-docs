@@ -27,7 +27,7 @@ Users get access to Prometheus metrics, logs and topology view of OpenEBS volume
 
 - Users can in general connect any Kubernetes cluster versioned above 1.10.x to Director Online and OpenShift versioned above 3.x. If you are facing troubles connecting your Kubernetes cluster, report the details in the <a href="<https://openebs.io/join-our-slack-community" target="_blank">Slack OpenEBS Community</a> .
 
-- Users need to authenticate to Director Online using their GitHub/Google credentials or with Local authenticaltion.
+- Users need to authenticate to Director Online using their GitHub/Google credentials or with Local authentication.
 
 - Users need to have access to Kubernetes admin context to install Director Online agents on Kubernetes.
 

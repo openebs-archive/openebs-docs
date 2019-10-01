@@ -106,7 +106,7 @@ cStor data engine is written in C and has a high performing iSCSI target and Cop
 
 ### LocalPV
 
-For those applications that do not need storage level replication, LocalPV may be good option as it gives higher performance. OpenEBS LocalPV is similar to Kubernetes LocalPV except that it is dynamically provisioned by OpenEBS control plane, just like any other regular PV. OpenEBS LocalPV is of two types - `hostpath` LocalPV or `device` LocalPV. `hostpath` LocalPV refers to a subdirectory on the host and `device` LocalPV referes to a discovered disk (either directly attached or network attached) on the node. OpenEBS has introduced a LocalPV provisioner for selecting a matching disk or hostpath against some criteria in PVC and storage class specifications. For more details on OpenEBS LocalPV, see [here](/docs/next/localpv.html).
+For those applications that do not need storage level replication, LocalPV may be good option as it gives higher performance. OpenEBS LocalPV is similar to Kubernetes LocalPV except that it is dynamically provisioned by OpenEBS control plane, just like any other regular PV. OpenEBS LocalPV is of two types - `hostpath` LocalPV or `device` LocalPV. `hostpath` LocalPV refers to a subdirectory on the host and `device` LocalPV refers to a discovered disk (either directly attached or network attached) on the node. OpenEBS has introduced a LocalPV provisioner for selecting a matching disk or hostpath against some criteria in PVC and storage class specifications. For more details on OpenEBS LocalPV, see [here](/docs/next/localpv.html).
 
 
 

@@ -426,7 +426,7 @@ Jiva pool requires mount path to be prepared and available on the Node. Note tha
 
 
 <h3><a class="anchor" aria-hidden="true" id="create-a-sc"></a>Create a StorageClass</h3>
-This StorageClass is mainly for using the Jiva Storagepool created with a mounted disk. Jiva volume can be provision using default Jiva StorageClass named `openebs-jiva-default` in the correponding PVC spec. The default StorageClass has replica count as 3.
+This StorageClass is mainly for using the Jiva Storagepool created with a mounted disk. Jiva volume can be provision using default Jiva StorageClass named `openebs-jiva-default` in the corresponding PVC spec. The default StorageClass has replica count as 3.
 The steps for creating Jiva Storage pool is mentioned in the above section. Specify the Jiva pool in the `StoragePool` annotation of StorageClass. Example StorageClass specification is given below.
 
 ```

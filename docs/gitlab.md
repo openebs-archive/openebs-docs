@@ -15,7 +15,7 @@ sidebar_label: GitLab
 
 <br>
 
-GitLab is a good solution for building On-Premise cloud native CI/CD platforms, it is a single application for the entire software development lifecycle. The helm charts for GitLab are made so simple that the entire infrastructure including the undelying databases and storage needed for GitLab are dynamically provisioned. This solution discusses the use cases of using OpenEBS from a single pool of storage for all the databases required to run GitLab.
+GitLab is a good solution for building On-Premise cloud native CI/CD platforms, it is a single application for the entire software development lifecycle. The helm charts for GitLab are made so simple that the entire infrastructure including the underlying databases and storage needed for GitLab are dynamically provisioned. This solution discusses the use cases of using OpenEBS from a single pool of storage for all the databases required to run GitLab.
 
 
 
@@ -23,7 +23,7 @@ GitLab is a good solution for building On-Premise cloud native CI/CD platforms, 
 
 - OpenEBS acts a single storage platform for all stateful applications including Gitaly,  Redis, PostgreSQL, Minio and Prometheus
 
-- OpenEBS volumes are highly available. Node loss, reboots and Kubernetes upgrades will not affect the availability of peristent storage to the stateful applications
+- OpenEBS volumes are highly available. Node loss, reboots and Kubernetes upgrades will not affect the availability of persistent storage to the stateful applications
 
 - Storage is scalable on demand. You can start with a small storage for all the databases required by GitLab and scale it on demand
 
@@ -63,7 +63,7 @@ GitLab is a good solution for building On-Premise cloud native CI/CD platforms, 
 
 3. **Configure cStor Pool**
 
-   After OpenEBS installation, cStor pool has to be configured.If cStor Pool is not configure in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). During cStor Pool creation, make sure that the maxPools parameter is set to >=3. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. . If cStor pool is already configured, go to the next step. 
+   After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). During cStor Pool creation, make sure that the maxPools parameter is set to >=3. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. If cStor pool is already configured, go to the next step. 
 
 4. **Create Storage Class**
 
