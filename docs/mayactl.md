@@ -14,7 +14,7 @@ The `mayactl` is the command line tool for interacting with OpenEBS volumes and 
 
 [Command used with mayactl](#commands-used-with-mayactl)
 
-[Accesssing mayactl](#accesssing-mayactl)
+[Accessing mayactl](#accessing-mayactl)
 
 [Using mayactl](#using-mayactl)
 
@@ -36,7 +36,7 @@ The following commands can be run using mayactl to get the details of OpenEBS vo
 
 
 
-## Accesssing mayactl
+## Accessing mayactl
 
 For getting access to `mayactl` command line tool, you have to login or execute into the maya-apiserver pod on Kubernetes. The steps are outlined below.
 
