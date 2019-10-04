@@ -79,14 +79,14 @@ In this mode, local disks on each node need to be prepared and mounted at a dire
 <ol>
  <li>
    Ensure the blockdevices are mounted as per requirement. 
-To know more about disk mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
+To know more about blockdevice mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
  </li>
  <li>
-First, you need to <b>Create a Jiva Pool</b> which includes creation of disks and mounting them and then creating Jiva pool using the above mentioned. 
+First, you need to <b>Create a Jiva Pool</b> which includes creation of blockdevice and mounting them and then creating Jiva pool using the above mentioned. 
 To know about the detailed steps <a href="/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a>
  </li>
  <li>
-Now, <b>create a StorageClass</b> mainly for using the Jiva StoragePool created with the mounted disks in the previous step.
+Now, <b>create a StorageClass</b> mainly for using the Jiva StoragePool created with the mounted blockdevices in the previous step.
 To get detailed steps <a href="/docs/next/jivaguide.html#create-a-sc" target="_blank">click here.</a>
  </li>
  <li>

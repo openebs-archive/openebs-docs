@@ -531,7 +531,7 @@ Before provisioning an application ensure that the following steps are completed
 <ol>
 <li>
 Ensure the blockdevices are mounted as per requirement. 
-To know more about disk mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
+To know more about blockdevices mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
 </li>
 <li>
 <b>Create StoragePool</b> specifying  the Blockdevices that are to be used.
