@@ -78,7 +78,7 @@ In this mode, local disks on each node need to be prepared and mounted at a dire
    Before provisioning of the application ensure all the below mentioned steps are carried out:
 <ol>
  <li>
-   Ensure the disks are mounted as per requirement. 
+   Ensure the blockdevices are mounted as per requirement. 
 To know more about disk mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
  </li>
  <li>

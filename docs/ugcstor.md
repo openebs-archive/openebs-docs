@@ -530,7 +530,7 @@ The steps are mentioned in Upgrade section. For upgrading cStorVolume, ensure th
 Before provisioning an application ensure that the following steps are completed.
 <ol>
 <li>
-Ensure the disks are mounted as per requirement. 
+Ensure the blockdevices are mounted as per requirement. 
 To know more about disk mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
 </li>
 <li>
@@ -539,7 +539,7 @@ To know the detailed steps for creation of StoragePool <a href="/docs/next/ugcst
 </li>
 <li>
 Next, you have to <b>create StorageClass</b>, specifying the StoragePoolClaim under annotations.
-<br>To know the step-wise procedure for creation of StoragePool <a href="/docs/next/ugcstor.html#creating-cStor-storage-class" target="_blank">click here</a>.
+<br>To know the step-wise procedure for creation of StorageClass <a href="/docs/next/ugcstor.html#creating-cStor-storage-class" target="_blank">click here</a>.
 </li>
 <li>
 Once all the above steps have been successfully  implemented copy the following yaml into a file, say <b>demo-busybox-cstor.yaml</b>
@@ -613,6 +613,7 @@ spec:
 ```
 <br>
 Now execute the above yaml file using the below-mentioned command
+
 ```
 kubectl apply -f demo-busybox-cstor.yaml
 ```
