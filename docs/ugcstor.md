@@ -25,6 +25,9 @@ This user guide section provides the operations need to performed by the User an
 
 [Upgrading the software version of a cStor volume](#Upgrading-the-software-version-of-a-cStor-volume)
 
+
+[Provisioning sample application with cStor](#Provisioning-sample-application-with-cstor)
+
 [Deleting a cStor Volume](#deleting-a-cStor-volume)
 
 [Patching pool deployment by adding or modifying resource limit and requests](#patching-pool-deployment-resource-limit)
@@ -522,8 +525,113 @@ The deletion of Velero backup schedule doesn't destroy the backup created during
 <h3><a class="anchor" aria-hidden="true" id="Upgrading-the-software-version-of-a-cStor-volume"></a>Upgrading the software version of a cStor volume</h3>
 The steps are mentioned in Upgrade section. For upgrading cStorVolume, ensure that cStor Pool image is support this cStor volume image.  It should also recommended to upgrade the corresponding pool before upgrading cStor volume. The steps for upgrading the cStor volume can be find from [here](/docs/next/upgrade.html).
 
+<h3><a class="anchor" aria-hidden="true" id="Provisioning-sample-application-with-cstor"></a>Provisioning sample application with cstor</h3>
+<br>
+Before provisioning an application ensure that the following steps are completed.
+<ol>
+<li>
+Ensure the disks are mounted as per requirement. 
+To know more about disk mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
+</li>
+<li>
+<b>Create StoragePool</b> specifying  the Blockdevices that are to be used.
+To know the detailed steps for creation of StoragePool <a href="/docs/next/ugcstor.html#creating-cStor-storage-pools" target="_blank">click here.</a>
+</li>
+<li>
+Next, you have to <b>create StorageClass</b>, specifying the StoragePoolClaim under annotations.
+<br>To know the step-wise procedure for creation of StoragePool <a href="/docs/next/ugcstor.html#creating-cStor-storage-class" target="_blank">click here</a>.
+</li>
+<li>
+Once all the above steps have been successfully  implemented copy the following yaml into a file, say <b>demo-busybox-cstor.yaml</b>
 
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busybox
+  labels:
+    app: busybox
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: busybox
+  template:
+    metadata:
+      labels:
+        app: busybox
+    spec:
+      containers:
+      - resources:
+           limits:
+            cpu: 0.5
+        name: busybox
+        image: busybox
+        command: ['sh', '-c', 'echo Container 1 is Running ; sleep 3600']
+        imagePullPolicy: IfNotPresent
+        ports:
+         - containerPort: 3306
+           name: busybox
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: demo-vol1
+      volumes:
+       - name: demo-vol1
+         persistentVolumeClaim:
+          claimName: demo-vol1-claim
+          
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: demo-vol1-claim
+  labels:
+    "volumeprovisioner.mapi.openebs.io/replica-topology-key-domain": "failure-domain.bethttps://docs.google.com/document/d/1SuIH4YxdyZm-8A3nzYtiyWW_w4TIPVWEhLsAMpDUA5E/edit?usp=sharinga.kubernetes.io"
+    "volumeprovisioner.mapi.openebs.io/replica-topology-key-type": "zone"
+spec:
+  storageClassName: openebs-sc-statefulset
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: busybox-mysql
+  labels:
+    name: busybox-mysql
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+      name: busybox
+```
+<br>
+Now execute the above yaml file using the below-mentioned command
+```
+kubectl apply -f demo-busybox-cstor.yaml
+```
+</li>
+<li>
+To <b>verify</b> whether the application is successfully deployed or not, execute the following command:<br>
 
+```
+kubectl get pods 
+```
+
+The application pods should be running state. The output would look something like this,
+
+```
+NAME                       READY   STATUS    RESTARTS   AGE
+busybox-66db7d9b88-kkktl   1/1     Running   0          2m16s
+``` 
+</li>
+</ol>
 <h3><a class="anchor" aria-hidden="true" id="deleting-a-cStor-volume"></a>Deleting a cStor Volume</h3>
 The cStor volume can be deleted by deleting the corresponding PVC. This can be done by using the following command.
 
