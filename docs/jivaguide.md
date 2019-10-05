@@ -71,7 +71,117 @@ In this mode, local disks on each node need to be prepared and mounted at a dire
 
 
 <h3><a class="anchor" aria-hidden="true" id="provision-sample-application-with-jiva-volume"></a>Provision Sample Application with Jiva Volume</h3>
-Once the storage class is created, provision the volumes using the standard PVC interface. In the following example, the `StorageClass` openebs-jiva-gpd-3repl is specified in the `PersistentVolumeClaim` specification. The raw file of this example spec can be download from [here](<https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml>) or use the following spec.
+<ol>
+<li>
+<h3>Busybox Application</h3>
+<br>
+   Before provisioning of the application ensure all the below mentioned steps are carried out:
+<ol>
+ <li>
+   Ensure the blockdevices are mounted as per requirement. 
+To know more about blockdevice mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
+ </li>
+ <li>
+First, you need to <b>Create a Jiva Pool</b> which includes creation of blockdevice and mounting them and then creating Jiva pool using the above mentioned. 
+To know about the detailed steps <a href="/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a>
+ </li>
+ <li>
+Now, <b>create a StorageClass</b> mainly for using the Jiva StoragePool created with the mounted blockdevices in the previous step.
+To get detailed steps <a href="/docs/next/jivaguide.html#create-a-sc" target="_blank">click here.</a>
+ </li>
+ <li>
+ Once all the above steps have been successfully implemented copy the following yaml file into a file, say <b>demo-busybox-jiva.yaml</b>
+
+ ```
+ apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busybox
+  labels:
+    app: busybox
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: busybox
+  template:
+    metadata:
+      labels:
+        app: busybox
+    spec:
+      containers:
+      - resources:
+           limits:
+            cpu: 0.5
+        name: busybox
+        image: busybox
+        command: ['sh', '-c', 'echo Container 1 is Running ; sleep 3600']
+        imagePullPolicy: IfNotPresent
+        ports:
+         - containerPort: 3306
+           name: busybox
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: demo-vol1
+      volumes:
+       - name: demo-vol1
+         persistentVolumeClaim:
+          claimName: demo-vol1-claim
+        ---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: demo-vol1-claim
+spec:
+  storageClassName: openebs-jiva-gpd-3repl
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5G
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: busybox-mysql
+  labels:
+    name: busybox-mysql
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+      name: busybox
+
+ ```
+ To deploy this application execute,<br>
+
+ ```
+ kubectl apply -f demo-busybox-jiva.yaml
+ ```
+ </li>
+<li>
+To <b>verify</b> whether the application is successfully deployed or not, execute the following command:<br>
+
+```
+kubectl get pods 
+```
+
+The application pods should be running state. The output would look something like this,
+
+```
+NAME                       READY   STATUS    RESTARTS   AGE
+busybox-66db7d9b88-kkktl   1/1     Running   0          2m16s
+``` 
+</li>
+</li>
+</ol>
+<li>
+<h3>Percona Application</h3>
+<br>
+Once the storage class is created, provision the volumes using the standard PVC interface. In the following example, the `StorageClass` openebs-jiva-gpd-3repl is specified in the `PersistentVolumeClaim` specification. The raw file of this example spec can be download from <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml"> here</a> or use the following spec.
 
 
 - Percona Example
@@ -157,8 +267,8 @@ Once the storage class is created, provision the volumes using the standard PVC 
   ```
   The Percona application now runs inside the `gpdpool` storage pool.
 
-
-
+</li>
+</ol>
 <h3><a class="anchor" aria-hidden="true" id="monitoring-a-jiva-volume"></a>Monitoring a Jiva Volume</h3>
 By default `VolumeMonitor` is set to ON in the JIva StorageClass. Volume metrics are exported when this parameter is set to ON. Following metrics are supported by Jiva as of the current release.
 
