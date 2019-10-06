@@ -653,16 +653,9 @@ No. It is recommended to create different BDC name for claiming an unclaimed dis
 
 ### [Uninstall](/docs/next/uninstall.html)
 
-<br>
-
-<hr>
-
-<br>
-
-
+<br><hr><br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
-
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
@@ -677,9 +670,8 @@ No. It is recommended to create different BDC name for claiming an unclaimed dis
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-92076314-12');
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   gtag('config', 'UA-92076314-12', { 'anonymize_ip': true });
 </script>

@@ -1,0 +1,55 @@
+{
+  "version-1.2.0-docs": {
+    "Introduction": [
+      "version-1.2.0-overview",
+      "version-1.2.0-features",
+      "version-1.2.0-usecases",
+      "version-1.2.0-releases",
+      "version-1.2.0-support",
+      "version-1.2.0-directoronline"
+    ],
+    "Concepts": [
+      "version-1.2.0-cas",
+      "version-1.2.0-architecture",
+      "version-1.2.0-casengines",
+      "version-1.2.0-cstor",
+      "version-1.2.0-jiva",
+      "version-1.2.0-localpv",
+      "version-1.2.0-ndm"
+    ],
+    "User Guides": [
+      "version-1.2.0-quickstart",
+      "version-1.2.0-prerequisites",
+      "version-1.2.0-installation",
+      "version-1.2.0-ugndm",
+      "version-1.2.0-ugcstor",
+      "version-1.2.0-jivaguide",
+      "version-1.2.0-uglocalpv",
+      "version-1.2.0-mayactl",
+      "version-1.2.0-upgrade",
+      "version-1.2.0-uninstall"
+    ],
+    "Stateful Applications": [
+      "version-1.2.0-mysql",
+      "version-1.2.0-prometheus",
+      "version-1.2.0-minio",
+      "version-1.2.0-gitlab",
+      "version-1.2.0-percona",
+      "version-1.2.0-elasticsearch",
+      "version-1.2.0-cassandra",
+      "version-1.2.0-nuodb",
+      "version-1.2.0-postgres",
+      "version-1.2.0-redis",
+      "version-1.2.0-mongo",
+      "version-1.2.0-jira",
+      "version-1.2.0-rwm"
+    ],
+    "Advanced Topics": [
+      "version-1.2.0-performance",
+      "version-1.2.0-faq",
+      "version-1.2.0-k8supgrades",
+      "version-1.2.0-troubleshooting",
+      "version-1.2.0-kb"
+    ]
+  }
+}

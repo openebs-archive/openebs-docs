@@ -46,18 +46,9 @@ When the controller detects failures in one of its replicas, it marks the replic
 
 ### [Jiva User Guide ](/docs/next/jivaguide.html)
 
-<br>
-
-<hr>
-
-<br>
-
-
-
-
+<br><hr><br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
-
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
@@ -72,9 +63,8 @@ When the controller detects failures in one of its replicas, it marks the replic
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-92076314-12');
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   gtag('config', 'UA-92076314-12', { 'anonymize_ip': true });
 </script>

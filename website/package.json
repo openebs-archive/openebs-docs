@@ -9,13 +9,6 @@
     "rename-version": "docusaurus-rename-version"
   },
   "devDependencies": {
-    "docusaurus": "^1.0.12"
-  },
-  "dependencies": {
-    "extend":">=3.0.2",
-    "lodash":">=4.17.13",
-    "cryptiles": "^4.1.2",
-    "hawk": "^7.0.7",
-    "macaddress": "^0.2.9"
+    "docusaurus": "^1.13.0"
   }
 }

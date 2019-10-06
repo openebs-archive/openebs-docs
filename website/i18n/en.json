@@ -4,138 +4,1248 @@
     "next": "Next",
     "previous": "Previous",
     "tagline": "A website for OpenEBS Documentation",
-    "api": "Using OpenEBS APIs",
-    "APIs": "APIs",
-    "architecture": "OpenEBS Architecture",
-    "Architecture": "Architecture",
-    "aws": "Running OpenEBS on AWS",
-    "Running OpeneEBS on AWS": "Running OpeneEBS on AWS",
-    "azure": "Running OpenEBS on Azure",
-    "Azure": "Azure",
-    "backup": "OpenEBS Usecases - Backup",
-    "Backup": "Backup",
-    "bigdata": "OpenEBS Usecases - Big Data",
-    "Big Data": "Big Data",
-    "blogsrefmatl": "OpenEBS Resources",
-    "Resources": "Resources",
-    "bluegreen": "OpenEBS Usecases - Blue Green deployments",
-    "Blue Green": "Blue Green",
-    "Cassandra": "Cassandra",
-    "changelog": "Changelog",
-    "Changelog": "Changelog",
-    "cicd": "OpenEBS Usecases - CI/CD",
-    "CI/CD": "CI/CD",
-    "CockroachDB": "CockroachDB",
-    "conceptscas": "Container Attached Storage (CAS)",
-    "CAS": "CAS",
-    "contribute": "Contributing to OpenEBS",
-    "Contributor's Guide": "Contributor's Guide",
-    "Couchbase": "Using OpenEBS for Couchbase Server",
-    "Couchbase Server": "Couchbase Server",
-    "CrunchyPostgres": "Using OpenEBS for Crunchy Postgres",
-    "Crunchy Postgres": "Crunchy Postgres",
-    "databases": "OpenEBS Usecases - Databases",
-    "Databases": "Databases",
-    "datascience": "OpenEBS Usecases - Machine Learning and Data Science",
-    "ML and Data Science": "ML and Data Science",
-    "developertasks": "OpenEBS Tasks for Application Developers",
-    "Developer Tasks": "Developer Tasks",
-    "devrelease": "Development Release",
-    "Development": "Development",
-    "diskobject": "OpenEBS Disk Objects",
-    "Disk Objects": "Disk Objects",
-    "faq": "OpenEBS FAQ",
-    "FAQ": "FAQ",
-    "faulthandling": "Handling Faults",
-    "Handling Faults": "Handling Faults",
-    "features": "OpenEBS Features",
-    "Features": "Features",
-    "gethelp": "Getting help on OpenEBS",
-    "Getting Help": "Getting Help",
-    "googlecloud": "Running OpenEBS on Google Cloud",
-    "Google Cloud": "Google Cloud",
-    "hybridcloud": "OpenEBS Usecases - Hybrid Cloud",
-    "Hybrid Cloud": "Hybrid Cloud",
-    "hyperconverged": "OpenEBS Usecases - Hyper Converged Infrastructure (HCI)",
-    "Hyperconverged": "Hyperconverged",
-    "hyperscale": "OpenEBS Usecases - Hyperscale",
-    "Hyperscale": "Hyperscale",
-    "ibmcloud": "Using OpenEBS on IBM Cloud",
-    "IBMCloud": "IBMCloud",
-    "installation": "OpenEBS Installation",
-    "Installation": "Installation",
-    "introduction": "Introduction to OpenEBS",
-    "Introduction": "Introduction",
-    "Jenkins": "Jenkins",
-    "Jupyter": "Jupyter",
-    "k8sstorage": "OpenEBS Usecases - Kubernetes Storage",
-    "Kubernetes Storage": "Kubernetes Storage",
-    "Kafka": "Kafka",
-    "knownissues": "Known Issues in OpenEBS",
-    "Known Issues": "Known Issues",
-    "maya": "Maya - The control plane of OpenEBS",
-    "Maya": "Maya",
-    "mayaonline": "Connecting OpenEBS to MayaOnline",
-    "MayaOnline": "MayaOnline",
-    "mayactl": "mayactl",
-    "MongoDB": "MongoDB",
-    "monitorstoragevolumes": "Monitoring Storage Volumes",
-    "Monitoring Storage Volumes": "Monitoring Storage Volumes",
-    "openshift": "Using OpenEBS on OpenShift",
-    "OpenShift": "OpenShift",
-    "operatortasks": "OpenEBS tasks for Kubernetes Operator or Administrator",
-    "Operator Tasks": "Operator Tasks",
-    "PerconaDB": "PerconaDB",
-    "PerconaGalera": "Using OpenEBS for Percona Galera Cluster",
-    "Percona Galera Cluster": "Percona Galera Cluster",
-    "open-iSCSI": "Verify open-iscsi status",
-    "prereqISCSIVerify": "prereqISCSIVerify",
-    "prerequisites": "Prerequisites for Installation",
-    "Prerequisites": "Prerequisites",
-    "quickstartguide": "Getting Started with OpenEBS",
-    "Quick Start Guide": "Quick Start Guide",
-    "RabbitMQ": "RabbitMQ",
-    "Redis": "Using OpenEBS for Redis",
-    "Redis StatefulSet": "Redis StatefulSet",
-    "setupstorageclasses": "Setting up Storage Classes",
-    "Storage Classes": "Storage Classes",
-    "setupstoragepools": "OpenEBS Storage Pools",
-    "Storage Pools": "Storage Pools",
-    "snapshotclone": "Cloning Snapshots",
-    "Snapshot and Cloning": "Snapshot and Cloning",
-    "stablerelease": "Stable Release",
-    "Stable": "Stable",
-    "stackpointcloud": "Using OpenEBS on StackPoint Cloud",
-    "StackPointCloud": "StackPointCloud",
-    "storageengine": "OpenEBS Storage Engines",
-    "Storage Engines": "Storage Engines",
-    "storagepolicies": "OpenEBS Storage Policies",
-    "Storage Policies": "Storage Policies",
-    "storageschema": "OpenEBS Storage Schema",
-    "Storage Schema": "Storage Schema",
-    "supportedplatforms": "OpenEBS supported platforms",
-    "Platforms": "Platforms",
-    "troubleshooting": "OpenEBS Troubleshooting Overview",
-    "Troubleshooting": "Troubleshooting",
-    "tsgcollectlogs": "Collecting OpenEBS Logs",
-    "Collecting Logs": "Collecting Logs",
-    "tsg_install": "Troubleshooting OpenEBS Installation",
-    "tsgpvs": "Troubleshooting OpenEBS Persistent Volumes",
-    "Persistent Volumes": "Persistent Volumes",
-    "upgrade": "Upgrading OpenEBS",
-    "Upgrade": "Upgrade",
-    "usingminikube": "Use MiniKube to get started with OpenEBS",
-    "With Minikube": "With Minikube",
-    "weeklycontribute": "Contributing to OpenEBS - Weekly",
-    "Open source Meetings": "Open source Meetings",
-    "Getting Started": "Getting Started",
-    "Concepts": "Concepts",
-    "Setup": "Setup",
-    "Usecases": "Usecases",
-    "Tasks": "Tasks",
-    "Integrations": "Integrations",
-    "Releases": "Releases",
-    "Contributor Resources": "Contributor Resources"
+    "docs": {
+      "architecture": {
+        "title": "OpenEBS Architecture",
+        "sidebar_label": "OpenEBS Architecture"
+      },
+      "cas": {
+        "title": "Container Attached Storage (CAS)",
+        "sidebar_label": "Container Attached Storage"
+      },
+      "casengines": {
+        "title": "OpenEBS Storage Engines - cStor, Jiva and LocalPV",
+        "sidebar_label": "CAS Engines"
+      },
+      "cassandra": {
+        "title": "OpenEBS for Cassandra",
+        "sidebar_label": "Cassandra"
+      },
+      "cstor": {
+        "title": "cStor Overview",
+        "sidebar_label": "cStor"
+      },
+      "directoronline": {
+        "title": "Connecting OpenEBS to Director Online",
+        "sidebar_label": "Director Online"
+      },
+      "elasticsearch": {
+        "title": "OpenEBS for ElasticSearch",
+        "sidebar_label": "ElasticSearch"
+      },
+      "faq": {
+        "title": "OpenEBS FAQ",
+        "sidebar_label": "FAQs"
+      },
+      "features": {
+        "title": "OpenEBS Features and Benefits",
+        "sidebar_label": "Features and Benefits"
+      },
+      "gitlab": {
+        "title": "OpenEBS for GitLab",
+        "sidebar_label": "GitLab"
+      },
+      "installation": {
+        "title": "Installing OpenEBS",
+        "sidebar_label": "Installation"
+      },
+      "jira": {
+        "title": "Using OpenEBS as storage for Jira on Kubernetes",
+        "sidebar_label": "Jira"
+      },
+      "jiva": {
+        "title": "Jiva Overview",
+        "sidebar_label": "Jiva"
+      },
+      "jivaguide": {
+        "title": "Jiva User Guide",
+        "sidebar_label": "Jiva"
+      },
+      "k8supgrades": {
+        "title": "Best practices to follow when upgrading Kubernetes",
+        "sidebar_label": "Kubernetes upgrades"
+      },
+      "kb": {
+        "title": "Knowledge Base",
+        "sidebar_label": "Knowledge Base"
+      },
+      "localpv": {
+        "title": "OpenEBS LocalPV",
+        "sidebar_label": "Local PV"
+      },
+      "mayactl": {
+        "title": "mayactl",
+        "sidebar_label": "mayactl"
+      },
+      "minio": {
+        "title": "OpenEBS for Minio",
+        "sidebar_label": "Minio"
+      },
+      "mongo": {
+        "title": "OpenEBS for MongoDB",
+        "sidebar_label": "MongoDB"
+      },
+      "mysql": {
+        "title": "Managed database service like RDS",
+        "sidebar_label": "RDS like MySQL"
+      },
+      "ndm": {
+        "title": "Node Device Manager",
+        "sidebar_label": "NDM"
+      },
+      "nuodb": {
+        "title": "OpenEBS for NuoDB",
+        "sidebar_label": "NuoDB"
+      },
+      "overview": {
+        "title": "Welcome to OpenEBS Documentation",
+        "sidebar_label": "Overview"
+      },
+      "percona": {
+        "title": "OpenEBS for Percona",
+        "sidebar_label": "Percona"
+      },
+      "performance": {
+        "title": "Performance testing of OpenEBS",
+        "sidebar_label": "Performance testing"
+      },
+      "postgres": {
+        "title": "OpenEBS for PostgreSQL",
+        "sidebar_label": "PostgreSQL"
+      },
+      "prerequisites": {
+        "title": "Prerequisites (iSCSI client)",
+        "sidebar_label": "Prerequisites"
+      },
+      "prometheus": {
+        "title": "Using OpenEBS as TSDB for Prometheus",
+        "sidebar_label": "Prometheus"
+      },
+      "quickstart": {
+        "title": "Quickstart Guide to OpenEBS",
+        "sidebar_label": "Quickstart"
+      },
+      "redis": {
+        "title": "OpenEBS for Redis",
+        "sidebar_label": "Redis"
+      },
+      "releases": {
+        "title": "OpenEBS Releases",
+        "sidebar_label": "Releases"
+      },
+      "rwm": {
+        "title": "Provisioning Read-Write-Many (RWM) PVCs",
+        "sidebar_label": "Read-Write-Many (RWM)"
+      },
+      "support": {
+        "title": "Getting help and support",
+        "sidebar_label": "Support"
+      },
+      "troubleshooting": {
+        "title": "Troubleshooting OpenEBS",
+        "sidebar_label": "Troubleshooting"
+      },
+      "ugcstor": {
+        "title": "cStor User Guide",
+        "sidebar_label": "cStor"
+      },
+      "uglocalpv": {
+        "title": "OpenEBS Local PV User Guide",
+        "sidebar_label": "Local PV"
+      },
+      "ugndm": {
+        "title": "Node Device Manager User Guide",
+        "sidebar_label": "NDM"
+      },
+      "uninstall": {
+        "title": "Uninstalling OpenEBS",
+        "sidebar_label": "Uninstall"
+      },
+      "upgrade": {
+        "title": "Upgrading OpenEBS",
+        "sidebar_label": "Upgrade"
+      },
+      "usecases": {
+        "title": "OpenEBS Use cases",
+        "sidebar_label": "Use cases"
+      },
+      "version-0.8.0/version-0.8.0-configurepools": {
+        "title": "Configuring Storage Pools",
+        "sidebar_label": "Configure StoragePools"
+      },
+      "version-0.8.0/version-0.8.0-configuresc": {
+        "title": "Configuring Storage Classes",
+        "sidebar_label": "Configuring StorageClasses"
+      },
+      "version-0.8.0/version-0.8.0-cstor": {
+        "title": "cStor Overview",
+        "sidebar_label": "cStor"
+      },
+      "version-0.8.0/version-0.8.0-faq": {
+        "title": "OpenEBS FAQ",
+        "sidebar_label": "FAQs"
+      },
+      "version-0.8.0/version-0.8.0-features": {
+        "title": "OpenEBS Features and Benefits",
+        "sidebar_label": "Features and Benefits"
+      },
+      "version-0.8.0/version-0.8.0-installation": {
+        "title": "Installing OpenEBS",
+        "sidebar_label": "Installation"
+      },
+      "version-0.8.0/version-0.8.0-jivaguide": {
+        "title": "Jiva user guide",
+        "sidebar_label": "Jiva user guide"
+      },
+      "version-0.8.0/version-0.8.0-mayaonline": {
+        "title": "Connecting OpenEBS to MayaOnline",
+        "sidebar_label": "MayaOnline"
+      },
+      "version-0.8.0/version-0.8.0-mongo": {
+        "title": "OpenEBS for MongoDB",
+        "sidebar_label": "MongoDB"
+      },
+      "version-0.8.0/version-0.8.0-nuodb": {
+        "title": "OpenEBS for NuoDB",
+        "sidebar_label": "NuoDB"
+      },
+      "version-0.8.0/version-0.8.0-operations": {
+        "title": "Day2 operations in OpenEBS",
+        "sidebar_label": "Day 2 Operations"
+      },
+      "version-0.8.0/version-0.8.0-overview": {
+        "title": "Welcome to OpenEBS Documentation",
+        "sidebar_label": "Overview"
+      },
+      "version-0.8.0/version-0.8.0-percona": {
+        "title": "OpenEBS for Percona",
+        "sidebar_label": "Percona"
+      },
+      "version-0.8.0/version-0.8.0-postgres": {
+        "title": "OpenEBS for PostgreSQL",
+        "sidebar_label": "PostgreSQL"
+      },
+      "version-0.8.0/version-0.8.0-prerequisites": {
+        "title": "Prerequisites (iSCSI client)",
+        "sidebar_label": "Prerequisites"
+      },
+      "version-0.8.0/version-0.8.0-releases": {
+        "title": "OpenEBS Releases",
+        "sidebar_label": "Releases"
+      },
+      "version-0.8.0/version-0.8.0-rwm": {
+        "title": "Provisioning Read-Write-Many (RWM) PVCs",
+        "sidebar_label": "Read-Write-Many (RWM)"
+      },
+      "version-0.8.0/version-0.8.0-support": {
+        "title": "Getting help and support",
+        "sidebar_label": "Support"
+      },
+      "version-0.8.0/version-0.8.0-troubleshooting": {
+        "title": "Troubleshooting OpenEBS",
+        "sidebar_label": "Troubleshooting"
+      },
+      "version-0.8.0/version-0.8.0-uninstall": {
+        "title": "Uninstalling OpenEBS",
+        "sidebar_label": "Uninstall"
+      },
+      "version-0.8.0/version-0.8.0-upgrade": {
+        "title": "Upgrading OpenEBS",
+        "sidebar_label": "Upgrade"
+      },
+      "version-0.8.0/version-0.8.0-usecases": {
+        "title": "OpenEBS Use cases",
+        "sidebar_label": "Use cases"
+      },
+      "version-0.8.1/version-0.8.1-architecture": {
+        "title": "OpenEBS Architecture",
+        "sidebar_label": "OpenEBS Architecture"
+      },
+      "version-0.8.1/version-0.8.1-backup": {
+        "title": "Backup and Restore of OpenEBS volumes",
+        "sidebar_label": "Backup and Restore"
+      },
+      "version-0.8.1/version-0.8.1-cas": {
+        "title": "Container Attached Storage (CAS)",
+        "sidebar_label": "Container Attached Storage"
+      },
+      "version-0.8.1/version-0.8.1-casengines": {
+        "title": "OpenEBS Storage Engines - cStor and Jiva",
+        "sidebar_label": "CAS Engines (cStor & Jiva)"
+      },
+      "version-0.8.1/version-0.8.1-cassandra": {
+        "title": "OpenEBS for Cassandra",
+        "sidebar_label": "Cassandra"
+      },
+      "version-0.8.1/version-0.8.1-configurepools": {
+        "title": "Configuring Storage Pools",
+        "sidebar_label": "Configure StoragePools"
+      },
+      "version-0.8.1/version-0.8.1-configuresc": {
+        "title": "Configuring Storage Classes",
+        "sidebar_label": "Configuring StorageClasses"
+      },
+      "version-0.8.1/version-0.8.1-cstor": {
+        "title": "cStor Overview",
+        "sidebar_label": "cStor"
+      },
+      "version-0.8.1/version-0.8.1-elasticsearch": {
+        "title": "OpenEBS for ElasticSearch",
+        "sidebar_label": "ElasticSearch"
+      },
+      "version-0.8.1/version-0.8.1-faq": {
+        "title": "OpenEBS FAQ",
+        "sidebar_label": "FAQs"
+      },
+      "version-0.8.1/version-0.8.1-features": {
+        "title": "OpenEBS Features and Benefits",
+        "sidebar_label": "Features and Benefits"
+      },
+      "version-0.8.1/version-0.8.1-gitlab": {
+        "title": "OpenEBS for GitLab",
+        "sidebar_label": "GitLab"
+      },
+      "version-0.8.1/version-0.8.1-installation": {
+        "title": "Installing OpenEBS",
+        "sidebar_label": "Installation"
+      },
+      "version-0.8.1/version-0.8.1-jiva": {
+        "title": "Jiva Overview",
+        "sidebar_label": "Jiva"
+      },
+      "version-0.8.1/version-0.8.1-jivaguide": {
+        "title": "Jiva user guide",
+        "sidebar_label": "Jiva user guide"
+      },
+      "version-0.8.1/version-0.8.1-k8supgrades": {
+        "title": "Best practices to follow when upgrading Kubernetes",
+        "sidebar_label": "Kubernetes upgrades"
+      },
+      "version-0.8.1/version-0.8.1-mayactl": {
+        "title": "mayactl",
+        "sidebar_label": "mayactl"
+      },
+      "version-0.8.1/version-0.8.1-mayaonline": {
+        "title": "Connecting OpenEBS to MayaOnline",
+        "sidebar_label": "MayaOnline"
+      },
+      "version-0.8.1/version-0.8.1-minio": {
+        "title": "OpenEBS for Minio",
+        "sidebar_label": "Minio"
+      },
+      "version-0.8.1/version-0.8.1-mongo": {
+        "title": "OpenEBS for MongoDB",
+        "sidebar_label": "MongoDB"
+      },
+      "version-0.8.1/version-0.8.1-mysql": {
+        "title": "Managed database service like RDS",
+        "sidebar_label": "RDS like MySQL"
+      },
+      "version-0.8.1/version-0.8.1-nuodb": {
+        "title": "OpenEBS for NuoDB",
+        "sidebar_label": "NuoDB"
+      },
+      "version-0.8.1/version-0.8.1-operations": {
+        "title": "Day2 operations in OpenEBS",
+        "sidebar_label": "Day 2 Operations"
+      },
+      "version-0.8.1/version-0.8.1-overview": {
+        "title": "Welcome to OpenEBS Documentation",
+        "sidebar_label": "Overview"
+      },
+      "version-0.8.1/version-0.8.1-percona": {
+        "title": "OpenEBS for Percona",
+        "sidebar_label": "Percona"
+      },
+      "version-0.8.1/version-0.8.1-performance": {
+        "title": "Performance testing of OpenEBS",
+        "sidebar_label": "Performance testing"
+      },
+      "version-0.8.1/version-0.8.1-postgres": {
+        "title": "OpenEBS for PostgreSQL",
+        "sidebar_label": "PostgreSQL"
+      },
+      "version-0.8.1/version-0.8.1-prerequisites": {
+        "title": "Prerequisites (iSCSI client)",
+        "sidebar_label": "Prerequisites"
+      },
+      "version-0.8.1/version-0.8.1-prometheus": {
+        "title": "Using OpenEBS as TSDB for Prometheus",
+        "sidebar_label": "Prometheus"
+      },
+      "version-0.8.1/version-0.8.1-provisionvols": {
+        "title": "Provisioning OpenEBS Storage Volumes",
+        "sidebar_label": "Provisioning Volumes"
+      },
+      "version-0.8.1/version-0.8.1-quickstart": {
+        "title": "Quickstart Guide to OpenEBS",
+        "sidebar_label": "Quickstart"
+      },
+      "version-0.8.1/version-0.8.1-redis": {
+        "title": "OpenEBS for Redis",
+        "sidebar_label": "Redis"
+      },
+      "version-0.8.1/version-0.8.1-releases": {
+        "title": "OpenEBS Releases",
+        "sidebar_label": "Releases"
+      },
+      "version-0.8.1/version-0.8.1-rwm": {
+        "title": "Provisioning Read-Write-Many (RWM) PVCs",
+        "sidebar_label": "Read-Write-Many (RWM)"
+      },
+      "version-0.8.1/version-0.8.1-troubleshooting": {
+        "title": "Troubleshooting OpenEBS",
+        "sidebar_label": "Troubleshooting"
+      },
+      "version-0.8.1/version-0.8.1-uninstall": {
+        "title": "Uninstalling OpenEBS",
+        "sidebar_label": "Uninstall"
+      },
+      "version-0.8.1/version-0.8.1-upgrade": {
+        "title": "Upgrading OpenEBS",
+        "sidebar_label": "Upgrade"
+      },
+      "version-0.8.1/version-0.8.1-usecases": {
+        "title": "OpenEBS Use cases",
+        "sidebar_label": "Use cases"
+      },
+      "version-0.8.2/version-0.8.2-architecture": {
+        "title": "OpenEBS Architecture",
+        "sidebar_label": "OpenEBS Architecture"
+      },
+      "version-0.8.2/version-0.8.2-backup": {
+        "title": "Backup and Restore of OpenEBS volumes",
+        "sidebar_label": "Backup and Restore"
+      },
+      "version-0.8.2/version-0.8.2-cas": {
+        "title": "Container Attached Storage (CAS)",
+        "sidebar_label": "Container Attached Storage"
+      },
+      "version-0.8.2/version-0.8.2-casengines": {
+        "title": "OpenEBS Storage Engines - cStor and Jiva",
+        "sidebar_label": "CAS Engines (cStor & Jiva)"
+      },
+      "version-0.8.2/version-0.8.2-cassandra": {
+        "title": "OpenEBS for Cassandra",
+        "sidebar_label": "Cassandra"
+      },
+      "version-0.8.2/version-0.8.2-configurepools": {
+        "title": "Configuring Storage Pools",
+        "sidebar_label": "Configure StoragePools"
+      },
+      "version-0.8.2/version-0.8.2-configuresc": {
+        "title": "Configuring Storage Classes",
+        "sidebar_label": "Configuring StorageClasses"
+      },
+      "version-0.8.2/version-0.8.2-cstor": {
+        "title": "cStor Overview",
+        "sidebar_label": "cStor"
+      },
+      "version-0.8.2/version-0.8.2-elasticsearch": {
+        "title": "OpenEBS for ElasticSearch",
+        "sidebar_label": "ElasticSearch"
+      },
+      "version-0.8.2/version-0.8.2-faq": {
+        "title": "OpenEBS FAQ",
+        "sidebar_label": "FAQs"
+      },
+      "version-0.8.2/version-0.8.2-features": {
+        "title": "OpenEBS Features and Benefits",
+        "sidebar_label": "Features and Benefits"
+      },
+      "version-0.8.2/version-0.8.2-gitlab": {
+        "title": "OpenEBS for GitLab",
+        "sidebar_label": "GitLab"
+      },
+      "version-0.8.2/version-0.8.2-installation": {
+        "title": "Installing OpenEBS",
+        "sidebar_label": "Installation"
+      },
+      "version-0.8.2/version-0.8.2-jira": {
+        "title": "Using OpenEBS as storage for Jira on Kubernetes",
+        "sidebar_label": "Jira"
+      },
+      "version-0.8.2/version-0.8.2-jiva": {
+        "title": "Jiva Overview",
+        "sidebar_label": "Jiva"
+      },
+      "version-0.8.2/version-0.8.2-jivaguide": {
+        "title": "Jiva user guide",
+        "sidebar_label": "Jiva user guide"
+      },
+      "version-0.8.2/version-0.8.2-k8supgrades": {
+        "title": "Best practices to follow when upgrading Kubernetes",
+        "sidebar_label": "Kubernetes upgrades"
+      },
+      "version-0.8.2/version-0.8.2-kb": {
+        "title": "Knowledge Base",
+        "sidebar_label": "Knowledge Base"
+      },
+      "version-0.8.2/version-0.8.2-mayactl": {
+        "title": "mayactl",
+        "sidebar_label": "mayactl"
+      },
+      "version-0.8.2/version-0.8.2-mayaonline": {
+        "title": "Connecting OpenEBS to MayaOnline",
+        "sidebar_label": "MayaOnline"
+      },
+      "version-0.8.2/version-0.8.2-minio": {
+        "title": "OpenEBS for Minio",
+        "sidebar_label": "Minio"
+      },
+      "version-0.8.2/version-0.8.2-mongo": {
+        "title": "OpenEBS for MongoDB",
+        "sidebar_label": "MongoDB"
+      },
+      "version-0.8.2/version-0.8.2-mysql": {
+        "title": "Managed database service like RDS",
+        "sidebar_label": "RDS like MySQL"
+      },
+      "version-0.8.2/version-0.8.2-nuodb": {
+        "title": "OpenEBS for NuoDB",
+        "sidebar_label": "NuoDB"
+      },
+      "version-0.8.2/version-0.8.2-operations": {
+        "title": "Day2 operations in OpenEBS",
+        "sidebar_label": "Day 2 Operations"
+      },
+      "version-0.8.2/version-0.8.2-overview": {
+        "title": "Welcome to OpenEBS Documentation",
+        "sidebar_label": "Overview"
+      },
+      "version-0.8.2/version-0.8.2-percona": {
+        "title": "OpenEBS for Percona",
+        "sidebar_label": "Percona"
+      },
+      "version-0.8.2/version-0.8.2-performance": {
+        "title": "Performance testing of OpenEBS",
+        "sidebar_label": "Performance testing"
+      },
+      "version-0.8.2/version-0.8.2-postgres": {
+        "title": "OpenEBS for PostgreSQL",
+        "sidebar_label": "PostgreSQL"
+      },
+      "version-0.8.2/version-0.8.2-prerequisites": {
+        "title": "Prerequisites (iSCSI client)",
+        "sidebar_label": "Prerequisites"
+      },
+      "version-0.8.2/version-0.8.2-prometheus": {
+        "title": "Using OpenEBS as TSDB for Prometheus",
+        "sidebar_label": "Prometheus"
+      },
+      "version-0.8.2/version-0.8.2-provisionvols": {
+        "title": "Provisioning OpenEBS Storage Volumes",
+        "sidebar_label": "Provisioning Volumes"
+      },
+      "version-0.8.2/version-0.8.2-quickstart": {
+        "title": "Quickstart Guide to OpenEBS",
+        "sidebar_label": "Quickstart"
+      },
+      "version-0.8.2/version-0.8.2-redis": {
+        "title": "OpenEBS for Redis",
+        "sidebar_label": "Redis"
+      },
+      "version-0.8.2/version-0.8.2-releases": {
+        "title": "OpenEBS Releases",
+        "sidebar_label": "Releases"
+      },
+      "version-0.8.2/version-0.8.2-rwm": {
+        "title": "Provisioning Read-Write-Many (RWM) PVCs",
+        "sidebar_label": "Read-Write-Many (RWM)"
+      },
+      "version-0.8.2/version-0.8.2-support": {
+        "title": "Getting help and support",
+        "sidebar_label": "Support"
+      },
+      "version-0.8.2/version-0.8.2-troubleshooting": {
+        "title": "Troubleshooting OpenEBS",
+        "sidebar_label": "Troubleshooting"
+      },
+      "version-0.8.2/version-0.8.2-uninstall": {
+        "title": "Uninstalling OpenEBS",
+        "sidebar_label": "Uninstall"
+      },
+      "version-0.8.2/version-0.8.2-upgrade": {
+        "title": "Upgrading OpenEBS",
+        "sidebar_label": "Upgrade"
+      },
+      "version-0.8.2/version-0.8.2-usecases": {
+        "title": "OpenEBS Use cases",
+        "sidebar_label": "Use cases"
+      },
+      "version-0.9.0/version-0.9.0-architecture": {
+        "title": "OpenEBS Architecture",
+        "sidebar_label": "OpenEBS Architecture"
+      },
+      "version-0.9.0/version-0.9.0-backup": {
+        "title": "Backup and Restore of OpenEBS volumes",
+        "sidebar_label": "Backup and Restore"
+      },
+      "version-0.9.0/version-0.9.0-cas": {
+        "title": "Container Attached Storage (CAS)",
+        "sidebar_label": "Container Attached Storage"
+      },
+      "version-0.9.0/version-0.9.0-casengines": {
+        "title": "OpenEBS Storage Engines - cStor and Jiva",
+        "sidebar_label": "CAS Engines (cStor & Jiva)"
+      },
+      "version-0.9.0/version-0.9.0-cassandra": {
+        "title": "OpenEBS for Cassandra",
+        "sidebar_label": "Cassandra"
+      },
+      "version-0.9.0/version-0.9.0-configurepools": {
+        "title": "Configuring Storage Pools",
+        "sidebar_label": "Configure StoragePools"
+      },
+      "version-0.9.0/version-0.9.0-configuresc": {
+        "title": "Configuring Storage Classes",
+        "sidebar_label": "Configuring StorageClasses"
+      },
+      "version-0.9.0/version-0.9.0-cstor": {
+        "title": "cStor Overview",
+        "sidebar_label": "cStor"
+      },
+      "version-0.9.0/version-0.9.0-elasticsearch": {
+        "title": "OpenEBS for ElasticSearch",
+        "sidebar_label": "ElasticSearch"
+      },
+      "version-0.9.0/version-0.9.0-faq": {
+        "title": "OpenEBS FAQ",
+        "sidebar_label": "FAQs"
+      },
+      "version-0.9.0/version-0.9.0-features": {
+        "title": "OpenEBS Features and Benefits",
+        "sidebar_label": "Features and Benefits"
+      },
+      "version-0.9.0/version-0.9.0-gitlab": {
+        "title": "OpenEBS for GitLab",
+        "sidebar_label": "GitLab"
+      },
+      "version-0.9.0/version-0.9.0-installation": {
+        "title": "Installing OpenEBS",
+        "sidebar_label": "Installation"
+      },
+      "version-0.9.0/version-0.9.0-jira": {
+        "title": "Using OpenEBS as storage for Jira on Kubernetes",
+        "sidebar_label": "Jira"
+      },
+      "version-0.9.0/version-0.9.0-jiva": {
+        "title": "Jiva Overview",
+        "sidebar_label": "Jiva"
+      },
+      "version-0.9.0/version-0.9.0-jivaguide": {
+        "title": "Jiva user guide",
+        "sidebar_label": "Jiva user guide"
+      },
+      "version-0.9.0/version-0.9.0-k8supgrades": {
+        "title": "Best practices to follow when upgrading Kubernetes",
+        "sidebar_label": "Kubernetes upgrades"
+      },
+      "version-0.9.0/version-0.9.0-kb": {
+        "title": "Knowledge Base",
+        "sidebar_label": "Knowledge Base"
+      },
+      "version-0.9.0/version-0.9.0-mayactl": {
+        "title": "mayactl",
+        "sidebar_label": "mayactl"
+      },
+      "version-0.9.0/version-0.9.0-mayaonline": {
+        "title": "Connecting OpenEBS to MayaOnline",
+        "sidebar_label": "MayaOnline"
+      },
+      "version-0.9.0/version-0.9.0-minio": {
+        "title": "OpenEBS for Minio",
+        "sidebar_label": "Minio"
+      },
+      "version-0.9.0/version-0.9.0-mongo": {
+        "title": "OpenEBS for MongoDB",
+        "sidebar_label": "MongoDB"
+      },
+      "version-0.9.0/version-0.9.0-mysql": {
+        "title": "Managed database service like RDS",
+        "sidebar_label": "RDS like MySQL"
+      },
+      "version-0.9.0/version-0.9.0-nuodb": {
+        "title": "OpenEBS for NuoDB",
+        "sidebar_label": "NuoDB"
+      },
+      "version-0.9.0/version-0.9.0-operations": {
+        "title": "Day2 operations in OpenEBS",
+        "sidebar_label": "Day 2 Operations"
+      },
+      "version-0.9.0/version-0.9.0-overview": {
+        "title": "Welcome to OpenEBS Documentation",
+        "sidebar_label": "Overview"
+      },
+      "version-0.9.0/version-0.9.0-percona": {
+        "title": "OpenEBS for Percona",
+        "sidebar_label": "Percona"
+      },
+      "version-0.9.0/version-0.9.0-performance": {
+        "title": "Performance testing of OpenEBS",
+        "sidebar_label": "Performance testing"
+      },
+      "version-0.9.0/version-0.9.0-postgres": {
+        "title": "OpenEBS for PostgreSQL",
+        "sidebar_label": "PostgreSQL"
+      },
+      "version-0.9.0/version-0.9.0-prerequisites": {
+        "title": "Prerequisites (iSCSI client)",
+        "sidebar_label": "Prerequisites"
+      },
+      "version-0.9.0/version-0.9.0-prometheus": {
+        "title": "Using OpenEBS as TSDB for Prometheus",
+        "sidebar_label": "Prometheus"
+      },
+      "version-0.9.0/version-0.9.0-provisionvols": {
+        "title": "Provisioning OpenEBS Storage Volumes",
+        "sidebar_label": "Provisioning Volumes"
+      },
+      "version-0.9.0/version-0.9.0-quickstart": {
+        "title": "Quickstart Guide to OpenEBS",
+        "sidebar_label": "Quickstart"
+      },
+      "version-0.9.0/version-0.9.0-redis": {
+        "title": "OpenEBS for Redis",
+        "sidebar_label": "Redis"
+      },
+      "version-0.9.0/version-0.9.0-releases": {
+        "title": "OpenEBS Releases",
+        "sidebar_label": "Releases"
+      },
+      "version-0.9.0/version-0.9.0-rwm": {
+        "title": "Provisioning Read-Write-Many (RWM) PVCs",
+        "sidebar_label": "Read-Write-Many (RWM)"
+      },
+      "version-0.9.0/version-0.9.0-support": {
+        "title": "Getting help and support",
+        "sidebar_label": "Support"
+      },
+      "version-0.9.0/version-0.9.0-troubleshooting": {
+        "title": "Troubleshooting OpenEBS",
+        "sidebar_label": "Troubleshooting"
+      },
+      "version-0.9.0/version-0.9.0-uninstall": {
+        "title": "Uninstalling OpenEBS",
+        "sidebar_label": "Uninstall"
+      },
+      "version-0.9.0/version-0.9.0-upgrade": {
+        "title": "Upgrading OpenEBS",
+        "sidebar_label": "Upgrade"
+      },
+      "version-0.9.0/version-0.9.0-usecases": {
+        "title": "OpenEBS Use cases",
+        "sidebar_label": "Use cases"
+      },
+      "version-1.0.0/version-1.0.0-architecture": {
+        "title": "OpenEBS Architecture",
+        "sidebar_label": "OpenEBS Architecture"
+      },
+      "version-1.0.0/version-1.0.0-backup": {
+        "title": "Backup and Restore of OpenEBS volumes",
+        "sidebar_label": "Backup and Restore"
+      },
+      "version-1.0.0/version-1.0.0-cas": {
+        "title": "Container Attached Storage (CAS)",
+        "sidebar_label": "Container Attached Storage"
+      },
+      "version-1.0.0/version-1.0.0-casengines": {
+        "title": "OpenEBS Storage Engines - cStor, Jiva and LocalPV",
+        "sidebar_label": "CAS Engines"
+      },
+      "version-1.0.0/version-1.0.0-cassandra": {
+        "title": "OpenEBS for Cassandra",
+        "sidebar_label": "Cassandra"
+      },
+      "version-1.0.0/version-1.0.0-cstor": {
+        "title": "cStor Overview",
+        "sidebar_label": "cStor"
+      },
+      "version-1.0.0/version-1.0.0-elasticsearch": {
+        "title": "OpenEBS for ElasticSearch",
+        "sidebar_label": "ElasticSearch"
+      },
+      "version-1.0.0/version-1.0.0-faq": {
+        "title": "OpenEBS FAQ",
+        "sidebar_label": "FAQs"
+      },
+      "version-1.0.0/version-1.0.0-features": {
+        "title": "OpenEBS Features and Benefits",
+        "sidebar_label": "Features and Benefits"
+      },
+      "version-1.0.0/version-1.0.0-gitlab": {
+        "title": "OpenEBS for GitLab",
+        "sidebar_label": "GitLab"
+      },
+      "version-1.0.0/version-1.0.0-installation": {
+        "title": "Installing OpenEBS",
+        "sidebar_label": "Installation"
+      },
+      "version-1.0.0/version-1.0.0-jira": {
+        "title": "Using OpenEBS as storage for Jira on Kubernetes",
+        "sidebar_label": "Jira"
+      },
+      "version-1.0.0/version-1.0.0-jiva": {
+        "title": "Jiva Overview",
+        "sidebar_label": "Jiva"
+      },
+      "version-1.0.0/version-1.0.0-jivaguide": {
+        "title": "Jiva User Guide",
+        "sidebar_label": "Jiva"
+      },
+      "version-1.0.0/version-1.0.0-k8supgrades": {
+        "title": "Best practices to follow when upgrading Kubernetes",
+        "sidebar_label": "Kubernetes upgrades"
+      },
+      "version-1.0.0/version-1.0.0-kb": {
+        "title": "Knowledge Base",
+        "sidebar_label": "Knowledge Base"
+      },
+      "version-1.0.0/version-1.0.0-localpv": {
+        "title": "OpenEBS LocalPV",
+        "sidebar_label": "Local PV"
+      },
+      "version-1.0.0/version-1.0.0-mayactl": {
+        "title": "mayactl",
+        "sidebar_label": "mayactl"
+      },
+      "version-1.0.0/version-1.0.0-mayaonline": {
+        "title": "Connecting OpenEBS to MayaOnline",
+        "sidebar_label": "MayaOnline"
+      },
+      "version-1.0.0/version-1.0.0-minio": {
+        "title": "OpenEBS for Minio",
+        "sidebar_label": "Minio"
+      },
+      "version-1.0.0/version-1.0.0-mongo": {
+        "title": "OpenEBS for MongoDB",
+        "sidebar_label": "MongoDB"
+      },
+      "version-1.0.0/version-1.0.0-mysql": {
+        "title": "Managed database service like RDS",
+        "sidebar_label": "RDS like MySQL"
+      },
+      "version-1.0.0/version-1.0.0-ndm": {
+        "title": "Node Device Manager",
+        "sidebar_label": "NDM"
+      },
+      "version-1.0.0/version-1.0.0-nuodb": {
+        "title": "OpenEBS for NuoDB",
+        "sidebar_label": "NuoDB"
+      },
+      "version-1.0.0/version-1.0.0-overview": {
+        "title": "Welcome to OpenEBS Documentation",
+        "sidebar_label": "Overview"
+      },
+      "version-1.0.0/version-1.0.0-percona": {
+        "title": "OpenEBS for Percona",
+        "sidebar_label": "Percona"
+      },
+      "version-1.0.0/version-1.0.0-performance": {
+        "title": "Performance testing of OpenEBS",
+        "sidebar_label": "Performance testing"
+      },
+      "version-1.0.0/version-1.0.0-postgres": {
+        "title": "OpenEBS for PostgreSQL",
+        "sidebar_label": "PostgreSQL"
+      },
+      "version-1.0.0/version-1.0.0-prerequisites": {
+        "title": "Prerequisites (iSCSI client)",
+        "sidebar_label": "Prerequisites"
+      },
+      "version-1.0.0/version-1.0.0-prometheus": {
+        "title": "Using OpenEBS as TSDB for Prometheus",
+        "sidebar_label": "Prometheus"
+      },
+      "version-1.0.0/version-1.0.0-provisionvols": {
+        "title": "Provisioning OpenEBS Storage Volumes",
+        "sidebar_label": "Provisioning Volumes"
+      },
+      "version-1.0.0/version-1.0.0-quickstart": {
+        "title": "Quickstart Guide to OpenEBS",
+        "sidebar_label": "Quickstart"
+      },
+      "version-1.0.0/version-1.0.0-redis": {
+        "title": "OpenEBS for Redis",
+        "sidebar_label": "Redis"
+      },
+      "version-1.0.0/version-1.0.0-releases": {
+        "title": "OpenEBS Releases",
+        "sidebar_label": "Releases"
+      },
+      "version-1.0.0/version-1.0.0-rwm": {
+        "title": "Provisioning Read-Write-Many (RWM) PVCs",
+        "sidebar_label": "Read-Write-Many (RWM)"
+      },
+      "version-1.0.0/version-1.0.0-tasks": {
+        "title": "Tasks",
+        "sidebar_label": "Tasks"
+      },
+      "version-1.0.0/version-1.0.0-troubleshooting": {
+        "title": "Troubleshooting OpenEBS",
+        "sidebar_label": "Troubleshooting"
+      },
+      "version-1.0.0/version-1.0.0-ugcstor": {
+        "title": "cStor User Guide",
+        "sidebar_label": "cStor"
+      },
+      "version-1.0.0/version-1.0.0-uglocalpv": {
+        "title": "OpenEBS Local PV User Guide",
+        "sidebar_label": "Local PV"
+      },
+      "version-1.0.0/version-1.0.0-ugndm": {
+        "title": "Node Device Manager User Guide",
+        "sidebar_label": "NDM"
+      },
+      "version-1.0.0/version-1.0.0-uninstall": {
+        "title": "Uninstalling OpenEBS",
+        "sidebar_label": "Uninstall"
+      },
+      "version-1.0.0/version-1.0.0-upgrade": {
+        "title": "Upgrading OpenEBS",
+        "sidebar_label": "Upgrade"
+      },
+      "version-1.0.0/version-1.0.0-usecases": {
+        "title": "OpenEBS Use cases",
+        "sidebar_label": "Use cases"
+      },
+      "version-1.1.0/version-1.1.0-architecture": {
+        "title": "OpenEBS Architecture",
+        "sidebar_label": "OpenEBS Architecture"
+      },
+      "version-1.1.0/version-1.1.0-cas": {
+        "title": "Container Attached Storage (CAS)",
+        "sidebar_label": "Container Attached Storage"
+      },
+      "version-1.1.0/version-1.1.0-casengines": {
+        "title": "OpenEBS Storage Engines - cStor, Jiva and LocalPV",
+        "sidebar_label": "CAS Engines"
+      },
+      "version-1.1.0/version-1.1.0-cassandra": {
+        "title": "OpenEBS for Cassandra",
+        "sidebar_label": "Cassandra"
+      },
+      "version-1.1.0/version-1.1.0-cstor": {
+        "title": "cStor Overview",
+        "sidebar_label": "cStor"
+      },
+      "version-1.1.0/version-1.1.0-elasticsearch": {
+        "title": "OpenEBS for ElasticSearch",
+        "sidebar_label": "ElasticSearch"
+      },
+      "version-1.1.0/version-1.1.0-faq": {
+        "title": "OpenEBS FAQ",
+        "sidebar_label": "FAQs"
+      },
+      "version-1.1.0/version-1.1.0-features": {
+        "title": "OpenEBS Features and Benefits",
+        "sidebar_label": "Features and Benefits"
+      },
+      "version-1.1.0/version-1.1.0-gitlab": {
+        "title": "OpenEBS for GitLab",
+        "sidebar_label": "GitLab"
+      },
+      "version-1.1.0/version-1.1.0-installation": {
+        "title": "Installing OpenEBS",
+        "sidebar_label": "Installation"
+      },
+      "version-1.1.0/version-1.1.0-jira": {
+        "title": "Using OpenEBS as storage for Jira on Kubernetes",
+        "sidebar_label": "Jira"
+      },
+      "version-1.1.0/version-1.1.0-jiva": {
+        "title": "Jiva Overview",
+        "sidebar_label": "Jiva"
+      },
+      "version-1.1.0/version-1.1.0-jivaguide": {
+        "title": "Jiva User Guide",
+        "sidebar_label": "Jiva"
+      },
+      "version-1.1.0/version-1.1.0-k8supgrades": {
+        "title": "Best practices to follow when upgrading Kubernetes",
+        "sidebar_label": "Kubernetes upgrades"
+      },
+      "version-1.1.0/version-1.1.0-kb": {
+        "title": "Knowledge Base",
+        "sidebar_label": "Knowledge Base"
+      },
+      "version-1.1.0/version-1.1.0-localpv": {
+        "title": "OpenEBS LocalPV",
+        "sidebar_label": "Local PV"
+      },
+      "version-1.1.0/version-1.1.0-mayactl": {
+        "title": "mayactl",
+        "sidebar_label": "mayactl"
+      },
+      "version-1.1.0/version-1.1.0-mayaonline": {
+        "title": "Connecting OpenEBS to MayaOnline",
+        "sidebar_label": "MayaOnline"
+      },
+      "version-1.1.0/version-1.1.0-minio": {
+        "title": "OpenEBS for Minio",
+        "sidebar_label": "Minio"
+      },
+      "version-1.1.0/version-1.1.0-mongo": {
+        "title": "OpenEBS for MongoDB",
+        "sidebar_label": "MongoDB"
+      },
+      "version-1.1.0/version-1.1.0-mysql": {
+        "title": "Managed database service like RDS",
+        "sidebar_label": "RDS like MySQL"
+      },
+      "version-1.1.0/version-1.1.0-ndm": {
+        "title": "Node Device Manager",
+        "sidebar_label": "NDM"
+      },
+      "version-1.1.0/version-1.1.0-nuodb": {
+        "title": "OpenEBS for NuoDB",
+        "sidebar_label": "NuoDB"
+      },
+      "version-1.1.0/version-1.1.0-overview": {
+        "title": "Welcome to OpenEBS Documentation",
+        "sidebar_label": "Overview"
+      },
+      "version-1.1.0/version-1.1.0-percona": {
+        "title": "OpenEBS for Percona",
+        "sidebar_label": "Percona"
+      },
+      "version-1.1.0/version-1.1.0-performance": {
+        "title": "Performance testing of OpenEBS",
+        "sidebar_label": "Performance testing"
+      },
+      "version-1.1.0/version-1.1.0-postgres": {
+        "title": "OpenEBS for PostgreSQL",
+        "sidebar_label": "PostgreSQL"
+      },
+      "version-1.1.0/version-1.1.0-prerequisites": {
+        "title": "Prerequisites (iSCSI client)",
+        "sidebar_label": "Prerequisites"
+      },
+      "version-1.1.0/version-1.1.0-prometheus": {
+        "title": "Using OpenEBS as TSDB for Prometheus",
+        "sidebar_label": "Prometheus"
+      },
+      "version-1.1.0/version-1.1.0-quickstart": {
+        "title": "Quickstart Guide to OpenEBS",
+        "sidebar_label": "Quickstart"
+      },
+      "version-1.1.0/version-1.1.0-redis": {
+        "title": "OpenEBS for Redis",
+        "sidebar_label": "Redis"
+      },
+      "version-1.1.0/version-1.1.0-releases": {
+        "title": "OpenEBS Releases",
+        "sidebar_label": "Releases"
+      },
+      "version-1.1.0/version-1.1.0-rwm": {
+        "title": "Provisioning Read-Write-Many (RWM) PVCs",
+        "sidebar_label": "Read-Write-Many (RWM)"
+      },
+      "version-1.1.0/version-1.1.0-support": {
+        "title": "Getting help and support",
+        "sidebar_label": "Support"
+      },
+      "version-1.1.0/version-1.1.0-troubleshooting": {
+        "title": "Troubleshooting OpenEBS",
+        "sidebar_label": "Troubleshooting"
+      },
+      "version-1.1.0/version-1.1.0-ugcstor": {
+        "title": "cStor User Guide",
+        "sidebar_label": "cStor"
+      },
+      "version-1.1.0/version-1.1.0-uglocalpv": {
+        "title": "OpenEBS Local PV User Guide",
+        "sidebar_label": "Local PV"
+      },
+      "version-1.1.0/version-1.1.0-ugndm": {
+        "title": "Node Device Manager User Guide",
+        "sidebar_label": "NDM"
+      },
+      "version-1.1.0/version-1.1.0-uninstall": {
+        "title": "Uninstalling OpenEBS",
+        "sidebar_label": "Uninstall"
+      },
+      "version-1.1.0/version-1.1.0-upgrade": {
+        "title": "Upgrading OpenEBS",
+        "sidebar_label": "Upgrade"
+      },
+      "version-1.1.0/version-1.1.0-usecases": {
+        "title": "OpenEBS Use cases",
+        "sidebar_label": "Use cases"
+      },
+      "version-1.2.0/version-1.2.0-architecture": {
+        "title": "OpenEBS Architecture",
+        "sidebar_label": "OpenEBS Architecture"
+      },
+      "version-1.2.0/version-1.2.0-cas": {
+        "title": "Container Attached Storage (CAS)",
+        "sidebar_label": "Container Attached Storage"
+      },
+      "version-1.2.0/version-1.2.0-casengines": {
+        "title": "OpenEBS Storage Engines - cStor, Jiva and LocalPV",
+        "sidebar_label": "CAS Engines"
+      },
+      "version-1.2.0/version-1.2.0-cassandra": {
+        "title": "OpenEBS for Cassandra",
+        "sidebar_label": "Cassandra"
+      },
+      "version-1.2.0/version-1.2.0-cstor": {
+        "title": "cStor Overview",
+        "sidebar_label": "cStor"
+      },
+      "version-1.2.0/version-1.2.0-directoronline": {
+        "title": "Connecting OpenEBS to Director Online",
+        "sidebar_label": "Director Online"
+      },
+      "version-1.2.0/version-1.2.0-elasticsearch": {
+        "title": "OpenEBS for ElasticSearch",
+        "sidebar_label": "ElasticSearch"
+      },
+      "version-1.2.0/version-1.2.0-faq": {
+        "title": "OpenEBS FAQ",
+        "sidebar_label": "FAQs"
+      },
+      "version-1.2.0/version-1.2.0-features": {
+        "title": "OpenEBS Features and Benefits",
+        "sidebar_label": "Features and Benefits"
+      },
+      "version-1.2.0/version-1.2.0-gitlab": {
+        "title": "OpenEBS for GitLab",
+        "sidebar_label": "GitLab"
+      },
+      "version-1.2.0/version-1.2.0-installation": {
+        "title": "Installing OpenEBS",
+        "sidebar_label": "Installation"
+      },
+      "version-1.2.0/version-1.2.0-jira": {
+        "title": "Using OpenEBS as storage for Jira on Kubernetes",
+        "sidebar_label": "Jira"
+      },
+      "version-1.2.0/version-1.2.0-jiva": {
+        "title": "Jiva Overview",
+        "sidebar_label": "Jiva"
+      },
+      "version-1.2.0/version-1.2.0-jivaguide": {
+        "title": "Jiva User Guide",
+        "sidebar_label": "Jiva"
+      },
+      "version-1.2.0/version-1.2.0-k8supgrades": {
+        "title": "Best practices to follow when upgrading Kubernetes",
+        "sidebar_label": "Kubernetes upgrades"
+      },
+      "version-1.2.0/version-1.2.0-kb": {
+        "title": "Knowledge Base",
+        "sidebar_label": "Knowledge Base"
+      },
+      "version-1.2.0/version-1.2.0-localpv": {
+        "title": "OpenEBS LocalPV",
+        "sidebar_label": "Local PV"
+      },
+      "version-1.2.0/version-1.2.0-mayactl": {
+        "title": "mayactl",
+        "sidebar_label": "mayactl"
+      },
+      "version-1.2.0/version-1.2.0-minio": {
+        "title": "OpenEBS for Minio",
+        "sidebar_label": "Minio"
+      },
+      "version-1.2.0/version-1.2.0-mongo": {
+        "title": "OpenEBS for MongoDB",
+        "sidebar_label": "MongoDB"
+      },
+      "version-1.2.0/version-1.2.0-mysql": {
+        "title": "Managed database service like RDS",
+        "sidebar_label": "RDS like MySQL"
+      },
+      "version-1.2.0/version-1.2.0-ndm": {
+        "title": "Node Device Manager",
+        "sidebar_label": "NDM"
+      },
+      "version-1.2.0/version-1.2.0-nuodb": {
+        "title": "OpenEBS for NuoDB",
+        "sidebar_label": "NuoDB"
+      },
+      "version-1.2.0/version-1.2.0-overview": {
+        "title": "Welcome to OpenEBS Documentation",
+        "sidebar_label": "Overview"
+      },
+      "version-1.2.0/version-1.2.0-percona": {
+        "title": "OpenEBS for Percona",
+        "sidebar_label": "Percona"
+      },
+      "version-1.2.0/version-1.2.0-performance": {
+        "title": "Performance testing of OpenEBS",
+        "sidebar_label": "Performance testing"
+      },
+      "version-1.2.0/version-1.2.0-postgres": {
+        "title": "OpenEBS for PostgreSQL",
+        "sidebar_label": "PostgreSQL"
+      },
+      "version-1.2.0/version-1.2.0-prerequisites": {
+        "title": "Prerequisites (iSCSI client)",
+        "sidebar_label": "Prerequisites"
+      },
+      "version-1.2.0/version-1.2.0-prometheus": {
+        "title": "Using OpenEBS as TSDB for Prometheus",
+        "sidebar_label": "Prometheus"
+      },
+      "version-1.2.0/version-1.2.0-quickstart": {
+        "title": "Quickstart Guide to OpenEBS",
+        "sidebar_label": "Quickstart"
+      },
+      "version-1.2.0/version-1.2.0-redis": {
+        "title": "OpenEBS for Redis",
+        "sidebar_label": "Redis"
+      },
+      "version-1.2.0/version-1.2.0-releases": {
+        "title": "OpenEBS Releases",
+        "sidebar_label": "Releases"
+      },
+      "version-1.2.0/version-1.2.0-rwm": {
+        "title": "Provisioning Read-Write-Many (RWM) PVCs",
+        "sidebar_label": "Read-Write-Many (RWM)"
+      },
+      "version-1.2.0/version-1.2.0-support": {
+        "title": "Getting help and support",
+        "sidebar_label": "Support"
+      },
+      "version-1.2.0/version-1.2.0-troubleshooting": {
+        "title": "Troubleshooting OpenEBS",
+        "sidebar_label": "Troubleshooting"
+      },
+      "version-1.2.0/version-1.2.0-ugcstor": {
+        "title": "cStor User Guide",
+        "sidebar_label": "cStor"
+      },
+      "version-1.2.0/version-1.2.0-uglocalpv": {
+        "title": "OpenEBS Local PV User Guide",
+        "sidebar_label": "Local PV"
+      },
+      "version-1.2.0/version-1.2.0-ugndm": {
+        "title": "Node Device Manager User Guide",
+        "sidebar_label": "NDM"
+      },
+      "version-1.2.0/version-1.2.0-uninstall": {
+        "title": "Uninstalling OpenEBS",
+        "sidebar_label": "Uninstall"
+      },
+      "version-1.2.0/version-1.2.0-upgrade": {
+        "title": "Upgrading OpenEBS",
+        "sidebar_label": "Upgrade"
+      },
+      "version-1.2.0/version-1.2.0-usecases": {
+        "title": "OpenEBS Use cases",
+        "sidebar_label": "Use cases"
+      }
+    },
+    "links": {},
+    "categories": {
+      "Introduction": "Introduction",
+      "Concepts": "Concepts",
+      "User Guides": "User Guides",
+      "Stateful Applications": "Stateful Applications",
+      "Advanced Topics": "Advanced Topics"
+    }
   },
   "pages-strings": {
     "Help Translate|recruit community translators for your project": "Help Translate",

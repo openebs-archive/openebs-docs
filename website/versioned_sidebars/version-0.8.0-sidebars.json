@@ -1,0 +1,52 @@
+{
+  "version-0.8.0-docs": {
+    "Introduction": [
+      "version-0.8.0-overview",
+      "version-0.8.0-features",
+      "version-0.8.0-usecases",
+      "version-0.8.0-releases",
+      "version-0.8.0-support",
+      "version-0.8.0-mayaonline"
+    ],
+    "Concepts": [
+      "version-0.8.0-cas",
+      "version-0.8.0-architecture",
+      "version-0.8.0-casengines",
+      "version-0.8.0-cstor",
+      "version-0.8.0-jiva"
+    ],
+    "User Guides": [
+      "version-0.8.0-quickstart",
+      "version-0.8.0-prerequisites",
+      "version-0.8.0-installation",
+      "version-0.8.0-configurepools",
+      "version-0.8.0-configuresc",
+      "version-0.8.0-provisionvols",
+      "version-0.8.0-operations",
+      "version-0.8.0-jivaguide",
+      "version-0.8.0-backup",
+      "version-0.8.0-upgrade",
+      "version-0.8.0-uninstall"
+    ],
+    "Stateful Applications": [
+      "version-0.8.0-mysql",
+      "version-0.8.0-prometheus",
+      "version-0.8.0-minio",
+      "version-0.8.0-gitlab",
+      "version-0.8.0-percona",
+      "version-0.8.0-elasticsearch",
+      "version-0.8.0-cassandra",
+      "version-0.8.0-nuodb",
+      "version-0.8.0-postgres",
+      "version-0.8.0-redis",
+      "version-0.8.0-mongo",
+      "version-0.8.0-rwm"
+    ],
+    "Advanced Topics": [
+      "version-0.8.0-performance",
+      "version-0.8.0-faq",
+      "version-0.8.0-k8supgrades",
+      "version-0.8.0-troubleshooting"
+    ]
+  }
+}

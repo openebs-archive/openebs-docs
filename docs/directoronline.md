@@ -105,12 +105,7 @@ User's data is never looked into or exported to Director Online by the agents.
 
 #### [Getting started with Director Online](https://help.mayadata.io/hc/en-us/articles/360033029212-Getting-started-with-DirectorOnline)
 
-<br>
-
-<hr>
-
-<br>
-
+<br><hr><br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
@@ -127,9 +122,8 @@ User's data is never looked into or exported to Director Online by the agents.
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-92076314-12');
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   gtag('config', 'UA-92076314-12', { 'anonymize_ip': true });
 </script>

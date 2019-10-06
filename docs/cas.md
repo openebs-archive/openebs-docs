@@ -63,17 +63,7 @@ Similar to hyperconverged systems, storage and performance of a volume in CAS is
 
 ### [CAS blog on CNCF](https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/)
 
-
-
-<br>
-
-<hr>
-
-<br>
-
-
-
-
+<br><hr><br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
@@ -90,9 +80,8 @@ Similar to hyperconverged systems, storage and performance of a volume in CAS is
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-92076314-12');
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   gtag('config', 'UA-92076314-12', { 'anonymize_ip': true });
 </script>

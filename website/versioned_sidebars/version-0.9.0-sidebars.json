@@ -1,0 +1,56 @@
+{
+  "version-0.9.0-docs": {
+    "Introduction": [
+      "version-0.9.0-overview",
+      "version-0.9.0-features",
+      "version-0.9.0-usecases",
+      "version-0.9.0-releases",
+      "version-0.9.0-support",
+      "version-0.9.0-mayaonline"
+    ],
+    "Concepts": [
+      "version-0.9.0-cas",
+      "version-0.9.0-architecture",
+      "version-0.9.0-casengines",
+      "version-0.9.0-cstor",
+      "version-0.9.0-jiva"
+    ],
+    "User Guides": [
+      "version-0.9.0-quickstart",
+      "version-0.9.0-prerequisites",
+      "version-0.9.0-installation",
+      "version-0.9.0-configurepools",
+      "version-0.9.0-configuresc",
+      "version-0.9.0-provisionvols",
+      "version-0.9.0-operations",
+      "version-0.9.0-jivaguide",
+      "version-0.9.0-mayactl",
+      "version-0.9.0-backup",
+      "version-0.9.0-upgrade",
+      "version-0.9.0-uninstall"
+    ],
+    "Stateful Applications": [
+      "version-0.9.0-mysql",
+      "version-0.9.0-prometheus",
+      "version-0.9.0-minio",
+      "version-0.9.0-gitlab",
+      "version-0.9.0-percona",
+      "version-0.9.0-elasticsearch",
+      "version-0.9.0-cassandra",
+      "version-0.9.0-nuodb",
+      "version-0.9.0-postgres",
+      "version-0.9.0-redis",
+      "version-0.9.0-mongo",
+      "version-0.9.0-jira",
+      "version-0.9.0-rwm"
+    ],
+    "Advanced Topics": [
+      "version-0.9.0-performance",
+      "version-0.9.0-faq",
+      "version-0.9.0-k8supgrades",
+      "version-0.9.0-troubleshooting",
+      "version-0.9.0-kb",
+      "version-0.9.0-tasks"
+    ]
+  }
+}

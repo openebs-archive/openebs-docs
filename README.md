@@ -39,11 +39,26 @@ cd openebs-docs
 ### Start the server
 
 ```bash
-cd openebs-docs/website
-npm start
+./launch.sh
 ```
 
 The above step will start a server on the `localhost:3000`
+
+### Build
+
+To create a static build of the OpenEBS Docs, run the following script from the website directory:
+
+```bash
+yarn run build
+```
+
+This will generate a `build` directory inside the `website` directory containing the `.html` files from all of your docs and other pages included in `pages`.
+
+### Deploy to Netlify
+
+Deploying OpenEBS Docs to Netlify is easy as 1-2-3. Simply click the button below to set-up Netlify deployment. All required settings are already defined in the [netlify.toml](/netlify.toml) file.
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/openebs/openebs-docs)
 
 ### How OpenEBS-docs get published?
 

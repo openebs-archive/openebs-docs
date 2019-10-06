@@ -133,7 +133,6 @@ footer .sitemap .nav-home {
 /* Side bar*/
 nav.toc .toggleNav {
     background: #f5f7fa;
-    padding: 3%;
 }
 
 nav.toc .toggleNav ul li a {
@@ -148,7 +147,7 @@ nav.toc .toggleNav .navGroup h3 {
     font-weight: 600;
     font-size: 20px;
 }
-nav.toc .toggleNav ul li.navListItemActive {
+.toc .toggleNav ul li.navListItemActive a {
     background: #a9a9a9;
     color: #f5f7fa;
 }
@@ -219,29 +218,19 @@ pre code {
 }
 
 @media (max-width: 376px) and (min-width: 576px) {
-
     .fixedHeaderContainer header img {
         width: 141px;
         height: auto;
     }
+	
     .fixedHeaderContainer header img#logo {
         width: 30px;
     }
+	
     .fixedHeaderContainer header h2{
         color: #fff;
     }
-
 }
-
-/* css for tables */
-
-/*
-table tr th {
-    background: #f2f2f2;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-*/
 
 /* css for code snippets */
 .hljs, .hljs-subst {
@@ -261,35 +250,6 @@ table tr th {
     display: block;
     overflow-x: auto;
     padding: 0.5em;
-}
-
-/* CSS for search bar */
-input#search_input_react
-{
-    background-color: #7B787D;
-    font-weight:400;
-    width:500px;
-    line-height: 28px;
-}
-input#search_input_react:focus, input#search_input_react:active {
-    width: 500px;
-    background-color: #7B787D;
-}
-
-#panel, .flip {
-    cursor: pointer;
-}
-
-@media (max-width: 320px) {
-    .ver-link-span {
-      display: none;
-    }
-    .dropdown {
-        display: inline-block;
-        margin-right: auto;
-        margin-left: 0px;
-        margin-top: 3.5px;
-    }
 }
 
 /* CSS for version dropdown */
@@ -401,4 +361,22 @@ redoc .operation-type {
   background-color: #fff8f3;*/
   background-color: #FEF0EB;
   border-radius: 15px;
+}
+
+@media only screen and (min-width: 1024px) {
+	.toc {
+		padding: 0
+	}
+}
+
+.toc .toggleNav .navGroup .navGroupCategoryTitle {
+	color: #f1584d
+}
+
+@media only screen and (min-width: 1024px) {
+	.separateOnPageNav .wrapper,
+	.headerWrapper.wrapper,
+	.singleRowMobileNav .wrapper {
+		max-width: 100% !important;
+	}
 }

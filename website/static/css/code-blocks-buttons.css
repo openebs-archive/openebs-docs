@@ -5,7 +5,7 @@ pre {
 
 pre .btnIcon {
   position: absolute;
-  top: 4px;
+  top: 2px;
   z-index: 2;
   cursor: pointer;
   border: 1px solid transparent;
@@ -35,7 +35,7 @@ pre .btnIcon:hover {
 }
 
 .btnClipboard {
-  right: 1px;
+  right: 2px;
   border-radius: 4px;
   padding: 0 8px;
 }

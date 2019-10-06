@@ -45,12 +45,7 @@ sidebar_label: Releases
 
 ### [Container Attached Storage or CAS](/docs/next/cas.html)
 
-<br><hr>
-
-<br>
-
-
-
+<br><hr><br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
@@ -67,9 +62,8 @@ sidebar_label: Releases
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-92076314-12');
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   gtag('config', 'UA-92076314-12', { 'anonymize_ip': true });
 </script>

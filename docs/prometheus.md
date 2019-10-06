@@ -259,17 +259,9 @@ See the <a href="https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b
 
 ### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
 
-
-
-<br>
-
-<hr>
-<br>
-
-
+<br><hr><br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
-
 <script>
    (function(h,o,t,j,a,r){
        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
@@ -281,13 +273,11 @@ See the <a href="https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
 
-
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-92076314-12');
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   gtag('config', 'UA-92076314-12', { 'anonymize_ip': true });
 </script>

@@ -71,13 +71,7 @@ Web-scale applications like WordPress require shared storage with RWM access mod
 
 Read <font size="5"><a href="/docs/next/rwm.html" target="_blank">RWM use case </a></font>
 
-<br>
-
-<hr>
-
-<br>
-
-
+<br><hr><br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
@@ -91,13 +85,11 @@ Read <font size="5"><a href="/docs/next/rwm.html" target="_blank">RWM use case <
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
 
-
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-92076314-12');
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   gtag('config', 'UA-92076314-12', { 'anonymize_ip': true });
 </script>

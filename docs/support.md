@@ -23,13 +23,7 @@ All community users by default are subscribed to a free plan on <a href="https:/
 
 Community blogs are available at [https://blog.openebs.io](https://blog.openebs.io). 
 
-
-
-<br>
-
-<hr>
-
-<br>
+<br><hr><br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
@@ -43,13 +37,11 @@ Community blogs are available at [https://blog.openebs.io](https://blog.openebs.
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
 
-
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-92076314-12');
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   gtag('config', 'UA-92076314-12', { 'anonymize_ip': true });
 </script>

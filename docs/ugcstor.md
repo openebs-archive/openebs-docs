@@ -1635,8 +1635,7 @@ OpenEBS team is working on both the CSI plugin as well as the feature to resize 
 
 ### [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
 
-
-<br>
+<br><hr><br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>
@@ -1650,12 +1649,11 @@ OpenEBS team is working on both the CSI plugin as well as the feature to resize 
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
 
-
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-92076314-12');
-</script>c
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   gtag('config', 'UA-92076314-12', { 'anonymize_ip': true });
+</script>
