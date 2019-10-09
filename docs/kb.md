@@ -28,6 +28,7 @@ sidebar_label: Knowledge Base
 
 [How to reconstruct data from healthy replica to replaced one?](#how-to-reconstruct-data-from-healthy-replica-to-replaced-ones)
 
+[How to verify whether cStor volume is running fine? ](how-to-verify-whether-cstor-volume-is-running-fine)
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
@@ -1277,9 +1278,185 @@ pvc-5c52d001-...........-cstor-sparse-pool-sb1v   90.8M   85.0M   	  Healthy   3
 
 <br>
 
-<hr>
+<a href="#top">Go to top</a>
+
+
+<h3><a class="anchor" aria-hidden="true" id="how-to-verify-whether-cstor-volume-is-running-fine"></a>How to verify whether cStor volume is running fine?</h3>
+
+
+### Overview
+
+The following items will be discussed:
+
+1. Verification of cStor Storage Pool(CSP)
+2. Verification of cStor Volume
+3. Verification of cStor Volume Replica(CVR)
+
+
+### Verification of cStor Storage Pool
+
+cStor Storage Pool(CSP) resources are cluster scoped resources. Status of CSPs can be obtained using the following way.
+
+```
+kubectl get csp
+```
+
+Example output:
+
+<div class="co">
+NAME                   ALLOCATED   FREE    CAPACITY   STATUS    TYPE      AGE
+cstor-disk-pool-g5go   270K        9.94G   9.94G      Healthy   striped   2m
+cstor-disk-pool-srj3   270K        9.94G   9.94G      Healthy   striped   2m
+cstor-disk-pool-tla4   270K        9.94G   9.94G      Healthy   striped   2m	
+</div>
+
+Status of each cStor pool can be found under `STATUS` field. The following are the different type of `STATUS` information of cStor pools and their meaning.
+
+**Healthy:** This state represents cStor pool is online and running.
+**Offline:** cStor pool status is offline due to the following cases:
+- when pool creation or pool import is failed.
+- when a disk is unavailable in case of the pool is created in a striped manner.
+- when tampering happens on CSP resource and invalid values are set then CSP will be updated to offline.
+**Degraded:** cStor pool status is degraded due to the following cases:
+- when any one of the disks is unavailable on the node where the pool is created either Mirror, Raidz or Raidz2 manner.
+**Error:** This means cstor-pool container in cStor pool pod is not in running state.
+**DetetionFailed:** There could be an internal error occurred when CSP is deleted.
+
+**Note:** Status of CSPs are updated only if its corresponding cStor pool pod is Running. If the cStor pool pod of corresponding cStor pool is not running, then the status of cStor pool shown in the above output may be stale.
+
+
+### Verification of cStor Volume
+
+cStor Volume is namespace scoped resource. You have to provide the same namespace where openebs is installed. Status of cStor Volume can be obtained using the following way.
+
+```
+kubectl get cstorvolume -n <openebs_installed_namespace>
+```
+
+Example command:
+
+```
+kubectl get cstorvolume -n openebs
+```
+
+Example output:
+
+<div class="co">
+NAME                                       STATUS    AGE   CAPACITY
+pvc-4c3baced-c020-11e9-ad45-42010a8001c8   Healthy   1h    5G	
+</div>
+
+Status of each cStor volume can be found under `STATUS` field.
+
+**Note:** If the target pod of corresponding cStor volume is not running, then the status of cStor volume shown in the above output may be stale.
+
+The following are the different type of STATUS information of cStor volumes and their definition.
+
+**Init:** Init status of cStor volume is due to the following cases:
+- when the cStor volume is created.
+- when the replicas are not connected to target pod.
+**Healthy:** Healthy status of cStor volume represents that 51% of healthy replicas are connected to the target and volume is ready IO operations
+**Degraded:** Minimum 51% of replicas are connected and some of these replicas are in  degraded state, then volume will be running as degraded state and IOs are operational in this state.
+**Offline:** When number.of replicas which is equal to Consistency Factor are not yet connected to the target due to network issues or some other reasons In this case, volume is not ready to perform IOs.
+
+For getting the number of replicas connected to the target pod of the cStor volume, use kubectl get cstorvolume <volume_name> -n <openebs_installed_namespace> -oyaml.
+```
+Example output:
+```
+In this case, replicationFactor is 3.
+
+<div class="co">
+status:
+    capacity: 5G
+    lastTransitionTime: "2019-08-16T12:22:21Z"
+    lastUpdateTime: "2019-08-16T13:36:51Z"
+    phase: Healthy
+    replicaStatuses:
+    - checkpointedIOSeq: "0"
+      inflightRead: "0"
+      inflightSync: "0"
+      inflightWrite: "0"
+      mode: Healthy
+      quorum: "1"
+      replicaId: "15881113332075879720"
+      upTime: 4516
+    - checkpointedIOSeq: "0"
+      inflightRead: "0"
+      inflightSync: "0"
+      inflightWrite: "0"
+      mode: Healthy
+      quorum: "1"
+      replicaId: "1928348327271356191"
+      upTime: 4515
+    - checkpointedIOSeq: "0"
+      inflightRead: "0"
+      inflightSync: "0"
+      inflightWrite: "0"
+      mode: Healthy
+      quorum: "1"
+      replicaId: "3816436440075944405"
+      upTime: 4514
+</div>
+
+
+In the above output, if quorum: **0** then data written to that replica is lost(not ready to read). If quorum: **1** then that replica is ready for Read&Write operation.
+
+If anything went wrong then the error can be seen in cstorvolume events `kubectl describe cstorvolume <volume_name> -n <openebs_installed_namespace>`
+
+### Verification of cStor Volume Replica
+
+cStor Volume Replica is namespace scoped resource. You have to provide the same namespace where openebs is installed. Status of cStor Volume Replica can be obtained using the following way.
+
+```
+kubectl get cvr -n <openebs_installed_namespace>
+```
+
+Example command:
+
+```
+kubectl get cvr -n openebs
+```
+
+Example output:
+
+<div class="co">
+NAME                                                            USED   ALLOCATED   STATUS    AGE
+pvc-4c3baced-c020-11e9-ad45-42010a8001c8-cstor-disk-pool-g5go   6K     6K          Offline   21s
+pvc-4c3baced-c020-11e9-ad45-42010a8001c8-cstor-disk-pool-srj3   6K     6K          Offline   21s
+pvc-4c3baced-c020-11e9-ad45-42010a8001c8-cstor-disk-pool-tla4   6K     6K          Offline   21s
+</div>
+
+Status of each cStor volume Replica can be found under `STATUS` field.
+
+
+**Note:** If the pool pod of corresponding cStor volume replica is not running, then the status of CVR shown in the output of the above command may be stale.
+
+The following are the different type of STATUS information of cStor Volumes Replica and their definition.
+
+**Healthy:** Healthy state represents volume is healthy and volume data existing on this replica is up to date.
+**Offline:** cStor volume replica status is offline due to the following cases:
+- when the corresponding cStor pool is not available to create volume.
+- when the creation of cStor volume fails.
+- when the replica is not yet connected to the target.
+**Degraded:** cStor volume replica status is degraded due to the following case
+- when the cStor volume replica is connected to the target and rebuilding is not yet started on this replica.
+**Rebuilding:** cStor volume replica status is rebuilding when the cStor volume replica is undergoing rebuilding, that means, data sync with another replica.
+**Error:** cStor volume replica status is in error state due to the following cases:
+- when the volume replica data set is not existing in the pool.
+- when an error occurs while getting the stats of cStor volume.
+- when the unit of size is not mentioned in PVC spec. For example, if the size is 5 instead of 5G, 
+**DeletionFailed:** cStor volume replica status is deletion failed while destroying cStor volumes fails.
+**Invalid:** cStor volume replica status is invalid when a new cstor-pool-mgmt container in a new pod is communicating with the old cstor-pool container in an old pod.
+**Init:** cStor volume replica status init represents the volume is not yet created.
+**Recreate:** cStor volume replica status recreate represents an intermediate state before importing the volume(this can happen only when pool pod got restarted) in case of a non-ephemeral disk. If the disk is ephemeral then this status represents volume is going to recreate.
 
 <br>
+
+<a href="#top">Go to top</a>
+
+<hr>
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
