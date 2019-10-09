@@ -28,7 +28,7 @@ sidebar_label: Knowledge Base
 
 [How to reconstruct data from healthy replica to replaced one?](#how-to-reconstruct-data-from-healthy-replica-to-replaced-ones)
 
-[How to verify whether cStor volume is running fine? ](how-to-verify-whether-cstor-volume-is-running-fine)
+[How to verify whether cStor volume is running fine?](how-to-verify-whether-cstor-volume-is-running-fine)
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
