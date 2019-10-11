@@ -1049,12 +1049,12 @@ From the above highlighted(Lines marked as `Checked this entry`) logs we can con
 **Possible Reason:**
 
 When a cstor pool pod is deleted there are high chances that two cstor pool pods of same pool can present i.e old pool pod will be in `Terminating` state(which means not all the containers completely terminated) and new pool pod will be in `Running` state(might be few containers are in running state but not all). In this scenario `cstor-pool-mgmt` container in new pool pod is communicating with `cstor-pool` in old pool pod.  This can cause CVR resource to set to `Invalid`.
+
 **Note:** This issue has observed in all OpenEBS versions upto 1.2.
 
 **Resolution:**
 
-Edit the `Phase` of cStorVolumeReplica (cvr) to `Offline`
-After few seconds CVR will be `Healthy` or `Degraded` state depends on rebuilding progress.
+Edit the `Phase` of cStorVolumeReplica (cvr) to `Offline`. After few seconds CVR will be `Healthy` or `Degraded` state depends on rebuilding progress.
 
 
 <hr>
