@@ -28,6 +28,10 @@ sidebar_label: Knowledge Base
 
 [How to reconstruct data from healthy replica to replaced one?](#how-to-reconstruct-data-from-healthy-replica-to-replaced-ones)
 
+[How to verify whether cStor volume is running fine?](#how-to-verify-whether-cstor-volume-is-running-fine)
+
+[Expanding Jiva Storage Volumes](#expanding-jiva-storage-volumes)
+
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
@@ -1277,9 +1281,575 @@ pvc-5c52d001-...........-cstor-sparse-pool-sb1v   90.8M   85.0M   	  Healthy   3
 
 <br>
 
-<hr>
+<a href="#top">Go to top</a>
+
+
+<h3><a class="anchor" aria-hidden="true" id="how-to-verify-whether-cstor-volume-is-running-fine"></a>How to verify whether cStor volume is running fine?</h3>
+
+
+### Overview
+
+The following items will be discussed:
+
+1. Verification of cStor Storage Pool(CSP)
+2. Verification of cStor Volume
+3. Verification of cStor Volume Replica(CVR)
+
+
+### Verification of cStor Storage Pool
+
+cStor Storage Pool(CSP) resources are cluster scoped resources. Status of CSPs can be obtained using the following way.
+
+```
+kubectl get csp
+```
+
+Example output:
+
+<div class="co">
+NAME                   ALLOCATED   FREE    CAPACITY   STATUS    TYPE      AGE
+cstor-disk-pool-g5go   270K        9.94G   9.94G      Healthy   striped   2m
+cstor-disk-pool-srj3   270K        9.94G   9.94G      Healthy   striped   2m
+cstor-disk-pool-tla4   270K        9.94G   9.94G      Healthy   striped   2m	
+</div>
+
+Status of each cStor pool can be found under `STATUS` field. The following are the different type of `STATUS` information of cStor pools and their meaning.
+
+**Healthy:** This state represents cStor pool is online and running.
+**Offline:** cStor pool status is offline due to the following cases:
+- when pool creation or pool import is failed.
+- when a disk is unavailable in case of the pool is created in a striped manner.
+- when tampering happens on CSP resource and invalid values are set then CSP will be updated to offline.
+**Degraded:** cStor pool status is degraded due to the following cases:
+- when any one of the disks is unavailable on the node where the pool is created either Mirror, Raidz or Raidz2 manner.
+**Error:** This means cstor-pool container in cStor pool pod is not in running state.
+**DetetionFailed:** There could be an internal error occurred when CSP is deleted.
+
+**Note:** Status of CSPs are updated only if its corresponding cStor pool pod is Running. If the cStor pool pod of corresponding cStor pool is not running, then the status of cStor pool shown in the above output may be stale.
+
+
+### Verification of cStor Volume
+
+cStor Volume is namespace scoped resource. You have to provide the same namespace where openebs is installed. Status of cStor Volume can be obtained using the following way.
+
+```
+kubectl get cstorvolume -n <openebs_installed_namespace>
+```
+
+Example command:
+
+```
+kubectl get cstorvolume -n openebs
+```
+
+Example output:
+
+<div class="co">
+NAME                                       STATUS    AGE   CAPACITY
+pvc-4c3baced-c020-11e9-ad45-42010a8001c8   Healthy   1h    5G	
+</div>
+
+Status of each cStor volume can be found under `STATUS` field.
+
+**Note:** If the target pod of corresponding cStor volume is not running, then the status of cStor volume shown in the above output may be stale.
+
+The following are the different type of STATUS information of cStor volumes and their definition.
+
+**Init:** Init status of cStor volume is due to the following cases:
+- when the cStor volume is created.
+- when the replicas are not connected to target pod.
+**Healthy:** Healthy status of cStor volume represents that 51% of healthy replicas are connected to the target and volume is ready IO operations
+**Degraded:** Minimum 51% of replicas are connected and some of these replicas are in  degraded state, then volume will be running as degraded state and IOs are operational in this state.
+**Offline:** When number.of replicas which is equal to Consistency Factor are not yet connected to the target due to network issues or some other reasons In this case, volume is not ready to perform IOs.
+
+For getting the number of replicas connected to the target pod of the cStor volume, use kubectl get cstorvolume <volume_name> -n <openebs_installed_namespace> -oyaml.
+```
+Example output:
+```
+In this case, replicationFactor is 3.
+
+<div class="co">
+status:
+    capacity: 5G
+    lastTransitionTime: "2019-08-16T12:22:21Z"
+    lastUpdateTime: "2019-08-16T13:36:51Z"
+    phase: Healthy
+    replicaStatuses:
+    - checkpointedIOSeq: "0"
+      inflightRead: "0"
+      inflightSync: "0"
+      inflightWrite: "0"
+      mode: Healthy
+      quorum: "1"
+      replicaId: "15881113332075879720"
+      upTime: 4516
+    - checkpointedIOSeq: "0"
+      inflightRead: "0"
+      inflightSync: "0"
+      inflightWrite: "0"
+      mode: Healthy
+      quorum: "1"
+      replicaId: "1928348327271356191"
+      upTime: 4515
+    - checkpointedIOSeq: "0"
+      inflightRead: "0"
+      inflightSync: "0"
+      inflightWrite: "0"
+      mode: Healthy
+      quorum: "1"
+      replicaId: "3816436440075944405"
+      upTime: 4514
+</div>
+
+
+In the above output, if quorum: **0** then data written to that replica is lost(not ready to read). If quorum: **1** then that replica is ready for Read&Write operation.
+
+If anything went wrong then the error can be seen in cstorvolume events `kubectl describe cstorvolume <volume_name> -n <openebs_installed_namespace>`
+
+### Verification of cStor Volume Replica
+
+cStor Volume Replica is namespace scoped resource. You have to provide the same namespace where openebs is installed. Status of cStor Volume Replica can be obtained using the following way.
+
+```
+kubectl get cvr -n <openebs_installed_namespace>
+```
+
+Example command:
+
+```
+kubectl get cvr -n openebs
+```
+
+Example output:
+
+<div class="co">
+NAME                                                            USED   ALLOCATED   STATUS    AGE
+pvc-4c3baced-c020-11e9-ad45-42010a8001c8-cstor-disk-pool-g5go   6K     6K          Offline   21s
+pvc-4c3baced-c020-11e9-ad45-42010a8001c8-cstor-disk-pool-srj3   6K     6K          Offline   21s
+pvc-4c3baced-c020-11e9-ad45-42010a8001c8-cstor-disk-pool-tla4   6K     6K          Offline   21s
+</div>
+
+Status of each cStor volume Replica can be found under `STATUS` field.
+
+
+**Note:** If the pool pod of corresponding cStor volume replica is not running, then the status of CVR shown in the output of the above command may be stale.
+
+The following are the different type of STATUS information of cStor Volumes Replica and their definition.
+
+**Healthy:** Healthy state represents volume is healthy and volume data existing on this replica is up to date.
+**Offline:** cStor volume replica status is offline due to the following cases:
+- when the corresponding cStor pool is not available to create volume.
+- when the creation of cStor volume fails.
+- when the replica is not yet connected to the target.
+**Degraded:** cStor volume replica status is degraded due to the following case
+- when the cStor volume replica is connected to the target and rebuilding is not yet started on this replica.
+**Rebuilding:** cStor volume replica status is rebuilding when the cStor volume replica is undergoing rebuilding, that means, data sync with another replica.
+**Error:** cStor volume replica status is in error state due to the following cases:
+- when the volume replica data set is not existing in the pool.
+- when an error occurs while getting the stats of cStor volume.
+- when the unit of size is not mentioned in PVC spec. For example, if the size is 5 instead of 5G, 
+**DeletionFailed:** cStor volume replica status is deletion failed while destroying cStor volumes fails.
+**Invalid:** cStor volume replica status is invalid when a new cstor-pool-mgmt container in a new pod is communicating with the old cstor-pool container in an old pod.
+**Init:** cStor volume replica status init represents the volume is not yet created.
+**Recreate:** cStor volume replica status recreate represents an intermediate state before importing the volume(this can happen only when pool pod got restarted) in case of a non-ephemeral disk. If the disk is ephemeral then this status represents volume is going to recreate.
 
 <br>
+
+<a href="#top">Go to top</a>
+
+
+<h3><a class="anchor" aria-hidden="true" id="expanding-jiva-storage-volumes"></a>Expanding Jiva Storage Volumes</h3>
+
+You can resize/expand the OpenEBS volume using the following procedure. Perform all commands with root privilege mentioned from step 2 to step 8 on node where application pod is running.
+
+**Step 1:** Identify the node where application pod is running. Also note down the IP of the corresponding Jiva controller pod. This IP is needed in step 7. The  above can be get by running following command:
+
+```
+kubectl get pod -n <namespace> -o wide 
+```
+
+Example:
+
+```
+kubectl get pod -n default -o wide
+```
+
+Example output:
+
+<div class="co">
+NAME                                                             READY   STATUS    RESTARTS   AGE     IP           NODE                                                 NOMINATED NODE   READINESS GATES
+percona-66db7d9b88-ltdsf                                         1/1     Running   0          9m47s   10.16.0.8    gke-ranjith-jiva-resize-default-pool-ec5045bf-mzf4   <none>           <none>
+pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-ctrl-798dcd69d8-k5v29   2/2     Running   0          9m46s   10.16.1.8    gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
+pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-5fwxr    1/1     Running   0          9m41s   10.16.1.9    gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
+pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-8rclm    1/1     Running   0          9m41s   10.16.0.7    gke-ranjith-jiva-resize-default-pool-ec5045bf-mzf4   <none>           <none>
+pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-sjvtq    1/1     Running   0          9m41s   10.16.2.10   gke-ranjith-jiva-resize-default-pool-ec5045bf-24f1   <none>           <none>
+</div>
+
+In above output, application pod is running on node ` gke-ranjith-jiva-resize-default-pool-ec5045bf-mzf4` and Jiva target pod IP is `10.16.1.8`.
+
+**Step 2:** SSH to the node where application pod is running. Run following command once logged into the corresponding node.
+
+```
+lsblk
+```
+
+Example output:
+
+<div class="co">
+NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda       8:0    0   40G  0 disk 
+├─sda1    8:1    0 39.9G  0 part /
+├─sda14   8:14   0    4M  0 part 
+└─sda15   8:15   0  106M  0 part /boot/efi
+sdb       8:16   0    5G  0 disk /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6
+</div>
+
+In the above output, `sdb` is the volume with `5G` capacity. 
+
+**Step 3:** Obtain iSCSI target and disk details using the following command.
+
+```
+iscsiadm -m session -P 3
+```
+
+Example output:
+
+<div class="co">
+iSCSI Transport Class version 2.0-870
+version 2.0-874
+Target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093 (non-flash)
+        Current Portal: 10.20.23.99:3260,1
+        Persistent Portal: 10.20.23.99:3260,1
+                **********
+                Interface:
+                **********
+                Iface Name: default
+                Iface Transport: tcp
+                Iface Initiatorname: iqn.1993-08.org.debian:01:f6771fccb5af
+                Iface IPaddress: 10.128.0.103
+                Iface HWaddress: <empty>
+                Iface Netdev: <empty>
+                SID: 1
+                iSCSI Connection State: Unknown
+                iSCSI Session State: LOGGED_IN
+                Internal iscsid Session State: Unknown
+                *********
+                Timeouts:
+                *********
+                Recovery Timeout: 120
+                Target Reset Timeout: 30
+                LUN Reset Timeout: 30
+                Abort Timeout: 15
+                *****
+                CHAP:
+                *****
+                username: <empty>
+                password: ********
+                username_in: <empty>
+                password_in: ********
+                ************************
+                Negotiated iSCSI params:
+                ************************
+                HeaderDigest: None
+                DataDigest: None
+                MaxRecvDataSegmentLength: 262144
+                MaxXmitDataSegmentLength: 65536
+                FirstBurstLength: 65536
+                MaxBurstLength: 262144
+                ImmediateData: Yes
+                InitialR2T: Yes
+                MaxOutstandingR2T: 1
+                ************************
+                Attached SCSI devices:
+                ************************
+                Host Number: 1  State: running
+                scsi1 Channel 00 Id 0 Lun: 0
+                        Attached scsi disk sdb          State: running
+</div>
+	
+In above output, there is only one volume present on the node so it is easy to get the iSCSI target IP and disk details status. In this example disk is `sdb`, iSCSI target IP is `10.20.23.99:3260`, and target iqn is `iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093`. Note down these information for future use. If there are many volumes attached on the node, then identify the disk using the PV name.
+
+**Step 4** Check the mount path on disk `sdb` using the following command.
+
+```
+mount | grep /dev/sdb | more
+```
+
+Example snippet of Output:
+
+<div class="co">
+/dev/sdb on /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
+/dev/sdb on /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
+/dev/sdb on /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
+/dev/sdb on /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
+/dev/sdb on /var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093 type ext4 (rw,relatime,data=ordered)
+/dev/sdb on /var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093 type ext4 (rw,relatime,data=ordered)
+/dev/sdb on /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093 type ext4 (rw,relatime,data=ordered)
+/dev/sdb on /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093 type ext4 (rw,relatime,data=ordered)
+</div>
+
+**Step 5:** Unmount the file system using the following command. The following is an example command with respect to the above output and update with correct mount path in your case. Ensure you are running following commands with root privilege.
+
+```
+umount /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.co
+m.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0
+umount /var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
+```
+
+**Step 6:** Logout from the particualr iSCSI target using the following command:
+
+```
+iscsiadm -m node -u -T <target_iqn>
+```
+
+Example:
+
+```
+iscsiadm -m node -u -T iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
+```
+
+Example output:
+
+<div class="co">
+Logging out of session [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093, portal: 10.20.23.99,3260]
+Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093, portal: 10.20.23.99,3260] successful
+</div>
+
+
+**Step 7:** Get the volume ID using the following command:
+
+```
+curl http://<Jiva_controller_pod_ip>:9501/v1/volumes
+```
+
+Example:
+
+```
+curl http://10.16.1.8:9501/v1/volumes
+```
+
+Example output:
+
+<div class="co">
+{"data":[{"actions":{"deleteSnapshot":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=deleteSnapshot","revert":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=revert","shutdown":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=shutdown","snapshot":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=snapshot"},"id":"cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==","links":{"self":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw=="},"name":"pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093","readOnly":"false","replicaCount":3,"type":"volume"}],"links":{"self":"http://10.16.1.8:9501/v1/volumes"},"resourceType":"volume","type":"collection"}
+</div>
+
+From above example output volume id is `cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==`, Jiva target pod IP is `10.16.1.8`, Volume name is `pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093`. These parameters are required for next step.
+
+**Step 8:** Modify the volume capacity using the following command.
+
+```
+curl -H "Content-Type: application/json" -X POST -d '{"name":"pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093","size":"8G"}' http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=resize
+```
+Example output:
+
+<div class="co">
+{"actions":{"deleteSnapshot":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=deleteSnapshot","revert":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=revert","shutdown":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=shutdown","snapshot":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=snapshot"},"id":"cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==","links":{"self":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw=="},"name":"pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093","readOnly":"false","replicaCount":3,"type":"volume"}
+</div>
+
+From above output, volume size has expanded to `8G`.
+
+**Step 9:** Run step 9 and step 10 from Kubernetes master node. Get the Jiva pod details using the following command:
+
+```
+kubectl get pod -n <namespace>
+```
+
+Example output:
+
+<div class="co">
+NAME                                                             READY   STATUS    RESTARTS   AGE
+percona-66db7d9b88-ltdsf                                         1/1     Running   0          6h38m
+pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-ctrl-798dcd69d8-k5v29   2/2     Running   0          6h38m
+pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-5fwxr    1/1     Running   0          6h38m
+pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-8rclm    1/1     Running   0          6h38m
+pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-sjvtq    1/1     Running   0          6h38m
+</div>
+
+**Step 10:** Restart all replica pods of the corresponding volume using the following command. If replica count of the Jiva volume is more than 1, then you must delete all the replica pods of corresponding Jiva volume using single command.
+
+```
+kubectl delete pod <replica_pod_1> <replica_pod_2> ... <replica_pod_n> -n <namespace>
+```
+
+Example:
+
+```
+kubectl delete pod pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-5fwxr pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-8rclm pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-sjvtq -n default
+```
+
+Example output:
+
+<div class="co">
+pod "pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-5fwxr" deleted
+pod "pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-8rclm" deleted
+pod "pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-sjvtq" deleted
+</div>
+
+Verify new Jiva pods are running fine using `kubectl get pod -n <namespace>`
+
+**Step 11:** Perform step 11 to step 15 with root privilege from node where application pod is running. Log in to the iSCSI target using the following commands.
+
+```
+iscsiadm -m discovery -t st -p <Jiva_target_ip>:3260
+```
+
+Example:
+
+```
+iscsiadm -m discovery -t st -p 10.16.1.8:3260
+```
+
+Example output:
+
+<div class="co">
+10.20.23.99:3260,1 iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
+</div>
+
+From above output, iSCSI target IP is `10.20.23.99:3260`.
+
+Now, Login to the iSCSI target using the following command:
+
+```
+iscsiadm -m discovery -t st -p 10.20.23.99:3260 -l
+```
+
+Example output:
+
+<div class="co">
+10.20.23.99:3260,1 iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
+Logging in to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093, portal: 10.20.23.99,3260] (multiple)
+Login to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093, portal: 10.20.23.99,3260] successful.
+</div>
+
+**Step 12:** Verify the newly added disk details using the following command:
+
+```
+lsblk
+```
+
+Example output:
+
+<div class="co">
+NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda       8:0    0   40G  0 disk 
+├─sda1    8:1    0 39.9G  0 part /
+├─sda14   8:14   0    4M  0 part 
+└─sda15   8:15   0  106M  0 part /boot/efi
+sdc       8:32   0    8G  0 disk 
+</div>
+
+From above output, new disk has mounted as `sdc` with a size of 8G.
+
+**Step 13:** Check the file system consistency using the following command:
+
+```
+e2fsck -f <expanded_device_path>
+```
+
+In following example, /dev/sdc is the newly expanded disk.
+
+```
+e2fsck -f /dev/sdc
+```
+
+Example output:
+
+<div class="co">
+e2fsck 1.44.1 (24-Mar-2018)
+/dev/sdc: recovering journal
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+Free blocks count wrong (1268642, counted=1213915).
+Fix<y>? yes
+Free inodes count wrong (327669, counted=327376).
+Fix<y>? yes
+
+/dev/sdc: ***** FILE SYSTEM WAS MODIFIED *****
+/dev/sdc: 304/327680 files (7.2% non-contiguous), 96805/1310720 blocks
+</div>
+
+**Step 14:** Expand the file system using the following command. In the following example, `/dev/sdc` is the newly expanded disk.
+
+```
+resize2fs /dev/sdc 
+```
+
+Example output:
+
+<div class="co">
+resize2fs 1.44.1 (24-Mar-2018)
+Resizing the filesystem on /dev/sdc to 2097152 (4k) blocks.
+The filesystem on /dev/sdc is now 2097152 (4k) blocks long.
+</div>
+
+**Step 15:** Mount the file system using the following commands with root privilege:
+
+```
+mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0
+mount /dev/sdc /var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
+```
+
+**Step 16:** Perform this command from Kuberenetes master node. Restart the application pod using the following command:
+
+```
+kubectl delete pod percona-66db7d9b88-ltdsf  
+```
+
+Verify new pod is running using the following command. Note down on which node the application pod is running now.
+
+```
+kubectl get pod  -n <namespace> -o wide 
+```
+
+Example:
+
+```
+kubectl get pod -n default -o wide
+```
+
+Example output:
+
+<div class="co">
+NAME                                                             READY   STATUS    RESTARTS   AGE   IP           NODE                                                 NOMINATED NODE   READINESS GATES
+percona-66db7d9b88-bnr8w                                         1/1     Running   0          81m   10.16.2.12   gke-ranjith-jiva-resize-default-pool-ec5045bf-24f1   <none>           <none>
+pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-ctrl-798dcd69d8-k5v29   2/2     Running   0          8h    10.16.1.8    gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
+pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-65c8z    1/1     Running   0          94m   10.16.1.10   gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
+pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-6znbr    1/1     Running   1          94m   10.16.0.9    gke-ranjith-jiva-resize-default-pool-ec5045bf-mzf4   <none>           <none>
+pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-m9lrx    1/1     Running   0          94m   10.16.2.11   gke-ranjith-jiva-resize-default-pool-ec5045bf-24f1   <none>           <none>
+</div>
+
+**Step 17:** Identify the node where new application pod is running. Then SSH to the node to verify the expanded size using the following command:
+
+```
+lsblk
+```
+
+Example output:
+
+<div class="co">
+NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda       8:0    0   40G  0 disk 
+├─sda1    8:1    0 39.9G  0 part /
+├─sda14   8:14   0    4M  0 part 
+└─sda15   8:15   0  106M  0 part /boot/efi
+sdb       8:16   0    8G  0 disk /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/pods/164201d0-ebcc-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
+</div>
+
+**Step 18:** Verify the exapnded size from application pod.
+
+**Note:** After the volume expansion, size will not be reflected on `kubectl get pv` for the corresponding volume.
+
+<br>
+
+<a href="#top">Go to top</a>
+
+<hr>
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
