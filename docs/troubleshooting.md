@@ -996,7 +996,7 @@ Perform following steps to restore the missing metadata file of internal snapsho
 
 <h3><a class="anchor" aria-hidden="true" id="CVR-showing-status-as-invalid-after-poolpod-gets-recreated"></a>One of the cStorVolumeReplica(CVR) will have its status as `Invalid` after corresponding pool pod gets recreated</h3>
 
-User has deleted a cStor pool pod and one of the CVR's status changed to `Invalid` after new pool pod gets created.
+When User delete a cStor pool pod, there are high chances for that corresponding pool-related CVR's can goes into `Invalid` state.
 Following is a sample output of `kubectl get cvr -n openebs`
 
 ```
@@ -1007,10 +1007,10 @@ pvc-738f76c0-b553-11e9-858e-54e1ad4a9dd4-cstor-sparse-p8yp   6K     6K          
 **Troubleshooting**
 
 Sample logs of `cstor-pool-mgmt` when issue happens:
-```
+<pre>
 rm /usr/local/bin/zrepl
 exec /usr/local/bin/cstor-pool-mgmt start
-I0802 18:35:13.814623 6 common.go:205] CStorPool CRD found   # Check this entry   
+<strong>I0802 18:35:13.814623 6 common.go:205] CStorPool CRD found</strong>
 I0802 18:35:13.822382 6 common.go:223] CStorVolumeReplica CRD found
 I0802 18:35:13.824957 6 new_pool_controller.go:103] Setting up event handlers
 I0802 18:35:13.827058 6 new_pool_controller.go:105] Setting up event handlers for CSP
@@ -1041,10 +1041,10 @@ I0802 18:35:13.968689 6 run_backup_controller.go:53] Started CStorBackup workers
 I0802 18:35:43.869876 6 handler.go:456] cStorPool pending: 48d3b2ba-b553-11e9-858e-54e1ad4a9dd4
 I0802 18:35:43.869961 6 new_pool_controller.go:160] cStorPool Modify event : cstor-sparse-p8yp, 48d3b2ba-b553-11e9-858e-54e1ad4a9dd4
 I0802 18:35:43.870552 6 event.go:221] Event(v1.ObjectReference{Kind:"CStorPool", Namespace:"", Name:"cstor-sparse-p8yp", UID:"48d3b2ba-b553-11e9-858e-54e1ad4a9dd4", APIVersion:"openebs.io/v1alpha1", ResourceVersion:"2070", FieldPath:""}): type: 'Normal' reason: 'Synced' Received Resource modify event
-I0802 18:35:44.905633 6 pool.go:93] Import command successful with true dontimport: false importattr: [import -c /tmp/pool1.cache -o cachefile=/tmp/pool1.cache cstor-48d3b2ba- b553-11e9-858e-54e1ad4a9dd4] out:   # Check this entry
-```
+<strong>I0802 18:35:44.905633 6 pool.go:93] Import command successful with true dontimport: false importattr: [import -c /tmp/pool1.cache -o cachefile=/tmp/pool1.cache cstor-48d3b2ba- b553-11e9-858e-54e1ad4a9dd4] out:</strong>   
+</pre>
 
-From the above highlighted(Lines marked as `Checked this entry`) logs we can confirm `cstor-pool-mgmt` in new pod is communicating with `cstor-pool` in old pod as first highlighted log says `cstor pool found` then pool is really `imported`.
+From the above highlighted logs, we can confirm `cstor-pool-mgmt` in new pod is communicating with `cstor-pool` in old pod as first highlighted log says `cstor pool found` then next highlighted one says pool is really `imported`.
 
 **Possible Reason:**
 
@@ -1054,7 +1054,7 @@ When a cstor pool pod is deleted there are high chances that two cstor pool pods
 
 **Resolution:**
 
-Edit the `Phase` of cStorVolumeReplica (cvr) to `Offline`. After few seconds CVR will be `Healthy` or `Degraded` state depends on rebuilding progress.
+Edit the `Phase` of cStorVolumeReplica (cvr) from `Invalid` to `Offline`. After few seconds CVR will be `Healthy` or `Degraded` state depends on rebuilding progress.
 
 
 <hr>
