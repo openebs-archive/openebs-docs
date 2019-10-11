@@ -1476,8 +1476,7 @@ kubectl get pod -n default -o wide
 
 Example output:
 
-<div class="co">
-NAME                                                             READY   STATUS    RESTARTS   AGE     IP           NODE                                                 NOMINATED NODE   READINESS GATES
+<div class="co">NAME                                                             READY   STATUS    RESTARTS   AGE     IP           NODE                                                 NOMINATED NODE   READINESS GATES
 percona-66db7d9b88-ltdsf                                         1/1     Running   0          9m47s   10.16.0.8    gke-ranjith-jiva-resize-default-pool-ec5045bf-mzf4   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-ctrl-798dcd69d8-k5v29   2/2     Running   0          9m46s   10.16.1.8    gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-5fwxr    1/1     Running   0          9m41s   10.16.1.9    gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
@@ -1495,8 +1494,7 @@ lsblk
 
 Example output:
 
-<div class="co">
-NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+<div class="co">NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 sda       8:0    0   40G  0 disk 
 ├─sda1    8:1    0 39.9G  0 part /
 ├─sda14   8:14   0    4M  0 part 
@@ -1514,8 +1512,7 @@ iscsiadm -m session -P 3
 
 Example output:
 
-<div class="co">
-iSCSI Transport Class version 2.0-870
+<div class="co">iSCSI Transport Class version 2.0-870
 version 2.0-874
 Target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093 (non-flash)
         Current Portal: 10.20.23.99:3260,1
@@ -1577,8 +1574,7 @@ mount | grep /dev/sdb | more
 
 Example snippet of Output:
 
-<div class="co">
-/dev/sdb on /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
+<div class="co">/dev/sdb on /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
 /dev/sdb on /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
 /dev/sdb on /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
 /dev/sdb on /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
@@ -1610,8 +1606,7 @@ iscsiadm -m node -u -T iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-
 
 Example output:
 
-<div class="co">
-Logging out of session [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093, portal: 10.20.23.99,3260]
+<div class="co">Logging out of session [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093, portal: 10.20.23.99,3260]
 Logout of [sid: 1, target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093, portal: 10.20.23.99,3260] successful
 </div>
 
@@ -1630,9 +1625,9 @@ curl http://10.16.1.8:9501/v1/volumes
 
 Example output:
 
-<div class="co">
+```
 {"data":[{"actions":{"deleteSnapshot":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=deleteSnapshot","revert":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=revert","shutdown":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=shutdown","snapshot":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=snapshot"},"id":"cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==","links":{"self":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw=="},"name":"pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093","readOnly":"false","replicaCount":3,"type":"volume"}],"links":{"self":"http://10.16.1.8:9501/v1/volumes"},"resourceType":"volume","type":"collection"}
-</div>
+```
 
 From above example output volume id is `cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==`, Jiva target pod IP is `10.16.1.8`, Volume name is `pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093`. These parameters are required for next step.
 
@@ -1643,9 +1638,9 @@ curl -H "Content-Type: application/json" -X POST -d '{"name":"pvc-25e8f6f1-eb2d-
 ```
 Example output:
 
-<div class="co">
+```
 {"actions":{"deleteSnapshot":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=deleteSnapshot","revert":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=revert","shutdown":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=shutdown","snapshot":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=snapshot"},"id":"cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==","links":{"self":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw=="},"name":"pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093","readOnly":"false","replicaCount":3,"type":"volume"}
-</div>
+```
 
 From above output, volume size has expanded to `8G`.
 
@@ -1657,8 +1652,7 @@ kubectl get pod -n <namespace>
 
 Example output:
 
-<div class="co">
-NAME                                                             READY   STATUS    RESTARTS   AGE
+<div class="co">NAME                                                             READY   STATUS    RESTARTS   AGE
 percona-66db7d9b88-ltdsf                                         1/1     Running   0          6h38m
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-ctrl-798dcd69d8-k5v29   2/2     Running   0          6h38m
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-5fwxr    1/1     Running   0          6h38m
@@ -1680,8 +1674,7 @@ kubectl delete pod pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-5fwxr
 
 Example output:
 
-<div class="co">
-pod "pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-5fwxr" deleted
+<div class="co">pod "pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-5fwxr" deleted
 pod "pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-8rclm" deleted
 pod "pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-sjvtq" deleted
 </div>
@@ -1702,8 +1695,7 @@ iscsiadm -m discovery -t st -p 10.16.1.8:3260
 
 Example output:
 
-<div class="co">
-10.20.23.99:3260,1 iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
+<div class="co">10.20.23.99:3260,1 iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
 </div>
 
 From above output, iSCSI target IP is `10.20.23.99:3260`.
@@ -1716,8 +1708,7 @@ iscsiadm -m discovery -t st -p 10.20.23.99:3260 -l
 
 Example output:
 
-<div class="co">
-10.20.23.99:3260,1 iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
+<div class="co">10.20.23.99:3260,1 iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
 Logging in to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093, portal: 10.20.23.99,3260] (multiple)
 Login to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093, portal: 10.20.23.99,3260] successful.
 </div>
@@ -1730,8 +1721,7 @@ lsblk
 
 Example output:
 
-<div class="co">
-NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+<div class="co">NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 sda       8:0    0   40G  0 disk 
 ├─sda1    8:1    0 39.9G  0 part /
 ├─sda14   8:14   0    4M  0 part 
@@ -1755,8 +1745,7 @@ e2fsck -f /dev/sdc
 
 Example output:
 
-<div class="co">
-e2fsck 1.44.1 (24-Mar-2018)
+<div class="co">e2fsck 1.44.1 (24-Mar-2018)
 /dev/sdc: recovering journal
 Pass 1: Checking inodes, blocks, and sizes
 Pass 2: Checking directory structure
@@ -1780,8 +1769,7 @@ resize2fs /dev/sdc
 
 Example output:
 
-<div class="co">
-resize2fs 1.44.1 (24-Mar-2018)
+<div class="co">resize2fs 1.44.1 (24-Mar-2018)
 Resizing the filesystem on /dev/sdc to 2097152 (4k) blocks.
 The filesystem on /dev/sdc is now 2097152 (4k) blocks long.
 </div>
@@ -1813,8 +1801,7 @@ kubectl get pod -n default -o wide
 
 Example output:
 
-<div class="co">
-NAME                                                             READY   STATUS    RESTARTS   AGE   IP           NODE                                                 NOMINATED NODE   READINESS GATES
+<div class="co">NAME                                                             READY   STATUS    RESTARTS   AGE   IP           NODE                                                 NOMINATED NODE   READINESS GATES
 percona-66db7d9b88-bnr8w                                         1/1     Running   0          81m   10.16.2.12   gke-ranjith-jiva-resize-default-pool-ec5045bf-24f1   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-ctrl-798dcd69d8-k5v29   2/2     Running   0          8h    10.16.1.8    gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-65c8z    1/1     Running   0          94m   10.16.1.10   gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
@@ -1830,8 +1817,7 @@ lsblk
 
 Example output:
 
-<div class="co">
-NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+<div class="co">NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 sda       8:0    0   40G  0 disk 
 ├─sda1    8:1    0 39.9G  0 part /
 ├─sda14   8:14   0    4M  0 part 
