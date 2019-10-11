@@ -999,18 +999,16 @@ Perform following steps to restore the missing metadata file of internal snapsho
 When User delete a cStor pool pod, there are high chances for that corresponding pool-related CVR's can goes into `Invalid` state.
 Following is a sample output of `kubectl get cvr -n openebs`
 
-```
-NAME                                                         USED   ALLOCATED   STATUS    AGE
+<div class="co">NAME                                                         USED   ALLOCATED   STATUS    AGE
 pvc-738f76c0-b553-11e9-858e-54e1ad4a9dd4-cstor-sparse-p8yp   6K     6K          Invalid   6m
-```
+</div>
 
 **Troubleshooting**
 
 Sample logs of `cstor-pool-mgmt` when issue happens:
-<pre>
-rm /usr/local/bin/zrepl
+<div class="co">rm /usr/local/bin/zrepl
 exec /usr/local/bin/cstor-pool-mgmt start
-<strong>I0802 18:35:13.814623 6 common.go:205] CStorPool CRD found</strong>
+<b>I0802 18:35:13.814623 6 common.go:205] CStorPool CRD found</b>
 I0802 18:35:13.822382 6 common.go:223] CStorVolumeReplica CRD found
 I0802 18:35:13.824957 6 new_pool_controller.go:103] Setting up event handlers
 I0802 18:35:13.827058 6 new_pool_controller.go:105] Setting up event handlers for CSP
@@ -1041,8 +1039,8 @@ I0802 18:35:13.968689 6 run_backup_controller.go:53] Started CStorBackup workers
 I0802 18:35:43.869876 6 handler.go:456] cStorPool pending: 48d3b2ba-b553-11e9-858e-54e1ad4a9dd4
 I0802 18:35:43.869961 6 new_pool_controller.go:160] cStorPool Modify event : cstor-sparse-p8yp, 48d3b2ba-b553-11e9-858e-54e1ad4a9dd4
 I0802 18:35:43.870552 6 event.go:221] Event(v1.ObjectReference{Kind:"CStorPool", Namespace:"", Name:"cstor-sparse-p8yp", UID:"48d3b2ba-b553-11e9-858e-54e1ad4a9dd4", APIVersion:"openebs.io/v1alpha1", ResourceVersion:"2070", FieldPath:""}): type: 'Normal' reason: 'Synced' Received Resource modify event
-<strong>I0802 18:35:44.905633 6 pool.go:93] Import command successful with true dontimport: false importattr: [import -c /tmp/pool1.cache -o cachefile=/tmp/pool1.cache cstor-48d3b2ba- b553-11e9-858e-54e1ad4a9dd4] out:</strong>   
-</pre>
+<b>I0802 18:35:44.905633 6 pool.go:93] Import command successful with true dontimport: false importattr: [import -c /tmp/pool1.cache -o cachefile=/tmp/pool1.cache cstor-48d3b2ba- b553-11e9-858e-54e1ad4a9dd4] out:</b>   
+</div>
 
 From the above highlighted logs, we can confirm `cstor-pool-mgmt` in new pod is communicating with `cstor-pool` in old pod as first highlighted log says `cstor pool found` then next highlighted one says pool is really `imported`.
 
