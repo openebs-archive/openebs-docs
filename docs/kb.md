@@ -1576,7 +1576,8 @@ mount | grep /dev/sdb | more
 
 Example snippet of Output:
 
-<div class="co">/dev/sdb on /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
+<div class="co">
+/dev/sdb on /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
 /dev/sdb on /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
 /dev/sdb on /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
 /dev/sdb on /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0 type ext4 (rw,relatime,data=ordered)
