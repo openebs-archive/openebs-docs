@@ -594,6 +594,7 @@ Below table lists the storage policies supported by Jiva. These policies can be 
 | [OpenEBS Namespace Policy for Jiva Pods](#deploy-in-openEBS-namespace) |           | false                             | Jiva Pod will be deployed in PVC name space by default. With the value as `true`, Jiva Pods will run in OpenEBS namespace. |
 
 <h4><a class="anchor" aria-hidden="true" id="Replica-Count-Policy"></a>Replica Count Policy</h4>
+
 You can specify the Jiva replica count using the *value* for *ReplicaCount* property. In the following example, the jiva-replica-count is specified as 3. Hence, three replicas are created.
 
 ```
@@ -610,6 +611,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Replica-Image-Policy"></a>Replica Image Policy</h4>
+
 You can specify the jiva replica image using *value* for *ReplicaImage* property.
 
 ```
@@ -626,6 +628,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Controller-Image-Policy"></a>Controller Image Policy</h4>
+
 You can specify the jiva controller image using the *value* for *ControllerImage* property.
 
 ```
@@ -642,6 +645,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-Monitor-Policy"></a>Volume Monitor Policy</h4>
+
 You can specify the jiva volume monitor feature which can be set using *value* for *VolumeMonitor* property.
 
 ```
@@ -658,6 +662,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Storage-Pool-Policy"></a>Storage Pool Policy</h4>
+
 A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on any of the following.
 
 - host-os or
@@ -693,6 +698,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-File-System-Type-Policy"></a>Volume File System Type Policy</h4>
+
 You can specify a storage class policy where you can specify the file system type. By default, OpenEBS comes with ext4 file system. However, you can also use the xfs file system.
 
 Following is a sample setting.
@@ -711,6 +717,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-Monitoring-Image-Policy"></a>Volume Monitoring Image Policy</h4>
+
 You can specify the monitoring image policy for a particular volume using *value* for *VolumeMonitorImage*property. The following Kubernetes storage class sample uses the Volume Monitoring policy. By default, volume monitor is enabled.
 
 ```
@@ -727,7 +734,8 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-Space-Reclaim-Policy"></a>Volume Space Reclaim Policy</h4>
-Support for a storage policy that can disable the Jiva Volume Space reclaim. You can specify the jiva volume space reclaim feature setting using the *value* for *RetainReplicaData* property. In the following example, the jiva volume space reclaim feature is enabled as true. Hence, retain the volume data post PVC deletion.
+
+Support for a storage policy that can disable the Jiva Volume Space reclaim. You can specify the jiva volume space reclaim feature setting using the *value* for *RetainReplicaData* property. If User would like to disable Jiva Volume Space reclaim (or in other words - retain the volume data post PVC deletion), set `RetainReplicaData` as `true`. RetainReplicaData specifies whether Jiva replica data folder should be cleared or retained. In the following example, the Jiva volume space reclaim feature is disabled. Hence, volume data will be retained post PVC deletion. 
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -743,6 +751,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Targe-NodeSelector-Policy"></a>Target  NodeSelector Policy</h4>
+
 You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: apnode`is the node label.
 
 ```
@@ -759,6 +768,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Replica-NodeSelector-Policy"></a>Replica NodeSelector Policy</h4>
+
 You can specify the *ReplicaNodeSelector* where replica pods has to be scheduled using the *value* for *ReplicaNodeSelector* . In following sample storage class yaml, `node: openebs` is the node label.
 
 ```
@@ -775,6 +785,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="TargetTolerations"></a>TargetTolerations Policy</h4>
+
 You can specify the *TargetTolerations* to specify the tolerations for Jiva target. 
 
 ```
@@ -793,6 +804,7 @@ You can specify the *TargetTolerations* to specify the tolerations for Jiva targ
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="ReplicaTolerations"></a>ReplicaTolerations Policy</h4>
+
 You can specify the *ReplicaTolerations* to specify the tolerations for Replica.
 
 ```
@@ -811,6 +823,7 @@ You can specify the *ReplicaTolerations* to specify the tolerations for Replica.
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="TargetResourceRequests"></a>TargetResourceRequests Policy</h4>
+
 You can specify the *TargetResourceRequests* to specify resource requests that need to be available before scheduling the containers. 
 
 ```
@@ -826,6 +839,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Target-ResourceLimits-Policy"></a>Target ResourceLimits Policy</h4>
+
 You can specify the *TargetResourceLimits* to restrict the memory and cpu usage of Jiva target pod within the given limit using the *value* for *TargetResourceLimits* .
 
 ```
@@ -837,12 +851,13 @@ metadata:
       - name: TargetResourceLimits
         value: |-
             memory: 1Gi
-            cpu: 100m
+            cpu: 200m
     openebs.io/cas-type: jiva
 provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="AuxResourceLimits-Policy"></a>AuxResourceLimits Policy</h4>
+
 You can specify the *AuxResourceLimits* which allow you to set limits on side cars.
 
 ```
@@ -860,6 +875,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="AuxResourceRequests-Policy"></a>AuxResourceRequests Policy</h4>
+
 This feature is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. `AuxResourceRequests` allow you to set requests on side cars. Requests have to be specified in the format expected by Kubernetes.
 
 ```
@@ -875,6 +891,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="ReplicaResourceLimits-Policy"></a>ReplicaResourceLimits Policy</h4>
+
 You can specify the *ReplicaResourceLimits* to restrict the memory usage of replica pod within the given limit using the *value* for *ReplicaResourceLimits*.
 
 ```
@@ -891,6 +908,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Target-Affinity-Policy"></a>Target Affinity Policy</h4>
+
 The Stateful workloads access the OpenEBS storage volume by connecting to the Volume Target Pod. This policy can be used to co-locate volume target pod on the same node as workload.
 
 - This feature makes use of the Kubernetes Pod Affinity feature that is dependent on the Pod labels. User will need to add the following label to both Application and PVC.
@@ -928,6 +946,7 @@ The Stateful workloads access the OpenEBS storage volume by connecting to the Vo
 **Note**: *This feature works only for cases where there is a single application pod instance associated to a PVC.  Example YAML spec for application deployment can be get from [here](https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/fio/demo-fio-jiva-taa.yaml). In the case of STS, this feature is supported only for single replica StatefulSet.*
 
 <h4><a class="anchor" aria-hidden="true" id="deploy-in-openEBS-namespace"></a>OpenEBS Namespace Policy for Jiva Pods</h4>
+
 This StorageClass Policy is for deploying the Jiva pods in OpenEBS Namespace. By default, the value is `false`, so Jiva Pods will deploy in PVC namespace. The following are the main requirement of running Jiva pods in OpenEBS namespace.
 
 * With default value, granting additional privileges to Jiva pods to access hostpath might involve granting privileges to the entire namespace of PVC. With enabling this value as`true` , Jiva pods will get additional privileges to access hostpath in OpenEBS namespace. 
