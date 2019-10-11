@@ -1307,8 +1307,7 @@ kubectl get csp
 
 Example output:
 
-<div class="co">
-NAME                   ALLOCATED   FREE    CAPACITY   STATUS    TYPE      AGE
+<div class="co">NAME                   ALLOCATED   FREE    CAPACITY   STATUS    TYPE      AGE
 cstor-disk-pool-g5go   270K        9.94G   9.94G      Healthy   striped   2m
 cstor-disk-pool-srj3   270K        9.94G   9.94G      Healthy   striped   2m
 cstor-disk-pool-tla4   270K        9.94G   9.94G      Healthy   striped   2m	
@@ -1346,8 +1345,7 @@ kubectl get cstorvolume -n openebs
 
 Example output:
 
-<div class="co">
-NAME                                       STATUS    AGE   CAPACITY
+<div class="co">NAME                                       STATUS    AGE   CAPACITY
 pvc-4c3baced-c020-11e9-ad45-42010a8001c8   Healthy   1h    5G	
 </div>
 
@@ -1364,14 +1362,17 @@ The following are the different type of STATUS information of cStor volumes and 
 **Degraded:** Minimum 51% of replicas are connected and some of these replicas are in  degraded state, then volume will be running as degraded state and IOs are operational in this state.
 **Offline:** When number.of replicas which is equal to Consistency Factor are not yet connected to the target due to network issues or some other reasons In this case, volume is not ready to perform IOs.
 
-For getting the number of replicas connected to the target pod of the cStor volume, use kubectl get cstorvolume <volume_name> -n <openebs_installed_namespace> -oyaml.
+For getting the number of replicas connected to the target pod of the cStor volume, use following command:
+
 ```
+kubectl get cstorvolume <volume_name> -n <openebs_installed_namespace> -oyaml.
+```
+
 Example output:
-```
+
 In this case, replicationFactor is 3.
 
-<div class="co">
-status:
+<div class="co">status:
     capacity: 5G
     lastTransitionTime: "2019-08-16T12:22:21Z"
     lastUpdateTime: "2019-08-16T13:36:51Z"
@@ -1404,7 +1405,7 @@ status:
 </div>
 
 
-In the above output, if quorum: **0** then data written to that replica is lost(not ready to read). If quorum: **1** then that replica is ready for Read&Write operation.
+In the above output, if `quorum: **0**` then data written to that replica is lost(not ready to read). If `quorum: **1**` then that replica is ready for Read and Write operation.
 
 If anything went wrong then the error can be seen in cstorvolume events `kubectl describe cstorvolume <volume_name> -n <openebs_installed_namespace>`
 
@@ -1424,8 +1425,7 @@ kubectl get cvr -n openebs
 
 Example output:
 
-<div class="co">
-NAME                                                            USED   ALLOCATED   STATUS    AGE
+<div class="co">NAME                                                            USED   ALLOCATED   STATUS    AGE
 pvc-4c3baced-c020-11e9-ad45-42010a8001c8-cstor-disk-pool-g5go   6K     6K          Offline   21s
 pvc-4c3baced-c020-11e9-ad45-42010a8001c8-cstor-disk-pool-srj3   6K     6K          Offline   21s
 pvc-4c3baced-c020-11e9-ad45-42010a8001c8-cstor-disk-pool-tla4   6K     6K          Offline   21s
