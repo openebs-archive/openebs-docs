@@ -15,7 +15,7 @@ Node Device Manager(NDM) is an important component in the OpenEBS architecture. 
 
 
 
-Inspite of doing all of the above, NDM contributes to overall ease of provisioning persistent volumes. 
+In spite of doing all of the above, NDM contributes to overall ease of provisioning persistent volumes. 
 
 
 
@@ -96,7 +96,7 @@ More details can be find from [here](/docs/next/ugndm.html).
 
 ### [cStor User Guide](/docs/next/ugcstor.html)
 
-
+### [Understanding Disk Mount Status on Node](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume)
 
 
 
