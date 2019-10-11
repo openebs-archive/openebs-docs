@@ -1287,7 +1287,7 @@ pvc-5c52d001-...........-cstor-sparse-pool-sb1v   90.8M   85.0M   	  Healthy   3
 <h3><a class="anchor" aria-hidden="true" id="how-to-verify-whether-cstor-volume-is-running-fine"></a>How to verify whether cStor volume is running fine?</h3>
 
 
-### Overview
+<h3><a class="anchor" aria-hidden="true" id="overview-cstor-volume"></a>Overview</h3>
 
 The following items will be discussed:
 
@@ -1296,7 +1296,8 @@ The following items will be discussed:
 3. Verification of cStor Volume Replica(CVR)
 
 
-### Verification of cStor Storage Pool
+<h3><a class="anchor" aria-hidden="true" id="verification-of-cStor-storage-pool"></a>Verification of cStor Storage Pool</h3>
+
 
 cStor Storage Pool(CSP) resources are cluster scoped resources. Status of CSPs can be obtained using the following way.
 
@@ -1328,7 +1329,8 @@ Status of each cStor pool can be found under `STATUS` field. The following are t
 **Note:** Status of CSPs are updated only if its corresponding cStor pool pod is Running. If the cStor pool pod of corresponding cStor pool is not running, then the status of cStor pool shown in the above output may be stale.
 
 
-### Verification of cStor Volume
+<h3><a class="anchor" aria-hidden="true" id="verification-of-cStor-storage-volume"></a>Verification of cStor Volume</h3>
+
 
 cStor Volume is namespace scoped resource. You have to provide the same namespace where openebs is installed. Status of cStor Volume can be obtained using the following way.
 
@@ -1406,7 +1408,7 @@ In the above output, if quorum: **0** then data written to that replica is lost(
 
 If anything went wrong then the error can be seen in cstorvolume events `kubectl describe cstorvolume <volume_name> -n <openebs_installed_namespace>`
 
-### Verification of cStor Volume Replica
+<h3><a class="anchor" aria-hidden="true" id="verification-of-cStor-storage-volume-replica"></a>Verification of cStor Volume Replica</h3>
 
 cStor Volume Replica is namespace scoped resource. You have to provide the same namespace where openebs is installed. Status of cStor Volume Replica can be obtained using the following way.
 
