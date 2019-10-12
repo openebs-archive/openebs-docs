@@ -1215,7 +1215,7 @@ On performing  step 12 and 13, this newly reconstructed replica gets added to th
 Status of CStorVolume and CVRs related to this PV looks like:
 
 ```
-NAME                                              USED	  ALLOCATED   STATUS	AGE
+NAME                                              USED	  ALLOCATED   	  STATUS    AGE
 pvc-5c52d001-...........-cstor-sparse-pool-1irk   7.07M   4.12M   	  Offline   3d
 pvc-5c52d001-...........-cstor-sparse-pool-a1ud   90.8M   85.0M   	  Healthy   3d
 pvc-5c52d001-...........-cstor-sparse-pool-sb1v   90.8M   85.0M   	  Healthy   3d
@@ -1478,7 +1478,8 @@ kubectl get pod -n default -o wide
 
 Example output:
 
-<div class="co">NAME                                                             READY   STATUS    RESTARTS   AGE     IP           NODE                                                 NOMINATED NODE   READINESS GATES
+<div class="co">
+NAME                                                             READY   STATUS    RESTARTS   AGE     IP           NODE                                                 NOMINATED NODE   READINESS GATES
 percona-66db7d9b88-ltdsf                                         1/1     Running   0          9m47s   10.16.0.8    gke-ranjith-jiva-resize-default-pool-ec5045bf-mzf4   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-ctrl-798dcd69d8-k5v29   2/2     Running   0          9m46s   10.16.1.8    gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-5fwxr    1/1     Running   0          9m41s   10.16.1.9    gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
@@ -1496,12 +1497,13 @@ lsblk
 
 Example output:
 
-<div class="co">NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+<div class="co">
+NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 sda       8:0    0   40G  0 disk 
 ├─sda1    8:1    0 39.9G  0 part /
 ├─sda14   8:14   0    4M  0 part 
 └─sda15   8:15   0  106M  0 part /boot/efi
-sdb       8:16   0    5G  0 disk /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6
+sdb       8:16   0    8G  0 disk /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
 </div>
 
 In the above output, `sdb` is the volume with `5G` capacity. 
@@ -1804,7 +1806,8 @@ kubectl get pod -n default -o wide
 
 Example output:
 
-<div class="co">NAME                                                             READY   STATUS    RESTARTS   AGE   IP           NODE                                                 NOMINATED NODE   READINESS GATES
+<div class="co">
+NAME                                                             READY   STATUS    RESTARTS   AGE   IP           NODE                                                 NOMINATED NODE   READINESS GATES
 percona-66db7d9b88-bnr8w                                         1/1     Running   0          81m   10.16.2.12   gke-ranjith-jiva-resize-default-pool-ec5045bf-24f1   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-ctrl-798dcd69d8-k5v29   2/2     Running   0          8h    10.16.1.8    gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-65c8z    1/1     Running   0          94m   10.16.1.10   gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
@@ -1820,7 +1823,8 @@ lsblk
 
 Example output:
 
-<div class="co">NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+<div class="co">
+NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 sda       8:0    0   40G  0 disk 
 ├─sda1    8:1    0 39.9G  0 part /
 ├─sda14   8:14   0    4M  0 part 
