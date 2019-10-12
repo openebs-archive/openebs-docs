@@ -357,12 +357,12 @@ This issue is fixed in 0.8.1 version.
 | Support for RAIDZ1 in cStorPool                              | 1.1.0           |
 | Support for RAIDZ2 in cStorPool                              | 1.1.0           |
 | Deleting a pool replica (Alpha version)                      | 1.2.0           |
-| Scaling up of cStor volume replica (Alpha version)           | 1.3.0           |
 | Disk replacement in a given cStor pool instance              | Not scheduled yet  |  
 |       |
 | <font size="5">cStor volume features</font>                  |                   |
 | Expanding the size of a cStor volume using CSI provisioner (Alpha version)       | 1.2.0         |
 | CSI driver support(alpha)                                  | 1.1.0          |
+| Scaling up of cStor Volume Replica (Alpha version)           | 1.3.0           |
 
 
 
