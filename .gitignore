@@ -7,3 +7,7 @@ chrome-user-data
 *.swp
 *.swo
 docs/ibmcloud.md
+node_modules
+website/i18n
+website/build
+website/package-lock.json
