@@ -293,7 +293,7 @@ openebs_write_time # Write time on volume
 openebs_writes # Write Input/Outputs on Volume
 ```
 
-Grafana charts can be built for the above Prometheus metrics. Some metrics of OpenEBS volumes are available automatically at MayaOnline when you connect the Kubernetes cluster to it. See an example screenshot below.
+Grafana charts can be built for the above Prometheus metrics. Some metrics of OpenEBS volumes are available automatically at [Director Online](https://director.mayadata.io/) when you connect the Kubernetes cluster to it. See an example screenshot below.
 
 ![jiva-monitor](/docs/assets/svg/volume-monitor.svg)
 
@@ -574,11 +574,11 @@ Below table lists the storage policies supported by Jiva. These policies can be 
 | JIVA STORAGE POLICY                                          | MANDATORY | DEFAULT                           | PURPOSE                                                      |
 | ------------------------------------------------------------ | --------- | --------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                 | Defines the number of Jiva volume replicas                   |
-| [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.2.0 | To use particular Jiva replica image                         |
+| [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.3.0 | To use particular Jiva replica image                         |
 | [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/jiva:1.10         | To use particular Jiva Controller Image                      |
 | [StoragePool](#Storage-Pool-Policy)                          | Yes       | default                           | A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on host OS or externally mounted disk. |
 | [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.2.0  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.3.0  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [Volume FSType](#Volume-File-System-Type-Policy)             |           | ext4                              | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)         |           | false                             | It will specify whether data need to be retained post PVC deletion. |
 | [TargetNodeSelector](#Targe-NodeSelector-Policy)             |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva target pod on the nodes that match label. |
@@ -623,7 +623,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ReplicaImage
-        value: quay.io/openebs/m-apiserver:1.2.0
+        value: quay.io/openebs/m-apiserver:1.3.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
@@ -640,7 +640,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: quay.io/openebs/jiva:1.2.0
+        value: quay.io/openebs/jiva:1.3.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
@@ -729,7 +729,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:1.2.0
+        value: quay.io/openebs/m-exporter:1.3.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
