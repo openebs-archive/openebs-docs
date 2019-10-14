@@ -525,7 +525,7 @@ The deletion of Velero backup schedule doesn't destroy the backup created during
 <h3><a class="anchor" aria-hidden="true" id="Upgrading-the-software-version-of-a-cStor-volume"></a>Upgrading the software version of a cStor volume</h3>
 The steps are mentioned in Upgrade section. For upgrading cStorVolume, ensure that cStor Pool image is support this cStor volume image.  It should also recommended to upgrade the corresponding pool before upgrading cStor volume. The steps for upgrading the cStor volume can be find from [here](/docs/next/upgrade.html).
 
-<h3><a class="anchor" aria-hidden="true" id="Provisioning-sample-application-with-cstor"></a>Provisioning sample application with cstor</h3>
+<h3><a class="anchor" aria-hidden="true" id="Provisioning-sample-application-with-cstor"></a>Provisioning sample application with cStor</h3>
 <br>
 Before provisioning an application ensure that the following steps are completed.
 <ol>
@@ -534,15 +534,18 @@ Ensure the blockdevices are mounted as per requirement.
 To know more about blockdevices mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
 </li>
 <li>
-<b>Create StoragePool</b> specifying  the Blockdevices that are to be used.
+<b>Create StoragePool</b> specifying the Blockdevices that are to be used.
 To know the detailed steps for creation of StoragePool <a href="/docs/next/ugcstor.html#creating-cStor-storage-pools" target="_blank">click here.</a>
+The name specified under `metadata` in the <b>StoragePoolClaim</b> YAML needs to be mentioned in StorageClass YAML (in the next step).
+</blockquote>
 </li>
 <li>
-Next, you have to <b>create StorageClass</b>, specifying the StoragePoolClaim under annotations.
-<br>To know the step-wise procedure for creation of StorageClass <a href="/docs/next/ugcstor.html#creating-cStor-storage-class" target="_blank">click here</a>.
+Next, you have to <b>create StorageClass</b>, specifying the `StoragePoolClaim` under `annotations` in the <b>StorageClass</b> YAML.
+To know the step-wise procedure for creation of StorageClass <a href="/docs/next/ugcstor.html#creating-cStor-storage-class" target="_blank">click here</a>.
 </li>
 <li>
-Once all the above steps have been successfully  implemented copy the following yaml into a file, say <b>demo-busybox-cstor.yaml</b>
+Once all the above steps have been successfully  implemented copy the following YAML into a file, say <b>demo-busybox-cstor.yaml</b>. You can  specify StorageClass specified in previous step under spec in <b>PersistentVolumeClaim</b> YAML. In this example, StorageClass name is `openebs-sc-statefulset`.
+<br>
 
 ```
 apiVersion: apps/v1
