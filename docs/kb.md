@@ -1478,14 +1478,14 @@ kubectl get pod -n default -o wide
 
 Example output:
 
-<div class="co">
+```
 NAME                                                             READY   STATUS    RESTARTS   AGE     IP           NODE                                                 NOMINATED NODE   READINESS GATES
 percona-66db7d9b88-ltdsf                                         1/1     Running   0          9m47s   10.16.0.8    gke-ranjith-jiva-resize-default-pool-ec5045bf-mzf4   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-ctrl-798dcd69d8-k5v29   2/2     Running   0          9m46s   10.16.1.8    gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-5fwxr    1/1     Running   0          9m41s   10.16.1.9    gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-8rclm    1/1     Running   0          9m41s   10.16.0.7    gke-ranjith-jiva-resize-default-pool-ec5045bf-mzf4   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-sjvtq    1/1     Running   0          9m41s   10.16.2.10   gke-ranjith-jiva-resize-default-pool-ec5045bf-24f1   <none>           <none>
-</div>
+```
 
 In above output, application pod is running on node ` gke-ranjith-jiva-resize-default-pool-ec5045bf-mzf4` and Jiva target pod IP is `10.16.1.8`.
 
@@ -1497,14 +1497,14 @@ lsblk
 
 Example output:
 
-<div class="co">
+```
 NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 sda       8:0    0   40G  0 disk 
 ├─sda1    8:1    0 39.9G  0 part /
 ├─sda14   8:14   0    4M  0 part 
 └─sda15   8:15   0  106M  0 part /boot/efi
 sdb       8:16   0    8G  0 disk /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
-</div>
+```
 
 In the above output, `sdb` is the volume with `5G` capacity. 
 
@@ -1806,14 +1806,14 @@ kubectl get pod -n default -o wide
 
 Example output:
 
-<div class="co">
+```
 NAME                                                             READY   STATUS    RESTARTS   AGE   IP           NODE                                                 NOMINATED NODE   READINESS GATES
 percona-66db7d9b88-bnr8w                                         1/1     Running   0          81m   10.16.2.12   gke-ranjith-jiva-resize-default-pool-ec5045bf-24f1   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-ctrl-798dcd69d8-k5v29   2/2     Running   0          8h    10.16.1.8    gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-65c8z    1/1     Running   0          94m   10.16.1.10   gke-ranjith-jiva-resize-default-pool-ec5045bf-rq1b   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-6znbr    1/1     Running   1          94m   10.16.0.9    gke-ranjith-jiva-resize-default-pool-ec5045bf-mzf4   <none>           <none>
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-m9lrx    1/1     Running   0          94m   10.16.2.11   gke-ranjith-jiva-resize-default-pool-ec5045bf-24f1   <none>           <none>
-</div>
+```
 
 **Step 17:** Identify the node where new application pod is running. Then SSH to the node to verify the expanded size using the following command:
 
@@ -1823,14 +1823,14 @@ lsblk
 
 Example output:
 
-<div class="co">
+```
 NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
 sda       8:0    0   40G  0 disk 
 ├─sda1    8:1    0 39.9G  0 part /
 ├─sda14   8:14   0    4M  0 part 
 └─sda15   8:15   0  106M  0 part /boot/efi
 sdb       8:16   0    8G  0 disk /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/pods/164201d0-ebcc-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
-</div>
+```
 
 **Step 18:** Verify the exapnded size from application pod.
 
