@@ -130,43 +130,6 @@ footer .sitemap .nav-home {
     background: #f1584d;
 }
 
-/* Side bar*/
-nav.toc .toggleNav {
-    background: #f5f7fa;
-    padding: 3%;
-}
-
-nav.toc .toggleNav ul li a {
-    color: #262B3E;
-    font-size: 14px;
-    padding-left: 10px;
-}
-nav.toc .toggleNav .navGroup a:hover {
-    color: #3A5EE6;
-}
-nav.toc .toggleNav .navGroup h3 {
-    font-weight: 600;
-    font-size: 20px;
-}
-nav.toc .toggleNav ul li.navListItemActive {
-    background: #a9a9a9;
-    color: #f5f7fa;
-}
-nav.toc .toggleNav ul li a.navItemActive{
-    color: #f5f7fa;
-}
-nav.toc .toggleNav .navGroup.navGroupActive h3 {
-    background:#f5f7fa;
-    color:#f1584d;
-    font-size: 15px;
-    text-transform: uppercase;
-}
-
-nav.toc .toggleNav .navGroup.navGroupActive {
-    background: #f5f7fa;
-    padding: '20px 0';
-}
-
 /* Right side menu */
 nav.onPageNav > ul.toc-headings > li > a {
     font-weight: bold;
