@@ -103,7 +103,7 @@ footer .sitemap .nav-home {
 
 /* NAV bar */
 
-.fixedHeaderContainer header img#logo {
+.fixedHeaderContainer header img.logo {
     height: 100%;
     margin-right: 3px;
 }
