@@ -21,10 +21,6 @@ const GithubButton = props => (
   </a>
 );
 
-GithubButton.propTypes = {
-  config: React.PropTypes.object
-};
-
 class Footer extends React.Component {
     docUrl(doc, language) {
         const baseUrl = this.props.config.baseUrl;
