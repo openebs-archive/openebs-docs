@@ -83,14 +83,14 @@ To know more about blockdevice mount status <a href="/docs/next/faq.html#what-mu
  </li>
  <li>
 First, you need to <b>Create a Jiva Pool</b> which includes creation of blockdevice and mounting them and then creating Jiva pool using the above mentioned. 
-To know about the detailed steps <a href="/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a>The name specified under<b>StoragePool</b> YAML needs to be mentioned in StorageClass YAML(in the next step).
+To know about the detailed steps <a href="/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a> The name specified under <b>StoragePool</b> YAML needs to be mentioned in StorageClass YAML in the next step.
  </li>
  <li>
 Now, <b>create a StorageClass</b> , specifying the StoragePool name under `annotations` in the <b>StorageClass</b> YAML.
 To get detailed steps <a href="/docs/next/jivaguide.html#create-a-sc" target="_blank">click here.</a>
  </li>
  <li>
- Once all the above steps have been successfully implemented copy the following yaml file into a file, say <b>demo-busybox-jiva.yaml</b> In this example, storageClassName is <b>openebs-jiva-gpd-3repl</b>.
+ Once all the above steps have been successfully implemented copy the following yaml file into a file, say <b>demo-busybox-jiva.yaml</b>. In this example, `storageClassName` is <b>openebs-jiva-gpd-3repl</b>.
 
  ```
  apiVersion: apps/v1
@@ -181,7 +181,7 @@ busybox-66db7d9b88-kkktl   1/1     Running   0          2m16s
 <li>
 <h3>Percona Application</h3>
 <br>
-Once the storage class is created, provision the volumes using the standard PVC interface. In the following example, the `StorageClass` openebs-jiva-gpd-3repl is specified in the `PersistentVolumeClaim` specification. The raw file of this example spec can be download from <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml"> here</a> or use the following spec.
+Once the storage class is created, provision the volumes using the standard PVC interface. In the following example, the `StorageClass` is default Jiva StorageClass (reffered as `openebs-jiva-default`) specified in the `PersistentVolumeClaim` specification. The raw file of this example spec can be download from <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml"> here</a> or use the following spec.
 
 
 - Percona Example

@@ -536,18 +536,16 @@ To know more about blockdevices mount status <a href="/docs/next/faq.html#what-m
 <li>
 <b>Create StoragePool</b> specifying the Blockdevices that are to be used.
 To know the detailed steps for creation of StoragePool <a href="/docs/next/ugcstor.html#creating-cStor-storage-pools" target="_blank">click here.</a>
-The name specified under `metadata` in the <b>StoragePool</b> YAML needs to be mentioned in StorageClass YAML (in the next step).
+The name specified under `metadata` in the <b>StoragePoolClaim</b> YAML needs to be mentioned in StorageClass YAML (in the next step).
 </blockquote>
 </li>
 <li>
-Next, you have to <b>create StorageClass</b>, specifying the StoragePoolClaim under `annotations` in the <b>StorageClass</b> YAML.
+Next, you have to <b>create StorageClass</b>, specifying the `StoragePoolClaim` under `annotations` in the <b>StorageClass</b> YAML.
 To know the step-wise procedure for creation of StorageClass <a href="/docs/next/ugcstor.html#creating-cStor-storage-class" target="_blank">click here</a>.
 </li>
 <li>
-Once all the above steps have been successfully  implemented copy the following YAML into a file, say <b>demo-busybox-cstor.yaml</b>  `storageClassName` under spec in <b>PersistentVolumeClaim</b> YAML. In this example, StorageClass name is `openebs-sc-statefulset`.
+Once all the above steps have been successfully  implemented copy the following YAML into a file, say <b>demo-busybox-cstor.yaml</b>. You can  specify StorageClass specified in previous step under spec in <b>PersistentVolumeClaim</b> YAML. In this example, StorageClass name is `openebs-sc-statefulset`.
 <br>
-In the below YAML `labels` are specified to ensure cross-zone availability.
-
 
 ```
 apiVersion: apps/v1
