@@ -83,14 +83,14 @@ To know more about blockdevice mount status <a href="/docs/next/faq.html#what-mu
  </li>
  <li>
 First, you need to <b>Create a Jiva Pool</b> which includes creation of blockdevice and mounting them and then creating Jiva pool using the above mentioned. 
-To know about the detailed steps <a href="/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a>
+To know about the detailed steps <a href="/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a>The name specified under<b>StoragePool</b> YAML needs to be mentioned in StorageClass YAML(in the next step).
  </li>
  <li>
-Now, <b>create a StorageClass</b> mainly for using the Jiva StoragePool created with the mounted blockdevices in the previous step.
+Now, <b>create a StorageClass</b> , specifying the StoragePool name under `annotations` in the <b>StorageClass</b> YAML.
 To get detailed steps <a href="/docs/next/jivaguide.html#create-a-sc" target="_blank">click here.</a>
  </li>
  <li>
- Once all the above steps have been successfully implemented copy the following yaml file into a file, say <b>demo-busybox-jiva.yaml</b>
+ Once all the above steps have been successfully implemented copy the following yaml file into a file, say <b>demo-busybox-jiva.yaml</b> In this example, storageClassName is <b>openebs-jiva-gpd-3repl</b>.
 
  ```
  apiVersion: apps/v1
