@@ -80,7 +80,7 @@ Maya volume exporter is a sidecar for each of the storage controller pods (cStor
 
 ![OpenEBS volume exporter data flow](/docs/assets/vol-exporter.png)
 
-These statistics are typically pulled either by the Prometheus client that is installed and configured during OpenEBS installation or by the Weave Cortex agent that is installed and configured during connectivity to [MayaOnline](https://mayaonline.io).
+These statistics are typically pulled either by the Prometheus client that is installed and configured during OpenEBS installation or by the Weave Cortex agent that is installed and configured during connectivity to [Director Online](https://director.mayadata.io).
 
 ### Volume Management Sidecars
 
@@ -134,7 +134,7 @@ Prometheus is installed as a micro service by the OpenEBS operator during the in
 
 ### WeaveScope
 
-Node Disk Manager components, volume pods, and other persistent storage structures of Kubernetes have been enabled for WeaveScope integration. With these enhancements, exploration and traversal of these components have become significantly easier.  WeaveScope is a well-regarded cloud-native visualisation solution and is also incorporated in MayaOnline from MayaData.  
+Node Disk Manager components, volume pods, and other persistent storage structures of Kubernetes have been enabled for WeaveScope integration. With these enhancements, exploration and traversal of these components have become significantly easier.  WeaveScope is a well-regarded cloud-native visualisation solution and is also incorporated in Director Online from MayaData.  
 
 
 
