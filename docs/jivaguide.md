@@ -66,14 +66,17 @@ If it a single node cluster, then download the above YAML spec and change the re
 
 
 <h3><a class="anchor" aria-hidden="true" id="provisioning-with-local-or-cloud-disks"></a>Provisioning with Local or Cloud Disks</h3>
+
 In this mode, local disks on each node need to be prepared and mounted at a directory path for use by jiva. For jiva, the mount paths need to be setup and managed by the administrator. The steps for mounting a disk into a node and creating a Jiva storage pool is provided [here](#create-a-pool). Once a StorageClass is created by mentioning this StoragePool name, then use this StorageClass in the PVC configuration.
 
 
 
 <h3><a class="anchor" aria-hidden="true" id="provision-sample-application-with-jiva-volume"></a>Provision Sample Application with Jiva Volume</h3>
+
 <ol>
 <li>
 <h3>Busybox Application</h3>
+   
 <br>
    Before provisioning of the application ensure all the below mentioned steps are carried out:
 <ol>
@@ -83,14 +86,14 @@ To know more about blockdevice mount status <a href="/docs/next/faq.html#what-mu
  </li>
  <li>
 First, you need to <b>Create a Jiva Pool</b> which includes creation of blockdevice and mounting them and then creating Jiva pool using the above mentioned. 
-To know about the detailed steps <a href="/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a> The name specified under <b>StoragePool</b> YAML needs to be mentioned in StorageClass YAML in the next step.
+To know about the detailed steps <a href="/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a> The name specified under <b>StoragePool</b> YAML needs to be mentioned in <b>StorageClass</b> YAML in the next step.
  </li>
  <li>
-Now, <b>create a StorageClass</b> , specifying the StoragePool name under `annotations` in the <b>StorageClass</b> YAML.
+Now, <b>create a StorageClass</b> , specifying the <b>StoragePool</b> name under <b>annotations</b> in the <b>StorageClass</b> YAML.
 To get detailed steps <a href="/docs/next/jivaguide.html#create-a-sc" target="_blank">click here.</a>
  </li>
  <li>
- Once all the above steps have been successfully implemented copy the following yaml file into a file, say <b>demo-busybox-jiva.yaml</b>. In this example, `storageClassName` is <b>openebs-jiva-gpd-3repl</b>.
+ Once all the above steps have been successfully implemented copy the following yaml file into a file, say <b>demo-busybox-jiva.yaml</b>. In this example, <b>storageClassName</b> is <b>openebs-jiva-gpd-3repl</b>.
 
  ```
  apiVersion: apps/v1
@@ -179,8 +182,9 @@ busybox-66db7d9b88-kkktl   1/1     Running   0          2m16s
 </li>
 </ol>
 <li>
+   
 <h3>Percona Application</h3>
-<br>
+
 Once the storage class is created, provision the volumes using the standard PVC interface. In the following example, the `StorageClass` is default Jiva StorageClass (reffered as `openebs-jiva-default`) specified in the `PersistentVolumeClaim` specification. The raw file of this example spec can be download from <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml"> here</a> or use the following spec.
 
 
@@ -269,7 +273,9 @@ Once the storage class is created, provision the volumes using the standard PVC 
 
 </li>
 </ol>
+
 <h3><a class="anchor" aria-hidden="true" id="monitoring-a-jiva-volume"></a>Monitoring a Jiva Volume</h3>
+
 By default `VolumeMonitor` is set to ON in the JIva StorageClass. Volume metrics are exported when this parameter is set to ON. Following metrics are supported by Jiva as of the current release.
 
 ```
@@ -300,6 +306,7 @@ Grafana charts can be built for the above Prometheus metrics. Some metrics of Op
 
 
 <h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
+
 OpenEBS volume can be backed up and restore along with application using velero plugin. It helps the user for taking backup of OpenEBS volumes to a third party storage location and then restoration of the data whenever it needed. The steps for taking backup and restore are following.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
@@ -479,6 +486,7 @@ The process of creating a Jiva pool include the following steps.
 2. Create a Jiva pool using the above mounted disk.
 
 <h4><a class="anchor" aria-hidden="true" id="prepare-disk-mount"></a>Prepare disks and mount them</h4>
+
 If it is a cloud disk provision and mount on the node. If three replicas of Jiva volume are needed, provision three cloud disks and mount them on each node. The mount path needs to be same on all three nodes. The following is the steps for creating a GPD disk on Google cloud and mounthing to the node.
 
 - Create a GPD
@@ -508,6 +516,7 @@ If it is a cloud disk provision and mount on the node. If three replicas of Jiva
 - Repeat the above steps on other two nodes if this is a three replica case.
 
 <h4><a class="anchor" aria-hidden="true" id="create-jiva-pool-with-mounted-disk"></a>Create a Jiva Pool using the mounted disk</h4>
+
 Jiva pool requires mount path to be prepared and available on the Node. Note that if the mount path is not pointing a real disk, then a local directory is created with this mount path and the replica data goes to the container image disk (similar to the case of `default` pool).
 
 - YAML specification to create the Jiva pool is shown below
@@ -536,6 +545,7 @@ Jiva pool requires mount path to be prepared and available on the Node. Note tha
 
 
 <h3><a class="anchor" aria-hidden="true" id="create-a-sc"></a>Create a StorageClass</h3>
+
 This StorageClass is mainly for using the Jiva Storagepool created with a mounted disk. Jiva volume can be provision using default Jiva StorageClass named `openebs-jiva-default` in the corresponding PVC spec. The default StorageClass has replica count as 3.
 The steps for creating Jiva Storage pool is mentioned in the above section. Specify the Jiva pool in the `StoragePool` annotation of StorageClass. Example StorageClass specification is given below.
 
@@ -567,6 +577,7 @@ provisioner: openebs.io/provisioner-iscsi
   ```
 
 <h3><a class="anchor" aria-hidden="true" id="setting-up-jiva-storage-policies"></a>Setting up Jiva Storage Policies</h3>
+
 Below table lists the storage policies supported by Jiva. These policies can be added into *StorageClass* and apply them through *PersistentVolumeClaim* or *VolumeClaimTemplates* interface.
 
 
