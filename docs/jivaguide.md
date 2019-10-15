@@ -71,9 +71,101 @@ In this mode, local disks on each node need to be prepared and mounted at a dire
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="provision-sample-application-with-jiva-volume"></a>Provision Sample Application with Jiva Volume</h3>
+<h3><a class="anchor" aria-hidden="true" id="provision-sample-application-with-jiva-volume"></a>Provision Sample Applications with Jiva Volume</h3>
 
 <ol>
+<li>
+   
+<h3>Percona Application</h3>
+
+Once the storage class is created, provision the volumes using the standard PVC interface. In the following example, the `StorageClass` is default Jiva StorageClass (reffered as `openebs-jiva-default`) specified in the `PersistentVolumeClaim` specification. The raw file of this example spec can be download from <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml"> here</a> or use the following spec.
+
+
+- Percona Example
+
+  ```
+  ---
+  apiVersion: apps/v1beta1
+  kind: Deployment
+  metadata:
+    name: percona
+    labels:
+      name: percona
+  spec:
+    replicas: 1
+    selector: 
+      matchLabels:
+        name: percona 
+    template: 
+      metadata:
+        labels: 
+          name: percona
+      spec:
+        securityContext:
+          fsGroup: 999
+        tolerations:
+        - key: "ak"
+          value: "av"
+          operator: "Equal"
+          effect: "NoSchedule"
+        containers:
+          - resources:
+              limits:
+                cpu: 0.5
+            name: percona
+            image: percona
+            args:
+              - "--ignore-db-dir"
+              - "lost+found"
+            env:
+              - name: MYSQL_ROOT_PASSWORD
+                value: k8sDem0
+            ports:
+              - containerPort: 3306
+                name: percona
+            volumeMounts:
+              - mountPath: /var/lib/mysql
+                name: demo-vol1
+        volumes:
+          - name: demo-vol1
+            persistentVolumeClaim:
+              claimName: demo-vol1-claim
+  ---
+  kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: demo-vol1-claim
+  spec:
+    storageClassName: openebs-jiva-default
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 5G
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: percona-mysql
+    labels:
+      name: percona-mysql
+  spec:
+    ports:
+      - port: 3306
+        targetPort: 3306
+    selector:
+        name: percona
+  ```
+  
+- Run the application using the following command.
+
+  ```
+  kubectl apply -f demo-percona-mysql-pvc.yaml
+  ```
+  The Percona application now runs inside the `gpdpool` storage pool.
+
+</li>
+
 <li>
 <h3>Busybox Application</h3>
    
@@ -181,97 +273,6 @@ busybox-66db7d9b88-kkktl   1/1     Running   0          2m16s
 </li>
 </li>
 </ol>
-<li>
-   
-<h3>Percona Application</h3>
-
-Once the storage class is created, provision the volumes using the standard PVC interface. In the following example, the `StorageClass` is default Jiva StorageClass (reffered as `openebs-jiva-default`) specified in the `PersistentVolumeClaim` specification. The raw file of this example spec can be download from <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml"> here</a> or use the following spec.
-
-
-- Percona Example
-
-  ```
-  ---
-  apiVersion: apps/v1beta1
-  kind: Deployment
-  metadata:
-    name: percona
-    labels:
-      name: percona
-  spec:
-    replicas: 1
-    selector: 
-      matchLabels:
-        name: percona 
-    template: 
-      metadata:
-        labels: 
-          name: percona
-      spec:
-        securityContext:
-          fsGroup: 999
-        tolerations:
-        - key: "ak"
-          value: "av"
-          operator: "Equal"
-          effect: "NoSchedule"
-        containers:
-          - resources:
-              limits:
-                cpu: 0.5
-            name: percona
-            image: percona
-            args:
-              - "--ignore-db-dir"
-              - "lost+found"
-            env:
-              - name: MYSQL_ROOT_PASSWORD
-                value: k8sDem0
-            ports:
-              - containerPort: 3306
-                name: percona
-            volumeMounts:
-              - mountPath: /var/lib/mysql
-                name: demo-vol1
-        volumes:
-          - name: demo-vol1
-            persistentVolumeClaim:
-              claimName: demo-vol1-claim
-  ---
-  kind: PersistentVolumeClaim
-  apiVersion: v1
-  metadata:
-    name: demo-vol1-claim
-  spec:
-    storageClassName: openebs-jiva-default
-    accessModes:
-      - ReadWriteOnce
-    resources:
-      requests:
-        storage: 5G
-  ---
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: percona-mysql
-    labels:
-      name: percona-mysql
-  spec:
-    ports:
-      - port: 3306
-        targetPort: 3306
-    selector:
-        name: percona
-  ```
-  
-- Run the application using the following command.
-
-  ```
-  kubectl apply -f demo-percona-mysql-pvc.yaml
-  ```
-  The Percona application now runs inside the `gpdpool` storage pool.
-
-</li>
 </ol>
 
 <h3><a class="anchor" aria-hidden="true" id="monitoring-a-jiva-volume"></a>Monitoring a Jiva Volume</h3>
