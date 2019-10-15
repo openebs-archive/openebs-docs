@@ -13,7 +13,7 @@ sidebar_label: NDM
 
 This section provides the operations need to performed by the Admin for configuring NDM.
 
-<font size="5">Admin operations</font>
+## Admin operations
 
 [Include filters](#Include-filters)
 
