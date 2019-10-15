@@ -39,7 +39,7 @@ sidebar_label: Installation
 
 <br>
 
-iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However, it is recommended that the [iSCSI client is setup](/docs/next/prerequisites.html) and iscsid service is running on worker nodes before proceeding with the OpenEBS installation.
+iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However, it is recommended that the [iSCSI client is setup](/v120/docs/next/prerequisites.html) and iscsid service is running on worker nodes before proceeding with the OpenEBS installation.
 
 <br>
 
@@ -96,7 +96,7 @@ helm install --namespace openebs --name openebs stable/openebs --version 1.2.0
 
 1. Since Kubernetes 1.12, if any containers does not set its resource requests & limits values, it results into eviction. It is recommended to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be obtained from [here](#example-configuration-pod-resource-requests).
 
-2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
+2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/v120/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
 
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
@@ -171,7 +171,7 @@ kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.2.0.yaml
 
 1. Since Kubernetes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests). 
 
-2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
+2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/v120/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
 
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
@@ -248,7 +248,6 @@ Some of the configurations related to cStor Target, default cStor sparse pool, d
 
 
 <h4><a class="anchor" aria-hidden="true" id="sparse-dir "></a>SparseDir</h4>
-
 SparseDir is a hostPath directory where to look for sparse files. The default value is "/var/openebs/sparse". 
 
 The following configuration must added as environmental variable in the maya-apiserver deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
@@ -262,7 +261,6 @@ The following configuration must added as environmental variable in the maya-api
 
 
 <h4><a class="anchor" aria-hidden="true" id="default-cstor-sparse-pool"></a>Default cStorSparsePool</h4>
-
 The OpenEBS installation will create default cStor sparse pool based on this configuration value. If "true",  default cStor sparse pools will be configured, if "false", it will not be configure a default cStor sparse pool. The default configured value is "false". The use of cStor sparse pool is for testing purposes only. 
 
 The following configuration must be added as environmental variable in the `maya-apiserver` deployment specification for the installation of cStor pool using sparse disks. This change must be done before applying the OpenEBS operator YAML file. 
@@ -278,7 +276,6 @@ The following configuration must be added as environmental variable in the `maya
 
 
 <h4><a class="anchor" aria-hidden="true" id="target-Dir"></a>TargetDir</h4>
-
 Target Dir is a hostPath directory for target pod. The default value is "/var/openebs".  This value can override the existing host path introducing a `OPENEBS_IO_CSTOR_TARGET_DIR` ENV in maya-apiserver deployment. This configuration might required where underlying host OS does not have write permission on default OpenEBS path(/var/openebs/). 
 
 The following configuration must added as environmental variable in the `maya-apiserver` deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
@@ -294,7 +291,6 @@ The following configuration must added as environmental variable in the `maya-ap
 
 
 <h4><a class="anchor" aria-hidden="true" id="basepath-for-openEBS-local-pv "></a>Basepath for OpenEBS Local PV</h4>
-
 By default the hostpath is configured as `/var/openebs/local` for Local PV based on hostpath, which can be changed during the OpenEBS operator install by passing the `OPENEBS_IO_BASE_PATH` ENV parameter to the Local PV dynamic provisioner deployment. 
 
 ```
@@ -306,7 +302,6 @@ By default the hostpath is configured as `/var/openebs/local` for Local PV based
 
 
 <h4><a class="anchor" aria-hidden="true" id="default-storage-configuration "></a>Default Storage Configuration</h4>
-
 OpenEBS comes with default storage configuration like Jiva and Local PV storage classes and so forth. Each of the storage engines in OpenEBS is highly configurable and the customization is done via Storage Classes and associated Custom Resources. While the default storage configuration can be modified after installation, it is going to be overwritten by the OpenEBS API Server. The recommended approach for customizing is to have users create their own storage configuration using the default options as examples/guidance. 
 If you would like to use a customized configuration, you can disable the installation of the default storage configuration during the installation. The following configuration must be added as environmental variable in the `maya-apiserver` deployment specification to disable default storage configuration.
 
@@ -458,11 +453,11 @@ For a simple testing of OpenEBS, you can use the below default storage classes
 
 - `openebs-device` for provisioning Local PV on device.
 
-For using real disks, you have to create [cStorPools](/docs/next/ugcstor.html#creating-cStor-storage-pools) or [Jiva pools](/docs/next/jivaguide.html#create-a-pool) or [OpenEBS Local PV](/docs/next/uglocalpv.html) based on the requirement and then create corresponding StorageClasses or use default StorageClasses to use them.
+For using real disks, you have to create [cStorPools](/v120/docs/next/ugcstor.html#creating-cStor-storage-pools) or [Jiva pools](/v120/docs/next/jivaguide.html#create-a-pool) or [OpenEBS Local PV](/v120/docs/next/uglocalpv.html) based on the requirement and then create corresponding StorageClasses or use default StorageClasses to use them.
 
 
 
-To monitor the OpenEBS volumes and obtain corresponding logs, connect to the free SaaS service MayaOnline. See connecting to [MayaOnline](/docs/next/mayaonline.html). 
+To monitor the OpenEBS volumes and obtain corresponding logs, connect to the free SaaS service MayaOnline. See connecting to [Director Online](/v120/docs/next/directoronline.html). 
 
 
 
@@ -480,7 +475,6 @@ All openebs components should have resource requests set against each of its pod
 
 
 <h3><a class="anchor" aria-hidden="true" id="AuxResourceRequests"></a>AuxResourceRequests</h3>
-
 This setting is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. `AuxResourceRequests` allow you to set requests on side cars.
 
 ```
@@ -564,7 +558,6 @@ ndm:
 
 
 <h3><a class="anchor" aria-hidden="true" id="helm-values"></a>Default Values for Helm Chart Parameters</h3>
-
 Download the values.yaml from [here](https://github.com/helm/charts/blob/master/stable/openebs/values.yaml) and update them as per your needs. The configurable parameters are described here for reading convenience.
 
 | PARAMETER                                    | DESCRIPTION                                  | DEFAULT                                            |
@@ -701,11 +694,11 @@ data:
 
 ## See Also:
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v120/docs/next/architecture.html)
 
-### [Installation troubleshooting](/docs/next/troubleshooting.html)
+### [Installation troubleshooting](/v120/docs/next/troubleshooting.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v120/docs/next/usecases.html)
 
 <br>
 

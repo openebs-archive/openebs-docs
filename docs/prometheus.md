@@ -56,9 +56,9 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
 
 
-1. **Install OpenEBS :** If OpenEBS is not installed on the Kubernetes already, start by <a href="/docs/next/installation.html" target="_blank">installing</a> OpenEBS on all or some of the cluster nodes. If OpenEBS is already installed, go to step 2.
+1. **Install OpenEBS :** If OpenEBS is not installed on the Kubernetes already, start by <a href="/v120/docs/next/installation.html" target="_blank">installing</a> OpenEBS on all or some of the cluster nodes. If OpenEBS is already installed, go to step 2.
 
-2. **Connect to MayaOnline (Optional)** : Connecting  the Kubernetes cluster to <a href="https://mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
+2. **Connect to MayaOnline (Optional)** : Connecting  the Kubernetes cluster to <a href="https://mayaonline.io" target="_blank">Director Online</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
 
 3. **Configure cStor Pool** : After OpenEBS installation,  cStor pool has to be configured. As prometheus TSDB needs high availability of data, OpenEBS cStor volume has to be configured with three replicas. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor Pool is already configured as required go to Step 4 to create Prometheus StorageClass. 
 
@@ -121,17 +121,17 @@ Deployment YAML spec files for Prometheus and OpenEBS resources are found <a hre
 
  **Monitor OpenEBS Volume size** 
 
-It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
+It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using Director Online.
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just Prometheus alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool) 
+As in most cases, cStor pool may not be dedicated to just Prometheus alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/v120/docs/next/ugcstor.html#monitor-pool) 
 
 
 
 **Maintain volume replica quorum during node upgrades**
 
- cStor volume replicas need to be in quorum Prometheus application is deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/docs/next/k8supgrades.html) for more details.
+ cStor volume replicas need to be in quorum Prometheus application is deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/v120/docs/next/k8supgrades.html) for more details.
 
 ,<br>
 
@@ -239,7 +239,7 @@ spec:
      
 ```
 
-See the <a href="https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/grafana-cstor/grafana-cstor-deployment.yaml" target="_blank"> sample spec files</a> for Grafana using cStor here. 
+See the <a href="https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/grafana-cstor/grafana-cstor-deployment.yaml" target="_blank"> sample spec files</a> for Grafana using cStor here. 
 
 
 
@@ -253,11 +253,11 @@ See the <a href="https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b
 
 <br>
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v120/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v120/docs/next/usecases.html)
 
-### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
+### [cStor pools overview](/v120/docs/next/cstor.html#cstor-pools)
 
 
 

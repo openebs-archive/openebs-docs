@@ -232,11 +232,11 @@ The easiest way to monitor cStor pools and volumes is through MayaOnline. The vo
 
 Links to screenshots of some of the cStor resources in MayaOnline are shown below.
 
-[Pool topology view](/docs/next/mayaonline.html#cstor-pool-view)
+[Pool topology view](/v120/docs/next/directoronline.html#cstor-pool-view)
 
-[Volume POD topology view](/docs/next/mayaonline.html#cstor-volume-pod-view)
+[Volume POD topology view](/docs/next/directoronline.html#cstor-volume-pod-view)
 
-[Volume CR topology view](/docs/next/mayaonline.html#cstor-custom-resources-view)
+[Volume CR topology view](/docs/next/directoronline.html#cstor-custom-resources-view)
 
 <br>
 
@@ -250,7 +250,7 @@ cStor supports thin provisioning of volumes. By default, a volume is provisioned
 
 Performance testing includes setting up the pools, storage classes and iSCSI server tunables. Some best practices include 
 
-- Number of replicas - For statefulsets, when the application is doing the required replication, one replica at volume may be sufficient
+- Number of replicas - For StatefulSet, when the application is doing the required replication, one replica at volume may be sufficient
 
 - Network latency - Latency between the pods and zones (if the replicas are placed across AZs) plays a major role in the performance results and it needs to be in the expected range
 
@@ -295,7 +295,7 @@ Following are most commonly observed areas of troubleshooting
 
    **Resolution**: 
 
-   Install iSCSI tools and make sure iSCSI service is running. See [iSCSI installation](/docs/next/prerequisites.html)
+   Install iSCSI tools and make sure iSCSI service is running. See [iSCSI installation](/v120/docs/next/prerequisites.html)
 
 2. **Multi-attach error is seen in the logs**
 
@@ -357,7 +357,7 @@ This issue is fixed in 0.8.1 version.
 | Support for RAIDZ1 in cStorPool                              | 1.1.0           |
 | Support for RAIDZ2 in cStorPool                              | 1.1.0           |
 | Deleting a pool replica (Alpha version)                      | 1.2.0           |
-| Disk replacement in a given cStor pool instance              | Not scheduled yet  |  
+| Disk replacement in a given cStor pool instance              | Not scheduled yet  |
 |       |
 | <font size="5">cStor volume features</font>                  |                   |
 | Expanding the size of a cStor volume using CSI provisioner (Alpha version)       | 1.2.0         |
@@ -398,11 +398,11 @@ Each discovered disk on a node is added as a disk CR. This is needed to identify
 
 ## See Also:
 
-### [Storage Engines in OpenEBS](/docs/next/casengines.html)
+### [Storage Engines in OpenEBS](/v120/docs/next/casengines.html)
 
-### [Creating cStor Pool](/docs/next/ugcstor.html#creating-cStor-storage-pools)
+### [Creating cStor Pool](/v120/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
-### [Provisioning cStor volumes](/docs/next/ugcstor.html#provisioning-a-cStor-volume)
+### [Provisioning cStor volumes](/v120/docs/next/ugcstor.html#provisioning-a-cStor-volume)
 
 
 
