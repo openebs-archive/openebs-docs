@@ -39,11 +39,11 @@ sidebar_label: Releases
 
 ## See Also:
 
-### [cStor Roadmap](/docs/next/cstor.html#cstor-roadmap)
+### [cStor Roadmap](/v120/docs/next/cstor.html#cstor-roadmap)
 
-### [OpenEBS FAQ](/docs/next/faq.html)
+### [OpenEBS FAQ](/v120/docs/next/faq.html)
 
-### [Container Attached Storage or CAS](/docs/next/cas.html)
+### [Container Attached Storage or CAS](/v120/docs/next/cas.html)
 
 <br><hr>
 
