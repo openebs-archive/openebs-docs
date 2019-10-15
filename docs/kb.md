@@ -1299,7 +1299,7 @@ The following items will be discussed:
 <h3><a class="anchor" aria-hidden="true" id="verification-of-cStor-storage-pool"></a>Verification of cStor Storage Pool</h3>
 
 
-cStor Storage Pool(CSP) resources are cluster scoped resources. Status of CSPs can be obtained using the following way.
+cStor Storage Pool(CSP) resources are cluster scoped. Status of CSPs can be obtained using the following way.
 
 ```
 kubectl get csp
@@ -1313,16 +1313,20 @@ cstor-disk-pool-srj3   270K        9.94G   9.94G      Healthy   striped   2m
 cstor-disk-pool-tla4   270K        9.94G   9.94G      Healthy   striped   2m	
 </div>
 
-Status of each cStor pool can be found under `STATUS` field. The following are the different type of `STATUS` information of cStor pools and their meaning.
+Status of each cStor pool can be found under `STATUS` column. The following are the different type of `STATUS` information of cStor pools and their meaning.
 
 **Healthy:** This state represents cStor pool is online and running.
+
 **Offline:** cStor pool status is offline due to the following cases:
 - when pool creation or pool import is failed.
 - when a disk is unavailable in case of the pool is created in a striped manner.
 - when tampering happens on CSP resource and invalid values are set then CSP will be updated to offline.
+
 **Degraded:** cStor pool status is degraded due to the following cases:
 - when any one of the disks is unavailable on the node where the pool is created either Mirror, Raidz or Raidz2 manner.
+
 **Error:** This means cstor-pool container in cStor pool pod is not in running state.
+
 **DetetionFailed:** There could be an internal error occurred when CSP is deleted.
 
 **Note:** Status of CSPs are updated only if its corresponding cStor pool pod is Running. If the cStor pool pod of corresponding cStor pool is not running, then the status of cStor pool shown in the above output may be stale.
@@ -1358,8 +1362,11 @@ The following are the different type of STATUS information of cStor volumes and 
 **Init:** Init status of cStor volume is due to the following cases:
 - when the cStor volume is created.
 - when the replicas are not connected to target pod.
-**Healthy:** Healthy status of cStor volume represents that 51% of healthy replicas are connected to the target and volume is ready IO operations
+
+**Healthy:** Healthy status of cStor volume represents that 51% of healthy replicas are connected to the target and volume is ready IO operations.
+
 **Degraded:** Minimum 51% of replicas are connected and some of these replicas are in  degraded state, then volume will be running as degraded state and IOs are operational in this state.
+
 **Offline:** When number.of replicas which is equal to Consistency Factor are not yet connected to the target due to network issues or some other reasons In this case, volume is not ready to perform IOs.
 
 For getting the number of replicas connected to the target pod of the cStor volume, use following command:
@@ -1439,20 +1446,28 @@ Status of each cStor volume Replica can be found under `STATUS` field.
 The following are the different type of STATUS information of cStor Volumes Replica and their definition.
 
 **Healthy:** Healthy state represents volume is healthy and volume data existing on this replica is up to date.
+
 **Offline:** cStor volume replica status is offline due to the following cases:
 - when the corresponding cStor pool is not available to create volume.
 - when the creation of cStor volume fails.
 - when the replica is not yet connected to the target.
+
 **Degraded:** cStor volume replica status is degraded due to the following case
 - when the cStor volume replica is connected to the target and rebuilding is not yet started on this replica.
+
 **Rebuilding:** cStor volume replica status is rebuilding when the cStor volume replica is undergoing rebuilding, that means, data sync with another replica.
+
 **Error:** cStor volume replica status is in error state due to the following cases:
 - when the volume replica data set is not existing in the pool.
 - when an error occurs while getting the stats of cStor volume.
-- when the unit of size is not mentioned in PVC spec. For example, if the size is 5 instead of 5G, 
+- when the unit of size is not mentioned in PVC spec. For example, if the size is 5 instead of 5G.
+
 **DeletionFailed:** cStor volume replica status is deletion failed while destroying cStor volumes fails.
+
 **Invalid:** cStor volume replica status is invalid when a new cstor-pool-mgmt container in a new pod is communicating with the old cstor-pool container in an old pod.
+
 **Init:** cStor volume replica status init represents the volume is not yet created.
+
 **Recreate:** cStor volume replica status recreate represents an intermediate state before importing the volume(this can happen only when pool pod got restarted) in case of a non-ephemeral disk. If the disk is ephemeral then this status represents volume is going to recreate.
 
 <br>
@@ -1462,9 +1477,9 @@ The following are the different type of STATUS information of cStor Volumes Repl
 
 <h3><a class="anchor" aria-hidden="true" id="expanding-jiva-storage-volumes"></a>Expanding Jiva Storage Volumes</h3>
 
-You can resize/expand the OpenEBS volume using the following procedure. Perform all commands with root privilege mentioned from step 2 to step 8 on node where application pod is running.
+You can resize/expand the OpenEBS volume using the following procedure. Execute the commands from step 2 to 8 as root user on the node where application pod is running.
 
-**Step 1:** Identify the node where application pod is running. Also note down the IP of the corresponding Jiva controller pod. This IP is needed in step 7. The  above can be get by running following command:
+**Step 1:** Identify the node where application pod is running. Also note down the IP address of corresponding Jiva controller pod. This IP address is needed in step 7. The above details can be obtained by running the following command:
 
 ```
 kubectl get pod -n <namespace> -o wide 
@@ -1487,9 +1502,9 @@ pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-8rclm    1/1     Running
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-sjvtq    1/1     Running   0          9m41s   10.16.2.10   gke-ranjith-jiva-resize-default-pool-ec5045bf-24f1   <none>           <none>
 ```
 
-In above output, application pod is running on node ` gke-ranjith-jiva-resize-default-pool-ec5045bf-mzf4` and Jiva target pod IP is `10.16.1.8`.
+In the above sample output, application pod is running on node ` gke-ranjith-jiva-resize-default-pool-ec5045bf-mzf4` and Jiva controller pod IP is `10.16.1.8`.
 
-**Step 2:** SSH to the node where application pod is running. Run following command once logged into the corresponding node.
+**Step 2:** SSH to the node where application pod is running and run the following command.
 
 ```
 lsblk
@@ -1503,12 +1518,12 @@ sda       8:0    0   40G  0 disk
 ├─sda1    8:1    0 39.9G  0 part /
 ├─sda14   8:14   0    4M  0 part 
 └─sda15   8:15   0  106M  0 part /boot/efi
-sdb       8:16   0    8G  0 disk /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
+sdb       8:16   0    5G  0 disk /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
 ```
 
-In the above output, `sdb` is the volume with `5G` capacity. 
+In the above sample output, `sdb` is the target volume with `5G` capacity. Similarly, find out the volume which needs to be resized.
 
-**Step 3:** Obtain iSCSI target and disk details using the following command.
+**Step 3:** Obtain the iSCSI target and disk details using the following command.
 
 ```
 iscsiadm -m session -P 3
@@ -1568,7 +1583,7 @@ Target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093 (n
                         Attached scsi disk sdb          State: running
 </div>
 	
-In above output, there is only one volume present on the node so it is easy to get the iSCSI target IP and disk details status. In this example disk is `sdb`, iSCSI target IP is `10.20.23.99:3260`, and target iqn is `iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093`. Note down these information for future use. If there are many volumes attached on the node, then identify the disk using the PV name.
+In the above sample output, there is only one volume present on the node. So it is easy to get the iSCSI target IP address and the disk details. In this example disk is `sdb`, iSCSI target IP is `10.20.23.99:3260`, and target iqn is `iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093`. Similarly, find out the target IP address, IQN and the disk name of the volume that has to be resized and note down these information for future use. If there are many volumes attached on the node, then identify the disk using the PV name.
 
 **Step 4** Check the mount path on disk `sdb` using the following command.
 
@@ -1589,7 +1604,7 @@ Example snippet of Output:
 /dev/sdb on /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093 type ext4 (rw,relatime,data=ordered)
 </div>
 
-**Step 5:** Unmount the file system using the following command. The following is an example command with respect to the above output and update with correct mount path in your case. Ensure you are running following commands with root privilege.
+**Step 5:** Unmount the file system using following command. The following is an example command with respect to the above output. Update correct mount path according to your deployment. Ensure that you are running following commands as super user.
 
 ```
 umount /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.co
@@ -1597,7 +1612,7 @@ m.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0
 umount /var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
 ```
 
-**Step 6:** Logout from the particualr iSCSI target using the following command:
+**Step 6:** Logout from the particular iSCSI target using the following command:
 
 ```
 iscsiadm -m node -u -T <target_iqn>
@@ -1634,9 +1649,9 @@ Example output:
 {"data":[{"actions":{"deleteSnapshot":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=deleteSnapshot","revert":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=revert","shutdown":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=shutdown","snapshot":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=snapshot"},"id":"cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==","links":{"self":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw=="},"name":"pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093","readOnly":"false","replicaCount":3,"type":"volume"}],"links":{"self":"http://10.16.1.8:9501/v1/volumes"},"resourceType":"volume","type":"collection"}
 ```
 
-From above example output volume id is `cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==`, Jiva target pod IP is `10.16.1.8`, Volume name is `pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093`. These parameters are required for next step.
+From above example output, You can find volume id is `cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==`, Jiva target pod IP is `10.16.1.8`, and the Volume name is `pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093`. These parameters are required in the next step.
 
-**Step 8:** Modify the volume capacity using the following command.
+**Step 8:** Specify desired size of volume  and the above parameters in the following command.
 
 ```
 curl -H "Content-Type: application/json" -X POST -d '{"name":"pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093","size":"8G"}' http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=resize
@@ -1647,12 +1662,12 @@ Example output:
 {"actions":{"deleteSnapshot":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=deleteSnapshot","revert":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=revert","shutdown":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=shutdown","snapshot":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==?action=snapshot"},"id":"cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw==","links":{"self":"http://10.16.1.8:9501/v1/volumes/cHZjLTI1ZThmNmYxLWViMmQtMTFlOS1iOGQxLTQyMDEwYTgwMDA5Mw=="},"name":"pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093","readOnly":"false","replicaCount":3,"type":"volume"}
 ```
 
-From above output, volume size has expanded to `8G`.
+From the above output, volume has been expanded to `8G`.
 
 **Step 9:** Run step 9 and step 10 from Kubernetes master node. Get the Jiva pod details using the following command:
 
 ```
-kubectl get pod -n <namespace>
+kubectl get pods -n <application_namespace>
 ```
 
 Example output:
@@ -1665,10 +1680,10 @@ pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-8rclm    1/1     Running
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-sjvtq    1/1     Running   0          6h38m
 </div>
 
-**Step 10:** Restart all replica pods of the corresponding volume using the following command. If replica count of the Jiva volume is more than 1, then you must delete all the replica pods of corresponding Jiva volume using single command.
+**Step 10:** Restart all replica pods of the corresponding volume using the following command. If the replica count of Jiva volume is more than 1, then you must delete all the replica pods of corresponding Jiva volume simultaneously using single command.
 
 ```
-kubectl delete pod <replica_pod_1> <replica_pod_2> ... <replica_pod_n> -n <namespace>
+kubectl delete pods <replica_pod_1> <replica_pod_2> ... <replica_pod_n> -n <application_namespace>
 ```
 
 Example:
@@ -1684,12 +1699,16 @@ pod "pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-8rclm" deleted
 pod "pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-sjvtq" deleted
 </div>
 
-Verify new Jiva pods are running fine using `kubectl get pod -n <namespace>`
-
-**Step 11:** Perform step 11 to step 15 with root privilege from node where application pod is running. Log in to the iSCSI target using the following commands.
+Verify if new Jiva pods are running successfully using:
 
 ```
-iscsiadm -m discovery -t st -p <Jiva_target_ip>:3260
+kubectl get pods -n <application_namespace>
+```
+
+**Step 11:** Perform step 11 to 15 as root user on node where the application pod is running. Perform iSCSI target login using the following commands.
+
+```
+iscsiadm -m discovery -t st -p <Jiva_controller_ip>:3260
 ```
 
 Example:
@@ -1718,7 +1737,7 @@ Logging in to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1
 Login to [iface: default, target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093, portal: 10.20.23.99,3260] successful.
 </div>
 
-**Step 12:** Verify the newly added disk details using the following command:
+**Step 12:** Verify the resized disk details using the following command:
 
 ```
 lsblk
@@ -1734,7 +1753,7 @@ sda       8:0    0   40G  0 disk
 sdc       8:32   0    8G  0 disk 
 </div>
 
-From above output, new disk has mounted as `sdc` with a size of 8G.
+From the above output, You can see the resized disk is `sdc` with 8G capacity.
 
 **Step 13:** Check the file system consistency using the following command:
 
@@ -1779,31 +1798,24 @@ Resizing the filesystem on /dev/sdc to 2097152 (4k) blocks.
 The filesystem on /dev/sdc is now 2097152 (4k) blocks long.
 </div>
 
-**Step 15:** Mount the file system using the following commands with root privilege:
+**Step 15:** Mount the file system using the following commands as root user:
 
 ```
 mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.23.99:3260-iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-lun-0
 mount /dev/sdc /var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
 ```
 
-**Step 16:** Perform this command from Kuberenetes master node. Restart the application pod using the following command:
+**Step 16:** Execute the below command in Kuberenetes master node. Restart the application pod using the following command:
 
 ```
-kubectl delete pod percona-66db7d9b88-ltdsf  
+kubectl delete pod <application_pod>  
 ```
 
-Verify new pod is running using the following command. Note down on which node the application pod is running now.
+Verify if the application pod is running using the following command. Note down the node where the application pod is running now.
 
 ```
-kubectl get pod  -n <namespace> -o wide 
+kubectl get pod  -n <application_namespace> -o wide 
 ```
-
-Example:
-
-```
-kubectl get pod -n default -o wide
-```
-
 Example output:
 
 ```
@@ -1815,7 +1827,7 @@ pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-6znbr    1/1     Running
 pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093-rep-56866d8696-m9lrx    1/1     Running   0          94m   10.16.2.11   gke-ranjith-jiva-resize-default-pool-ec5045bf-24f1   <none>           <none>
 ```
 
-**Step 17:** Identify the node where new application pod is running. Then SSH to the node to verify the expanded size using the following command:
+**Step 17:** Identify the node where new application pod is running. Then SSH to the node to verify the expanded size and execute the following command:
 
 ```
 lsblk
@@ -1832,7 +1844,7 @@ sda       8:0    0   40G  0 disk
 sdb       8:16   0    8G  0 disk /home/kubernetes/containerized_mounter/rootfs/var/lib/kubelet/pods/164201d0-ebcc-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
 ```
 
-**Step 18:** Verify the exapnded size from application pod.
+**Step 18:** Verify the expanded size from application pod.
 
 **Note:** After the volume expansion, size will not be reflected on `kubectl get pv` for the corresponding volume.
 
