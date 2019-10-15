@@ -13,7 +13,7 @@ sidebar_label: cStor
 
 This user guide section provides the operations need to performed by the User and the Admin for configuring cStor related tasks. 
 
-<font size="5">User operations</font>
+## User operations
 
 [Provisioning a cStor volume](#provisioning-a-cStor-volume)
 
@@ -34,7 +34,7 @@ This user guide section provides the operations need to performed by the User an
 
 
 
-<font size="5">Admin operations</font>
+## Admin operations
 
 [Creating cStor storage pools](#creating-cStor-storage-pools)
 
@@ -61,6 +61,7 @@ This user guide section provides the operations need to performed by the User an
 
 
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>User Operations</h2>
+
 <h3><a class="anchor" aria-hidden="true" id="provisioning-a-cStor-volume"></a>Provisioning a cStor volume</h3>
 For provisioning a cStor Volume, it requires a cStor Storage Pool and a StorageClass. The configuration and verification of a cStor Storage pool can be checked from [here](#creating-cStor-storage-pools). The configuration and verification of a StorageClass can be checked from [here](#creating-cStor-storage-class).
 
