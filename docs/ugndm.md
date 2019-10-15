@@ -46,7 +46,7 @@ When the above configuration is used, only the block device `/dev/sda` will be u
 
 **Note**:
 
-- Regex support is not available on the `filterconfigs` in NDM `Configmap` and the `Configmap` is applicable to cluster level. This means, if a user is provided `/dev/sdb` in `filterconfigs` as an include filter, then all `/dev/sdb` blockdevices from all nodes in the cluster will be used for the creation of blockdevice CR by NDM.
+- Regex support is not available on the `filterconfigs` in NDM `Configmap` and the `Configmap` is applicable to cluster level. This means, if user provide `/dev/sdb` in `filterconfigs` as an include filter, then all `/dev/sdb` blockdevices from all nodes in the cluster will be used for the creation of blockdevice CR by NDM.
 
 
 
@@ -98,7 +98,7 @@ filterconfigs:
 
 **Note:** 
 
-- Regex support is not available on the  `filterconfigs` in NDM `Configmap` and the Configmap is applicable to cluster level. This means, if user is provided `/dev/sdb` in configmap as an exlcuded filter, then all `/dev/sdb` blockdevices from all nodes in the cluster will be excluded by NDM.
+- Regex support is not available on the  `filterconfigs` in NDM `Configmap` and the Configmap is applicable to cluster level. This means, if user provide `/dev/sdb` in configmap as an exlcuded filter, then all `/dev/sdb` blockdevices from all nodes in the cluster will be excluded by NDM.
 
 - It is recommended to use OpenEBS provisioner alone in the cluster. If you are using other storage provider provisioner like `gce-pd` along with OpenEBS, use exclude filters to avoid those disks from being consumed by OpenEBS. For example, if you are using the `standard` storage class in GKE with storage provisioner as **kubernetes.io/gce-pd**, and when it creates a PVC, a GPD is attached to the node. This GPD will be detected by NDM and it may be used by OpenEBS for provisioning volume. To avoid this scenario, it is recommended to put the associated device path created on the node in the **exclude** field under **path-filter**. If GPD is attached as `/dev/sdc` , then add `/dev/sdc` in the above mentioned field.
 
