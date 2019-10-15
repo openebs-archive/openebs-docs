@@ -60,28 +60,25 @@ To quickly provision a Jiva volume using the default pool and StorageClass, use 
 kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/pvc-standard-jiva-default.yaml
 ```
 
-In this mode, OpenEBS provisions a Jiva volume with three replicas on three different nodes. Ensure there are 3 Nodes in the cluster. The data in each replica is stored in the local container storage of the replica itself. The data is replicated and highly available and is suitable for quick testing of OpenEBS and simple application PoCs.
-If it a single node cluster, then download the above YAML spec and change the replica count and apply the modified YAML spec.
+In this mode, OpenEBS provisions a Jiva volume with three replicas on three different nodes. Ensure that there are 3 Nodes in the cluster. The data in each replica is stored in the local container storage of that replica itself. The data is replicated and highly available and is suitable for quick testing of OpenEBS and simple application PoCs.
+If it is single node cluster, then download the above YAML spec and change the replica count accordingly and apply the modified YAML spec.
 
 
 
 <h3><a class="anchor" aria-hidden="true" id="provisioning-with-local-or-cloud-disks"></a>Provisioning with Local or Cloud Disks</h3>
 
-In this mode, local disks on each node need to be prepared and mounted at a directory path for use by jiva. For jiva, the mount paths need to be setup and managed by the administrator. The steps for mounting a disk into a node and creating a Jiva storage pool is provided [here](#create-a-pool). Once a StorageClass is created by mentioning this StoragePool name, then use this StorageClass in the PVC configuration.
+In this mode, local disks on each node has to be formatted and mounted at a directory path. The steps for mounting a disk into a node and creating a Jiva storage pool is provided [here](#create-a-pool). Then, storage class has to be created by specifying this StoragePool name. You can use this StorageClass in PVC configuration.
 
 
 
 <h3><a class="anchor" aria-hidden="true" id="provision-sample-application-with-jiva-volume"></a>Provision Sample Applications with Jiva Volume</h3>
-
-<ol>
-<li>
    
-<h3>Percona Application</h3>
+<h3>1.Percona</h3>
 
-Once the storage class is created, provision the volumes using the standard PVC interface. In the following example, the `StorageClass` is default Jiva StorageClass (reffered as `openebs-jiva-default`) specified in the `PersistentVolumeClaim` specification. The raw file of this example spec can be download from <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml"> here</a> or use the following spec.
+Here we illustrate the usage of default Jiva storage class. In the following example manifest, the default storage class `openebs-jiva-default` is specified in `PersistentVolumeClaim` specification. So, the Jiva volume will be created with 3 replicas adhering to the default configuration. The manifest for deploying Percona can be downloaded from <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml"> here</a> or use the following spec.
 
 
-- Percona Example
+- Percona spec
 
   ```
   ---
@@ -157,35 +154,30 @@ Once the storage class is created, provision the volumes using the standard PVC 
         name: percona
   ```
   
-- Run the application using the following command.
+- Run the application using following command.
 
   ```
   kubectl apply -f demo-percona-mysql-pvc.yaml
   ```
-  The Percona application now runs inside the `gpdpool` storage pool.
+  Now, Percona application runs inside jiva default storage pool.
 
-</li>
-
-<li>
-<h3>Busybox Application</h3>
+<h3>2.Busybox</h3>
    
-<br>
-   Before provisioning of the application ensure all the below mentioned steps are carried out:
+   Before provisioning the application ensure that all the below mentioned steps are carried out:
 <ol>
  <li>
-   Ensure the blockdevices are mounted as per requirement. 
-To know more about blockdevice mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
+   Ensure that the filesystem is mounted as per requirement. 
+To know more about mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
  </li>
  <li>
-First, you need to <b>Create a Jiva Pool</b> which includes creation of blockdevice and mounting them and then creating Jiva pool using the above mentioned. 
-To know about the detailed steps <a href="/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a> The name specified under <b>StoragePool</b> YAML needs to be mentioned in <b>StorageClass</b> YAML in the next step.
+First, You need to <b>Create a Jiva Pool</b> specifying the filesystem path on each node. To know about the detailed steps <a href="/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a>  
+</li>
+<li>
+Using this storage pool, create a storage class by referring<a href="/docs/next/jivaguide.html#create-a-sc" target="_blank"> here.</a>
  </li>
  <li>
-Now, <b>create a StorageClass</b> , specifying the <b>StoragePool</b> name under <b>annotations</b> in the <b>StorageClass</b> YAML.
-To get detailed steps <a href="/docs/next/jivaguide.html#create-a-sc" target="_blank">click here.</a>
- </li>
- <li>
- Once all the above steps have been successfully implemented copy the following yaml file into a file, say <b>demo-busybox-jiva.yaml</b>. In this example, <b>storageClassName</b> is <b>openebs-jiva-gpd-3repl</b>.
+ Once all the above actions have been successfully executed, You can deploy Busybox with Jiva volume as follows:<br>
+ Copy the below spec into a file, say <b>demo-busybox-jiva.yaml</b> and update  <b>storageClassName</b> to <b>openebs-jiva-gpd-3repl</b>.
 
  ```
  apiVersion: apps/v1
@@ -251,29 +243,28 @@ spec:
       name: busybox
 
  ```
- To deploy this application execute,<br>
+ To deploy busybox, execute<br>
 
  ```
  kubectl apply -f demo-busybox-jiva.yaml
  ```
  </li>
 <li>
-To <b>verify</b> whether the application is successfully deployed or not, execute the following command:<br>
+To verify whether the application is successfully deployed, execute the following command:<br>
 
 ```
 kubectl get pods 
 ```
 
-The application pods should be running state. The output would look something like this,
+The application pods should be running as displayed below
 
 ```
 NAME                       READY   STATUS    RESTARTS   AGE
 busybox-66db7d9b88-kkktl   1/1     Running   0          2m16s
 ``` 
 </li>
-</li>
 </ol>
-</ol>
+
 
 <h3><a class="anchor" aria-hidden="true" id="monitoring-a-jiva-volume"></a>Monitoring a Jiva Volume</h3>
 
