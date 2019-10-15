@@ -535,24 +535,22 @@ The steps are mentioned in Upgrade section. For upgrading cStorVolume, ensure th
 
 <h3><a class="anchor" aria-hidden="true" id="Provisioning-sample-application-with-cstor"></a>Provisioning sample application with cStor</h3>
 
-Before provisioning an application ensure that the following steps are completed.
+Before provisioning an application ensure that all the below mentioned steps are carried out:
 <ol>
 <li>
-Ensure the blockdevices are mounted as per requirement. 
-To know more about blockdevices mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
+Ensure that the filesystem is mounted as per requirement. 
+To know more about mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
 </li>
 <li>
 <b>Create StoragePool</b> specifying the Blockdevices that are to be used.
 To know the detailed steps for creation of StoragePool <a href="/docs/next/ugcstor.html#creating-cStor-storage-pools" target="_blank">click here.</a>
 The name specified under <b>metadata</b> in the <b>StoragePoolClaim</b> YAML needs to be mentioned in <b>StorageClass</b> YAML (in the next step).
-</blockquote>
+Using this StoragePool 
+ create StorageClass by referring <a href="/docs/next/ugcstor.html#creating-cStor-storage-class" target="_blank"> here</a>.
 </li>
 <li>
-Next, you have to <b>create StorageClass</b>, specifying the <b>StoragePoolClaim</b> under <b>annotations</b> in the <b>StorageClass</b> YAML.
-To know the step-wise procedure for creation of <b>StorageClass</b> <a href="/docs/next/ugcstor.html#creating-cStor-storage-class" target="_blank">click here</a>.
-</li>
-<li>
-Once all the above steps have been successfully  implemented copy the following YAML into a file, say <b>demo-busybox-cstor.yaml</b>. You can  specify <b>StorageClass</b> specified in previous step under spec in <b>PersistentVolumeClaim</b> YAML. In this example, StorageClass name is <b>openebs-sc-statefulset</b>.
+Once all the above actions have been successfully executed, You can deploy Busybox with cStor volume as follows:
+Copy the below spec into a file, say <b>demo-busybox-cstor.yaml</b> and update  <b>storageClassName</b>  to <b>openebs-sc-statefulset</b>.
 <br>
 
 ```
@@ -630,13 +628,13 @@ kubectl apply -f demo-busybox-cstor.yaml
 ```
 </li>
 <li>
-To <b>verify</b> whether the application is successfully deployed or not, execute the following command:<br>
+To verify whether the application is successfully deployed, execute the following command:<br>
 
 ```
 kubectl get pods 
 ```
 
-The application pods should be running state. The output would look something like this,
+The application pods should be running as displayed below:
 
 ```
 NAME                       READY   STATUS    RESTARTS   AGE
