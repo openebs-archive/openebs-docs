@@ -19,7 +19,7 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 <br>
 
 
-<font size="5">User operations</font>
+## User operations
 
 [Simple provisioning of Jiva](#simple-provisioning-of-jiva)
 
@@ -36,7 +36,7 @@ Jiva is a light weight storage engine that is recommended to use for low capacit
 
 
 
-<font size="5">Admin operations</font>
+## Admin operations
 
 [Create a Jiva Pool](#create-a-pool)
 
