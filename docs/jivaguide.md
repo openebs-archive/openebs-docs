@@ -77,7 +77,6 @@ In this mode, local disks on each node has to be formatted and mounted at a dire
 
 Here we illustrate the usage of default Jiva storage class. In the following example manifest, the default storage class `openebs-jiva-default` is specified in `PersistentVolumeClaim` specification. So, the Jiva volume will be created with 3 replicas adhering to the default configuration. The manifest for deploying Percona can be downloaded from <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml"> here</a> or use the following spec.
 
-
 - Percona spec
 
   ```
@@ -216,7 +215,7 @@ spec:
        - name: demo-vol1
          persistentVolumeClaim:
           claimName: demo-vol1-claim
-        ---
+---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
