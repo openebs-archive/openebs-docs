@@ -590,15 +590,11 @@ spec:
        - name: demo-vol1
          persistentVolumeClaim:
           claimName: demo-vol1-claim
-          
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: demo-vol1-claim
-  labels:
-    "volumeprovisioner.mapi.openebs.io/replica-topology-key-domain": "failure-domain.bethttps://docs.google.com/document/d/1SuIH4YxdyZm-8A3nzYtiyWW_w4TIPVWEhLsAMpDUA5E/edit?usp=sharinga.kubernetes.io"
-    "volumeprovisioner.mapi.openebs.io/replica-topology-key-type": "zone"
 spec:
   storageClassName: openebs-sc-statefulset
   accessModes:
