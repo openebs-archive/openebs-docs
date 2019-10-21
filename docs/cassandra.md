@@ -43,7 +43,7 @@ Apache Cassandra is a distributed NoSQL database management system designed to h
 
 <br>
 
-<img src="/docs/assets/svg/cassandra-deployment.svg" alt="OpenEBS and Elasticsearch" style="width:100%;">
+<img src="/docs/assets/svg/cassandra-deployment.svg" alt="OpenEBS and Cassandra" style="width:100%;">
 
 <br>
 
