@@ -1,5 +1,5 @@
 ---
-id: Elasticsearch
+id: elasticsearch
 title: OpenEBS for Elasticsearch
 sidebar_label: Elasticsearch
 ---
@@ -41,7 +41,7 @@ Advantages of using OpenEBS for Elasticsearch database:
 
 
 
-<img src="/docs/assets/svg/Elasticsearch-deployment.svg" alt="OpenEBS and Elasticsearch" style="width:100%;">
+<img src="/docs/assets/svg/elasticsearch-deployment.svg" alt="OpenEBS and Elasticsearch" style="width:100%;">
 
 <br>
 
@@ -117,7 +117,7 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just Elasticsearch database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool). 
+As in most cases, cStor pool may not be dedicated to just elasticsearch database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool). 
 
 
 
