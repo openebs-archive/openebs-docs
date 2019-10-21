@@ -152,7 +152,7 @@
 		<line class="st3" x1="1827.6" y1="689.6" x2="1827.6" y2="686.6"/>
 		<path class="st13" d="M1455.4,101H621.9c-6.4,0-11.5-5.1-11.5-11.5l0,0V49.1c0-6.4,5.1-11.5,11.5-11.5h833.4
 			c6.4,0,11.5,5.1,11.5,11.5v40.4C1466.9,95.8,1461.8,100.9,1455.4,101C1455.5,101,1455.5,101,1455.4,101z"/>
-		<text transform="matrix(0.94 0 0 1 646.8201 81.2276)" class="st4 st7 st14">OpenEBS as persistent storage for ElasticSearch</text>
+		<text transform="matrix(0.94 0 0 1 646.8201 81.2276)" class="st4 st7 st14">OpenEBS as persistent storage for Elasticsearch</text>
 		<g>
 			<g>
 				<line class="st15" x1="585.1" y1="626" x2="585.1" y2="683.4"/>
@@ -176,7 +176,7 @@
 				</g>
 			</g>
 		</g>
-		<text transform="matrix(0.9445 0 0 1 611.9976 615.587)" class="st16 st5 st17">ElasticSearch DB replicated to 3 copies</text>
+		<text transform="matrix(0.9445 0 0 1 611.9976 615.587)" class="st16 st5 st17">Elasticsearch DB replicated to 3 copies</text>
 		<text transform="matrix(0.94 0 0 1 843.6201 815.5402)" class="st4 st5 st6">cStorPool instance2</text>
 		<text transform="matrix(0.94 0 0 1 1184.5 811.67)" class="st4 st5 st6">cStorPool instance3</text>
 		<text transform="matrix(0.94 0 0 1 1552.5 815.5402)" class="st4 st5 st6">cStorPool instance4</text>
