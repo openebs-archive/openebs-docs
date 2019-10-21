@@ -1,10 +1,10 @@
 ---
-id: elasticsearch
-title: OpenEBS for ElasticSearch
-sidebar_label: ElasticSearch
+id: Elasticsearch
+title: OpenEBS for Elasticsearch
+sidebar_label: Elasticsearch
 ---
 
-<img src="/docs/assets/o-elastic.png" alt="OpenEBS and ElasticSearch" style="width:400px;">
+<img src="/docs/assets/o-elastic.png" alt="OpenEBS and Elasticsearch" style="width:400px;">
 
 <br>
 
@@ -12,20 +12,20 @@ sidebar_label: ElasticSearch
 
 <br>
 
-EFK is the most popular cloud native logging solution on Kubernetes for On-Premise as well as cloud platforms. In the EFK stack, ElasticSearch is a stateful application that needs persistent storage. Logs of production applications need to be stored for a long time which requires reliable and highly available storage.  OpenEBS and EFK together provides a complete logging solution.
+EFK is the most popular cloud native logging solution on Kubernetes for On-Premise as well as cloud platforms. In the EFK stack, Elasticsearch is a stateful application that needs persistent storage. Logs of production applications need to be stored for a long time which requires reliable and highly available storage.  OpenEBS and EFK together provides a complete logging solution.
 
 
 
-Advantages of using OpenEBS for ElasticSearch database:
+Advantages of using OpenEBS for Elasticsearch database:
 
 - All the logs data is stored locally and managed natively to Kubernetes
 - Start with small storage and add disks as needed on the fly
 - Logs are are highly available. When a node fails or rebooted during upgrades, the persistent volumes from OpenEBS continue to be highly available. 
-- If required, take backup of the ElasticSearch database periodically and back them up to S3 or any object storage so that restoration of the same logs is possible to the same or any other Kubernetes cluster
+- If required, take backup of the Elasticsearch database periodically and back them up to S3 or any object storage so that restoration of the same logs is possible to the same or any other Kubernetes cluster
 
 <br>
 
-*Note: ElasticSearch can be deployed both as `deployment` or as `statefulset`. When ElasticSearch deployed as `statefulset`, you don't need to replicate the data again at OpenEBS level. When ElasticSearch is deployed as `deployment`, consider 3 OpenEBS replicas, choose the StorageClass accordingly.*
+*Note: Elasticsearch can be deployed both as `deployment` or as `statefulset`. When Elasticsearch deployed as `statefulset`, you don't need to replicate the data again at OpenEBS level. When Elasticsearch is deployed as `deployment`, consider 3 OpenEBS replicas, choose the StorageClass accordingly.*
 
 <br>
 
@@ -41,7 +41,7 @@ Advantages of using OpenEBS for ElasticSearch database:
 
 
 
-<img src="/docs/assets/svg/elasticsearch-deployment.svg" alt="OpenEBS and ElasticSearch" style="width:100%;">
+<img src="/docs/assets/svg/Elasticsearch-deployment.svg" alt="OpenEBS and Elasticsearch" style="width:100%;">
 
 <br>
 
@@ -65,17 +65,17 @@ Advantages of using OpenEBS for ElasticSearch database:
 
 4. **Create Storage Class**
 
-   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since ElasticSearch is a StatefulSet, it requires only single storage replica. So cStor volume `replicaCount` is >=1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStoveVolume Replica count as 1 is provided in the configuration details below.
+   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since Elasticsearch is a StatefulSet, it requires only single storage replica. So cStor volume `replicaCount` is >=1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStoveVolume Replica count as 1 is provided in the configuration details below.
 
-5. **Launch and test ElasticSearch**
+5. **Launch and test Elasticsearch**
 
-   Use latest ElasticSearch chart with helm to deploy ElasticSearch in your cluster using the following command. In the following command, it will create PVC with 30G size.
+   Use latest Elasticsearch chart with helm to deploy Elasticsearch in your cluster using the following command. In the following command, it will create PVC with 30G size.
 
    ```
-   helm install --name es-test --set volumeClaimTemplate.storageClassName=openebs-cstor-disk elastic/elasticsearch --version 6.6.0-alpha1
+   helm install --name es-test --set volumeClaimTemplate.storageClassName=openebs-cstor-disk elastic/Elasticsearch --version 6.6.0-alpha1
    ```
 
-   For more information on installation, see ElasticSearch [documentation](https://github.com/elastic/helm-charts/tree/master/elasticsearch).
+   For more information on installation, see Elasticsearch [documentation](https://github.com/elastic/helm-charts/tree/master/Elasticsearch).
 
 <br>
 
@@ -89,13 +89,13 @@ Advantages of using OpenEBS for ElasticSearch database:
 
 
 
-A live deployment of ElasticSearch with Kibana using OpenEBS volumes can be seen at the website [www.openebs.ci](https://openebs.ci/)
+A live deployment of Elasticsearch with Kibana using OpenEBS volumes can be seen at the website [www.openebs.ci](https://openebs.ci/)
 
-Deployment YAML spec files for ElasticSearch and OpenEBS resources are found [here](https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/efk-server/elasticsearch/es-statefulset.yaml)
+Deployment YAML spec files for Elasticsearch and OpenEBS resources are found [here](https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/efk-server/Elasticsearch/es-statefulset.yaml)
 
-[OpenEBS-CI dashboard of ElasticSearch](https://openebs.ci/logging)
+[OpenEBS-CI dashboard of Elasticsearch](https://openebs.ci/logging)
 
-[Live access to ElasticSearch dashboard](https://e2elogs.openebs.ci/app/kibana)
+[Live access to Elasticsearch dashboard](https://e2elogs.openebs.ci/app/kibana)
 
 
 
@@ -117,7 +117,7 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just elasticsearch database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool). 
+As in most cases, cStor pool may not be dedicated to just Elasticsearch database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool). 
 
 
 

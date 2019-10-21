@@ -39,7 +39,7 @@ OpenEBS is deployed under PostgreSQL for a variety of reasons discussed below.  
 
 <br>
 
-<img src="/docs/assets/svg/postgresql-deployment.svg" alt="OpenEBS and ElasticSearch" style="width:100%;">
+<img src="/docs/assets/svg/postgresql-deployment.svg" alt="OpenEBS and Elasticsearch" style="width:100%;">
 
 As shown above, OpenEBS volumes need to be configured with single replica. This configuration works fine when the nodes (hence the OpenEBS cStor pool) is deployed across Kubernetes zones.
 
