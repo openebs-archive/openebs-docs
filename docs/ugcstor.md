@@ -561,7 +561,7 @@ metadata:
   labels:
     app: busybox
 spec:
-  replicas: 3
+  replicas: 1
   strategy:
     type: RollingUpdate
   selector:
@@ -1332,7 +1332,7 @@ labels:
   app: test-application
 spec:
 serviceName: test-application
-replicas: 3
+replicas: 1
 selector:
   matchLabels:
     app: test-application
@@ -1494,7 +1494,7 @@ metadata:
     app: busybox1
 spec:
   serviceName: busybox1
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: busybox1
