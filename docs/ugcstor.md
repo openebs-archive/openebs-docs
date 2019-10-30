@@ -82,7 +82,7 @@ apiVersion: v1
 metadata:
   name: cstor-pvc-mysql-large
 spec:
-  storageClassName: openebs-cstor-pool1-3-replicas
+  storageClassName: openebs-sc-statefulset
   accessModes:
     - ReadWriteOnce
   resources:
@@ -1048,12 +1048,12 @@ You can create a new StorageClass YAML called **openebs-sc-rep1.yaml** and add c
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: openebs-sparse-sc-statefulset
+  name: openebs-sc-statefulset
   annotations:
     openebs.io/cas-type: cstor
     cas.openebs.io/config: |
       - name: StoragePoolClaim
-        value: "cstor-pool2"
+        value: "cstor-disk-pool"
       - name: ReplicaCount
         value: "1"
 provisioner: openebs.io/provisioner-iscsi

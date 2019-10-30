@@ -137,6 +137,11 @@ The Percona application will be running on the OpenEBS local PV on hostpath. Ver
 kubectl get pod -n <namespace>
 ```
 
+In this documentation we are using default namespace. Default namespace may or may not be specified in commands. So, the command will be:
+
+```
+kubectl get pod
+```
 The output will be similar to the following.
 
 <div class="co">NAME                       READY   STATUS    RESTARTS   AGE
