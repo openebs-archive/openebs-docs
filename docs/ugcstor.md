@@ -561,7 +561,7 @@ metadata:
   labels:
     app: busybox
 spec:
-  replicas: 1
+  replicas: 3
   strategy:
     type: RollingUpdate
   selector:
@@ -1055,7 +1055,7 @@ metadata:
       - name: StoragePoolClaim
         value: "cstor-disk-pool"
       - name: ReplicaCount
-        value: "1"
+        value: "3"
 provisioner: openebs.io/provisioner-iscsi
 ```
 
@@ -1312,7 +1312,7 @@ The configuration for implementing this policy is different for deployment and S
 
 <h5><a class="anchor" aria-hidden="true" id="for-statefulset-applications"></a>For StatefulSet Applications</h5>
 
-In the case of provisioning StatfulSet applications with replication factor of  greater than "1" and volume replication factor of euqal to "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application resides. This feature can be achieved by using either of the following approaches.
+In the case of provisioning StatfulSet applications with replication factor of  greater than "1" and volume replication factor of equal to "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application resides. This feature can be achieved by using either of the following approaches.
 
 **Approach 1:**
 
@@ -1332,7 +1332,7 @@ labels:
   app: test-application
 spec:
 serviceName: test-application
-replicas: 1
+replicas: 3
 selector:
   matchLabels:
     app: test-application
@@ -1359,7 +1359,7 @@ annotations:
   openebs.io/cas-type: cstor
   cas.openebs.io/config: |
     - name: ReplicaCount
-      value: "1"
+      value: "3"
     - name: StoragePoolClaim
       value: "cstor-sparse-pool" 
 provisioner: openebs.io/provisioner-iscsi
@@ -1389,7 +1389,7 @@ annotations:
   openebs.io/cas-type: cstor
   cas.openebs.io/config: |
     - name: ReplicaCount
-      value: "1"
+      value: "3"
     - name: StoragePoolClaim
       value: "cstor-sparse-pool" 
 provisioner: openebs.io/provisioner-iscsi
@@ -1468,7 +1468,7 @@ metadata:
       - name: StoragePoolClaim
         value: "cstor-sparse-pool"
       - name: ReplicaCount
-        value: "1"
+        value: "3"
     openebs.io/cas-type: cstor
   name: openebs-cstor-pool-sts
 provisioner: openebs.io/provisioner-iscsi
@@ -1494,7 +1494,7 @@ metadata:
     app: busybox1
 spec:
   serviceName: busybox1
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: busybox1
