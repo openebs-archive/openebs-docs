@@ -113,7 +113,7 @@ Deployment YAML spec files for Elasticsearch and OpenEBS resources are found [he
 
 **Monitor OpenEBS Volume size** 
 
-It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
+It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using Director Online.
 
 **Monitor cStor Pool size**
 
