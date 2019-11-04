@@ -164,7 +164,7 @@ If you have a Kubernetes environment, you can deploy OpenEBS using the following
 
 You can then begin running a workload against OpenEBS. There is a large and growing number of workload that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. If you seek for any help,You can join at <a href="https://openebs.io/join-our-community" target="_blank">Slack OpenEBS</a> community channel.
 
-Register at <a href="https://mayaonline.io/" target="_blank">MayaOnline</a> to receive free monitoring and a single view of stateful workloads of your Kubernetes environment. MayaOnline incorporates customized versions of Prometheus for monitoring, Grafana for metrics visualization and Scope to see the overall environment, and our MuleBot for ChatOps integration and more.  
+Register at <a href="https://director.mayadata.io/" target="_blank">Director Online</a> to receive free monitoring and a single view of stateful workloads of your Kubernetes environment. Director Online incorporates customized versions of Prometheus for monitoring, Grafana for metrics visualization and Scope to see the overall environment, and our MuleBot for ChatOps integration and more.  
 
 <a href="#top">Go to top</a>
 
