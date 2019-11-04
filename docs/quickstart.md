@@ -19,8 +19,8 @@ sidebar_label: Quickstart
 
 <div class="emphasize">
     <ul>
-        <li>Kubernetes 1.10.0+ installed. Latest tested Kubernetes version is 1.15.3.</li>
-        <li>For using features like Local PV and Backup & Restore, you must require Kubernetes version 1.12 or above.
+        <li>Kubernetes 1.13+ installed. Latest tested Kubernetes version is 1.15.3.</li>
+        <li>For using features like Local PV and Backup & Restore, you must require Kubernetes version 1.13 or above.
         </li>
         <li>Understand the <a href="/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
         <li>Start <a href="/docs/next/installation.html">installation </a> through OpenEBS operator.</li>
