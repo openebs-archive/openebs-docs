@@ -486,8 +486,16 @@ system-docker rm all-volumes
 reboot
 ```
 
+If you are using Jiva or Local PV for provisioning OpenEBS volume on hostpath, add default hostpath of corresponding storage engine to `extra_binds` under kubelet service in cluster YAML. If the volume is using a mounted path on the host, then you must add the mounted path under extra_binds section.
 
+```
+services:
+  kubelet:
+    extra_binds:
+     - /var/openebs/local:/var/openebs/local
+```
 
+In the above snippet, default hostpath for Local PV (/var/openebs/local), which will be created on the worker node using `openebs-hostpath` StorageClass, is added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `openebs-hostpath` volume.
 
 
 
@@ -535,7 +543,7 @@ The following commands will enable the `iscsi_tcp` module and it will persist th
 | Ubuntu 18.04     | open-iscsi            | modprobe iscsi_tcp <br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
 | CentOS 7.6       | iscsi-initiator-utils | modprobe iscsi_tcp <br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
 
-**Step 2:** If you are using Jiva or Local PV for provisioning OpenEBS volume,  Add `extra_binds` under kubelet service in cluster YAML. If the volume is using a mounted path on the host, then you must add the mounted path under `extra_binds` section. 
+**Step 2:** If you are using Jiva or Local PV for provisioning OpenEBS volume on hostpath, add default hostpath of corresponding storage engine to `extra_binds` under kubelet service in cluster YAML. If the volume is using a mounted path on the host, then you must add the mounted path under `extra_binds` section.
 
 ```
 services:
@@ -544,7 +552,7 @@ services:
      - /var/openebs/local:/var/openebs/local
 ```
 
-In the above snippet default hostpath, which will be created on the worker node using `LocalPV-hostpath` StorageClass, should be added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `LocalPV-hostpath` volume.
+In the above snippet, default hostpath for Local PV (/var/openebs/local), which will be created on the worker node using `openebs-hostpath` StorageClass, is added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `openebs-hostpath` volume.
 
 <br>
 
