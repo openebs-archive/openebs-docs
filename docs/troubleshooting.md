@@ -110,7 +110,7 @@ Connecting Kubernetes cluster to Director Online is the simplest and easiest way
 
 ## Others
 
-[Nodes in the cluster reboots frequently almost everyday](#reboot-cluster-nodes)
+[Nodes in the cluster reboots frequently almost everyday in openSUSE CaaS](#reboot-cluster-nodes)
 
 <br>
 
@@ -1062,10 +1062,10 @@ Edit the `Phase` of cStorVolumeReplica (cvr) from `Invalid` to `Offline`. After 
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="reboot-cluster-nodes"></a>Nodes in the cluster reboots frequently almost everyday </h3>
+<h3><a class="anchor" aria-hidden="true" id="reboot-cluster-nodes"></a>Nodes in the cluster reboots frequently almost everyday in openSUSE CaaS</h3>
 
 
-Setup the cluster using RKE in MicroOS using CNI Plugin Cilium. Install OpenEBS, create a PVC and allocate to a fio job/ busybox. Run FIO test on the same. Observed nodes in the cluster getting restarted on a schedule basis.
+Setup the cluster using RKE with openSUSE CaaS MicroOS using CNI Plugin Cilium. Install OpenEBS, create a PVC and allocate to a fio job/ busybox. Run FIO test on the same. Observed nodes in the cluster getting restarted on a schedule basis.
 
 **Troubleshooting**
 
