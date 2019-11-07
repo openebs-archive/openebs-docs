@@ -82,7 +82,7 @@ apiVersion: v1
 metadata:
   name: cstor-pvc-mysql-large
 spec:
-  storageClassName: openebs-cstor-pool1-3-replicas
+  storageClassName: openebs-sc-statefulset
   accessModes:
     - ReadWriteOnce
   resources:
@@ -135,7 +135,7 @@ openebs_write_time # Write time on volume
 openebs_writes # Write Input/Outputs on Volume
 ```
 
-Grafana charts can be built for the above Prometheus metrics. Some metrics OpenEBS volumes are available automatically at MayaOnline when you connect the Kubernetes cluster to it. See an example screenshot below.
+Grafana charts can be built for the above Prometheus metrics. Some metrics OpenEBS volumes are available automatically at Director Online when you connect the Kubernetes cluster to it. See an example screenshot below.
 
 <img src="/docs/assets/svg/volume-monitor.svg" alt="OpenEBS configuration flow" style="width:100%">
 
@@ -818,13 +818,13 @@ In the above file, change the following parameters as required.
 
   You must enter all selected blockDevice CRs manually together from the selected nodes. 
 
-  When the `poolType` = `mirrored` , ensure the blockDevice CRs selected from each node are in even number.  The data is striped across mirrors. For example, if 4x1TB blockDevice are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on `node1` is 2TB. 
+  When the `poolType` = `mirrored` , **ensure the number of blockDevice CRs selected from each node are an even number**.  The data is striped across mirrors. For example, if 4x1TB blockDevice are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on `node1` is 2TB. 
 
-  When the `poolType` = `striped` the number of blockDevice CRs from each node can be in any number, the data is striped across each blockDevice. For example, if 4x1TB blockDevices are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on that `node1` is 4TB. 
+  When the `poolType` = `striped`, **the number of blockDevice CRs from each node can be in any number**. The data is striped across each blockDevice. For example, if 4x1TB blockDevices are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on that `node1` is 4TB. 
 
-  When the `poolType` = `raidz`, ensure that the number of  blockDevice CRs selected from each node are like 3,5,7 etc. The data is written with parity. For example, if 3x1TB blockDevice are selected on node1, the raw capacity of the pool instance of `cstor-disk-pool` on node1 is 2TB. 1 disk will be used as a parity disk.
+  When the `poolType` = `raidz`, **ensure that the number of  blockDevice CRs selected from each node are like 3,5,7 etc. The data is written with parity**. For example, if 3x1TB blockDevice are selected on node1, the raw capacity of the pool instance of `cstor-disk-pool` on node1 is 2TB. 1 disk will be used as a parity disk.
   
-  When the `poolType` = `raidz2`, ensure that the number of  blockDevice CRs selected from each node are like 6,8,10 etc. The data is written with dual parity. For example, if 6x1TB blockDevice are selected on node1, the raw capacity of the pool instance of `cstor-disk-pool` on node1 is 4TB. 2 disks will be used for parity.
+  When the `poolType` = `raidz2`, **ensure that the number of  blockDevice CRs selected from each node are like 6,8,10 etc. The data is written with dual parity**. For example, if 6x1TB blockDevice are selected on node1, the raw capacity of the pool instance of `cstor-disk-pool` on node1 is 4TB. 2 disks will be used for parity.
   
   
   
@@ -1048,14 +1048,14 @@ You can create a new StorageClass YAML called **openebs-sc-rep1.yaml** and add c
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: openebs-sparse-sc-statefulset
+  name: openebs-sc-statefulset
   annotations:
     openebs.io/cas-type: cstor
     cas.openebs.io/config: |
       - name: StoragePoolClaim
-        value: "cstor-pool2"
+        value: "cstor-disk-pool"
       - name: ReplicaCount
-        value: "1"
+        value: "3"
 provisioner: openebs.io/provisioner-iscsi
 ```
 
@@ -1312,7 +1312,7 @@ The configuration for implementing this policy is different for deployment and S
 
 <h5><a class="anchor" aria-hidden="true" id="for-statefulset-applications"></a>For StatefulSet Applications</h5>
 
-In the case of provisioning StatfulSet applications with replication factor of  greater than "1" and volume replication factor of euqal to "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application resides. This feature can be achieved by using either of the following approaches.
+In the case of provisioning StatfulSet applications with replication factor of  greater than "1" and volume replication factor of equal to "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application resides. This feature can be achieved by using either of the following approaches.
 
 **Approach 1:**
 
@@ -1359,7 +1359,7 @@ annotations:
   openebs.io/cas-type: cstor
   cas.openebs.io/config: |
     - name: ReplicaCount
-      value: "1"
+      value: "3"
     - name: StoragePoolClaim
       value: "cstor-sparse-pool" 
 provisioner: openebs.io/provisioner-iscsi
@@ -1389,7 +1389,7 @@ annotations:
   openebs.io/cas-type: cstor
   cas.openebs.io/config: |
     - name: ReplicaCount
-      value: "1"
+      value: "3"
     - name: StoragePoolClaim
       value: "cstor-sparse-pool" 
 provisioner: openebs.io/provisioner-iscsi
@@ -1468,7 +1468,7 @@ metadata:
       - name: StoragePoolClaim
         value: "cstor-sparse-pool"
       - name: ReplicaCount
-        value: "1"
+        value: "3"
     openebs.io/cas-type: cstor
   name: openebs-cstor-pool-sts
 provisioner: openebs.io/provisioner-iscsi
