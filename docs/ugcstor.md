@@ -822,7 +822,7 @@ In the above file, change the following parameters as required.
 
   When the `poolType` = `striped`, **the number of blockDevice CRs from each node can be in any number**. The data is striped across each blockDevice. For example, if 4x1TB blockDevices are selected on `node1`, the raw capacity of the pool instance of `cstor-disk-pool` on that `node1` is 4TB. 
 
-  When the `poolType` = `raidz`, **ensure that the number of  blockDevice CRs selected from each node are like 3,5,7 etc. The data is written with parity**. For example, if 3x1TB blockDevice are selected on node1, the raw capacity of the pool instance of `cstor-disk-pool` on node1 is 2TB. 1 disk will be used as a parity disk.
+  When the `poolType` = `raidz`, **ensure that the number of  blockDevice CRs selected from each node are like 3,5,7 etc. The data is written with single parity**. For example, if 3x1TB blockDevice are selected on node1, the raw capacity of the pool instance of `cstor-disk-pool` on node1 is 2TB. 1 disk will be used as a parity disk.
   
   When the `poolType` = `raidz2`, **ensure that the number of  blockDevice CRs selected from each node are like 6,8,10 etc. The data is written with dual parity**. For example, if 6x1TB blockDevice are selected on node1, the raw capacity of the pool instance of `cstor-disk-pool` on node1 is 4TB. 2 disks will be used for parity.
   
