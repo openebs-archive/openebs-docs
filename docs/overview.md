@@ -5,7 +5,7 @@ sidebar_label: Overview
 ---
 ------
 
-##  <font size="6">Introduction</font>
+<font size="6">Introduction</font>
 
 OpenEBS is the leading open-source project for container-attached and
 container-native storage on Kubernetes. OpenEBS adopts
@@ -19,7 +19,7 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 
 <br>
 
-## <font size="6">Quickstart</font>
+<font size="6">Quickstart</font>
 
 - OpenEBS requires iSCSI client to be configured and iscsid service
   running on the worker nodes.
@@ -47,7 +47,7 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 
 <br>
 
-## <font size="6">Explore documentation</font>
+<font size="6">Explore documentation</font>
 
 <br>
 
@@ -87,7 +87,7 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 </div>
 <br>
 
-## <font size="6">Run stateful applications on OpenEBS</font>
+<font size="6">Run stateful applications on OpenEBS</font>
 
 <br>
 <div class="row stateful-applications_row">

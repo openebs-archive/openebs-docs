@@ -7,14 +7,14 @@ sidebar_label: Troubleshooting
 
 <font size="5">General guidelines for troubleshooting</font>
 
-Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to monitor OpenEBS resources and volumes. Logs of OpenEBS pods available at MayaOnline are helpful for troubleshooting. Topology views of OpenEBS custom resources provide the live status which are helpful in the troubleshooting process.
+Connecting Kubernetes cluster to Director Online is the simplest and easiest way to monitor OpenEBS resources and volumes. Logs of OpenEBS pods available at Director Online are helpful for troubleshooting. Topology views of OpenEBS custom resources provide the live status which are helpful in the troubleshooting process.
 
 
 
 **Steps for troubleshooting:**
 
 - Join <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a>
-- Connect Kubernetes cluster to MayaOnline and observe the following
+- Connect Kubernetes cluster to Director Online and observe the following
   - Any alerts that may be relevant to the issue under troubleshooting 
   - Logs that throw up any errors
   - Status of custom resources of OpenEBS volumes in the topology view
@@ -110,7 +110,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 ## Others
 
-[Nodes in the cluster reboots frequently almost everyday](#reboot-cluster-nodes)
+[Nodes in the cluster reboots frequently almost everyday in openSUSE CaaS](#reboot-cluster-nodes)
 
 <br>
 
@@ -1062,10 +1062,10 @@ Edit the `Phase` of cStorVolumeReplica (cvr) from `Invalid` to `Offline`. After 
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="reboot-cluster-nodes"></a>Nodes in the cluster reboots frequently almost everyday </h3>
+<h3><a class="anchor" aria-hidden="true" id="reboot-cluster-nodes"></a>Nodes in the cluster reboots frequently almost everyday in openSUSE CaaS</h3>
 
 
-Setup the cluster using RKE in MicroOS using CNI Plugin Cilium. Install OpenEBS, create a PVC and allocate to a fio job/ busybox. Run FIO test on the same. Observed nodes in the cluster getting restarted on a schedule basis.
+Setup the cluster using RKE with openSUSE CaaS MicroOS using CNI Plugin Cilium. Install OpenEBS, create a PVC and allocate to a fio job/ busybox. Run FIO test on the same. Observed nodes in the cluster getting restarted on a schedule basis.
 
 **Troubleshooting**
 

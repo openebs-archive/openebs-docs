@@ -13,7 +13,7 @@ Additional details on the Docusaurus project can be found [here](https://docusau
 ### Install Node.js
 
 ```bash
-sudo apt-get install python-software-properties
+sudo apt-get install software-properties-common
 curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 ```
 
@@ -51,7 +51,7 @@ The following procedure lists the tasks from the time you select an issue to pub
 
 1. Go through the [issues](https://github.com/openebs/openebs-docs/issues/), and select an issue you want to work on.
 
-2. Go to `openebs-docs/website`, and execute `npm start`. You can then preview the document at `http://localhost:3000/docs/next/quickstartguide.html`.
+2. Go to `openebs-docs/website`, and execute `npm start`. You can then preview the document at `http://localhost:3000/docs/next/overview.html`.
 
 3. Work on your issue and create and submit your pull request(PR) for the members to review. Do perform the DCO signoff. DCO stands for Developer Certificate of Origin. It requires the commit message to have a `Signed-off-by:` statement along with the email address of the author of that commit. You can do this using the following command `git commit -s -m 'Commit message related to the issue'`. You can read more about it [here](https://github.com/probot/dco#how-it-works).
 
