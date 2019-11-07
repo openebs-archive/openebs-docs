@@ -294,7 +294,7 @@ This can happen for many reasons.
 - Node is rebooted in adhoc manner (or unscheduled reboot) and Kubernetes is waiting for Kubelet to come backup to know that the node is rebooted and the pods on that node need to be rescheduled. Kubernetes can take upto 30 minutes as timeout before deciding the node does not comebackup and pods need to be rescheduled. During this time, the iSCSI initiator at the application pod has timeout and marked the underlying filesystem as ReadOnly
 - cStor target has lost quorum because of underlying node losses and target has marked the lun as ReadOnly
 
-Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kuberntes node reboots. 
+Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kubernetes node reboots. 
 
 <h3><a class="anchor" aria-hidden="true" id="admission-server-ca"></a>Unable to create persistentVolumeClaim due to certificate verification error</h3>
 
