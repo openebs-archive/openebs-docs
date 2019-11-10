@@ -200,7 +200,8 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
    - path
      - The value should be like `/dev/sdb1` .
    
-3. Apply the modified YAML file to create the blockdevice CR for the provided partitioned device path.
+3. Apply the modified YAML file to create the blockdevice CR for the provided partitioned device path. 
+   **Note:** The blockdevice CR should be created on the same namespace where openebs is installed.
 
 4. Repeat the same steps for each partitioned device and create blockdevice CR for each device.
 
