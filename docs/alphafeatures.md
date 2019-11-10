@@ -15,7 +15,7 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 [Provisioning and Deprovisioning cStor volume using CSI provisioner](#provisioning-deprovisioning-cstor-volume-using-csi-provisioner)
 
-[Resize cStor volume created using CSI provisioner](#resize-cstor-volume-created-using-csi-provisioner)
+[Expand a cStor volume created using CSI provisioner](#expand-cstor-volume-created-using-csi-provisioner)
 
 <font size="5">cStor</font>
 
@@ -289,7 +289,7 @@ kubectl delete -f pvc <PVC_YAML_spec.yaml> -n <namespace>
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="exapnd-cstor-volume-created-using-csi-provisioner"></a>Expand a cStor volume created using CSI provisioner</h3>
+<h3><a class="anchor" aria-hidden="true" id="expand-cstor-volume-created-using-csi-provisioner"></a>Expand a cStor volume created using CSI provisioner</h3>
 
 The following section will give the steps to expand a cStor volume which is created using CSI provisioner. 
 
