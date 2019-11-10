@@ -1470,6 +1470,10 @@ The following are the different type of STATUS information of cStor Volumes Repl
 
 **Recreate:** cStor volume replica status recreate represents an intermediate state before importing the volume(this can happen only when pool pod got restarted) in case of a non-ephemeral disk. If the disk is ephemeral then this status represents volume is going to recreate.
 
+**NonQuorumDegraded:** cStor volume replica is recreated and it make successfull connection with target pod. In this case IO's wrote to the replica is lost.
+
+**Reconstructing:** cStor volume replica is recreated and this volume replica will be reconstructed the data from another replica.
+
 <br>
 
 <a href="#top">Go to top</a>
