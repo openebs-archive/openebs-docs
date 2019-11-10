@@ -1472,7 +1472,7 @@ The following are the different type of STATUS information of cStor Volumes Repl
 
 **NonQuorumDegraded:** cStor volume replica is recreated and it make successfull connection with target pod. In this case IO's wrote to the replica is lost.
 
-**Reconstructing:** cStor volume replica is recreated and this volume replica will be reconstructed the data from another replica.
+**Reconstructing:** cStor volume replica is recreated and this volume replica will be reconstructed the data from another replica or replicas.
 
 <br>
 
