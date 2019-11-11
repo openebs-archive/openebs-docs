@@ -1625,20 +1625,17 @@ OpenEBS team is working on both the CSI plugin as well as the feature to resize 
 
 
 <h3><a class="anchor" aria-hidden="true" id="scaling-up-of-cvr"></a>Scaling up of cStor Volume Replica</h3>
-
 The following prvoides the steps for scaling up replica of a cStor volume.
 
 
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisites-for-cvr-scale-up"></a>Prerequisite for replica scale-up</h4>
-
 - A cStor pool should be available and replica of this cStor volume should not be present on this cStor pool.
 - OpenEBS version should be 1.3.0 or more.
 
 
 
 <h4><a class="anchor" aria-hidden="true" id="overview-scale-up"></a>Overview</h4>
-
 - Get the current replica count of the cStor volume which is mentioned in corresponding StorageClass.
 - Find cStor pool(s) where existing cStor volume replica(s) is created.
 - Find available cStor pools where new cStor volume replica should be created.
@@ -1648,7 +1645,6 @@ The following prvoides the steps for scaling up replica of a cStor volume.
 
 
 <h4><a class="anchor" aria-hidden="true" id="steps-to-perform-scale-up"></a>Steps to perform cStor volume replica scale up:</h4>
-
 1. Get the current replica count of the cStor volume which is mentioned in corresponding StorageClass. Get the StorageClass name using the following command:
 
    ```
@@ -1701,7 +1697,8 @@ The following prvoides the steps for scaling up replica of a cStor volume.
 
    Example output:
 
-   <div class="co">NAME              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
+   <div class="co">
+   NAME              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
    demo-vol1-claim   Bound    pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8   500Gi      RWO            openebs-sc-cstor   3h18m
    </div>
 
@@ -1713,7 +1710,8 @@ The following prvoides the steps for scaling up replica of a cStor volume.
 
    Example output:
 
-   <div class="co">NAME                                       STATUS    AGE   CAPACITY
+   <div class="co">
+   NAME                                       STATUS    AGE   CAPACITY
    pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8   Healthy   20m   500Gi
    </div>
 
@@ -1725,7 +1723,8 @@ The following prvoides the steps for scaling up replica of a cStor volume.
 
    Example output:
 
-   <div class="co">NAME                                                            USED    ALLOCATED   STATUS    AGE
+   <div class="co">
+   NAME                                                            USED    ALLOCATED   STATUS    AGE
    pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8-cstor-disk-pool-hgt4   84.6M   2.88M       Healthy   20m
    </div>
 
@@ -1737,7 +1736,8 @@ The following prvoides the steps for scaling up replica of a cStor volume.
 
    Example snippet of output:
 
-   <div class="co">apiVersion: openebs.io/v1alpha1
+   <div class="co">
+   apiVersion: openebs.io/v1alpha1
    kind: CStorVolumeReplica
    metadata:
      annotations:
@@ -1768,30 +1768,29 @@ The following prvoides the steps for scaling up replica of a cStor volume.
      targetIP: 10.0.59.89
      zvolWorkers: ""
    status:
-   </div>
-
-   Note down following parameters from the output. This is needed for creating new cStor Volume Replica  in step 7.
-
-   - metadata.annotations.openebs.io/storage-class-ref|
-
-     ​     name:
-
-   - metadata.labels.cstorvolume.openebs.io/name
-
-   - metadata.labels.cstorvolume.openebs.io/persistent-volume
-
-   - metadata.labels.cstorvolume.openebs.io/version
-
+</div>
+   
+Note down following parameters from the output. This is needed for creating new cStor Volume Replica  in step 7.
+   
+- metadata.annotations.openebs.io/storage-class-ref|
+   
+  ​     name:
+   
+- metadata.labels.cstorvolume.openebs.io/name
+   
+- metadata.labels.cstorvolume.openebs.io/persistent-volume
+   
+- metadata.labels.cstorvolume.openebs.io/version
+   
    - metadata.namespace
    
-   - spec.capacity
-
-   - spec.targetIP
-
+- spec.capacity
+   
+- spec.targetIP
+   
    - versionDetails.desired
    
    - versionDetails.status.current
-   
 
 4. Perform the following command to get the cStor Pool where the existing cStor volume replica is created:
 
@@ -1801,7 +1800,8 @@ The following prvoides the steps for scaling up replica of a cStor volume.
 
    Example output:
 
-   <div class="co">cstorpool.openebs.io/name=cstor-disk-pool-hgt4
+   <div class="co">
+   cstorpool.openebs.io/name=cstor-disk-pool-hgt4
    </div>
 
 5. Get the available cStor Pools for creating the cStor volume replica. The following commands will get the other associated cStor pools details:
@@ -1812,7 +1812,8 @@ The following prvoides the steps for scaling up replica of a cStor volume.
 
    Example output:
 
-   <div class="co">NAME                   ALLOCATED   FREE    CAPACITY   STATUS    TYPE      AGE
+   <div class="co">
+   NAME                   ALLOCATED   FREE    CAPACITY   STATUS    TYPE      AGE
    cstor-disk-pool-2phf   1.58M       39.7G   39.8G      Healthy   striped   36m
    cstor-disk-pool-hgt4   22.3M       39.7G   39.8G      Healthy   striped   36m
    cstor-disk-pool-zm8l   1.60M       39.7G   39.8G      Healthy   striped   36m
@@ -1829,7 +1830,8 @@ The following prvoides the steps for scaling up replica of a cStor volume.
 
    Example snippet of output:
 
-   <div class="co">apiVersion: openebs.io/v1alpha1
+   <div class="co">
+   apiVersion: openebs.io/v1alpha1
    kind: CStorPool
    metadata:
      annotations:
@@ -1929,7 +1931,7 @@ The following prvoides the steps for scaling up replica of a cStor volume.
      echo -n "3f86fcdf-02f6-11ea-b0f6-42010a8000f8-ca657af1-02f4-11ea-b0f6-42010a8000f8" | md5sum | awk '{print toupper($1)}'
      ```
 
-     In the above example pvc-uid is `3f86fcdf-02f6-11ea-b0f6-42010a8000f8` and `csp-uid` of identified cStor pool is `ca657af1-02f4-11ea-b0f6-42010a8000f8`
+     In the above example pvc-uid is `3f86fcdf-02f6-11ea-b0f6-42010a8000f8` and `csp-uid` of identified cStor pool is `ca657af1-02f4-11ea-b0f6-42010a8000f8`
 
      Example output:
 
@@ -1938,7 +1940,8 @@ The following prvoides the steps for scaling up replica of a cStor volume.
 
      Example snippet of filled CVR looks like below. :
 
-     <div class="co">apiVersion: openebs.io/v1alpha1
+     <div class="co">
+     apiVersion: openebs.io/v1alpha1
      kind: CStorVolumeReplica
      metadata:
        annotations:
@@ -1971,7 +1974,7 @@ The following prvoides the steps for scaling up replica of a cStor volume.
          current: 1.4.0
      </div>
 
-   In this example, CVR YAML spec is saved as `CVR2.yaml` .
+   In this example, CVR YAML spec is saved as `CVR2.yaml` .
 
 8. Apply the updated CVR YAML spec to create the new replica of cStor volume using the following command:
 
@@ -1992,38 +1995,40 @@ The following prvoides the steps for scaling up replica of a cStor volume.
 
    Example output:
 
-   <div class="co">NAME                                                            USED   ALLOCATED   STATUS    AGE
+   <div class="co">
+   NAME                                                            USED   ALLOCATED   STATUS    AGE
    pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8-cstor-disk-pool-2phf   6K     6K          Offline   32s
    pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8-cstor-disk-pool-hgt4   158M   3.41M       Healthy   4h
    </div>
 
-   From above output, new replica of the cStor volume is created and `STATUS` is showing as `Offline`. 
+   From above output, new replica of the cStor volume is created and `STATUS` is showing as `Offline`. 
 
 10. Update `Desired Replication Factor` in cStor volume with new replica count. This can be updated by editing corresponding cStor volume CR YAML.
 
-    ```
-    kubectl edit cstorvolume pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8 -n openebs
-    ```
+   ```
+   kubectl edit cstorvolume pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8 -n openebs
+   ```
 
-    The following is the snippet of updated cStor volume CR YAML:
+   The following is the snippet of updated cStor volume CR YAML:
 
-    <div class="co">spec:
-      capacity: 500Gi
-      consistencyFactor: 1
-      desiredReplicationFactor: 2
-      iqn: iqn.2016-09.com.openebs.cstor:pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8
-      nodeBase: iqn.2016-09.com.openebs.cstor
-      replicaDetails:
-        knownReplicas:
-          C65AE27463F8646017D3F933C204925E: "11298477277091074483"
-      replicationFactor: 1
-    </div>
-    
-    In the above snippet, `desiredReplicationFactor` is updated to 2 from 1.
-    Example output:
+   <div class="co">
+   spec:
+     capacity: 500Gi
+     consistencyFactor: 1
+     desiredReplicationFactor: 2
+     iqn: iqn.2016-09.com.openebs.cstor:pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8
+     nodeBase: iqn.2016-09.com.openebs.cstor
+     replicaDetails:
+       knownReplicas:
+         C65AE27463F8646017D3F933C204925E: "11298477277091074483"
+     replicationFactor: 1
+   </div>
 
-    <div class="co">cstorvolume.openebs.io/pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8 edited
-    </div>
+   In the above snippet, `desiredReplicationFactor` is updated to 2 from 1.
+   Example output:
+
+   <div class="co">cstorvolume.openebs.io/pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8 edited
+   </div>
 
 11. Verify if the rebuilding has started on new replica of the cStor volume. Once rebuilding has completed, it will update its `STATUS` as `Healthy`. Get the status of the CVR of the cStor volume using the folloiwng command:
 
@@ -2033,7 +2038,8 @@ The following prvoides the steps for scaling up replica of a cStor volume.
 
     Example output:
 
-    <div class="co">NAME                                                            USED   ALLOCATED   STATUS    AGE
+    <div class="co">
+    NAME                                                            USED   ALLOCATED   STATUS    AGE
     pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8-cstor-disk-pool-2phf   158M   3.40M       Healthy   8m13s
     pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8-cstor-disk-pool-hgt4   158M   3.41M       Healthy   4h7m
     </div>
