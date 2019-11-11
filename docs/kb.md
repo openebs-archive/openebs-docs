@@ -542,8 +542,9 @@ There are certain use cases where the user does not need some of the BlockDevice
 3. Apply the modified YAML spec using the following command:
 
    ```
-   kubectl apply -f openebs_v1alpha1_blockdeviceclaim_cr.yaml
+   kubectl apply -f openebs_v1alpha1_blockdeviceclaim_cr.yaml -n <openebs_installed_namespace>
    ```
+   **Note:** The blockdevice CR should be created on the same namespace where openebs is installed.
 
 4. Verify if particular BD is claimed using the following command:
 
