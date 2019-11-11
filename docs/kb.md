@@ -35,8 +35,6 @@ sidebar_label: Knowledge Base
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
-
-
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
 
 1. Get the PV name by following command and use it in Step 2.
@@ -171,8 +169,6 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-scale-up-jiva-replica"></a>How to scale up Jiva replica?</h3>
-
-
 From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity. For scaling up Jiva replica count, the following steps has to be performed.
 
 1. Get the deployment details of replica of corresponding Jiva volume using the following command. If it is deployed in `openebs` namespace, use corresponding namespace appropriately in the following commands.
@@ -249,8 +245,6 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-4.1"></a>How to install OpenEBS in OpenShift 4.1</h3>
-
-
 In earlier documentation, it was referred to install OpenEBS by disabling SELinux. But, you can install OpenEBS in OpenShift environment without disabling SELinux using the following steps.
 
 1. Add OpenEBS Service account to the privileged scc of OpenShift.
@@ -323,8 +317,6 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
 </br>
 
 <h3><a class="anchor" aria-hidden="true" id="enable-admission-controller-in-openshift"></a>How to enable Admission-Controller in OpenShift 3.10 and above</h3>
-
-
 The following procedure will help to enable admission-controller in OpenShift 3.10 and above.
 
 1. Update the `/etc/origin/master/master-config.yaml`  file with below configuration.
@@ -356,8 +348,6 @@ The following procedure will help to enable admission-controller in OpenShift 3.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions"></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
-
-
 Apply the following YAML in your cluster.
 
 - Create a Privileged PSP
@@ -433,8 +423,6 @@ Apply the following YAML in your cluster.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="enable-log-rotation-on-cluster-nodes"></a>How to prevent container logs from exhausting disk space?</h3>
-
-
 Container logs, if left unchecked, can eat into the underlying disk space causing `disk-pressure` conditions
 leading to eviction of pods running on a given node. This can be prevented by performing log-rotation
 based on file-size while specifying retention count. One recommended way to do this is by configuring the
@@ -527,8 +515,6 @@ the node to show up as `Not Ready` until the daemon has restarted successfully.
 <a href="#top">Go to top</a>
 
 <h3><a class="anchor" aria-hidden="true" id="create-bdc-for-a-blockdevice"></a>How to create a BlockDeviceClaim for a particular BlockDevice?</h3>
-
-
 There are certain use cases where the user does not need some of the BlockDevices discovered by OpenEBS to be used by any of the storage engines (cStor, LocalPV, etc.). In such scenarios, users can manually create a BlockDeviceClaim to claim that particular BlockDevice, so that it won't be used by cStor or Local PV. The following steps can be used  to claim a particular BlockDevice: 
 
 1. Download the BDC CR YAML from `node-disk-manager` repository.
@@ -544,9 +530,9 @@ There are certain use cases where the user does not need some of the BlockDevice
    ```
    kubectl apply -f openebs_v1alpha1_blockdeviceclaim_cr.yaml -n <openebs_installed_namespace>
    ```
-   **Note:** The blockdevice CR should be created on the same namespace where openebs is installed.
+   **Note:** The blockdeviceclaim CR should be created on the same namespace where openebs is installed.
 
-4. Verify if particular BD is claimed using the following command:
+4. Verify if particular BDC is created for the given BD cr using the following command:
 
    ```
    kubectl get bdc -n <openebs_installed_namespace>
@@ -557,8 +543,6 @@ There are certain use cases where the user does not need some of the BlockDevice
 <a href="#top">Go to top</a>
 
 <h3><a class="anchor" aria-hidden="true" id="provision-localpv-on-k3os"></a>How to provision Local PV on K3OS?</h3>
-
-
 K3OS can be installed on any hypervisor The procedure for deploying K3OS on VMware environment is provided in the following section. There are 3 steps for provisioning OpenEBS Local PV on K3OS.
 
 1. Configure server(master)
@@ -669,9 +653,6 @@ The detailed information of each steps are provided below.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-make-cstor-volume-online-if-replicas-2-of-are-lost"></a>How to make cStor volume online if 2 replicas of 3 are lost ?</h3>
-
-
-
 Application that is using cStor volume can run IOs, if at least 2 out of 3 replicas (i.e., > 50% of ReplicationFactor) have data with them. If 2 out of 3 replicas lost data, cStor volume goes into RO (read-only) mode, and, application can get into crashed state.
 This section is to provide the steps to bring back volume online by scaling down replicas to 1 with a consideration of ReplicationFactor as 3 in the examples.
 
@@ -914,8 +895,6 @@ The detailed information of each steps are provided below.
 <a href="#top">Go to top</a>
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-reconstruct-data-from-healthy-replica-to-replaced-ones"></a>How to reconstruct data from healthy replica to replaced one?</h3>
-
-
 Consider the case where cStorVolumes have replication enabled, and one/few of its replicas got replaced, i.e., they are new and lost the data. In this case, cStor volume will be in Offline state and unable to recover data to the replaced replicas from healthy replica automatically.
 
 Reconstructing data from healthy replica to the replaced ones can be done using the following steps. To perform the following steps, cStor volume should be in `Online`. If cStor volume is not in `Online`, make it  online using the steps mentioned [here](#how-to-make-cstor-volume-online-if-replicas-2-of-are-lost).
@@ -1286,10 +1265,7 @@ pvc-5c52d001-...........-cstor-sparse-pool-sb1v   90.8M   85.0M   	  Healthy   3
 
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-verify-whether-cstor-volume-is-running-fine"></a>How to verify whether cStor volume is running fine?</h3>
-
-
 <h3><a class="anchor" aria-hidden="true" id="overview-cstor-volume"></a>Overview</h3>
-
 The following items will be discussed:
 
 1. Verification of cStor Storage Pool(CSP)
@@ -1298,8 +1274,6 @@ The following items will be discussed:
 
 
 <h3><a class="anchor" aria-hidden="true" id="verification-of-cStor-storage-pool"></a>Verification of cStor Storage Pool</h3>
-
-
 cStor Storage Pool(CSP) resources are cluster scoped. Status of CSPs can be obtained using the following way.
 
 ```
@@ -1334,8 +1308,6 @@ Status of each cStor pool can be found under `STATUS` column. The following are 
 
 
 <h3><a class="anchor" aria-hidden="true" id="verification-of-cStor-storage-volume"></a>Verification of cStor Volume</h3>
-
-
 cStor Volume is namespace scoped resource. You have to provide the same namespace where openebs is installed. Status of cStor Volume can be obtained using the following way.
 
 ```
@@ -1361,6 +1333,7 @@ Status of each cStor volume can be found under `STATUS` field.
 The following are the different type of STATUS information of cStor volumes and their definition.
 
 **Init:** Init status of cStor volume is due to the following cases:
+
 - when the cStor volume is created.
 - when the replicas are not connected to target pod.
 
@@ -1368,7 +1341,7 @@ The following are the different type of STATUS information of cStor volumes and 
 
 **Degraded:** Minimum 51% of replicas are connected and some of these replicas are in  degraded state, then volume will be running as degraded state and IOs are operational in this state.
 
-**Offline:** When number.of replicas which is equal to Consistency Factor are not yet connected to the target due to network issues or some other reasons In this case, volume is not ready to perform IOs.
+**Offline:** When number of replicas which is equal to Consistency Factor are not yet connected to the target due to network issues or some other reasons In this case, volume is not ready to perform IOs.
 
 For getting the number of replicas connected to the target pod of the cStor volume, use following command:
 
@@ -1415,11 +1388,10 @@ In this case, replicationFactor is 3.
 
 In the above output, if `quorum: **0**` then data written to that replica is lost(not ready to read). If `quorum: **1**` then that replica is ready for Read and Write operation.
 
-If anything went wrong then the error can be seen in cstorvolume events `kubectl describe cstorvolume <volume_name> -n <openebs_installed_namespace>`
+If anything went wrong then the error can be seen in cStor volume events `kubectl describe cstorvolume <volume_name> -n <openebs_installed_namespace>`
 
 <h3><a class="anchor" aria-hidden="true" id="verification-of-cStor-storage-volume-replica"></a>Verification of cStor Volume Replica</h3>
-
-cStor Volume Replica is namespace scoped resource. You have to provide the same namespace where openebs is installed. Status of cStor Volume Replica can be obtained using the following way.
+cStor Volume Replica is namespace scoped resource. You have to provide the same namespace where OpenEBS is installed. Status of cStor Volume Replica can be obtained using the following way.
 
 ```
 kubectl get cvr -n <openebs_installed_namespace>
@@ -1440,7 +1412,6 @@ pvc-4c3baced-c020-11e9-ad45-42010a8001c8-cstor-disk-pool-tla4   6K     6K       
 </div>
 
 Status of each cStor volume Replica can be found under `STATUS` field.
-
 
 **Note:** If the pool pod of corresponding cStor volume replica is not running, then the status of CVR shown in the output of the above command may be stale.
 
@@ -1471,9 +1442,9 @@ The following are the different type of STATUS information of cStor Volumes Repl
 
 **Recreate:** cStor volume replica status recreate represents an intermediate state before importing the volume(this can happen only when pool pod got restarted) in case of a non-ephemeral disk. If the disk is ephemeral then this status represents volume is going to recreate.
 
-**NewReplicaDegraded** cStor volume replica is newly created and it make successfull connection with the target pod. 
+**NewReplicaDegraded:** cStor volume replica is newly created and it make successful connection with the target pod. 
 
-**ReconstructingNewReplica** cStor volume replica is newly created and it started reconstructing entire data from another healthy replica.
+**ReconstructingNewReplica:** cStor volume replica is newly created and it started reconstructing entire data from another healthy replica.
 
 <br>
 
@@ -1481,7 +1452,6 @@ The following are the different type of STATUS information of cStor Volumes Repl
 
 
 <h3><a class="anchor" aria-hidden="true" id="expanding-jiva-storage-volumes"></a>Expanding Jiva Storage Volumes</h3>
-
 You can resize/expand the OpenEBS volume using the following procedure. Execute the commands from step 2 to 8 as root user on the node where application pod is running.
 
 **Step 1:** Identify the node where application pod is running. Also note down the IP address of corresponding Jiva controller pod. This IP address is needed in step 7. The above details can be obtained by running the following command:
@@ -1587,7 +1557,7 @@ Target: iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093 (n
                 scsi1 Channel 00 Id 0 Lun: 0
                         Attached scsi disk sdb          State: running
 </div>
-	
+
 In the above sample output, there is only one volume present on the node. So it is easy to get the iSCSI target IP address and the disk details. In this example disk is `sdb`, iSCSI target IP is `10.20.23.99:3260`, and target iqn is `iqn.2016-09.com.openebs.jiva:pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093`. Similarly, find out the target IP address, IQN and the disk name of the volume that has to be resized and note down these information for future use. If there are many volumes attached on the node, then identify the disk using the PV name.
 
 **Step 4** Check the mount path on disk `sdb` using the following command.
