@@ -94,7 +94,25 @@ Depending on the OS, select the appropriate deployment file.
 
 <h4><a class="anchor" aria-hidden="true" id="provision-a-cStor-Pool-Cluster-csi"></a>Provision a cStor Pool Cluster</h4>
 
-You have to create a cStor Pool Cluster(CSPC) which is the group of cStor pools in the cluster. CSPC can be created by applying the sample YAML provided below:
+Apply CSPC operator YAML file using the following command:
+
+```
+https://raw.githubusercontent.com/openebs/openebs/master/k8s/cspc-operator.yaml
+```
+
+Verify the status of cspc operator using the following command:
+
+```
+kubectl get pod -n openebs -l name=cspc-operator
+```
+
+Example output:
+
+<div class="co">NAME                            READY   STATUS    RESTARTS   AGE
+cspc-operator-c4dc96bb9-km4dh   1/1     Running   0          43s
+</div>
+
+Now, You have to create a cStor Pool Cluster(CSPC) which is the group of cStor pools in the cluster. CSPC can be created by applying the sample YAML provided below:
 
 <div class="co">apiVersion: openebs.io/v1alpha1
 kind: CStorPoolCluster
@@ -127,7 +145,9 @@ Edit the following parameter in the sample CSPC YAML:
 
 
 
-The above sample YAML creates a cStor pool on the corresponding node with provided block device. In this example, the modified YAML is saved as `cspc.yaml`. Apply the modified CSPC YAML spec using the following command to create a cStor Pool Cluster:
+The above sample YAML creates a cStor pool on the corresponding node with provided block device. The above example will create a cStor pool in the CSPC cluster. If you need to create multiple cStor pools in a CSPC cluster, get the YAML from [here](https://raw.githubusercontent.com/sonasingh46/artifacts/master/day2ops/cspc/cspc-stripe.yaml).
+
+In this example, the above YAML is modified and saved as `cspc.yaml`. Apply the modified CSPC YAML spec using the following command to create a cStor Pool Cluster:
 
 ```
 kubectl apply -f cspc.yaml
@@ -160,7 +180,7 @@ Example output:
 
 <h4><a class="anchor" aria-hidden="true" id="create-a-cStor-sc-for-csi-driver"></a>Create a cStor StorageClass with cStor CSI provisioner</h4>
 
-Create a Storage Class to dynamically provision volumes using cStor CSI provisioner. A sample StorageClass looks like:
+Create a Storage Class to dynamically provision volumes using cStor CSI provisioner. You can save the following sample StorageClass YAML spec as `cstor-csi-sc.yaml`.
 
 <div class="co">kind: StorageClass
 apiVersion: storage.k8s.io/v1
@@ -178,23 +198,44 @@ You should specify the correct cStor `cstorPoolCluster` name from your cluster a
 
 **Note:** The `replicaCount` should be less than or equal to the max pools available.
 
-Sample StorageClass YAML spec can be found in [github repo](https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/sc.yaml). Apply the sample Storage Class YAML using the following command:
+Sample StorageClass YAML spec can be found in [github repo](https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/sc.yaml). 
+
+Apply the above sample Storage Class YAML using the following command:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/sc.yaml
+kubectl apply -f cstor-csi-sc.yaml
 ```
 
+Example output:
 
+<div class="co">NAME                        PROVISIONER                                                AGE
+openebs-csi-cstor-disk      cstor.csi.openebs.io                                       5s
+openebs-device              openebs.io/local                                           59m
+openebs-hostpath            openebs.io/local                                           59m
+openebs-jiva-default        openebs.io/provisioner-iscsi                               59m
+openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   59m
+standard (default)          kubernetes.io/gce-pd                                       66m
+</div>
+
+The StorageClass `openebs-csi-cstor-disk` is created succeffully. 
 
 <h4><a class="anchor" aria-hidden="true" id="run-application-on-a-cStor-volume-by-specifying-sc"></a>Run your application on cStor volume provisioned via CSI Provisioner</h4>
 
-Run your application by specifying the above created StorageClass for creating the PVC. The following example launches a busybox app with a cStor Volume provisioned via CSI Provisioner.
+Run your application by specifying the above created StorageClass for creating the PVC. Sample application YAML can be downloaded using the following command:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/busybox-csi-cstor-sparse.yaml
+wget https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/busybox-csi-cstor-sparse.yaml
 ```
 
-Now the application will be running on the volume provisioned via cStor CSI provisioner. Verify the status of the PVC using the following command:
+Modify the YAML spec with required PVC storage size, storageClassName. In this example, `storageClassName` is updated with `openebs-csi-cstor-disk`. 
+```
+The following example launches a busybox app with a cStor Volume provisioned via CSI Provisioner.
+
+```
+kubectl apply -f busybox-csi-cstor-sparse.yaml
+```
+
+In thisNow the application will be running on the volume provisioned via cStor CSI provisioner. Verify the status of the PVC using the following command:
 
 ```
 kubectl get pvc
@@ -282,7 +323,7 @@ The following section will give the steps to expand a cStor volume which is crea
      - ReadWriteOnce
      resources:
        requests:
-         storage: 9G   
+         storage: 9Gi   
      storageClassName: openebs-csi-cstor-disk
    </div>
 
