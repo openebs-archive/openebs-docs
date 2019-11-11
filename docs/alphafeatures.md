@@ -13,13 +13,13 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 ## cStor
 
-[Provisioning and Deprovisioning cStor volume using CSI provisioner](#provisioning-deprovisioning-cstor-volume-using-csi-provisioner)
+[Running a sample application on a cStor volume provsioned via CSI provisioner](#running-sample-application-cstor-volume-using-csi-provisioner)
 
 [Expand a cStor volume created using CSI provisioner](#expand-cstor-volume-created-using-csi-provisioner)
 
 <font size="5">cStor</font>
 
-<h3><a class="anchor" aria-hidden="true" id="provisioning-deprovisioning-cstor-volume-using-csi-provisioner"></a>Provisioning and Deprovisioning cStor volume using CSI provisioner</h3>
+<h3><a class="anchor" aria-hidden="true" id="running-sample-application-cstor-volume-using-csi-provisioner"></a>Running a sample application on a cStor volume provsioned via CSI provisioner</h3>
 
 The [Container Storage Interface](https://github.com/container-storage-interface/spec/blob/master/spec.md) (CSI) is a standard for exposing arbitrary block and file storage systems to containerized workloads on Container Orchestration Systems(COs)  like Kubernetes combined with different storage vendors. This means, implementing a single CSI for a storage vendor is guaranteed to work with all COs. OpenEBS cStor volume can be now provisioned with CSI driver from OpenEBS 1.2 version onwards. This feature is under active development and considered to be in Alpha state. 
 
@@ -236,14 +236,6 @@ Example output:
 Waiting for CVC to be bound: Implies volume components are still being created
 
 Volume is not ready: Replicas yet to connect to controller: Implies volume components are already created but yet to interact with each other.
-
-<h4><a class="anchor" aria-hidden="true" id="deprovision-cstor-volume-created-using-csi"></a>Deprovision a cStor volume</h4>
-
-First, delete the corresponding application which is mounted the corresponding cStor volume which is created using CSI provisioner. Then delete the cStor volume using the following command:
-
-```
-kubectl delete -f pvc <PVC_YAML_spec.yaml> -n <namespace>
-```
 
 
 
