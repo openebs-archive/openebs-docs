@@ -542,8 +542,9 @@ There are certain use cases where the user does not need some of the BlockDevice
 3. Apply the modified YAML spec using the following command:
 
    ```
-   kubectl apply -f openebs_v1alpha1_blockdeviceclaim_cr.yaml
+   kubectl apply -f openebs_v1alpha1_blockdeviceclaim_cr.yaml -n <openebs_installed_namespace>
    ```
+   **Note:** The blockdevice CR should be created on the same namespace where openebs is installed.
 
 4. Verify if particular BD is claimed using the following command:
 
@@ -1469,6 +1470,10 @@ The following are the different type of STATUS information of cStor Volumes Repl
 **Init:** cStor volume replica status init represents the volume is not yet created.
 
 **Recreate:** cStor volume replica status recreate represents an intermediate state before importing the volume(this can happen only when pool pod got restarted) in case of a non-ephemeral disk. If the disk is ephemeral then this status represents volume is going to recreate.
+
+**NewReplicaDegraded** cStor volume replica is newly created and it make successfull connection with the target pod. 
+
+**ReconstructingNewReplica** cStor volume replica is newly created and it started reconstructing entire data from another healthy replica.
 
 <br>
 
