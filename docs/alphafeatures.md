@@ -23,23 +23,23 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 The [Container Storage Interface](https://github.com/container-storage-interface/spec/blob/master/spec.md) (CSI) is a standard for exposing arbitrary block and file storage systems to containerized workloads on Container Orchestration Systems(COs)  like Kubernetes combined with different storage vendors. This means, implementing a single CSI for a storage vendor is guaranteed to work with all COs. OpenEBS cStor volume can be now provisioned with CSI driver from OpenEBS 1.2 version onwards. This feature is under active development and considered to be in Alpha state. 
 
-**Note:** The current implementation only supports provisioning, de-provisioning and expansion of cStor Volumes.
+**Note:** The current implementation only supports provisioning, de-provisioning, snapshot & clone and expansion of cStor Volumes.
 
 **Prerequisites**
 
 - Kubernetes version 1.14 or higher is installed.
 - OpenEBS Version 1.2 or higher installed. 
-- The steps to install OpenEBS are [here](https://docs.openebs.io/docs/next/quickstart.html).
+- The steps to install OpenEBS is [here](/docs/next/quickstart.html).
 - iSCSI initiator utils installed on all the worker nodes.
 - You have access to install RBAC components into `kube-system` namespace. The OpenEBS CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
-- You will need to turn on `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` feature gates as `true` on `kubelets` and `kube-apiserver` . 
+- You will need to enable `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` feature gates on `kubelets` and `kube-apiserver` . 
 - Base OS on worker should be Ubuntu 16.04, Ubuntu 18.04 or CentOS.
 
 
 
 <h4><a class="anchor" aria-hidden="true" id="install-OpenEBS-csi-driver"></a>Install OpenEBS CSI Driver</h4>
 
-The node components make use of the host iSCSI binaries for iSCSI connection management. Depending on the OS, the spec will have to be modified to load the required iSCSI files into the node pods.
+The node components make use of the host iSCSI binaries for iSCSI connection management. Depending on the OS, the csi-operator will have to be modified to load the required iSCSI files into the node pods.
 
 OpenEBS CSI driver components can be installed by running the following command:
 
@@ -121,13 +121,13 @@ spec:
 
 Edit the following parameter in the sample CSPC YAML:
 
-**blockDeviceName**:- Provide the block device CR(CRs) created by NDM on the node where cStor storage pool is going to be created.
+**blockDeviceName**:- Provide the block device names to be used for provisioning cStor pool. All the block devices must be on the same node. 
 
-**kubernetes.io/hostname**: Provide the hostname where the cStor pool will be created using the set of block devices attached to the same node.
+**kubernetes.io/hostname**: Provide the hostname where the cStor pool will be created using the set of block devices attached to that node.
 
 
 
-The above sample YAML create a single cStor pool on the provided node using the provided block device. In this example, the modified YAML is saved as `cspc.yaml`. Apply the modified CSPC YAML spec using the following command to create cStor Pool Cluster:
+The above sample YAML creates a cStor pool on the corresponding node with provided block device. In this example, the modified YAML is saved as `cspc.yaml`. Apply the modified CSPC YAML spec using the following command to create a cStor Pool Cluster:
 
 ```
 kubectl apply -f cspc.yaml
@@ -158,9 +158,9 @@ Example output:
 
 
 
-<h4><a class="anchor" aria-hidden="true" id="create-a-cStor-sc-uses-csi-driver"></a>Create a cStor StorageClass uses OpenEBS CSI driver</h4>
+<h4><a class="anchor" aria-hidden="true" id="create-a-cStor-sc-for-csi-driver"></a>Create a cStor StorageClass with cStor CSI provisioner</h4>
 
-Create a Storage Class to dynamically provision volumes using OpenEBS CSI provisioner. A sample storage class looks like:
+Create a Storage Class to dynamically provision volumes using cStor CSI provisioner. A sample StorageClass looks like:
 
 <div class="co">kind: StorageClass
 apiVersion: storage.k8s.io/v1
@@ -178,7 +178,7 @@ You should specify the correct cStor `cstorPoolCluster` name from your cluster a
 
 **Note:** The `replicaCount` should be less than or equal to the max pools available.
 
-Sample StorageClass YAML spec can be found in [github repo](https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/sc.yaml). Apply the Storage Class YAML file using the following command:
+Sample StorageClass YAML spec can be found in [github repo](https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/sc.yaml). Apply the sample Storage Class YAML using the following command:
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/sc.yaml
@@ -186,18 +186,30 @@ kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/depl
 
 
 
-<h4><a class="anchor" aria-hidden="true" id="run-application-on-a-cStor-volume-by-specifying-sc"></a>Run your application on cStor volume by specifying the Storage Class for the PVCs</h4>
+<h4><a class="anchor" aria-hidden="true" id="run-application-on-a-cStor-volume-by-specifying-sc"></a>Run your application on cStor volume provisioned via CSI Provisioner</h4>
 
-Run your application by specifying the above created StorageClass for creating the PVCs. The following example launches a busybox pod using a cStor Volume provisioned via CSI Provisioner.
+Run your application by specifying the above created StorageClass for creating the PVC. The following example launches a busybox app with a cStor Volume provisioned via CSI Provisioner.
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/busybox-csi-cstor-sparse.yaml
 ```
 
-Verify if the pod is running or not using the following command:
+Now the application will be running on the volume provisioned via cStor CSI provisioner. Verify the status of the PVC using the following command:
 
 ```
-kubectl get pods
+kubectl get pvc
+```
+
+Example output:
+
+<div class="co">NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS             AGE
+demo-csivol-claim   Bound    pvc-723283b6-02bc-11ea-a139-42010a8000b2   5Gi        RWO            openebs-csi-cstor-disk   17m
+</div>
+
+Verify the status of the app by running the following command:
+
+```
+kubectl get pod
 ```
 
 Example output:
@@ -219,65 +231,11 @@ Example output:
 <div class="co">Sat Nov  9 06:59:27 UTC 2019
 </div>
 
-The following command will get the details of PVC of the cStor volume:
+**Note:** While the asynchronous handling of the Volume provisioning is in progress, the application pod description may throw some errors like:
 
-```
-kubectl get pvc
-```
+Waiting for CVC to be bound: Implies volume components are still being created
 
-Example output:
-
-<div class="co">NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS             AGE
-demo-csivol-claim   Bound    pvc-723283b6-02bc-11ea-a139-42010a8000b2   5Gi        RWO            openebs-csi-cstor-disk   17m
-</div>
-
-The following command will get the details of PV of the cStor volume:
-
-```
-kubectl get pv
-```
-
-Example output:
-
-<div class="co">NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                       STORAGECLASS             REASON   AGE
-pvc-723283b6-02bc-11ea-a139-42010a8000b2   5Gi        RWO            Delete           Bound    default/demo-csivol-claim   openebs-csi-cstor-disk            4m24s
-</div>
-
-The following command will get the details of cStor volume:
-
-```
-kubectl get cstorvolume -n openebs
-```
-
-Example output:
-
-<div class="co">NAME                                       STATUS    AGE     CAPACITY
-pvc-723283b6-02bc-11ea-a139-42010a8000b2   Healthy   4m19s   4Gi
-</div>
-
-The following command will get the details of CVC of the cStor volume:
-
-```
-kubectl get cvc -n openebs
-```
-
-Example output:
-
-<div class="co">NAME                                       STATUS   AGE
-pvc-723283b6-02bc-11ea-a139-42010a8000b2   Bound    4m29s
-</div>
-
-The following command will get the details of CVR of the cStor volume:
-
-```
-kubectl get cvr -n openebs
-```
-
-Example output:
-
-<div class="co">NAME                                                            USED    ALLOCATED   STATUS    AGE
-pvc-723283b6-02bc-11ea-a139-42010a8000b2-cstor-disk-cspc-7hkl   4.29M   60K         Healthy   4m14s
-</div>
+Volume is not ready: Replicas yet to connect to controller: Implies volume components are already created but yet to interact with each other.
 
 <h4><a class="anchor" aria-hidden="true" id="deprovision-cstor-volume-created-using-csi"></a>Deprovision a cStor volume</h4>
 
@@ -296,7 +254,7 @@ The following section will give the steps to expand a cStor volume which is crea
 **Notes to remember:**
 
 - Only dynamically provisioned cStor volumes can be resized.
-- You can only expand cStor volumes containing a file system if the file system is XFS, Ext3, or Ext4.
+- You can only expand cStor volumes containing a file system if the file system is XFS, ext3, or ext4.
 - Ensure that the corresponding StorageClass has the `allowVolumeExpansion` field set to `true` when the volume is provisioned.
 
 **Steps to perform the cStor volume expansion:**
