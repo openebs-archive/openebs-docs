@@ -36,6 +36,8 @@ sidebar_label: FAQs
 
 [Why customized parameters set on default OpenEBS StorageClasses are not getting persisted?](#customized-values-not-peristed-after-reboot)
 
+[Why NDM listens on host network?](#why-ndm-listens-on-host-network)
+
 <br>
 
 ## Data Protection
@@ -272,9 +274,12 @@ OpenEBS cStor volume is working based on cStor/ZFS snapshot using Velero. For Op
 
 <h3><a class="anchor" aria-hidden="true" id="customized-values-not-peristed-after-reboot"></a>Why customized parameters set on default OpenEBS StorageClasses are not getting persisted?</h3>
 
-
 The customized parameters set on default OpenEBS StorageClasses will not persist after restarting `maya-apiserver` pod or restarting the node where `maya-apiserver` pod is running. StorageClasses created by maya-apiserver are owned by it and it tries to overwrite them upon its creation.
 
+
+<h3><a class="anchor" aria-hidden="true" id="why-ndm-listens-on-host-network"></a>Why NDM listens on host network?</h3>
+
+NDM uses `udev` to monitor dynamic disk attach and detach events. `udev` listens on netlink socket of the host system to get those events. A container requires host network access so that it can listen on the socket. Therefore NDM requires host network access for the `udev` running inside the container to listen those disk related events. 
 
 
 <hr>
