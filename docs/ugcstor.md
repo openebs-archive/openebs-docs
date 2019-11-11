@@ -1626,7 +1626,7 @@ OpenEBS team is working on both the CSI plugin as well as the feature to resize 
 
 <h3><a class="anchor" aria-hidden="true" id="scaling-up-of-cvr"></a>Scaling up of cStor Volume Replica</h3>
 
-This section will give the steps for scaling up cStor volume replica where cStor volume is created using `provisioner` as `openebs.io/provisioner-iscsi`.
+The following prvoides the steps for scaling up replica of a cStor volume.
 
 
 
@@ -1637,20 +1637,13 @@ This section will give the steps for scaling up cStor volume replica where cStor
 
 
 
-<h4><a class="anchor" aria-hidden="true" id="recommendation-scale-up"></a>Recommendation</h4>
-
-- The cStor volume replica scale-up to the next count should be done one at a time. This means if current replica count is 1 and planning to create another 2 more replica of the cStor volume, then first perform scale up operation to 2 and then do the same process to make it 3.
-
-
-
 <h4><a class="anchor" aria-hidden="true" id="overview-scale-up"></a>Overview</h4>
 
 - Get the current replica count of the cStor volume which is mentioned in corresponding StorageClass.
-- Find cStor pool where current replica is created.
-- Find available cStor pools where new replica pods should be created.
-- Scale up cStor Volume Replica count one at a time.
-- Verify new cStor Volume Replica is created for the particular volume. 
-- (Optional) Repeat the above steps for scaling up to the next count if it is required. 
+- Find cStor pool(s) where existing cStor volume replica(s) is created.
+- Find available cStor pools where new cStor volume replica should be created.
+- Verify new cStor Volume Replica(s) is created for the particular volume on the available cStor pool(s). 
+
 
 
 
@@ -1674,7 +1667,7 @@ This section will give the steps for scaling up cStor volume replica where cStor
    standard (default)          kubernetes.io/gce-pd     
    ```
 
-   Perform the following command to get the details of corresponding StorageClass which is used for creating of corresponding cStor volume :
+   Perform the following command to get the details of corresponding StorageClass which is used for creating the corresponding cStor volume :
 
    ```
    kubectl get sc openebs-sc-cstor -o yaml
@@ -1715,7 +1708,7 @@ This section will give the steps for scaling up cStor volume replica where cStor
    Get the details of cStor volume details using the following command:
 
    ```
-   kubectl get cstorvolume -n openebs
+   kubectl get cstorvolume -n openebs -l openebs.io/persistent-volume=pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8
    ```
 
    Example output:
@@ -1724,10 +1717,10 @@ This section will give the steps for scaling up cStor volume replica where cStor
    pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8   Healthy   20m   500Gi
    </div>
 
-   Get the details of current cStor Volume Replica details using the following command:  
+   Get the details of existing cStor Volume Replica details using the following command:  
 
    ```
-   kubectl get cvr -n openebs
+   kubectl get cvr -n openebs -l openebs.io/persistent-volume=pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8
    ```
 
    Example output:
@@ -1736,7 +1729,7 @@ This section will give the steps for scaling up cStor volume replica where cStor
    pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8-cstor-disk-pool-hgt4   84.6M   2.88M       Healthy   20m
    </div>
 
-3. Perform the following command to get complete details the current replica of cStor volume:
+3. Perform the following command to get complete details the existing replica of cStor volume:
 
    ```
    kubectl get cvr pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8-cstor-disk-pool-hgt4 -n openebs -oyaml
@@ -1779,25 +1772,28 @@ This section will give the steps for scaling up cStor volume replica where cStor
 
    Note down following parameters from the output. This is needed for creating new cStor Volume Replica  in step 7.
 
-   - desired.annotations.openebs.io/storage-class-ref|
+   - metadata.annotations.openebs.io/storage-class-ref|
 
      ​     name:
 
    - metadata.labels.cstorvolume.openebs.io/name
 
-   - metadata.labels.cstorvolume.openebs.io/cas-template-name
-
    - metadata.labels.cstorvolume.openebs.io/persistent-volume
 
    - metadata.labels.cstorvolume.openebs.io/version
 
+   - metadata.namespace
+   
    - spec.capacity
 
    - spec.targetIP
 
    - versionDetails.desired
+   
+   - versionDetails.status.current
+   
 
-4. Perform the following command to get the current cStor Storage Pool where the existing cStor volume replica is created:
+4. Perform the following command to get the cStor Pool where the existing cStor volume replica is created:
 
    ```
    kubectl get cvr pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8-cstor-disk-pool-hgt4 -n openebs --show-labels |  awk '{print $6}'  | grep -i cstorpool | awk -F'[, ]' '{print $1}'
@@ -1808,7 +1804,7 @@ This section will give the steps for scaling up cStor volume replica where cStor
    <div class="co">cstorpool.openebs.io/name=cstor-disk-pool-hgt4
    </div>
 
-5. Get the available cStor Storage Pool for creating the required volume replica. The following commands will get the other associated cStor Storage pools details:
+5. Get the available cStor Pools for creating the cStor volume replica. The following commands will get the other associated cStor pools details:
 
    ```
    kubectl get csp -l openebs.io/storage-pool-claim=cstor-disk-pool
@@ -1822,11 +1818,10 @@ This section will give the steps for scaling up cStor volume replica where cStor
    cstor-disk-pool-zm8l   1.60M       39.7G   39.8G      Healthy   striped   36m
    </div>
 
-   From the above example output, there are 2 cStor Storage Pools are available, ie: cstor-disk-pool-2phf and cstor-disk-pool-zm8l. So it is possible to scale up the current volume replica count to 3 from 1 through scaling up of replica to 2 from 1 first then to 3 from 2.
+   From the above example output, there are 2 cStor pools are available, ie: cstor-disk-pool-2phf and cstor-disk-pool-zm8l. So it is possible to scale up the current volume replica count to 3 from 1.
+   **Note:** If there are no cStor pools available to perform volume replica scale-up , the fonllow the [steps](#expanding-cStor-pool-to-a-new-node) to create new cStor pool by updating existing SPC configuration.
 
-   **Note:** If there are no cStor Storage Pools available to perform volume replica scale-up , the follow the [steps](#expanding-cStor-pool-to-a-new-node) to create new cStor pool by updating existing SPC configuration.
-
-6. Perform the following command to get the details of the cStor Storage Pool where new replica is going to be created:
+6. Perform the following command to get the details of the cStor Pool where new replica is going to be created:
 
    ```
    kubectl get csp -n openebs cstor-disk-pool-2phf -oyaml
@@ -1906,17 +1901,17 @@ This section will give the steps for scaling up cStor volume replica where cStor
 
    - **<storage_class_name>:** Storageclass name used to create the cStor volume. It is also available in any existing CVR. This can be get from step 3.
 
-   - **<csp_name>**:  identified new cStor Storage Pool name where new CVR is going to be created.  This can be get from step 6.
+   - **<csp_name>**:  identified cStor pool name where new CVR is going to be created.  This can be get from step 6.
 
-   - **<csp_uid>**:  UID  of new cStor Storage Pool name where new CVR is going to be created.  This can be get from step 6.
+   - **<csp_uid>**:  UID of identified cStor pool name where new CVR is going to be created.  This can be get from step 6.
 
    - **<persistent_volume_name>**:  Kubernetes Persistent Volume name of the corresponding cStor volume. This can be get from step 3.
 
    - **<openebs_version>**:  Version of OpenEBS on which this volume exist. This can be get from step 3.
 
-   - **<cstor_volume_name>**: Name of current cStor volume. This can be get from step 3.
+   - **<cstor_volume_name>**: Name of cStor volume. This can be get from step 3.
 
-   - **<cstor_volume_name>-<csp_name>**:  Particular cStor volume name and cStor storage pool where replica of particular cStor volume is going to be create. This can be get from step 3 and step 6.
+   - **<cstor_volume_name>-<csp_name>**:  This is the newe CVR name which is going to be created. This should be named as a combination of particular cStor volume name and identified cStor pool name. This can be get from step 3 and step 6.
 
    - **<initial_capacity>**:  Capacity of the cStor volume. This can be get from step 3.
 
@@ -1934,7 +1929,7 @@ This section will give the steps for scaling up cStor volume replica where cStor
      echo -n "3f86fcdf-02f6-11ea-b0f6-42010a8000f8-ca657af1-02f4-11ea-b0f6-42010a8000f8" | md5sum | awk '{print toupper($1)}'
      ```
 
-     In the above example pvc-uid is `3f86fcdf-02f6-11ea-b0f6-42010a8000f8` and `csp-uid` is `ca657af1-02f4-11ea-b0f6-42010a8000f8`
+     In the above example pvc-uid is `3f86fcdf-02f6-11ea-b0f6-42010a8000f8` and `csp-uid` of identified cStor pool is `ca657af1-02f4-11ea-b0f6-42010a8000f8`
 
      Example output:
 
@@ -2004,7 +1999,7 @@ This section will give the steps for scaling up cStor volume replica where cStor
 
    From above output, new replica of the cStor volume is created and `STATUS` is showing as `Offline`. 
 
-10. Update `Desired Replication Factor` in cStor volume with the updated replica count. This can be updated by editing corresponding cStor volume CR YAML.
+10. Update `Desired Replication Factor` in cStor volume with new replica count. This can be updated by editing corresponding cStor volume CR YAML.
 
     ```
     kubectl edit cstorvolume pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8 -n openebs
@@ -2023,7 +2018,8 @@ This section will give the steps for scaling up cStor volume replica where cStor
           C65AE27463F8646017D3F933C204925E: "11298477277091074483"
       replicationFactor: 1
     </div>
-
+    
+    In the above snippet, `desiredReplicationFactor` is updated to 2 from 1.
     Example output:
 
     <div class="co">cstorvolume.openebs.io/pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8 edited
@@ -2051,7 +2047,6 @@ This section will give the steps for scaling up cStor volume replica where cStor
     - status.replicaDetails.knownReplicas
     - status.replicaStatuses
 
-13. Repeat from step 6 to step 12 if you need to create another replica of the corresponding cStor volume to another available storage pool where replica of this cStor volume is not present.
 
 <br>
 
