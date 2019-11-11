@@ -22,6 +22,8 @@ This section give different features of OpenEBS which is presently in Alpha vers
 <font size="6">cStor</font>
 
 <h3><a class="anchor" aria-hidden="true" id="running-sample-application-cstor-volume-using-csi-provisioner"></a>Running a sample application on a cStor volume provsioned via CSI provisioner</h3>
+
+
 The [Container Storage Interface](https://github.com/container-storage-interface/spec/blob/master/spec.md) (CSI) is a standard for exposing arbitrary block and file storage systems to containerized workloads on Container Orchestration Systems(COs)  like Kubernetes combined with different storage vendors. This means, implementing a single CSI for a storage vendor is guaranteed to work with all COs. OpenEBS cStor volume can be now provisioned with CSI driver from OpenEBS 1.2 version onwards. This feature is under active development and considered to be in Alpha state. 
 
 **Note:** The current implementation only supports provisioning, de-provisioning, snapshot & clone and expansion of cStor Volumes.
@@ -292,6 +294,8 @@ Sat Nov  9 06:59:27 UTC 2019
 
 
 <h3><a class="anchor" aria-hidden="true" id="expand-cstor-volume-created-using-csi-provisioner"></a>Expand a cStor volume created using CSI provisioner</h3>
+
+
 The following section will give the steps to expand a cStor volume which is created using CSI provisioner. 
 
 **Notes to remember:**
