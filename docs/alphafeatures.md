@@ -28,7 +28,7 @@ The [Container Storage Interface](https://github.com/container-storage-interface
 
 **Note:** The current implementation only supports provisioning, de-provisioning, snapshot & clone and expansion of cStor Volumes.
 
-**Prerequisites**
+<h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-csi"></a>Prerequisites</h4>
 
 - Kubernetes version 1.14 or higher is installed.
 - OpenEBS Version 1.2 or higher installed. 
@@ -311,6 +311,7 @@ The following section will give the steps to expand a cStor volume which is crea
 - Only dynamically provisioned cStor volumes can be resized.
 - You can only expand cStor volumes containing a file system if the file system is XFS, ext3, or ext4.
 - Ensure that the corresponding StorageClass has the `allowVolumeExpansion` field set to `true` when the volume is provisioned.
+- You will need to enable `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` feature gates on `kubelets` and `kube-apiserver`. Other general prerequisites related to cStor volume via CSI provosioner can be found from [here](#prerequisites-cstor-csi). 
 
 **Steps to perform the cStor volume expansion:**
 
@@ -347,7 +348,9 @@ The following section will give the steps to expand a cStor volume which is crea
          storage: 9Gi   
      storageClassName: openebs-csi-cstor-disk
    </div>
-
+   
+   In the above snippet, `storage` is modified with 9Gi from 5Gi. 
+   
 3. Wait for the updated capacity to reflect in PVC status (pvc.status.capacity.storage). Perform the following command to verify the updated size of the PVC:
 
    ```
