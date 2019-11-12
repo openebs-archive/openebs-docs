@@ -372,7 +372,7 @@ The following section will give the steps to expand a cStor volume which is crea
 
 The following prvoides the steps for scaling down replica of a cStor volume.
 
-<h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-csi-scale-down"></a>Prerequisites</h4>
+<h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-scale-down"></a>Prerequisites</h4>
 
 - All the cStor volume replicas(CVR) should be in `Healthy` state except the cStor volume replica that is going to deleted(i.e deleting CVR can be in any state).
 
@@ -382,7 +382,7 @@ The following prvoides the steps for scaling down replica of a cStor volume.
 
 - Scaling down one replica at a time is the recommended way. This means only one replica at a time should be removed.
 
-**Overview**
+<h4><a class="anchor" aria-hidden="true" id="Overview-scale-down"></a>Overview</h4>
 
 - Get the details of corresponding cStor volume.
 - Identify the replica of the cStor volume which need t be removed.
@@ -390,7 +390,7 @@ The following prvoides the steps for scaling down replica of a cStor volume.
 - Verify that the identified volume replica is removed successfully.
 - Delete the removed volume replica.
 
-**Steps to perform the scale-down of cStor volume replica:**
+<h4><a class="anchor" aria-hidden="true" id="steps-cstor-scale-down"></a>Steps to perform the scale-down of cStor volume replica</h4>
 
 1. Perform the following command to get the details of the PVC:
    ```
