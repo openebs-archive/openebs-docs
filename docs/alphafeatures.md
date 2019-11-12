@@ -38,9 +38,15 @@ The [Container Storage Interface](https://github.com/container-storage-interface
 - You will need to enable `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` feature gates on `kubelets` and `kube-apiserver` . 
 - Base OS on worker should be Ubuntu 16.04, Ubuntu 18.04 or CentOS.
 
+**Overview**
 
+- Install OpenEBS CSI Driver
+- Provision a cStor Pool Cluster
+- Create a cStor StorageClass with cStor CSI provisioner
+- Run your application on cStor volume provisioned via CSI Provisioner
 
 <h4><a class="anchor" aria-hidden="true" id="install-OpenEBS-csi-driver"></a>Install OpenEBS CSI Driver</h4>
+
 The node components make use of the host iSCSI binaries for iSCSI connection management. Depending on the OS, the csi-operator will have to be modified to load the required iSCSI files into the node pods.
 
 OpenEBS CSI driver components can be installed by running the following command:
@@ -98,6 +104,7 @@ Depending on the OS, select the appropriate deployment file.
   
 
 <h4><a class="anchor" aria-hidden="true" id="provision-a-cStor-Pool-Cluster-csi"></a>Provision a cStor Pool Cluster</h4>
+
 Apply CSPC operator YAML file using the following command:
 
 ```
@@ -183,6 +190,7 @@ Example output:
 
 
 <h4><a class="anchor" aria-hidden="true" id="create-a-cStor-sc-for-csi-driver"></a>Create a cStor StorageClass with cStor CSI provisioner</h4>
+
 Create a Storage Class to dynamically provision volumes using cStor CSI provisioner. You can save the following sample StorageClass YAML spec as `cstor-csi-sc.yaml`.
 
 ```
@@ -229,6 +237,7 @@ The StorageClass `openebs-csi-cstor-disk` is created successfully.
 
 
 <h4><a class="anchor" aria-hidden="true" id="run-application-on-a-cStor-volume-by-specifying-sc"></a>Run your application on cStor volume provisioned via CSI Provisioner</h4>
+
 Run your application by specifying the above created StorageClass for creating the PVC. Sample application YAML can be downloaded using the following command:
 
 ```
@@ -292,7 +301,6 @@ Sat Nov  9 06:59:27 UTC 2019
 
 
 
-
 <h3><a class="anchor" aria-hidden="true" id="expand-cstor-volume-created-using-csi-provisioner"></a>Expand a cStor volume created using CSI provisioner</h3>
 
 
@@ -318,7 +326,7 @@ The following section will give the steps to expand a cStor volume which is crea
       demo-csivol-claim   Bound    pvc-723283b6-02bc-11ea-a139-42010a8000b2   5Gi        RWO            openebs-csi-cstor-disk   66m
       </div>
 
-2.  Update the increased PVC size in the following section of the PVC YAML. 
+2. Update the increased PVC size in the following section of the PVC YAML. 
 
    - `pvc.spec.resources.requests.storage`.
 
@@ -340,7 +348,7 @@ The following section will give the steps to expand a cStor volume which is crea
      storageClassName: openebs-csi-cstor-disk
    </div>
 
-3.  Wait for the updated capacity to reflect in PVC status (pvc.status.capacity.storage). Perform the following command to verify the updated size of the PVC:
+3. Wait for the updated capacity to reflect in PVC status (pvc.status.capacity.storage). Perform the following command to verify the updated size of the PVC:
 
    ```
    kubectl get pvc
