@@ -2123,16 +2123,49 @@ The following prvoides the steps for scaling up replica of a cStor volume.
     pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8-cstor-disk-pool-hgt4   158M   3.41M       Healthy   4h7m
     </div>
 
-12. After new replica of the cStor volume is in `Healthy ` state, check the following parameters of the cStor volume to ensure that details are updated properly.
-
+12. After new replica of the cStor volume is in `Healthy ` state, check the following parameters of the cStor volume to ensure that details are updated properly. 
+    
     - consistencyFactor
     - desiredReplicationFactor
     - spec.replicaDetails.knownReplicas
     - spec.replicationFactor
     - status.replicaDetails.knownReplicas
     - status.replicaStatuses
+    
+    The following command will get the details of cStor volume.
 
+    ```
+    kubectl describe cstorvolume cstorvolume pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8 -n openebs
+    ```
+    
+    Example snippet:
+    
+    <div class="co">
+    API Version:  openebs.io/v1alpha1
+    Kind:         CStorVolume
+    ...
+    ...
 
+    Spec:
+      Capacity:                    500G
+      Consistency Factor:          2
+      Desired Replication Factor:  2
+      Replication Factor:          2
+    ...
+    ...
+
+    Status:
+      Capacity:              500G
+      Phase:                 Healthy
+      Replica Details:
+        Known Replicas:
+          C65AE27463F8646017D3F933C204925E: 11298477277091074483
+          113EB77418E30B1A3DA0D9374C4E943C: 14689006053351698479
+    ...
+    ...
+    </div>
+    
+    In the above snippet, `Consistency Factor` and `Replication Factor` is automatically updated and new replica is added under `Known Replicas` field.
 <br>
 
 ## See Also:

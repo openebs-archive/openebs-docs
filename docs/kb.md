@@ -1460,7 +1460,7 @@ The following are the different type of STATUS information of cStor Volumes Repl
 - when an error occurs while getting the stats of cStor volume.
 - when the unit of size is not mentioned in PVC spec. For example, if the size is 5 instead of 5G.
 
-**DeletionFailed:** cStor volume replica status is deletion failed while destroying cStor volumes fails.
+**DeletionFailed:** cStor volume replica status will be in `deletion failed` when destroying corresponding cStor volume fails.
 
 **Invalid:** cStor volume replica status is invalid when a new cstor-pool-mgmt container in a new pod is communicating with the old cstor-pool container in an old pod.
 
@@ -1471,6 +1471,8 @@ The following are the different type of STATUS information of cStor Volumes Repl
 **NewReplicaDegraded:** cStor volume replica is newly created and it make successful connection with the target pod. 
 
 **ReconstructingNewReplica:** cStor volume replica is newly created and it started reconstructing entire data from another healthy replica.
+
+**Note:** If cStor Volume Replica `STATUS` is in `NewReplicaDegraded` or `NewReplicaReconstructing`, then the corresponding volume replica will not be part of the quorum decisions.
 
 <br>
 
