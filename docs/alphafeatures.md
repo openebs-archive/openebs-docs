@@ -385,10 +385,10 @@ The following prvoides the steps for scaling down replica of a cStor volume.
 <h4><a class="anchor" aria-hidden="true" id="Overview-scale-down"></a>Overview</h4>
 
 - Get the details of corresponding cStor volume.
-- Identify the replica of the cStor volume which need t be removed.
+- Identify the replica of the cStor volume which needs to be removed.
 - Modify the cStor volume specification with required change.
 - Verify that the identified volume replica is removed successfully.
-- Delete the removed volume replica.
+- Delete the CVR corresponding to the replicaID entry which was removed from cStor volume.
 
 <h4><a class="anchor" aria-hidden="true" id="steps-cstor-scale-down"></a>Steps to perform the scale-down of cStor volume replica</h4>
 
@@ -505,7 +505,7 @@ The following prvoides the steps for scaling down replica of a cStor volume.
          4858867E8F150C533A2CF30A5D5FD8C6: "3588528959973203834"    
    </div>
   
-   From above snippet, `desiredReplicationFactor` is updated to `2` from `3` and removed `replicaid` of identified volume replica 4858867E8F150C533A2CF30A5D5FD8C6 from `spec.replicaid`. 
+   From above snippet, `desiredReplicationFactor` is updated to `2` from `3` and removed `replicaid` entry of identified volume replica 4858867E8F150C533A2CF30A5D5FD8C6 from `spec.replicaDetails.knownReplicas`. 
   
 4. Verify identified replica is removed from the cStor volume. The following section can be checked to verify the updated details and event messages.
    
@@ -559,6 +559,16 @@ The following prvoides the steps for scaling down replica of a cStor volume.
      replicaStatuses:
    </div>
   
+   From the output, the following values are auto updated:
+   
+   - consistencyFactor: It is updated to 2.
+   
+   - spec.replicaDetails.knownReplicas : The `replicaid` entry of identified CVR is removed.
+   
+   - replicationFactor : Its is updated to 2.
+   
+   - status.replicaDetails.knownReplicas :  The `replicaid` entry of identified CVR is removed.
+   
    Status of CVR of the correpsonding cStor volume can be get by running following command:
   
    ```
@@ -576,7 +586,7 @@ The following prvoides the steps for scaling down replica of a cStor volume.
 
    From above output, identified CVR status is changed to `Offline`. 
 
-5. Delete the removed CVR which is now in `offline` state using the following command:
+5. Delete the CVR corresponding to the replicaID entry which was removed from cStor volume using the following command:
   
    ```
    kubectl delete cvr pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw -n openebs
