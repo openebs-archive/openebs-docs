@@ -1897,7 +1897,8 @@ The following prvoides the steps for scaling up replica of a cStor volume.
    </div>
 
    From the above example output, there are 2 cStor pools are available, ie: cstor-disk-pool-2phf and cstor-disk-pool-zm8l. So it is possible to scale up the current volume replica count to 3 from 1.
-   **Note:** If there are no cStor pools available to perform volume replica scale-up , the fonllow the [steps](#expanding-cStor-pool-to-a-new-node) to create new cStor pool by updating existing SPC configuration.
+   
+   **Note:** If there are no cStor pools available to perform volume replica scale-up , the follow the [steps](#expanding-cStor-pool-to-a-new-node) to create new cStor pool by updating existing SPC configuration.
 
 6. Perform the following command to get the details of the cStor Pool where new replica is going to be created:
 
