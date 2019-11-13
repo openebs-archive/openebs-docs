@@ -17,7 +17,7 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 [Expand a cStor volume created using CSI provisioner](#expand-cstor-volume-created-using-csi-provisioner)
 
-[Scaling down of cStor Volume Replica](#scaling-down-of-cstor-volume-replica)
+[Scaling down cStor Volume Replica](#scaling-down-of-cstor-volume-replica)
 
 
 
@@ -367,20 +367,20 @@ The following section will give the steps to expand a cStor volume which is crea
     </div>
 
 
-<h3><a class="anchor" aria-hidden="true" id="scaling-down-of-cstor-volume-replica"></a>Scaling down of cStor Volume Replica</h3>
+<h3><a class="anchor" aria-hidden="true" id="scaling-down-of-cstor-volume-replica"></a>Scaling down cStor Volume Replica</h3>
 
 
-The following prvoides the steps for scaling down replica of a cStor volume.
+This section prvoide the steps for scaling down the replica of a cStor volume.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-scale-down"></a>Prerequisites</h4>
 
-- All the cStor volume replicas(CVR) should be in `Healthy` state except the cStor volume replica that is going to deleted(i.e deleting CVR can be in any state).
+- All the othe cStor volume replicas(CVR) should be in `Healthy` state except the cStor volume replica that is going to deleted(i.e deleting CVR can be in any state).
 
 - There shouldn't be any ongoing scaleup process. Verify that `replicationFactor` should be equal to the `desiredReplicationFactor` from corresponding cStor volume CR specification. 
 
 **Notes to remember:**
 
-- Scaling down one replica at a time is the recommended way. This means only one replica at a time should be removed.
+- Scaling down one replica at a time is recommended. This means, only one replica at a time should be removed.
 
 <h4><a class="anchor" aria-hidden="true" id="Overview-scale-down"></a>Overview</h4>
 
@@ -390,9 +390,9 @@ The following prvoides the steps for scaling down replica of a cStor volume.
 - Verify that the identified volume replica is removed successfully.
 - Delete the CVR corresponding to the replicaID entry which was removed from cStor volume.
 
-<h4><a class="anchor" aria-hidden="true" id="steps-cstor-scale-down"></a>Steps to perform the scale-down of cStor volume replica</h4>
+<h4><a class="anchor" aria-hidden="true" id="steps-cstor-scale-down"></a>Steps to perform scaling down of cStor volume replica</h4>
 
-1. Perform the following command to get the details of the PVC:
+1. Perform the following command to get the details of PVC:
    ```
    kubectl get pvc
    ```
@@ -404,7 +404,7 @@ The following prvoides the steps for scaling down replica of a cStor volume.
    demo-csivol-claim   Bound    pvc-723283b6-02bc-11ea-a139-42010a8000b2   5Gi        RWO            openebs-csi-cstor-disk   66m
    </div>
   
-   Perform the following command to get the details of the corresponding cStor volume. All commands are peformed with considering above PVC. 
+   From the above output, get `VOLUME` name and use in the following command to get the details of corresponding cStor volume. All commands are peformed by considering above PVC. 
   
    ```
    kubectl get cstorvolume -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
@@ -432,48 +432,29 @@ The following prvoides the steps for scaling down replica of a cStor volume.
    pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-zcn7   37.4M   2.58M       Healthy      8m16s
    </div>
   
-2. Identify the cStor volume replica from above output which need to be removed. Then, perform the following command to get the `replicaid` of the corresponding cStor volume replica. In ths example, identified cStor volume replica is `pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw`. 
+2. Identify the cStor volume replica from above output which needs to be removed. Then, perform the following command to get the `replicaid` of the corresponding cStor volume replica. In this example, identified cStor volume replica is `pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw`. 
   
    ```
-   kubectl get cvr pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw -n openebs -oyaml 
+   kubectl get cvr pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw -n openebs -oyaml | grep -i replicaid
    ```
   
    Example snippet:
   
    <div class="co">
-     labels:
-     cstorpool.openebs.io/name: cstor-disk-pool-c0tw
-     cstorpool.openebs.io/uid: d697b79b-051d-11ea-a786-42010a8001c9
-     cstorvolume.openebs.io/name: pvc-ed6e893a-051d-11ea-a786-42010a8001c9
-     openebs.io/cas-template-name: cstor-volume-create-default-1.4.0
-     openebs.io/persistent-volume: pvc-ed6e893a-051d-11ea-a786-42010a8001c9
-     openebs.io/version: 1.4.0
-   name: pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw
-   namespace: openebs
-   resourceVersion: "52805"
-   selfLink: /apis/openebs.io/v1alpha1/namespaces/openebs/cstorvolumereplicas/pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw
-   uid: eda0e0c8-051d-11ea-a786-42010a8001c9
-   spec:
-     capacity: 500G
      replicaid: 4858867E8F150C533A2CF30A5D5FD8C6
-     targetIP: 10.0.70.44
-     zvolWorkers: ""
-   status:
-     capacity:
-       totalAllocated: 2.77M
    </div>
+    
+   From the above output, `replicaid` of the identified cStor volume replica is `4858867E8F150C533A2CF30A5D5FD8C6`.
    
-   The `replicaid` can be obtained from `spec.replicaid`. 
-   
-   From the above outout, `replicaid` of the identified cStor volume replica is `4858867E8F150C533A2CF30A5D5FD8C6`.
-   
-3. Modify the correspondiong cStor volume specification to remove the identified cStor volume replica and update the `desiredReplicationFactor`. The cStor volume can be edited by using the following command:
+3. Modify the corresponding cStor volume specification to remove the identified cStor volume replica and update the `desiredReplicationFactor`. The cStor volume can be edited by using the following command:
 
    ```
    kubectl edit cstorvolume pvc-ed6e893a-051d-11ea-a786-42010a8001c9 -n openebs
    ```
   
-   The following are the items need to be updated if you are scaling down from replica count 3 to 2.
+   The following are the items need to be updated if you are scaling down the replica count from 3 to 2.
+   
+   In the below snippet, `desiredReplicationFactor` is updated to `2` from `3` and removed the `replicaid` entry of the identified volume replica `4858867E8F150C533A2CF30A5D5FD8C6` from `spec.replicaDetails.knownReplicas`. 
   
    Example snippet:
   
@@ -505,9 +486,7 @@ The following prvoides the steps for scaling down replica of a cStor volume.
          4858867E8F150C533A2CF30A5D5FD8C6: "3588528959973203834"    
    </div>
   
-   From above snippet, `desiredReplicationFactor` is updated to `2` from `3` and removed `replicaid` entry of identified volume replica 4858867E8F150C533A2CF30A5D5FD8C6 from `spec.replicaDetails.knownReplicas`. 
-  
-4. Verify identified replica is removed from the cStor volume. The following section can be checked to verify the updated details and event messages.
+4. Verify that the identified replica has been removed from the cStor volume. The following section can be checked to verify the updated details and removal event messages of the cStor volume.
    
    Removal event message can be checked by describe the corresponding cStor volume using the following command:
    
@@ -561,15 +540,11 @@ The following prvoides the steps for scaling down replica of a cStor volume.
   
    From the output, the following values are auto updated:
    
-   - consistencyFactor: It is updated to 2.
-   
-   - spec.replicaDetails.knownReplicas : The `replicaid` entry of identified CVR is removed.
-   
-   - replicationFactor : Its is updated to 2.
+   - replicationFactor : It is updated to 2.
    
    - status.replicaDetails.knownReplicas :  The `replicaid` entry of identified CVR is removed.
    
-   Status of CVR of the correpsonding cStor volume can be get by running following command:
+   The status of CVRs corresponding to the cStor volume can be obtained by running the following command:
   
    ```
    kubectl get cvr -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
@@ -586,7 +561,7 @@ The following prvoides the steps for scaling down replica of a cStor volume.
 
    From above output, identified CVR status is changed to `Offline`. 
 
-5. Delete the CVR corresponding to the replicaID entry which was removed from cStor volume using the following command:
+5. Delete the identified CVR which was removed from cStor volume using the following command:
   
    ```
    kubectl delete cvr pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw -n openebs
