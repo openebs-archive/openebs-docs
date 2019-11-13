@@ -351,15 +351,15 @@ In the successful installation of OpenEBS, you should see an example output like
 
 <div class="co">
 NAME                                           READY   STATUS    RESTARTS   AGE
-maya-apiserver-57dfc67fd-fz4pw                 1/1     Running   3          79s
-openebs-admission-server-77c4d59d6c-x2wmc      1/1     Running   0          73s
-openebs-localpv-provisioner-57f6798f66-d9fjx   1/1     Running   0          72s
-openebs-ndm-84wdr                              1/1     Running   0          75s
-openebs-ndm-9gqwm                              1/1     Running   0          75s
-openebs-ndm-9wpkx                              1/1     Running   0          75s
-openebs-ndm-operator-6f8bdff579-v89kr          1/1     Running   1          75s
-openebs-provisioner-6c76df5955-9dbsd           1/1     Running   0          77s
-openebs-snapshot-operator-dbbd8fcd5-dnc6g      2/2     Running   0          77s
+maya-apiserver-d77867956-mv9ls                 1/1     Running   3          99s
+openebs-admission-server-7f565bcbb5-lp5sk      1/1     Running   0          95s
+openebs-localpv-provisioner-7bb98f549d-ljcc5   1/1     Running   0          94s
+openebs-ndm-dn422                              1/1     Running   0          96s
+openebs-ndm-operator-84849677b7-rhfbk          1/1     Running   1          95s
+openebs-ndm-ptxss                              1/1     Running   0          96s
+openebs-ndm-zpr2l                              1/1     Running   0          96s
+openebs-provisioner-657486f6ff-pxdbc           1/1     Running   0          98s
+openebs-snapshot-operator-5bdcdc9b77-v7n4w     2/2     Running   0          97s
 </div>
 
 `openebs-ndm` is a daemon set, it should be running on all nodes or on the nodes that are selected through nodeSelector configuration.
@@ -382,11 +382,11 @@ In the successful installation, you should have the following StorageClasses are
 
 <div class="co">
 NAME                        PROVISIONER                                                AGE
-openebs-device              openebs.io/local                                           63s
-openebs-hostpath            openebs.io/local                                           63s
-openebs-jiva-default        openebs.io/provisioner-iscsi                               63s
-openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   63s
-standard (default)          kubernetes.io/gce-pd                                       6m2s
+openebs-device              openebs.io/local                                           64s
+openebs-hostpath            openebs.io/local                                           64s
+openebs-jiva-default        openebs.io/provisioner-iscsi                               64s
+openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   64s
+standard (default)          kubernetes.io/gce-pd                                       6m41s
 </div>
 
 
@@ -409,20 +409,17 @@ kubectl get blockdevice -n openebs
 
 Following is an example output.
 
-<div class="co">NAME SIZE CLAIMSTATE STATUS AGE
-NAME                                           NODENAME                                     SIZE          CLAIMSTATE   STATUS   AGE
-blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   gke-ranjith-doc-default-pool-d42b4f66-f4h9   42949672960   Unclaimed    Active   1m
-blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-doc-default-pool-d42b4f66-657s   42949672960   Unclaimed    Active   1m
-blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-doc-default-pool-d42b4f66-2xjl   42949672960   Unclaimed    Active   1m
-sparse-594e4d85702609036152811ba95b0c79        gke-ranjith-doc-default-pool-d42b4f66-2xjl   10737418240   Unclaimed    Active   1m
-sparse-8ed8e05ac4d94f987f66109830a26923        gke-ranjith-doc-default-pool-d42b4f66-657s   10737418240   Unclaimed    Active   1m
-sparse-f560ead09869a194dbc84e3653b07d7b        gke-ranjith-doc-default-pool-d42b4f66-f4h9   10737418240   Unclaimed    Active   1m
+<div class="co">
+NAME                                           NODENAME                                    SIZE          CLAIMSTATE   STATUS   AGE
+blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   gke-ranjith-14-default-pool-da9e1336-mbq9   42949672960   Unclaimed    Active   14s
+blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-14-default-pool-da9e1336-d9zq   42949672960   Unclaimed    Active   22s
+blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-14-default-pool-da9e1336-9j2w   42949672960   Unclaimed    Active   30s
 </div>
 
 To know which block device CR belongs to which node, check the node label set on the CR by doing the following command.
 
 ```
-kubectl describe blockdevice <blockdevice-cr>
+kubectl describe blockdevice <blockdevice-cr> -n openebs
 ```
 
 
