@@ -55,7 +55,7 @@ volumeBindingMode: WaitForFirstConsumer
 
 When a PVC is created using the above StorageClass, OpenEBS Local PV Provisioner uses NDM operator to  claim a matching BlockDevice from the worker node where the application pod is scheduled. 
 
-Kubelet will format the block device with the filesystem specified in the StorageClass and then provision the Local PV.  Currently supported filesystems are`ext4` and `xfs`. If no `FSType` is specified, by default Kubelet will format the BlockDevice as `ext4` .
+Kubelet will format the block device with the filesystem specified in the StorageClass and then provision the Local PV.  Currently supported filesystems are `ext4` and `xfs`. If no `FSType` is specified, by default Kubelet will format the BlockDevice as `ext4` .
 
 For provisioning Local PV using the BlockDevice attached to the nodes, the BlockDevice should be in one of the following states:
 
