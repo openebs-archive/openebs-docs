@@ -577,7 +577,7 @@ Below table lists the storage policies supported by Jiva. These policies can be 
 | ------------------------------------------------------------ | --------- | --------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                 | Defines the number of Jiva volume replicas                   |
 | [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.3.0 | To use particular Jiva replica image                         |
-| [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/jiva:1.10         | To use particular Jiva Controller Image                      |
+| [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/jiva:1.3.0         | To use particular Jiva Controller Image                      |
 | [StoragePool](#Storage-Pool-Policy)                          | Yes       | default                           | A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on host OS or externally mounted disk. |
 | [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
 | [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.3.0  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
