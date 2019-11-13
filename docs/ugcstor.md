@@ -762,13 +762,10 @@ kubectl get blockdevice -n openebs
 The output will be similar to the following.
 
 <div class="co">
-NAME                                           NODENAME                                     SIZE          CLAIMSTATE   STATUS   AGE
-blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   gke-ranjith-doc-default-pool-d42b4f66-f4h9   42949672960   Unclaimed    Active   2h
-blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-doc-default-pool-d42b4f66-657s   42949672960   Unclaimed    Active   2h
-blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-doc-default-pool-d42b4f66-2xjl   42949672960   Unclaimed    Active   2h
-sparse-594e4d85702609036152811ba95b0c79        gke-ranjith-doc-default-pool-d42b4f66-2xjl   10737418240   Unclaimed    Active   2h
-sparse-8ed8e05ac4d94f987f66109830a26923        gke-ranjith-doc-default-pool-d42b4f66-657s   10737418240   Unclaimed    Active   2h
-sparse-f560ead09869a194dbc84e3653b07d7b        gke-ranjith-doc-default-pool-d42b4f66-f4h9   10737418240   Unclaimed    Active   2h </div>
+NAME                                           NODENAME                                    SIZE          CLAIMSTATE   STATUS   AGE
+blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   gke-ranjith-14-default-pool-da9e1336-mbq9   42949672960   Unclaimed    Active   2m39s
+blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-14-default-pool-da9e1336-d9zq   42949672960   Unclaimed    Active   2m47s
+blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-14-default-pool-da9e1336-9j2w   42949672960   Unclaimed    Active   2m55s </div>
 
 The details of blockdevice can be get using the following command. 
 
@@ -779,7 +776,7 @@ The details of blockdevice can be get using the following command.
 Example:
 
 ```
-kubectl describe blockdevice blockdevice-77f834edba45b03318d9de5b79af0734 -n openebs 
+kubectl describe blockdevice blockdevice-1c10eb1bb14c94f02a00373f2fa09b93 -n openebs 
 ```
 
 From the output, you will get the hostname and other blockdevice details such as State,Path,Claim State,Capacity etc.
@@ -811,9 +808,9 @@ spec:
     poolType: striped
   blockDevices:
     blockDeviceList:
-    - blockdevice-936911c5c9b0218ed59e64009cc83c8f
-    - blockdevice-77f834edba45b03318d9de5b79af0734
     - blockdevice-1c10eb1bb14c94f02a00373f2fa09b93
+    - blockdevice-77f834edba45b03318d9de5b79af0734
+    - blockdevice-936911c5c9b0218ed59e64009cc83c8f
 ---
 ```
 
@@ -979,6 +976,7 @@ metadata:
             effect: NoSchedule
             key: nodeA
             operator: Equal
+            value: storage
           t2:
             effect: NoSchedule
             key: app
@@ -1009,8 +1007,6 @@ metadata:
         value: |-
             memory: 0.5Gi
             cpu: 100m
-    openebs.io/cas-type: cstor
-provisioner: openebs.io/provisioner-iscsi
 ```
 
 
@@ -1030,8 +1026,6 @@ metadata:
         value: |-
             memory: 0.5Gi
             cpu: 100m
-    openebs.io/cas-type: cstor
-provisioner: openebs.io/provisioner-iscsi
 ```
 
 
