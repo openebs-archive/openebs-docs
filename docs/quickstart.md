@@ -19,9 +19,10 @@ sidebar_label: Quickstart
 
 <div class="emphasize">
     <ul>
-        <li>Kubernetes 1.13+ installed. Latest tested Kubernetes version is 1.15.3.</li>
+        <li>Kubernetes 1.13+ installed. Latest tested Kubernetes version is 1.16.1.</li>
         <li>For using features like Local PV and Backup & Restore, you must require Kubernetes version 1.13 or above.
         </li>
+        <li>For provisioning cStor volume via CSI driver support and performing basic operations on this volume such as expanding volume and snapshot & clone, you must require Kubernetes version 1.14 or above</li>
         <li>Understand the <a href="/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
         <li>Start <a href="/docs/next/installation.html">installation </a> through OpenEBS operator.</li>
         <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses. More details can be find from <a href="/docs/next/ugcstor.html">here.</a></li>
