@@ -68,9 +68,9 @@ For provisioning a cStor Volume, it requires a cStor Storage Pool and a StorageC
 
 Use a similar PVC spec or volumeClaimTemplate to use a StorageClass that is pointing to a pool with real disks. Consider the following parameters while provisioning OpenEBS volumes on real disks.
 
-**AccessModes:** cStor provides iSCSI targets, which are appropriate for RWO (ReadWriteOnce) access mode and is suitable for all types of databases. For webscale applications like WordPress or any for any other NFS needs, you need RWM (ReadWriteMany) access mode. For RWM, you need NFS provisioner to be deployed along with cStor. See how to provision <a href="/docs/next/rwm.html" target="_blank">RWM PVC with OpenEBS </a>.
+**AccessModes:** cStor provides iSCSI targets, which are appropriate for RWO (ReadWriteOnce) access mode and is suitable for all types of databases. For webscale applications like WordPress or any for any other NFS needs, you need RWM (ReadWriteMany) access mode. For RWM, you need NFS provisioner to be deployed along with cStor. See how to provision <a href="/v130/docs/next/rwm.html" target="_blank">RWM PVC with OpenEBS </a>.
 
-**Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release (OpenEBS 0.9.0) and is active development, see [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in the very short time period. 
+**Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release (OpenEBS 0.9.0) and is active development, see [roadmap](/v130/docs/next/cstor.html#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in the very short time period. 
 
 The following shows the example PVC configuration for a Deployment and a StatefulSet application which uses a configured StorageClass to provision a cStor Volume. The provided StorageClass name will contain the StoragePoolClaim name and the cStor Volume will provisioned on a StoragePool associated to the StroagePoolClaim.
 
@@ -531,7 +531,7 @@ The deletion of Velero backup schedule doesn't destroy the backup created during
 
 <h3><a class="anchor" aria-hidden="true" id="Upgrading-the-software-version-of-a-cStor-volume"></a>Upgrading the software version of a cStor volume</h3>
 
-The steps are mentioned in Upgrade section. For upgrading cStorVolume, ensure that cStor Pool image is support this cStor volume image.  It should also recommended to upgrade the corresponding pool before upgrading cStor volume. The steps for upgrading the cStor volume can be find from [here](/docs/next/upgrade.html).
+The steps are mentioned in Upgrade section. For upgrading cStorVolume, ensure that cStor Pool image is support this cStor volume image.  It should also recommended to upgrade the corresponding pool before upgrading cStor volume. The steps for upgrading the cStor volume can be find from [here](/v130/docs/next/upgrade.html).
 
 <h3><a class="anchor" aria-hidden="true" id="Provisioning-sample-application-with-cstor"></a>Provisioning sample application with cStor</h3>
 
@@ -539,14 +539,14 @@ Before provisioning an application ensure that all the below mentioned steps are
 <ol>
 <li>
 Ensure that the filesystem is mounted as per requirement. 
-To know more about mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
+To know more about mount status <a href="/v130/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
 </li>
 <li>
 <b>Create StoragePool</b> specifying the Blockdevices that are to be used.
-To know the detailed steps for creation of StoragePool <a href="/docs/next/ugcstor.html#creating-cStor-storage-pools" target="_blank">click here.</a>
+To know the detailed steps for creation of StoragePool <a href="/v130/docs/next/ugcstor.html#creating-cStor-storage-pools" target="_blank">click here.</a>
 The name specified under <b>metadata</b> in the <b>StoragePoolClaim</b> YAML needs to be mentioned in <b>StorageClass</b> YAML (in the next step).
 Using this StoragePool 
- create StorageClass by referring <a href="/docs/next/ugcstor.html#creating-cStor-storage-class" target="_blank"> here</a>.
+ create StorageClass by referring <a href="/v130/docs/next/ugcstor.html#creating-cStor-storage-class" target="_blank"> here</a>.
 </li>
 <li>
 Once all the above actions have been successfully executed, You can deploy Busybox with cStor volume as follows:
@@ -769,7 +769,7 @@ kubectl describe blockdevice blockdevice-77f834edba45b03318d9de5b79af0734 -n ope
 
 From the output, you will get the hostname and other blockdevice details such as State,Path,Claim State,Capacity etc.
 
-**Note:** Identify block devices which are unclaimed, unmounted on node and does not contain any filesystem. The above command will help to find these information. More information about the disk mount status on node can be read from [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume).
+**Note:** Identify block devices which are unclaimed, unmounted on node and does not contain any filesystem. The above command will help to find these information. More information about the disk mount status on node can be read from [here](/v130/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume).
 
 **Step2:** 
 
@@ -808,7 +808,7 @@ In the above file, change the following parameters as required.
 
   This field  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped`, `mirrored`, `raidz` and `raidz2`.
 
-  Note: In OpenEBS, the pool instance does not extend beyond a node. The replication happens at volume level but not at the pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
+  Note: In OpenEBS, the pool instance does not extend beyond a node. The replication happens at volume level but not at the pool level. See [volumes and pools relationship](/v130/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
 - `blockDeviceList`
 
@@ -893,7 +893,7 @@ cstor-disk-pool-ilz1-5587ff79bf-6djjf          3/3     Running   0          2m31
 
 If all pods are showing are running, then you can use these cStor pools for creating cStor volumes.
 
-**Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` . More details can be found [here](/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node).  If you find any issues, check common issues added in [troubleshooting](/docs/next/troubleshooting.html) section.
+**Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` . More details can be found [here](/v130/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node).  If you find any issues, check common issues added in [troubleshooting](/v130/docs/next/troubleshooting.html) section.
 
 <br>
 
@@ -1531,7 +1531,7 @@ spec:
 
 <h3><a class="anchor" aria-hidden="true" id="Upgrade-the-software-version-of-a-cStor-pool"></a>Upgrade the Software Version of a cStor pool</h3>
 
-The steps for upgrading cStor Pool is mentioned in Upgrade section. Refer [Upgrade](/docs/next/upgrade.html) section for more details.
+The steps for upgrading cStor Pool is mentioned in Upgrade section. Refer [Upgrade](/v130/docs/next/upgrade.html) section for more details.
 
 
 <h3><a class="anchor" aria-hidden="true" id="monitor-pool"></a>Monitor a cStor Pool</h3>
@@ -1634,7 +1634,7 @@ The steps for expanding the pool to new nodes is given below.
 
 <h4><a class="anchor" aria-hidden="true" id="With-specifiying-blockDeviceList"></a>With specifiying blockDeviceList</h4>
 
-If you are following this approach, you should have created cStor Pool initially using the steps provided [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). For expanding pool onto a new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with the required block device names under the `blockDeviceList` .
+If you are following this approach, you should have created cStor Pool initially using the steps provided [here](/v130/docs/next/ugcstor.html#creating-cStor-storage-pools). For expanding pool onto a new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with the required block device names under the `blockDeviceList` .
 
 **Step 1:** Edit the existing pool configuration spec that you originally used and apply it (OR) directly edit the in-use spec file using `kubectl edit spc <SPC Name>`.
 
@@ -1673,11 +1673,11 @@ OpenEBS team is working on both the CSI plugin as well as the feature to resize 
 ## See Also:
 
 
-### [Understand cStorPools ](/docs/next/cstor.html#cstor-pools)
+### [Understand cStorPools ](/v130/docs/next/cstor.html#cstor-pools)
 
-### [cStorPool use case for Prometheus](/docs/next/prometheus.html)
+### [cStorPool use case for Prometheus](/v130/docs/next/prometheus.html)
 
-### [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
+### [cStor roadmap](/v130/docs/next/cstor.html#cstor-roadmap)
 
 
 <br>

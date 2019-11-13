@@ -21,6 +21,10 @@ after_success:
   - if [ "$TRAVIS_BRANCH" = "staging" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/stage-openebs-docs;
        docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$TRAVIS_BRANCH-$COMMIT . && docker push $REPO; 
     fi
+    
+  - if [ "$TRAVIS_BRANCH" = "1.3.0" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/openebsdocsversion;
+       docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$TRAVIS_BRANCH-$COMMIT . && docker push $REPO;
+    fi
 
   - if [ "$TRAVIS_BRANCH" = "0.6" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/newstaging-openebs-docs;
        docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$TRAVIS_BRANCH-$COMMIT . && docker push $REPO;

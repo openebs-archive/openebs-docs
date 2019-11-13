@@ -28,7 +28,7 @@ OpenEBS Local PVs are analogous to Kubernetes LocalPV. In addition, OpenEBS Loca
 
 ## How to use OpenEBS Local PVs
 
-OpenEBS create two Storage Classes of Local PVs by default as `openebs-hostpath` and `openebs-device`. For simple provisioning of OpenEBS Local PV, these default Storage Classes can be used. More details can be found  [here](/docs/next/uglocalpv.html).   
+OpenEBS create two Storage Classes of Local PVs by default as `openebs-hostpath` and `openebs-device`. For simple provisioning of OpenEBS Local PV, these default Storage Classes can be used. More details can be found  [here](/v130/docs/next/uglocalpv.html).   
 
 End users or developers will provision the OpenEBS Local PVs like any other PV, by creating a PVC using a StorageClass provided by the admin user. The StorageClass has `volumeBindingMode: WaitForFirstConsumer` which means delay volume binding until application pod is scheduled on the node.
 
@@ -128,11 +128,11 @@ When a PVC is created using the above StorageClass, OpenEBS Local PV  provisione
 
 ## See Also:
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v130/docs/next/architecture.html)
 
-### [Understanding NDM](/docs/next/ndm.html)
+### [Understanding NDM](/v130/docs/next/ndm.html)
 
-### [Local PV User Guide](/docs/next/uglocalpv.html)
+### [Local PV User Guide](/v130/docs/next/uglocalpv.html)
 
 <br>
 

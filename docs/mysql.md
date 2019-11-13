@@ -45,7 +45,7 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
 1. **Install OpenEBS**
 
-   If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
+   If OpenEBS is not installed in your K8s cluster, this can done from [here](/v130/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
 2. **Connect to Director Online (Optional)** : Connecting  the Kubernetes cluster to <a href="https://director.mayadata.io" target="_blank">Director Online</a> provides good visibility of storage resources. Director Online has various **support options for enterprise customers**.
 
@@ -81,11 +81,11 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just MySQL alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool) 
+As in most cases, cStor pool may not be dedicated to just MySQL alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/v130/docs/next/ugcstor.html#monitor-pool) 
 
 **Maintain volume replica quorum during node upgrades**
 
- cStor volume replicas need to be in quorum when MySQL application is deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/docs/next/k8supgrades.html) for more details.
+ cStor volume replicas need to be in quorum when MySQL application is deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/v130/docs/next/k8supgrades.html) for more details.
 
 <br>
 
@@ -158,11 +158,11 @@ reclaimPolicy: Delete
 
 <br>
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v130/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v130/docs/next/usecases.html)
 
-### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
+### [cStor pools overview](/v130/docs/next/cstor.html#cstor-pools)
 
 
 
