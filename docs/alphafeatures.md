@@ -21,24 +21,24 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 
 
-<font size="5">cStor</font>
 
-<h3><a class="anchor" aria-hidden="true" id="running-sample-application-cstor-volume-using-csi-provisioner"></a>Running a sample application on a cStor volume provsioned via CSI provisioner</h3>
+<h3><a class="anchor" aria-hidden="true" id="running-sample-application-cstor-volume-using-csi-provisioner"></a>Running a sample application on a cStor volume provisioned via CSI provisioner</h3>
 
 
 The [Container Storage Interface](https://github.com/container-storage-interface/spec/blob/master/spec.md) (CSI) is a standard for exposing arbitrary block and file storage systems to containerized workloads on Container Orchestration Systems(COs)  like Kubernetes combined with different storage vendors. This means, implementing a single CSI for a storage vendor is guaranteed to work with all COs. OpenEBS cStor volume can be now provisioned with CSI driver from OpenEBS 1.2 version onwards. This feature is under active development and considered to be in Alpha state. 
 
-**Note:** The current implementation only supports provisioning, de-provisioning, snapshot & clone and expansion of cStor Volumes.
+**Note:** The current implementation only supports provisioning, de-provisioning, expansion and snapshot and clone of cStor Volumes .
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-csi"></a>Prerequisites</h4>
 
 - Kubernetes version 1.14 or higher is installed.
-- OpenEBS Version 1.2 or higher installed. 
+- Recommended OpenEBS Version is 1.4. 
 - The steps to install OpenEBS is [here](/docs/next/quickstart.html).
-- iSCSI initiator utils installed on all the worker nodes.
+- iSCSI initiator utils to be installed on all the worker nodes.
 - You have access to install RBAC components into `kube-system` namespace. The OpenEBS CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
-- You will need to enable `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` feature gates on `kubelets` and `kube-apiserver` . 
-- Base OS on worker should be Ubuntu 16.04, Ubuntu 18.04 or CentOS.
+- You need to enable the feature gates `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` on `kubelet` in each worker node.
+- You need to enable the feature gates `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` on `kube-apiserver` in the master node.
+- Base OS on worker nodes can  be Ubuntu 16.04, Ubuntu 18.04 or CentOS.
 
 **Overview**
 
@@ -150,15 +150,14 @@ spec:
       compression: "off"
 </div>
 
-Edit the following parameter in the sample CSPC YAML:
+Edit the following parameters in the sample CSPC YAML:
 
-**blockDeviceName**:- Provide the block device names to be used for provisioning cStor pool. All the block devices must be on the same node. 
+**blockDeviceName**:- Provide the block devices name to be used for provisioning cStor pool. All the block devices must be on the same node. 
 
-**kubernetes.io/hostname**: Provide the hostname where the cStor pool will be created using the set of block devices attached to that node.
+**kubernetes.io/hostname**: Provide the hostname where the cStor pool will be created using the set of block devices.
 
 
-
-The above sample YAML creates a cStor pool on the corresponding node with provided block device. The above example will create a cStor pool in the CSPC cluster. If you need to create multiple cStor pools in a CSPC cluster, get the YAML from [here](https://raw.githubusercontent.com/sonasingh46/artifacts/master/day2ops/cspc/cspc-stripe.yaml).
+The above sample YAML creates a cStor pool on the corresponding node with provided block devicse. If you need to create multiple cStor pools in the cluster, get the YAML from [here](https://raw.githubusercontent.com/sonasingh46/artifacts/master/day2ops/cspc/cspc-stripe.yaml).
 
 In this example, the above YAML is modified and saved as `cspc.yaml`. Apply the modified CSPC YAML spec using the following command to create a cStor Pool Cluster:
 
@@ -186,7 +185,9 @@ kubectl get cspi -n openebs
 
 Example output:
 
-<div class="co">NAME                   HOSTNAME                                     ALLOCATED   FREE    CAPACITY   STATUS   AGEcstor-disk-cspc-7hkl   gke-ranjith-csi-default-pool-a9a13f27-6qv1   50K         39.7G   39.8G      ONLINE   2m43s
+<div class="co">
+  NAME                   HOSTNAME                                     ALLOCATED   FREE    CAPACITY   STATUS   AGE
+  cstor-disk-cspc-7hkl   gke-ranjith-csi-default-pool-a9a13f27-6qv1   50K         39.7G   39.8G      ONLINE   2m43s
 </div>
 
 
@@ -208,7 +209,7 @@ parameters:
   cstorPoolCluster: cstor-disk-cspc
 ```
 
-You should specify the correct cStor `cstorPoolCluster` name from your cluster and specify the desired `replicaCount` for the cStor volume.
+You should specify the correct `cstorPoolCluster` name from your cluster and specify the desired `replicaCount` for the cStor volume.
 
 **Note:** The `replicaCount` should be less than or equal to the max pools available.
 
@@ -266,7 +267,7 @@ Example output:
 demo-csivol-claim   Bound    pvc-723283b6-02bc-11ea-a139-42010a8000b2   5Gi        RWO            openebs-csi-cstor-disk   17m
 </div>
 
-Verify the status of the app by running the following command:
+Verify the status of the application by running the following command:
 
 ```
 kubectl get pod
@@ -286,7 +287,7 @@ kubectl exec -it busybox -- cat /mnt/openebs-csi/date.txt
 
 
 
-The busybox is instructed to write the date when it starts into the mounted path at `/.mnt/openebs-csi/date.txt`. 
+The busybox is instructed to write the date into the mounted path at `/.mnt/openebs-csi/date.txt` when it is started . 
 
 Example output:
 
@@ -296,9 +297,9 @@ Sat Nov  9 06:59:27 UTC 2019
 
 **Note:** While the asynchronous handling of the Volume provisioning is in progress, the application pod description may throw some errors like:
 
-- Waiting for CVC to be bound: Implies volume components are still being created
+- `Waiting for CVC to be bound`: Implies volume components are still being created
 
-- Volume is not ready: Replicas yet to connect to controller: Implies volume components are already created but yet to interact with each other.
+- `Volume is not ready: Replicas yet to connect to controller`: Implies volume components are already created but yet to interact with each other.
 
 
 
@@ -351,7 +352,7 @@ The following section will give the steps to expand a cStor volume which is crea
      storageClassName: openebs-csi-cstor-disk
    </div>
    
-   In the above snippet, `storage` is modified with 9Gi from 5Gi. 
+   In the above snippet, `storage` is modified to 9Gi from 5Gi. 
    
 3. Wait for the updated capacity to reflect in PVC status (pvc.status.capacity.storage). Perform the following command to verify the updated size of the PVC:
 
@@ -366,7 +367,9 @@ The following section will give the steps to expand a cStor volume which is crea
       demo-csivol-claim   Bound    pvc-723283b6-02bc-11ea-a139-42010a8000b2   9Gi        RWO            openebs-csi-cstor-disk   68m
     </div>
 
-
+4. Check the size is reflected on the application pod where the above volume is mounted.
+    
+    
 <h3><a class="anchor" aria-hidden="true" id="scaling-down-of-cstor-volume-replica"></a>Scaling down cStor Volume Replica</h3>
 
 
