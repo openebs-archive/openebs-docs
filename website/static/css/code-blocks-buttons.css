@@ -11,7 +11,7 @@ pre .btnIcon {
   cursor: pointer;
   border: 1px solid transparent;
   color: #383030;
-  background-color: transparent;
+  background-color: #f5f4f7;
   /*height: 30px;*/
   transition: all .25s ease-out;
 }
