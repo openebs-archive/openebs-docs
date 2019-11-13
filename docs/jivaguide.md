@@ -166,13 +166,13 @@ Here we illustrate the usage of default Jiva storage class. In the following exa
 <ol>
  <li>
    Ensure that the filesystem is mounted as per requirement. 
-To know more about mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
+To know more about mount status <a href="/v130/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
  </li>
  <li>
-First, You need to <b>Create a Jiva Pool</b> specifying the filesystem path on each node. To know about the detailed steps <a href="/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a>  
+First, You need to <b>Create a Jiva Pool</b> specifying the filesystem path on each node. To know about the detailed steps <a href="/v130/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a>  
 </li>
 <li>
-Using this storage pool, create a storage class by referring<a href="/docs/next/jivaguide.html#create-a-sc" target="_blank"> here.</a>
+Using this storage pool, create a storage class by referring<a href="/v130/docs/next/jivaguide.html#create-a-sc" target="_blank"> here.</a>
  </li>
  <li>
  Once all the above actions have been successfully executed, You can deploy Busybox with Jiva volume as follows:<br>
@@ -292,7 +292,7 @@ openebs_writes # Write Input/Outputs on Volume
 
 Grafana charts can be built for the above Prometheus metrics. Some metrics of OpenEBS volumes are available automatically at [Director Online](https://director.mayadata.io/) when you connect the Kubernetes cluster to it. See an example screenshot below.
 
-![jiva-monitor](/docs/assets/svg/volume-monitor.svg)
+![jiva-monitor](/v130/docs/assets/svg/volume-monitor.svg)
 
 
 
@@ -312,7 +312,7 @@ OpenEBS volume can be backed up and restore along with application using velero 
 
 Velero is a utility to back up and restore your Kubernetes resource and persistent volumes. 
 
-To take backup and restore of Jiva volume, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Jiva volume which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](/docs/next/minio.html).
+To take backup and restore of Jiva volume, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Jiva volume which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](/v130/docs/next/minio.html).
 
 The following are the step by step procedure for taking backup and restore of application with Jiva.
 
@@ -975,7 +975,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 ## See Also:
 
-### [Understanding Jiva](/docs/next/jiva.html)
+### [Understanding Jiva](/v130/docs/next/jiva.html)
 
 
 
