@@ -90,8 +90,8 @@ A cStor pool spec consists of
 
 - STRIPE
 - MIRROR
-- RAIDZ1 (Roadmap)
-- RAIDZ2 (Roadmap)
+- RAIDZ1 
+- RAIDZ2 
 
 ***Note:*** A pool cannot be extended beyond a node. When the pool type is STRIPE, it should not be assumed that data is striped across the nodes. The data is striped across the disks within a the pool on that given node. As mentioned in the data replication section, the data is synchronously replicated to as many number of pools as the number of volume replicas irrespective of the type of pool.  
 
@@ -260,13 +260,13 @@ Performance testing includes setting up the pools, storage classes and iSCSI ser
 
 **After a node shutdown, I see application stuck in container creating waiting for PV to be attached.:**
 
-When a Kubernetes node is involved in an unplanned shutdown like a power loss or software hang etc, the PVs which are mounted on that node will not be mounted by Kubelet till the timeout of 30 minutes or 1800 seconds. In such scenarios, the application will lose connectivity to persistent storage. This limitation of Kubernetes will be resolved for OpenEBS PVs when the CSI driver support is available for OpenEBS. With OpenEBS CSI driver in place, the unavailability of the node can be detected by the CSI driver node agent and do the force mount of the PV on the new node
+When a Kubernetes node is involved in an unplanned shutdown like a power loss or software hang etc, the PVs which are mounted on that node will not be mounted by Kubelet till the timeout of 30 minutes or 1800 seconds. In such scenarios, the application will lose connectivity to persistent storage. This limitation of Kubernetes will be resolved for OpenEBS PVs when the CSI driver support is available for OpenEBS. With OpenEBS CSI driver in place, the unavailability of the node can be detected by the CSI driver node agent and do the force mount of the PV on the new node. The alpha version of CSI support is available from OpenEBS 1.2.0.
 
 
 
 **Cannot disable thin provisioning**
 
-By default, cStor supports thin provisioning, which means that when a storage class or PVC specifies the size of the volume and the pool from which the volume must be provisioned, and volume of that size is provisioned irrespective of whether that much free space is available in the pool or not. There is no option to specify thick provision while requesting a volume provisioning
+By default, cStor supports thin provisioning, which means that when a storage class or PVC specifies the size of the volume and the pool from which the volume must be provisioned, and volume of that size is provisioned irrespective of whether that much free space is available in the pool or not. There is no option to specify thick provision while requesting a volume provisioning. 
 
 
 
