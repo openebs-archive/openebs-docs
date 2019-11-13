@@ -25,7 +25,7 @@ sidebar_label: Installation
   
 - [Verify](#verifying-openebs-installation) installation 
 
-- Installation [troubleshooting](/docs/next/troubleshooting.html#installation) 
+- Installation [troubleshooting](/v130/docs/next/troubleshooting.html#installation) 
 
 - [Post installation](#post-installation-considerations)
 
@@ -39,7 +39,7 @@ sidebar_label: Installation
 
 <br>
 
-iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However, it is recommended that the [iSCSI client is setup](/docs/next/prerequisites.html) and iscsid service is running on worker nodes before proceeding with the OpenEBS installation.
+iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However, it is recommended that the [iSCSI client is setup](/v130/docs/next/prerequisites.html) and iscsid service is running on worker nodes before proceeding with the OpenEBS installation.
 
 <br>
 
@@ -96,7 +96,7 @@ helm install --namespace openebs --name openebs stable/openebs --version 1.3.0
 
 1. Since Kubernetes 1.12, if any containers does not set its resource requests & limits values, it results into eviction. It is recommended to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be obtained from [here](#example-configuration-pod-resource-requests).
 
-2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
+2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/v130/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
 
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
@@ -171,7 +171,7 @@ kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.3.0.yaml
 
 1. Since Kubernetes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests). 
 
-2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
+2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/v130/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
 
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
@@ -458,11 +458,11 @@ For a simple testing of OpenEBS, you can use the below default storage classes
 
 - `openebs-device` for provisioning Local PV on device.
 
-For using real disks, you have to create [cStorPools](/docs/next/ugcstor.html#creating-cStor-storage-pools) or [Jiva pools](/docs/next/jivaguide.html#create-a-pool) or [OpenEBS Local PV](/docs/next/uglocalpv.html) based on the requirement and then create corresponding StorageClasses or use default StorageClasses to use them.
+For using real disks, you have to create [cStorPools](/v130/docs/next/ugcstor.html#creating-cStor-storage-pools) or [Jiva pools](/v130/docs/next/jivaguide.html#create-a-pool) or [OpenEBS Local PV](/v130/docs/next/uglocalpv.html) based on the requirement and then create corresponding StorageClasses or use default StorageClasses to use them.
 
 
 
-To monitor the OpenEBS volumes and obtain corresponding logs, connect to the free SaaS service Director Online. See connecting to [Director Online](/docs/next/directoronline.html). 
+To monitor the OpenEBS volumes and obtain corresponding logs, connect to the free SaaS service Director Online. See connecting to [Director Online](/v130/docs/next/directoronline.html). 
 
 
 
@@ -701,11 +701,11 @@ data:
 
 ## See Also:
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v130/docs/next/architecture.html)
 
-### [Installation troubleshooting](/docs/next/troubleshooting.html)
+### [Installation troubleshooting](/v130/docs/next/troubleshooting.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v130/docs/next/usecases.html)
 
 <br>
 
