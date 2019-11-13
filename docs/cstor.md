@@ -90,8 +90,8 @@ A cStor pool spec consists of
 
 - STRIPE
 - MIRROR
-- RAIDZ1 (Roadmap)
-- RAIDZ2 (Roadmap)
+- RAIDZ1 
+- RAIDZ2
 
 ***Note:*** A pool cannot be extended beyond a node. When the pool type is STRIPE, it should not be assumed that data is striped across the nodes. The data is striped across the disks within a the pool on that given node. As mentioned in the data replication section, the data is synchronously replicated to as many number of pools as the number of volume replicas irrespective of the type of pool.  
 
@@ -232,11 +232,11 @@ The easiest way to monitor cStor pools and volumes is through Director Online. T
 
 Links to screenshots of some of the cStor resources in Director Online are shown below.
 
-[Pool topology view](/docs/next/mayaonline.html#cstor-pool-view)
+[Pool topology view](/v130/docs/next/directoronline.html#cstor-pool-view)
 
-[Volume POD topology view](/docs/next/mayaonline.html#cstor-volume-pod-view)
+[Volume POD topology view](/docs/next/directoronline.html#cstor-volume-pod-view)
 
-[Volume CR topology view](/docs/next/mayaonline.html#cstor-custom-resources-view)
+[Volume CR topology view](/docs/next/directoronline.html#cstor-custom-resources-view)
 
 <br>
 
@@ -260,8 +260,7 @@ Performance testing includes setting up the pools, storage classes and iSCSI ser
 
 **After a node shutdown, I see application stuck in container creating waiting for PV to be attached.:**
 
-When a Kubernetes node is involved in an unplanned shutdown like a power loss or software hang etc, the PVs which are mounted on that node will not be mounted by Kubelet till the timeout of 30 minutes or 1800 seconds. In such scenarios, the application will lose connectivity to persistent storage. This limitation of Kubernetes will be resolved for OpenEBS PVs when the CSI driver support is available for OpenEBS. With OpenEBS CSI driver in place, the unavailability of the node can be detected by the CSI driver node agent and do the force mount of the PV on the new node
-
+When a Kubernetes node is involved in an unplanned shutdown like a power loss or software hang etc, the PVs which are mounted on that node will not be mounted by Kubelet till the timeout of 30 minutes or 1800 seconds. In such scenarios, the application will lose connectivity to persistent storage. This limitation of Kubernetes will be resolved for OpenEBS PVs when the CSI driver support is available for OpenEBS. With OpenEBS CSI driver in place, the unavailability of the node can be detected by the CSI driver node agent and do the force mount of the PV on the new node. The alpha version of CSI support is available from OpenEBS 1.2.0.
 
 
 **Cannot disable thin provisioning**
@@ -295,7 +294,7 @@ Following are most commonly observed areas of troubleshooting
 
    **Resolution**: 
 
-   Install iSCSI tools and make sure iSCSI service is running. See [iSCSI installation](/docs/next/prerequisites.html)
+   Install iSCSI tools and make sure iSCSI service is running. See [iSCSI installation](/v130/docs/next/prerequisites.html)
 
 2. **Multi-attach error is seen in the logs**
 
@@ -398,11 +397,11 @@ Each discovered disk on a node is added as a disk CR. This is needed to identify
 
 ## See Also:
 
-### [Storage Engines in OpenEBS](/docs/next/casengines.html)
+### [Storage Engines in OpenEBS](/v130/docs/next/casengines.html)
 
-### [Creating cStor Pool](/docs/next/ugcstor.html#creating-cStor-storage-pools)
+### [Creating cStor Pool](/v130/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
-### [Provisioning cStor volumes](/docs/next/ugcstor.html#provisioning-a-cStor-volume)
+### [Provisioning cStor volumes](/v130/docs/next/ugcstor.html#provisioning-a-cStor-volume)
 
 
 
