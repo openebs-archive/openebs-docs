@@ -66,7 +66,6 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl delete crd volumesnapshotdatas.volumesnapshot.external-storage.k8s.io
   kubectl delete crd volumesnapshots.volumesnapshot.external-storage.k8s.io
   kubectl delete crd disks.openebs.io
-  kubectl delete crd runtasks.openebs.io
   kubectl delete crd blockdevices.openebs.io
   kubectl delete crd blockdeviceclaims.openebs.io
   kubectl delete crd cstorbackups.openebs.io
