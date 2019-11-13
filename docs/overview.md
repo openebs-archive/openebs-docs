@@ -75,8 +75,8 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 	</a>
   </div>
   <div class="">
-	<a href="/docs/next/mayaonline.html">
-		<img src="/docs/assets/intro-mo.png" alt="Connecting to MayaOnline" style="float:left;width:250px;">
+	<a href="/docs/next/directoronline.html">
+		<img src="/docs/assets/intro-mo.png" alt="Connecting to Director Online" style="float:left;width:250px;">
 	</a>
   </div>
   <div class="">
