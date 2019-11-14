@@ -20,7 +20,7 @@ Advantages of using OpenEBS for Elasticsearch database:
 
 - All the logs data is stored locally and managed natively to Kubernetes
 - Start with small storage and add disks as needed on the fly
-- Logs are are highly available. When a node fails or rebooted during upgrades, the persistent volumes from OpenEBS continue to be highly available. 
+- Logs are highly available. When a node fails or rebooted during upgrades, the persistent volumes from OpenEBS continue to be highly available. 
 - If required, take backup of the Elasticsearch database periodically and back them up to S3 or any object storage so that restoration of the same logs is possible to the same or any other Kubernetes cluster
 
 <br>
