@@ -523,8 +523,44 @@ The cStor disk pods are not coming up after it deploy with the YAML. On checking
 
 **Workaround:**
 
-cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is also recommended to wipe out the disks if you are using an used disk for cStor pool creation.
+cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is also recommended to wipe out the disks if you are using an used disk for cStor pool creation. The following steps will clear the file system from the disk.
 
+```
+sudo umount <block device path>
+wipefs -a <block device path>
+```
+
+The following is an example output of `lsblk` on node.
+
+<div class="co">
+NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0     7:0    0   89M  1 loop /snap/core/7713
+loop1     7:1    0   18M  1 loop /snap/amazon-ssm-agent/1480
+xvda    202:0    0  128G  0 disk
+└─xvda1 202:1    0  128G  0 part /
+xvdf    202:80   0   50G  0 disk /home/openebs-ebs
+</div>
+
+From the above output, it shows that `/dev/xvdf` is mounted on `/home/openebs-ebs`. The following commands will unmount disk first and then remove the file system.
+
+```
+sudo umount /dev/xvdf
+wipefs -a /dev/xvdf
+```
+
+After performing the above commands, verify the disk status using `lsblk` command:
+
+Example output:
+
+<div class="co">
+ubuntu@ip-10-5-113-122:~$ lsblk
+NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0     7:0    0   89M  1 loop /snap/core/7713
+loop1     7:1    0   18M  1 loop /snap/amazon-ssm-agent/1480
+xvda    202:0    0  128G  0 disk
+└─xvda1 202:1    0  128G  0 part /
+xvdf    202:80   0   50G  0 disk
+</div>
 
 
 <h3><a class="anchor" aria-hidden="true" id="Jiva-provisioning-failed-080"></a>OpenEBS Jiva PVC is not provisioning in 0.8.0</h3>
