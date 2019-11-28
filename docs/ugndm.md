@@ -157,50 +157,58 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
 1. Create the sample block device CR YAML using the following spec. Following is the sample block device CR YAML.
 
    ```
-   apiVersion: openebs.io/v1alpha1
-   kind: BlockDevice
-   metadata:
-     name: example-blockdevice
-     labels:
-       kubernetes.io/hostname: <host name in which disk/blockdevice is attached> # like gke-openebs-user-default-pool-044afcb8-bmc0
-       ndm.io/managed: "false" # for manual disk creation put false
-       ndm.io/blockdevice-type: blockdevice
-   status:
-     claimState: Unclaimed
-     state: Active
-   spec:
-     capacity:
-       logicalSectorSize: <logical sector size of lockdevice> # like 512
-       storage: <total capacity in bits> #like 53687091200
-     details:
-       firmwareRevision: <firmware revision>
-       model: <model name of blockdevice> # like PersistentDisk
-       serial: <serial no of disk> # like google-disk-2
-       compliance: <compliance of disk> #like "SPC-4"
-       vendor: <vendor of disk> #like Google
-     devlinks:
-     - kind: by-id
-       links:
-       - <link1> # like /dev/disk/by-id/scsi-0Google_PersistentDisk_disk-2
-       - <link2> # like /dev/disk/by-id/google-disk-2
-     - kind: by-path
-       links:
-       - <link1> # like /dev/disk/by-path/virtio-pci-0000:00:03.0-scsi-0:0:2:0 
-     Partitioned: Yes
-     path: <devpath> # like /dev/sdb1
+    apiVersion: openebs.io/v1alpha1
+    kind: BlockDevice
+    metadata:
+      name: example-blockdevice
+      labels:
+        kubernetes.io/hostname: <host name in which disk/blockdevice is attached> # like gke-openebs-user-default-pool-044afcb8-bmc0
+        ndm.io/managed: "false" # for manual blockdevice creation put false
+        ndm.io/blockdevice-type: <blockdevice type> # like blockdevice, sparse
+    status:
+      claimState: Unclaimed
+      state: Active
+    spec:
+      capacity:
+        logicalSectorSize: <logical sector size of lockdevice> # like 512
+        storage: <total capacity in bits> #like 53687091200
+      details:
+        firmwareRevision: <firmware revision>
+        model: <model name of blockdevice> # like PersistentDisk
+        serial: <serial no of disk> # like google-disk-2
+        compliance: <compliance of disk> #like "SPC-4"
+        vendor: <vendor of disk> #like Google
+      devlinks:
+      - kind: by-id
+        links:
+        - <link1> # like /dev/disk/by-id/scsi-0Google_PersistentDisk_disk-2
+        - <link2> # like /dev/disk/by-id/google-disk-2
+      - kind: by-path
+        links:
+        - <link1> # like /dev/disk/by-path/virtio-pci-0000:00:03.0-scsi-0:0:2:0
+      nodeAttributes:
+        nodeName: <node name> # output of `kubectl get nodes` can be used
+      path: <devpath> # like /dev/sdb1
+
    ```
 
 2. Modify the created block device CR sample YAML with the partition disk information. In the above block device CR sample spec, following fields must be filled before applying the YAML.
 
    - kubernetes.io/hostname
-     - Hostname where the blockdevice is attached.
+     - Hostname of the node where the blockdevice is attached. 
    - storage
    - links
      - This field should be filled for by-id and by-path. These details can be obtained from worker node by running the following command `udevadm info -q property -n <device_path>` 
+   - nodeName
+     - Name of the Node where the blockdevice is attached. 
    - path
      - The value should be like `/dev/sdb1` .
    
 3. Apply the modified YAML file to create the blockdevice CR for the provided partitioned device path. 
+   
+   ```
+   kubectl apply -f <blockdevice-cr.yaml> -n <openebs_namespace>
+   ```
 
    **Note:** The blockdevice CR should be created on the same namespace where openebs is installed.
 
