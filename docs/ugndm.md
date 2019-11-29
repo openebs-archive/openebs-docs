@@ -170,7 +170,7 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
       state: Active
     spec:
       capacity:
-        logicalSectorSize: <logical sector size of lockdevice> # like 512
+        logicalSectorSize: 512
         storage: <total capacity in bits> #like 53687091200
       details:
         firmwareRevision: <firmware revision>
@@ -197,6 +197,8 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
    - kubernetes.io/hostname
      - Hostname of the node where the blockdevice is attached. 
    - storage
+   - logicalSectorSize
+     - logical sector size of lockdevice. For example, 512, 4096 etc. Provided 512 in the above example snippet. This value can be chaged as per the correct value.
    - links
      - This field should be filled for by-id and by-path. These details can be obtained from worker node by running the following command `udevadm info -q property -n <device_path>` 
    - nodeName
