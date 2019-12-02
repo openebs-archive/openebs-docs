@@ -29,7 +29,7 @@ This will be different based on where your Kubernetes cluster is running.  For o
 3. Find the pool pod that is running on that host
 
 	```
-	$ kubectl -n openebs get pods -o wide | <HOSTNAME> | grep <POOL_NAME>
+	$ kubectl -n openebs get pods -o wide | grep <HOSTNAME> | grep <POOL_NAME>
 	cstor-test-ul35-6cf7499458-f7zlw               3/3     Running   0          36m   10.244.1.4      k8s-openebs-demo-node-2   <none>           <none>
 	```
 
