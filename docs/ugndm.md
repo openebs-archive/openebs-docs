@@ -160,7 +160,7 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
     apiVersion: openebs.io/v1alpha1
     kind: BlockDevice
     metadata:
-      name: example-blockdevice
+      name: example-blockdevice-1
       labels:
         kubernetes.io/hostname: <host name in which disk/blockdevice is attached> # like gke-openebs-user-default-pool-044afcb8-bmc0
         ndm.io/managed: "false" # for manual blockdevice creation put false
@@ -171,7 +171,7 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
     spec:
       capacity:
         logicalSectorSize: 512
-        storage: <total capacity in bits> #like 53687091200
+        storage: <total capacity in bytes> #like 53687091200
       details:
         firmwareRevision: <firmware revision>
         model: <model name of blockdevice> # like PersistentDisk
@@ -194,16 +194,18 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
 
 2. Modify the created block device CR sample YAML with the partition disk information. In the above block device CR sample spec, following fields must be filled before applying the YAML.
 
+   - name
+     - Provide unique name for the blockdevice CR. In the above YAML spec, given name for the blockdevice CR is `example-blockdevice-1`
    - kubernetes.io/hostname
      - Hostname of the node where the blockdevice is attached. 
    - storage
-      - Provide the storage capacity in `bits`.
+      - Provide the storage capacity in `bytes` like `53687091200`.
    - logicalSectorSize
-     - logical sector size of blockdevice. For example, 512, 4096 etc. Provided 512 in the above example snippet. This value can be chaged as per the correct value.
+     - logical sector size of blockdevice. For example, 512, 4096 etc. Provided 512 in the above example snippet. This value can be changed as per the logical sector size of the device.
    - links
      - This field should be filled for by-id and by-path. These details can be obtained from worker node by running the following command `udevadm info -q property -n <device_path>` 
    - nodeName
-     - Name of the Node where the blockdevice is attached. 
+     - Name of the Node where the blockdevice is attached.  The output of `kubectl get nodes` can be used to obtain this value.
    - path
      - The value should be like `/dev/sdb1`.
    
@@ -219,7 +221,7 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
 
 5. Verify if the blockdevice is created by running the following `kubectl get blockdevice -n openebs` command.
 
-**Note:** If you are creating a block device CR for a partitioned device path, then you must add the corresponding disk under **exclude** filter so that NDM will not select the particular disk for BD creation. For example, `/dev/sdb` have 2 partitions, say `/dev/sdb1` and `/dev/sdb2`. If block device CR is creating for `/dev/sdb1` manually, then you must add `/dev/sdb` under **exclude** filter of NDM configuration. See [here](#Exclude-filters) for customizing the exclude filter in NDM configuration.
+**Note:** If you are creating a block device CR for a partitioned device path, then you must add the corresponding disk under **exclude** filter so that NDM will not select the particular disk for BD creation. For example, `/dev/sdb` have 2 partitions, say `/dev/sdb1` and `/dev/sdb2`. If block device CR is created for `/dev/sdb1` manually, then you must add `/dev/sdb` under **exclude** filter of NDM configuration. See [here](#Exclude-filters) for customizing the exclude filter in NDM configuration.
 
 <br>
 
