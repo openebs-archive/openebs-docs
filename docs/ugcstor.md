@@ -1212,7 +1212,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 <h4><a class="anchor" aria-hidden="true" id="Target-NodeSelector-Policy"></a>Target NodeSelector Policy</h4>
 
-You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: apnode ` is the node label.
+You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: appnode ` is the node label.
 
 ```
 apiVersion: storage.k8s.io/v1
