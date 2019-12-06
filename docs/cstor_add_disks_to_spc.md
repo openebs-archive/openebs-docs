@@ -200,26 +200,26 @@ Note: The following steps are applicable only for OpenEBS version installed from
    
 10. Identify the ZFS storage pool corresponding to the cStor pool pod. The following steps will obtain the ZFS storage pool of corresponding cStor pool pod.
 
-   ```
-   kubectl -n openebs exec -it <cStor_POOL_POD_NAME> -c cstor-pool -- zpool status
-   ```
-   Example command:
-   ```
-   kubectl exec -it cstor-disk-pool-f7gq-6c94857b9c-q7v2w -n openebs -c cstor-pool -- zpool status
-   ```
-   Example output:
-   ```
-    pool: cstor-edd5005d-17ce-11ea-8413-42010aa00017
-   state: ONLINE
-    scan: none requested
-   config:
+    ```
+    kubectl -n openebs exec -it <cStor_POOL_POD_NAME> -c cstor-pool -- zpool status
+    ```
+    Example command:
+    ```
+    kubectl exec -it cstor-disk-pool-f7gq-6c94857b9c-q7v2w -n openebs -c cstor-pool -- zpool status
+    ```
+    Example output:
+    ```
+     pool: cstor-edd5005d-17ce-11ea-8413-42010aa00017
+    state: ONLINE
+     scan: none requested
+    config:
 
-          NAME                                         STATE     READ WRITE CKSUM
-   	  cstor-edd5005d-17ce-11ea-8413-42010aa00017   ONLINE       0     0     0
-    	   scsi-0Google_PersistentDisk_ranjith-disk1  ONLINE       0     0     0
+           NAME                                         STATE     READ WRITE CKSUM
+     	   cstor-edd5005d-17ce-11ea-8413-42010aa00017   ONLINE       0     0     0
+    	    scsi-0Google_PersistentDisk_ranjith-disk1  ONLINE       0     0     0
    
-   errors: No known data errors
-   ```
+    errors: No known data errors
+    ```
    
 11. Add the new disk to the pool by adding `disk-id` which is obtained in step 3. For the `disk-id`, it requires only the name of the device, not the full path that found in the disk description. For example, in case of example output in step 3, use `scsi-0Google_PersistentDisk_ranjith-disk2` as `DISK_ID` in below command.
 
