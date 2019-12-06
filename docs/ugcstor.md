@@ -940,7 +940,7 @@ spec:
 
 <h4><a class="anchor" aria-hidden="true" id="PoolResourceRequests-Policy"></a>PoolResourceRequests Policy</h4>
 
-This feature allow you to specify resource requests that need to be available before scheduling the containers. If not specified, the default values are used. The `name` of SPC can be changed if you need.
+This feature allow you to specify pool resource requests that need to be available before scheduling the containers. If not specified, the default values are used. The following sample configuration will set memory as `2Gi` and ephemeral-stroage request value as `100Mi`. The memory  will be shared for all the volume replicas that reside on a pool. The memory can be `2Gi` to `4Gi` per pool on a given node for better performance. These values can be changed as per the node configuration for better performance. The below configuration also set the `cstor-pool` container with `100Mi` as `ephemeral-storage` requests which will avoid erraneous eviction by K8s. 
 
 ```
 apiVersion: openebs.io/v1alpha1
@@ -952,6 +952,7 @@ metadata:
       - name: PoolResourceRequests
         value: |-
             memory: 2Gi
+            ephemeral-storage: "100Mi"
 spec:
   name: cstor-disk
   type: disk
@@ -1013,7 +1014,7 @@ metadata:
 
 <h4><a class="anchor" aria-hidden="true" id="AuxResourceRequests-Policy"></a>AuxResourceRequests Policy</h4>
 
-This feature is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. `AuxResourceRequests` allow you to set requests on side cars. Requests have to be specified in the format expected by Kubernetes.
+The below configuration will set the cstor-pool side-cars with memory as `0.5Gi`, cpu as `100m`. This also set the `cstor-pool` side-cars with ephemeral-storage request `50Mi` which will avoid erraneous eviction by K8s. 
 
 ```
 apiVersion: openebs.io/v1alpha1
@@ -1026,6 +1027,7 @@ metadata:
         value: |-
             memory: 0.5Gi
             cpu: 100m
+            ephemeral-storage: "50Mi"
 ```
 
 
@@ -1256,7 +1258,8 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: TargetResourceRequests
-        value: "none"
+        value: |-
+            ephemeral-storage: "100Mi"
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1312,6 +1315,7 @@ metadata:
         value: |-
             memory: 0.5Gi
             cpu: 100m
+            ephemeral-storage: "100Mi"
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```

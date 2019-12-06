@@ -472,19 +472,18 @@ To monitor the OpenEBS volumes and obtain corresponding logs, connect to the fre
 
 
 
-All openebs components should have resource requests set against each of its pod containers. This should be added in the openebs operator YAML file before applying it. This setting is useful in cases where user has to specify minimum requests like ephemeral storage etc, to avoid erroneous eviction by K8s.
+All openebs components should have ephemeral storage requests set against each of its pod containers and side cars. Ephemeral storage requests can be used only from Kubernetes 1.13 or in earlier versions if the feature-gate flag is enabled. This value should be added for all the openebs control plane components in the openebs operator YAML file before applying it. This setting is used to specify ephemeral-storage to avoid erroneous eviction by K8s.
 
-
+The following is one the example configurations for `AuxResourceRequests` which allow you to set requests on side cars of the container.
 
 <h3><a class="anchor" aria-hidden="true" id="AuxResourceRequests"></a>AuxResourceRequests</h3>
 
-This setting is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. `AuxResourceRequests` allow you to set requests on side cars.
+This setting is useful in cases where user has to specify minimum ephemeral-storage requests to avoid erroneous eviction by K8s. The below spec will set the side-cars with `50Mi` ephemeral-storage requests.
 
 ```
  - name:  AuxResourceRequests
    value: |-
-       memory: 0.5Gi
-       cpu: 100m
+       ephemeral-storage: "50Mi"
 ```
 
 <br>
