@@ -14,7 +14,7 @@ Note: The following steps are applicable only for OpenEBS version installed from
    blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-minio-default-pool-e076cf5f-q1k1   42949672960   Unclaimed    Active   10s
    blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-minio-default-pool-e076cf5f-q1k1   42949672960   Claimed      Active   16h
    ```
-3. Get the `disk-id` and `nodename` of blockdevice which is going to be added to the cStor pool. This `disk-id` is required in step 10. The following command will obatin the `disk-id` and `nodename` of the corresponding blockdevice:
+3. Get the `disk-id` and `nodename` of blockdevice which is going to be added to the cStor pool. This `disk-id` is required in step 11. The following command will obatin the `disk-id` and `nodename` of the corresponding blockdevice:
    
    ```
    kubectl describe bd <blockdevice-id> -n openebs | grep -i "\(hostname\|by-id\)"
@@ -144,7 +144,31 @@ Note: The following steps are applicable only for OpenEBS version installed from
    ```
    blockdeviceclaim.openebs.io/bdc-fae4dadd-17f0-11ea-8c06-42010aa00032 created
    ```
-7. Get the cStor pools details using the following command:
+7. Verify BDC is created for the selected blorkcdevice using the following command:
+   ```
+   kubectl get bdc -n openebs
+   ```
+   Example output:
+   ```
+   NAME                                       BLOCKDEVICENAME                                PHASE   AGE
+   bdc-bfde0fb4-17ef-11ea-8c06-42010aa00032   blockdevice-77f834edba45b03318d9de5b79af0734   Bound   54m
+   bdc-fae4dadd-17f0-11ea-8c06-42010aa00032   blockdevice-936911c5c9b0218ed59e64009cc83c8f   Bound   28s
+   ```
+   From the example output, BDC for selected BD CR, in this case `blockdevice-936911c5c9b0218ed59e64009cc83c8f` is created. 
+   
+   Verify if `CLAIMSTATE` of the selected BD cr is changed to `Claimed` using the following command:
+   ```
+   kubectl get bd -n openebs
+   ```
+   Example output:
+   ```
+   NAME                                           NODENAME                                       SIZE          CLAIMSTATE   STATUS   AGE
+   blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-cstor-default-pool-85ebc9b5-vhw6   42949672960   Claimed      Active   57m
+   blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cstor-default-pool-85ebc9b5-vhw6   42949672960   Claimed      Active   48m
+   ```
+   In the example output, `CLAIMSTATE` of the selected BD CR is changed.
+   
+8. Get the cStor pools details using the following command:
 
    ```
    kubectl get csp
@@ -158,7 +182,7 @@ Note: The following steps are applicable only for OpenEBS version installed from
    ```
    In the above example, only one cStor pool is running. If there are multiple cStor pools running on the cluster, identify the pool which need to be expanded and find the avaialble blockdevice on the same node where associated pool pod is running . The availble blockdevice should be `Active`, `Unclaimed` and does not contain any filesystem. 
    
-8. Find the pool pod that is running on that host where the cStor pool need to be expanded.
+9. Find the pool pod that is running on that host where the cStor pool need to be expanded.
    ```
    kubectl -n openebs get pods -o wide | grep <HOSTNAME> | grep <POOL_NAME>
    ```
@@ -171,10 +195,10 @@ Note: The following steps are applicable only for OpenEBS version installed from
    cstor-disk-pool-f7gq-6c94857b9c-q7v2w                             3/3     Running   0          16m   10.108.0.43   gke-ranjith-minio-default-pool-e076cf5f-q1k1   <none>      <none>
 
    ```
-   From the output, identify the cStor pool pod name. This pool pod name will be required in step 9. 
+   From the output, identify the cStor pool pod name. This pool pod name will be required in step 10. 
    From the example output, cStor pool pod name is `cstor-disk-pool-f7gq-6c94857b9c-q7v2w`.
    
-9. Identify the ZFS storage pool corresponding to the cStor pool pod. The following steps will obtain the ZFS storage pool of corresponding cStor pool pod.
+10. Identify the ZFS storage pool corresponding to the cStor pool pod. The following steps will obtain the ZFS storage pool of corresponding cStor pool pod.
 
    ```
    kubectl -n openebs exec -it <cStor_POOL_POD_NAME> -c cstor-pool -- zpool status
@@ -197,7 +221,7 @@ Note: The following steps are applicable only for OpenEBS version installed from
    errors: No known data errors
    ```
    
-10. Add the new disk to the pool by adding `disk-id` which is obtained in step 3. For the `disk-id`, it requires only the name of the device, not the full path that found in the disk description. For example, in case of example output in step 3, use `scsi-0Google_PersistentDisk_ranjith-disk2` as `DISK_I`D in below command.
+11. Add the new disk to the pool by adding `disk-id` which is obtained in step 3. For the `disk-id`, it requires only the name of the device, not the full path that found in the disk description. For example, in case of example output in step 3, use `scsi-0Google_PersistentDisk_ranjith-disk2` as `DISK_ID` in below command.
 
     ```
     kubectl -n openebs exec -it <POOL_POD_NAME> -c cstor-pool -- zpool add <POOL_NAME> <DISK_ID>
@@ -208,7 +232,7 @@ Note: The following steps are applicable only for OpenEBS version installed from
     ```
     If command is successfull, it will goto a new line.
 
-11. Verify the disk was added to the pool using the following command:
+12. Verify the disk was added to the pool using the following command:
 
     ```
     kubectl -n openebs exec -it <POOL_POD_NAME> --container cstor-pool -- zpool status
@@ -231,7 +255,7 @@ Note: The following steps are applicable only for OpenEBS version installed from
 
     errors: No known data errors
     ```
-12. Verify if the size of the cStor pool has updated or not using the following command:
+13. Verify if the size of the cStor pool has updated or not using the following command:
     ```
     kubectl get csp
     ```
@@ -242,7 +266,7 @@ Note: The following steps are applicable only for OpenEBS version installed from
     ```
     The example output shows that `CAPACITY` is exapnded to `79.5G` from `39.8G`.
 
-13. Update the CSP spec by adding the selected blockdevice details. This can be performed by following command:
+14. Update the CSP spec by adding the selected blockdevice details. This can be performed by following command:
     ```
     kubectl edit csp <cStor_Pool_Name>
     ```
@@ -272,9 +296,9 @@ Note: The following steps are applicable only for OpenEBS version installed from
       overProvisioning: false
       poolType: striped
     ```
-14. Repeat steps 2 - 13 for each disk to be added to the required cStor pool.
+15. Repeat steps 2 - 14 for each disk to be added to the required cStor pool.
 
-15. Add the new blockdevice CR which is added to the cStor pools to the YAML file of your StoragePoolClaim and apply the updated YAML using the following command:
+16. Add the new blockdevice CR which is added to the cStor pools to the YAML file of your StoragePoolClaim and apply the updated YAML using the following command:
 
     ```
     kubectl apply -f <SPC_YAML_FILE>
