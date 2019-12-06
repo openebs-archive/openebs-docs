@@ -97,17 +97,17 @@ Note: The following steps are applicable only for OpenEBS version installed from
    spec:
      blockDeviceName: <blockdevice_name>
      blockDeviceNodeAttributes:
-       hostName: <hostName>
+       hostName: <host_Name>
      resources:
        requests:
-         storage: <capacity>
+         storage: <disk_capacity>
    ```
    Fill the following details in to the BDC YAML spec:
    - <spc_name> : SPC name of the corresponding cStor pool which is identified in step 4.
    - <blockdevice_uid> : UID of the selected blockdevice which is identified in step 5.
    - <spc_uid> : UID of corresonding SPC which is identified in step 4.
-   - <hostName> : Hostname of the selected blockdevice which can be identified in step 2
-   - <capacity> : Provide the Capacity of selected blockdevice like 100G, 2T etc.
+   - <host_Name> : Hostname of the selected blockdevice which can be identified in step 2
+   - <disk_capacity> : Provide the Capacity of selected blockdevice like 100G, 2T etc.
    
    
    In this example, a new file is created as `bdc-cstor-bd2.yaml`. Example snippet of modified YAML:
