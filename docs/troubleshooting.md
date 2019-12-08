@@ -106,6 +106,8 @@ Connecting Kubernetes cluster to Director Online is the simplest and easiest way
 ## cStor Volume related
 
 [One of the cStorVolumeReplica(CVR) will have its status as `Invalid` after corresponding pool pod gets recreated](#CVR-showing-status-as-invalid-after-poolpod-gets-recreated)
+
+[cStor volume become read only state](#cstor-volume-read-only)
 <br>
 
 ## Others
@@ -1090,6 +1092,25 @@ When a cstor pool pod is deleted there are high chances that two cstor pool pods
 
 Edit the `Phase` of cStorVolumeReplica (cvr) from `Invalid` to `Offline`. After few seconds CVR will be `Healthy` or `Degraded` state depends on rebuilding progress.
 
+
+<h3><a class="anchor" aria-hidden="true" id="cstor-volume-read-only"></a>cStor volume become read only state</h3>
+
+Application mount point running on cStor volume went into read only state.
+
+**Possible Reason:**
+
+ If `cStorVolume` is `offline` for more than 120 seconds(iscsi timeout) then the PV will be mounted as `RO` filesystem. For understanding different state of cStor volume , more details can be found [here](https://staging-docs.openebs.io/docs/next/kb.html#verification-of-cStor-storage-volume).
+
+**Troubleshooting**
+
+- Check the status of cStor volume using the following command:
+  ```
+  kubectl get cstorvolume -n <openebs_installed_namespace>
+  ```
+
+**Resolution:**
+
+ If cStor volume exists in `Healthy` or `Degraded` state then restarting of the application pod alone will bring back cStor volume to `RW` mode. If cStor volume exists in `Offline`, reach out to <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a> for assistance. 
 
 <hr>
 
