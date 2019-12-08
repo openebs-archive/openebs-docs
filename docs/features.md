@@ -53,7 +53,7 @@ OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always
 ### Synchronous Replication
 
 <img src="/docs/assets/svg/f-replication.svg" alt="Smiley face" style="width:200px;">
-OpenEBS synchronously replicates the data volume replicas for high availability. The replication happens across Kubernetes zone resulting in the cloud native applications to be highly available in cross AZ setups. This feature is especially becomes useful to build highly available stateful applications using local disks on cloud providers services such as GKE, EKS and AKS 
+OpenEBS synchronously replicates the data volume replicas for high availability. The replication happens across Kubernetes zone resulting in the cloud native applications to be highly available in cross AZ setups. This feature is especially useful to build highly available stateful applications using local disks on cloud providers services such as GKE, EKS and AKS 
 
 <hr>
 
@@ -116,7 +116,7 @@ With CAS architecture and being completely in user space, OpenEBS is a truly clo
 
 <img src="/docs/assets/svg/b-no-lockin.svg" alt="Smiley face" style="width:200px;">
 
-Even with Kubernetes, data gravity concerns exist on clouds. With Kubernetes Stateful applications can be moved across clouds. But with Stateful applications, the data is written to cloud provider storage infrastructure and results in the cloud lock-in of the Stateful applications. The OpenEBS, the data is written to the OpenEBS layer and it acts as the data abstraction layer. Using this data abstraction layer, data can be moved across Kubernetes layers eliminating the expensive cloud lock-in issue. 
+Even with Kubernetes, data gravity concerns exist on clouds. With Kubernetes Stateful applications can be moved across clouds. But with Stateful applications, the data is written to cloud provider storage infrastructure and results in the cloud lock-in of the Stateful applications. With the OpenEBS, the data is written to the OpenEBS layer and it acts as the data abstraction layer. Using this data abstraction layer, data can be moved across Kubernetes layers eliminating the expensive cloud lock-in issue. 
 
 <hr>
 
@@ -128,7 +128,7 @@ Even with Kubernetes, data gravity concerns exist on clouds. With Kubernetes Sta
 
 <img src="/docs/assets/svg/b-granular.svg" alt="Smiley face" style="width:200px;">
 
-Containerization of storage software and dedicating such controller for each volume brings in maximum granularity in storage policies. The storage parameters can be monitored on a per volume basis and storage policies can be dynamically updated at run time to achieve the desired result for a given workload. The policies are tested and tuned keeping only the particular workload in mind, neighbouring workloads are affected. The operations and maintenance of storage is greatly reduced because of this dedicated storage stack per workload
+Containerization of storage software and dedicating such controller for each volume brings in maximum granularity in storage policies. The storage parameters can be monitored on a per volume basis and storage policies can be dynamically updated at run time to achieve the desired result for a given workload. The policies are tested and tuned keeping only the particular workload in mind, neighbouring workloads are unaffected. The operations and maintenance of storage is greatly reduced because of this dedicated storage stack per workload.
 
 <hr>
 
@@ -141,7 +141,7 @@ Containerization of storage software and dedicating such controller for each vol
 
  <img src="/docs/assets/svg/b-lowtco.svg" alt="Smiley face" style="width:200px;">
 
-On most clouds, block storage on cloud is charged based on how much is purchased and not on how much is used. Thin provisioning feature of OpenEBS is useful in pooling the local storage or cloud storage and start giving out the data volumes to the stateful applications in whatever size they need. The storage can be added on the fly without any disruption to the volumes exposed to the workloads or applications. This process has shown cost savings of upto 50% in the medium to long term of running workloads on clouds
+On most clouds, block storage is charged based on how much is purchased and not on how much is used. Thin provisioning feature of OpenEBS is useful in pooling the local storage or cloud storage and start giving out the data volumes to the stateful applications in whatever size they need. The storage can be added on the fly without any disruption to the volumes exposed to the workloads or applications. This process has shown cost savings of upto 50% in the medium to long term of running workloads on clouds.
 
 <hr>
 
@@ -161,7 +161,7 @@ Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by u
 
 <img src="/docs/assets/svg/b-ha.svg" alt="High Availability" style="width:200px;"> 
 
-There is no blast radius effect. CAS architecture does not have the typical blast radius issue that is typically observed in the traditional storage systems. Metadata of the volume is not centralized and is kept local to the volume. Losing any node results in the loss of volume replicas present only on that node. As the volume data is synchronous replicated at least on to two other nodes, in the event of a node failure, the data continues to be available at the same performance levels.
+There is no blast radius effect. CAS architecture does not have the blast radius issue that is typically observed in the traditional storage systems. Metadata of the volume is not centralized and is kept local to the volume. Losing any node results in the loss of volume replicas present only on that node. As the volume data is synchronously replicated at least on two other nodes, in the event of a node failure, the data continues to be available at the same performance levels.
 
 <hr>
 
@@ -171,7 +171,7 @@ There is no blast radius effect. CAS architecture does not have the typical blas
 
 <img src="/docs/assets/svg/b-crosscloud.svg" alt="Director Online" style="width:200px;">
 
-Director Online is the SaaS service for OpenEBS enabled Kubernetes clusters that provide  comprehensive monitoring and management of OpenEBS volumes. Logs of all OpenEBS volume pods are instantly uploaded to Director Online and available for users through Kibana dashboard. Topology view on Director Online used very often to understand the Kubernetes resources when they are deployed at scale.
+Director Online is the SaaS service for OpenEBS enabled Kubernetes clusters that provide comprehensive monitoring and management of OpenEBS volumes. Logs of all OpenEBS volume pods are instantly uploaded to Director Online and available for users through Kibana dashboard. Topology view on Director Online is used very often to understand the Kubernetes resources when they are deployed at scale.
 
 <hr>
 
