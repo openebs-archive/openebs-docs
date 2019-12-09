@@ -252,7 +252,30 @@ spec:
       name: percona
 ```
 
-Run the application using the following command. In this example, the above configuration YAML spec is saved as `demo-percona-mysql-pvc.yaml`
+In this example, the above configuration YAML spec is saved as `demo-percona-mysql-pvc.yaml`
+
+**Note**: 
+
+- The Local PV volume will be provisioned  with `volumeMode` as `filesystem` by default. The supported filesystems are `ext4` and `xfs`  The means Local PV volume will be created and formatted with one of these filesystem. If no filesystem is specified, by default Kubelet will format the BlockDevice as `ext4`. More details can be found [here](/docs/next/localpv.html#how-to-use-openebs-local-pvs).
+
+- With OpenEBS 1.5 version, Local PV volume has Raw Block Volume support. The Raw Block Volume support can be added to the path `spec.volumeMode` as `Block` in the Persistent Volume spec. Below is the sample PVC spec for provisioning Local PV on Raw Block Volume.
+
+  ```
+  apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: my-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    volumeMode: Block
+    storageClassName: openebs-device
+    resources:
+      requests:
+        storage: 10Gi
+  ```
+
+Run the following command to provision an the application using the above saved YAML spec.
 
 ```
 kubectl apply -f demo-percona-mysql-pvc.yaml
