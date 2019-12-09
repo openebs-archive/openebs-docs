@@ -67,43 +67,42 @@ Depending on the OS, select the appropriate deployment file.
   kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/csi-operator-ubuntu-18.04.yaml
   ```
 
-- Verify that the OpenEBS CSI Components are installed.
+Verify that the OpenEBS CSI Components are installed.
 
-  ```
-  kubectl get pods -n kube-system
-  ```
+```
+kubectl get pods -n kube-system
+```
 
-  Example output:
+Example output:
 
-  <div class="co">
-  NAME                                                        READY   STATUS    RESTARTS   AGE
-  event-exporter-v0.2.5-7df89f4b8f-ml8qz                      2/2     Running   0          35m
-  fluentd-gcp-scaler-54ccb89d5-jk4gs                          1/1     Running   0          35m
-  fluentd-gcp-v3.1.1-56976                                    2/2     Running   0          35m
-  fluentd-gcp-v3.1.1-jvqxn                                    2/2     Running   0          35m
-  fluentd-gcp-v3.1.1-kwvsx                                    2/2     Running   0          35m
-  heapster-7966498b57-w4mrs                                   3/3     Running   0          35m
-  kube-dns-5877696fb4-jftrh                                   4/4     Running   0          35m
-  kube-dns-5877696fb4-s6dgg                                   4/4     Running   0          35m
-  kube-dns-autoscaler-85f8bdb54-m584t                         1/1     Running   0          35m
-  kube-proxy-gke-ranjith-csi-default-pool-a9a13f27-6qv1       1/1     Running   0          35m
-  kube-proxy-gke-ranjith-csi-default-pool-a9a13f27-cftl       1/1     Running   0          35m
-  kube-proxy-gke-ranjith-csi-default-pool-a9a13f27-q5ws       1/1     Running   0          35m
-  l7-default-backend-8f479dd9-zxbtf                           1/1     Running   0          35m
-  metrics-server-v0.3.1-8d4c5db46-fw66z                       2/2     Running   0          35m
-  openebs-cstor-csi-controller-0                              6/6     Running   0          77s
-  openebs-cstor-csi-node-hflmf                                2/2     Running   0          73s
-  openebs-cstor-csi-node-mdgqq                                2/2     Running   0          73s
-  openebs-cstor-csi-node-rwshl                                2/2     Running   0          73s
-  prometheus-to-sd-5b68q                                      1/1     Running   0          35m
-  prometheus-to-sd-c5bwl                                      1/1     Running   0          35m
-  prometheus-to-sd-s7fdv                                      1/1     Running   0          35m
-  stackdriver-metadata-agent-cluster-level-8468cc67d8-p864w   1/1     Running   0          35m
+<div class="co">
+NAME                                                        READY   STATUS    RESTARTS   AGE
+event-exporter-v0.2.5-7df89f4b8f-ml8qz                      2/2     Running   0          35m
+fluentd-gcp-scaler-54ccb89d5-jk4gs                          1/1     Running   0          35m
+fluentd-gcp-v3.1.1-56976                                    2/2     Running   0          35m
+fluentd-gcp-v3.1.1-jvqxn                                    2/2     Running   0          35m
+fluentd-gcp-v3.1.1-kwvsx                                    2/2     Running   0          35m
+heapster-7966498b57-w4mrs                                   3/3     Running   0          35m
+kube-dns-5877696fb4-jftrh                                   4/4     Running   0          35m
+kube-dns-5877696fb4-s6dgg                                   4/4     Running   0          35m
+kube-dns-autoscaler-85f8bdb54-m584t                         1/1     Running   0          35m
+kube-proxy-gke-ranjith-csi-default-pool-a9a13f27-6qv1       1/1     Running   0          35m
+kube-proxy-gke-ranjith-csi-default-pool-a9a13f27-cftl       1/1     Running   0          35m
+kube-proxy-gke-ranjith-csi-default-pool-a9a13f27-q5ws       1/1     Running   0          35m
+l7-default-backend-8f479dd9-zxbtf                           1/1     Running   0          35m
+metrics-server-v0.3.1-8d4c5db46-fw66z                       2/2     Running   0          35m
+openebs-cstor-csi-controller-0                              6/6     Running   0          77s
+openebs-cstor-csi-node-hflmf                                2/2     Running   0          73s
+openebs-cstor-csi-node-mdgqq                                2/2     Running   0          73s
+openebs-cstor-csi-node-rwshl                                2/2     Running   0          73s
+prometheus-to-sd-5b68q                                      1/1     Running   0          35m
+prometheus-to-sd-c5bwl                                      1/1     Running   0          35m
+prometheus-to-sd-s7fdv                                      1/1     Running   0          35m
+stackdriver-metadata-agent-cluster-level-8468cc67d8-p864w   1/1     Running   0          35m
 </div>
   
-  From above output, `openebs-cstor-csi-controller-0`  is running and `openebs-cstor-csi-node-hflmf` , `openebs-cstor-csi-node-mdgqq ` and `openebs-cstor-csi-node-rwshl ` running in each worker node.
-  
-  
+From above output, `openebs-cstor-csi-controller-0`  is running and `openebs-cstor-csi-node-hflmf` , `openebs-cstor-csi-node-mdgqq ` and `openebs-cstor-csi-node-rwshl ` running in each worker node.
+    
 
 <h4><a class="anchor" aria-hidden="true" id="provision-a-cStor-Pool-Cluster-csi"></a>Provision a cStor Pool Cluster</h4>
 
