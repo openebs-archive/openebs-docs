@@ -19,6 +19,7 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 [Snapshot and Clone a cStor volume created using CSI provisioner](#snapshot-clone-cstor-volume-created-using-csi-provisioner)
 
+[Provisioning cStor pool using CSPC operator](#provision-cstor-pool-using-cspc-operator)
 
 
 
@@ -151,12 +152,12 @@ spec:
 
 Edit the following parameters in the sample CSPC YAML:
 
-**blockDeviceName**:- Provide the block devices name to be used for provisioning cStor pool. All the block devices must be on the same node. 
+- **blockDeviceName**:- Provide the block devices name to be used for provisioning cStor pool. Each storage pool will be created on one single node using the blockedvices attached to the node.
 
-**kubernetes.io/hostname**: Provide the hostname where the cStor pool will be created using the set of block devices.
+- **kubernetes.io/hostname**: Provide the hostname where the cStor pool will be created using the set of block devices.
 
 
-The above sample YAML creates a cStor pool on the corresponding node with provided block devicse. If you need to create multiple cStor pools in the cluster, get the YAML from [here](https://raw.githubusercontent.com/sonasingh46/artifacts/master/day2ops/cspc/cspc-stripe.yaml).
+The above sample YAML creates a cStor pool on the corresponding node with provided block devicse. If you need to create multiple cStor pools in the cluster with different raid technologies, go to provisioning [CSPC cluster creation](#provision-cstor-pool-using-cspc-operator) section.
 
 In this example, the above YAML is modified and saved as `cspc.yaml`. Apply the modified CSPC YAML spec using the following command to create a cStor Pool Cluster:
 
@@ -485,7 +486,319 @@ The following section will give the steps to take snapshot and clone of a cStor 
 10. Now this cloned volume can be used in Application to get the snapshot data.  
 
 
+<h3><a class="anchor" aria-hidden="true" id="provision-cstor-pool-using-cspc-operator"></a>Provisioning cStor pool using CSPC operator</h3>
 
+CSPC is a new schema for cStor pool provisioning and also refactors the code to make the cStor a completely pluggable engine into OpenEBS. The new schema also makes it easy to perform day 2 operations on cStor pools. The following are the new terms related to CSPC:
+
+- CStorPoolcluster(CSPC)
+- CStorPoolInstance(CSPI) 
+- cspc-operator
+
+**Note:** Volume provisioning on CSPC provisioned pools will be supported only via CSI.
+
+The current workflow to provision CSPC pool is as follows:
+
+1. OpenEBS should be installed. Recommended OpenEBS version is 1.4 or above.
+2. Install CSPC operator using YAML.
+3. Identify the available blockdevice which are `Unclaimed`and `Active`.
+4. Apply the CSPC pool YAML spec by filling required fields.
+5. Verify the CSPC pool details
+
+<h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc"></a>Install OpenEBS</h4>
+
+Latest OpenEBS version can be installed using the following command:
+
+```
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.5.0.yaml
+```
+
+Verify if OpenEBS pods are in `Running` state using the following command:
+```
+kubectl get pod -n openebs
+```
+Example output:
+```
+NAME                                          READY   STATUS    RESTARTS   AGE
+maya-apiserver-77f9cc9f9b-jg825               1/1     Running   3          90s
+openebs-admission-server-8c5b8565-d2q58       1/1     Running   0          79s
+openebs-localpv-provisioner-f458bc8c4-bjmkq   1/1     Running   0          78s
+openebs-ndm-lz4n6                             1/1     Running   0          80s
+openebs-ndm-operator-7d7c9d966d-bqlnj         1/1     Running   1          79s
+openebs-ndm-spm7f                             1/1     Running   0          80s
+openebs-ndm-tm8ff                             1/1     Running   0          80s
+openebs-provisioner-5fbd8fc74c-6zcnq          1/1     Running   0          82s
+openebs-snapshot-operator-7d6dd4b77f-444zh    2/2     Running   0          81s
+```
+
+<h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc-operator"></a>Install CSPC Operator</h4>
+
+Install CSPC operator by using the following command:
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/cspc-operator.yaml
+```
+Verify if CSPC operator is in `Running` state using the following command:
+```
+kubectl get pod -n openebs -l name=cspc-operator
+```
+Example output:
+```
+NAME                            READY   STATUS    RESTARTS   AGE
+cspc-operator-c4dc96bb9-zvfws   1/1     Running   0          115s
+```
+
+<h4><a class="anchor" aria-hidden="true" id="identify-bd-for-cspc"></a>Identify the blockdevice</h4>
+
+Get the details of all blockdevice attached in the cluster using the following command. Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not conatin any filesystem. These are the candidiate for CSPC pool creation which need to use in next step.
+
+```
+kubectl get bd -n openebs
+```
+Example output:
+```
+NAME                                           NODENAME                                      SIZE          CLAIMSTATE   STATUS   AGE
+blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   gke-ranjith-cspc-default-pool-f7a78720-zr1t   42949672960   Unclaimed    Active   41m
+blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-cspc-default-pool-f7a78720-k1cr   42949672960   Unclaimed    Active   42m
+blockdevice-78f6be57b9eca9c08a2e18e8f894df30   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Unclaimed    Active   11s
+blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Unclaimed    Active   42m
+```
+
+In the above example, two blockdevices are attached to one node and one disk is attached to other two nodes.
+
+<h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc-operator"></a>Apply the CSPC pool YAML</h4>
+
+Create a CSPC pool YAML spec to provision CSPC pools using the sample template provided below.
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: CStorPoolCluster
+metadata:
+  name: <CSPC_name>
+  namespace: openebs
+spec:
+  pools:
+  - nodeSelector:
+      kubernetes.io/hostname: "<Node_name>"
+    raidGroups:
+    - type: "<RAID_type>"
+      isWriteCache: false
+      isSpare: false
+      isReadCache: false
+      blockDevices:
+      - blockDeviceName: "<blockdevice_name>"
+    poolConfig:
+      cacheFile: ""
+      defaultRaidGroupType: "<<RAID_type>>"
+      overProvisioning: false
+      compression: "off"
+```
+ The following are the details of parameters used for the CSPC pool creation.
+ 
+ - CSPC_name :- Name of CSPC cluster
+ - Node_name :- Name of node where pool is going to create using the available blockdevice on the node.
+ - RAID_type :- RAID configuration used for pool creation. Supported RAID types are `stripe`, `mirror`, `raidz` and `raidz2`. If `spec.pools.raidGroups.type` is specified, then `spec.pools.poolConfig.defaultRaidGroupType` will not consider for the particular raid groups. 
+ - blockdevice_name :- Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not conatin any filesystem.
+ 
+This is a sample CSPC template YAMl configuration which will provision a cStor pool using CSPC opeartor. The following describe the pool details of one node. If there are multiple pool to be created on different nodes, add below configuration for each node.
+
+```
+  - nodeSelector:
+      kubernetes.io/hostname: "<Node1_name>"
+    raidGroups:
+    - type: "<RAID_type>"
+      isWriteCache: false
+      isSpare: false
+      isReadCache: false
+      blockDevices:
+      - blockDeviceName: "<blockdevice_name>"
+    poolConfig:
+      cacheFile: ""
+      defaultRaidGroupType: "<<RAID_type>>"
+      overProvisioning: false
+      compression: "off"
+```
+
+The following are some of the sample CSPC configuration YAML spec:
+
+- **Striped**- One striped pool on each node using blockdevice attached to the node. In below example, one node has 2 blockdevice and other two nodes having one disk each.
+  
+  ```
+  apiVersion: openebs.io/v1alpha1
+  kind: CStorPoolCluster
+  metadata:
+    name: cstor-pool-stripe
+    namespace: openebs
+  spec:
+    pools:
+    - nodeSelector:
+        kubernetes.io/hostname: "gke-ranjith-cspc-default-pool-f7a78720-9436"
+      raidGroups:
+      - type: "stripe"
+        isWriteCache: false
+        isSpare: false
+        isReadCache: false
+        blockDevices:
+        - blockDeviceName: "blockdevice-936911c5c9b0218ed59e64009cc83c8f"
+        - blockDeviceName: "blockdevice-78f6be57b9eca9c08a2e18e8f894df30"
+    poolConfig:
+        cacheFile: ""
+        defaultRaidGroupType: "stripe"
+        overProvisioning: false
+        compression: "off"
+    - nodeSelector:
+        kubernetes.io/hostname: "gke-ranjith-cspc-default-pool-f7a78720-k1cr"
+      raidGroups:
+      - type: "stripe"
+        isWriteCache: false
+        isSpare: false
+        isReadCache: false
+        blockDevices:
+        - blockDeviceName: "blockdevice-77f834edba45b03318d9de5b79af0734"
+      poolConfig:
+        cacheFile: ""
+        defaultRaidGroupType: "stripe"
+        overProvisioning: false
+        compression: "off"
+    - nodeSelector:
+        kubernetes.io/hostname: "gke-ranjith-cspc-default-pool-f7a78720-zr1t"
+      raidGroups:
+      - type: "stripe"
+        isWriteCache: false
+        isSpare: false
+        isReadCache: false
+        blockDevices:
+        - blockDeviceName: "blockdevice-1c10eb1bb14c94f02a00373f2fa09b93"
+      poolConfig:
+        cacheFile: ""
+        defaultRaidGroupType: "stripe"
+        overProvisioning: false
+        compression: "off"
+  ```
+
+- **Mirror**- One mirror pool on one nodes using 2 disk attached to the node.
+
+  ```
+  apiVersion: openebs.io/v1alpha1
+  kind: CStorPoolCluster
+  metadata:
+    name: cstor-pool-stripe
+    namespace: openebs
+  spec:
+    pools:
+    - nodeSelector:
+        kubernetes.io/hostname: "gke-ranjith-cspc-default-pool-f7a78720-9436"
+      raidGroups:
+      - type: "mirror"
+        isWriteCache: false
+        isSpare: false
+        isReadCache: false
+        blockDevices:
+        - blockDeviceName: "blockdevice-936911c5c9b0218ed59e64009cc83c8f"
+        - blockDeviceName: "blockdevice-78f6be57b9eca9c08a2e18e8f894df30"
+    poolConfig:
+        cacheFile: ""
+        defaultRaidGroupType: "mirror"
+        overProvisioning: false
+        compression: "off"
+  ```
+
+- **RAIDZ**- Single parity raid configuration with 3 blockdevice attached to a node.
+
+  ```
+  apiVersion: openebs.io/v1alpha1
+  kind: CStorPoolCluster
+  metadata:
+    name: cstor-pool-stripe
+    namespace: openebs
+  spec:
+    pools:
+    - nodeSelector:
+        kubernetes.io/hostname: "gke-ranjith-cspc-default-pool-f7a78720-9436"
+      raidGroups:
+      - type: "raidz"
+        isWriteCache: false
+        isSpare: false
+        isReadCache: false
+        blockDevices:
+        - blockDeviceName: "blockdevice-936911c5c9b0218ed59e64009cc83c8f"
+        - blockDeviceName: "blockdevice-78f6be57b9eca9c08a2e18e8f894df30"
+      - blockDeviceName: "blockdevice-77f834edba45b03318d9de5b79af0734"
+    poolConfig:
+        cacheFile: ""
+        defaultRaidGroupType: "raidz"
+        overProvisioning: false
+        compression: "off"
+  ```
+  
+- **RAIDZ2**- Dual parity raid configuration with 6 blockdevice attached to a node.  
+  ```
+  apiVersion: openebs.io/v1alpha1
+  kind: CStorPoolCluster
+  metadata:
+    name: cstor-pool-stripe
+    namespace: openebs
+  spec:
+    pools:
+    - nodeSelector:
+        kubernetes.io/hostname: "gke-ranjith-cspc-default-pool-f7a78720-9436"
+      raidGroups:
+      - type: "raidz2"
+        isWriteCache: false
+        isSpare: false
+        isReadCache: false
+        blockDevices:
+        - blockDeviceName: "blockdevice-936911c5c9b0218ed59e64009cc83c8f"
+        - blockDeviceName: "blockdevice-78f6be57b9eca9c08a2e18e8f894df30"
+        - blockDeviceName: "blockdevice-77f834edba45b03318d9de5b79af0734"
+        - blockDeviceName: "blockdevice-2594fa672b07f200f299f59cad340326"
+        - blockDeviceName: "blockdevice-cbd2dc4f3ff3f463509b695173b6064b"
+        - blockDeviceName: "blockdevice-1c10eb1bb14c94f02a00373f2fa09b93"
+    poolConfig:
+        cacheFile: ""
+        defaultRaidGroupType: "raidz2"
+        overProvisioning: false
+        compression: "off"	  
+  ```
+
+<h4><a class="anchor" aria-hidden="true" id="verify-cspc-pool-details"></a>Verify CSPC Pool Details</h4>
+
+Verify if the pool is in `Running` state by checking the status of cspc, cspi and pod running in `openebs` namespace. 
+
+The following command will get the details of CSPC status:
+```
+kubectl get cspc -n openebs
+```
+Example output:
+```
+NAME                AGE
+cstor-pool-stripe   18s
+```
+The following command will get the details of CSPI status:
+```
+kubectl get cspi -n openebs
+```
+Example output:
+```
+NAME                     HOSTNAME                                      ALLOCATED   FREE    CAPACITY   STATUS   AGE
+cstor-pool-stripe-bt2d   gke-ranjith-cspc-default-pool-f7a78720-zr1t   50K         39.7G   39.8G      ONLINE   29s
+cstor-pool-stripe-l928   gke-ranjith-cspc-default-pool-f7a78720-9436   50K         79.5G   79.5G      ONLINE   29s
+cstor-pool-stripe-mdh4   gke-ranjith-cspc-default-pool-f7a78720-k1cr   50K         39.7G   39.8G      ONLINE   29s
+```
+The following command will get the details of CSPC pool pod status:
+```
+kubectl get pod -n openebs
+```
+Example output:
+```
+
+```
+
+Also verify all the given blockdevices are used correctly by checking theh `CLAIMSTATE`.
+```
+kubectl get bd -n openebs
+```
+Example output:
+```
+```
 <br>
 
 ## See Also:
