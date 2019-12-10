@@ -556,10 +556,10 @@ kubectl get bd -n openebs
 Example output:
 ```
 NAME                                           NODENAME                                      SIZE          CLAIMSTATE   STATUS   AGE
-blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   gke-ranjith-cspc-default-pool-f7a78720-zr1t   42949672960   Unclaimed    Active   41m
-blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-cspc-default-pool-f7a78720-k1cr   42949672960   Unclaimed    Active   42m
-blockdevice-78f6be57b9eca9c08a2e18e8f894df30   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Unclaimed    Active   11s
-blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Unclaimed    Active   42m
+blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   gke-ranjith-cspc-default-pool-f7a78720-zr1t   42949672960   Unclaimed    Active   7h43m
+blockdevice-2594fa672b07f200f299f59cad340326   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Unclaimed    Active   40s
+blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-cspc-default-pool-f7a78720-k1cr   42949672960   Unclaimed    Active   7h43m
+blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Unclaimed    Active   7h44m
 ```
 
 In the above example, two blockdevices are attached to one node and one disk is attached to other two nodes.
@@ -638,7 +638,7 @@ The following are some of the sample CSPC configuration YAML spec:
         isReadCache: false
         blockDevices:
         - blockDeviceName: "blockdevice-936911c5c9b0218ed59e64009cc83c8f"
-        - blockDeviceName: "blockdevice-78f6be57b9eca9c08a2e18e8f894df30"
+        - blockDeviceName: "blockdevice-2594fa672b07f200f299f59cad340326"
     poolConfig:
         cacheFile: ""
         defaultRaidGroupType: "stripe"
@@ -779,25 +779,36 @@ kubectl get cspi -n openebs
 Example output:
 ```
 NAME                     HOSTNAME                                      ALLOCATED   FREE    CAPACITY   STATUS   AGE
-cstor-pool-stripe-bt2d   gke-ranjith-cspc-default-pool-f7a78720-zr1t   50K         39.7G   39.8G      ONLINE   29s
-cstor-pool-stripe-l928   gke-ranjith-cspc-default-pool-f7a78720-9436   50K         79.5G   79.5G      ONLINE   29s
-cstor-pool-stripe-mdh4   gke-ranjith-cspc-default-pool-f7a78720-k1cr   50K         39.7G   39.8G      ONLINE   29s
+cstor-pool-stripe-cfsm   gke-ranjith-cspc-default-pool-f7a78720-zr1t   69.5K       39.7G   39.8G      ONLINE   87s
+cstor-pool-stripe-mnbh   gke-ranjith-cspc-default-pool-f7a78720-k1cr   69.5K       39.7G   39.8G      ONLINE   87s
+cstor-pool-stripe-sxpr   gke-ranjith-cspc-default-pool-f7a78720-9436   69.5K       79.5G   79.5G      ONLINE   87s
 ```
 The following command will get the details of CSPC pool pod status:
 ```
-kubectl get pod -n openebs
+kubectl get pod -n openebs | grep -i <CSPC_name>
+```
+Example command:
+```
+kubectl get pod -n openebs | grep -i cstor-pool-stripe
 ```
 Example output:
 ```
-
+cstor-pool-stripe-cfsm-b947988c7-sdtjz        3/3     Running   0          25s
+cstor-pool-stripe-mnbh-74cb58df69-tpkm6       3/3     Running   0          25s
+cstor-pool-stripe-sxpr-59c5f46fd6-jz4n4       3/3     Running   0          25s
 ```
 
-Also verify all the given blockdevices are used correctly by checking theh `CLAIMSTATE`.
+Also verify all the given blockdevices are used correctly by checking the `CLAIMSTATE`.
 ```
 kubectl get bd -n openebs
 ```
 Example output:
 ```
+NAME                                           NODENAME                                      SIZE          CLAIMSTATE   STATUS   AGE
+blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   gke-ranjith-cspc-default-pool-f7a78720-zr1t   42949672960   Claimed      Active   7h47m
+blockdevice-2594fa672b07f200f299f59cad340326   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Claimed      Active   4m24s
+blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-cspc-default-pool-f7a78720-k1cr   42949672960   Claimed      Active   7h47m
+blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Claimed      Active   7h47m
 ```
 <br>
 
