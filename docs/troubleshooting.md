@@ -1099,7 +1099,7 @@ Application mount point running on cStor volume went into read only state.
 
 **Possible Reason:**
 
- If `cStorVolume` is `offline` for more than 120 seconds(iscsi timeout) then the PV will be mounted as `RO` filesystem. For understanding different state of cStor volume , more details can be found [here](https://staging-docs.openebs.io/docs/next/kb.html#verification-of-cStor-storage-volume).
+ If `cStorVolume` is `offline` for more than 120 seconds(iscsi timeout) then the PV will be mounted as `RO` filesystem. For understanding different state of cStor volume , more details can be found [here](/docs/next/kb.html#verification-of-cStor-storage-volume).
 
 **Troubleshooting**
 
