@@ -266,7 +266,7 @@ OpenEBS volume can be backed up and restored along with the application using Op
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h4>
 
-- Latest tested Velero version is 1.0.0.
+- Latest tested Velero version is 1.1.0.
 - Create required storage provider configuration to store the backup.
 - Create required OpenEBS storage pools and storage classes on destination cluster.
 - Add a common label to all the resources associated to the application that you want to backup. For example, add an application label selector in associated components such as PVC,SVC etc.
