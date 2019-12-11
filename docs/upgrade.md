@@ -29,9 +29,9 @@ From 0.5.3 or 0.5.4 to 0.6.0 - Get the steps from [here](https://v06-docs.openeb
 
 ## See Also:
 
-### [Releases](/docs/next/releases.html)
+### [Releases](/v140/docs/next/releases.html)
 
-### [Director Online](/docs/next/directoronline.html)
+### [Director Online](/v140/docs/next/directoronline.html)
 
 
 

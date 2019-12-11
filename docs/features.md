@@ -28,7 +28,7 @@ sidebar_label: Features and Benefits
 
 
 
-For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/docs/next/usecases.html) section.
+For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/v140/docs/next/usecases.html) section.
 
 
 
@@ -44,7 +44,7 @@ For more information on how OpenEBS is used in cloud native environments,  visit
 
 <img src="/docs/assets/svg/f-cas.svg" alt="Smiley face" 		style="width:200px;">
 
-OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found <a href="/docs/next/cas.html" target="_blank">here</a>
+OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found <a href="/v140/docs/next/cas.html" target="_blank">here</a>.
 
 <hr>
 
@@ -53,7 +53,7 @@ OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always
 ### Synchronous Replication
 
 <img src="/docs/assets/svg/f-replication.svg" alt="Smiley face" style="width:200px;">
-OpenEBS synchronously replicates the data volume replicas for high availability. The replication happens across Kubernetes zone resulting in the cloud native applications to be highly available in cross AZ setups. This feature is especially useful to build highly available stateful applications using local disks on cloud providers services such as GKE, EKS and AKS 
+OpenEBS synchronously replicates the data volume replicas for high availability. The replication happens across Kubernetes zone resulting in the cloud native applications to be highly available in cross AZ setups. This feature is especially useful to build highly available stateful applications using local disks on cloud providers services such as GKE, EKS and AKS.
 
 <hr>
 
@@ -65,7 +65,7 @@ OpenEBS synchronously replicates the data volume replicas for high availability.
 
 <img src="/docs/assets/svg/f-snapshots.svg" alt="Smiley face" style="width:200px;">
 
-Copy-on-write snapshots are a key feature of OpenEBS. The snapshots are created instantaneously and there is no limit on the number of snapshots. The incremental snapshot capability enables data migration and portability services across Kubernetes clusters and across different cloud providers or data centers, enabling a true multi-cloud data plane for stateful applications. Operations on snapshots and clones are performed in completely Kubernetes native method using the standard kubectl command
+Copy-on-write snapshots are a key feature of OpenEBS. The snapshots are created instantaneously and there is no limit on the number of snapshots. The incremental snapshot capability enables data migration and portability services across Kubernetes clusters and across different cloud providers or data centers, enabling a true multi-cloud data plane for stateful applications. Operations on snapshots and clones are performed in completely Kubernetes native method using the standard kubectl command.
 
 <hr>
 
@@ -85,7 +85,7 @@ Backup and restore of OpenEBS volumes work with the recent Kubernetes backup and
 
 <img src="/docs/assets/svg/f-prometheus.svg" alt="Smiley face" style="width:200px;">
 
-OpenEBS volumes are instrumented for granular data metrics such as volume IOPS, throughput, latency and data patterns. As OpenEBS follows CAS architecture, Stateful applications can be tuned for better performance by observing the traffic data patterns on Prometheus and tweaking the storage policy parameters without worrying about neighbouring workloads that are using OpenEBS
+OpenEBS volumes are instrumented for granular data metrics such as volume IOPS, throughput, latency and data patterns. As OpenEBS follows CAS architecture, Stateful applications can be tuned for better performance by observing the traffic data patterns on Prometheus and tweaking the storage policy parameters without worrying about neighbouring workloads that are using OpenEBS.
 
 <hr>
 <br>
@@ -183,11 +183,11 @@ Director Online is the SaaS service for OpenEBS enabled Kubernetes clusters that
 
 ## See Also:
 
-### [Object Storage with OpenEBS](/docs/next/minio.html)
+### [Object Storage with OpenEBS](/v140/docs/next/minio.html)
 
-### [RWM PVs with OpenEBS](/docs/next/rwm.html)
+### [RWM PVs with OpenEBS](/v140/docs/next/rwm.html)
 
-### [Local storage for Prometheus ](/docs/next/prometheus.html)
+### [Local storage for Prometheus ](/v140/docs/next/prometheus.html)
 
 <br>
 

@@ -23,11 +23,13 @@ sidebar_label: Quickstart
         <li>For using features like Local PV and Backup & Restore, you must require Kubernetes version 1.13 or above.
         </li>
         <li>For provisioning cStor volume via CSI driver support and performing basic operations on this volume such as expanding volume and snapshot & clone, you must require Kubernetes version 1.14 or above</li>
-        <li>Understand the <a href="/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
-        <li>Start <a href="/docs/next/installation.html">installation </a> through OpenEBS operator.</li>
-        <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses. More details can be find from <a href="/docs/next/ugcstor.html">here.</a></li>
-        <li>For high performance required applications which manage their own replication, data protection and other storage features, provision OpenEBS Local PV. More details can be find from <a href="/docs/next/uglocalpv.html">here.</a></li>
+        <li>Understand the <a href="/V140/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
+        <li>Start <a href="/V140/docs/next/installation.html">installation </a> through OpenEBS operator.</li>
+        <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses. More details can be find from <a href="/V140/docs/next/ugcstor.html">here.</a></li>
+        <li>For high performance required applications which manage their own replication, data protection and other storage features, provision OpenEBS Local PV. More details can be find from <a href="/V140/docs/next/uglocalpv.html">here.</a></li>
+        <li>For smaller capacity workloads in general and if there is no requirement of snapshot and clone, provision Jiva volume. More details can be find from <a href="/V140/docs/next/jivaguide.html">here.</li>
     </ul>
+
 
 
 
@@ -47,24 +49,23 @@ sidebar_label: Quickstart
 <font size="5">As a first step, follow the instructions to setup or verify iSCSI clients on any of the platforms below </font>
 
 <div class="emphasize">
+[Ubuntu](/v140/docs/next/prerequisites.html#ubuntu)
 
-[Ubuntu](/docs/next/prerequisites.html#ubuntu)
+[RHEL](/v140/docs/next/prerequisites.html#rhel)
 
-[RHEL](/docs/next/prerequisites.html#rhel)
+[CentOS](/v140/docs/next/prerequisites.html#centos)
 
-[CentOS](/docs/next/prerequisites.html#centos)
+[OpenShift](/v140/docs/next/prerequisites.html#openshift)
 
-[OpenShift](/docs/next/prerequisites.html#openshift)
+[Rancher](/v140/docs/next/prerequisites.html#rancher)
 
-[Rancher](/docs/next/prerequisites.html#rancher)
+[ICP](/v140/docs/next/prerequisites.html#icp)
 
-[ICP](/docs/next/prerequisites.html#icp)
+[EKS](/v140/docs/next/prerequisites.html#eks)
 
-[EKS](/docs/next/prerequisites.html#eks)
+[GKE](/v140/docs/next/prerequisites.html#gke)
 
-[GKE](/docs/next/prerequisites.html#gke)
-
-[AKS](/docs/next/prerequisites.html#aks)
+[AKS](/v140/docs/next/prerequisites.html#aks)
 
 <br>
 

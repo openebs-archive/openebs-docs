@@ -17,7 +17,7 @@ OpenEBS follows the container attached storage or CAS model.  As a part of this 
 OpenEBS has many components, which can be grouped into the following categories.
 
 - [Control plane components](#ControlPlane) - Provisioner, API Server, volume exports, and volume sidecars
-- [Data plane components](#DataPlane) - Jiva and cStor
+- [Data plane components](#DataPlane) - Jiva , cStor and Local PV
 - [Node disk manager](#NDM) - Discover, monitor, and manage the media attached to the Kubernetes node
 - [Integrations with cloud-native tools](#CNTools)  - Integrations are done with Prometheus, Grafana, Fluentd, and Jaeger.
 
@@ -61,7 +61,7 @@ Currently, the OpenEBS provisioner supports only one type of binding i.e. iSCSI.
 
 m-apiserver runs as a POD. As the name suggests, m-apiserver exposes the OpenEBS REST APIs. 
 
-m-apiserver is also responsible for creating deployment specification files required for creating the volume pods. After generating these specification files, it invokes kube-apiserver for scheduling the pods accordingly. At the end of volume provisioning by the OpenEBS PV provisioner, a Kubernetes object PV is created and is mounted on the application pod. The PV is hosted by the controller pod which is supported by a set of replica pods in different nodes. The controller pod and replica pods are part of the data plane and are described in more detail in the [Storage Engines](/docs/next/casengines.html) section.
+m-apiserver is also responsible for creating deployment specification files required for creating the volume pods. After generating these specification files, it invokes kube-apiserver for scheduling the pods accordingly. At the end of volume provisioning by the OpenEBS PV provisioner, a Kubernetes object PV is created and is mounted on the application pod. The PV is hosted by the controller pod which is supported by a set of replica pods in different nodes. The controller pod and replica pods are part of the data plane and are described in more detail in the [Storage Engines](/v140/docs/next/casengines.html) section.
 
 Another important task of the m-apiserver is volume policy management. OpenEBS provides very granular specification for expressing policies. m-apiserver interprets these YAML specifications, converts them into enforceable components and enforces them through volume-management sidecars.
 
@@ -98,7 +98,7 @@ The OpenEBS data plane is responsible for the actual volume IO path. A storage e
 
 ### Jiva
 
-Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. Jiva engine is written in GO language and runs in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation for building the storage features such as thin provisioning, snapshotting, rebuilding etc. More details on Jiva architecture are written [here](/docs/next/jiva.html).   
+Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. Jiva engine is written in GO language and runs in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation for building the storage features such as thin provisioning, snapshotting, rebuilding etc. More details on Jiva architecture are written [here](/v140/docs/next/jiva.html).   
 
 ### cStor
 
@@ -114,7 +114,7 @@ For those applications that do not need storage level replication, LocalPV may b
 
 ------
 
-Node Disk Manager (NDM) fills a gap in the chain of tools required for managing persistent storage for stateful applications using Kubernetes. DevOps architects in the container era must serve the infrastructure needs of applications and of application developers in an automated way that delivers resilience and consistency across environments. These requirements mean that the storage stack must itself be extremely flexible so that Kubernetes and other software in the cloud-native ecosystem can easily use this stack. The NDM plays a foundational role in the storage stack for Kubernetes by unifying disparate disks and by providing the capability to pool them in part by identifying them as a Kubernetes object.  Also, NDM discovers, provisions, monitors, and manages the underlying disks in such a way that Kubernetes PV provisioners such as  OpenEBS and other storage systems and Prometheus can manage the disk subsystems. 
+Node Disk Manager (NDM) fills a gap in the chain of tools required for managing persistent storage for stateful applications using Kubernetes. DevOps architects in the container era must serve the infrastructure needs of applications and of application developers in an automated way that delivers resilience and consistency across environments. These requirements mean that the storage stack must itself be extremely flexible so that Kubernetes and other software in the cloud-native ecosystem can easily use this stack. The NDM plays a foundational role in the storage stack for Kubernetes by unifying disparate disks and by providing the capability to pool them in part by identifying them as a Kubernetes object.  Also, NDM discovers, provisions, monitors, and manages the underlying disks in such a way that Kubernetes PV provisioner such as  OpenEBS and other storage systems and Prometheus can manage the disk subsystems. 
 
 <br>
 
@@ -134,7 +134,7 @@ Prometheus is installed as a micro service by the OpenEBS operator during the in
 
 ### WeaveScope
 
-Node Disk Manager components, volume pods, and other persistent storage structures of Kubernetes have been enabled for WeaveScope integration. With these enhancements, exploration and traversal of these components have become significantly easier.  WeaveScope is a well-regarded cloud-native visualisation solution and is also incorporated in Director Online from MayaData.  
+Node Disk Manager components, volume pods, and other persistent storage structures of Kubernetes have been enabled for WeaveScope integration. With these enhancements, exploration and traversal of these components have become significantly easier.  WeaveScope is a well-regarded cloud-native visualization solution and is also incorporated in Director Online from MayaData.  
 
 
 
@@ -142,7 +142,7 @@ Node Disk Manager components, volume pods, and other persistent storage structur
 
 ## See Also:
 
-### [Understanding NDM](/docs/next/ndm.html)
+### [Understanding NDM](/v140/docs/next/ndm.html)
 
 
 <br>
