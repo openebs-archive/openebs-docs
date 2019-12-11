@@ -571,8 +571,7 @@ Download the values.yaml from [here](https://github.com/helm/charts/blob/master/
 | `apiserver.imageTag`                         | Docker Image Tag for API Server              | `1.5.0`                                            |
 | `apiserver.replicas`                         | Number of API Server Replicas                | `1`                                                |
 | `apiserver.sparse.enabled`                   | Create Sparse Pool based on Sparsefile       | `false`                                            |
-| `provisioner.enabled	`                      | Enable Provisioner                           | `true`
-           |
+| `provisioner.enabled	`                      | Enable Provisioner                           | `true`                                              |
 | `provisioner.image`                          | Docker Image for Provisioner                 | `quay.io/openebs/openebs-k8s-provisioner`          |
 | `provisioner.imageTag`                       | Docker Image Tag for Provisioner             | `1.5.0`                                            |
 | `provisioner.replicas`                       | Number of Provisioner Replicas               | `1`                                                |
@@ -598,8 +597,7 @@ Download the values.yaml from [here](https://github.com/helm/charts/blob/master/
 | `ndm.sparse.count`                           | Number of sparse files to be created         | `0`                                                |
 | `ndm.filters.excludeVendors`                 | Exclude devices with specified vendor        | `CLOUDBYT,OpenEBS`                                 |
 | `ndm.filters.excludePaths`                   | Exclude devices with specified path patterns | `loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md` |
-| `ndm.filters.includePaths`                   | Include devices with specified path patterns | ""
-           |
+| `ndm.filters.includePaths`                   | Include devices with specified path patterns | " "                                               |
 | `ndm.probes.enableSeachest`                  | Enable Seachest probe for NDM                | `false`                                            |
 | `ndmOperator.enabled`                        | Enable NDM Operator                          | `true`                                             |
 | `ndmOperator.image`                          | Image for NDM Operator                       | `quay.io/openebs/node-disk-operator-amd64`         |
