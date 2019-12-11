@@ -591,6 +591,7 @@ Below table lists the storage policies supported by Jiva. These policies can be 
 | [TargetResourceRequests](#TargetResourceRequests)            |           | Decided by Kubernetes scheduler   | Configuring resource requests that need to be available before scheduling the containers. |
 | [AuxResourceLimits](#AuxResourceLimits-Policy)               |           | Decided by Kubernetes scheduler   | configuring resource limits on the target pod.               |
 | [AuxResourceRequests](#AuxResourceRequests-Policy)           |           | Decided by Kubernetes scheduler   | Configure minimum requests like ephemeral storage to avoid erroneous eviction by K8s. |
+| [ReplicaResourceRequests](#ReplicaResourceRequests-Policy)       |           | Decided by Kubernetes scheduler   | Configuring resource requests that need to be available to the Replica.     |
 | [ReplicaResourceLimits](#ReplicaResourceLimits-Policy)       |           | Decided by Kubernetes scheduler   | Allow you to specify resource limits for the Replica.        |
 | [Target Affinity](#Target-Affinity-Policy)                   |           | Decided by Kubernetes scheduler   | The policy specifies the label `key: value` pair to be used both on the Jiva target and on the application being used so that application pod and Jiva target pod are scheduled on the same node. |
 | [OpenEBS Namespace Policy for Jiva Pods](#deploy-in-openEBS-namespace) |           | false                             | Jiva Pod will be deployed in PVC name space by default. With the value as `true`, Jiva Pods will run in OpenEBS namespace. |
@@ -856,8 +857,7 @@ metadata:
       - name: TargetResourceLimits
         value: |-
             memory: 1Gi
-            cpu: 200m
-            ephemeral-storage: "100Mi"            
+            cpu: 200m          
     openebs.io/cas-type: jiva
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -874,8 +874,8 @@ metadata:
     cas.openebs.io/config: |
       - name: AuxResourceLimits
         value: |-
-            memory: 0.5Gi
-            cpu: 50m
+            memory: 1Gi
+            cpu: 100m
     openebs.io/cas-type: jiva
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -892,9 +892,28 @@ metadata:
     cas.openebs.io/config: |
       - name: AuxResourceRequests
         value: |-
-            memory: 1Gi
-            cpu: 100m
+            memory: 0.5Gi
+            cpu: 50m
             ephemeral-storage: "50Mi"            
+    openebs.io/cas-type: jiva
+provisioner: openebs.io/provisioner-iscsi
+```
+
+<h4><a class="anchor" aria-hidden="true" id="ReplicaResourceRequests-Policy"></a>ReplicaResourceRequests Policy</h4>
+
+You can specify the *ReplicaResourceRequests* to requests the resource requirements of replica pod by specifying memory, CPU and ephemeral-storage values.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cas.openebs.io/config: |
+      - name: ReplicaResourceRequests
+        value: |-
+            memory: 1Gi
+            cpu: 200m
+            ephemeral-storage: "100Mi"
     openebs.io/cas-type: jiva
 provisioner: openebs.io/provisioner-iscsi
 ```
