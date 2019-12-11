@@ -323,7 +323,7 @@ The following are the step by step procedure for taking backup and restore of ap
 
 <h4><a class="anchor" aria-hidden="true" id="install-velero"></a>Install Velero (Formerly known as ARK)</h3>
 
-Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.0.0/>) to install and configure Velero and follow [restic integration documentation](https://velero.io/docs/v1.0.0/restic/) for setting up and usage of restic support.
+Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.1.0/>) to install and configure Velero and follow [restic integration documentation](https://velero.io/docs/v1.1.0/restic/) for setting up and usage of restic support.
 
 While installing Velero plugin in your cluster,  specify `--use-restic` to enable restic support. 
 
