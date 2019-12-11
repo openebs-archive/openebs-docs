@@ -353,18 +353,18 @@ This issue is fixed in 0.8.1 version.
 | cStor pool creation and initial use with either stripe mode or RAIDZ0 (mirror) mode | 0.8.0             |
 | Adding a new cStorPool instance to the existing cstor-pool-config(SPC) | 0.8.1             |
 | Ephemeral disk/pool support for rebuilding                   | 0.8.1             |
-| Expanding a given pool replica (add disks to a pool after it is created) (Alpha version)  | 1.2.0          |
+| Expanding a given pool replica (add disks to a pool after it is created) (Alpha)  | 1.2.0          |
 | Support for RAIDZ1 in cStorPool                              | 1.1.0           |
 | Support for RAIDZ2 in cStorPool                              | 1.1.0           |
-| Deleting a pool replica (Alpha version)                      | 1.2.0           |
-| Disk replacement in a given cStor pool instance              | Not scheduled yet  |  
+| Deleting a pool replica (Alpha)                      | 1.2.0           |
+| Disk replacement in a given cStor pool instance created using CSPC way(Alpha)                | 1.5.0           |  
 |       |
 | <font size="5">cStor volume features</font>                  |                   |
 | Expanding the size of a cStor volume using CSI provisioner (Alpha)       | 1.2.0         |
 | CSI driver support(Alpha)                                  | 1.1.0          |
 | Snapshot and Clone of cStor volume provisoned via CSI provisioner(Alpha) | 1.4.0         |
-| Scaling up of cStor Volume Replica (Alpha)           | 1.3.0           |
-| Scaling down of cStor Volume Replica(Alpha)          | 1.4.0           |
+| Scaling up of cStor Volume Replica            | 1.3.0           |
+| Scaling down of cStor Volume Replica          | 1.4.0           |
 
 
 

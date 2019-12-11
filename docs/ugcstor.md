@@ -25,12 +25,12 @@ This user guide section provides the operations need to performed by the User an
 
 [Upgrading the software version of a cStor volume](#Upgrading-the-software-version-of-a-cStor-volume)
 
-
 [Provisioning sample application with cStor](#Provisioning-sample-application-with-cstor)
 
 [Deleting a cStor Volume](#deleting-a-cStor-volume)
 
 [Patching pool deployment by adding or modifying resource limit and requests](#patching-pool-deployment-resource-limit)
+
 
 
 
@@ -59,6 +59,8 @@ This user guide section provides the operations need to performed by the User an
 [Expanding the cStor Volume Capacity](#expanding-size-of-a-cStor-volume)
 
 [Scaling up cStor Volume Replica](#scaling-up-of-cvr)
+
+[Scaling down cStor Volume Replica](#scaling-down-of-cstor-volume-replica)
 
 
 
@@ -1091,11 +1093,11 @@ Below table lists the storage policies supported by cStor. These policies should
 | cStor Storage Policy                                         | Mandatory | Default                                 | Purpose                                                      |
 | ------------------------------------------------------------ | --------- | --------------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                       | Defines the number of cStor volume replicas                  |
-| [VolumeControllerImage](#Volume-Controller-Image-Policy)     |           | quay.io/openebs/cstor-volume-mgmt:1.4.0 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
-| [VolumeTargetImage](#Volume-Target-Image-Policy)             |           | value:quay.io/openebs/cstor-istgt:1.4.0 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeControllerImage](#Volume-Controller-Image-Policy)     |           | quay.io/openebs/cstor-volume-mgmt:1.5.0 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
+| [VolumeTargetImage](#Volume-Target-Image-Policy)             |           | value:quay.io/openebs/cstor-istgt:1.5.0 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
 | [StoragePoolClaim](#Storage-Pool-Claim-Policy)               | Yes       | N/A (a valid pool must be provided)     | The cStorPool on which the volume replicas should be provisioned |
 | [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                      | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.4.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.5.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [FSType](#Volume-File-System-Type-Policy)                    |           | ext4                                    | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [TargetNodeSelector](#Target-NodeSelector-Policy)            |           | Decided by Kubernetes scheduler         | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
 | [TargetResourceLimits](#Target-ResourceLimits-Policy)        |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
@@ -1136,7 +1138,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeControllerImage
-        value: quay.io/openebs/cstor-volume-mgmt:1.4.0
+        value: quay.io/openebs/cstor-volume-mgmt:1.5.0
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1152,7 +1154,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeTargetImage
-        value:quay.io/openebs/cstor-istgt:1.4.0
+        value:quay.io/openebs/cstor-istgt:1.5.0
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1200,7 +1202,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:1.4.0
+        value: quay.io/openebs/m-exporter:1.5.0
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -2174,6 +2176,229 @@ This section provide the steps for scaling up the replica of a cStor volume.
     </div>
     
     In the above snippet, `Consistency Factor` and `Replication Factor` is automatically updated and new replica is added under `Known Replicas` field.
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="scaling-down-of-cstor-volume-replica"></a>Scaling down cStor Volume Replica</h3>
+
+
+This section prvoide the steps for scaling down the replica of a cStor volume.
+
+<h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-scale-down"></a>Prerequisites</h4>
+
+- All the othe cStor volume replicas(CVR) should be in `Healthy` state except the cStor volume replica that is going to deleted(i.e deleting CVR can be in any state).
+
+- There shouldn't be any ongoing scaleup process. Verify that `replicationFactor` should be equal to the `desiredReplicationFactor` from corresponding cStor volume CR specification. 
+
+**Notes to remember:**
+
+- Scaling down one replica at a time is recommended. This means, only one replica at a time should be removed.
+
+<h4><a class="anchor" aria-hidden="true" id="Overview-scale-down"></a>Overview</h4>
+
+- Get the details of corresponding cStor volume.
+- Identify the replica of the cStor volume which needs to be removed.
+- Modify the cStor volume specification with required change.
+- Verify that the identified volume replica is removed successfully.
+- Delete the CVR corresponding to the replicaID entry which was removed from cStor volume.
+
+<h4><a class="anchor" aria-hidden="true" id="steps-cstor-scale-down"></a>Steps to perform scaling down of cStor volume replica</h4>
+
+1. Perform the following command to get the details of PVC:
+   ```
+   kubectl get pvc
+   ```
+
+   Example output:
+
+   <div class="co">
+   NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS            AGE
+   demo-csivol-claim   Bound    pvc-723283b6-02bc-11ea-a139-42010a8000b2   5Gi        RWO            openebs-csi-cstor-disk   66m
+   </div>
+  
+   From the above output, get `VOLUME` name and use in the following command to get the details of corresponding cStor volume. All commands are peformed by considering above PVC. 
+  
+   ```
+   kubectl get cstorvolume -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
+   ```
+  
+   Example output:
+  
+   <div class="co">
+   NAME                                       STATUS    AGE    CAPACITY
+   pvc-ed6e893a-051d-11ea-a786-42010a8001c9   Healthy   8m9s   500Gi
+   </div>
+  
+   Perform the following command to get the details of the replicas of corresponding cStor volume:
+   
+   ```
+   kubectl get cvr -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
+   ```
+  
+   Example output:
+  
+   <div class="co">
+   NAME                                                            USED    ALLOCATED   STATUS       AGE
+   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw   37.5M   2.57M       Healthy      8m16s
+   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-eav6   37.4M   2.57M       Healthy      8m16s
+   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-zcn7   37.4M   2.58M       Healthy      8m16s
+   </div>
+  
+2. Identify the cStor volume replica from above output which needs to be removed. Then, perform the following command to get the `replicaid` of the corresponding cStor volume replica. In this example, identified cStor volume replica is `pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw`. 
+  
+   ```
+   kubectl get cvr pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw -n openebs -oyaml | grep -i replicaid
+   ```
+  
+   Example snippet:
+  
+   <div class="co">
+     replicaid: 4858867E8F150C533A2CF30A5D5FD8C6
+   </div>
+    
+   From the above output, `replicaid` of the identified cStor volume replica is `4858867E8F150C533A2CF30A5D5FD8C6`.
+   
+3. Modify the corresponding cStor volume specification to remove the identified cStor volume replica and update the `desiredReplicationFactor`. The cStor volume can be edited by using the following command:
+
+   ```
+   kubectl edit cstorvolume pvc-ed6e893a-051d-11ea-a786-42010a8001c9 -n openebs
+   ```
+  
+   The following are the items need to be updated if you are scaling down the replica count from 3 to 2.
+   
+   In the below snippet, `desiredReplicationFactor` is updated to `2` from `3` and removed the `replicaid` entry of the identified volume replica `4858867E8F150C533A2CF30A5D5FD8C6` from `spec.replicaDetails.knownReplicas`. 
+  
+   Example snippet:
+  
+   <div class="co">
+   spec:
+     capacity: 500Gi
+     consistencyFactor: 2
+     desiredReplicationFactor: 2
+     iqn: iqn.2016-09.com.openebs.cstor:pvc-ed6e893a-051d-11ea-a786-42010a8001c9
+     nodeBase: iqn.2016-09.com.openebs.cstor
+     replicaDetails:
+       knownReplicas:
+         2E93FCD50CFA2A0502BE29FF397FA661: "8687568470394952308"
+         6E1C5FD9EC9C084234C440873D256E93: "7318762175148076215"
+     replicationFactor: 3
+     status: Init
+     targetIP: 10.0.70.44
+     targetPort: "3260"
+     targetPortal: 10.0.70.44:3260
+   status:
+     capacity: 500Gi
+     lastTransitionTime: "2019-11-12T07:32:38Z"
+     lastUpdateTime: "2019-11-12T07:48:08Z"
+     phase: Healthy
+     replicaDetails:
+       knownReplicas:
+         2E93FCD50CFA2A0502BE29FF397FA661: "8687568470394952308"
+         6E1C5FD9EC9C084234C440873D256E93: "7318762175148076215"
+         4858867E8F150C533A2CF30A5D5FD8C6: "3588528959973203834"    
+   </div>
+  
+4. Verify that the identified replica has been removed from the cStor volume. The following section can be checked to verify the updated details and removal event messages of the cStor volume.
+   
+   Removal event message can be checked by describe the corresponding cStor volume using the following command:
+   
+   ```
+   kubectl describe cstorvolume pvc-ed6e893a-051d-11ea-a786-42010a8001c9 -n openebs
+   ```
+   
+   Example snippet of output:
+   
+   <div class="co">
+   Normal   Healthy     18m                pvc-ed6e893a-051d-11ea-a786-42010a8001c9-target-58d76bdbd-95hdh, gke-ranjith-scaledown-default-pool-0dece219-jt3d  Volume is in Healthy state
+   Warning  FailUpdate  92s (x4 over 22m)  pvc-ed6e893a-051d-11ea-a786-42010a8001c9-target-58d76bdbd-95hdh, gke-ranjith-scaledown-default-pool-0dece219-jt3d  Ignoring changes on volume pvc-ed6e893a-051d-11ea-a786-42010a8001c9
+   Normal   Updated     92s                pvc-ed6e893a-051d-11ea-a786-42010a8001c9-target-58d76bdbd-95hdh, gke-ranjith-scaledown-default-pool-0dece219-jt3d  Successfully updated the desiredReplicationFactor to 2
+   </div>
+  
+   Verify the updated details of cStor volume using the following command:
+  
+   ```
+   kubectl get cstorvolume pvc-ed6e893a-051d-11ea-a786-42010a8001c9 -n openebs -oyaml
+   ```
+  
+   Example snippet of output:
+  
+   <div class="co">
+   spec:
+     capacity: 500Gi
+     consistencyFactor: 2
+     desiredReplicationFactor: 2
+     iqn: iqn.2016-09.com.openebs.cstor:pvc-ed6e893a-051d-11ea-a786-42010a8001c9
+     nodeBase: iqn.2016-09.com.openebs.cstor
+     replicaDetails:
+       knownReplicas:
+         2E93FCD50CFA2A0502BE29FF397FA661: "8687568470394952308"
+         6E1C5FD9EC9C084234C440873D256E93: "7318762175148076215"
+     replicationFactor: 2
+     status: Init
+     targetIP: 10.0.70.44
+     targetPort: "3260"
+     targetPortal: 10.0.70.44:3260
+   status:
+     capacity: 500Gi
+     lastTransitionTime: "2019-11-12T07:32:38Z"
+     lastUpdateTime: "2019-11-12T07:49:38Z"
+     phase: Healthy
+     replicaDetails:
+       knownReplicas:
+         2E93FCD50CFA2A0502BE29FF397FA661: "8687568470394952308"
+         6E1C5FD9EC9C084234C440873D256E93: "7318762175148076215"
+     replicaStatuses:
+   </div>
+  
+   From the output, the following values are auto updated:
+   
+   - replicationFactor : It is updated to 2.
+   
+   - status.replicaDetails.knownReplicas :  The `replicaid` entry of identified CVR is removed.
+   
+   The status of CVRs corresponding to the cStor volume can be obtained by running the following command:
+  
+   ```
+   kubectl get cvr -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
+   ```
+  
+   Example output:
+  
+   <div class="co">
+   NAME                                                            USED    ALLOCATED   STATUS    AGE
+   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw   58.6M   2.81M       Offline   22m
+   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-eav6   59.5M   2.81M       Healthy   22m
+   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-zcn7   59.5M   2.81M       Healthy   22m
+   </div>
+
+   From above output, identified CVR status is changed to `Offline`. 
+
+5. Delete the identified CVR which was removed from cStor volume using the following command:
+  
+   ```
+   kubectl delete cvr pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw -n openebs
+   ```
+   
+   Example output:
+  
+   <div class="co">
+   cstorvolumereplica.openebs.io "pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw" deleted
+   </div> 
+  
+   Get the latest CVR details of corresponding cStor volume using the following command:
+  
+   ```
+   kubectl get cvr -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
+   ```
+  
+   Example output:
+   
+   <div class="co">
+   NAME                                                            USED    ALLOCATED   STATUS    AGE
+   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-eav6   61.8M   2.84M       Healthy   23m
+   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-zcn7   61.9M   2.84M       Healthy   23m
+   </div>
+
 <br>
 
 ## See Also:
