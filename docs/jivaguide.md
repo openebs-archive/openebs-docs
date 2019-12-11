@@ -576,11 +576,11 @@ Below table lists the storage policies supported by Jiva. These policies can be 
 | JIVA STORAGE POLICY                                          | MANDATORY | DEFAULT                           | PURPOSE                                                      |
 | ------------------------------------------------------------ | --------- | --------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                 | Defines the number of Jiva volume replicas                   |
-| [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.4.0 | To use particular Jiva replica image                         |
-| [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/jiva:1.4.0         | To use particular Jiva Controller Image                      |
+| [Replica Image](#Replica-Image-Policy)                       |           | quay.io/openebs/m-apiserver:1.5.0 | To use particular Jiva replica image                         |
+| [ControllerImage](#Controller-Image-Policy)                  |           | quay.io/openebs/jiva:1.5.0         | To use particular Jiva Controller Image                      |
 | [StoragePool](#Storage-Pool-Policy)                          | Yes       | default                           | A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on host OS or externally mounted disk. |
 | [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.4.0  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.5.0  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [Volume FSType](#Volume-File-System-Type-Policy)             |           | ext4                              | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)         |           | false                             | It will specify whether data need to be retained post PVC deletion. |
 | [TargetNodeSelector](#Targe-NodeSelector-Policy)             |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva target pod on the nodes that match label. |
@@ -625,7 +625,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ReplicaImage
-        value: quay.io/openebs/m-apiserver:1.4.0
+        value: quay.io/openebs/m-apiserver:1.5.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
@@ -642,7 +642,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: quay.io/openebs/jiva:1.4.0
+        value: quay.io/openebs/jiva:1.5.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
@@ -731,7 +731,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:1.4.0
+        value: quay.io/openebs/m-exporter:1.5.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
@@ -835,7 +835,10 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: TargetResourceRequests
-        value: "none"
+        value: |-
+            memory: 1Gi
+            cpu: 200m
+            ephemeral-storage: "100Mi"
     openebs.io/cas-type: jiva
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -854,6 +857,7 @@ metadata:
         value: |-
             memory: 1Gi
             cpu: 200m
+            ephemeral-storage: "100Mi"            
     openebs.io/cas-type: jiva
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -887,7 +891,10 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: AuxResourceRequests
-        value: "none"
+        value: |-
+            memory: 1Gi
+            cpu: 100m
+            ephemeral-storage: "50Mi"            
     openebs.io/cas-type: jiva
 provisioner: openebs.io/provisioner-iscsi
 ```
