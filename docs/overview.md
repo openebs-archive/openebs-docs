@@ -29,13 +29,13 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 - Default installation works in most  of the cases. As a Kubernetes cluster-admin, start the default installation using either
 
   ```
-  helm install --namespace openebs --name openebs stable/openebs --version 1.4.0
+  helm install --namespace openebs --name openebs stable/openebs --version 1.5.0
   ```
 
   (or)
 
   ```
-  kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.4.0.yaml
+  kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.5.0.yaml
   ```
 
   For advanced installation steps, see [Installation](/docs/next/installation.html) section.

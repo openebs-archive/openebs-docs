@@ -17,7 +17,9 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 [Expand a cStor volume created using CSI provisioner](#expand-cstor-volume-created-using-csi-provisioner)
 
-[Scaling down cStor Volume Replica](#scaling-down-of-cstor-volume-replica)
+[Snapshot and Clone a cStor volume created using CSI provisioner](#snapshot-clone-cstor-volume-created-using-csi-provisioner)
+
+[Provisioning cStor pool using CSPC operator](#provision-cstor-pool-using-cspc-operator)
 
 
 
@@ -32,9 +34,8 @@ The [Container Storage Interface](https://github.com/container-storage-interface
 <h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-csi"></a>Prerequisites</h4>
 
 - Kubernetes version 1.14 or higher is installed.
-- Recommended OpenEBS Version is 1.4. 
-- The steps to install OpenEBS is [here](/docs/next/quickstart.html).
 - iSCSI initiator utils to be installed on all the worker nodes.
+- Recommended OpenEBS Version is 1.4 or above . The steps to install OpenEBS is [here](/docs/next/quickstart.html).
 - You have access to install RBAC components into `kube-system` namespace. The OpenEBS CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
 - You need to enable the feature gates `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` on `kubelet` in each worker node.
 - You need to enable the feature gates `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` on `kube-apiserver` in the master node.
@@ -67,43 +68,42 @@ Depending on the OS, select the appropriate deployment file.
   kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/csi-operator-ubuntu-18.04.yaml
   ```
 
-- Verify that the OpenEBS CSI Components are installed.
+Verify that the OpenEBS CSI Components are installed.
 
-  ```
-  kubectl get pods -n kube-system
-  ```
+```
+kubectl get pods -n kube-system
+```
 
-  Example output:
+Example output:
 
-  <div class="co">
-  NAME                                                        READY   STATUS    RESTARTS   AGE
-  event-exporter-v0.2.5-7df89f4b8f-ml8qz                      2/2     Running   0          35m
-  fluentd-gcp-scaler-54ccb89d5-jk4gs                          1/1     Running   0          35m
-  fluentd-gcp-v3.1.1-56976                                    2/2     Running   0          35m
-  fluentd-gcp-v3.1.1-jvqxn                                    2/2     Running   0          35m
-  fluentd-gcp-v3.1.1-kwvsx                                    2/2     Running   0          35m
-  heapster-7966498b57-w4mrs                                   3/3     Running   0          35m
-  kube-dns-5877696fb4-jftrh                                   4/4     Running   0          35m
-  kube-dns-5877696fb4-s6dgg                                   4/4     Running   0          35m
-  kube-dns-autoscaler-85f8bdb54-m584t                         1/1     Running   0          35m
-  kube-proxy-gke-ranjith-csi-default-pool-a9a13f27-6qv1       1/1     Running   0          35m
-  kube-proxy-gke-ranjith-csi-default-pool-a9a13f27-cftl       1/1     Running   0          35m
-  kube-proxy-gke-ranjith-csi-default-pool-a9a13f27-q5ws       1/1     Running   0          35m
-  l7-default-backend-8f479dd9-zxbtf                           1/1     Running   0          35m
-  metrics-server-v0.3.1-8d4c5db46-fw66z                       2/2     Running   0          35m
-  openebs-cstor-csi-controller-0                              6/6     Running   0          77s
-  openebs-cstor-csi-node-hflmf                                2/2     Running   0          73s
-  openebs-cstor-csi-node-mdgqq                                2/2     Running   0          73s
-  openebs-cstor-csi-node-rwshl                                2/2     Running   0          73s
-  prometheus-to-sd-5b68q                                      1/1     Running   0          35m
-  prometheus-to-sd-c5bwl                                      1/1     Running   0          35m
-  prometheus-to-sd-s7fdv                                      1/1     Running   0          35m
-  stackdriver-metadata-agent-cluster-level-8468cc67d8-p864w   1/1     Running   0          35m
+<div class="co">
+NAME                                                        READY   STATUS    RESTARTS   AGE
+event-exporter-v0.2.5-7df89f4b8f-ml8qz                      2/2     Running   0          35m
+fluentd-gcp-scaler-54ccb89d5-jk4gs                          1/1     Running   0          35m
+fluentd-gcp-v3.1.1-56976                                    2/2     Running   0          35m
+fluentd-gcp-v3.1.1-jvqxn                                    2/2     Running   0          35m
+fluentd-gcp-v3.1.1-kwvsx                                    2/2     Running   0          35m
+heapster-7966498b57-w4mrs                                   3/3     Running   0          35m
+kube-dns-5877696fb4-jftrh                                   4/4     Running   0          35m
+kube-dns-5877696fb4-s6dgg                                   4/4     Running   0          35m
+kube-dns-autoscaler-85f8bdb54-m584t                         1/1     Running   0          35m
+kube-proxy-gke-ranjith-csi-default-pool-a9a13f27-6qv1       1/1     Running   0          35m
+kube-proxy-gke-ranjith-csi-default-pool-a9a13f27-cftl       1/1     Running   0          35m
+kube-proxy-gke-ranjith-csi-default-pool-a9a13f27-q5ws       1/1     Running   0          35m
+l7-default-backend-8f479dd9-zxbtf                           1/1     Running   0          35m
+metrics-server-v0.3.1-8d4c5db46-fw66z                       2/2     Running   0          35m
+openebs-cstor-csi-controller-0                              6/6     Running   0          77s
+openebs-cstor-csi-node-hflmf                                2/2     Running   0          73s
+openebs-cstor-csi-node-mdgqq                                2/2     Running   0          73s
+openebs-cstor-csi-node-rwshl                                2/2     Running   0          73s
+prometheus-to-sd-5b68q                                      1/1     Running   0          35m
+prometheus-to-sd-c5bwl                                      1/1     Running   0          35m
+prometheus-to-sd-s7fdv                                      1/1     Running   0          35m
+stackdriver-metadata-agent-cluster-level-8468cc67d8-p864w   1/1     Running   0          35m
 </div>
   
-  From above output, `openebs-cstor-csi-controller-0`  is running and `openebs-cstor-csi-node-hflmf` , `openebs-cstor-csi-node-mdgqq ` and `openebs-cstor-csi-node-rwshl ` running in each worker node.
-  
-  
+From above output, `openebs-cstor-csi-controller-0`  is running and `openebs-cstor-csi-node-hflmf` , `openebs-cstor-csi-node-mdgqq ` and `openebs-cstor-csi-node-rwshl ` running in each worker node.
+    
 
 <h4><a class="anchor" aria-hidden="true" id="provision-a-cStor-Pool-Cluster-csi"></a>Provision a cStor Pool Cluster</h4>
 
@@ -152,12 +152,12 @@ spec:
 
 Edit the following parameters in the sample CSPC YAML:
 
-**blockDeviceName**:- Provide the block devices name to be used for provisioning cStor pool. All the block devices must be on the same node. 
+- **blockDeviceName**:- Provide the block devices name to be used for provisioning cStor pool. Each storage pool will be created on one single node using the blockedvices attached to the node.
 
-**kubernetes.io/hostname**: Provide the hostname where the cStor pool will be created using the set of block devices.
+- **kubernetes.io/hostname**: Provide the hostname where the cStor pool will be created using the set of block devices.
 
 
-The above sample YAML creates a cStor pool on the corresponding node with provided block devicse. If you need to create multiple cStor pools in the cluster, get the YAML from [here](https://raw.githubusercontent.com/sonasingh46/artifacts/master/day2ops/cspc/cspc-stripe.yaml).
+The above sample YAML creates a cStor pool in `striped` manner  using the provided block device on the corresponding node. If you need to create multiple cStor pools in the cluster with different raid technologies, go to provisioning [CSPC cluster creation](#provision-cstor-pool-using-cspc-operator) section.
 
 In this example, the above YAML is modified and saved as `cspc.yaml`. Apply the modified CSPC YAML spec using the following command to create a cStor Pool Cluster:
 
@@ -369,227 +369,447 @@ The following section will give the steps to expand a cStor volume which is crea
 
 4. Check the size is reflected on the application pod where the above volume is mounted.
     
-    
-<h3><a class="anchor" aria-hidden="true" id="scaling-down-of-cstor-volume-replica"></a>Scaling down cStor Volume Replica</h3>
 
+<h3><a class="anchor" aria-hidden="true" id="snapshot-clone-cstor-volume-created-using-csi-provisioner"></a>Snapshot and Clone a cStor volume created using CSI provisioner</h3>
 
-This section prvoide the steps for scaling down the replica of a cStor volume.
-
-<h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-scale-down"></a>Prerequisites</h4>
-
-- All the othe cStor volume replicas(CVR) should be in `Healthy` state except the cStor volume replica that is going to deleted(i.e deleting CVR can be in any state).
-
-- There shouldn't be any ongoing scaleup process. Verify that `replicationFactor` should be equal to the `desiredReplicationFactor` from corresponding cStor volume CR specification. 
+The following section will give the steps to take snapshot and clone of a cStor volume which is created using CSI provisioner. 
 
 **Notes to remember:**
 
-- Scaling down one replica at a time is recommended. This means, only one replica at a time should be removed.
+- You will need to enable `VolumeSnapshotDataSource` feature gates on `kubelets` and `kube-apiserver`. Other general prerequisites related to cStor volume via CSI provosioner can be found from [here](#prerequisites-cstor-csi). 
+- Supported OpenEBS Version is 1.5
 
-<h4><a class="anchor" aria-hidden="true" id="Overview-scale-down"></a>Overview</h4>
+**Steps to perform the snapshot and clone of a cStor volume:**
 
-- Get the details of corresponding cStor volume.
-- Identify the replica of the cStor volume which needs to be removed.
-- Modify the cStor volume specification with required change.
-- Verify that the identified volume replica is removed successfully.
-- Delete the CVR corresponding to the replicaID entry which was removed from cStor volume.
-
-<h4><a class="anchor" aria-hidden="true" id="steps-cstor-scale-down"></a>Steps to perform scaling down of cStor volume replica</h4>
-
-1. Perform the following command to get the details of PVC:
+1. Get the details of PVC and PV of the CSI based cStor volume using the following  command:
+   
+   PVC:
    ```
    kubectl get pvc
    ```
-
    Example output:
-
-   <div class="co">
-   NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS            AGE
-   demo-csivol-claim   Bound    pvc-723283b6-02bc-11ea-a139-42010a8000b2   5Gi        RWO            openebs-csi-cstor-disk   66m
-   </div>
-  
-   From the above output, get `VOLUME` name and use in the following command to get the details of corresponding cStor volume. All commands are peformed by considering above PVC. 
-  
    ```
-   kubectl get cstorvolume -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
+   NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS             AGE
+   demo-csivol-claim   Bound    pvc-c4868664-1a84-11ea-a1ad-42010aa00fd2   5Gi        RWO            openebs-csi-cstor-disk   8m39s
    ```
-  
+   PV:
+   ```
+   kubectl get pv
+   ```
    Example output:
-  
-   <div class="co">
-   NAME                                       STATUS    AGE    CAPACITY
-   pvc-ed6e893a-051d-11ea-a786-42010a8001c9   Healthy   8m9s   500Gi
-   </div>
-  
-   Perform the following command to get the details of the replicas of corresponding cStor volume:
-   
    ```
-   kubectl get cvr -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
+   NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                         STORAGECLASS             REASON   AGE
+   pvc-c4868664-1a84-11ea-a1ad-42010aa00fd2   5Gi        RWO            Delete           Bound    default/demo-csivol-claim   openebs-    csi-cstor-disk            22s
    ```
-  
+2. Create a snapshot class pointing to cStor CSI driver. The following command will create a snapshot class poiting to cStor CSI driver:
+   ```
+   kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/snapshot-class.yaml
+   ```
+   Verify if snapshot class is created successfully using the following command:
+   ```
+   kubectl get volumesnapshotclass
+   ```
    Example output:
-  
-   <div class="co">
-   NAME                                                            USED    ALLOCATED   STATUS       AGE
-   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw   37.5M   2.57M       Healthy      8m16s
-   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-eav6   37.4M   2.57M       Healthy      8m16s
-   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-zcn7   37.4M   2.58M       Healthy      8m16s
-   </div>
-  
-2. Identify the cStor volume replica from above output which needs to be removed. Then, perform the following command to get the `replicaid` of the corresponding cStor volume replica. In this example, identified cStor volume replica is `pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw`. 
-  
    ```
-   kubectl get cvr pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw -n openebs -oyaml | grep -i replicaid
+   NAME                      AGE
+   csi-cstor-snapshotclass   94s
    ```
-  
-   Example snippet:
-  
-   <div class="co">
-     replicaid: 4858867E8F150C533A2CF30A5D5FD8C6
-   </div>
-    
-   From the above output, `replicaid` of the identified cStor volume replica is `4858867E8F150C533A2CF30A5D5FD8C6`.
+3. Get the YAML for snapshot creation of a PVC using the following command:
+   ```
+   wget https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/snapshot.yaml
+   ```
+   In this example, downlaoded file is saved as `snapshot.yaml`.
+4. Edit the snapshot.yaml which is created in previous step to update:
    
-3. Modify the corresponding cStor volume specification to remove the identified cStor volume replica and update the `desiredReplicationFactor`. The cStor volume can be edited by using the following command:
+   metedata.name :- Name of the snapshot
+   
+   spec.snapshotClassName :- Names of the snapshotClass poiting to cStor CSI driver which you can get from step 2.
+   
+   spec.source.name :- Source PVC which you are going to take the snapshot.
+
+5. Apply the modified snapshot YAML using the following command:
+   ```
+   kubectl apply -f snapshot.yaml
+   ```
+   Verify that if the snapshot has been created successfully using the following command:
+   ```
+   kubectl get volumesnapshots.snapshot
+   ```
+   Example output:
+   ```
+   NAME            AGE
+   demo-snapshot   16s
+   ```
+   The output shows that snapshot of the source PVC is created successfully.
+   
+6. Now, let's create the clone volume of the snapshot. Get the PVC YAML spec for creating the clone volume from the given snapshot.
+   ```
+   wget https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/pvc-clone.yaml
+   ```
+   The downlaoded file is saved as `pvc-clone.yaml`.
+
+7. Edit the downloaded clone PVC YAML spec to update:
+   
+   - metadata.name :- Name of the clone PVC.
+   - spec.storageClassName :- Same StorageClass used to create the source PVC.
+   - spec.dataSource.name :- Name of the snapshot.
+   - spec.resources.requests.storage :- The size of the volume being cloned or restored. This should be same as source PVC.
+
+8. Run the following command with the modified clone PVC YAML to create a cloned PVC.
 
    ```
-   kubectl edit cstorvolume pvc-ed6e893a-051d-11ea-a786-42010a8001c9 -n openebs
-   ```
-  
-   The following are the items need to be updated if you are scaling down the replica count from 3 to 2.
-   
-   In the below snippet, `desiredReplicationFactor` is updated to `2` from `3` and removed the `replicaid` entry of the identified volume replica `4858867E8F150C533A2CF30A5D5FD8C6` from `spec.replicaDetails.knownReplicas`. 
-  
-   Example snippet:
-  
-   <div class="co">
-   spec:
-     capacity: 500Gi
-     consistencyFactor: 2
-     desiredReplicationFactor: 2
-     iqn: iqn.2016-09.com.openebs.cstor:pvc-ed6e893a-051d-11ea-a786-42010a8001c9
-     nodeBase: iqn.2016-09.com.openebs.cstor
-     replicaDetails:
-       knownReplicas:
-         2E93FCD50CFA2A0502BE29FF397FA661: "8687568470394952308"
-         6E1C5FD9EC9C084234C440873D256E93: "7318762175148076215"
-     replicationFactor: 3
-     status: Init
-     targetIP: 10.0.70.44
-     targetPort: "3260"
-     targetPortal: 10.0.70.44:3260
-   status:
-     capacity: 500Gi
-     lastTransitionTime: "2019-11-12T07:32:38Z"
-     lastUpdateTime: "2019-11-12T07:48:08Z"
-     phase: Healthy
-     replicaDetails:
-       knownReplicas:
-         2E93FCD50CFA2A0502BE29FF397FA661: "8687568470394952308"
-         6E1C5FD9EC9C084234C440873D256E93: "7318762175148076215"
-         4858867E8F150C533A2CF30A5D5FD8C6: "3588528959973203834"    
-   </div>
-  
-4. Verify that the identified replica has been removed from the cStor volume. The following section can be checked to verify the updated details and removal event messages of the cStor volume.
-   
-   Removal event message can be checked by describe the corresponding cStor volume using the following command:
-   
-   ```
-   kubectl describe cstorvolume pvc-ed6e893a-051d-11ea-a786-42010a8001c9 -n openebs
+   kubectl apply -f pvc-clone.yaml
    ```
    
-   Example snippet of output:
+9. Verify the status of new cloned PVC and PV using the following command:
    
-   <div class="co">
-   Normal   Healthy     18m                pvc-ed6e893a-051d-11ea-a786-42010a8001c9-target-58d76bdbd-95hdh, gke-ranjith-scaledown-default-pool-0dece219-jt3d  Volume is in Healthy state
-   Warning  FailUpdate  92s (x4 over 22m)  pvc-ed6e893a-051d-11ea-a786-42010a8001c9-target-58d76bdbd-95hdh, gke-ranjith-scaledown-default-pool-0dece219-jt3d  Ignoring changes on volume pvc-ed6e893a-051d-11ea-a786-42010a8001c9
-   Normal   Updated     92s                pvc-ed6e893a-051d-11ea-a786-42010a8001c9-target-58d76bdbd-95hdh, gke-ranjith-scaledown-default-pool-0dece219-jt3d  Successfully updated the desiredReplicationFactor to 2
-   </div>
-  
-   Verify the updated details of cStor volume using the following command:
-  
+   PVC:  
    ```
-   kubectl get cstorvolume pvc-ed6e893a-051d-11ea-a786-42010a8001c9 -n openebs -oyaml
+   kubectl get pvc
    ```
-  
-   Example snippet of output:
-  
-   <div class="co">
-   spec:
-     capacity: 500Gi
-     consistencyFactor: 2
-     desiredReplicationFactor: 2
-     iqn: iqn.2016-09.com.openebs.cstor:pvc-ed6e893a-051d-11ea-a786-42010a8001c9
-     nodeBase: iqn.2016-09.com.openebs.cstor
-     replicaDetails:
-       knownReplicas:
-         2E93FCD50CFA2A0502BE29FF397FA661: "8687568470394952308"
-         6E1C5FD9EC9C084234C440873D256E93: "7318762175148076215"
-     replicationFactor: 2
-     status: Init
-     targetIP: 10.0.70.44
-     targetPort: "3260"
-     targetPortal: 10.0.70.44:3260
-   status:
-     capacity: 500Gi
-     lastTransitionTime: "2019-11-12T07:32:38Z"
-     lastUpdateTime: "2019-11-12T07:49:38Z"
-     phase: Healthy
-     replicaDetails:
-       knownReplicas:
-         2E93FCD50CFA2A0502BE29FF397FA661: "8687568470394952308"
-         6E1C5FD9EC9C084234C440873D256E93: "7318762175148076215"
-     replicaStatuses:
-   </div>
-  
-   From the output, the following values are auto updated:
-   
-   - replicationFactor : It is updated to 2.
-   
-   - status.replicaDetails.knownReplicas :  The `replicaid` entry of identified CVR is removed.
-   
-   The status of CVRs corresponding to the cStor volume can be obtained by running the following command:
-  
-   ```
-   kubectl get cvr -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
-   ```
-  
    Example output:
-  
-   <div class="co">
-   NAME                                                            USED    ALLOCATED   STATUS    AGE
-   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw   58.6M   2.81M       Offline   22m
-   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-eav6   59.5M   2.81M       Healthy   22m
-   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-zcn7   59.5M   2.81M       Healthy   22m
-   </div>
-
-   From above output, identified CVR status is changed to `Offline`. 
-
-5. Delete the identified CVR which was removed from cStor volume using the following command:
-  
    ```
-   kubectl delete cvr pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw -n openebs
+   NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS             AGE
+   demo-csivol-claim   Bound    pvc-c4868664-1a84-11ea-a1ad-42010aa00fd2   5Gi        RWO            openebs-csi-cstor-disk   18m
+   pvc-clone           Bound    pvc-43340dc6-1a87-11ea-a1ad-42010aa00fd2   5Gi        RWO            openebs-csi-cstor-disk   16s
    ```
-   
+   PV:
+   ```
+   kubectl get pv
+   ```
    Example output:
-  
-   <div class="co">
-   cstorvolumereplica.openebs.io "pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw" deleted
-   </div> 
-  
-   Get the latest CVR details of corresponding cStor volume using the following command:
-  
    ```
-   kubectl get cvr -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
+   NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                       STORAGECLASS             REASON   AGE
+   pvc-43340dc6-1a87-11ea-a1ad-42010aa00fd2   5Gi        RWO            Delete           Bound    default/pvc-clone           openebs-csi-cstor-disk            17s
+   pvc-c4868664-1a84-11ea-a1ad-42010aa00fd2   5Gi        RWO            Delete           Bound    default/demo-csivol-claim   openebs-csi-cstor-disk            9m43s
    ```
-  
-   Example output:
-   
-   <div class="co">
-   NAME                                                            USED    ALLOCATED   STATUS    AGE
-   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-eav6   61.8M   2.84M       Healthy   23m
-   pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-zcn7   61.9M   2.84M       Healthy   23m
-   </div>
+10. Now this cloned volume can be used in Application to get the snapshot data.  
 
+
+<h3><a class="anchor" aria-hidden="true" id="provision-cstor-pool-using-cspc-operator"></a>Provisioning cStor pool using CSPC operator</h3>
+
+CSPC is a new schema for cStor pool provisioning and also refactors the code to make the cStor a completely pluggable engine into OpenEBS. The new schema also makes it easy to perform day 2 operations on cStor pools. The following are the new terms related to CSPC:
+
+- CStorPoolcluster(CSPC)
+- CStorPoolInstance(CSPI) 
+- cspc-operator
+
+**Note:** Volume provisioning on CSPC provisioned pools will be supported only via CSI.
+
+The current workflow to provision CSPC pool is as follows:
+
+1. OpenEBS should be installed. Recommended OpenEBS version is 1.4 or above.
+2. Install CSPC operator using YAML.
+3. Identify the available blockdevice which are `Unclaimed`and `Active`.
+4. Apply the CSPC pool YAML spec by filling required fields.
+5. Verify the CSPC pool details
+
+<h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc"></a>Install OpenEBS</h4>
+
+Latest OpenEBS version can be installed using the following command:
+
+```
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.5.0.yaml
+```
+
+Verify if OpenEBS pods are in `Running` state using the following command:
+```
+kubectl get pod -n openebs
+```
+Example output:
+```
+NAME                                          READY   STATUS    RESTARTS   AGE
+maya-apiserver-77f9cc9f9b-jg825               1/1     Running   3          90s
+openebs-admission-server-8c5b8565-d2q58       1/1     Running   0          79s
+openebs-localpv-provisioner-f458bc8c4-bjmkq   1/1     Running   0          78s
+openebs-ndm-lz4n6                             1/1     Running   0          80s
+openebs-ndm-operator-7d7c9d966d-bqlnj         1/1     Running   1          79s
+openebs-ndm-spm7f                             1/1     Running   0          80s
+openebs-ndm-tm8ff                             1/1     Running   0          80s
+openebs-provisioner-5fbd8fc74c-6zcnq          1/1     Running   0          82s
+openebs-snapshot-operator-7d6dd4b77f-444zh    2/2     Running   0          81s
+```
+
+<h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc-operator"></a>Install CSPC Operator</h4>
+
+Install CSPC operator by using the following command:
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/cspc-operator.yaml
+```
+Verify if CSPC operator is in `Running` state using the following command:
+```
+kubectl get pod -n openebs -l name=cspc-operator
+```
+Example output:
+```
+NAME                            READY   STATUS    RESTARTS   AGE
+cspc-operator-c4dc96bb9-zvfws   1/1     Running   0          115s
+```
+
+<h4><a class="anchor" aria-hidden="true" id="identify-bd-for-cspc"></a>Identify the blockdevice</h4>
+
+Get the details of all blockdevice attached in the cluster using the following command. Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not conatin any filesystem. These are the candidiate for CSPC pool creation which need to use in next step.
+
+```
+kubectl get bd -n openebs
+```
+Example output:
+```
+NAME                                           NODENAME                                      SIZE          CLAIMSTATE   STATUS   AGE
+blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   gke-ranjith-cspc-default-pool-f7a78720-zr1t   42949672960   Unclaimed    Active   7h43m
+blockdevice-2594fa672b07f200f299f59cad340326   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Unclaimed    Active   40s
+blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-cspc-default-pool-f7a78720-k1cr   42949672960   Unclaimed    Active   7h43m
+blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Unclaimed    Active   7h44m
+```
+
+In the above example, two blockdevices are attached to one node and one disk is attached to other two nodes.
+
+<h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc-operator"></a>Apply the CSPC pool YAML</h4>
+
+Create a CSPC pool YAML spec to provision CSPC pools using the sample template provided below.
+
+```
+apiVersion: openebs.io/v1alpha1
+kind: CStorPoolCluster
+metadata:
+  name: <CSPC_name>
+  namespace: openebs
+spec:
+  pools:
+  - nodeSelector:
+      kubernetes.io/hostname: "<Node_name>"
+    raidGroups:
+    - type: "<RAID_type>"
+      isWriteCache: false
+      isSpare: false
+      isReadCache: false
+      blockDevices:
+      - blockDeviceName: "<blockdevice_name>"
+    poolConfig:
+      cacheFile: ""
+      defaultRaidGroupType: "<<RAID_type>>"
+      overProvisioning: false
+      compression: "off"
+```
+ The following are the details of parameters used for the CSPC pool creation.
+ 
+ - CSPC_name :- Name of CSPC cluster
+ - Node_name :- Name of node where pool is going to create using the available blockdevice on the node.
+ - RAID_type :- RAID configuration used for pool creation. Supported RAID types are `stripe`, `mirror`, `raidz` and `raidz2`. If `spec.pools.raidGroups.type` is specified, then `spec.pools.poolConfig.defaultRaidGroupType` will not consider for the particular raid groups. 
+ - blockdevice_name :- Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not conatin any filesystem.
+ 
+This is a sample CSPC template YAMl configuration which will provision a cStor pool using CSPC opeartor. The following describe the pool details of one node. If there are multiple pool to be created on different nodes, add below configuration for each node.
+
+```
+  - nodeSelector:
+      kubernetes.io/hostname: "<Node1_name>"
+    raidGroups:
+    - type: "<RAID_type>"
+      isWriteCache: false
+      isSpare: false
+      isReadCache: false
+      blockDevices:
+      - blockDeviceName: "<blockdevice_name>"
+    poolConfig:
+      cacheFile: ""
+      defaultRaidGroupType: "<<RAID_type>>"
+      overProvisioning: false
+      compression: "off"
+```
+
+The following are some of the sample CSPC configuration YAML spec:
+
+- **Striped**- One striped pool on each node using blockdevice attached to the node. In below example, one node has 2 blockdevice and other two nodes having one disk each.
+  
+  ```
+  apiVersion: openebs.io/v1alpha1
+  kind: CStorPoolCluster
+  metadata:
+    name: cstor-pool-stripe
+    namespace: openebs
+  spec:
+    pools:
+    - nodeSelector:
+        kubernetes.io/hostname: "gke-ranjith-cspc-default-pool-f7a78720-9436"
+      raidGroups:
+      - type: "stripe"
+        isWriteCache: false
+        isSpare: false
+        isReadCache: false
+        blockDevices:
+        - blockDeviceName: "blockdevice-936911c5c9b0218ed59e64009cc83c8f"
+        - blockDeviceName: "blockdevice-2594fa672b07f200f299f59cad340326"
+    poolConfig:
+        cacheFile: ""
+        defaultRaidGroupType: "stripe"
+        overProvisioning: false
+        compression: "off"
+    - nodeSelector:
+        kubernetes.io/hostname: "gke-ranjith-cspc-default-pool-f7a78720-k1cr"
+      raidGroups:
+      - type: "stripe"
+        isWriteCache: false
+        isSpare: false
+        isReadCache: false
+        blockDevices:
+        - blockDeviceName: "blockdevice-77f834edba45b03318d9de5b79af0734"
+      poolConfig:
+        cacheFile: ""
+        defaultRaidGroupType: "stripe"
+        overProvisioning: false
+        compression: "off"
+    - nodeSelector:
+        kubernetes.io/hostname: "gke-ranjith-cspc-default-pool-f7a78720-zr1t"
+      raidGroups:
+      - type: "stripe"
+        isWriteCache: false
+        isSpare: false
+        isReadCache: false
+        blockDevices:
+        - blockDeviceName: "blockdevice-1c10eb1bb14c94f02a00373f2fa09b93"
+      poolConfig:
+        cacheFile: ""
+        defaultRaidGroupType: "stripe"
+        overProvisioning: false
+        compression: "off"
+  ```
+
+- **Mirror**- One mirror pool on one nodes using 2 disk attached to the node.
+
+  ```
+  apiVersion: openebs.io/v1alpha1
+  kind: CStorPoolCluster
+  metadata:
+    name: cstor-pool-stripe
+    namespace: openebs
+  spec:
+    pools:
+    - nodeSelector:
+        kubernetes.io/hostname: "gke-ranjith-cspc-default-pool-f7a78720-9436"
+      raidGroups:
+      - type: "mirror"
+        isWriteCache: false
+        isSpare: false
+        isReadCache: false
+        blockDevices:
+        - blockDeviceName: "blockdevice-936911c5c9b0218ed59e64009cc83c8f"
+        - blockDeviceName: "blockdevice-78f6be57b9eca9c08a2e18e8f894df30"
+    poolConfig:
+        cacheFile: ""
+        defaultRaidGroupType: "mirror"
+        overProvisioning: false
+        compression: "off"
+  ```
+
+- **RAIDZ**- Single parity raid configuration with 3 blockdevice attached to a node.
+
+  ```
+  apiVersion: openebs.io/v1alpha1
+  kind: CStorPoolCluster
+  metadata:
+    name: cstor-pool-stripe
+    namespace: openebs
+  spec:
+    pools:
+    - nodeSelector:
+        kubernetes.io/hostname: "gke-ranjith-cspc-default-pool-f7a78720-9436"
+      raidGroups:
+      - type: "raidz"
+        isWriteCache: false
+        isSpare: false
+        isReadCache: false
+        blockDevices:
+        - blockDeviceName: "blockdevice-936911c5c9b0218ed59e64009cc83c8f"
+        - blockDeviceName: "blockdevice-78f6be57b9eca9c08a2e18e8f894df30"
+      - blockDeviceName: "blockdevice-77f834edba45b03318d9de5b79af0734"
+    poolConfig:
+        cacheFile: ""
+        defaultRaidGroupType: "raidz"
+        overProvisioning: false
+        compression: "off"
+  ```
+  
+- **RAIDZ2**- Dual parity raid configuration with 6 blockdevice attached to a node.  
+  ```
+  apiVersion: openebs.io/v1alpha1
+  kind: CStorPoolCluster
+  metadata:
+    name: cstor-pool-stripe
+    namespace: openebs
+  spec:
+    pools:
+    - nodeSelector:
+        kubernetes.io/hostname: "gke-ranjith-cspc-default-pool-f7a78720-9436"
+      raidGroups:
+      - type: "raidz2"
+        isWriteCache: false
+        isSpare: false
+        isReadCache: false
+        blockDevices:
+        - blockDeviceName: "blockdevice-936911c5c9b0218ed59e64009cc83c8f"
+        - blockDeviceName: "blockdevice-78f6be57b9eca9c08a2e18e8f894df30"
+        - blockDeviceName: "blockdevice-77f834edba45b03318d9de5b79af0734"
+        - blockDeviceName: "blockdevice-2594fa672b07f200f299f59cad340326"
+        - blockDeviceName: "blockdevice-cbd2dc4f3ff3f463509b695173b6064b"
+        - blockDeviceName: "blockdevice-1c10eb1bb14c94f02a00373f2fa09b93"
+    poolConfig:
+        cacheFile: ""
+        defaultRaidGroupType: "raidz2"
+        overProvisioning: false
+        compression: "off"	  
+  ```
+
+<h4><a class="anchor" aria-hidden="true" id="verify-cspc-pool-details"></a>Verify CSPC Pool Details</h4>
+
+Verify if the pool is in `Running` state by checking the status of cspc, cspi and pod running in `openebs` namespace. 
+
+The following command will get the details of CSPC status:
+```
+kubectl get cspc -n openebs
+```
+Example output:
+```
+NAME                AGE
+cstor-pool-stripe   18s
+```
+The following command will get the details of CSPI status:
+```
+kubectl get cspi -n openebs
+```
+Example output:
+```
+NAME                     HOSTNAME                                      ALLOCATED   FREE    CAPACITY   STATUS   AGE
+cstor-pool-stripe-cfsm   gke-ranjith-cspc-default-pool-f7a78720-zr1t   69.5K       39.7G   39.8G      ONLINE   87s
+cstor-pool-stripe-mnbh   gke-ranjith-cspc-default-pool-f7a78720-k1cr   69.5K       39.7G   39.8G      ONLINE   87s
+cstor-pool-stripe-sxpr   gke-ranjith-cspc-default-pool-f7a78720-9436   69.5K       79.5G   79.5G      ONLINE   87s
+```
+The following command will get the details of CSPC pool pod status:
+```
+kubectl get pod -n openebs | grep -i <CSPC_name>
+```
+Example command:
+```
+kubectl get pod -n openebs | grep -i cstor-pool-stripe
+```
+Example output:
+```
+cstor-pool-stripe-cfsm-b947988c7-sdtjz        3/3     Running   0          25s
+cstor-pool-stripe-mnbh-74cb58df69-tpkm6       3/3     Running   0          25s
+cstor-pool-stripe-sxpr-59c5f46fd6-jz4n4       3/3     Running   0          25s
+```
+
+Also verify all the given blockdevices are used correctly by checking the `CLAIMSTATE`.
+```
+kubectl get bd -n openebs
+```
+Example output:
+```
+NAME                                           NODENAME                                      SIZE          CLAIMSTATE   STATUS   AGE
+blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   gke-ranjith-cspc-default-pool-f7a78720-zr1t   42949672960   Claimed      Active   7h47m
+blockdevice-2594fa672b07f200f299f59cad340326   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Claimed      Active   4m24s
+blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-cspc-default-pool-f7a78720-k1cr   42949672960   Claimed      Active   7h47m
+blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Claimed      Active   7h47m
+```
 <br>
 
 ## See Also:

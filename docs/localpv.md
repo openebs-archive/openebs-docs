@@ -55,7 +55,9 @@ volumeBindingMode: WaitForFirstConsumer
 
 When a PVC is created using the above StorageClass, OpenEBS Local PV Provisioner uses NDM operator to  claim a matching BlockDevice from the worker node where the application pod is scheduled. 
 
-Kubelet will format the block device with the filesystem specified in the StorageClass and then provision the Local PV.  Currently supported filesystems are `ext4` and `xfs`. If no `FSType` is specified, by default Kubelet will format the BlockDevice as `ext4` .
+The Local PV volume will be provisioned with `volumeMode` as `filesystem` by default. Kubelet will format the block device with the filesystem specified as `FSType` under `cas.openebs.io/config` to the path `metadata.annotations` in the StorageClass and then provision the Local PV.  Currently supported filesystems are `ext4` and `xfs`. If no `FSType` is specified, by default Kubelet will format the BlockDevice as `ext4`.
+
+From OpenEBS 1.5, Local PV volume has Raw Block Volume support. The Raw Block Volume support can be added to the path `spec.volumeMode` as `Block` in the Persistent Volume spec. The sample YAML spec of PVC to provision Local PV on Raw Block volume can be found [here](/docs/next/uglocalpv.html#Provision-OpenEBS-Local-PV-based-on-Device).
 
 For provisioning Local PV using the BlockDevice attached to the nodes, the BlockDevice should be in one of the following states:
 
