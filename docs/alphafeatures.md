@@ -157,7 +157,7 @@ Edit the following parameters in the sample CSPC YAML:
 - **kubernetes.io/hostname**: Provide the hostname where the cStor pool will be created using the set of block devices.
 
 
-The above sample YAML creates a cStor pool on the corresponding node with provided block devicse. If you need to create multiple cStor pools in the cluster with different raid technologies, go to provisioning [CSPC cluster creation](#provision-cstor-pool-using-cspc-operator) section.
+The above sample YAML creates a cStor pool in `striped` manner  using the provided block device on the corresponding node. If you need to create multiple cStor pools in the cluster with different raid technologies, go to provisioning [CSPC cluster creation](#provision-cstor-pool-using-cspc-operator) section.
 
 In this example, the above YAML is modified and saved as `cspc.yaml`. Apply the modified CSPC YAML spec using the following command to create a cStor Pool Cluster:
 
