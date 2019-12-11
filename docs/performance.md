@@ -9,7 +9,7 @@ sidebar_label: Performance testing
 
 **Setup cStorPool and StorageClass**
 
-Choose the appropriate disks (SSDs or SAS or Cloud disks) and [create pool](/docs/next/ugcstor.html#creating-cStor-storage-pools)  and [create StorageClass](/docs/next/ugcstor.html#creating-cStor-storage-class).  There are some performance tunings available and this configuration can be added in the corresponding StorageClass before provisioning the volume. The tunings are available in the [StorageClass](/docs/next/ugcstor.html#setting-performance-tunings) section. 
+Choose the appropriate disks (SSDs or SAS or Cloud disks) and [create pool](/v140/docs/next/ugcstor.html#creating-cStor-storage-pools)  and [create StorageClass](/v140/docs/next/ugcstor.html#creating-cStor-storage-class).  There are some performance tunings available and this configuration can be added in the corresponding StorageClass before provisioning the volume. The tunings are available in the [StorageClass](/v140/docs/next/ugcstor.html#setting-performance-tunings) section. 
 
 For performance testing, performance numbers vary based on the following factors.
 
@@ -24,15 +24,15 @@ The steps for running FIO based Storage benchmarking and viewing the results are
 
 <font size="6">Support for Performance tuning </font>
 
-Support for performance tuning for specific workloads can be obtained through the premium plan on DirectorOnline. Connect your cluster to <a href="https://director.mayadata.io" target="_blank">DirectorOnline</a>, start the cluster on evaluation plan and seek support for performance tuning. 
+Support for performance tuning for specific workloads can be obtained through the premium plan on Director Online. Connect your cluster to <a href="https://director.mayadata.io" target="_blank">Director Online</a>, start the cluster on evaluation plan and seek support for performance tuning. 
 
 <br>
 
 ## See Also:
 
-### [Connecting to DirectorOnline](/docs/next/directoronline.html)
+### [Connecting to Director Online](/v140/docs/next/directoronline.html)
 
-### [Seeking help](/docs/next/support.html)
+### [Seeking help](/v140/docs/next/support.html)
 
 <br>
 

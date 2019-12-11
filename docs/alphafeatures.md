@@ -24,16 +24,14 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 <h3><a class="anchor" aria-hidden="true" id="running-sample-application-cstor-volume-using-csi-provisioner"></a>Running a sample application on a cStor volume provisioned via CSI provisioner</h3>
 
-
 The [Container Storage Interface](https://github.com/container-storage-interface/spec/blob/master/spec.md) (CSI) is a standard for exposing arbitrary block and file storage systems to containerized workloads on Container Orchestration Systems(COs)  like Kubernetes combined with different storage vendors. This means, implementing a single CSI for a storage vendor is guaranteed to work with all COs. OpenEBS cStor volume can be now provisioned with CSI driver from OpenEBS 1.2 version onwards. This feature is under active development and considered to be in Alpha state. 
 
 **Note:** The current implementation only supports provisioning, de-provisioning, expansion and snapshot and clone of cStor Volumes .
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-csi"></a>Prerequisites</h4>
-
 - Kubernetes version 1.14 or higher is installed.
 - Recommended OpenEBS Version is 1.4. 
-- The steps to install OpenEBS is [here](/docs/next/quickstart.html).
+- The steps to install OpenEBS is [here](/v140/docs/next/quickstart.html).
 - iSCSI initiator utils to be installed on all the worker nodes.
 - You have access to install RBAC components into `kube-system` namespace. The OpenEBS CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
 - You need to enable the feature gates `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` on `kubelet` in each worker node.
@@ -48,7 +46,6 @@ The [Container Storage Interface](https://github.com/container-storage-interface
 - Run your application on cStor volume provisioned via CSI Provisioner
 
 <h4><a class="anchor" aria-hidden="true" id="install-OpenEBS-csi-driver"></a>Install OpenEBS CSI Driver</h4>
-
 The node components make use of the host iSCSI binaries for iSCSI connection management. Depending on the OS, the csi-operator will have to be modified to load the required iSCSI files into the node pods.
 
 OpenEBS CSI driver components can be installed by running the following command:
@@ -106,7 +103,6 @@ Depending on the OS, select the appropriate deployment file.
   
 
 <h4><a class="anchor" aria-hidden="true" id="provision-a-cStor-Pool-Cluster-csi"></a>Provision a cStor Pool Cluster</h4>
-
 Apply CSPC operator YAML file using the following command:
 
 ```
@@ -193,7 +189,6 @@ Example output:
 
 
 <h4><a class="anchor" aria-hidden="true" id="create-a-cStor-sc-for-csi-driver"></a>Create a cStor StorageClass with cStor CSI provisioner</h4>
-
 Create a Storage Class to dynamically provision volumes using cStor CSI provisioner. You can save the following sample StorageClass YAML spec as `cstor-csi-sc.yaml`.
 
 ```
@@ -240,7 +235,6 @@ The StorageClass `openebs-csi-cstor-disk` is created successfully.
 
 
 <h4><a class="anchor" aria-hidden="true" id="run-application-on-a-cStor-volume-by-specifying-sc"></a>Run your application on cStor volume provisioned via CSI Provisioner</h4>
-
 Run your application by specifying the above created StorageClass for creating the PVC. Sample application YAML can be downloaded using the following command:
 
 ```
@@ -306,7 +300,6 @@ Sat Nov  9 06:59:27 UTC 2019
 
 <h3><a class="anchor" aria-hidden="true" id="expand-cstor-volume-created-using-csi-provisioner"></a>Expand a cStor volume created using CSI provisioner</h3>
 
-
 The following section will give the steps to expand a cStor volume which is created using CSI provisioner. 
 
 **Notes to remember:**
@@ -314,7 +307,7 @@ The following section will give the steps to expand a cStor volume which is crea
 - Only dynamically provisioned cStor volumes can be resized.
 - You can only expand cStor volumes containing a file system if the file system is ext3 or ext4.
 - Ensure that the corresponding StorageClass has the `allowVolumeExpansion` field set to `true` when the volume is provisioned.
-- You will need to enable `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` feature gates on `kubelets` and `kube-apiserver`. Other general prerequisites related to cStor volume via CSI provosioner can be found from [here](#prerequisites-cstor-csi). 
+- You will need to enable `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` feature gates on `kubelets` and `kube-apiserver`. Other general prerequisites related to cStor volume via CSI provisioner can be found from [here](#prerequisites-cstor-csi). 
 
 **Steps to perform the cStor volume expansion:**
 
@@ -354,7 +347,7 @@ The following section will give the steps to expand a cStor volume which is crea
    
    In the above snippet, `storage` is modified to 9Gi from 5Gi. 
    
-3. Wait for the updated capacity to reflect in PVC status (pvc.status.capacity.storage). Perform the following command to verify the updated size of the PVC:
+3. Wait for the updated capacity to reflect in PVC status (`pvc.status.capacity.storage`). Perform the following command to verify the updated size of the PVC:
 
    ```
    kubectl get pvc
@@ -368,16 +361,14 @@ The following section will give the steps to expand a cStor volume which is crea
     </div>
 
 4. Check the size is reflected on the application pod where the above volume is mounted.
-    
+  
     
 <h3><a class="anchor" aria-hidden="true" id="scaling-down-of-cstor-volume-replica"></a>Scaling down cStor Volume Replica</h3>
 
-
-This section prvoide the steps for scaling down the replica of a cStor volume.
+This section provide the steps for scaling down the replica of a cStor volume.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-scale-down"></a>Prerequisites</h4>
-
-- All the othe cStor volume replicas(CVR) should be in `Healthy` state except the cStor volume replica that is going to deleted(i.e deleting CVR can be in any state).
+- All the ther cStor volume replicas(CVR) should be in `Healthy` state except the cStor volume replica that is going to deleted(i.e deleting CVR can be in any state).
 
 - There shouldn't be any ongoing scaleup process. Verify that `replicationFactor` should be equal to the `desiredReplicationFactor` from corresponding cStor volume CR specification. 
 
@@ -386,15 +377,13 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
 - Scaling down one replica at a time is recommended. This means, only one replica at a time should be removed.
 
 <h4><a class="anchor" aria-hidden="true" id="Overview-scale-down"></a>Overview</h4>
-
 - Get the details of corresponding cStor volume.
 - Identify the replica of the cStor volume which needs to be removed.
 - Modify the cStor volume specification with required change.
 - Verify that the identified volume replica is removed successfully.
-- Delete the CVR corresponding to the replicaID entry which was removed from cStor volume.
+- Delete the CVR corresponding to the `replicaID` entry which was removed from cStor volume.
 
 <h4><a class="anchor" aria-hidden="true" id="steps-cstor-scale-down"></a>Steps to perform scaling down of cStor volume replica</h4>
-
 1. Perform the following command to get the details of PVC:
    ```
    kubectl get pvc
@@ -407,7 +396,7 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
    demo-csivol-claim   Bound    pvc-723283b6-02bc-11ea-a139-42010a8000b2   5Gi        RWO            openebs-csi-cstor-disk   66m
    </div>
   
-   From the above output, get `VOLUME` name and use in the following command to get the details of corresponding cStor volume. All commands are peformed by considering above PVC. 
+   From the above output, get `VOLUME` name and use in the following command to get the details of corresponding cStor volume. All commands are performed by considering above PVC. 
   
    ```
    kubectl get cstorvolume -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
@@ -446,7 +435,7 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
    <div class="co">
      replicaid: 4858867E8F150C533A2CF30A5D5FD8C6
    </div>
-    
+   
    From the above output, `replicaid` of the identified cStor volume replica is `4858867E8F150C533A2CF30A5D5FD8C6`.
    
 3. Modify the corresponding cStor volume specification to remove the identified cStor volume replica and update the `desiredReplicationFactor`. The cStor volume can be edited by using the following command:
@@ -490,7 +479,7 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
    </div>
   
 4. Verify that the identified replica has been removed from the cStor volume. The following section can be checked to verify the updated details and removal event messages of the cStor volume.
-   
+  
    Removal event message can be checked by describe the corresponding cStor volume using the following command:
    
    ```
@@ -594,9 +583,9 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
 
 ## See Also:
 
-### [cStor Concepts](/docs/next/cstor.html)
+### [cStor Concepts](/v140/docs/next/cstor.html)
 
-### [cStor User Guide](/docs/next/ugcstor.html)
+### [cStor User Guide](/v140/docs/next/ugcstor.html)
 
 <hr>
 

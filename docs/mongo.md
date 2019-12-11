@@ -10,7 +10,7 @@ sidebar_label: MongoDB
 
 <br>
 
-MongoDB is a cross-platform document-oriented database. Classified as a NoSQL database, MongoDB eschews the traditional table-based relational database structure in favour of JSON-like documents with dynamic schemas, making the integration of data in certain types of applications easier and faster. MongoDB  is deployed usually as a `statefulset` on Kubernetes and requires persistent storage for each instance of MongoDB StorageManager instance. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
+MongoDB is a cross-platform document-oriented database. Classified as a NoSQL database, MongoDB eschews the traditional table-based relational database structure in favour of JSON-like documents with dynamic schemas, making the integration of data in certain types of applications easier and faster. MongoDB  is deployed usually as a `StatefulSet` on Kubernetes and requires persistent storage for each instance of MongoDB StorageManager instance. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
 
 <br>
 
@@ -50,13 +50,13 @@ MongoDB is a cross-platform document-oriented database. Classified as a NoSQL da
 
 1. **Install OpenEBS**
 
-   If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
+   If OpenEBS is not installed in your K8s cluster, this can done from [here](/v140/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
 2. **Connect to Director Online (Optional)** : Connecting the Kubernetes cluster to <a href="https://director.mayadata.io" target="_blank">Director Online</a> provides good visibility of storage resources. Director Online has various **support options for enterprise customers**.
 
 3. **Configure cStor Pool**
 
-   After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools).  During cStor Pool creation, make sure that the maxPools parameter is set to >=3. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. If cStor pool is already configured, go to the next step. 
+   After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/v140/docs/next/ugcstor.html#creating-cStor-storage-pools).  During cStor Pool creation, make sure that the maxPools parameter is set to >=3. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. If cStor pool is already configured, go to the next step. 
 
 4. **Create Storage Class**
 
@@ -80,7 +80,7 @@ MongoDB is a cross-platform document-oriented database. Classified as a NoSQL da
 
 A live deployment of MongoDB using OpenEBS volumes can be seen at the website [www.openebs.ci](https://openebs.ci/)
 
-Deployment YAML spec files for MongoDB and OpenEBS resources are found [here](https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/mongo-cstor/mongo-cstor-mongo.yaml)
+Deployment YAML spec files for MongoDB and OpenEBS resources are found [here](https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/mongo-cstor/mongo-cstor-mongo.yaml).
 
 [OpenEBS-CI dashboard of MongoDB](https://openebs.ci/mongo-cstor)
 
@@ -104,7 +104,7 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just Mongo database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool).
+As in most cases, cStor pool may not be dedicated to just Mongo database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/v140/docs/next/ugcstor.html#monitor-pool).
 
 
 
@@ -181,11 +181,11 @@ reclaimPolicy: Delete
 
 <br>
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v140/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v140/docs/next/usecases.html)
 
-### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
+### [cStor pools overview](/v140/docs/next/cstor.html#cstor-pools)
 
 
 
