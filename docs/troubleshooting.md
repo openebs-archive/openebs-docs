@@ -1103,9 +1103,9 @@ Application mount point running on cStor volume went into read only state.
 
 **Troubleshooting**
 
-Check the status of cStor volume using the following command:
+Check the status of corresponding cStor volume using the following command:
 ```
-kubectl get cstorvolume -n <openebs_installed_namespace>
+kubectl get cstorvolume -n <openebs_installed_namespace> -l openebs.io/persistent-volume=<PV_NAME>
 ```
 
 If cStor volume exists in `Healthy` or `Degraded` state then restarting of the application pod alone will bring back cStor volume to `RW` mode. If cStor volume exists in `Offline`, reach out to <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a> for assistance. 
