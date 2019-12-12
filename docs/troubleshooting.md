@@ -1099,18 +1099,16 @@ Application mount point running on cStor volume went into read only state.
 
 **Possible Reason:**
 
- If `cStorVolume` is `offline` for more than 120 seconds(iscsi timeout) then the PV will be mounted as `RO` filesystem. For understanding different state of cStor volume , more details can be found [here](/docs/next/kb.html#verification-of-cStor-storage-volume).
+ If `cStorVolume` is `Offline` or corresponding target pod is unavailable for more than 120 seconds(iscsi timeout) then the PV will be mounted as `RO` filesystem. For understanding different state of cStor volume , more details can be found [here](/docs/next/kb.html#verification-of-cStor-storage-volume).
 
 **Troubleshooting**
 
-- Check the status of cStor volume using the following command:
-  ```
-  kubectl get cstorvolume -n <openebs_installed_namespace>
-  ```
+Check the status of cStor volume using the following command:
+```
+kubectl get cstorvolume -n <openebs_installed_namespace>
+```
 
-**Resolution:**
-
- If cStor volume exists in `Healthy` or `Degraded` state then restarting of the application pod alone will bring back cStor volume to `RW` mode. If cStor volume exists in `Offline`, reach out to <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a> for assistance. 
+If cStor volume exists in `Healthy` or `Degraded` state then restarting of the application pod alone will bring back cStor volume to `RW` mode. If cStor volume exists in `Offline`, reach out to <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a> for assistance. 
 
 <hr>
 
