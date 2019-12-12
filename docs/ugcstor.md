@@ -1051,10 +1051,10 @@ StorageClass definition is an important task in the planning and execution of Op
 
 **Step1:** Decide the cStorPool and get the StoragePoolClaim name associated to it.
 
-**Step2:** Which application uses it? Decide the replicaCount based on it. OpenEBS doesn't restrict on the specific number of replica count to set, but only max up to 5 are allowed. It depends on users how they configure but for the availability of volumes at least  (n/2 + 1) replicas should be up and connected to the target. The following are some example cases:
-- If user configured replica count as 2, then always 2 replicas should be available to perform operations on volume.2.
-- If replica count as 3 it should require at least 2 replicas for volume to be operational. 
-- If replica count as 5 it should require at least 3 replicas for volume to be operational.
+**Step2:** Which application uses it? Decide the replicaCount based on it. OpenEBS doesn't restrict on the specific number of replica count to set, but only max up to 5 are allowed. It depends on users how they configure but for the availability of volumes at least  (n/2 + 1) replicas should be up and connected to the target, where `n` is the `replicaCount`. The following are some example cases:
+- If user configured replica count as 2, then always 2 replicas should be available to perform operations on volume.
+- If replica count as 3 it should require at least 2 replicas should be available for volume to be operational. 
+- If replica count as 5 it should require at least 3 replicas should be available for volume to be operational.
 
 **Step3:** Are there any other storage policies to be applied to the StorageClass? Refer to the [storage policies section](#cstor-storage-policies) for more details on the storage policies applicable for cStor.
 
