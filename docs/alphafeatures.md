@@ -370,16 +370,16 @@ The following section will give the steps to expand a cStor volume which is crea
 4. Check the size is reflected on the application pod where the above volume is mounted.
     
 
-<h3><a class="anchor" aria-hidden="true" id="snapshot-clone-cstor-volume-created-using-csi-provisioner"></a>Snapshot and Clone a cStor volume created using CSI provisioner</h3>
+<h3><a class="anchor" aria-hidden="true" id="snapshot-clone-cstor-volume-created-using-csi-provisioner"></a>Snapshot and Cloning the cStor volume created using CSI provisioner</h3>
 
-The following section will give the steps to take snapshot and clone of a cStor volume which is created using CSI provisioner. 
+The following section will give the steps to take snapshot and clone the cStor volume created using CSI provisioner. 
 
 **Notes to remember:**
 
-- You will need to enable `VolumeSnapshotDataSource` feature gates on `kubelets` and `kube-apiserver`. Other general prerequisites related to cStor volume via CSI provosioner can be found from [here](#prerequisites-cstor-csi). 
+- You will need to enable `VolumeSnapshotDataSource` Feature Gate on `kubelet` and `kube-apiserver`. Other general prerequisites related to cStor volume via CSI provisioner can be found from [here](#prerequisites-cstor-csi). 
 - Supported OpenEBS Version is 1.5
 
-**Steps to perform the snapshot and clone of a cStor volume:**
+**Capture the snapshot and cloning the cStor volume:**
 
 1. Get the details of PVC and PV of the CSI based cStor volume using the following  command:
    
@@ -401,7 +401,7 @@ The following section will give the steps to take snapshot and clone of a cStor 
    NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                         STORAGECLASS             REASON   AGE
    pvc-c4868664-1a84-11ea-a1ad-42010aa00fd2   5Gi        RWO            Delete           Bound    default/demo-csivol-claim   openebs-    csi-cstor-disk            22s
    ```
-2. Create a snapshot class pointing to cStor CSI driver. The following command will create a snapshot class poiting to cStor CSI driver:
+2. Create a snapshot class pointing to cStor CSI driver. The following command will create a snapshot class pointing to cStor CSI driver:
    ```
    kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/snapshot-class.yaml
    ```
@@ -418,20 +418,20 @@ The following section will give the steps to take snapshot and clone of a cStor 
    ```
    wget https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/snapshot.yaml
    ```
-   In this example, downlaoded file is saved as `snapshot.yaml`.
+   In this example, downloaded file is saved as `snapshot.yaml`.
 4. Edit the snapshot.yaml which is created in previous step to update:
    
    metedata.name :- Name of the snapshot
    
-   spec.snapshotClassName :- Names of the snapshotClass poiting to cStor CSI driver which you can get from step 2.
+   spec.snapshotClassName :- Name of the `snapshotClass` poiting to cStor CSI driver which you can get from step 2.
    
-   spec.source.name :- Source PVC which you are going to take the snapshot.
+   spec.source.name :- Source PVC, for which you are going to take the snapshot.
 
 5. Apply the modified snapshot YAML using the following command:
    ```
    kubectl apply -f snapshot.yaml
    ```
-   Verify that if the snapshot has been created successfully using the following command:
+   Verify if the snapshot has been created successfully using the following command:
    ```
    kubectl get volumesnapshots.snapshot
    ```
@@ -442,16 +442,16 @@ The following section will give the steps to take snapshot and clone of a cStor 
    ```
    The output shows that snapshot of the source PVC is created successfully.
    
-6. Now, let's create the clone volume of the snapshot. Get the PVC YAML spec for creating the clone volume from the given snapshot.
+6. Now, let's create clone volume using the above snapshot. Get the PVC YAML spec for creating the clone volume from the given snapshot.
    ```
    wget https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/pvc-clone.yaml
    ```
-   The downlaoded file is saved as `pvc-clone.yaml`.
+   The downloaded file is saved as `pvc-clone.yaml`.
 
 7. Edit the downloaded clone PVC YAML spec to update:
    
    - metadata.name :- Name of the clone PVC.
-   - spec.storageClassName :- Same StorageClass used to create the source PVC.
+   - spec.storageClassName :- Same StorageClass used while creating the source PVC.
    - spec.dataSource.name :- Name of the snapshot.
    - spec.resources.requests.storage :- The size of the volume being cloned or restored. This should be same as source PVC.
 
@@ -483,7 +483,7 @@ The following section will give the steps to take snapshot and clone of a cStor 
    pvc-43340dc6-1a87-11ea-a1ad-42010aa00fd2   5Gi        RWO            Delete           Bound    default/pvc-clone           openebs-csi-cstor-disk            17s
    pvc-c4868664-1a84-11ea-a1ad-42010aa00fd2   5Gi        RWO            Delete           Bound    default/demo-csivol-claim   openebs-csi-cstor-disk            9m43s
    ```
-10. Now this cloned volume can be used in Application to get the snapshot data.  
+10. Now this cloned volume can be mounted in application and access the snapshot data.  
 
 
 <h3><a class="anchor" aria-hidden="true" id="provision-cstor-pool-using-cspc-operator"></a>Provisioning cStor pool using CSPC operator</h3>
