@@ -2186,7 +2186,7 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-scale-down"></a>Prerequisites</h4>
 
-- All the othe cStor volume replicas(CVR) should be in `Healthy` state except the cStor volume replica that is going to deleted(i.e deleting CVR can be in any state).
+- All the other cStor volume replicas(CVR) should be in `Healthy` state except the cStor volume replica that is going to deleted(i.e deleting CVR can be in any state).
 
 - There shouldn't be any ongoing scaleup process. Verify that `replicationFactor` should be equal to the `desiredReplicationFactor` from corresponding cStor volume CR specification. 
 
@@ -2208,15 +2208,8 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
    ```
    kubectl get pvc
    ```
-
-   Example output:
-
-   <div class="co">
-   NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS            AGE
-   demo-csivol-claim   Bound    pvc-723283b6-02bc-11ea-a139-42010a8000b2   5Gi        RWO            openebs-csi-cstor-disk   66m
-   </div>
   
-   From the above output, get `VOLUME` name and use in the following command to get the details of corresponding cStor volume. All commands are peformed by considering above PVC. 
+   From the output of above command, get `VOLUME` name and use in the following command to get the details of corresponding cStor volume. All commands are peformed by considering above PVC. 
   
    ```
    kubectl get cstorvolume -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
