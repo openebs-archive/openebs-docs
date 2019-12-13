@@ -17,7 +17,7 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 [Expand a cStor volume created using CSI provisioner](#expand-cstor-volume-created-using-csi-provisioner)
 
-[Snapshot and Clone a cStor volume created using CSI provisioner](#snapshot-clone-cstor-volume-created-using-csi-provisioner)
+[Snapshot and Cloning the cStor volume created using CSI provisioner](#snapshot-clone-cstor-volume-created-using-csi-provisioner)
 
 [Provisioning cStor pool using CSPC operator](#provision-cstor-pool-using-cspc-operator)
 
@@ -157,7 +157,7 @@ Edit the following parameters in the sample CSPC YAML:
 - **kubernetes.io/hostname**: Provide the hostname where the cStor pool will be created using the set of block devices.
 
 
-The above sample YAML creates a cStor pool in `striped` manner  using the provided block device on the corresponding node. If you need to create multiple cStor pools in the cluster with different raid technologies, go to provisioning [CSPC cluster creation](#provision-cstor-pool-using-cspc-operator) section.
+The above sample YAML creates a cStor pool of `striped` type using the provided block device on the corresponding node. If you need to create multiple cStor pools in the cluster with different RAID types, go to provisioning [CSPC cluster creation](#provision-cstor-pool-using-cspc-operator) section.
 
 In this example, the above YAML is modified and saved as `cspc.yaml`. Apply the modified CSPC YAML spec using the following command to create a cStor Pool Cluster:
 
