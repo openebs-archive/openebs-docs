@@ -201,7 +201,7 @@ Currently, NDM Daemon set runs in the privileged mode. NDM requires privileged m
 
 <h3><a class="anchor" aria-hidden="true" id="openebs-in-openshift-4.2"></a>Does OpenEBS installation support in OpenShift 4.2?</h3>
 
-OpenEBS installation support in OpenShift 4.2 with recommended OpenEBS version 1.5.
+OpenEBS v1.5 installation is supported in OpenShift 4.2.
 
 
 <a href="#top">Go to top</a>
