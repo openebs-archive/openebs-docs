@@ -494,15 +494,15 @@ CSPC is a new schema for cStor pool provisioning and also refactors the code to 
 - CStorPoolInstance(CSPI) 
 - cspc-operator
 
-**Note:** Volume provisioning on CSPC provisioned pools will be supported only via CSI.
+**Note:** Volume provisioning on CSPC pools will be supported only via OpenEBS CSI provisioner.
 
 The current workflow to provision CSPC pool is as follows:
 
-1. OpenEBS should be installed. Recommended OpenEBS version is 1.4 or above.
+1. OpenEBS should be installed. Recommended OpenEBS version is 1.5.
 2. Install CSPC operator using YAML.
-3. Identify the available blockdevice which are `Unclaimed`and `Active`.
+3. Identify the available blockdevices which are `Unclaimed` and `Active`.
 4. Apply the CSPC pool YAML spec by filling required fields.
-5. Verify the CSPC pool details
+5. Verify the CSPC pool details.
 
 <h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc"></a>Install OpenEBS</h4>
 
@@ -546,9 +546,9 @@ NAME                            READY   STATUS    RESTARTS   AGE
 cspc-operator-c4dc96bb9-zvfws   1/1     Running   0          115s
 ```
 
-<h4><a class="anchor" aria-hidden="true" id="identify-bd-for-cspc"></a>Identify the blockdevice</h4>
+<h4><a class="anchor" aria-hidden="true" id="identify-bd-for-cspc"></a>Identify the blockdevices</h4>
 
-Get the details of all blockdevice attached in the cluster using the following command. Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not conatin any filesystem. These are the candidiate for CSPC pool creation which need to use in next step.
+Get the details of all blockdevice attached in the cluster using the following command. Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not contain any filesystem. These are the candidiates for CSPC pool creation which need to be used in next step.
 
 ```
 kubectl get bd -n openebs
@@ -562,7 +562,7 @@ blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-cspc-default-pool-f7a
 blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Unclaimed    Active   7h44m
 ```
 
-In the above example, two blockdevices are attached to one node and one disk is attached to other two nodes.
+In the above example, two blockdevices are attached to one node and one disk each attached to other two nodes.
 
 <h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc-operator"></a>Apply the CSPC pool YAML</h4>
 
@@ -591,14 +591,14 @@ spec:
       overProvisioning: false
       compression: "off"
 ```
- The following are the details of parameters used for the CSPC pool creation.
+Here, we describe the parameters used in above CSPC pool creation template.
  
  - CSPC_name :- Name of CSPC cluster
- - Node_name :- Name of node where pool is going to create using the available blockdevice on the node.
+ - Node_name :- Name of node where pool is to be created using the available blockdevices attached to the node.
  - RAID_type :- RAID configuration used for pool creation. Supported RAID types are `stripe`, `mirror`, `raidz` and `raidz2`. If `spec.pools.raidGroups.type` is specified, then `spec.pools.poolConfig.defaultRaidGroupType` will not consider for the particular raid groups. 
  - blockdevice_name :- Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not conatin any filesystem.
  
-This is a sample CSPC template YAMl configuration which will provision a cStor pool using CSPC opeartor. The following describe the pool details of one node. If there are multiple pool to be created on different nodes, add below configuration for each node.
+This is a sample CSPC template YAMl configuration which will provision a cStor pool using CSPC operator. The following describe the pool details of one node. If there are multiple pools to be created on different nodes, add below configuration for each node.
 
 ```
   - nodeSelector:
@@ -619,7 +619,7 @@ This is a sample CSPC template YAMl configuration which will provision a cStor p
 
 The following are some of the sample CSPC configuration YAML spec:
 
-- **Striped**- One striped pool on each node using blockdevice attached to the node. In below example, one node has 2 blockdevice and other two nodes having one disk each.
+- **Striped**- One striped pool on each node using blockdevice attached to the node. In the below example, one node has 2 blockdevices and other two nodes having one disk each.
   
   ```
   apiVersion: openebs.io/v1alpha1
@@ -674,7 +674,7 @@ The following are some of the sample CSPC configuration YAML spec:
         compression: "off"
   ```
 
-- **Mirror**- One mirror pool on one nodes using 2 disk attached to the node.
+- **Mirror**- One mirror pool on one node using 2 blockdevices.
 
   ```
   apiVersion: openebs.io/v1alpha1
@@ -701,7 +701,7 @@ The following are some of the sample CSPC configuration YAML spec:
         compression: "off"
   ```
 
-- **RAIDZ**- Single parity raid configuration with 3 blockdevice attached to a node.
+- **RAIDZ**- Single parity raid configuration with 3 blockdevices.
 
   ```
   apiVersion: openebs.io/v1alpha1
@@ -721,7 +721,7 @@ The following are some of the sample CSPC configuration YAML spec:
         blockDevices:
         - blockDeviceName: "blockdevice-936911c5c9b0218ed59e64009cc83c8f"
         - blockDeviceName: "blockdevice-78f6be57b9eca9c08a2e18e8f894df30"
-      - blockDeviceName: "blockdevice-77f834edba45b03318d9de5b79af0734"
+        - blockDeviceName: "blockdevice-77f834edba45b03318d9de5b79af0734"
     poolConfig:
         cacheFile: ""
         defaultRaidGroupType: "raidz"
@@ -729,7 +729,7 @@ The following are some of the sample CSPC configuration YAML spec:
         compression: "off"
   ```
   
-- **RAIDZ2**- Dual parity raid configuration with 6 blockdevice attached to a node.  
+- **RAIDZ2**- Dual parity raid configuration with 6 blockdevices.  
   ```
   apiVersion: openebs.io/v1alpha1
   kind: CStorPoolCluster
@@ -761,7 +761,7 @@ The following are some of the sample CSPC configuration YAML spec:
 
 <h4><a class="anchor" aria-hidden="true" id="verify-cspc-pool-details"></a>Verify CSPC Pool Details</h4>
 
-Verify if the pool is in `Running` state by checking the status of cspc, cspi and pod running in `openebs` namespace. 
+Verify if the pool is in `Running` state by checking the status of CSPC, CSPI and pod running in `openebs` namespace. 
 
 The following command will get the details of CSPC status:
 ```
@@ -798,7 +798,7 @@ cstor-pool-stripe-mnbh-74cb58df69-tpkm6       3/3     Running   0          25s
 cstor-pool-stripe-sxpr-59c5f46fd6-jz4n4       3/3     Running   0          25s
 ```
 
-Also verify all the given blockdevices are used correctly by checking the `CLAIMSTATE`.
+Also verify if all the blockdevices are claimed correctly by checking the `CLAIMSTATE`.
 ```
 kubectl get bd -n openebs
 ```
