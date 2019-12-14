@@ -17,7 +17,7 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 [Expand a cStor volume created using CSI provisioner](#expand-cstor-volume-created-using-csi-provisioner)
 
-[Snapshot and Clone a cStor volume created using CSI provisioner](#snapshot-clone-cstor-volume-created-using-csi-provisioner)
+[Snapshot and Cloning the cStor volume created using CSI provisioner](#snapshot-clone-cstor-volume-created-using-csi-provisioner)
 
 [Provisioning cStor pool using CSPC operator](#provision-cstor-pool-using-cspc-operator)
 
@@ -59,13 +59,13 @@ Depending on the OS, select the appropriate deployment file.
 - For Ubuntu 16.04 and CentOS:
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/csi-operator.yaml 
+  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.5.0.yaml
   ```
 
 - For Ubuntu 18.04:
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/csi-operator-ubuntu-18.04.yaml
+  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.5.0-ubuntu-18.04.yaml
   ```
 
 Verify that the OpenEBS CSI Components are installed.
@@ -110,7 +110,7 @@ From above output, `openebs-cstor-csi-controller-0`  is running and `openebs-cst
 Apply CSPC operator YAML file using the following command:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/cspc-operator.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.5.0.yaml
 ```
 
 Verify the status of CSPC operator using the following command:
@@ -157,7 +157,7 @@ Edit the following parameters in the sample CSPC YAML:
 - **kubernetes.io/hostname**: Provide the hostname where the cStor pool will be created using the set of block devices.
 
 
-The above sample YAML creates a cStor pool in `striped` manner  using the provided block device on the corresponding node. If you need to create multiple cStor pools in the cluster with different raid technologies, go to provisioning [CSPC cluster creation](#provision-cstor-pool-using-cspc-operator) section.
+The above sample YAML creates a cStor pool of `striped` type using the provided block device on the corresponding node. If you need to create multiple cStor pools in the cluster with different RAID types, go to provisioning [CSPC cluster creation](#provision-cstor-pool-using-cspc-operator) section.
 
 In this example, the above YAML is modified and saved as `cspc.yaml`. Apply the modified CSPC YAML spec using the following command to create a cStor Pool Cluster:
 
@@ -354,7 +354,7 @@ The following section will give the steps to expand a cStor volume which is crea
    
    In the above snippet, `storage` is modified to 9Gi from 5Gi. 
    
-3. Wait for the updated capacity to reflect in PVC status (pvc.status.capacity.storage). Perform the following command to verify the updated size of the PVC:
+3. Wait for the updated capacity to reflect in PVC status (`pvc.status.capacity.storage`). Perform the following command to verify the updated size of the PVC:
 
    ```
    kubectl get pvc
@@ -370,16 +370,16 @@ The following section will give the steps to expand a cStor volume which is crea
 4. Check the size is reflected on the application pod where the above volume is mounted.
     
 
-<h3><a class="anchor" aria-hidden="true" id="snapshot-clone-cstor-volume-created-using-csi-provisioner"></a>Snapshot and Clone a cStor volume created using CSI provisioner</h3>
+<h3><a class="anchor" aria-hidden="true" id="snapshot-clone-cstor-volume-created-using-csi-provisioner"></a>Snapshot and Cloning the cStor volume created using CSI provisioner</h3>
 
-The following section will give the steps to take snapshot and clone of a cStor volume which is created using CSI provisioner. 
+The following section will give the steps to take snapshot and clone the cStor volume created using CSI provisioner. 
 
 **Notes to remember:**
 
-- You will need to enable `VolumeSnapshotDataSource` feature gates on `kubelets` and `kube-apiserver`. Other general prerequisites related to cStor volume via CSI provosioner can be found from [here](#prerequisites-cstor-csi). 
+- You will need to enable `VolumeSnapshotDataSource` Feature Gate on `kubelet` and `kube-apiserver`. Other general prerequisites related to cStor volume via CSI provisioner can be found from [here](#prerequisites-cstor-csi). 
 - Supported OpenEBS Version is 1.5
 
-**Steps to perform the snapshot and clone of a cStor volume:**
+**Capture the snapshot and cloning the cStor volume:**
 
 1. Get the details of PVC and PV of the CSI based cStor volume using the following  command:
    
@@ -401,7 +401,7 @@ The following section will give the steps to take snapshot and clone of a cStor 
    NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                         STORAGECLASS             REASON   AGE
    pvc-c4868664-1a84-11ea-a1ad-42010aa00fd2   5Gi        RWO            Delete           Bound    default/demo-csivol-claim   openebs-    csi-cstor-disk            22s
    ```
-2. Create a snapshot class pointing to cStor CSI driver. The following command will create a snapshot class poiting to cStor CSI driver:
+2. Create a snapshot class pointing to cStor CSI driver. The following command will create a snapshot class pointing to cStor CSI driver:
    ```
    kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/snapshot-class.yaml
    ```
@@ -418,20 +418,20 @@ The following section will give the steps to take snapshot and clone of a cStor 
    ```
    wget https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/snapshot.yaml
    ```
-   In this example, downlaoded file is saved as `snapshot.yaml`.
+   In this example, downloaded file is saved as `snapshot.yaml`.
 4. Edit the snapshot.yaml which is created in previous step to update:
    
    metedata.name :- Name of the snapshot
    
-   spec.snapshotClassName :- Names of the snapshotClass poiting to cStor CSI driver which you can get from step 2.
+   spec.snapshotClassName :- Name of the `snapshotClass` poiting to cStor CSI driver which you can get from step 2.
    
-   spec.source.name :- Source PVC which you are going to take the snapshot.
+   spec.source.name :- Source PVC, for which you are going to take the snapshot.
 
 5. Apply the modified snapshot YAML using the following command:
    ```
    kubectl apply -f snapshot.yaml
    ```
-   Verify that if the snapshot has been created successfully using the following command:
+   Verify if the snapshot has been created successfully using the following command:
    ```
    kubectl get volumesnapshots.snapshot
    ```
@@ -442,16 +442,16 @@ The following section will give the steps to take snapshot and clone of a cStor 
    ```
    The output shows that snapshot of the source PVC is created successfully.
    
-6. Now, let's create the clone volume of the snapshot. Get the PVC YAML spec for creating the clone volume from the given snapshot.
+6. Now, let's create clone volume using the above snapshot. Get the PVC YAML spec for creating the clone volume from the given snapshot.
    ```
    wget https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/pvc-clone.yaml
    ```
-   The downlaoded file is saved as `pvc-clone.yaml`.
+   The downloaded file is saved as `pvc-clone.yaml`.
 
 7. Edit the downloaded clone PVC YAML spec to update:
    
    - metadata.name :- Name of the clone PVC.
-   - spec.storageClassName :- Same StorageClass used to create the source PVC.
+   - spec.storageClassName :- Same StorageClass used while creating the source PVC.
    - spec.dataSource.name :- Name of the snapshot.
    - spec.resources.requests.storage :- The size of the volume being cloned or restored. This should be same as source PVC.
 
@@ -483,7 +483,7 @@ The following section will give the steps to take snapshot and clone of a cStor 
    pvc-43340dc6-1a87-11ea-a1ad-42010aa00fd2   5Gi        RWO            Delete           Bound    default/pvc-clone           openebs-csi-cstor-disk            17s
    pvc-c4868664-1a84-11ea-a1ad-42010aa00fd2   5Gi        RWO            Delete           Bound    default/demo-csivol-claim   openebs-csi-cstor-disk            9m43s
    ```
-10. Now this cloned volume can be used in Application to get the snapshot data.  
+10. Now this cloned volume can be mounted in application and access the snapshot data.  
 
 
 <h3><a class="anchor" aria-hidden="true" id="provision-cstor-pool-using-cspc-operator"></a>Provisioning cStor pool using CSPC operator</h3>
@@ -494,15 +494,15 @@ CSPC is a new schema for cStor pool provisioning and also refactors the code to 
 - CStorPoolInstance(CSPI) 
 - cspc-operator
 
-**Note:** Volume provisioning on CSPC provisioned pools will be supported only via CSI.
+**Note:** Volume provisioning on CSPC pools will be supported only via OpenEBS CSI provisioner.
 
 The current workflow to provision CSPC pool is as follows:
 
-1. OpenEBS should be installed. Recommended OpenEBS version is 1.4 or above.
+1. OpenEBS should be installed. Recommended OpenEBS version is 1.5.
 2. Install CSPC operator using YAML.
-3. Identify the available blockdevice which are `Unclaimed`and `Active`.
+3. Identify the available blockdevices which are `Unclaimed` and `Active`.
 4. Apply the CSPC pool YAML spec by filling required fields.
-5. Verify the CSPC pool details
+5. Verify the CSPC pool details.
 
 <h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc"></a>Install OpenEBS</h4>
 
@@ -534,7 +534,7 @@ openebs-snapshot-operator-7d6dd4b77f-444zh    2/2     Running   0          81s
 
 Install CSPC operator by using the following command:
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/cspc-operator.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.5.0.yaml
 ```
 Verify if CSPC operator is in `Running` state using the following command:
 ```
@@ -546,9 +546,9 @@ NAME                            READY   STATUS    RESTARTS   AGE
 cspc-operator-c4dc96bb9-zvfws   1/1     Running   0          115s
 ```
 
-<h4><a class="anchor" aria-hidden="true" id="identify-bd-for-cspc"></a>Identify the blockdevice</h4>
+<h4><a class="anchor" aria-hidden="true" id="identify-bd-for-cspc"></a>Identify the blockdevices</h4>
 
-Get the details of all blockdevice attached in the cluster using the following command. Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not conatin any filesystem. These are the candidiate for CSPC pool creation which need to use in next step.
+Get the details of all blockdevice attached in the cluster using the following command. Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not contain any filesystem. These are the candidiates for CSPC pool creation which need to be used in next step.
 
 ```
 kubectl get bd -n openebs
@@ -562,7 +562,7 @@ blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-cspc-default-pool-f7a
 blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Unclaimed    Active   7h44m
 ```
 
-In the above example, two blockdevices are attached to one node and one disk is attached to other two nodes.
+In the above example, two blockdevices are attached to one node and one disk each attached to other two nodes.
 
 <h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc-operator"></a>Apply the CSPC pool YAML</h4>
 
@@ -591,14 +591,14 @@ spec:
       overProvisioning: false
       compression: "off"
 ```
- The following are the details of parameters used for the CSPC pool creation.
+Here, we describe the parameters used in above CSPC pool creation template.
  
  - CSPC_name :- Name of CSPC cluster
- - Node_name :- Name of node where pool is going to create using the available blockdevice on the node.
+ - Node_name :- Name of node where pool is to be created using the available blockdevices attached to the node.
  - RAID_type :- RAID configuration used for pool creation. Supported RAID types are `stripe`, `mirror`, `raidz` and `raidz2`. If `spec.pools.raidGroups.type` is specified, then `spec.pools.poolConfig.defaultRaidGroupType` will not consider for the particular raid groups. 
  - blockdevice_name :- Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not conatin any filesystem.
  
-This is a sample CSPC template YAMl configuration which will provision a cStor pool using CSPC opeartor. The following describe the pool details of one node. If there are multiple pool to be created on different nodes, add below configuration for each node.
+This is a sample CSPC template YAMl configuration which will provision a cStor pool using CSPC operator. The following describe the pool details of one node. If there are multiple pools to be created on different nodes, add below configuration for each node.
 
 ```
   - nodeSelector:
@@ -619,7 +619,7 @@ This is a sample CSPC template YAMl configuration which will provision a cStor p
 
 The following are some of the sample CSPC configuration YAML spec:
 
-- **Striped**- One striped pool on each node using blockdevice attached to the node. In below example, one node has 2 blockdevice and other two nodes having one disk each.
+- **Striped**- One striped pool on each node using blockdevice attached to the node. In the below example, one node has 2 blockdevices and other two nodes having one disk each.
   
   ```
   apiVersion: openebs.io/v1alpha1
@@ -674,7 +674,7 @@ The following are some of the sample CSPC configuration YAML spec:
         compression: "off"
   ```
 
-- **Mirror**- One mirror pool on one nodes using 2 disk attached to the node.
+- **Mirror**- One mirror pool on one node using 2 blockdevices.
 
   ```
   apiVersion: openebs.io/v1alpha1
@@ -701,7 +701,7 @@ The following are some of the sample CSPC configuration YAML spec:
         compression: "off"
   ```
 
-- **RAIDZ**- Single parity raid configuration with 3 blockdevice attached to a node.
+- **RAIDZ**- Single parity raid configuration with 3 blockdevices.
 
   ```
   apiVersion: openebs.io/v1alpha1
@@ -721,7 +721,7 @@ The following are some of the sample CSPC configuration YAML spec:
         blockDevices:
         - blockDeviceName: "blockdevice-936911c5c9b0218ed59e64009cc83c8f"
         - blockDeviceName: "blockdevice-78f6be57b9eca9c08a2e18e8f894df30"
-      - blockDeviceName: "blockdevice-77f834edba45b03318d9de5b79af0734"
+        - blockDeviceName: "blockdevice-77f834edba45b03318d9de5b79af0734"
     poolConfig:
         cacheFile: ""
         defaultRaidGroupType: "raidz"
@@ -729,7 +729,7 @@ The following are some of the sample CSPC configuration YAML spec:
         compression: "off"
   ```
   
-- **RAIDZ2**- Dual parity raid configuration with 6 blockdevice attached to a node.  
+- **RAIDZ2**- Dual parity raid configuration with 6 blockdevices.  
   ```
   apiVersion: openebs.io/v1alpha1
   kind: CStorPoolCluster
@@ -761,7 +761,7 @@ The following are some of the sample CSPC configuration YAML spec:
 
 <h4><a class="anchor" aria-hidden="true" id="verify-cspc-pool-details"></a>Verify CSPC Pool Details</h4>
 
-Verify if the pool is in `Running` state by checking the status of cspc, cspi and pod running in `openebs` namespace. 
+Verify if the pool is in `Running` state by checking the status of CSPC, CSPI and pod running in `openebs` namespace. 
 
 The following command will get the details of CSPC status:
 ```
@@ -798,7 +798,7 @@ cstor-pool-stripe-mnbh-74cb58df69-tpkm6       3/3     Running   0          25s
 cstor-pool-stripe-sxpr-59c5f46fd6-jz4n4       3/3     Running   0          25s
 ```
 
-Also verify all the given blockdevices are used correctly by checking the `CLAIMSTATE`.
+Also verify if all the blockdevices are claimed correctly by checking the `CLAIMSTATE`.
 ```
 kubectl get bd -n openebs
 ```

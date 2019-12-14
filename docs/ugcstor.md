@@ -1051,10 +1051,10 @@ StorageClass definition is an important task in the planning and execution of Op
 
 **Step1:** Decide the cStorPool and get the StoragePoolClaim name associated to it.
 
-**Step2:** Which application uses it? Decide the replicaCount based on it. OpenEBS doesn't restrict on the specific number of replica count to set, but only max up to 5 are allowed. It depends on users how they configure but for the availability of volumes at least  (n/2 + 1) replicas should be up and connected to the target. The following are some example cases:
-- If user configured replica count as 2, then always 2 replicas should be available to perform operations on volume.2.
-- If replica count as 3 it should require at least 2 replicas for volume to be operational. 
-- If replica count as 5 it should require at least 3 replicas for volume to be operational.
+**Step2:** Which application uses it? Decide the replicaCount based on your reqiurement. OpenEBS doesn't restrict the replica count to set, but only maximum up to 5 are allowed. It depends how users configure it, but for the availability of volumes at least  (n/2 + 1) replicas should be up and connected to the target, where `n` is the `replicaCount`. The following are some example cases:
+- If user configured replica count as 2, then always 2 replicas should be available to perform operations on volume.
+- If replica count as 3 it should require at least 2 replicas should be available for volume to be operational. 
+- If replica count as 5 it should require at least 3 replicas should be available for volume to be operational.
 
 **Step3:** Are there any other storage policies to be applied to the StorageClass? Refer to the [storage policies section](#cstor-storage-policies) for more details on the storage policies applicable for cStor.
 
@@ -2186,7 +2186,7 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-scale-down"></a>Prerequisites</h4>
 
-- All the othe cStor volume replicas(CVR) should be in `Healthy` state except the cStor volume replica that is going to deleted(i.e deleting CVR can be in any state).
+- All the other cStor volume replicas(CVR) should be in `Healthy` state except the cStor volume replica that is going to deleted(i.e deleting CVR can be in any state).
 
 - There shouldn't be any ongoing scaleup process. Verify that `replicationFactor` should be equal to the `desiredReplicationFactor` from corresponding cStor volume CR specification. 
 
@@ -2208,15 +2208,8 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
    ```
    kubectl get pvc
    ```
-
-   Example output:
-
-   <div class="co">
-   NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS            AGE
-   demo-csivol-claim   Bound    pvc-723283b6-02bc-11ea-a139-42010a8000b2   5Gi        RWO            openebs-csi-cstor-disk   66m
-   </div>
   
-   From the above output, get `VOLUME` name and use in the following command to get the details of corresponding cStor volume. All commands are peformed by considering above PVC. 
+   From the output of above command, get `VOLUME` name and use in the following command to get the details of corresponding cStor volume. All commands are peformed by considering above PVC. 
   
    ```
    kubectl get cstorvolume -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
