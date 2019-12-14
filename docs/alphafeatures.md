@@ -59,13 +59,13 @@ Depending on the OS, select the appropriate deployment file.
 - For Ubuntu 16.04 and CentOS:
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/csi-operator.yaml 
+  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.5.0.yaml
   ```
 
 - For Ubuntu 18.04:
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/csi-operator-ubuntu-18.04.yaml
+  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.5.0-ubuntu-18.04.yaml
   ```
 
 Verify that the OpenEBS CSI Components are installed.
@@ -110,7 +110,7 @@ From above output, `openebs-cstor-csi-controller-0`  is running and `openebs-cst
 Apply CSPC operator YAML file using the following command:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/cspc-operator.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.5.0.yaml
 ```
 
 Verify the status of CSPC operator using the following command:
@@ -354,7 +354,7 @@ The following section will give the steps to expand a cStor volume which is crea
    
    In the above snippet, `storage` is modified to 9Gi from 5Gi. 
    
-3. Wait for the updated capacity to reflect in PVC status (pvc.status.capacity.storage). Perform the following command to verify the updated size of the PVC:
+3. Wait for the updated capacity to reflect in PVC status (`pvc.status.capacity.storage`). Perform the following command to verify the updated size of the PVC:
 
    ```
    kubectl get pvc
@@ -534,7 +534,7 @@ openebs-snapshot-operator-7d6dd4b77f-444zh    2/2     Running   0          81s
 
 Install CSPC operator by using the following command:
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/cspc-operator.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.5.0.yaml
 ```
 Verify if CSPC operator is in `Running` state using the following command:
 ```
