@@ -290,10 +290,7 @@ openebs_write_time # Write time on volume
 openebs_writes # Write Input/Outputs on Volume
 ```
 
-Grafana charts can be built for the above Prometheus metrics. Some metrics of OpenEBS volumes are available automatically at [Director Online](https://director.mayadata.io/) when you connect the Kubernetes cluster to it. See an example screenshot below.
-
-![jiva-monitor](/docs/assets/svg/volume-monitor.svg)
-
+Grafana charts can be built for the above Prometheus metrics. 
 
 
 <h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
