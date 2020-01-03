@@ -1,0 +1,235 @@
+---
+id: chaostest
+title: Chaos Engineering with Litmus
+sidebar_label: Chaos Engineering
+---
+
+------
+
+
+
+Litmus is a toolset to do chaos engineering in a kubernetes native way. Litmus provides chaos CRDs for Cloud-Native developers and SREs to inject, orchestrate and monitor chaos to find weaknesses in Kubernetes deployments. 
+
+In this section, a couple of experiments are mentioned that can inject chaos into the OpenEBS volume and Application using a Litmus chart. This way a user can validate the application resiliency by injecting chaos. There are multiple OpenEBS experiments available in [chart hub](https://hub.litmuschaos.io/) which can be used to check its resiliency.  To understand better, more details can be found [here](https://docs.litmuschaos.io/docs/getstarted/).
+
+
+
+## Installation & Setup
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="install-litmus"></a>Install Litmus</h3>
+
+
+
+Installation of litmus can be done by executing the following command:
+
+```
+kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v0.9.0.yaml
+```
+
+Verify if the chaos operator is running using the following command:
+
+```
+kubectl get pods -n litmus
+```
+
+The following is a sample output:
+
+<div class="co">
+chaos-operator-ce-554d6c8f9f-slc8k 1/1 Running 0 6m41s
+</div>
+
+Verify if chaos CRDs are installed using the following command:
+
+```
+kubectl get crds | grep chaos
+```
+
+<div class="co">
+chaosengines.litmuschaos.io 2019-10-02T08:45:25Z
+chaosexperiments.litmuschaos.io 2019-10-02T08:45:26Z
+chaosresults.litmuschaos.io 2019-10-02T08:45:26Z
+</div>
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="install-openebs-chaos-experiments-crs"></a>Install OpenEBS chaos experiments Custom Resources</h3>
+
+
+
+To create OpenEBS chaos experiments CRs, execute the following command:
+
+```
+kubectl create -f https://hub.litmuschaos.io/api/chaos?file=charts/openebs/experiments.yaml -n <application_namespace>
+```
+
+Verify if the chaos experiments are installed using the following command:
+
+```
+kubectl get chaosexperiments -n <application_namespace>
+```
+
+The output will be similar to the following:
+
+<div class="co">
+NAME                               AGE
+openebs-pool-container-failure     1h
+openebs-pool-pod-failure           1h
+openebs-target-container-failure   1h
+openebs-target-network-delay       1h
+openebs-target-network-loss        1h
+openebs-target-pod-failure         1h
+</div>
+
+
+
+## cStor Volume Chaos Experiments
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="cStor-target-container-failure"></a>cStor Target Container Failure</h3>
+
+
+
+
+<h4><a class="anchor" aria-hidden="true" id="setup-service-account"></a>Setup Service Account</h4>
+
+A Service Account should be created to allow chaos engine to run experiments in the application namespace. Copy the following YAML spec into `rbac-chaos.yaml`. You can change the service account name and namespace as needed.
+
+```
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mysql-chaos
+  # app namespace
+  namespace: default   
+  labels:
+    app: mysql
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: mysql-chaos
+rules:
+- apiGroups: ["", "extensions", "apps", "batch", "litmuschaos.io", "openebs.io", "storage.k8s.io"]
+  resources: ["daemonsets", "deployments", "replicasets", "jobs", "pods", "pods/exec","nodes","events", "chaosengines", "chaosexperiments", "chaosresults", "storageclasses", "persistentvolumes", "persistentvolumeclaims", "services", "cstorvolumereplicas", "configmaps"]
+  verbs: ["*"] 
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: mysql-chaos
+subjects:
+- kind: ServiceAccount
+  name: mysql-chaos
+  namespace: default 
+roleRef:
+  kind: ClusterRole
+  name: mysql-chaos
+  apiGroup: rbac.authorization.k8s.io
+```
+
+Apply the following command  to create one such account on your provided namespace. In this example, namespace is mentioned as `default`.
+
+```
+kubectl apply -f rbac-chaos.yaml 
+```
+
+
+
+<h4><a class="anchor" aria-hidden="true" id="annotate-application"></a>Annotate your application</h4>
+
+Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application.
+
+```
+kubectl annotate deploy/<deployment_name> -n <application_namespace> litmuschaos.io/chaos="true"
+```
+
+Example command:
+
+```
+kubectl annotate deploy/mysql -n default litmuschaos.io/chaos="true" 
+```
+
+**NOTE:** To get the deployment name, run `kubectl get deploy -n <application_namespace>`
+
+
+
+<h4><a class="anchor" aria-hidden="true" id="prepare-and-run-chaos-engine-cstor-target-container-failure"></a>Prepare and Run ChaosEngine</h4>
+
+ChaosEngine connects application to the Chaos Experiment. Prepare the chaos engine template to inject container failure on the OpenEBS cStor target pod. 
+
+Update the following parameters in a chaos engine template with the details of the PVC  whose corresponding target container has to be killed.
+
+- spec.appinfo.appns :- Namespace of the PVC
+- spec.appinfo.applabel :- Details of application label
+- spec.appinfo.appkind :- Type of application; Deployment or StatefulSet.
+- spec.chaosServiceAccount :- Name of Service Account created in [setup service account](#setup-service-account) section.
+- spec.experiments.spec.components :-  Update value for `APP_PVC` with the application PVC name and value for `DEPLOY_TYPE` as the type of application.
+
+After updating the above details in chaos engine template, run the following command to run the `openebs-target-container-kill` chaos experiment.
+
+```
+kubectl create -f chaosengine.yaml
+```
+
+**NOTE**: It is recommended to create Application, ChaosEngine, ChaosExperiment and Service Account in the same namespace for smooth execution of experiments.
+
+A chaos experiment job is launched that carries out the intended chaos. Check if the job is completed by executing the following command:
+
+```
+kubectl get pods -n <application_namespace>
+```
+
+
+
+<h4><a class="anchor" aria-hidden="true" id="observe-chaos-results"></a>Observe Chaos results</h4>
+
+After completion of chaos experiment job, verify if the application deployment is resilient to momentary loss of the storage target by describing the `chaosresult` through the following command. In this example, taken application is MySQL.
+
+```
+kubectl describe chaosresult <chaosengine name>-<chaos-experiment name> -n <application_namespace>
+```
+
+Example command:
+
+```
+kubectl describe chaosresult target-chaos-openebs-target-failure -n percona
+```
+
+The `spec.verdict` is set to `Running` when the experiment is in progress, eventually changing to either `Pass` or `Fail`.
+
+You can ensure the resiliency of cStor volume by checking if the target pod is healthy and running successfully.
+
+</br>
+
+<a href="#top">Go to top</a>
+
+<hr>
+
+
+
+<!-- Hotjar Tracking Code for https://docs.openebs.io -->
+
+<script>
+   (function(h,o,t,j,a,r){
+       h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+       h._hjSettings={hjid:785693,hjsv:6};
+       a=o.getElementsByTagName('head')[0];
+       r=o.createElement('script');r.async=1;
+       r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+       a.appendChild(r);
+   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-92076314-12');
+</script>
