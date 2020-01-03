@@ -16,6 +16,7 @@ sidebar_label: Troubleshooting
 <br>
 
 <hr>
+
 <font size="6">Areas of troubleshooting</font>
 
 <br>
