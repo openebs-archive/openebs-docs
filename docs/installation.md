@@ -459,10 +459,6 @@ For using real disks, you have to create [cStorPools](/docs/next/ugcstor.html#cr
 
 
 
-To monitor the OpenEBS volumes and obtain corresponding logs, connect to the free SaaS service Director Online. See connecting to [Director Online](/docs/next/directoronline.html). 
-
-
-
 <br>
 
 <hr>

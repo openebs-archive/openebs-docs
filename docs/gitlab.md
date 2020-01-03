@@ -59,15 +59,13 @@ GitLab is a good solution for building On-Premise cloud native CI/CD platforms, 
 
    If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
-2. **Connect to Director Online (Optional)** : Connecting the Kubernetes cluster to <a href="https://director.mayadata.io" target="_blank">Director Online</a> provides good visibility of storage resources. Director Online has various **support options for enterprise customers**.
-
-3. **Configure cStor Pool**
+2. **Configure cStor Pool**
 
    After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). During cStor Pool creation, make sure that the maxPools parameter is set to >=3. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. If cStor pool is already configured, go to the next step. 
 
 4. **Create Storage Class**
 
-   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since GitLab is a StatefulSet application and it requires only single storage replication. So cStor volume `replicaCount` is =1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStoveVolume Replica count as 1 is provided in the configuration details below.
+   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since GitLab is a StatefulSet application and it requires only single storage replication. So cStor volume `replicaCount` is =1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStor volume replica count as 1 is provided in the configuration details below.
 
 5. **Launch and test GitLab**
 
@@ -104,7 +102,7 @@ GitLab is a good solution for building On-Premise cloud native CI/CD platforms, 
 
 **Monitor OpenEBS Volume size** 
 
-It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using Director Online.
+It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration.
 
 **Monitor cStor Pool size**
 
