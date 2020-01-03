@@ -43,7 +43,7 @@ A cStor pool is local to a node in OpenEBS. A pool on a node is an aggregation o
 <br>
 
 
-A pool is an important OpenEBS component for the Kubernetes administrators in the design and planning of storage classes  which are the primary interfaces to consume the persistent storage by applications. 
+A pool is an important OpenEBS component for the Kubernetes administrators in the design and planning of storage classes which are the primary interfaces to consume the persistent storage by applications. 
 
 <br>**Benefits of a cStor pool**
 
@@ -53,7 +53,7 @@ A pool is an important OpenEBS component for the Kubernetes administrators in th
 
 ### Relationship between cStor volumes and cStor pools
 
-cStor pool is a group of individual pools with one pool instance on each participating node. Individual pools in the group are named as pool instances and corresponding pod for each pool instance is referred to as cStor pool pod. The pools are totally independent from each other in that each one is a different pool itself and could host different number of volumes. They simply contain volume replicas.  For example, replica3 of pool1 in Node3 has two volumes whereas the other two pool replicas have only one volume each. The pool replicas are related to each other only at the level of target where target decides where to host the volume/data replicas/copies. 
+cStor pool is a group of individual pools with one pool instance on each participating node. Individual pools in the group are named as pool instances and corresponding pod for each pool instance is referred to as cStor pool pod. The pools are totally independent from each other in that each one is a different pool itself and could host different number of volumes. They simply contain volume replicas. For example, replica3 of pool1 in Node3 has two volumes whereas the other two pool replicas have only one volume each. The pool replicas are related to each other only at the level of target where target decides where to host the volume/data replicas/copies. 
 
 Replication of data does not happen at the pool level. Synchronous data replication and rebuilding happen at volume level by the cStor target. Volume replicas are created on cStor pools located on different nodes. In the following example figure, a pool configuration is defined to have three replicas or three independent pools .
 
