@@ -8,9 +8,9 @@ sidebar_label: Chaos Engineering
 
 
 
-Litmus is a toolset to do chaos engineering in a kubernetes native way. Litmus provides chaos CRDs for Cloud-Native developers and SREs to inject, orchestrate and monitor chaos to find weaknesses in Kubernetes deployments. 
+Litmus is a tool to practice chaos engineering in a kubernetes native way. Litmus provides chaos specific CRDs for Cloud-Native developers and SREs to inject, orchestrate and monitor chaos to find weaknesses in Kubernetes deployments. 
 
-In this section, a couple of experiments are mentioned that can inject chaos into the OpenEBS volume and Application using a Litmus chart. This way a user can validate the application resiliency by injecting chaos. There are multiple OpenEBS experiments available in [chart hub](https://hub.litmuschaos.io/) which can be used to check its resiliency.  To understand better, more details can be found [here](https://docs.litmuschaos.io/docs/getstarted/).
+In this section, an experiment that can inject chaos into the OpenEBS cStor volume and Application using a Litmus chart is mentioned. This way a user can validate the resiliency of the application by injecting chaos. There are multiple OpenEBS experiments available in [chart hub](https://hub.litmuschaos.io/) which can be used to check resiliency of the application. To understand better, more details can be found [here](https://docs.litmuschaos.io/docs/getstarted/).
 
 
 
@@ -161,14 +161,44 @@ kubectl annotate deploy/mysql -n default litmuschaos.io/chaos="true"
 
 ChaosEngine connects application to the Chaos Experiment. Prepare the chaos engine template to inject container failure on the OpenEBS cStor target pod. 
 
-Update the following parameters in a chaos engine template with the details of the PVC  whose corresponding target container has to be killed.
+Copy the following YAML spec into `chaosengine.yaml`.
 
-- spec.appinfo.appns :- Namespace of the PVC
-- spec.appinfo.applabel :- Details of application label
+```
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: target-chaos
+  namespace: default 
+spec:
+  appinfo:
+    # App namespace
+    appns: default 
+    applabel: 'app=mysql'
+    appkind: deployment
+  chaosServiceAccount: mysql-chaos
+  monitoring: false
+  jobCleanUpPolicy: delete
+  experiments:
+    - name: openebs-target-container-failure
+      spec:
+        components:
+          - name: TARGET_CONTAINER
+            value: 'cstor-istgt'
+          - name: APP_PVC
+            value: 'mysql-claim'    
+          - name: DEPLOY_TYPE
+            value: deployment     
+```
+
+Update the following parameters in the above chaos engine template with the details of PVC whose corresponding target container has to be killed.
+
+- spec.appinfo.appns :- PVC where the application is deployed
+- spec.appinfo.applabel :- Label of application pod
 - spec.appinfo.appkind :- Type of application; Deployment or StatefulSet.
 - spec.chaosServiceAccount :- Name of Service Account created in [setup service account](#setup-service-account) section.
-- spec.experiments.spec.components :-  Update value for `APP_PVC` with the application PVC name and value for `DEPLOY_TYPE` as the type of application.
+- spec.experiments.spec.components :-  Update value for `APP_PVC` with the application PVC name and value for `DEPLOY_TYPE` as the type of application such as Deployment or StatefulSet.
 
+ 
 After updating the above details in chaos engine template, run the following command to run the `openebs-target-container-kill` chaos experiment.
 
 ```
@@ -187,7 +217,7 @@ kubectl get pods -n <application_namespace>
 
 <h4><a class="anchor" aria-hidden="true" id="observe-chaos-results"></a>Observe Chaos results</h4>
 
-After completion of chaos experiment job, verify if the application deployment is resilient to momentary loss of the storage target by describing the `chaosresult` through the following command. In this example, taken application is MySQL.
+After completion of chaos experiment job, verify if the application deployment is resilient to momentary loss of the storage target by describing the `chaosresult` through the following command. 
 
 ```
 kubectl describe chaosresult <chaosengine name>-<chaos-experiment name> -n <application_namespace>
@@ -196,12 +226,16 @@ kubectl describe chaosresult <chaosengine name>-<chaos-experiment name> -n <appl
 Example command:
 
 ```
-kubectl describe chaosresult target-chaos-openebs-target-failure -n percona
+kubectl describe chaosresult target-chaos-openebs-target-failure -n default
 ```
 
 The `spec.verdict` is set to `Running` when the experiment is in progress, eventually changing to either `Pass` or `Fail`.
 
-You can ensure the resiliency of cStor volume by checking if the target pod is healthy and running successfully.
+You can ensure the resiliency of cStor volume by checking if the target pod is healthy and running successfully. This can be checked by running following command:
+
+```
+kubectl get pod -n openebs | grep <PV_name>
+```
 
 </br>
 
