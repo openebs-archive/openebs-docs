@@ -73,6 +73,12 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 	<a href="/docs/next/usecases.html">
 		<img src="/docs/assets/intro-uc.png" alt="OpenEBS use cases" style="float:left;width:250px;">
 	</a>
+  </div>
+  <div class="">
+	<a href="/docs/next/troubleshooting.html">
+		<img src="/docs/assets/intro-mo.png" alt="Troubleshooting OpenEBS" style="float:left;width:250px;">
+	</a>
+  </div>
   <div class="">
 	<a href="/docs/next/support.html">
 		<img src="/docs/assets/intro-support.png" alt="OpenEBS Support" style="float:left;width:250px;">
