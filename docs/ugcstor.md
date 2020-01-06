@@ -113,7 +113,7 @@ spec:
       storageClassName: openebs-cstor-pool1-1-replica
 ```
 
-After provisioning OpenEBS cStor volume, resiliency of the application can be checked by injecting chaos. Litmus is a Cloud-native Chaos Engineering tool which can be used to validate various chaos tests on Kubernetes in a cloud-native way. Some of the Litmus based chaos tests are mentioned [here](/docs/next/chaostest.html).
+**Note**: (Optional) Post provisioning OpenEBS cStor volume, resiliency of the application can be checked by injecting chaos. Litmus is a Cloud-native Chaos Engineering tool which can be used to validate various chaos tests on Kubernetes in a cloud-native way. Some of the Litmus based chaos tests are mentioned [here](/docs/next/chaostest.html).
 
 <h3><a class="anchor" aria-hidden="true" id="monitoring-a-cStor-Volume"></a>Monitoring a cStor Volume</h3>
 
