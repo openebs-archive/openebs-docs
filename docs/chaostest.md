@@ -193,7 +193,7 @@ spec:
 Update the following parameters in the above chaos engine template with the details of PVC whose corresponding target container has to be killed.
 
 - spec.appinfo.appns :- Namespace where the application is deployed.
-- spec.appinfo.applabel :- Label of application pod.
+- spec.appinfo.applabel :- Any one of the label of application pod. Run `kubectl get pod <appliction_pod_name> --show-labels` to get the labels.
 - spec.appinfo.appkind :- Type of application such as Deployment or StatefulSet.
 - spec.chaosServiceAccount :- Name of Service Account created in [setup service account](#setup-service-account) section.
 - spec.experiments.spec.components :- Update value for `APP_PVC` with the application PVC name and value for `DEPLOY_TYPE` as the type of application such as Deployment or StatefulSet.
@@ -207,10 +207,16 @@ kubectl create -f chaosengine.yaml
 
 **NOTE**: It is recommended to create Application, ChaosEngine, ChaosExperiment and Service Account in the same namespace for smooth execution of experiments.
 
-A chaos experiment job is launched that carries out the intended chaos. Check if the job is completed by executing the following command:
+A chaos experiment job is launched that carries out the intended chaos. It may take some time to start the job. Check if the job is completed by executing the following command:
 
 ```
-kubectl get pods -n <application_namespace>
+kubectl get jobs -n <application-namespace> | grep <experiment-name>
+```
+
+Run the following command to check the staus of the pod created by the above job:
+
+```
+kubectl get pods -n <application-namespace> | grep <experiment-name>
 ```
 
 
