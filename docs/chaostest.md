@@ -223,19 +223,33 @@ kubectl get pods -n <application-namespace> | grep <experiment-name>
 
 <h4><a class="anchor" aria-hidden="true" id="observe-chaos-results"></a>Observe Chaos results</h4>
 
+Run the following command to get the name of chaos experiment result:
+
+```
+kubectl get chaosresult 
+```
+
+Example output:
+```
+NAME                               AGE
+target-chaos-openebs-target-container-failure   15m
+```
+
+The name of `chaosresult` will be created in this format - <**chaosengine name>-<chaos-experiment name**>.
+  
 After completion of chaos experiment job, verify if the application deployment is resilient to momentary loss of the storage target by describing the `chaosresult` through the following command. 
 
 ```
-kubectl describe chaosresult <chaosengine name>-<chaos-experiment name> -n <application_namespace>
+kubectl describe chaosresult <chaos_result_name> -n <application_namespace>
 ```
 
 Example command:
 
 ```
-kubectl describe chaosresult target-chaos openebs-target-container-failure -n default
+kubectl describe chaosresult target-chaos-openebs-target-container-failure -n default
 ```
 
-The `spec.verdict` is set to `Running` when the experiment is in progress, eventually changing to either `Pass` or `Fail`.
+The `spec.verdict` is set to `Running` when the experiment is in progress, eventually changing to either `Pass` or `Fail`. A `Pass` means the application is resilient against the injected failures. A `Fail` means the application could not sustain injected failures. 
 
 You can ensure the resiliency of cStor volume by checking if the target pod is healthy and running successfully. This can be checked by running following command:
 
