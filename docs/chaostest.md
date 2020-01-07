@@ -192,11 +192,11 @@ spec:
 
 Update the following parameters in the above chaos engine template with the details of PVC whose corresponding target container has to be killed.
 
-- spec.appinfo.appns :- PVC where the application is deployed
-- spec.appinfo.applabel :- Label of application pod
-- spec.appinfo.appkind :- Type of application; Deployment or StatefulSet.
+- spec.appinfo.appns :- Namespace where the application is deployed.
+- spec.appinfo.applabel :- Any one of the label of application pod. Run `kubectl get pod <appliction_pod_name> --show-labels` to get the labels.
+- spec.appinfo.appkind :- Type of application such as Deployment or StatefulSet.
 - spec.chaosServiceAccount :- Name of Service Account created in [setup service account](#setup-service-account) section.
-- spec.experiments.spec.components :-  Update value for `APP_PVC` with the application PVC name and value for `DEPLOY_TYPE` as the type of application such as Deployment or StatefulSet.
+- spec.experiments.spec.components :- Update value for `APP_PVC` with the application PVC name and value for `DEPLOY_TYPE` as the type of application such as Deployment or StatefulSet.
 
  
 After updating the above details in chaos engine template, run the following command to run the `openebs-target-container-kill` chaos experiment.
@@ -207,29 +207,49 @@ kubectl create -f chaosengine.yaml
 
 **NOTE**: It is recommended to create Application, ChaosEngine, ChaosExperiment and Service Account in the same namespace for smooth execution of experiments.
 
-A chaos experiment job is launched that carries out the intended chaos. Check if the job is completed by executing the following command:
+A chaos experiment job is launched that carries out the intended chaos. It may take some time to start the job. Check if the job is completed by executing the following command:
 
 ```
-kubectl get pods -n <application_namespace>
+kubectl get jobs -n <application-namespace> | grep <experiment-name>
+```
+
+Run the following command to check the staus of the pod created by the above job:
+
+```
+kubectl get pods -n <application-namespace> | grep <experiment-name>
 ```
 
 
 
 <h4><a class="anchor" aria-hidden="true" id="observe-chaos-results"></a>Observe Chaos results</h4>
 
+Run the following command to get the name of chaos experiment result:
+
+```
+kubectl get chaosresult 
+```
+
+Example output:
+```
+NAME                               AGE
+target-chaos-openebs-target-container-failure   15m
+```
+
+The name of `chaosresult` will be created in this format - <**chaosengine name>-<chaos-experiment name**>.
+  
 After completion of chaos experiment job, verify if the application deployment is resilient to momentary loss of the storage target by describing the `chaosresult` through the following command. 
 
 ```
-kubectl describe chaosresult <chaosengine name>-<chaos-experiment name> -n <application_namespace>
+kubectl describe chaosresult <chaos_result_name> -n <application_namespace>
 ```
 
 Example command:
 
 ```
-kubectl describe chaosresult target-chaos-openebs-target-failure -n default
+kubectl describe chaosresult target-chaos-openebs-target-container-failure -n default
 ```
 
-The `spec.verdict` is set to `Running` when the experiment is in progress, eventually changing to either `Pass` or `Fail`.
+The `spec.verdict` is set to `Running` when the experiment is in progress, eventually changing to either `Pass` or `Fail`. A `Pass` means the application is resilient against the injected failures. A `Fail` means the application could not sustain injected failures. 
 
 You can ensure the resiliency of cStor volume by checking if the target pod is healthy and running successfully. This can be checked by running following command:
 
