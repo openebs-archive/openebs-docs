@@ -192,11 +192,11 @@ spec:
 
 Update the following parameters in the above chaos engine template with the details of PVC whose corresponding target container has to be killed.
 
-- spec.appinfo.appns :- PVC where the application is deployed
-- spec.appinfo.applabel :- Label of application pod
-- spec.appinfo.appkind :- Type of application; Deployment or StatefulSet.
+- spec.appinfo.appns :- Namespace where the application is deployed.
+- spec.appinfo.applabel :- Label of application pod.
+- spec.appinfo.appkind :- Type of application such as Deployment or StatefulSet.
 - spec.chaosServiceAccount :- Name of Service Account created in [setup service account](#setup-service-account) section.
-- spec.experiments.spec.components :-  Update value for `APP_PVC` with the application PVC name and value for `DEPLOY_TYPE` as the type of application such as Deployment or StatefulSet.
+- spec.experiments.spec.components :- Update value for `APP_PVC` with the application PVC name and value for `DEPLOY_TYPE` as the type of application such as Deployment or StatefulSet.
 
  
 After updating the above details in chaos engine template, run the following command to run the `openebs-target-container-kill` chaos experiment.
@@ -226,7 +226,7 @@ kubectl describe chaosresult <chaosengine name>-<chaos-experiment name> -n <appl
 Example command:
 
 ```
-kubectl describe chaosresult target-chaos-openebs-target-failure -n default
+kubectl describe chaosresult target-chaos openebs-target-container-failure -n default
 ```
 
 The `spec.verdict` is set to `Running` when the experiment is in progress, eventually changing to either `Pass` or `Fail`.
