@@ -60,7 +60,7 @@ is installed and running or to find the steps to install the iSCSI client.
         <a href="/docs/next/prerequisites.html#do"><img src="/docs/assets/DigitalOceanLogo.png" width="45px;">&nbsp;DigitalOcean</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#d2iq"><img src="/docs/assets/d2iq.png" width="50px;">D2iQ</a>
+        <a href="/docs/next/prerequisites.html#d2iq"><img src="/docs/assets/d2iq.jpg" width="50px;">D2iQ</a>
     </div>
 </div>
 
