@@ -53,10 +53,17 @@ is installed and running or to find the steps to install the iSCSI client.
     <div class="divcol">
         <a href="/docs/next/prerequisites.html#icp"><img src="/docs/assets/l-icp.png" width="50px;">ICP</a>
     </div>
-      <div class="divcol">
+</div>
+
+<div class="divrow">
+    <div class="divcol">
         <a href="/docs/next/prerequisites.html#do"><img src="/docs/assets/DigitalOceanLogo.png" width="45px;">&nbsp;DigitalOcean</a>
     </div>
+    <div class="divcol">
+        <a href="/docs/next/prerequisites.html#d2iq"><img src="/docs/assets/d2iq.png" width="50px;">D2iQ</a>
+    </div>
 </div>
+
 
 
 [Provide feedback](https://github.com/openebs/openebs-docs/edit/staging/docs/quickstart.md) if a platform is missing in the above list.
@@ -236,10 +243,12 @@ You can verify the iSCSI installation from the above section.
 
 <h3><a class="anchor" aria-hidden="true" id="eks"></a>Amazon Elastic
 Container Service for Kubernetes (EKS)</h3>
+
 Amazon EKS clusters can be brought up with either an AmazonLinux AMI
 or an Ubuntu 18.04 AMI.
 
 <h4><a class="anchor" aria-hidden="true" id="eks-linux-ami"></a>For clusters running with the AmazonLinux AMI</h4>
+
 **Verify iSCSI services are configured**
 
 If an iSCSI initiator is already installed on your node, check that
@@ -278,6 +287,7 @@ You can verify the iSCSI installation from the above section.
 
 
 <h4><a class="anchor" aria-hidden="true" id="eks-linux-ami"></a>For clusters running with the Ubuntu 18.04 AMI</h4>
+
 For setting up iSCSI clients on Ubuntu nodes, see the
 instructions [here.](#ubuntu)
 
@@ -292,7 +302,9 @@ Select Ubuntu as the image version for the node pools in the custom settings. Fo
 
 <br>
 
+
 <h3><a class="anchor" aria-hidden="true" id="aks"></a>Azure Kubernetes Service (AKS)</h3>
+
 On Azure Kubernetes Service you need to verify that the `open-iscsi`
 packages are installed and running the service on the kubelet.
 This can be checked by connecting to the nodes through SSH using the
@@ -440,8 +452,9 @@ service kubelet restart
 
 
 <h3><a class="anchor" aria-hidden="true" id="openshift"></a>Red Hat OpenShift</h3>
+
 OpenEBS can be installed using Openshift on the following Operating
-Systems. Tested OpenShift versions are 3.9 and 3.10.
+Systems. Tested OpenShift versions are 3.10 and 4.2.
 
 1. On RHEL 7
 2. On CentOS 7
@@ -449,6 +462,7 @@ Systems. Tested OpenShift versions are 3.9 and 3.10.
 
 
 <h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
+
 Latest tested RHEL versions are 7.5, 7.6.
 
 For setting up iSCSI clients on RHEL nodes, see the instructions [here](#rhel).
@@ -456,6 +470,7 @@ For setting up iSCSI clients on RHEL nodes, see the instructions [here](#rhel).
 
 
 <h4><a class="anchor" aria-hidden="true" id="On-Centos"></a>On CentOS</h4>
+
 Latest tested CentOS version is CentOS 7.
 
 For setting up iSCSI clients on CentOS nodes, see the instructions [here](#centos).
@@ -553,6 +568,12 @@ services:
 ```
 
 In the above snippet, default hostpath for Local PV (/var/openebs/local), which will be created on the worker node using `openebs-hostpath` StorageClass, is added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `openebs-hostpath` volume.
+
+<br>
+
+<h3><a class="anchor" aria-hidden="true" id="d2iq"></a>D2iQ</h3>
+
+Konvoy, a managed Kubernetes platform for operation and lifecycle management from D2iQ. CentOS is used as the underlying OS by default. Latest tested CentOS version is CentOS 7. For setting up iSCSI clients on CentOS nodes, see the instructions [here](#centos). 
 
 <br>
 
