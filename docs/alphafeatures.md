@@ -15,11 +15,13 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 [Running a sample application on a cStor volume provsioned via CSI provisioner](#running-sample-application-cstor-volume-using-csi-provisioner)
 
+[Provisioning cStor pool using CSPC operator](#provision-cstor-pool-using-cspc-operator)
+
 [Expand a cStor volume created using CSI provisioner](#expand-cstor-volume-created-using-csi-provisioner)
 
 [Snapshot and Cloning the cStor volume created using CSI provisioner](#snapshot-clone-cstor-volume-created-using-csi-provisioner)
 
-[Provisioning cStor pool using CSPC operator](#provision-cstor-pool-using-cspc-operator)
+[Disk replacement in a cStor pool created using CSPC operator](#disk-replacement-cstor-pool-cspc)
 
 
 
@@ -812,6 +814,153 @@ blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a
 ```
 <br>
 
+<h3><a class="anchor" aria-hidden="true" id="disk-replacement-cstor-pool-cspc"></a>Disk replacement in a cStor pool created using CSPC operator</h3>
+
+The following steps will help to perform the blockdevice replacement used in the cStor pool created using CSPC operator method. It is recommended to perform replacement of one blockdevice per raid group of the cStor pool. For example, if cStor pool is created using 2 mirror raid group, then only blockdevice can replaced per raid group if any available disks are statisified with all prerequisites.
+
+**Prerequisites:**
+
+1. There should an available blockdevice present on the same node where the old blockdevice is attached. The available blockdevice should be `Unclaimed` state and does not contain any filesystem or partition.
+
+2. New blockdevice which is going to be replaced should have equal or greater capacity of old blockdevice.
+
+The following are the steps:
+
+- Verify the status of cStor pool using the following command:
+  
+  ```
+  kubectl get cspi -n openebs
+  ```
+  Example command:
+  <div class="co">
+  NAME                     HOSTNAME                                   ALLOCATED   FREE    CAPACITY   STATUS   AGE
+  cstor-pool-mirror-6tls   gke-ranjith16-default-pool-6e471406-kfb8   506K        39.7G   39.8G      ONLINE   103m
+  </div>
+
+- Verify the details of cStor pool cluster configuration using the following command:
+  ```
+  kubectl get cspc -n openebs
+  ```
+  Example output:
+  <div class="co">
+  NAME                AGE
+  cstor-pool-mirror   106m
+  </div>
+  
+- Obtain the details of used blockdevices and avaiable blockdevices using the following command:
+  
+  ```
+  kubectl get bd -n openebs
+  ```
+  Example output:
+  <div class="co">
+  NAME                                           NODENAME                                   SIZE          CLAIMSTATE   STATUS   AGE
+  blockdevice-070383c017742c82d14103a2d2047c0f   gke-ranjith16-default-pool-6e471406-kfb8   42949672960   Claimed      Active   122m
+  blockdevice-41d4416f6199a14b706e2ced69e2694a   gke-ranjith16-default-pool-6e471406-kfb8   42949672960   Claimed      Active   122m
+  blockdevice-c0179d93aebfd90c09a7a864a9148f85   gke-ranjith16-default-pool-6e471406-kfb8   42949672960   Unclaimed    Active   122m
+  blockdevice-ef810d7dfc8e4507359963fab7e9647e   gke-ranjith16-default-pool-6e471406-kfb8   53687091200   Unclaimed    Active   122m
+  </div>
+  In this example, blockdevices `blockdevice-070383c017742c82d14103a2d2047c0f` and `blockdevice-41d4416f6199a14b706e2ced69e2694a` are used for the pool creation configuration `cstor-pool-mirror` mentioned in previous step . Both the blockdevices are attached to the same node. Also, there are 2 available blockdevice CRs present on the same node with `Unclaimed` state. These 2 blockdevices satisfied all the prerequisites conditions and can be used to replace any of the above mentioned used blockdevice with a recommended method that, only one blockdevice per raid group can be replaced at a time.
+
+- Get the details of cStor pool configuration using the following command:
+
+  ```
+  kubectl get cspc <CSPC configuration> -n openebs -o yaml
+  ```
+  Example command:
+  ```
+  kubectl get cspc cstor-pool-mirror -n openebs -o yaml
+  ```
+  Example output shows the details of the selected CSPC cluster and used blockdevices. Example snippet of used blockdevice section details will be similar to the following:
+  <div class="co">
+  spec:
+  auxResources: {}
+  pools:
+  - nodeSelector:
+      kubernetes.io/hostname: gke-ranjith16-default-pool-6e471406-kfb8
+    poolConfig:
+      cacheFile: ""
+      compression: "off"
+      defaultRaidGroupType: mirror
+      overProvisioning: false
+      resources: null
+    raidGroups:
+    - blockDevices:
+      - blockDeviceName: blockdevice-070383c017742c82d14103a2d2047c0f
+        capacity: ""
+        devLink: ""
+      - blockDeviceName: blockdevice-41d4416f6199a14b706e2ced69e2694a
+        capacity: ""
+        devLink: ""
+      isReadCache: false
+      isSpare: false
+      isWriteCache: false
+      type: mirror
+  </div>
+- Replace the selected blockdevice from the RAID group by editing the corresponding CSPC configuration. Only requirement is that, one blockdevice per raid group can be replaced at a time. The following command will edit the CSPC configuration and user can replace one blockdevice in the corresponding raid group by replacing with new blockdevice.
+  ```
+  kubectl edit cspc cstor-pool-mirror -n openebs 
+  ```
+  Example command:
+  ```
+  kubectl edit cspc cstor-pool-mirror -n openebs 
+  ```
+  
+  After replacing the required blockdevice with new one, ensure that CSPC configiration is applied successfully with new blockdevice using the folloiwng command:
+  ```
+  kubectl get cspc <CSPC configuration> -n openebs -o yaml
+  ```
+  Example command:
+  ```
+  kubectl get cspc cstor-pool-mirror -n openebs -o yaml
+  ```
+  The following output shows the snippet of used blockdevice section details.
+  <div class="co">
+  spec:
+  auxResources: {}
+  pools:
+  - nodeSelector:
+      kubernetes.io/hostname: gke-ranjith16-default-pool-6e471406-kfb8
+    poolConfig:
+      cacheFile: ""
+      compression: "off"
+      defaultRaidGroupType: mirror
+      overProvisioning: false
+    raidGroups:
+    - blockDevices:
+      - blockDeviceName: blockdevice-070383c017742c82d14103a2d2047c0f
+        capacity: ""
+        devLink: ""
+      - blockDeviceName: blockdevice-c0179d93aebfd90c09a7a864a9148f85
+        capacity: ""
+        devLink: ""
+      isReadCache: false
+      isSpare: false
+      isWriteCache: false
+      type: mirror
+  resources: null
+  </div>
+  It shows that the details of new blockdevice is repalced with old one.
+  
+- Verify if blockdevice replacement is successfull by using the following command:
+  ```
+  kubectl get bd -n openebs
+  ```
+  Example output:
+  <div class="co">
+  NAME                                           NODENAME                                   SIZE          CLAIMSTATE   STATUS   AGE
+  blockdevice-070383c017742c82d14103a2d2047c0f   gke-ranjith16-default-pool-6e471406-kfb8   42949672960   Claimed      Active   147m
+  blockdevice-41d4416f6199a14b706e2ced69e2694a   gke-ranjith16-default-pool-6e471406-kfb8   42949672960   Unclaimed    Active   147m
+  blockdevice-c0179d93aebfd90c09a7a864a9148f85   gke-ranjith16-default-pool-6e471406-kfb8   42949672960   Claimed      Active   147m
+  blockdevice-ef810d7dfc8e4507359963fab7e9647e   gke-ranjith16-default-pool-6e471406-kfb8   53687091200   Unclaimed    Active   147m
+  </div>
+  
+  In the above example output, `blockdevice-41d4416f6199a14b706e2ced69e2694a` is replaced succeffully with `blockdevice-c0179d93aebfd90c09a7a864a9148f85`.
+    
+  If resilvering on new blockdevice is completed , state of old blockdevice will be changed to `Unclaimed` state from `Claimed` state and state of replaced new blockdevice will be changed to `Claimed` state from `Unclaimed` state. In future, different verification methods will be added.
+  
+ 
+  
 ## See Also:
 
 ### [cStor Concepts](/docs/next/cstor.html)
