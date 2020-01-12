@@ -416,7 +416,7 @@ velero restore get
 
 Once the restore job is completed you should see the corresponding restore job is marked as `Completed`.
 
-**Note:** After restoring, you need to set `targetip` for the volume in pool pod.  Target IP of the PVC can be find from running the following command.
+**Note:** After restoring, you need to set `targetip` for the volume in all pool pods. This means, if there are 3 cStor pools of same SPC, then you need to set `targetip` for the volume in all the 3 pool pods. Target IP of the PVC can be find from running the following command.
 
 ```
 kubectl get svc -n <openebs_installed namespace>
@@ -449,7 +449,7 @@ Update the `targetip` for the corresponding dataset using the following command.
 zfs set io.openebs:targetip=<PVC SERVICE IP> <POOL_NAME/VOLUME_NAME>
 ```
 
-After executing the above command, exit from the container session.
+After executing the above command, exit from the container session. The above procedure has to be performed on all the other cStor pools of the same SPC. 
 
 Verify application status using the following command. Now the application should be running.
 
