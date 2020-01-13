@@ -842,8 +842,8 @@ The following are the steps to perform blockdevice replacement:
   Example output:
   
   <div class="co">
-  NAME                     HOSTNAME                                   ALLOCATED   FREE    CAPACITY   STATUS   AGE
-  cstor-pool-mirror-6tls   gke-ranjith16-default-pool-6e471406-kfb8   506K        39.7G   39.8G      ONLINE   103m
+  NAME                     HOSTNAME                                     ALLOCATED   FREE    CAPACITY   STATUS   AGE
+  cstor-pool-mirror-6gdq   gke-ranjith-csi-default-pool-6643eeb8-77f7   506K        39.7G   39.8G      ONLINE   103m
   </div>
 
 - Verify the details of cStor pool cluster configuration using the following command:
@@ -867,11 +867,11 @@ The following are the steps to perform blockdevice replacement:
   ```
   Example output:
   <div class="co">
-  NAME                                           NODENAME                                   SIZE          CLAIMSTATE   STATUS   AGE
-  blockdevice-070383c017742c82d14103a2d2047c0f   gke-ranjith16-default-pool-6e471406-kfb8   42949672960   Claimed      Active   122m
-  blockdevice-41d4416f6199a14b706e2ced69e2694a   gke-ranjith16-default-pool-6e471406-kfb8   42949672960   Claimed      Active   122m
-  blockdevice-c0179d93aebfd90c09a7a864a9148f85   gke-ranjith16-default-pool-6e471406-kfb8   42949672960   Unclaimed    Active   122m
-  blockdevice-ef810d7dfc8e4507359963fab7e9647e   gke-ranjith16-default-pool-6e471406-kfb8   53687091200   Unclaimed    Active   122m
+  NAME                                           NODENAME                                     SIZE          CLAIMSTATE   STATUS   AGE
+  blockdevice-070383c017742c82d14103a2d2047c0f   gke-ranjith-csi-default-pool-6643eeb8-77f7   42949672960   Claimed      Active   122m
+  blockdevice-41d4416f6199a14b706e2ced69e2694a   gke-ranjith-csi-default-pool-6643eeb8-77f7   42949672960   Claimed      Active   122m
+  blockdevice-c0179d93aebfd90c09a7a864a9148f85   gke-ranjith-csi-default-pool-6643eeb8-77f7   42949672960   Unclaimed    Active   122m
+  blockdevice-ef810d7dfc8e4507359963fab7e9647e   gke-ranjith-csi-default-pool-6643eeb8-77f7   53687091200   Unclaimed    Active   122m
   </div>
   In this example, blockdevices `blockdevice-070383c017742c82d14103a2d2047c0f` and `blockdevice-41d4416f6199a14b706e2ced69e2694a` are used for the pool creation configuration `cstor-pool-mirror` mentioned in previous step . Both the blockdevices are attached to the same node. Also, there are 2 available blockdevice CRs present on the same node with `Unclaimed` state. These 2 blockdevices satisfied all the prerequisites conditions and can be used to replace any of the above mentioned used blockdevice with a recommended method that, only one blockdevice per raid group can be replaced at a time.
 
@@ -890,7 +890,7 @@ The following are the steps to perform blockdevice replacement:
   auxResources: {}
   pools:
   - nodeSelector:
-      kubernetes.io/hostname: gke-ranjith16-default-pool-6e471406-kfb8
+      kubernetes.io/hostname: gke-ranjith-csi-default-pool-6643eeb8-77f7
     poolConfig:
       cacheFile: ""
       compression: "off"
@@ -921,37 +921,37 @@ The following are the steps to perform blockdevice replacement:
   
   After replacing the required blockdevice with new one, ensure that CSPC configiration is applied successfully with new blockdevice using the folloiwng command:
   ```
-  kubectl get cspc <CSPC configuration> -n openebs -o yaml
+  kubectl get cspi <CSPI-name>  -n openebs -o yaml
   ```
   Example command:
   ```
-  kubectl get cspc cstor-pool-mirror -n openebs -o yaml
+  kubectl get cspi cstor-pool-mirror-6gdq -n openebs -o yaml
   ```
   The following output shows the snippet of used blockdevice section details.
   <div class="co">
   spec:
-  auxResources: {}
-  pools:
-  - nodeSelector:
-      kubernetes.io/hostname: gke-ranjith16-default-pool-6e471406-kfb8
+    auxResources: {}
+    hostName: gke-ranjith-csi-default-pool-6643eeb8-77f7
+    nodeSelector:
+      kubernetes.io/hostname: gke-ranjith-csi-default-pool-6643eeb8-77f7
     poolConfig:
       cacheFile: ""
       compression: "off"
       defaultRaidGroupType: mirror
       overProvisioning: false
-    raidGroups:
+      resources: null
+    raidGroup:
     - blockDevices:
       - blockDeviceName: blockdevice-070383c017742c82d14103a2d2047c0f
         capacity: ""
-        devLink: ""
+        devLink: /dev/disk/by-id/scsi-0Google_PersistentDisk_ranjith-mirror1
       - blockDeviceName: blockdevice-c0179d93aebfd90c09a7a864a9148f85
         capacity: ""
-        devLink: ""
+        devLink: /dev/disk/by-id/scsi-0Google_PersistentDisk_ranjith-mirror4
       isReadCache: false
       isSpare: false
       isWriteCache: false
       type: mirror
-  resources: null
   </div>
   It shows that the details of new blockdevice is repalced with old one.
   
@@ -961,11 +961,11 @@ The following are the steps to perform blockdevice replacement:
   ```
   Example output:
   <div class="co">
-  NAME                                           NODENAME                                   SIZE          CLAIMSTATE   STATUS   AGE
-  blockdevice-070383c017742c82d14103a2d2047c0f   gke-ranjith16-default-pool-6e471406-kfb8   42949672960   Claimed      Active   147m
-  blockdevice-41d4416f6199a14b706e2ced69e2694a   gke-ranjith16-default-pool-6e471406-kfb8   42949672960   Unclaimed    Active   147m
-  blockdevice-c0179d93aebfd90c09a7a864a9148f85   gke-ranjith16-default-pool-6e471406-kfb8   42949672960   Claimed      Active   147m
-  blockdevice-ef810d7dfc8e4507359963fab7e9647e   gke-ranjith16-default-pool-6e471406-kfb8   53687091200   Unclaimed    Active   147m
+  NAME                                           NODENAME                                      SIZE          CLAIMSTATE   STATUS   AGE
+  blockdevice-070383c017742c82d14103a2d2047c0f   gke-ranjith-csi-default-pool-6643eeb8-77f7    42949672960   Claimed      Active   147m
+  blockdevice-41d4416f6199a14b706e2ced69e2694a   gke-ranjith-csi-default-pool-6643eeb8-77f7    42949672960   Unclaimed    Active   147m
+  blockdevice-c0179d93aebfd90c09a7a864a9148f85   gke-ranjith-csi-default-pool-6643eeb8-77f78   42949672960   Claimed      Active   147m
+  blockdevice-ef810d7dfc8e4507359963fab7e9647e   gke-ranjith-csi-default-pool-6643eeb8-77f7    53687091200   Unclaimed    Active   147m
   </div>
   
   In the above example output, `blockdevice-41d4416f6199a14b706e2ced69e2694a` is replaced succeffully with `blockdevice-c0179d93aebfd90c09a7a864a9148f85`.
