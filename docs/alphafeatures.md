@@ -21,7 +21,7 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 [Snapshot and Cloning the cStor volume created using CSI provisioner](#snapshot-clone-cstor-volume-created-using-csi-provisioner)
 
-[Disk replacement in a cStor pool created using CSPC operator](#disk-replacement-cstor-pool-cspc)
+[Blockdevice replacement in a cStor pool created using CSPC operator](#blockdevice-replacement-cstor-pool-cspc)
 
 
 ## Jiva
@@ -820,9 +820,9 @@ blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a
 ```
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="disk-replacement-cstor-pool-cspc"></a>Disk replacement in a cStor pool created using CSPC operator</h3>
+<h3><a class="anchor" aria-hidden="true" id="blockdevice-replacement-cstor-pool-cspc"></a>Blockdevice replacement in a cStor pool created using CSPC operator</h3>
 
-The following steps will help to perform the blockdevice replacement used in the cStor pool created using CSPC operator method. It is recommended to perform replacement of one blockdevice per raid group of the cStor pool. For example, if cStor pool is created using 2 mirror raid group, then only blockdevice can replaced per raid group if any available disks are statisified with all prerequisites.
+The following steps will help to perform the blockdevice replacement used in the cStor pool created using CSPC operator method. It is recommended to perform replacement of one blockdevice per raid group of the cStor pool. For example, If cStor pool is created using 2 mirror raid groups, then only one blockdevice can be replaced per raid group. Following are prerequisites to perform replacement of blockdevice
 
 **Prerequisites:**
 
@@ -830,20 +830,27 @@ The following steps will help to perform the blockdevice replacement used in the
 
 2. New blockdevice which is going to be replaced should have equal or greater capacity of old blockdevice.
 
-The following are the steps:
+**Note:** Blockdevice replacement is not supported on cStor pool created using stripe configuration.
+
+The following are the steps to perform blockdevice replacement:
 
 - Verify the status of cStor pool using the following command:
   
   ```
   kubectl get cspi -n openebs
   ```
-  Example command:
+  Example output:
+  
   <div class="co">
   NAME                     HOSTNAME                                   ALLOCATED   FREE    CAPACITY   STATUS   AGE
   cstor-pool-mirror-6tls   gke-ranjith16-default-pool-6e471406-kfb8   506K        39.7G   39.8G      ONLINE   103m
   </div>
 
 - Verify the details of cStor pool cluster configuration using the following command:
+  ```
+  kubectl get cspc <CSPC configuration> -n <openebs_namespace> -o yaml
+  ```
+  Example command:
   ```
   kubectl get cspc -n openebs
   ```
@@ -975,7 +982,7 @@ OpenEBS Jiva volumes can now be provisioned with CSI driver from OpenEBS 1.5 ver
 
 - Kubernetes version 1.14 or higher
 - OpenEBS Version 1.5 or higher installed. Recommended OpenEBS version is 1.6.
-- iSCSI initiator utils installed on all the worker nodes
+- iSCSI initiator utils installed on all the worker nodes.
 - You have access to install RBAC components into `kube-system` namespace. The Jiva CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
 - Base OS on worker nodes can be Ubuntu 16.04, Ubuntu 18.04 or CentOS.
 
