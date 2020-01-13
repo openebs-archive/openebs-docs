@@ -24,6 +24,9 @@ This section give different features of OpenEBS which is presently in Alpha vers
 [Disk replacement in a cStor pool created using CSPC operator](#disk-replacement-cstor-pool-cspc)
 
 
+## Jiva
+
+[Run a sample application on Jiva volume provisioned via Jiva CSI Provisioner](#running-sample-application-jiva-volume-using-csi-provisioner)
 
 
 <h3><a class="anchor" aria-hidden="true" id="running-sample-application-cstor-volume-using-csi-provisioner"></a>Running a sample application on a cStor volume provisioned via CSI provisioner</h3>
@@ -38,7 +41,7 @@ The [Container Storage Interface](https://github.com/container-storage-interface
 - Kubernetes version 1.14 or higher is installed.
 - iSCSI initiator utils to be installed on all the worker nodes.
 - Recommended OpenEBS Version is 1.4 or above . The steps to install OpenEBS is [here](/docs/next/quickstart.html).
-- You have access to install RBAC components into `kube-system` namespace. The OpenEBS CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
+- You have access to install RBAC components into `kube-system` namespace. The OpenEBS cStor CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
 - You need to enable the feature gates `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` on `kubelet` in each worker node.
 - You need to enable the feature gates `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` on `kube-apiserver` in the master node.
 - Base OS on worker nodes can  be Ubuntu 16.04, Ubuntu 18.04 or CentOS.
@@ -54,7 +57,7 @@ The [Container Storage Interface](https://github.com/container-storage-interface
 
 The node components make use of the host iSCSI binaries for iSCSI connection management. Depending on the OS, the csi-operator will have to be modified to load the required iSCSI files into the node pods.
 
-OpenEBS CSI driver components can be installed by running the following command:
+OpenEBS cStor CSI driver components can be installed by running the following command:
 
 Depending on the OS, select the appropriate deployment file.
 
@@ -962,8 +965,185 @@ The following are the steps:
     
   If resilvering on new blockdevice is completed , state of old blockdevice will be changed to `Unclaimed` state from `Claimed` state and state of replaced new blockdevice will be changed to `Claimed` state from `Unclaimed` state. In future, different verification methods will be added.
   
- 
-  
+<h3><a class="anchor" aria-hidden="true" id="running-sample-application-jiva-volume-using-csi-provisioner"></a>Run a sample application on Jiva volume provisioned via Jiva CSI Provisioner</h3>  
+
+OpenEBS Jiva volumes can now be provisioned with CSI driver from OpenEBS 1.5 version onwards.
+
+**Note:** The current implementation only supports provisioning and de-provisioning of Jiva Volumes. This feature is under active development and considered to be in Alpha state.
+
+**Prerequisites:**
+
+- Kubernetes version 1.14 or higher
+- OpenEBS Version 1.5 or higher installed. Recommended OpenEBS version is 1.6.
+- iSCSI initiator utils installed on all the worker nodes
+- You have access to install RBAC components into `kube-system` namespace. The Jiva CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
+- Base OS on worker nodes can be Ubuntu 16.04, Ubuntu 18.04 or CentOS.
+
+**Overview**
+- Install OpenEBS. 
+- Install Jiva operator
+- Install Jiva CSI Driver
+- Create a Storage Class with Jiva CSI provisioner
+- Provision sample application using a PVC spec  which uses SC with Jiva CSI provisioner
+
+
+<h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc"></a>Install OpenEBS</h4>
+
+Latest OpenEBS version can be installed using the following command:
+
+```
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.6.0.yaml
+```
+
+Verify if OpenEBS pods are in `Running` state using the following command:
+```
+kubectl get pod -n openebs
+```
+Example output:
+<div class="co">
+NAME                                          READY   STATUS    RESTARTS   AGE
+maya-apiserver-77f9cc9f9b-jg825               1/1     Running   3          90s
+openebs-admission-server-8c5b8565-d2q58       1/1     Running   0          79s
+openebs-localpv-provisioner-f458bc8c4-bjmkq   1/1     Running   0          78s
+openebs-ndm-lz4n6                             1/1     Running   0          80s
+openebs-ndm-operator-7d7c9d966d-bqlnj         1/1     Running   1          79s
+openebs-ndm-spm7f                             1/1     Running   0          80s
+openebs-ndm-tm8ff                             1/1     Running   0          80s
+openebs-provisioner-5fbd8fc74c-6zcnq          1/1     Running   0          82s
+openebs-snapshot-operator-7d6dd4b77f-444zh    2/2     Running   0          81s
+</div>
+
+<h4><a class="anchor" aria-hidden="true" id="install-jiva-operator"></a>Install Jiva operator</h4>
+
+
+Install Jiva operator using the following command:
+
+```
+kubectl create -f https://raw.githubusercontent.com/openebs/jiva-operator/master/deploy/operator.yaml
+```
+
+Verify the status of Jiva operator using the following command:
+
+```
+kubectl get pod -n openebs
+```
+Example output:
+
+<div class="co">
+jiva-operator-7765cbfffd-vt787                 1/1     Running   0          10s
+maya-apiserver-77f9cc9f9b-jg825                1/1     Running   3          90s
+openebs-admission-server-8c5b8565-d2q58        1/1     Running   0          79s
+openebs-localpv-provisioner-f458bc8c4-bjmkq    1/1     Running   0          78s
+openebs-ndm-lz4n6                              1/1     Running   0          80s
+openebs-ndm-operator-7d7c9d966d-bqlnj          1/1     Running   1          79s
+openebs-ndm-spm7f                              1/1     Running   0          80s
+openebs-ndm-tm8ff                              1/1     Running   0          80s
+openebs-provisioner-5fbd8fc74c-6zcnq           1/1     Running   0          82s
+openebs-snapshot-operator-7d6dd4b77f-444zh     2/2     Running   0          81s
+</div>
+
+<h4><a class="anchor" aria-hidden="true" id="install-jiva-csi-driver"></a>Install Jiva CSI Driver</h4>
+
+The node components make use of the host iSCSI binaries for iSCSI connection management. Depending on the OS, the Jiva operator will have to be modified to load the required iSCSI files into the node pods.
+
+OpenEBS Jiva CSI driver components can be installed by running the following command:
+Depending on the base OS, select the appropriate deployment file.
+
+For Ubuntu 16.04 and CentOS:
+
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/jiva-csi/master/deploy/jiva-csi-ubuntu-16.04.yaml
+```
+
+For Ubuntu 18.04:
+
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/jiva-csi/master/deploy/jiva-csi.yaml
+```
+
+Verify that the Jiva CSI Components are installed:
+
+```
+kubectl get pods -n kube-system -l role=openebs-csi
+```
+Example output:
+
+<div class="co">
+NAME                            READY   STATUS    RESTARTS   AGE
+openebs-jiva-csi-controller-0   4/4     Running   0          6m14s
+openebs-jiva-csi-node-56t5g     2/2     Running   0          6m13s
+</div>
+
+<h4><a class="anchor" aria-hidden="true" id="install-jiva-sc-csi-provisioner-"></a>Create a Storage Class with Jiva CSI provisioner</h4>
+
+Create a Storage Class to dynamically provision volumes using Jiva CSI provisioner. You can save the following sample StorageClass YAML spec as `jiva-csi-sc.yaml`.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-jiva-csi-sc
+provisioner: jiva.csi.openebs.io
+parameters:
+  cas-type: "jiva"
+  replicaCount: "1"
+  replicaSC: "openebs-hostpath"
+```
+
+<h4><a class="anchor" aria-hidden="true" id="use-sc-to-provision-jiva-volume"></a>Provsion a sample application using Jiva SC</h4>
+
+Create PVC by specifying the above Storage Class in the PVC spec. The following is a sample PVC which uses the above created Storage Class. In this example, the PVC YAML spec is saved as `jiva-csi-demp-pvc.yaml`.
+
+```
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: jiva-csi-demo
+spec:
+  storageClassName: openebs-jiva-csi-sc
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+```
+
+Now, deploy your application by specifying the PVC name. The following is a sample application spec which uses the above PVC.  In this example, the application YAML file is saved as `jiva-csi-demp-app.yaml`. 
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fio
+spec:
+  selector:
+    matchLabels:
+      name: fio
+  replicas: 1
+  strategy:
+    type: Recreate
+    rollingUpdate: null
+  template:
+    metadata:
+      labels:
+        name: fio
+    spec:
+      nodeName: gke-utkarsh-csi-default-pool-953ba289-rt9l
+      containers:
+      - name: perfrunner
+        image: openebs/tests-fio
+        command: ["/bin/bash"]
+        args: ["-c", "while true ;do sleep 50; done"]
+        volumeMounts:
+      - mountPath: /datadir
+        name: fio-vol
+      volumes:
+      - name: fio-vol
+        persistentVolumeClaim:
+          claimName: jiva-csi-demo
+```
+
+
 ## See Also:
 
 ### [cStor Concepts](/docs/next/cstor.html)
