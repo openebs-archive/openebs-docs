@@ -826,15 +826,15 @@ The following steps will help to perform the blockdevice replacement used in the
 
 **Prerequisites:**
 
-1. There should an available blockdevice present on the same node where the old blockdevice is attached. The available blockdevice should be `Unclaimed` state and does not contain any filesystem or partition.
+1. There should be an blockdevice present on the same node where the old blockdevice is attached. The available blockdevice should be in `Unclaimed` & 'Active' state and does not contain any filesystem or partition.
 
-2. New blockdevice which is going to be replaced should have equal or greater capacity of old blockdevice.
+2. The capacity of the new blockdevice should be greater than or equal to that of old blockdevice.
 
 **Note:** Blockdevice replacement is not supported on cStor pool created using stripe configuration.
 
 The following are the steps to perform blockdevice replacement:
 
-- Verify the status of cStor pool using the following command:
+- Verify the status of cStor pool instance using the following command:
   
   ```
   kubectl get cspi -n openebs
@@ -848,7 +848,7 @@ The following are the steps to perform blockdevice replacement:
 
 - Verify the details of cStor pool cluster configuration using the following command:
   ```
-  kubectl get cspc <CSPC configuration> -n <openebs_namespace> -o yaml
+  kubectl get cspc <CSPC name> -n <openebs_namespace> -o yaml
   ```
   Example command:
   ```
@@ -878,13 +878,14 @@ The following are the steps to perform blockdevice replacement:
 - Get the details of cStor pool configuration using the following command:
 
   ```
-  kubectl get cspc <CSPC configuration> -n openebs -o yaml
+  kubectl get cspc <CSPC name> -n openebs -o yaml
   ```
   Example command:
   ```
   kubectl get cspc cstor-pool-mirror -n openebs -o yaml
   ```
-  Example output shows the details of the selected CSPC cluster and used blockdevices. Example snippet of used blockdevice section details will be similar to the following:
+  Example output shows the details of the selected CSPC cluster and used blockdevices. 
+  
   <div class="co">
   spec:
   auxResources: {}
@@ -910,6 +911,7 @@ The following are the steps to perform blockdevice replacement:
       isWriteCache: false
       type: mirror
   </div>
+
 - Replace the selected blockdevice from the RAID group by editing the corresponding CSPC configuration. Only requirement is that, one blockdevice per raid group can be replaced at a time. The following command will edit the CSPC configuration and user can replace one blockdevice in the corresponding raid group by replacing with new blockdevice.
   ```
   kubectl edit cspc cstor-pool-mirror -n openebs 
@@ -919,7 +921,7 @@ The following are the steps to perform blockdevice replacement:
   kubectl edit cspc cstor-pool-mirror -n openebs 
   ```
   
-  After replacing the required blockdevice with new one, ensure that CSPC configiration is applied successfully with new blockdevice using the folloiwng command:
+  After replacing the required blockdevice with new one, ensure that CSPC configuration is applied successfully with new blockdevice using the following command:
   ```
   kubectl get cspi <CSPI-name>  -n openebs -o yaml
   ```
@@ -927,7 +929,7 @@ The following are the steps to perform blockdevice replacement:
   ```
   kubectl get cspi cstor-pool-mirror-6gdq -n openebs -o yaml
   ```
-  The following output shows the snippet of used blockdevice section details.
+  The following output shows the snippet of used blockdevice section.
   <div class="co">
   spec:
     auxResources: {}
@@ -953,9 +955,10 @@ The following are the steps to perform blockdevice replacement:
       isWriteCache: false
       type: mirror
   </div>
-  It shows that the details of new blockdevice is repalced with old one.
   
-- Verify if blockdevice replacement is successfull by using the following command:
+  It shows that the details of new blockdevice is replaced with old one.
+  
+- Verify if blockdevice replacement is successful by using the following command:
   ```
   kubectl get bd -n openebs
   ```
@@ -968,9 +971,9 @@ The following are the steps to perform blockdevice replacement:
   blockdevice-ef810d7dfc8e4507359963fab7e9647e   gke-ranjith-csi-default-pool-6643eeb8-77f7    53687091200   Unclaimed    Active   147m
   </div>
   
-  In the above example output, `blockdevice-41d4416f6199a14b706e2ced69e2694a` is replaced succeffully with `blockdevice-c0179d93aebfd90c09a7a864a9148f85`.
+  In the above example output, `blockdevice-41d4416f6199a14b706e2ced69e2694a` is replaced successfully with `blockdevice-c0179d93aebfd90c09a7a864a9148f85`.
     
-  If resilvering on new blockdevice is completed , state of old blockdevice will be changed to `Unclaimed` state from `Claimed` state and state of replaced new blockdevice will be changed to `Claimed` state from `Unclaimed` state. In future, different verification methods will be added.
+  If resilvering on the pool is completed , state of old blockdevice will be changed to `Unclaimed` state and new blockdevice will be `Claimed`. In future, different verification methods will be added.
   
 <h3><a class="anchor" aria-hidden="true" id="running-sample-application-jiva-volume-using-csi-provisioner"></a>Run a sample application on Jiva volume provisioned via Jiva CSI Provisioner</h3>  
 
