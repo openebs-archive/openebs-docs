@@ -1053,7 +1053,8 @@ openebs-snapshot-operator-7d6dd4b77f-444zh     2/2     Running   0          81s
 
 The node components make use of the host iSCSI binaries for iSCSI connection management. Depending on the OS, the Jiva operator will have to be modified to load the required iSCSI files into the node pods.
 
-OpenEBS Jiva CSI driver components can be installed by running the following command:
+OpenEBS Jiva CSI driver components can be installed by running the following command.
+
 Depending on the base OS, select the appropriate deployment file.
 
 For Ubuntu 16.04 and CentOS:
@@ -1102,9 +1103,9 @@ Create Storage Class using the above YAML using the following command:
 kubectl apply -f jiva-csi-sc.yaml
 ```
 
-<h4><a class="anchor" aria-hidden="true" id="use-sc-to-provision-jiva-volume"></a>Provsion a sample application using Jiva SC</h4>
+<h4><a class="anchor" aria-hidden="true" id="use-sc-to-provision-jiva-volume"></a>Provision a sample application using Jiva StorageClass</h4>
 
-Create PVC by specifying the above Storage Class in the PVC spec. The following is a sample PVC which uses the above created Storage Class. In this example, the PVC YAML spec is saved as `jiva-csi-demo-pvc.yaml`.
+Create PVC by specifying the above Storage Class in the PVC spec. The following is a sample PVC spec which uses the above created Storage Class. In this example, the PVC YAML spec is saved as `jiva-csi-demo-pvc.yaml`.
 
 ```
 apiVersion: v1
@@ -1121,7 +1122,7 @@ spec:
     requests:
       storage: 7Gi
 ```
-Create PVC using the above YAML using the following command:
+Now, apply the PVC using the following command:
 
 ```
 kubectl apply -f jiva-csi-demo-pvc.yaml
@@ -1170,8 +1171,7 @@ spec:
         - name: storage # must match the volume name, above
           mountPath: "/storage"
 ```
-Create PVC using the above YAML using the following command:
-
+Now, apply the application using the following command:
 ```
 kubectl apply -f jiva-csi-demo-app.yaml
 ```
@@ -1194,13 +1194,10 @@ spec:
     app: minio
   sessionAffinity: None
   type: NodePort
-
-Create PVC using the above YAML using the following command:
-
+```
+Apply the service using the above YAML spec.
 ```
 kubectl apply -f jiva-csi-demo--app-service.yaml
-```
-
 ```
 Verify if application pod is created successfully using the following command:
 
