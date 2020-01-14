@@ -246,6 +246,16 @@ See an example configuration [here](#example-diskfilter-yaml)
 Some of the configurations related to cStor Target, default cStor sparse pool, default Storage configuration, Local PV Basepath, etc can be configured as environmental variable in the corresponding deployment specification. 
 
 
+<h4><a class="anchor" aria-hidden="true" id="enable-core-dump"></a>Enable core dump</h4>
+
+Core dumping for `cstor-pool`, `cstor-istgt` and `ndm` containers are disbaled by default from 1.6. So when these containers are crashed, it will not dump the core. The following configuration can be added as environmental variable in the maya-apiserver deployment specification to enable the core dump on these containers.
+
+```
+ - name: ENABLE_COREDUMP
+   value: "true"
+```
+On enabling coredumps, coredumps gets collected onto hostpath `/var/openebs/sparse` for `cstor-pool` and `cstor-istgt` conatiners which is persistent storage. For `ndm` container,  core files will be stored inside `var/openebs/ndm/core`.
+
 
 <h4><a class="anchor" aria-hidden="true" id="sparse-dir "></a>SparseDir</h4>
 
