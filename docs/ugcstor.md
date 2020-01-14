@@ -416,7 +416,7 @@ velero restore get
 
 Once the restore job is completed you should see the corresponding restore job is marked as `Completed`.
 
-**Note:** After restoring, you need to set `targetip` for the volume in pool pod.  Target IP of the PVC can be find from running the following command.
+**Note:** After restoring, you need to set `targetip` for the volume in all pool pods. This means, if there are 3 cStor pools of same SPC, then you need to set `targetip` for the volume in all the 3 pool pods. Target IP of the PVC can be find from running the following command.
 
 ```
 kubectl get svc -n <openebs_installed namespace>
@@ -449,7 +449,7 @@ Update the `targetip` for the corresponding dataset using the following command.
 zfs set io.openebs:targetip=<PVC SERVICE IP> <POOL_NAME/VOLUME_NAME>
 ```
 
-After executing the above command, exit from the container session.
+After executing the above command, exit from the container session. The above procedure has to be performed on all the other cStor pools of the same SPC. 
 
 Verify application status using the following command. Now the application should be running.
 
@@ -1090,11 +1090,11 @@ Below table lists the storage policies supported by cStor. These policies should
 | cStor Storage Policy                                         | Mandatory | Default                                 | Purpose                                                      |
 | ------------------------------------------------------------ | --------- | --------------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                       | Defines the number of cStor volume replicas                  |
-| [VolumeControllerImage](#Volume-Controller-Image-Policy)     |           | quay.io/openebs/cstor-volume-mgmt:1.5.0 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
-| [VolumeTargetImage](#Volume-Target-Image-Policy)             |           | value:quay.io/openebs/cstor-istgt:1.5.0 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeControllerImage](#Volume-Controller-Image-Policy)     |           | quay.io/openebs/cstor-volume-mgmt:1.6.0 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
+| [VolumeTargetImage](#Volume-Target-Image-Policy)             |           | value:quay.io/openebs/cstor-istgt:1.6.0 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
 | [StoragePoolClaim](#Storage-Pool-Claim-Policy)               | Yes       | N/A (a valid pool must be provided)     | The cStorPool on which the volume replicas should be provisioned |
 | [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                      | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.5.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | quay.io/openebs/m-exporter:1.6.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [FSType](#Volume-File-System-Type-Policy)                    |           | ext4                                    | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [TargetNodeSelector](#Target-NodeSelector-Policy)            |           | Decided by Kubernetes scheduler         | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
 | [TargetResourceLimits](#Target-ResourceLimits-Policy)        |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
@@ -1135,7 +1135,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeControllerImage
-        value: quay.io/openebs/cstor-volume-mgmt:1.5.0
+        value: quay.io/openebs/cstor-volume-mgmt:1.6.0
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1151,7 +1151,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeTargetImage
-        value:quay.io/openebs/cstor-istgt:1.5.0
+        value:quay.io/openebs/cstor-istgt:1.6.0
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1199,7 +1199,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: quay.io/openebs/m-exporter:1.5.0
+        value: quay.io/openebs/m-exporter:1.6.0
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```

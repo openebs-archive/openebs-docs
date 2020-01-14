@@ -9,19 +9,25 @@ sidebar_label: Alpha Features
 
 This section give different features of OpenEBS which is presently in Alpha version. These features are not recommend to perform on a production clusters. We suggest to familiarize these features on test clusters and reach out to OpenEBS [community slack](https://openebs.io/join-our-slack-community) if you have  any queries or help on trying out these features.
 
+**Note** : Upgrade is not supported for features in Alpha version.
 
 
 ## cStor
 
 [Running a sample application on a cStor volume provsioned via CSI provisioner](#running-sample-application-cstor-volume-using-csi-provisioner)
 
+[Provisioning cStor pool using CSPC operator](#provision-cstor-pool-using-cspc-operator)
+
 [Expand a cStor volume created using CSI provisioner](#expand-cstor-volume-created-using-csi-provisioner)
 
 [Snapshot and Cloning the cStor volume created using CSI provisioner](#snapshot-clone-cstor-volume-created-using-csi-provisioner)
 
-[Provisioning cStor pool using CSPC operator](#provision-cstor-pool-using-cspc-operator)
+[Blockdevice replacement in a cStor pool created using CSPC operator](#blockdevice-replacement-cstor-pool-cspc)
 
 
+## Jiva
+
+[Run a sample application on Jiva volume provisioned via Jiva CSI Provisioner](#running-sample-application-jiva-volume-using-csi-provisioner)
 
 
 <h3><a class="anchor" aria-hidden="true" id="running-sample-application-cstor-volume-using-csi-provisioner"></a>Running a sample application on a cStor volume provisioned via CSI provisioner</h3>
@@ -36,7 +42,7 @@ The [Container Storage Interface](https://github.com/container-storage-interface
 - Kubernetes version 1.14 or higher is installed.
 - iSCSI initiator utils to be installed on all the worker nodes.
 - Recommended OpenEBS Version is 1.4 or above . The steps to install OpenEBS is [here](/docs/next/quickstart.html).
-- You have access to install RBAC components into `kube-system` namespace. The OpenEBS CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
+- You have access to install RBAC components into `kube-system` namespace. The OpenEBS cStor CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
 - You need to enable the feature gates `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` on `kubelet` in each worker node.
 - You need to enable the feature gates `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` on `kube-apiserver` in the master node.
 - Base OS on worker nodes can  be Ubuntu 16.04, Ubuntu 18.04 or CentOS.
@@ -52,20 +58,20 @@ The [Container Storage Interface](https://github.com/container-storage-interface
 
 The node components make use of the host iSCSI binaries for iSCSI connection management. Depending on the OS, the csi-operator will have to be modified to load the required iSCSI files into the node pods.
 
-OpenEBS CSI driver components can be installed by running the following command:
+OpenEBS cStor CSI driver components can be installed by running the following command:
 
 Depending on the OS, select the appropriate deployment file.
 
 - For Ubuntu 16.04 and CentOS:
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.5.0.yaml
+  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.6.0.yaml
   ```
 
 - For Ubuntu 18.04:
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.5.0-ubuntu-18.04.yaml
+  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.6.0-ubuntu-18.04.yaml
   ```
 
 Verify that the OpenEBS CSI Components are installed.
@@ -110,7 +116,7 @@ From above output, `openebs-cstor-csi-controller-0`  is running and `openebs-cst
 Apply CSPC operator YAML file using the following command:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.5.0.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.6.0.yaml
 ```
 
 Verify the status of CSPC operator using the following command:
@@ -377,7 +383,8 @@ The following section will give the steps to take snapshot and clone the cStor v
 **Notes to remember:**
 
 - You will need to enable `VolumeSnapshotDataSource` Feature Gate on `kubelet` and `kube-apiserver`. Other general prerequisites related to cStor volume via CSI provisioner can be found from [here](#prerequisites-cstor-csi). 
-- Supported OpenEBS Version is 1.5
+
+- Recommended OpenEBS Version is 1.6
 
 **Capture the snapshot and cloning the cStor volume:**
 
@@ -498,7 +505,7 @@ CSPC is a new schema for cStor pool provisioning and also refactors the code to 
 
 The current workflow to provision CSPC pool is as follows:
 
-1. OpenEBS should be installed. Recommended OpenEBS version is 1.5.
+1. OpenEBS should be installed. Recommended OpenEBS version is 1.6.
 2. Install CSPC operator using YAML.
 3. Identify the available blockdevices which are `Unclaimed` and `Active`.
 4. Apply the CSPC pool YAML spec by filling required fields.
@@ -509,7 +516,7 @@ The current workflow to provision CSPC pool is as follows:
 Latest OpenEBS version can be installed using the following command:
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.5.0.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.6.0.yaml
 ```
 
 Verify if OpenEBS pods are in `Running` state using the following command:
@@ -534,7 +541,7 @@ openebs-snapshot-operator-7d6dd4b77f-444zh    2/2     Running   0          81s
 
 Install CSPC operator by using the following command:
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.5.0.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.6.0.yaml
 ```
 Verify if CSPC operator is in `Running` state using the following command:
 ```
@@ -758,6 +765,8 @@ The following are some of the sample CSPC configuration YAML spec:
         overProvisioning: false
         compression: "off"	  
   ```
+  
+  Next, you can provision a cStor volume and then provision applciation on this volume. The steps can be found [here](#running-sample-application-cstor-volume-using-csi-provisioner).
 
 <h4><a class="anchor" aria-hidden="true" id="verify-cspc-pool-details"></a>Verify CSPC Pool Details</h4>
 
@@ -811,6 +820,425 @@ blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-cspc-default-pool-f7a
 blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a78720-9436   42949672960   Claimed      Active   7h47m
 ```
 <br>
+
+<h3><a class="anchor" aria-hidden="true" id="blockdevice-replacement-cstor-pool-cspc"></a>Blockdevice replacement in a cStor pool created using CSPC operator</h3>
+
+The following steps will help to perform the blockdevice replacement used in the cStor pool created using CSPC operator method. It is recommended to perform replacement of one blockdevice per raid group of the cStor pool. For example, If cStor pool is created using 2 mirror raid groups, then only one blockdevice can be replaced per raid group. Following are prerequisites to perform replacement of blockdevice
+
+**Prerequisites:**
+
+1. There should be an blockdevice present on the same node where the old blockdevice is attached. The available blockdevice should be in `Unclaimed` & 'Active' state and does not contain any filesystem or partition.
+
+2. The capacity of the new blockdevice should be greater than or equal to that of old blockdevice.
+
+**Note:** Blockdevice replacement is not supported on cStor pool created using stripe configuration.
+
+The following are the steps to perform blockdevice replacement:
+
+- Verify the status of cStor pool instance using the following command:
+  
+  ```
+  kubectl get cspi -n openebs
+  ```
+  Example output:
+  
+  <div class="co">
+  NAME                     HOSTNAME                                     ALLOCATED   FREE    CAPACITY   STATUS   AGE
+  cstor-pool-mirror-6gdq   gke-ranjith-csi-default-pool-6643eeb8-77f7   506K        39.7G   39.8G      ONLINE   103m
+  </div>
+
+- Verify the details of cStor pool cluster configuration using the following command:
+  ```
+  kubectl get cspc <CSPC name> -n <openebs_namespace> -o yaml
+  ```
+  Example command:
+  ```
+  kubectl get cspc -n openebs
+  ```
+  Example output:
+  <div class="co">
+  NAME                AGE
+  cstor-pool-mirror   106m
+  </div>
+  
+- Obtain the details of used blockdevices and avaiable blockdevices using the following command:
+  
+  ```
+  kubectl get bd -n openebs
+  ```
+  Example output:
+  <div class="co">
+  NAME                                           NODENAME                                     SIZE          CLAIMSTATE   STATUS   AGE
+  blockdevice-070383c017742c82d14103a2d2047c0f   gke-ranjith-csi-default-pool-6643eeb8-77f7   42949672960   Claimed      Active   122m
+  blockdevice-41d4416f6199a14b706e2ced69e2694a   gke-ranjith-csi-default-pool-6643eeb8-77f7   42949672960   Claimed      Active   122m
+  blockdevice-c0179d93aebfd90c09a7a864a9148f85   gke-ranjith-csi-default-pool-6643eeb8-77f7   42949672960   Unclaimed    Active   122m
+  blockdevice-ef810d7dfc8e4507359963fab7e9647e   gke-ranjith-csi-default-pool-6643eeb8-77f7   53687091200   Unclaimed    Active   122m
+  </div>
+  In this example, blockdevices `blockdevice-070383c017742c82d14103a2d2047c0f` and `blockdevice-41d4416f6199a14b706e2ced69e2694a` are used for the pool creation configuration `cstor-pool-mirror` mentioned in previous step . Both the blockdevices are attached to the same node. Also, there are 2 available blockdevice CRs present on the same node with `Unclaimed` state. These 2 blockdevices satisfied all the prerequisites conditions and can be used to replace any of the above mentioned used blockdevice with a recommended method that, only one blockdevice per raid group can be replaced at a time.
+
+- Get the details of cStor pool configuration using the following command:
+
+  ```
+  kubectl get cspc <CSPC name> -n openebs -o yaml
+  ```
+  Example command:
+  ```
+  kubectl get cspc cstor-pool-mirror -n openebs -o yaml
+  ```
+  Example output shows the details of the selected CSPC cluster and used blockdevices. 
+  
+  <div class="co">
+  spec:
+  auxResources: {}
+  pools:
+  - nodeSelector:
+      kubernetes.io/hostname: gke-ranjith-csi-default-pool-6643eeb8-77f7
+    poolConfig:
+      cacheFile: ""
+      compression: "off"
+      defaultRaidGroupType: mirror
+      overProvisioning: false
+      resources: null
+    raidGroups:
+    - blockDevices:
+      - blockDeviceName: blockdevice-070383c017742c82d14103a2d2047c0f
+        capacity: ""
+        devLink: ""
+      - blockDeviceName: blockdevice-41d4416f6199a14b706e2ced69e2694a
+        capacity: ""
+        devLink: ""
+      isReadCache: false
+      isSpare: false
+      isWriteCache: false
+      type: mirror
+  </div>
+
+- Replace the selected blockdevice from the RAID group by editing the corresponding CSPC configuration. Only requirement is that, one blockdevice per raid group can be replaced at a time. The following command will edit the CSPC configuration and user can replace one blockdevice in the corresponding raid group by replacing with new blockdevice.
+  ```
+  kubectl edit cspc cstor-pool-mirror -n openebs 
+  ```
+  Example command:
+  ```
+  kubectl edit cspc cstor-pool-mirror -n openebs 
+  ```
+  
+  After replacing the required blockdevice with new one, ensure that CSPC configuration is applied successfully with new blockdevice using the following command:
+  ```
+  kubectl get cspi <CSPI-name>  -n openebs -o yaml
+  ```
+  Example command:
+  ```
+  kubectl get cspi cstor-pool-mirror-6gdq -n openebs -o yaml
+  ```
+  The following output shows the snippet of used blockdevice section.
+  <div class="co">
+  spec:
+    auxResources: {}
+    hostName: gke-ranjith-csi-default-pool-6643eeb8-77f7
+    nodeSelector:
+      kubernetes.io/hostname: gke-ranjith-csi-default-pool-6643eeb8-77f7
+    poolConfig:
+      cacheFile: ""
+      compression: "off"
+      defaultRaidGroupType: mirror
+      overProvisioning: false
+      resources: null
+    raidGroup:
+    - blockDevices:
+      - blockDeviceName: blockdevice-070383c017742c82d14103a2d2047c0f
+        capacity: ""
+        devLink: /dev/disk/by-id/scsi-0Google_PersistentDisk_ranjith-mirror1
+      - blockDeviceName: blockdevice-c0179d93aebfd90c09a7a864a9148f85
+        capacity: ""
+        devLink: /dev/disk/by-id/scsi-0Google_PersistentDisk_ranjith-mirror4
+      isReadCache: false
+      isSpare: false
+      isWriteCache: false
+      type: mirror
+  </div>
+  
+  It shows that the details of new blockdevice is replaced with old one.
+  
+- Verify if blockdevice replacement is successful by using the following command:
+  ```
+  kubectl get bd -n openebs
+  ```
+  Example output:
+  <div class="co">
+  NAME                                           NODENAME                                      SIZE          CLAIMSTATE   STATUS   AGE
+  blockdevice-070383c017742c82d14103a2d2047c0f   gke-ranjith-csi-default-pool-6643eeb8-77f7    42949672960   Claimed      Active   147m
+  blockdevice-41d4416f6199a14b706e2ced69e2694a   gke-ranjith-csi-default-pool-6643eeb8-77f7    42949672960   Unclaimed    Active   147m
+  blockdevice-c0179d93aebfd90c09a7a864a9148f85   gke-ranjith-csi-default-pool-6643eeb8-77f78   42949672960   Claimed      Active   147m
+  blockdevice-ef810d7dfc8e4507359963fab7e9647e   gke-ranjith-csi-default-pool-6643eeb8-77f7    53687091200   Unclaimed    Active   147m
+  </div>
+  
+  In the above example output, `blockdevice-41d4416f6199a14b706e2ced69e2694a` is replaced successfully with `blockdevice-c0179d93aebfd90c09a7a864a9148f85`.
+    
+  If resilvering on the pool is completed , state of old blockdevice will be changed to `Unclaimed` state and new blockdevice will be `Claimed`. In future, different verification methods will be added.
+  
+<h3><a class="anchor" aria-hidden="true" id="running-sample-application-jiva-volume-using-csi-provisioner"></a>Run a sample application on Jiva volume provisioned via Jiva CSI Provisioner</h3>  
+
+OpenEBS Jiva volumes can now be provisioned with CSI driver from OpenEBS 1.5 version onwards.
+
+**Note:** The current implementation only supports provisioning and de-provisioning of Jiva Volumes. This feature is under active development and considered to be in Alpha state.
+
+**Prerequisites:**
+
+- Kubernetes version 1.14 or higher
+- OpenEBS Version 1.5 or higher installed. Recommended OpenEBS version is 1.6.
+- iSCSI initiator utils installed on all the worker nodes.
+- You have access to install RBAC components into `kube-system` namespace. The Jiva CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
+- Base OS on worker nodes can be Ubuntu 16.04, Ubuntu 18.04 or CentOS.
+
+**Overview**
+- Install OpenEBS. 
+- Install Jiva operator
+- Install Jiva CSI Driver
+- Create a Storage Class with Jiva CSI provisioner
+- Provision sample application using a PVC spec  which uses SC with Jiva CSI provisioner
+
+
+<h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc"></a>Install OpenEBS</h4>
+
+Latest OpenEBS version can be installed using the following command:
+
+```
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.6.0.yaml
+```
+
+Verify if OpenEBS pods are in `Running` state using the following command:
+```
+kubectl get pod -n openebs
+```
+Example output:
+<div class="co">
+NAME                                          READY   STATUS    RESTARTS   AGE
+maya-apiserver-77f9cc9f9b-jg825               1/1     Running   3          90s
+openebs-admission-server-8c5b8565-d2q58       1/1     Running   0          79s
+openebs-localpv-provisioner-f458bc8c4-bjmkq   1/1     Running   0          78s
+openebs-ndm-lz4n6                             1/1     Running   0          80s
+openebs-ndm-operator-7d7c9d966d-bqlnj         1/1     Running   1          79s
+openebs-ndm-spm7f                             1/1     Running   0          80s
+openebs-ndm-tm8ff                             1/1     Running   0          80s
+openebs-provisioner-5fbd8fc74c-6zcnq          1/1     Running   0          82s
+openebs-snapshot-operator-7d6dd4b77f-444zh    2/2     Running   0          81s
+</div>
+
+<h4><a class="anchor" aria-hidden="true" id="install-jiva-operator"></a>Install Jiva operator</h4>
+
+
+Install Jiva operator using the following command:
+
+```
+kubectl create -f https://raw.githubusercontent.com/openebs/jiva-operator/master/deploy/operator.yaml
+```
+
+Verify the status of Jiva operator using the following command:
+
+```
+kubectl get pod -n openebs
+```
+Example output:
+
+<div class="co">
+jiva-operator-7765cbfffd-vt787                 1/1     Running   0          10s
+maya-apiserver-77f9cc9f9b-jg825                1/1     Running   3          90s
+openebs-admission-server-8c5b8565-d2q58        1/1     Running   0          79s
+openebs-localpv-provisioner-f458bc8c4-bjmkq    1/1     Running   0          78s
+openebs-ndm-lz4n6                              1/1     Running   0          80s
+openebs-ndm-operator-7d7c9d966d-bqlnj          1/1     Running   1          79s
+openebs-ndm-spm7f                              1/1     Running   0          80s
+openebs-ndm-tm8ff                              1/1     Running   0          80s
+openebs-provisioner-5fbd8fc74c-6zcnq           1/1     Running   0          82s
+openebs-snapshot-operator-7d6dd4b77f-444zh     2/2     Running   0          81s
+</div>
+
+<h4><a class="anchor" aria-hidden="true" id="install-jiva-csi-driver"></a>Install Jiva CSI Driver</h4>
+
+The node components make use of the host iSCSI binaries for iSCSI connection management. Depending on the OS, the Jiva operator will have to be modified to load the required iSCSI files into the node pods.
+
+OpenEBS Jiva CSI driver components can be installed by running the following command.
+
+Depending on the base OS, select the appropriate deployment file.
+
+For Ubuntu 16.04 and CentOS:
+
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/jiva-csi/master/deploy/jiva-csi-ubuntu-16.04.yaml
+```
+
+For Ubuntu 18.04:
+
+```
+kubectl apply -f https://raw.githubusercontent.com/openebs/jiva-csi/master/deploy/jiva-csi.yaml
+```
+
+Verify if Jiva CSI Components are installed:
+
+```
+kubectl get pods -n kube-system -l role=openebs-jiva-csi
+```
+Example output:
+
+<div class="co">
+NAME                            READY   STATUS    RESTARTS   AGE
+openebs-jiva-csi-controller-0   4/4     Running   0          6m14s
+openebs-jiva-csi-node-56t5g     2/2     Running   0          6m13s
+</div>
+
+<h4><a class="anchor" aria-hidden="true" id="install-jiva-sc-csi-provisioner-"></a>Create a Storage Class with Jiva CSI provisioner</h4>
+
+Create a Storage Class to dynamically provision volumes using Jiva CSI provisioner. You can save the following sample StorageClass YAML spec as `jiva-csi-sc.yaml`.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-jiva-csi-sc
+provisioner: jiva.csi.openebs.io
+parameters:
+  cas-type: "jiva"
+  replicaCount: "1"
+  replicaSC: "openebs-hostpath"
+```
+Create Storage Class using the above YAML using the following command:
+
+```
+kubectl apply -f jiva-csi-sc.yaml
+```
+
+<h4><a class="anchor" aria-hidden="true" id="use-sc-to-provision-jiva-volume"></a>Provision a sample application using Jiva StorageClass</h4>
+
+Create PVC by specifying the above Storage Class in the PVC spec. The following is a sample PVC spec which uses the above created Storage Class. In this example, the PVC YAML spec is saved as `jiva-csi-demo-pvc.yaml`.
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio-pv-claim
+  labels:
+    app: minio-storage-claim
+spec:
+  storageClassName: openebs-jiva-csi-sc
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 7Gi
+```
+Now, apply the PVC using the following command:
+
+```
+kubectl apply -f jiva-csi-demo-pvc.yaml
+```
+
+Now, deploy your application by specifying the PVC name. The following is a sample application spec which uses the above PVC.  In this example, the application YAML file is saved as `jiva-csi-demo-app.yaml`. 
+
+```
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  # This name uniquely identifies the Deployment
+  name: minio-deployment
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        # Label is used as selector in the service.
+        app: minio
+    spec:
+      # Refer to the PVC created earlier
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          # Name of the PVC created earlier
+                claimName: minio-pv-claim
+      containers:
+      - name: minio
+        # Pulls the default Minio image from Docker Hub
+        image: minio/minio
+        args:
+        - server
+        - /storage
+        env:
+        # Minio access key and secret key
+        - name: MINIO_ACCESS_KEY
+          value: "minio"
+        - name: MINIO_SECRET_KEY
+          value: "minio123"
+        ports:
+        - containerPort: 9000
+        # Mount the volume into the pod
+        volumeMounts:
+        - name: storage # must match the volume name, above
+          mountPath: "/storage"
+```
+Now, apply the application using the following command:
+```
+kubectl apply -f jiva-csi-demo-app.yaml
+```
+
+Now, deploy the service related to the application. In this example, the service YAML file is saved as `jiva-csi-demo--app-service.yaml`. 
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-service
+  labels:
+    app: minio
+spec:
+  ports:
+    - port: 9000
+      nodePort: 32701
+      protocol: TCP
+  selector:
+    app: minio
+  sessionAffinity: None
+  type: NodePort
+```
+Apply the service using the above YAML spec.
+```
+kubectl apply -f jiva-csi-demo--app-service.yaml
+```
+Verify if application pod is created successfully using the following command:
+
+```
+kubectl get pod -n <namespace>
+```
+Example output:
+<div class="co">
+NAME                                READY   STATUS    RESTARTS   AGE
+minio-deployment-7c4ccff854-flt8c   1/1     Running   0          80s
+</div>
+
+Verify if PVC is created successfully using the following command:
+
+```
+kubectl get pvc -n <namespace>
+```
+Example output:
+<div class="co">
+NAME             STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS          AGE
+minio-pv-claim   Bound    pvc-0053ef2d-2919-47ea-aeaf-9f1cbd915bae   7Gi        RWO            openebs-jiva-csi-sc   11s
+</div>
+
+Verify if PV is created successfully using the following command:
+
+```
+kubectl get pv
+```
+Example output:
+
+<div class="co">
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                                                 STORAGECLASS          REASON   AGE
+pvc-0053ef2d-2919-47ea-aeaf-9f1cbd915bae   7Gi        RWO            Delete           Bound    default/minio-pv-claim                                                openebs-jiva-csi-sc            17s
+pvc-fb21eb55-23ce-4547-922c-44780f2c4c2f   7Gi        RWO            Delete           Bound    openebs/openebs-pvc-0053ef2d-2919-47ea-aeaf-9f1cbd915bae-jiva-rep-0   openebs-hostpath               11s
+</div>
+
+In the above output, 2 PVs are created. As the `replicaSC` specified in storage class spec, Jiva replica will consume local PV created  using the Storage Class `openebs-hostpath`. Based on the required Jiva replica count, the number of local PVs will be provisioned. In this example, PV `pvc-fb21eb55-23ce-4547-922c-44780f2c4c2f` is dedicated for Jiva volume replica. If you specifiy `replicaCount` as 3, then a total of 4 PVs will be created. 
 
 ## See Also:
 
