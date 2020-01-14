@@ -1237,7 +1237,7 @@ pvc-0053ef2d-2919-47ea-aeaf-9f1cbd915bae   7Gi        RWO            Delete     
 pvc-fb21eb55-23ce-4547-922c-44780f2c4c2f   7Gi        RWO            Delete           Bound    openebs/openebs-pvc-0053ef2d-2919-47ea-aeaf-9f1cbd915bae-jiva-rep-0   openebs-hostpath               11s
 </div>
 
-In the above output, 2 PVs are created. PV created using Storage Class `openebs-hostpath` will provide the hostpath directory on the node and Jiva replica volume will be created on this direcorty.
+In the above output, 2 PVs are created. As the `replicaSC` specified in storage class spec, Jiva replica will consume local PV created  using the Storage Class `openebs-hostpath`. Based on the required Jiva replica count, the number of local PVs will be provisioned. In this example, PV `pvc-fb21eb55-23ce-4547-922c-44780f2c4c2f` is dedicated for Jiva volume replica. If you specifiy `replicaCount` as 3, then a total of 4 PVs will be created. 
 
 ## See Also:
 
