@@ -5,7 +5,7 @@ sidebar_label: Upgrade
 ---
 ------
 
-Latest stable version of OpenEBS is 1.5.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/1.5.0).  Upgrade to the latest OpenEBS 1.5.0 version is supported only from 1.0.0, 1.1.0, 1.2.0, 1.3.0 and 1.4.0 and the steps for upgrading from these versions can be found [here](https://github.com/openebs/openebs/blob/master/k8s/upgrades/README.md).
+Latest stable version of OpenEBS is 1.6.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/1.6.0).  Upgrade to the latest OpenEBS 1.6.0 version is supported only from 1.0.0, 1.1.0, 1.2.0, 1.3.0, 1.4.0 and 1.5.0 and the steps for upgrading from these versions can be found [here](https://github.com/openebs/openebs/blob/master/k8s/upgrades/README.md).
 
 ## Supported upgrade paths
 
