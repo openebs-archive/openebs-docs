@@ -60,7 +60,7 @@ is installed and running or to find the steps to install the iSCSI client.
         <a href="/docs/next/prerequisites.html#do"><img src="/docs/assets/DigitalOceanLogo.png" width="45px;">&nbsp;DigitalOcean</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#d2iq"><img src="/docs/assets/d2iq.jpg" width="50px;">D2iQ</a>
+        <a href="/docs/next/prerequisites.html#konvoy"><img src="/docs/assets/d2iq.jpg" width="50px;">Konvoy</a>
     </div>
 </div>
 
@@ -571,9 +571,9 @@ In the above snippet, default hostpath for Local PV (/var/openebs/local), which 
 
 <br>
 
-<h3><a class="anchor" aria-hidden="true" id="d2iq"></a>D2iQ</h3>
+<h3><a class="anchor" aria-hidden="true" id="konvoy"></a>Konvoy</h3>
 
-Konvoy, a managed Kubernetes platform for operation and lifecycle management from D2iQ. CentOS is used as the underlying OS by default. Latest tested CentOS version is CentOS 7. For setting up iSCSI clients on CentOS nodes, see the instructions [here](#centos). 
+Konvoy is a managed Kubernetes platform for operation and lifecycle management from D2iQ. CentOS 7.6 is used as the underlying node OS by default. Only prerequisite for setting up OpenEBS in Konvoy is to have iSCSI clients on CentOS nodes. For setting up iSCSI clients on CentOS nodes, see the instructions [here](#centos).
 
 <br>
 
