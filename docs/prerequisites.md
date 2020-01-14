@@ -457,9 +457,7 @@ OpenEBS can be installed using Openshift on the following Operating
 Systems. Tested OpenShift versions are 3.10 and 4.2.
 
 1. On RHEL 7
-2. On CentOS 7
-
-
+2. CoreOS 
 
 <h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
 
@@ -469,11 +467,10 @@ For setting up iSCSI clients on RHEL nodes, see the instructions [here](#rhel).
 
 
 
-<h4><a class="anchor" aria-hidden="true" id="On-Centos"></a>On CentOS</h4>
+<h4><a class="anchor" aria-hidden="true" id="On-Centos"></a>On CoreOS</h4>
 
-Latest tested CentOS version is CentOS 7.
+Latest tested RHEL CoreOs version is 4.2.
 
-For setting up iSCSI clients on CentOS nodes, see the instructions [here](#centos).
 
 <br>
 
