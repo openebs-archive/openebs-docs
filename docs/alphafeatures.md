@@ -1068,10 +1068,10 @@ For Ubuntu 18.04:
 kubectl apply -f https://raw.githubusercontent.com/openebs/jiva-csi/master/deploy/jiva-csi.yaml
 ```
 
-Verify that the Jiva CSI Components are installed:
+Verify if Jiva CSI Components are installed:
 
 ```
-kubectl get pods -n kube-system -l role=openebs-csi
+kubectl get pods -n kube-system -l role=openebs-jiva-csi
 ```
 Example output:
 
@@ -1096,60 +1096,148 @@ parameters:
   replicaCount: "1"
   replicaSC: "openebs-hostpath"
 ```
+Create Storage Class using the above YAML using the following command:
+
+```
+kubectl apply -f jiva-csi-sc.yaml
+```
 
 <h4><a class="anchor" aria-hidden="true" id="use-sc-to-provision-jiva-volume"></a>Provsion a sample application using Jiva SC</h4>
 
-Create PVC by specifying the above Storage Class in the PVC spec. The following is a sample PVC which uses the above created Storage Class. In this example, the PVC YAML spec is saved as `jiva-csi-demp-pvc.yaml`.
+Create PVC by specifying the above Storage Class in the PVC spec. The following is a sample PVC which uses the above created Storage Class. In this example, the PVC YAML spec is saved as `jiva-csi-demo-pvc.yaml`.
 
 ```
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  name: jiva-csi-demo
+  name: minio-pv-claim
+  labels:
+    app: minio-storage-claim
 spec:
   storageClassName: openebs-jiva-csi-sc
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 4Gi
+      storage: 7Gi
+```
+Create PVC using the above YAML using the following command:
+
+```
+kubectl apply -f jiva-csi-demo-pvc.yaml
 ```
 
-Now, deploy your application by specifying the PVC name. The following is a sample application spec which uses the above PVC.  In this example, the application YAML file is saved as `jiva-csi-demp-app.yaml`. 
+Now, deploy your application by specifying the PVC name. The following is a sample application spec which uses the above PVC.  In this example, the application YAML file is saved as `jiva-csi-demo-app.yaml`. 
 
 ```
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: fio
+  # This name uniquely identifies the Deployment
+  name: minio-deployment
 spec:
-  selector:
-    matchLabels:
-      name: fio
-  replicas: 1
   strategy:
     type: Recreate
-    rollingUpdate: null
   template:
     metadata:
       labels:
-        name: fio
+        # Label is used as selector in the service.
+        app: minio
     spec:
-      nodeName: gke-utkarsh-csi-default-pool-953ba289-rt9l
-      containers:
-      - name: perfrunner
-        image: openebs/tests-fio
-        command: ["/bin/bash"]
-        args: ["-c", "while true ;do sleep 50; done"]
-        volumeMounts:
-      - mountPath: /datadir
-        name: fio-vol
+      # Refer to the PVC created earlier
       volumes:
-      - name: fio-vol
+      - name: storage
         persistentVolumeClaim:
-          claimName: jiva-csi-demo
+          # Name of the PVC created earlier
+                claimName: minio-pv-claim
+      containers:
+      - name: minio
+        # Pulls the default Minio image from Docker Hub
+        image: minio/minio
+        args:
+        - server
+        - /storage
+        env:
+        # Minio access key and secret key
+        - name: MINIO_ACCESS_KEY
+          value: "minio"
+        - name: MINIO_SECRET_KEY
+          value: "minio123"
+        ports:
+        - containerPort: 9000
+        # Mount the volume into the pod
+        volumeMounts:
+        - name: storage # must match the volume name, above
+          mountPath: "/storage"
+```
+Create PVC using the above YAML using the following command:
+
+```
+kubectl apply -f jiva-csi-demo-app.yaml
 ```
 
+Now, deploy the service related to the application. In this example, the service YAML file is saved as `jiva-csi-demo--app-service.yaml`. 
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-service
+  labels:
+    app: minio
+spec:
+  ports:
+    - port: 9000
+      nodePort: 32701
+      protocol: TCP
+  selector:
+    app: minio
+  sessionAffinity: None
+  type: NodePort
+
+Create PVC using the above YAML using the following command:
+
+```
+kubectl apply -f jiva-csi-demo--app-service.yaml
+```
+
+```
+Verify if application pod is created successfully using the following command:
+
+```
+kubectl get pod -n <namespace>
+```
+Example output:
+<div class="co">
+NAME                                READY   STATUS    RESTARTS   AGE
+minio-deployment-7c4ccff854-flt8c   1/1     Running   0          80s
+</div>
+
+Verify if PVC is created successfully using the following command:
+
+```
+kubectl get pvc -n <namespace>
+```
+Example output:
+<div class="co">
+NAME             STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS          AGE
+minio-pv-claim   Bound    pvc-0053ef2d-2919-47ea-aeaf-9f1cbd915bae   7Gi        RWO            openebs-jiva-csi-sc   11s
+</div>
+
+Verify if PV is created successfully using the following command:
+
+```
+kubectl get pv
+```
+Example output:
+
+<div class="co">
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                                                 STORAGECLASS          REASON   AGE
+pvc-0053ef2d-2919-47ea-aeaf-9f1cbd915bae   7Gi        RWO            Delete           Bound    default/minio-pv-claim                                                openebs-jiva-csi-sc            17s
+pvc-fb21eb55-23ce-4547-922c-44780f2c4c2f   7Gi        RWO            Delete           Bound    openebs/openebs-pvc-0053ef2d-2919-47ea-aeaf-9f1cbd915bae-jiva-rep-0   openebs-hostpath               11s
+</div>
+
+In the above output, 2 PVs are created. PV created using Storage Class `openebs-hostpath` will provide the hostpath directory on the node and Jiva replica volume will be created on this direcorty.
 
 ## See Also:
 
