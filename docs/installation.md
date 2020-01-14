@@ -248,7 +248,7 @@ Some of the configurations related to cStor Target, default cStor sparse pool, d
 
 <h4><a class="anchor" aria-hidden="true" id="enable-core-dump"></a>Enable core dump</h4>
 
-Core dumping for `cstor-pool`, `cstor-istgt` and `ndm` containers are disbaled by default from 1.6. So when these containers are crashed, it will not dump the core. The following configuration can be added as environmental variable in the maya-apiserver deployment specification to enable the core dump on these containers.
+Dumping cores has been disabled by default for `cstor pool`, `cstor istgt` and `NDM daemonset` pods from 1.6. So when these pods are crashed, it will not dump the core. The following configuration can be added as environmental variable in the maya-apiserver deployment specification to enable the core dump on these containers.
 
 ```
  - name: ENABLE_COREDUMP
