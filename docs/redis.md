@@ -53,7 +53,7 @@ Redis is an open source (BSD licensed), in-memory **data structure store**, used
 
 1. **Install OpenEBS**
 
-   If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
+   If OpenEBS is not installed in your K8s cluster, this can done from [here](/v150/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
 2. **Configure cStor Pool**
 
@@ -109,7 +109,7 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just Redis database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool).
+As in most cases, cStor pool may not be dedicated to just Redis database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/v150/docs/next/ugcstor.html#monitor-pool).
 
 
 
@@ -190,9 +190,9 @@ reclaimPolicy: Delete
 
 ### [OpenEBS architecture](/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v150/docs/next/usecases.html)
 
-### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
+### [cStor pools overview](/v150/docs/next/cstor.html#cstor-pools)
 
 
 
