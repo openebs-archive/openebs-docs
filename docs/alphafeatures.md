@@ -823,7 +823,7 @@ blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a
 
 <h3><a class="anchor" aria-hidden="true" id="blockdevice-replacement-cstor-pool-cspc"></a>Blockdevice replacement in a cStor pool created using CSPC operator</h3>
 
-The following steps will help to perform the blockdevice replacement used in the cStor pool created using CSPC operator method. It is recommended to perform replacement of one blockdevice per raid group of the cStor pool. For example, If cStor pool is created using 2 mirror raid groups, then only one blockdevice can be replaced per raid group. Following are prerequisites to perform replacement of blockdevice
+The following steps will help to perform the blockdevice replacement in cStor pools which were created using CSPC. It is recommended to perform replacement of one blockdevice per raid group of the cStor pool. For example, If cStor pool is created using 2 mirror raid groups, then only one blockdevice can be replaced per raid group. Following are prerequisites to perform replacement of blockdevice
 
 **Prerequisites:**
 
