@@ -248,14 +248,11 @@ Some of the configurations related to cStor Target, default cStor sparse pool, d
 
 <h4><a class="anchor" aria-hidden="true" id="enable-core-dump"></a>Enable core dump</h4>
 
-Dumping cores has been disabled by default for `cStor pool` and `NDM daemonset` pods. This can be enabled by setting an ENV variable `ENABLE_COREDUMP` to `1`. The ENV setting can be added in cStor pool deployment to enable the core dump for cStor pool pod and the ENV setting can be added in ndm daemonset  spec to enable the core dump for ndm pods.
-
+Dumping cores has been disabled by default for `cStor pool` and `NDM daemonset` pods. This can be enabled by setting an ENV variable `ENABLE_COREDUMP` to `1`. The ENV setting can be added in cStor pool deployment for dumping core for cStor pool pod and the ENV setting can be added in ndm daemonset  spec for dumping core for ndm daemonset pods.
 ```
  - name: ENABLE_COREDUMP
-   value: "true"
+   value: "1"
 ```
-On enabling coredumps, coredumps gets collected onto hostpath `/var/openebs/sparse` for `cstor-pool` and `cstor-istgt` conatiners which is persistent storage. For `ndm` container,  core files will be stored inside `var/openebs/ndm/core`.
-
 
 <h4><a class="anchor" aria-hidden="true" id="sparse-dir "></a>SparseDir</h4>
 
