@@ -78,7 +78,7 @@ A cStor pool spec consists of :
 - List of blockdevices on each node that constitute the pool on that given node
 - RAID type within the pool. Supported RAID types are striped, mirrored, raidz and raidz2.
 
-**Number of pools:** It is good to start with 3 pools as the number of volume replicas will be typically three or one. The pool capacity can be increased on the fly and different types of pool expansion can be found [here](/docs/next/ugcstor.html#admin-operations).
+**Number of pools:** It is good to start with 3 pools as the number of volume replicas will be typically three or one. The pool capacity can be increased on the fly and different types of pool expansion can be found [here](/v150/docs/next/ugcstor.html#admin-operations).
 
 **List of nodes that host the pools:** This information and the number of pool replicas are implicitly provided by analyzing the provided blockdevice CRs in the Storage Pool Claim spec file. For example, if the Storage Pool Claim spec file has 3 blockdevice CRs, which belong to 3 different nodes, it implicitly means the number of pool replicas are 3 and the list of nodes taken from the blockdevice CR's metadata information.
 
@@ -102,7 +102,7 @@ cStor Pool is an important component in the storage management. It is fundamenta
 
 **Create a Pool :** Create a new pool with all the configuration. It is typical to start a pool with 3 pool instances on three nodes. Currently RAID types supported for a given pool instance are striped, mirrored, raidz and raidz2. A pool needs to be created before storage classes are created. So, pool creation is the first configuration step in the cStor configuration process.
 
-**Add a new pool instance** : A new pool instance may need to be added for many different reasons. The steps for expanding a cStor pool to a new node can be found [here](/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node). Few example scenarios where need of cStor pool expansion to new nodes are:
+**Add a new pool instance** : A new pool instance may need to be added for many different reasons. The steps for expanding a cStor pool to a new node can be found [here](/v150/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node). Few example scenarios where need of cStor pool expansion to new nodes are:
 
 - New node is being added to the Kubernetes cluster and the blockedvices in new node needs to be considered for persistent volume storage.
 - An existing pool instance is full in capacity and it cannot be expanded as either local disks or network disks are not available. Hence, a new pool instance may be needed for hosting the new volume replicas.
@@ -272,7 +272,7 @@ Following are most commonly observed areas of troubleshooting
 
    **Resolution**: 
 
-   Install iSCSI tools and make sure that iSCSI service is running. See [iSCSI installation](/docs/next/prerequisites.html)
+   Install iSCSI tools and make sure that iSCSI service is running. See [iSCSI installation](/v150/docs/next/prerequisites.html)
 
 2. **Multi-attach error is seen in the logs**
 
@@ -377,11 +377,11 @@ Each discovered blockdevice on a node is added as a blockdevice CR. This is need
 
 ## See Also:
 
-### [Storage Engines in OpenEBS](/docs/next/casengines.html)
+### [Storage Engines in OpenEBS](/v150/docs/next/casengines.html)
 
-### [Creating cStor Pool](/docs/next/ugcstor.html#creating-cStor-storage-pools)
+### [Creating cStor Pool](/v150/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
-### [Provisioning cStor volumes](/docs/next/ugcstor.html#provisioning-a-cStor-volume)
+### [Provisioning cStor volumes](/v150/docs/next/ugcstor.html#provisioning-a-cStor-volume)
 
 
 
