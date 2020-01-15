@@ -28,7 +28,7 @@ sidebar_label: Features and Benefits
 
 
 
-For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/docs/next/usecases.html) section.
+For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/v150/docs/next/usecases.html) section.
 
 
 
@@ -44,7 +44,7 @@ For more information on how OpenEBS is used in cloud native environments,  visit
 
 <img src="/docs/assets/svg/f-cas.svg" alt="Smiley face" 		style="width:200px;">
 
-OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found <a href="/docs/next/cas.html" target="_blank">here</a>
+OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found <a href="/v150/docs/next/cas.html" target="_blank">here</a>
 
 <hr>
 
@@ -167,27 +167,17 @@ There is no blast radius effect. CAS architecture does not have the blast radius
 
 <br>
 
-### Free Cross Cloud Visibility of Stateful Applications
-
-<img src="/docs/assets/svg/b-crosscloud.svg" alt="Director Online" style="width:200px;">
-
-Director Online is the SaaS service for OpenEBS enabled Kubernetes clusters that provide comprehensive monitoring and management of OpenEBS volumes. Logs of all OpenEBS volume pods are instantly uploaded to Director Online and available for users through Kibana dashboard. Topology view on Director Online is used very often to understand the Kubernetes resources when they are deployed at scale.
-
-<hr>
-
-<br>
-
 
 
 <br>
 
 ## See Also:
 
-### [Object Storage with OpenEBS](/docs/next/minio.html)
+### [Object Storage with OpenEBS](/v150/docs/next/minio.html)
 
-### [RWM PVs with OpenEBS](/docs/next/rwm.html)
+### [RWM PVs with OpenEBS](/v150/docs/next/rwm.html)
 
-### [Local storage for Prometheus ](/docs/next/prometheus.html)
+### [Local storage for Prometheus ](/v150/docs/next/prometheus.html)
 
 <br>
 
