@@ -265,7 +265,7 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
    scc "privileged" added to: ["system:serviceaccount:openebs:default"]
    ```
 
-2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
+2. Find the latest OpenEBS release version from [here](/v150/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
 
    ```
    wget https://openebs.github.io/charts/openebs-operator-1.2.0.yaml
@@ -662,7 +662,7 @@ The detailed information of each steps are provided below.
     openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   57m
     ```
 
-  - The default StorageClass `openebs-hostpath` can be used to create local PV on the path `/var/openebs/local` in your Kubernetes node. You can either use `openebs-hostpath` storage class to create volumes or create new storage class by following the steps mentioned [here](/docs/next/uglocalpv.html).
+  - The default StorageClass `openebs-hostpath` can be used to create local PV on the path `/var/openebs/local` in your Kubernetes node. You can either use `openebs-hostpath` storage class to create volumes or create new storage class by following the steps mentioned [here](/v150/docs/next/uglocalpv.html).
 
     **Note:** OpenEBS local PV will not be bound until the application pod is scheduled as its **volumeBindingMode** is set to **WaitForFirstConsumer.** Once the application pod is scheduled on a certain node, OpenEBS Local PV will be bound on that node.
 
