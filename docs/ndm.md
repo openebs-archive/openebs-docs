@@ -25,7 +25,7 @@ In spite of doing all of the above, NDM contributes to overall ease of provision
 
 <br>
 
-NDM is deployed as a daemonset during installation of OpenEBS. NDM daemonset discovers the disks on each node and creates a custom resource called Block Device or BD. This `blockdevice` CR is newly implemented in 1.0.0 release of OpenEBS and the old `disk` CR will be deprecated in the future releases. 
+NDM is deployed as a daemonset during installation of OpenEBS. NDM daemonset discovers the disks on each node and creates a custom resource called Block Device or BD. This `blockdevice` CR is implemented in 1.0.0 release of OpenEBS and the old `disk` CR will be deprecated in the future releases. 
 
 Using `disk` CRs in SPC configuration spec will continue to work as NDM is backward compatible. 
 
@@ -74,7 +74,7 @@ So at a high level, to allow OpenEBS to run in privileged mode in selinux=on nod
   - If OpenEBS is installed using helm, update the filters in the configmap of values.yaml and do the helm upgrade
   - Or, directly edit NDM configmap using `kubectl edit` and update the filters
 
-More details can be find from [here](/docs/next/ugndm.html).
+More details can be find from [here](/v150/docs/next/ugndm.html).
 
 ## NDM Roadmap:
 
@@ -90,13 +90,13 @@ More details can be find from [here](/docs/next/ugndm.html).
 
 ## See Also:
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v150/docs/next/architecture.html)
 
-### [Local PV User Guide](/docs/next/uglocalpv.html)
+### [Local PV User Guide](/v150/docs/next/uglocalpv.html)
 
-### [cStor User Guide](/docs/next/ugcstor.html)
+### [cStor User Guide](/v150/docs/next/ugcstor.html)
 
-### [Understanding Disk Mount Status on Node](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume)
+### [Understanding Disk Mount Status on Node](/v150/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume)
 
 
 
