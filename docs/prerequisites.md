@@ -570,7 +570,7 @@ In the above snippet, default hostpath for Local PV (/var/openebs/local), which 
 
 <h3><a class="anchor" aria-hidden="true" id="konvoy"></a>Konvoy</h3>
 
-Konvoy is a managed Kubernetes platform for operation and lifecycle management from D2iQ. CentOS 7.6 is used as the underlying node OS by default. Only prerequisite for setting up OpenEBS in Konvoy is to have iSCSI clients on CentOS nodes. For setting up iSCSI clients on CentOS nodes, see the instructions [here](#centos).
+Konvoy is a managed Kubernetes platform for operation and lifecycle management from D2iQ. CentOS 7.6 is used as the underlying node OS by default. Only prerequisite for setting up OpenEBS in Konvoy is to have iSCSI clients on CentOS nodes. For setting up iSCSI clients on CentOS nodes, see the instructions [here](#centos). More details about setting up of OpenEBS in Konvoy can be found [here](https://docs.d2iq.com/ksphere/konvoy/partner-solutions/openebs/).
 
 <br>
 
