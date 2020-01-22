@@ -66,6 +66,10 @@ sidebar_label: Quickstart
 
 [AKS](/docs/next/prerequisites.html#aks)
 
+[Digital Ocean](/docs/next/prerequisites.html#do)
+
+[Konvoy](/docs/next/prerequisites.html#konvoy)
+
 <br>
 
 </div>
