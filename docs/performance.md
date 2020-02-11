@@ -20,17 +20,9 @@ For performance testing, performance numbers vary based on the following factors
 The steps for running FIO based Storage benchmarking and viewing the results are explained in detail [here](https://github.com/openebs/performance-benchmark/tree/master/fio-benchmarks). 
 
 
-
-
-<font size="6">Support for Performance tuning </font>
-
-Support for performance tuning for specific workloads can be obtained through the premium plan on DirectorOnline. Connect your cluster to <a href="https://director.mayadata.io" target="_blank">DirectorOnline</a>, start the cluster on evaluation plan and seek support for performance tuning. 
-
 <br>
 
 ## See Also:
-
-### [Connecting to DirectorOnline](/docs/next/directoronline.html)
 
 ### [Seeking help](/docs/next/support.html)
 
