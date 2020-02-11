@@ -82,15 +82,88 @@ kubectl config use-context admin-ctx
 
 ## Installation through helm
 
+Verify helm is installed and helm repo is updated.
 
 
-Verify helm is installed and helm repo is updated. See [helm docs](https://docs.helm.sh/using_helm/#from-script) for setting up helm and [instructions](#setup-rbac-for-tiller-before-installing-openebs-chart) below for setting up RBAC for tiller.
+**For Helm v2**  
+
+Run `helm init` for installing tiller pod under `kube-system` namespace.
+
+See [instructions](#setup-rbac-for-tiller-before-installing-openebs-chart) below for setting up RBAC for tiller.
+
+Installed helm version can be obtained by using the following command:
+
+```
+helm version
+```
+Example ouptut:
+
+<div class="co">
+Client: &version.Version{SemVer:"v2.16.1", GitCommit:"bbdfe5e7803a12bbdf97e94cd847859890cf4050", GitTreeState:"clean"}
+</div>
+
 
 In the **default installation mode**, use the following command to install OpenEBS in `openebs` namespace.
 
 ```
 helm install --namespace openebs --name openebs stable/openebs --version 1.6.0
 ```
+
+**For Helm v3** 
+
+See [helm docs](https://helm.sh/docs/intro/install/#from-script) for setting up helm v3. Installed helm version can be obtained by using the following command:
+
+```
+helm version
+```
+Example ouptut:
+
+<div class="co">
+version.BuildInfo{Version:"v3.0.2", GitCommit:"19e47ee3283ae98139d98460de796c1be1e3975f", GitTreeState:"clean", GoVersion:"go1.13.5"}
+</div>
+
+OpenEBS instalaltion with helm v3 can be done by 2 ways:
+
+**Option 1:** Helm v3 takes the current namespace from the local kube config and use that namespace the next time the user invoke it. If it is not present, the default namespace is used. Assign the `openebs` namespace to the current context and run the following command will install openebs in `openebs` namespace. 
+
+To view current context, run the following:
+```
+kubectl config current-context
+```
+Assign `openebs` namespace to the current context:
+```
+kubectl config set-context <current_context_name> --namespace=openebs
+```
+Create OpenEBS namespace
+```
+kubectl create ns openebs
+```
+Install openebs with chart name as `openebs`:
+```
+helm install openebs stable/openebs --version 1.6.0
+```
+To view the chart
+```
+helm ls
+```
+The above commands will install OpenEBS in `openebs` namespace and chart name as `openebs` 
+
+**Option 2:** By mentioning namespace in helm command
+
+Create OpenEBS namespace
+```
+kubectl create ns openebs
+```
+Install openebs with chart name as `openebs`:
+```
+helm install --namespace openebs openebs stable/openebs --version 1.6.0 
+```
+To view the chart
+```
+helm ls -n openebs
+```
+The above commans will install OpenEBS in `openebs` namespace and chart name as `openebs` 
+
 
 **Note:** 
 
