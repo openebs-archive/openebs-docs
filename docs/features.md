@@ -24,8 +24,6 @@ sidebar_label: Features and Benefits
 - [Reduced storage TCO upto 50%](#reduced-storage-tco-upto-50)
 - [Native Hyperconvergence on Kubernetes](#native-hyperconvergence-on-kubernetes)
 - [High availability - No Blast Radius](#high-availability)
-- [Free cross cloud visibility of stateful applications](#free-cross-cloud-visibility-of-stateful-applications)
-
 
 
 For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/docs/next/usecases.html) section.
@@ -163,17 +161,9 @@ Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by u
 
 There is no blast radius effect. CAS architecture does not have the blast radius issue that is typically observed in the traditional storage systems. Metadata of the volume is not centralized and is kept local to the volume. Losing any node results in the loss of volume replicas present only on that node. As the volume data is synchronously replicated at least on two other nodes, in the event of a node failure, the data continues to be available at the same performance levels.
 
-<hr>
-
-<br>
-
-### Free Cross Cloud Visibility of Stateful Applications
-
-<img src="/docs/assets/svg/b-crosscloud.svg" alt="Director Online" style="width:200px;">
-
-Director Online is the SaaS service for OpenEBS enabled Kubernetes clusters that provide comprehensive monitoring and management of OpenEBS volumes. Logs of all OpenEBS volume pods are instantly uploaded to Director Online and available for users through Kibana dashboard. Topology view on Director Online is used very often to understand the Kubernetes resources when they are deployed at scale.
 
 <hr>
+
 
 <br>
 
