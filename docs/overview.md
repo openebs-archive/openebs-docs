@@ -31,13 +31,14 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
   ```
   helm install --namespace openebs --name openebs stable/openebs --version 1.6.0
   ```
+  More infromation about openebs installation using different helm version can be found [here](/docs/next/installation.html#installation-through-helm).
 
   (or)
 
   ```
   kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.6.0.yaml
   ```
-
+  
   For advanced installation steps, see [Installation](/docs/next/installation.html) section.
 
 - [Verify if OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation)
