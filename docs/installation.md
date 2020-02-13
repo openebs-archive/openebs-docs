@@ -124,7 +124,7 @@ version.BuildInfo{Version:"v3.0.2", GitCommit:"19e47ee3283ae98139d98460de796c1be
 
 OpenEBS instalaltion with helm v3 can be done by 2 ways:
 
-**Option 1:** Helm v3 takes the current namespace from the local kube config and use that namespace the next time the user invoke it. If it is not present, the default namespace is used. Assign the `openebs` namespace to the current context and run the following command will install openebs in `openebs` namespace. 
+**Option 1:** Helm v3 takes the current namespace from the local kube config and use that namespace the next time the user executes helm commands. If it is not present, the default namespace is used. Assign the `openebs` namespace to the current context and run the following commands to install openebs in `openebs` namespace. 
 
 To view current context, run the following:
 ```
