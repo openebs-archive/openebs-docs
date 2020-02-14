@@ -45,13 +45,13 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl get sc
   ```
 
-- Delete the OpenEBS namespace either via `helm delete <chart name> --purge` or `kubectl delete ns openebs` or you can delete the corresponding `openebs-operator` YAML using `kubectl delete -f <openebs-operator.yaml>`. You can check the status of OpenEBS namespace using the following command.
+- Delete the OpenEBS namespace either via `helm delete <chart name> --purge` if helm version is v2 or `helm uninstall <chart name> -n <namespace>` if helm version is v3 or `kubectl delete ns openebs` or you can delete the corresponding `openebs-operator` YAML using `kubectl delete -f <openebs-operator.yaml>`. You can check the status of OpenEBS namespace using the following command.
 
   ```
   kubectl get ns
   ```
 
-- Uninstalling the OpenEBS doesn't automatically delete the CRDs that were created. If you would like to complete remove the CRDs and the associated objects, run the following commands:
+- Uninstalling the OpenEBS doesn't automatically delete the CRDs that were created. If you would like to completely remove the CRDs and the associated objects, run the following commands:
 
   ```
   kubectl delete crd castemplates.openebs.io
