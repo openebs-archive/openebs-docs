@@ -25,7 +25,7 @@ In this section, an experiment that can inject chaos into the OpenEBS cStor volu
 Installation of litmus can be done by executing the following command:
 
 ```
-kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.0.0.yaml
+kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.1.0.yaml
 ```
 
 Verify if the chaos operator is running using the following command:
