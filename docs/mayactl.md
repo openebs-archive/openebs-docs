@@ -11,7 +11,6 @@ The `mayactl` is the command line tool for interacting with OpenEBS volumes and 
 
 <h3><a class="anchor" aria-hidden="true" id="summary"></a>Summary</h3>
 
-
 [Command used with mayactl](#commands-used-with-mayactl)
 
 [Accessing mayactl](#accessing-mayactl)
@@ -273,9 +272,9 @@ m-apiserver status:  running</div>
 
 ## See Also:
 
-### [FAQ](/docs/next/faq.html)
+### [FAQ](/v160/docs/next/faq.html)
 
-### [Troubleshooting Guide](/docs/next/troubleshooting.html)
+### [Troubleshooting Guide](/v160/docs/next/troubleshooting.html)
 
 ### <br>
 

@@ -51,7 +51,7 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl get ns
   ```
 
-- Uninstalling the OpenEBS doesn't automatically delete the CRDs that were created. If you would like to complete remove the CRDs and the associated objects, run the following commands:
+- Uninstalling the OpenEBS doesn't automatically delete the CRDs that were created. If you would like to completely remove the CRDs and the associated objects, run the following commands:
 
   ```
   kubectl delete crd castemplates.openebs.io
@@ -91,9 +91,9 @@ In addition, the job is set with a TTL to get cleaned up, if the cluster version
 
 ## See Also:
 
-### [FAQ](/docs/next/faq.html)
+### [FAQ](/v160/docs/next/faq.html)
 
-### [Troubleshooting](/docs/next/troubleshooting.html)
+### [Troubleshooting](/v160/docs/next/troubleshooting.html)
 
 <br>
 

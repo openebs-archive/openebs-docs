@@ -102,7 +102,7 @@ cStor Pool is an important component in the storage management. It is fundamenta
 
 **Create a Pool :** Create a new pool with all the configuration. It is typical to start a pool with 3 pool instances on three nodes. Currently RAID types supported for a given pool instance are striped, mirrored, raidz and raidz2. A pool needs to be created before storage classes are created. So, pool creation is the first configuration step in the cStor configuration process.
 
-**Add a new pool instance** : A new pool instance may need to be added for many different reasons. The steps for expanding a cStor pool to a new node can be found [here](/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node). Few example scenarios where need of cStor pool expansion to new nodes are:
+**Add a new pool instance** : A new pool instance may need to be added for many different reasons. The steps for expanding a cStor pool to a new node can be found [here](/v160/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node). Few example scenarios where need of cStor pool expansion to new nodes are:
 
 - New node is being added to the Kubernetes cluster and the blockedvices in new node needs to be considered for persistent volume storage.
 - An existing pool instance is full in capacity and it cannot be expanded as either local disks or network disks are not available. Hence, a new pool instance may be needed for hosting the new volume replicas.
@@ -225,9 +225,9 @@ cStor supports thin provisioning of volumes. By default, a volume is provisioned
 
 ## Performance testing of cStor
 
-Performance testing includes setting up the pools, StorageClasses and iSCSI server tunables. Some best practices include 
+Performance testing includes setting up the pools, StorageClasses and iSCSI server tunable. Some best practices include 
 
-- Number of replicas - For Statefulsets, when the application is doing the required replication, one replica per volume may be sufficient
+- Number of replicas - For StatefulSet, when the application is doing the required replication, one replica per volume may be sufficient
 
 - Network latency - Latency between the pods and zones (if the replicas are placed across AZs) plays a major role in the performance results and it needs to be in the expected range
 
@@ -272,7 +272,7 @@ Following are most commonly observed areas of troubleshooting
 
    **Resolution**: 
 
-   Install iSCSI tools and make sure that iSCSI service is running. See [iSCSI installation](/docs/next/prerequisites.html)
+   Install iSCSI tools and make sure that iSCSI service is running. See [iSCSI installation](/v160/docs/next/prerequisites.html)
 
 2. **Multi-attach error is seen in the logs**
 
@@ -312,7 +312,7 @@ Following are most commonly observed areas of troubleshooting
        iscsiadm: connection login retries (reopen_max) 5 exceeded
        iscsiadm: Connection to Discovery Address 127.0.0.1 failed
        iscsiadm: failed to send SendTargets PDU
-   kubelet keeps taking this response and accumulates the memory.More details can be seen [here](https://github.com/openebs/openebs/issues/2382).
+   kubelet keeps taking this response and accumulates the memory. More details can be seen [here](https://github.com/openebs/openebs/issues/2382).
    
 
 **Resolution:**
@@ -334,12 +334,12 @@ This issue is fixed in 0.8.1 version.
 | Support for RAIDZ1 in cStorPool                              | 1.1.0           |
 | Support for RAIDZ2 in cStorPool                              | 1.1.0           |
 | Deleting a pool replica (Alpha)                      | 1.2.0           |
-| Disk replacement in a given cStor pool instance created using CSPC way(Alpha)                | 1.5.0           |  
-|       |
+| Disk replacement in a given cStor pool instance created using CSPC way(Alpha)                | 1.5.0           |
+|       ||
 | <font size="5">cStor volume features</font>                  |                   |
 | Expanding the size of a cStor volume using CSI provisioner (Alpha)       | 1.2.0         |
 | CSI driver support(Alpha)                                  | 1.1.0          |
-| Snapshot and Clone of cStor volume provisoned via CSI provisioner(Alpha) | 1.4.0         |
+| Snapshot and Clone of cStor volume provisioned via CSI provisioner(Alpha) | 1.4.0         |
 | Scaling up of cStor Volume Replica            | 1.3.0           |
 | Scaling down of cStor Volume Replica          | 1.4.0           |
 
@@ -377,11 +377,11 @@ Each discovered blockdevice on a node is added as a blockdevice CR. This is need
 
 ## See Also:
 
-### [Storage Engines in OpenEBS](/docs/next/casengines.html)
+### [Storage Engines in OpenEBS](/v160/docs/next/casengines.html)
 
-### [Creating cStor Pool](/docs/next/ugcstor.html#creating-cStor-storage-pools)
+### [Creating cStor Pool](/v160/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
-### [Provisioning cStor volumes](/docs/next/ugcstor.html#provisioning-a-cStor-volume)
+### [Provisioning cStor volumes](/v160/docs/next/ugcstor.html#provisioning-a-cStor-volume)
 
 
 

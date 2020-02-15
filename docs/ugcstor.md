@@ -66,18 +66,14 @@ This user guide section provides the operations need to performed by the User an
 
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>User Operations</h2>
 
-
-
 <h3><a class="anchor" aria-hidden="true" id="provisioning-a-cStor-volume"></a>Provisioning a cStor volume</h3>
-
-
 For provisioning a cStor Volume, it requires a cStor Storage Pool and a StorageClass. The configuration and verification of a cStor Storage pool can be checked from [here](#creating-cStor-storage-pools). The configuration and verification of a StorageClass can be checked from [here](#creating-cStor-storage-class).
 
 Use a similar PVC spec or volumeClaimTemplate to use a StorageClass that is pointing to a pool with real disks. Consider the following parameters while provisioning OpenEBS volumes on real disks.
 
-**AccessModes:** cStor provides iSCSI targets, which are appropriate for RWO (ReadWriteOnce) access mode and is suitable for all types of databases. For webscale applications like WordPress or any for any other NFS needs, you need RWM (ReadWriteMany) access mode. For RWM, you need NFS provisioner to be deployed along with cStor. See how to provision <a href="/docs/next/rwm.html" target="_blank">RWM PVC with OpenEBS </a>.
+**AccessModes:** cStor provides iSCSI targets, which are appropriate for RWO (ReadWriteOnce) access mode and is suitable for all types of databases. For webscale applications like WordPress or any for any other NFS needs, you need RWM (ReadWriteMany) access mode. For RWM, you need NFS provisioner to be deployed along with cStor. See how to provision <a href="/v160/docs/next/rwm.html" target="_blank">RWM PVC with OpenEBS </a>.
 
-**Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release (OpenEBS 0.9.0) and is active development, see [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in the very short time period. 
+**Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release (OpenEBS 0.9.0) and is active development, see [roadmap](/v160/docs/next/cstor.html#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in the very short time period. 
 
 The following shows the example PVC configuration for a Deployment and a StatefulSet application which uses a configured StorageClass to provision a cStor Volume. The provided StorageClass name will contain the StoragePoolClaim name and the cStor Volume will provisioned on a StoragePool associated to the StroagePoolClaim.
 
@@ -113,11 +109,9 @@ spec:
       storageClassName: openebs-cstor-pool1-1-replica
 ```
 
-**Note**: After provisioning OpenEBS cStor volume, resiliency of the application can be checked by injecting chaos. Litmus is a Cloud-native Chaos Engineering tool which can be used to perform various chaos tests on Kubernetes in a cloud-native way. Some of the Litmus based chaos tests are mentioned [here](/docs/next/chaostest.html).
+**Note**: After provisioning OpenEBS cStor volume, resiliency of the application can be checked by injecting chaos. Litmus is a Cloud-native Chaos Engineering tool which can be used to perform various chaos tests on Kubernetes in a cloud-native way. Some of the Litmus based chaos tests are mentioned [here](/v160/docs/next/chaostest.html).
 
 <h3><a class="anchor" aria-hidden="true" id="monitoring-a-cStor-Volume"></a>Monitoring a cStor Volume</h3>
-
-
 By default the `VolumeMonitor` is set to ON in the cStor StorageClass. Volume metrics are exported when this parameter is set to ON. Following metrics are supported by cStor as of the current release.
 
 ```
@@ -147,8 +141,6 @@ Grafana charts can be built for the above Prometheus metrics.
 
 
 <h3><a class="anchor" aria-hidden="true" id="snapshot-and-clone-of-a-cStor-volume"></a>Snapshot and Clone of a cStor Volume</h3>
-
-
 An OpenEBS snapshot is a set of reference markers for data at a particular point in time. A snapshot act as a detailed table of contents, with accessible copies of data that user can roll back to the required point of instance. Snapshots in OpenEBS are instantaneous and are managed through `kubectl`.
 
 During the installation of OpenEBS, a snapshot-controller and a snapshot-provisioner are setup which assist in taking the snapshots. During the snapshot creation, snapshot-controller creates `VolumeSnapshot` and `VolumeSnapshotData` custom resources. A snapshot-provisioner is used to restore a snapshot as a new Persistent Volume(PV) via dynamic provisioning.
@@ -158,6 +150,7 @@ In this section the steps for the creation, clone and deletion a snapshot is pro
 
 
 <h4><a class="anchor" aria-hidden="true" id="creating-a-cStor-snapshot"></a>Creating a cStor Snapshot</h4>
+
 
 The following steps will help you to create a snapshot of a cStor volume. For creating the snapshot, you need to create a YAML specification and provide the required PVC name into it. The only prerequisite check is  to be performed is to ensure that there is no stale entries of snapshot and snapshot data before creating a new snapshot.
 
@@ -197,6 +190,7 @@ The following steps will help you to create a snapshot of a cStor volume. For cr
   
 
 <h4><a class="anchor" aria-hidden="true" id="Cloning-a-cStor-snapshot"></a>Cloning a cStor Snapshot</h4>
+
 
 Once the snapshot is created, restoration from a snapshot or cloning the snapshot is done through a two step process. First create a PVC that refers to the snapshot and then use the PVC to create a new PV. This PVC must refer to a storage class called `openebs-snapshot-promoter`. 
 
@@ -246,6 +240,8 @@ Once the snapshot is created, restoration from a snapshot or cloning the snapsho
 
 
 <h4><a class="anchor" aria-hidden="true" id="deleting-a-cStor-Snapshot"></a>Deleting a cStor Snapshot</h4>
+
+
 Delete the snapshot using the kubectl command  by providing the the same YAML specification that was used to create the snapshot.
 
 ```
@@ -262,6 +258,7 @@ This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` that we
 OpenEBS volume can be backed up and restored along with the application using OpenEBS velero plugin. It helps the user for backing up the OpenEBS volumes to third party storage location and restore the data whenever it is required. The steps for taking backup and restore are as follows.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h4>
+
 
 - Latest tested Velero version is 1.1.0.
 - Create required storage provider configuration to store the backup.
@@ -539,28 +536,30 @@ The deletion of Velero backup schedule doesn't destroy the backup created during
 <h3><a class="anchor" aria-hidden="true" id="Upgrading-the-software-version-of-a-cStor-volume"></a>Upgrading the software version of a cStor volume</h3>
 
 
-The steps are mentioned in Upgrade section. For upgrading cStorVolume, ensure that cStor Pool image is support this cStor volume image.  It should also recommended to upgrade the corresponding pool before upgrading cStor volume. The steps for upgrading the cStor volume can be find from [here](/docs/next/upgrade.html).
+The steps are mentioned in Upgrade section. For upgrading cStorVolume, ensure that cStor Pool image is support this cStor volume image.  It should also recommended to upgrade the corresponding pool before upgrading cStor volume. The steps for upgrading the cStor volume can be find from [here](/v160/docs/next/upgrade.html).
 
 <h3><a class="anchor" aria-hidden="true" id="Provisioning-sample-application-with-cstor"></a>Provisioning sample application with cStor</h3>
 
 
 Before provisioning an application ensure that all the below mentioned steps are carried out:
+
 <ol>
 <li>
 Ensure that the filesystem is mounted as per requirement. 
-To know more about mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
+To know more about mount status <a href="/v160/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
 </li>
 <li>
 <b>Create StoragePool</b> specifying the Blockdevices that are to be used.
-To know the detailed steps for creation of StoragePool <a href="/docs/next/ugcstor.html#creating-cStor-storage-pools" target="_blank">click here.</a>
+To know the detailed steps for creation of StoragePool <a href="/v160/docs/next/ugcstor.html#creating-cStor-storage-pools" target="_blank">click here.</a>
 The name specified under <b>metadata</b> in the <b>StoragePoolClaim</b> YAML needs to be mentioned in <b>StorageClass</b> YAML (in the next step).
 Using this StoragePool 
- create StorageClass by referring <a href="/docs/next/ugcstor.html#creating-cStor-storage-class" target="_blank"> here</a>.
+ create StorageClass by referring <a href="/v160/docs/next/ugcstor.html#creating-cStor-storage-class" target="_blank"> here</a>.
 </li>
 <li>
 Once all the above actions have been successfully executed, You can deploy Busybox with cStor volume as follows:
 Copy the below spec into a file, say <b>demo-busybox-cstor.yaml</b> and update  <b>storageClassName</b>  to <b>openebs-sc-statefulset</b>.
 <br>
+
 
 ```
 apiVersion: apps/v1
@@ -691,8 +690,6 @@ kubectl get pod -n <openebs_installed_namespace> | grep <pvc_name>
 
 
 <h3><a class="anchor" aria-hidden="true" id="patching-pool-deployment-resource-limit"></a>Patching pool deployment by adding or modifying resource limit and requests</h3>
-
-
 1. Create a patch file called "patch.yaml" and add the following content to it. You can change the values based on the Node configuration. Recommended values are 4Gi for limits and 2Gi for requests.
 
    ```
@@ -738,12 +735,9 @@ kubectl get pod -n <openebs_installed_namespace> | grep <pvc_name>
 
 
 <h3><a class="anchor" aria-hidden="true" id="creating-cStor-storage-pools"></a>Creating cStor Storage Pools</h3>
-
-
 The cStorStoragePool can be created by specifying the blockDeviceList. The following section will describe the steps in detail. 
 
 <h4><a class="anchor" aria-hidden="true" id="manual-mode"></a>Create a cStorPool by specifying blockDeviceList </h4>
-
 **Overview**
 
 1. Get the details of blockdevices attached in the cluster.
@@ -786,7 +780,7 @@ kubectl describe blockdevice blockdevice-1c10eb1bb14c94f02a00373f2fa09b93 -n ope
 
 From the output, you will get the hostname and other blockdevice details such as State,Path,Claim State,Capacity etc.
 
-**Note:** Identify block devices which are unclaimed, unmounted on node and does not contain any filesystem. The above command will help to find these information. More information about the disk mount status on node can be read from [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume).
+**Note:** Identify block devices which are unclaimed, unmounted on node and does not contain any filesystem. The above command will help to find these information. More information about the disk mount status on node can be read from [here](/v160/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume).
 
 **Step2:** 
 
@@ -825,7 +819,7 @@ In the above file, change the following parameters as required.
 
   This field  represents how the data will be written to the disks on a given pool instance on a node. Supported values are `striped`, `mirrored`, `raidz` and `raidz2`.
 
-  Note: In OpenEBS, the pool instance does not extend beyond a node. The replication happens at volume level but not at the pool level. See [volumes and pools relationship](/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
+  Note: In OpenEBS, the pool instance does not extend beyond a node. The replication happens at volume level but not at the pool level. See [volumes and pools relationship](/v160/docs/next/cstor.html#relationship-between-cstor-volumes-and-cstor-pools) in cStor for a deeper understanding.
 
 - `blockDeviceList`
 
@@ -910,7 +904,7 @@ cstor-disk-pool-ilz1-5587ff79bf-6djjf          3/3     Running   0          2m31
 
 If all pods are showing are running, then you can use these cStor pools for creating cStor volumes.
 
-**Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` . More details can be found [here](/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node).  If you find any issues, check common issues added in [troubleshooting](/docs/next/troubleshooting.html) section.
+**Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` . More details can be found [here](/v160/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node).  If you find any issues, check common issues added in [troubleshooting](/v160/docs/next/troubleshooting.html) section.
 
 <br>
 
@@ -923,7 +917,6 @@ This section captures the policies supported for cStorPools in `StoragePoolClaim
 
 
 <h4><a class="anchor" aria-hidden="true" id="PoolResourceLimits-Policy"></a>PoolResourceLimits Policy</h4>
-
 This feature allow you to set the limits on memory and cpu for pool pods. The resource and limit value should be in the same format as expected by Kubernetes. The `name` of SPC can be changed if you need.
 
 ```
@@ -944,7 +937,6 @@ spec:
 
 
 <h4><a class="anchor" aria-hidden="true" id="PoolResourceRequests-Policy"></a>PoolResourceRequests Policy</h4>
-
 This feature allow you to specify pool resource requests that need to be available before scheduling the containers. If not specified, the default values are used. The following sample configuration will set memory as `2Gi` and ephemeral-stroage request value as `100Mi`. The memory  will be shared for all the volume replicas that reside on a pool. The memory can be `2Gi` to `4Gi` per pool on a given node for better performance. These values can be changed as per the node configuration for better performance. The below configuration also set the `cstor-pool` container with `100Mi` as `ephemeral-storage` requests which will avoid erraneous eviction by K8s. 
 
 ```
@@ -966,6 +958,7 @@ spec:
 
 
 <h4><a class="anchor" aria-hidden="true" id="Tolerations"></a>Tolerations</h4>
+
 
 cStor pool pods can be ensure that pods are not scheduled onto inappropriate nodes. This can be acheived using taint and tolerations method. If Nodes are tainted to schedule the pods which are tolerating the taint, then cStor pool pods also can be scheduled using this method.  Tolerations are applied to cStor pool pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
 
@@ -1000,6 +993,7 @@ spec:
 
 <h4><a class="anchor" aria-hidden="true" id="AuxResourceLimits-Policy"></a>AuxResourceLimits Policy</h4>
 
+
 You can specify the *AuxResourceLimits* which allow you to set limits on side cars. 
 
 ```
@@ -1018,6 +1012,7 @@ metadata:
 
 
 <h4><a class="anchor" aria-hidden="true" id="AuxResourceRequests-Policy"></a>AuxResourceRequests Policy</h4>
+
 
 The below configuration will set the cstor-pool side-cars with memory as `0.5Gi`, cpu as `100m`. This also set the `cstor-pool` side-cars with ephemeral-storage request `50Mi` which will avoid erraneous eviction by K8s. 
 
@@ -1045,7 +1040,6 @@ StorageClass definition is an important task in the planning and execution of Op
 
 
 <h4><a class="anchor" aria-hidden="true" id="steps-to-create-a-cStor-storageclass"></a>Steps to Create a cStor StorageClass</h4>
-
 **Step1:** Decide the cStorPool and get the StoragePoolClaim name associated to it.
 
 **Step2:** Which application uses it? Decide the replicaCount based on your reqiurement. OpenEBS doesn't restrict the replica count to set, but only maximum up to 5 are allowed. It depends how users configure it, but for the availability of volumes at least  (n/2 + 1) replicas should be up and connected to the target, where `n` is the `replicaCount`. The following are some example cases:
@@ -1062,7 +1056,6 @@ StorageClass definition is an important task in the planning and execution of Op
 
 
 <h4><a class="anchor" aria-hidden="true" id="example-configuration-of-openEBS-storageClass"></a>Example Configuration of OpenEBS StorageClass</h4>
-
 You can create a new StorageClass YAML called **openebs-sc-rep3.yaml** and add content to it from below. The following will create a StorageClass of OpenEBS volume replica of `1`, Storage Pool as `cstor-pool2` and CAS type as `cstor`.
 
 ```
@@ -1110,6 +1103,7 @@ Below table lists the storage policies supported by cStor. These policies should
 
 <h4><a class="anchor" aria-hidden="true" id="Replica-Count-Policy"></a>Replica Count Policy</h4>
 
+
 You can specify the cStor volume replica count using the *ReplicaCount* property. In the following example, the ReplicaCount is specified as 3. Hence, three cStor volume replicas will be created.
 
 ```
@@ -1125,6 +1119,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-Controller-Image-Policy"></a>Volume Controller Image Policy</h4>
+
 
 You can specify the cStor Volume Controller Image using the *value* for *VolumeControllerImage* property. This will help you choose the volume management image.
 
@@ -1142,6 +1137,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-Target-Image-Policy"></a>Volume Target Image Policy</h4>
 
+
 You can specify the cStor Target Image using the *value* for *VolumeTargetImage* property. This will help you choose the cStor istgt target image.
 
 ```
@@ -1157,6 +1153,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Storage-Pool-Claim-Policy"></a>Storage Pool Claim Policy</h4>
+
 
 You can specify the cStor Pool Claim name using the *value* for *StoragePoolClaim* property. This will help you choose cStor storage pool where OpenEBS volume will be created. Following is the default StorageClass template where cStor volume will be created on default cStor Sparse Pool.
 
@@ -1174,6 +1171,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-Monitor-Policy"></a>Volume Monitor Policy</h4>
 
+
 You can specify the cStor volume monitor feature which can be set using *value* for the *VolumeMonitor* property.  By default, volume monitor is enabled.
 
 ```
@@ -1189,6 +1187,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-Monitoring-Image-Policy"></a>Volume Monitoring Image Policy</h4>
+
 
 You can specify the monitoring image policy for a particular volume using *value* for *VolumeMonitorImage* property. The following sample storage class uses the Volume Monitor Image policy.
 
@@ -1206,6 +1205,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 <h4><a class="anchor" aria-hidden="true" id="Volume-File-System-Type-Policy"></a>Volume File System Type Policy</h4>
 
+
 You can specify the file system type for the cStor volume where application will consume the storage using *value* for *FSType*. The following is the sample storage class. Currently OpenEBS support ext4 as the default file system and it also supports XFS.
 
 ```
@@ -1221,6 +1221,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Target-NodeSelector-Policy"></a>Target NodeSelector Policy</h4>
+
 
 You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: appnode ` is the node label.
 
@@ -1238,6 +1239,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="Target-ResourceLimits-Policy"></a>Target ResourceLimits Policy</h4>
+
 
 You can specify the *TargetResourceLimits* to restrict the memory and cpu usage of target pod within the given limit  using the *value* for *TargetResourceLimits* .
 
@@ -1257,6 +1259,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 <h4><a class="anchor" aria-hidden="true" id="TargetResourceRequests"></a>TargetResourceRequests Policy </h4>
 
+
 You can specify the *TargetResourceRequests* to specify resource requests that need to be available before scheduling the containers. 
 
 ```
@@ -1273,6 +1276,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="TargetTolerations"></a>TargetTolerations Policy </h4>
+
 
 You can specify the *TargetTolerations* to specify the tolerations for target. 
 
@@ -1293,6 +1297,7 @@ You can specify the *TargetTolerations* to specify the tolerations for target.
 
 <h4><a class="anchor" aria-hidden="true" id="AuxResourceLimits-Policy"></a>AuxResourceLimits Policy</h4>
 
+
 You can specify the *AuxResourceLimits* which allow you to set limits on side cars. 
 
 ```
@@ -1310,6 +1315,7 @@ provisioner: openebs.io/provisioner-iscsi
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="AuxResourceRequests-Policy"></a>AuxResourceRequests Policy</h4>
+
 
 This feature is useful in cases where user has to specify minimum requests like ephemeral storage etc. to avoid erroneous eviction by K8s. `AuxResourceRequests` allow you to set requests on side cars. Requests have to be specified in the format expected by Kubernetes
 
@@ -1330,13 +1336,15 @@ provisioner: openebs.io/provisioner-iscsi
 
 <h4><a class="anchor" aria-hidden="true" id="Target-Affinity-Policy"></a>Target Affinity Policy</h4>
 
+
 The StatefulSet workloads access the OpenEBS storage volume  by connecting to the Volume Target Pod. This policy can be used to co-locate volume target pod on the same node as workload.
 
 The configuration for implementing this policy is different for deployment and StatefulSet applications.
 
 <h5><a class="anchor" aria-hidden="true" id="for-statefulset-applications"></a>For StatefulSet Applications</h5>
 
-In the case of provisioning StatfulSet applications with replication factor of  greater than "1" and volume replication factor of equal to "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application resides. This feature can be achieved by using either of the following approaches.
+
+In the case of provisioning StatefulSet applications with replication factor of  greater than "1" and volume replication factor of equal to "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application resides. This feature can be achieved by using either of the following approaches.
 
 **Approach 1:**
 
@@ -1457,6 +1465,7 @@ metadata:
 
 <h4><a class="anchor" aria-hidden="true" id="Target-Namespace"></a>Target Namespace</h4>
 
+
 By default, the cStor target pods are scheduled in a dedicated *openebs* namespace. The target pod also is provided with OpenEBS service account so that it can access the Kubernetes Custom Resource called `CStorVolume` and `Events`.
 This policy, allows the Cluster administrator to specify if the Volume Target pods should be deployed in the namespace of the workloads itself. This can help with setting the limits on the resources on the target pods, based on the namespace in which they are deployed.
 To use this policy, the Cluster administrator could either use the existing OpenEBS service account or create a new service account with limited access and provide it in the StorageClass as follows:
@@ -1471,6 +1480,7 @@ annotations:
 The sample service account can be found [here](https://github.com/openebs/openebs/blob/master/k8s/ci/maya/volume/cstor/service-account.yaml).
 
 <h4><a class="anchor" aria-hidden="true" id="cStorStoragePool-Anti-Affinity"></a>cStorStoragePool Replica Anti-Affinity</h4>
+
 
 This policy will adds the ability in cStor to correlate and hence distribute single replica volumes across pools which are in turn deployed in separate nodes when application consuming all these volumes is deployed as a StatefulSet.  
 
@@ -1555,13 +1565,13 @@ spec:
 <h3><a class="anchor" aria-hidden="true" id="Upgrade-the-software-version-of-a-cStor-pool"></a>Upgrade the Software Version of a cStor pool</h3>
 
 
-The steps for upgrading cStor Pool is mentioned in Upgrade section. Refer [Upgrade](/docs/next/upgrade.html) section for more details.
+The steps for upgrading cStor Pool is mentioned in Upgrade section. Refer [Upgrade](/v160/docs/next/upgrade.html) section for more details.
 
 
 <h3><a class="anchor" aria-hidden="true" id="monitor-pool"></a>Monitor a cStor Pool</h3>
 
 
-A new sidecar will run once a cStor pool pod is created.This sidecar will collect the metrics of the corresponding cStorStoragePool. Following metrics are supported by cStor to export the cStorStoragePool usage statistics as Prometheus metrics.
+A new sidecar will run once a cStor pool pod is created. This sidecar will collect the metrics of the corresponding cStorStoragePool. Following metrics are supported by cStor to export the cStorStoragePool usage statistics as Prometheus metrics.
 
 ```
 openebs_volume_replica_available_size # Available size of volume replica on a pool
@@ -1660,7 +1670,7 @@ cStorPools can be horizontally scaled when needed typically when a new Kubernete
 The steps for expanding the pool to new nodes is given below. 
 
 <h4><a class="anchor" aria-hidden="true" id="With-specifiying-blockDeviceList"></a>With specifiying blockDeviceList</h4>
-If you are following this approach, you should have created cStor Pool initially using the steps provided [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). For expanding pool onto a new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with the required block device names under the `blockDeviceList` .
+If you are following this approach, you should have created cStor Pool initially using the steps provided [here](/v160/docs/next/ugcstor.html#creating-cStor-storage-pools). For expanding pool onto a new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with the required block device names under the `blockDeviceList` .
 
 **Step 1:** Edit the existing pool configuration spec that you originally used and apply it (OR) directly edit the in-use spec file using `kubectl edit spc <SPC Name>`.
 
@@ -1710,12 +1720,14 @@ This section provide the steps for scaling up the replica of a cStor volume.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisites-for-cvr-scale-up"></a>Prerequisite for scaling up the replicas of cStor volume</h4>
 
+
 - A cStor pool should be available and replica of this cStor volume should not be present on this cStor pool.
 - OpenEBS version should be 1.3.0 or more.
 
 
 
 <h4><a class="anchor" aria-hidden="true" id="overview-scale-up"></a>Overview</h4>
+
 
 - Get the current replica count of the cStor volume which is mentioned in corresponding StorageClass.
 - Find cStor pool(s) where existing cStor volume replica(s) is created.
@@ -1726,6 +1738,7 @@ This section provide the steps for scaling up the replica of a cStor volume.
 
 
 <h4><a class="anchor" aria-hidden="true" id="steps-to-perform-scale-up"></a>Steps to perform cStor volume replica scale up:</h4>
+
 
 1. Get the current replica count of the cStor volume which is mentioned in corresponding StorageClass. Get the StorageClass name using the following command:
 
@@ -2110,7 +2123,7 @@ This section provide the steps for scaling up the replica of a cStor volume.
     </div>
 
     In the above snippet, `desiredReplicationFactor` is updated to 2 from 1.
-   Example output:
+      Example output:
 
     <div class="co">
     cstorvolume.openebs.io/pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8 edited
@@ -2131,7 +2144,7 @@ This section provide the steps for scaling up the replica of a cStor volume.
     </div>
 
 12. Once the new replica of the cStor volume is in `Healthy ` state, check the following parameters of the cStor volume to ensure that details are updated properly. 
-    
+  
     - consistencyFactor
     - desiredReplicationFactor
     - spec.replicaDetails.knownReplicas
@@ -2179,10 +2192,9 @@ This section provide the steps for scaling up the replica of a cStor volume.
 <h3><a class="anchor" aria-hidden="true" id="scaling-down-of-cstor-volume-replica"></a>Scaling down cStor Volume Replica</h3>
 
 
-This section prvoide the steps for scaling down the replica of a cStor volume.
+This section provide the steps for scaling down the replica of a cStor volume.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-scale-down"></a>Prerequisites</h4>
-
 - All the other cStor volume replicas(CVR) should be in `Healthy` state except the cStor volume replica that is going to deleted(i.e deleting CVR can be in any state).
 
 - There shouldn't be any ongoing scaleup process. Verify that `replicationFactor` should be equal to the `desiredReplicationFactor` from corresponding cStor volume CR specification. 
@@ -2193,6 +2205,7 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
 
 <h4><a class="anchor" aria-hidden="true" id="Overview-scale-down"></a>Overview</h4>
 
+
 - Get the details of corresponding cStor volume.
 - Identify the replica of the cStor volume which needs to be removed.
 - Modify the cStor volume specification with required change.
@@ -2200,6 +2213,7 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
 - Delete the CVR corresponding to the replicaID entry which was removed from cStor volume.
 
 <h4><a class="anchor" aria-hidden="true" id="steps-cstor-scale-down"></a>Steps to perform scaling down of cStor volume replica</h4>
+
 
 1. Perform the following command to get the details of PVC:
    ```
@@ -2245,7 +2259,7 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
    <div class="co">
      replicaid: 4858867E8F150C533A2CF30A5D5FD8C6
    </div>
-    
+   
    From the above output, `replicaid` of the identified cStor volume replica is `4858867E8F150C533A2CF30A5D5FD8C6`.
    
 3. Modify the corresponding cStor volume specification to remove the identified cStor volume replica and update the `desiredReplicationFactor`. The cStor volume can be edited by using the following command:
@@ -2289,7 +2303,7 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
    </div>
   
 4. Verify that the identified replica has been removed from the cStor volume. The following section can be checked to verify the updated details and removal event messages of the cStor volume.
-   
+  
    Removal event message can be checked by describe the corresponding cStor volume using the following command:
    
    ```
@@ -2394,13 +2408,11 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
 ## See Also:
 
 
-### [Understand cStorPools ](/docs/next/cstor.html#cstor-pools)
+### [Understand cStorPools ](/v160/docs/next/cstor.html#cstor-pools)
 
-### [cStorPool use case for Prometheus](/docs/next/prometheus.html)
+### [cStorPool use case for Prometheus](/v160/docs/next/prometheus.html)
 
-
-
-### [cStor roadmap](/docs/next/cstor.html#cstor-roadmap)
+### [cStor roadmap](/v160/docs/next/cstor.html#cstor-roadmap)
 
 
 <br>

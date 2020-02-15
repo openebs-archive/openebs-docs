@@ -28,7 +28,7 @@ sidebar_label: Features and Benefits
 
 
 
-For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/docs/next/usecases.html) section.
+For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/v160/docs/next/usecases.html) section.
 
 
 
@@ -44,10 +44,9 @@ For more information on how OpenEBS is used in cloud native environments,  visit
 
 <img src="/docs/assets/svg/f-cas.svg" alt="Smiley face" 		style="width:200px;">
 
-OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found <a href="/docs/next/cas.html" target="_blank">here</a>
+OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always containerized. Each volume has a dedicated storage controller that increases the agility and granularity of persistent storage operations of the stateful applications. Benefits and more details on CAS architecture are found <a href="/v160/docs/next/cas.html" target="_blank">here</a>
 
 <hr>
-
 <br>
 
 ### Synchronous Replication
@@ -75,7 +74,7 @@ Copy-on-write snapshots are a key feature of OpenEBS. The snapshots are created 
 
 <img src="/docs/assets/svg/f-backup.svg" alt="Smiley face" style="width:200px;">
 
-Backup and restore of OpenEBS volumes work with the recent Kubernetes backup and restore solution such as VMware velero (or HeptIO Ark). Data backup to object storage targets such as S3 or Minio can be built using OpenEBS incremental snapshot capability. This storage level snapshotting and backup saves a lot bandwidth and storage space as only the incremental data is used for backup.
+Backup and restore of OpenEBS volumes work with the recent Kubernetes backup and restore solution such as VMware Velero (or HeptIO Ark). Data backup to object storage targets such as S3 or Minio can be built using OpenEBS incremental snapshot capability. This storage level snapshotting and backup saves a lot bandwidth and storage space as only the incremental data is used for backup.
 
 <hr>
 
@@ -122,8 +121,6 @@ Even with Kubernetes, data gravity concerns exist on clouds. With Kubernetes Sta
 
 <br>
 
-
-
 ### Granular Policies Per Stateful Workload
 
 <img src="/docs/assets/svg/b-granular.svg" alt="Smiley face" style="width:200px;">
@@ -135,13 +132,11 @@ Containerization of storage software and dedicating such controller for each vol
 <br>
 
 
-
-
 ### Reduced Storage TCO upto 50% 
 
  <img src="/docs/assets/svg/b-lowtco.svg" alt="Smiley face" style="width:200px;">
 
-On most clouds, block storage is charged based on how much is purchased and not on how much is used. Thin provisioning feature of OpenEBS is useful in pooling the local storage or cloud storage and start giving out the data volumes to the stateful applications in whatever size they need. The storage can be added on the fly without any disruption to the volumes exposed to the workloads or applications. This process has shown cost savings of upto 50% in the medium to long term of running workloads on clouds.
+On most clouds, block storage is charged based on how much is purchased and not on how much is used. Thin provisioning feature of OpenEBS is useful in pooling the local storage or cloud storage and start giving out the data volumes to the stateful applications in whatever size they need. The storage can be added on the fly without any disruption to the volumes exposed to the workloads or applications. This process has shown cost savings of up to 50% in the medium to long term of running workloads on clouds.
 
 <hr>
 
@@ -154,8 +149,8 @@ On most clouds, block storage is charged based on how much is purchased and not 
 Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by using Kubernetes constructs. Using OpenEBS, nodes in the Kubernetes cluster can be horizontally scaled without worrying about managing persistent storage needs of stateful applications. The storage needs (capacity planning, performance planning, and volume management) of a cluster can easily be automated using the volume and pool policies of OpenEBS.
 
 <hr>
-<br>
 
+<br>
 
 ### High Availability 
 
@@ -164,30 +159,17 @@ Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by u
 There is no blast radius effect. CAS architecture does not have the blast radius issue that is typically observed in the traditional storage systems. Metadata of the volume is not centralized and is kept local to the volume. Losing any node results in the loss of volume replicas present only on that node. As the volume data is synchronously replicated at least on two other nodes, in the event of a node failure, the data continues to be available at the same performance levels.
 
 <hr>
-
 <br>
-
-### Free Cross Cloud Visibility of Stateful Applications
-
-<img src="/docs/assets/svg/b-crosscloud.svg" alt="Director Online" style="width:200px;">
-
-Director Online is the SaaS service for OpenEBS enabled Kubernetes clusters that provide comprehensive monitoring and management of OpenEBS volumes. Logs of all OpenEBS volume pods are instantly uploaded to Director Online and available for users through Kibana dashboard. Topology view on Director Online is used very often to understand the Kubernetes resources when they are deployed at scale.
-
-<hr>
-
-<br>
-
-
 
 <br>
 
 ## See Also:
 
-### [Object Storage with OpenEBS](/docs/next/minio.html)
+### [Object Storage with OpenEBS](/v160/docs/next/minio.html)
 
-### [RWM PVs with OpenEBS](/docs/next/rwm.html)
+### [RWM PVs with OpenEBS](/v160/docs/next/rwm.html)
 
-### [Local storage for Prometheus ](/docs/next/prometheus.html)
+### [Local storage for Prometheus ](/v160/docs/next/prometheus.html)
 
 <br>
 

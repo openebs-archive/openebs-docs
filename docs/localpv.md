@@ -9,11 +9,15 @@ sidebar_label: Local PV
 
 ## Overview
 
+
+
 OpenEBS Local PV is a CAS engine that can create persistent volumes using either local disks or host paths on the worker nodes. With this CAS engine, the performance will be equivalent to local disk or the file system (host path) on which the volumes are created. Many cloud native applications may not require advanced storage features like replication, snapshots and clones as they themselves can handles those. Such applications require access to managed disks as persistent volumes. 
 
 
 
 ## Benefits of OpenEBS Local PVs
+
+
 
 OpenEBS Local PVs are analogous to Kubernetes LocalPV. In addition, OpenEBS LocalPVs have the following benefits.
 
@@ -28,11 +32,14 @@ OpenEBS Local PVs are analogous to Kubernetes LocalPV. In addition, OpenEBS Loca
 
 ## How to use OpenEBS Local PVs
 
-OpenEBS create two Storage Classes of Local PVs by default as `openebs-hostpath` and `openebs-device`. For simple provisioning of OpenEBS Local PV, these default Storage Classes can be used. More details can be found  [here](/docs/next/uglocalpv.html).   
+
+
+OpenEBS create two Storage Classes of Local PVs by default as `openebs-hostpath` and `openebs-device`. For simple provisioning of OpenEBS Local PV, these default Storage Classes can be used. More details can be found  [here](/v160/docs/next/uglocalpv.html).   
 
 End users or developers will provision the OpenEBS Local PVs like any other PV, by creating a PVC using a StorageClass provided by the admin user. The StorageClass has `volumeBindingMode: WaitForFirstConsumer` which means delay volume binding until application pod is scheduled on the node.
 
 <h4><a class="anchor" aria-hidden="true" id="openebs-localpv-device"></a>OpenEBS Local PV based on device</h4>
+
 
 Admin user can create a customized StorageClass using the following sample configuration.
 
@@ -53,11 +60,13 @@ reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
 ```
 
+
+
 When a PVC is created using the above StorageClass, OpenEBS Local PV Provisioner uses NDM operator to  claim a matching BlockDevice from the worker node where the application pod is scheduled. 
 
 The Local PV volume will be provisioned with `volumeMode` as `filesystem` by default. Kubelet will format the block device with the filesystem specified as `FSType` under `cas.openebs.io/config` to the path `metadata.annotations` in the StorageClass while provisioning the Local PV.  Currently supported filesystems are `ext4` and `xfs`. If no `FSType` is specified, by default Kubelet will format the BlockDevice as `ext4`.
 
-From OpenEBS 1.5, Local PV volume has Raw Block Volume support. The Raw Block Volume support can be added to the path `spec.volumeMode` as `Block` in the Persistent Volume spec. The sample YAML spec of PVC to provision Local PV on Raw Block volume can be found [here](/docs/next/uglocalpv.html#Provision-OpenEBS-Local-PV-based-on-Device).
+From OpenEBS 1.5, Local PV volume has Raw Block Volume support. The Raw Block Volume support can be added to the path `spec.volumeMode` as `Block` in the Persistent Volume spec. The sample YAML spec of PVC to provision Local PV on Raw Block volume can be found [here](/v160/docs/next/uglocalpv.html#Provision-OpenEBS-Local-PV-based-on-Device).
 
 For provisioning Local PV using the BlockDevice attached to the nodes, the BlockDevice should be in one of the following states:
 
@@ -75,6 +84,7 @@ For provisioning Local PV using the BlockDevice attached to the nodes, the Block
 
 
 <h4><a class="anchor" aria-hidden="true" id="openebs-localpv-hostpath"></a>OpenEBS Local PV based on hostpath</h4>
+
 
 Admin user creates a customized StorageClass using the following sample configuration.
 
@@ -103,12 +113,16 @@ When a PVC is created using the above StorageClass, OpenEBS Local PV  provisione
 
 ## When to use OpenEBS Local PVs
 
+
+
 - High performance is needed by those applications which manage their own replication, data protection and other features such as snapshots and clones.
 - When local disks need to be managed dynamically and monitored for impending notice of them going bad.
 
 
 
 ## When not to use OpenEBS Local PVs
+
+
 
 - When applications expect replication from storage.
 
@@ -117,6 +131,8 @@ When a PVC is created using the above StorageClass, OpenEBS Local PV  provisione
   
 
 ## Limitations (or Roadmap items ) of OpenEBS Local PVs
+
+
 
 - Size of the Local PV cannot be increased dynamically. LVM type of functionality inside Local PVs is a potential feature in roadmap.
 - Disk quotas are not enforced by Local PV. An underlying device or hostpath can have more data than requested by a PVC or storage class. Enforcing the capacity is a roadmap feature.
@@ -130,11 +146,11 @@ When a PVC is created using the above StorageClass, OpenEBS Local PV  provisione
 
 ## See Also:
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v160/docs/next/architecture.html)
 
-### [Understanding NDM](/docs/next/ndm.html)
+### [Understanding NDM](/v160/docs/next/ndm.html)
 
-### [Local PV User Guide](/docs/next/uglocalpv.html)
+### [Local PV User Guide](/v160/docs/next/uglocalpv.html)
 
 <br>
 

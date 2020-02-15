@@ -32,13 +32,11 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 <h3><a class="anchor" aria-hidden="true" id="running-sample-application-cstor-volume-using-csi-provisioner"></a>Running a sample application on a cStor volume provisioned via CSI provisioner</h3>
 
-
 The [Container Storage Interface](https://github.com/container-storage-interface/spec/blob/master/spec.md) (CSI) is a standard for exposing arbitrary block and file storage systems to containerized workloads on Container Orchestration Systems(COs)  like Kubernetes combined with different storage vendors. This means, implementing a single CSI for a storage vendor is guaranteed to work with all COs. OpenEBS cStor volume can be now provisioned with CSI driver from OpenEBS 1.2 version onwards. This feature is under active development and considered to be in Alpha state. 
 
 **Note:** The current implementation only supports provisioning, de-provisioning, expansion and snapshot and clone of cStor Volumes .
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-csi"></a>Prerequisites</h4>
-
 - Kubernetes version 1.14 or higher is installed.
 - iSCSI initiator utils to be installed on all the worker nodes.
 - Recommended OpenEBS Version is 1.4 or above . The steps to install OpenEBS is [here](/docs/next/quickstart.html).
@@ -55,7 +53,6 @@ The [Container Storage Interface](https://github.com/container-storage-interface
 - Run your application on cStor volume provisioned via CSI Provisioner
 
 <h4><a class="anchor" aria-hidden="true" id="install-OpenEBS-csi-driver"></a>Install OpenEBS CSI Driver</h4>
-
 The node components make use of the host iSCSI binaries for iSCSI connection management. Depending on the OS, the csi-operator will have to be modified to load the required iSCSI files into the node pods.
 
 OpenEBS cStor CSI driver components can be installed by running the following command:
@@ -107,12 +104,11 @@ prometheus-to-sd-c5bwl                                      1/1     Running   0 
 prometheus-to-sd-s7fdv                                      1/1     Running   0          35m
 stackdriver-metadata-agent-cluster-level-8468cc67d8-p864w   1/1     Running   0          35m
 </div>
-  
+
 From above output, `openebs-cstor-csi-controller-0`  is running and `openebs-cstor-csi-node-hflmf` , `openebs-cstor-csi-node-mdgqq ` and `openebs-cstor-csi-node-rwshl ` running in each worker node.
     
 
 <h4><a class="anchor" aria-hidden="true" id="provision-a-cStor-Pool-Cluster-csi"></a>Provision a cStor Pool Cluster</h4>
-
 Apply CSPC operator YAML file using the following command:
 
 ```
@@ -199,7 +195,6 @@ Example output:
 
 
 <h4><a class="anchor" aria-hidden="true" id="create-a-cStor-sc-for-csi-driver"></a>Create a cStor StorageClass with cStor CSI provisioner</h4>
-
 Create a Storage Class to dynamically provision volumes using cStor CSI provisioner. You can save the following sample StorageClass YAML spec as `cstor-csi-sc.yaml`.
 
 ```
@@ -246,7 +241,6 @@ The StorageClass `openebs-csi-cstor-disk` is created successfully.
 
 
 <h4><a class="anchor" aria-hidden="true" id="run-application-on-a-cStor-volume-by-specifying-sc"></a>Run your application on cStor volume provisioned via CSI Provisioner</h4>
-
 Run your application by specifying the above created StorageClass for creating the PVC. Sample application YAML can be downloaded using the following command:
 
 ```
@@ -312,7 +306,6 @@ Sat Nov  9 06:59:27 UTC 2019
 
 <h3><a class="anchor" aria-hidden="true" id="expand-cstor-volume-created-using-csi-provisioner"></a>Expand a cStor volume created using CSI provisioner</h3>
 
-
 The following section will give the steps to expand a cStor volume which is created using CSI provisioner. 
 
 **Notes to remember:**
@@ -374,10 +367,9 @@ The following section will give the steps to expand a cStor volume which is crea
     </div>
 
 4. Check the size is reflected on the application pod where the above volume is mounted.
-    
+  
 
 <h3><a class="anchor" aria-hidden="true" id="snapshot-clone-cstor-volume-created-using-csi-provisioner"></a>Snapshot and Cloning the cStor volume created using CSI provisioner</h3>
-
 The following section will give the steps to take snapshot and clone the cStor volume created using CSI provisioner. 
 
 **Notes to remember:**
@@ -389,7 +381,7 @@ The following section will give the steps to take snapshot and clone the cStor v
 **Capture the snapshot and cloning the cStor volume:**
 
 1. Get the details of PVC and PV of the CSI based cStor volume using the following  command:
-   
+  
    PVC:
    ```
    kubectl get pvc
@@ -427,7 +419,7 @@ The following section will give the steps to take snapshot and clone the cStor v
    ```
    In this example, downloaded file is saved as `snapshot.yaml`.
 4. Edit the snapshot.yaml which is created in previous step to update:
-   
+  
    metedata.name :- Name of the snapshot
    
    spec.snapshotClassName :- Name of the `snapshotClass` poiting to cStor CSI driver which you can get from step 2.
@@ -456,7 +448,7 @@ The following section will give the steps to take snapshot and clone the cStor v
    The downloaded file is saved as `pvc-clone.yaml`.
 
 7. Edit the downloaded clone PVC YAML spec to update:
-   
+  
    - metadata.name :- Name of the clone PVC.
    - spec.storageClassName :- Same StorageClass used while creating the source PVC.
    - spec.dataSource.name :- Name of the snapshot.
@@ -469,7 +461,7 @@ The following section will give the steps to take snapshot and clone the cStor v
    ```
    
 9. Verify the status of new cloned PVC and PV using the following command:
-   
+  
    PVC:  
    ```
    kubectl get pvc
@@ -494,7 +486,6 @@ The following section will give the steps to take snapshot and clone the cStor v
 
 
 <h3><a class="anchor" aria-hidden="true" id="provision-cstor-pool-using-cspc-operator"></a>Provisioning cStor pool using CSPC operator</h3>
-
 CSPC is a new schema for cStor pool provisioning and also refactors the code to make the cStor a completely pluggable engine into OpenEBS. The new schema also makes it easy to perform day 2 operations on cStor pools. The following are the new terms related to CSPC:
 
 - CStorPoolcluster(CSPC)
@@ -512,7 +503,6 @@ The current workflow to provision CSPC pool is as follows:
 5. Verify the CSPC pool details.
 
 <h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc"></a>Install OpenEBS</h4>
-
 Latest OpenEBS version can be installed using the following command:
 
 ```
@@ -538,7 +528,6 @@ openebs-snapshot-operator-7d6dd4b77f-444zh    2/2     Running   0          81s
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc-operator"></a>Install CSPC Operator</h4>
-
 Install CSPC operator by using the following command:
 ```
 kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.6.0.yaml
@@ -554,7 +543,6 @@ cspc-operator-c4dc96bb9-zvfws   1/1     Running   0          115s
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="identify-bd-for-cspc"></a>Identify the blockdevices</h4>
-
 Get the details of all blockdevice attached in the cluster using the following command. Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not contain any filesystem. These are the candidiates for CSPC pool creation which need to be used in next step.
 
 ```
@@ -572,7 +560,6 @@ blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a
 In the above example, two blockdevices are attached to one node and one disk each attached to other two nodes.
 
 <h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc-operator"></a>Apply the CSPC pool YAML</h4>
-
 Create a CSPC pool YAML spec to provision CSPC pools using the sample template provided below.
 
 ```
@@ -599,12 +586,12 @@ spec:
       compression: "off"
 ```
 Here, we describe the parameters used in above CSPC pool creation template.
- 
+
  - CSPC_name :- Name of CSPC cluster
  - Node_name :- Name of node where pool is to be created using the available blockdevices attached to the node.
  - RAID_type :- RAID configuration used for pool creation. Supported RAID types are `stripe`, `mirror`, `raidz` and `raidz2`. If `spec.pools.raidGroups.type` is specified, then `spec.pools.poolConfig.defaultRaidGroupType` will not consider for the particular raid groups. 
  - blockdevice_name :- Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not conatin any filesystem.
- 
+
 This is a sample CSPC template YAMl configuration which will provision a cStor pool using CSPC operator. The following describe the pool details of one node. If there are multiple pools to be created on different nodes, add below configuration for each node.
 
 ```
@@ -769,7 +756,6 @@ The following are some of the sample CSPC configuration YAML spec:
   Next, you can provision a cStor volume and then provision applciation on this volume. The steps can be found [here](#running-sample-application-cstor-volume-using-csi-provisioner).
 
 <h4><a class="anchor" aria-hidden="true" id="verify-cspc-pool-details"></a>Verify CSPC Pool Details</h4>
-
 Verify if the pool is in `Running` state by checking the status of CSPC, CSPI and pod running in `openebs` namespace. 
 
 The following command will get the details of CSPC status:
@@ -822,7 +808,6 @@ blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-cspc-default-pool-f7a
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="blockdevice-replacement-cstor-pool-cspc"></a>Blockdevice replacement in a cStor pool created using CSPC operator</h3>
-
 The following steps will help to perform the blockdevice replacement in cStor pools which were created using CSPC. It is recommended to perform replacement of one blockdevice per raid group of the cStor pool. For example, If cStor pool is created using 2 mirror raid groups, then only one blockdevice can be replaced per raid group. Following are prerequisites to perform replacement of blockdevice
 
 **Prerequisites:**
@@ -973,11 +958,10 @@ The following are the steps to perform blockdevice replacement:
   </div>
   
   In the above example output, `blockdevice-41d4416f6199a14b706e2ced69e2694a` is replaced successfully with `blockdevice-c0179d93aebfd90c09a7a864a9148f85`.
-    
+  
   If resilvering on the pool is completed , state of old blockdevice will be changed to `Unclaimed` state and new blockdevice will be `Claimed`. In future, different verification methods will be added.
   
 <h3><a class="anchor" aria-hidden="true" id="running-sample-application-jiva-volume-using-csi-provisioner"></a>Run a sample application on Jiva volume provisioned via Jiva CSI Provisioner</h3>  
-
 OpenEBS Jiva volumes can now be provisioned with CSI driver from OpenEBS 1.5 version onwards.
 
 **Note:** The current implementation only supports provisioning and de-provisioning of Jiva Volumes. This feature is under active development and considered to be in Alpha state.
@@ -999,7 +983,6 @@ OpenEBS Jiva volumes can now be provisioned with CSI driver from OpenEBS 1.5 ver
 
 
 <h4><a class="anchor" aria-hidden="true" id="install-openebs-cspc"></a>Install OpenEBS</h4>
-
 Latest OpenEBS version can be installed using the following command:
 
 ```
@@ -1025,7 +1008,6 @@ openebs-snapshot-operator-7d6dd4b77f-444zh    2/2     Running   0          81s
 </div>
 
 <h4><a class="anchor" aria-hidden="true" id="install-jiva-operator"></a>Install Jiva operator</h4>
-
 
 Install Jiva operator using the following command:
 
@@ -1054,7 +1036,6 @@ openebs-snapshot-operator-7d6dd4b77f-444zh     2/2     Running   0          81s
 </div>
 
 <h4><a class="anchor" aria-hidden="true" id="install-jiva-csi-driver"></a>Install Jiva CSI Driver</h4>
-
 The node components make use of the host iSCSI binaries for iSCSI connection management. Depending on the OS, the Jiva operator will have to be modified to load the required iSCSI files into the node pods.
 
 OpenEBS Jiva CSI driver components can be installed by running the following command.
@@ -1087,7 +1068,6 @@ openebs-jiva-csi-node-56t5g     2/2     Running   0          6m13s
 </div>
 
 <h4><a class="anchor" aria-hidden="true" id="install-jiva-sc-csi-provisioner-"></a>Create a Storage Class with Jiva CSI provisioner</h4>
-
 Create a Storage Class to dynamically provision volumes using Jiva CSI provisioner. You can save the following sample StorageClass YAML spec as `jiva-csi-sc.yaml`.
 
 ```
@@ -1108,7 +1088,6 @@ kubectl apply -f jiva-csi-sc.yaml
 ```
 
 <h4><a class="anchor" aria-hidden="true" id="use-sc-to-provision-jiva-volume"></a>Provision a sample application using Jiva StorageClass</h4>
-
 Create PVC by specifying the above Storage Class in the PVC spec. The following is a sample PVC spec which uses the above created Storage Class. In this example, the PVC YAML spec is saved as `jiva-csi-demo-pvc.yaml`.
 
 ```
@@ -1242,9 +1221,9 @@ In the above output, 2 PVs are created. As the `replicaSC` specified in storage 
 
 ## See Also:
 
-### [cStor Concepts](/docs/next/cstor.html)
+### [cStor Concepts](/v160/docs/next/cstor.html)
 
-### [cStor User Guide](/docs/next/ugcstor.html)
+### [cStor User Guide](/v160/docs/next/ugcstor.html)
 
 <hr>
 

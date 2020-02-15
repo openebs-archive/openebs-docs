@@ -21,46 +21,46 @@ is installed and running or to find the steps to install the iSCSI client.
 
 <div class="divrow">
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#ubuntu"><img src="/docs/assets/l-ubuntu.png" width="50px;">Ubuntu</a>
+        <a href="/v160/docs/next/prerequisites.html#ubuntu"><img src="/docs/assets/l-ubuntu.png" width="50px;">Ubuntu</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#rhel"><img src="/docs/assets/l-rhel.png" width="50px;">RHEL</a>
+        <a href="/v160/docs/next/prerequisites.html#rhel"><img src="/docs/assets/l-rhel.png" width="50px;">RHEL</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#centos"><img src="/docs/assets/l-centos.png" width="50px;">CentOS</a>
-    </div>
-</div>
-
-<div class="divrow">
-    <div class="divcol">
-        <a href="/docs/next/prerequisites.html#eks"><img src="/docs/assets/l-eks.png" width="50px;">EKS</a>
-    </div>
-    <div class="divcol">
-        <a href="/docs/next/prerequisites.html#gke"><img src="/docs/assets/l-gke.png" width="50px;">GKE</a>
-    </div>
-    <div class="divcol">
-        <a href="/docs/next/prerequisites.html#aks"><img src="/docs/assets/l-aks.png" width="50px;">AKS</a>
+        <a href="/v160/docs/next/prerequisites.html#centos"><img src="/docs/assets/l-centos.png" width="50px;">CentOS</a>
     </div>
 </div>
 
 <div class="divrow">
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#openshift"><img src="/docs/assets/l-openshift.png" width="50px;">OpenShift</a>
+        <a href="/v160/docs/next/prerequisites.html#eks"><img src="/docs/assets/l-eks.png" width="50px;">EKS</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#rancher"><img src="/docs/assets/l-rancher.png" width="50px;">Rancher</a>
+        <a href="/v160/docs/next/prerequisites.html#gke"><img src="/docs/assets/l-gke.png" width="50px;">GKE</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#icp"><img src="/docs/assets/l-icp.png" width="50px;">ICP</a>
+        <a href="/v160/docs/next/prerequisites.html#aks"><img src="/docs/assets/l-aks.png" width="50px;">AKS</a>
     </div>
 </div>
 
 <div class="divrow">
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#do"><img src="/docs/assets/DigitalOceanLogo.png" width="45px;">&nbsp;DigitalOcean</a>
+        <a href="/v160/docs/next/prerequisites.html#openshift"><img src="/docs/assets/l-openshift.png" width="50px;">OpenShift</a>
     </div>
     <div class="divcol">
-        <a href="/docs/next/prerequisites.html#konvoy"><img src="/docs/assets/d2iq.jpg" width="50px;">Konvoy</a>
+        <a href="/v160/docs/next/prerequisites.html#rancher"><img src="/docs/assets/l-rancher.png" width="50px;">Rancher</a>
+    </div>
+    <div class="divcol">
+        <a href="/v160/docs/next/prerequisites.html#icp"><img src="/docs/assets/l-icp.png" width="50px;">ICP</a>
+    </div>
+</div>
+
+<div class="divrow">
+    <div class="divcol">
+        <a href="/v160/docs/next/prerequisites.html#do"><img src="/docs/assets/DigitalOceanLogo.png" width="45px;">&nbsp;DigitalOcean</a>
+    </div>
+    <div class="divcol">
+        <a href="/v160/docs/next/prerequisites.html#konvoy"><img src="/docs/assets/d2iq.jpg" width="50px;">Konvoy</a>
     </div>
 </div>
 
@@ -80,7 +80,6 @@ block volumes.
 
 
 <h3><a class="anchor" aria-hidden="true" id="ubuntu"></a>Ubuntu</h3>
-
 **Verify iSCSI services are configured**
 
 If an iSCSI initiator is already installed on your node, check that the
@@ -134,7 +133,6 @@ You can verify the iSCSI installation from above section.
 <br> 
 
 <h3><a class="anchor" aria-hidden="true" id="rhel"></a>Red Hat Enterprise Linux</h3>
-
 **Verify iSCSI services are configured**
 
 In Red Hat Enterprise Linux 7, the iSCSI service is lazily started by
@@ -197,7 +195,6 @@ You can verify the iSCSI installation from above section.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="centos"></a>CentOS</h3>
-
 **Verify iSCSI services are configured**
 
 If an iSCSI initiator is already installed on your node, check that
@@ -248,7 +245,6 @@ Amazon EKS clusters can be brought up with either an AmazonLinux AMI
 or an Ubuntu 18.04 AMI.
 
 <h4><a class="anchor" aria-hidden="true" id="eks-linux-ami"></a>For clusters running with the AmazonLinux AMI</h4>
-
 **Verify iSCSI services are configured**
 
 If an iSCSI initiator is already installed on your node, check that
@@ -287,7 +283,6 @@ You can verify the iSCSI installation from the above section.
 
 
 <h4><a class="anchor" aria-hidden="true" id="eks-linux-ami"></a>For clusters running with the Ubuntu 18.04 AMI</h4>
-
 For setting up iSCSI clients on Ubuntu nodes, see the
 instructions [here.](#ubuntu)
 
@@ -304,7 +299,6 @@ Select Ubuntu as the image version for the node pools in the custom settings. Fo
 
 
 <h3><a class="anchor" aria-hidden="true" id="aks"></a>Azure Kubernetes Service (AKS)</h3>
-
 On Azure Kubernetes Service you need to verify that the `open-iscsi`
 packages are installed and running the service on the kubelet.
 This can be checked by connecting to the nodes through SSH using the
@@ -442,7 +436,7 @@ WantedBy=multi-user.target
 ```
 systemctl daemon-reload
 service kubelet restart
-``` 
+```
 <br>
 
 <hr>
@@ -452,7 +446,6 @@ service kubelet restart
 
 
 <h3><a class="anchor" aria-hidden="true" id="openshift"></a>Red Hat OpenShift</h3>
-
 OpenEBS can be installed using Openshift on the following Operating
 Systems. Tested OpenShift versions are 3.10 and 4.2.
 
@@ -460,7 +453,6 @@ Systems. Tested OpenShift versions are 3.10 and 4.2.
 2. CoreOS 
 
 <h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
-
 Latest tested RHEL versions are 7.5, 7.6.
 
 For setting up iSCSI clients on RHEL nodes, see the instructions [here](#rhel).
@@ -468,8 +460,7 @@ For setting up iSCSI clients on RHEL nodes, see the instructions [here](#rhel).
 
 
 <h4><a class="anchor" aria-hidden="true" id="On-Centos"></a>On CoreOS</h4>
-
-Latest tested RHEL CoreOs version is 4.2.
+Latest tested RHEL CoreOS version is 4.2.
 
 
 <br>
@@ -569,7 +560,6 @@ In the above snippet, default hostpath for Local PV (/var/openebs/local), which 
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="konvoy"></a>Konvoy</h3>
-
 Konvoy is a managed Kubernetes platform for operation and lifecycle management from D2iQ. CentOS 7.6 is used as the underlying node OS by default. Only prerequisite for setting up OpenEBS in Konvoy is to have iSCSI clients on CentOS nodes. For setting up iSCSI clients on CentOS nodes, see the instructions [here](#centos). More details about setting up of OpenEBS in Konvoy can be found [here](https://docs.d2iq.com/ksphere/konvoy/partner-solutions/openebs/).
 
 <br>
@@ -605,9 +595,9 @@ instructions [here](#ubuntu).
 
 ## See Also:
 
-### [OpenEBS Installation](/docs/next/installation.html)
+### [OpenEBS Installation](/v160/docs/next/installation.html)
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v160/docs/next/architecture.html)
 
 
 

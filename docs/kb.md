@@ -36,7 +36,6 @@ sidebar_label: Knowledge Base
 
 <h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
 
-
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
 
 1. Get the PV name by following command and use it in Step 2.
@@ -172,7 +171,6 @@ There are some cases where it had to delete the StatefulSet and re-install a new
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-scale-up-jiva-replica"></a>How to scale up Jiva replica?</h3>
 
-
 From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity. For scaling up Jiva replica count, the following steps has to be performed.
 
 1. Get the deployment details of replica of corresponding Jiva volume using the following command. If it is deployed in `openebs` namespace, use corresponding namespace appropriately in the following commands.
@@ -250,7 +248,6 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
 
 <h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-4.1"></a>How to install OpenEBS in OpenShift 4.1</h3>
 
-
 In earlier documentation, it was referred to install OpenEBS by disabling SELinux. But, you can install OpenEBS in OpenShift environment without disabling SELinux using the following steps.
 
 1. Add OpenEBS Service account to the privileged scc of OpenShift.
@@ -265,7 +262,7 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
    scc "privileged" added to: ["system:serviceaccount:openebs:default"]
    ```
 
-2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
+2. Find the latest OpenEBS release version from [here](/v160/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
 
    ```
    wget https://openebs.github.io/charts/openebs-operator-1.2.0.yaml
@@ -324,7 +321,6 @@ In earlier documentation, it was referred to install OpenEBS by disabling SELinu
 
 <h3><a class="anchor" aria-hidden="true" id="enable-admission-controller-in-openshift"></a>How to enable Admission-Controller in OpenShift 3.10 and above</h3>
 
-
 The following procedure will help to enable admission-controller in OpenShift 3.10 and above.
 
 1. Update the `/etc/origin/master/master-config.yaml`  file with below configuration.
@@ -356,7 +352,6 @@ The following procedure will help to enable admission-controller in OpenShift 3.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions"></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
-
 
 Apply the following YAML in your cluster.
 
@@ -433,7 +428,6 @@ Apply the following YAML in your cluster.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="enable-log-rotation-on-cluster-nodes"></a>How to prevent container logs from exhausting disk space?</h3>
-
 
 Container logs, if left unchecked, can eat into the underlying disk space causing `disk-pressure` conditions
 leading to eviction of pods running on a given node. This can be prevented by performing log-rotation
@@ -528,7 +522,6 @@ the node to show up as `Not Ready` until the daemon has restarted successfully.
 
 <h3><a class="anchor" aria-hidden="true" id="create-bdc-for-a-blockdevice"></a>How to create a BlockDeviceClaim for a particular BlockDevice?</h3>
 
-
 There are certain use cases where the user does not need some of the BlockDevices discovered by OpenEBS to be used by any of the storage engines (cStor, LocalPV, etc.). In such scenarios, users can manually create a BlockDeviceClaim to claim that particular BlockDevice, so that it won't be used by cStor or Local PV. The following steps can be used  to claim a particular BlockDevice: 
 
 1. Download the BDC CR YAML from `node-disk-manager` repository.
@@ -557,7 +550,6 @@ There are certain use cases where the user does not need some of the BlockDevice
 <a href="#top">Go to top</a>
 
 <h3><a class="anchor" aria-hidden="true" id="provision-localpv-on-k3os"></a>How to provision Local PV on K3OS?</h3>
-
 
 K3OS can be installed on any hypervisor The procedure for deploying K3OS on VMware environment is provided in the following section. There are 3 steps for provisioning OpenEBS Local PV on K3OS.
 
@@ -669,7 +661,6 @@ The detailed information of each steps are provided below.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-make-cstor-volume-online-if-replicas-2-of-are-lost"></a>How to make cStor volume online if 2 replicas of 3 are lost ?</h3>
-
 
 Application that is using cStor volume can run IOs, if at least 2 out of 3 replicas (i.e., > 50% of ReplicationFactor) have data with them. If 2 out of 3 replicas lost data, cStor volume goes into RO (read-only) mode, and, application can get into crashed state.
 This section is to provide the steps to bring back volume online by scaling down replicas to 1 with a consideration of ReplicationFactor as 3 in the examples.
@@ -913,7 +904,6 @@ The detailed information of each steps are provided below.
 <a href="#top">Go to top</a>
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-reconstruct-data-from-healthy-replica-to-replaced-ones"></a>How to reconstruct data from healthy replica to replaced one?</h3>
-
 
 Consider the case where cStorVolumes have replication enabled, and one/few of its replicas got replaced, i.e., they are new and lost the data. In this case, cStor volume will be in Offline state and unable to recover data to the replaced replicas from healthy replica automatically.
 
@@ -1286,9 +1276,7 @@ pvc-5c52d001-...........-cstor-sparse-pool-sb1v   90.8M   85.0M   	  Healthy   3
 
 <h3><a class="anchor" aria-hidden="true" id="how-to-verify-whether-cstor-volume-is-running-fine"></a>How to verify whether cStor volume is running fine?</h3>
 
-
 <h3><a class="anchor" aria-hidden="true" id="overview-cstor-volume"></a>Overview</h3>
-
 The following items will be discussed:
 
 1. Verification of cStor Storage Pool(CSP)
@@ -1297,7 +1285,6 @@ The following items will be discussed:
 
 
 <h3><a class="anchor" aria-hidden="true" id="verification-of-cStor-storage-pool"></a>Verification of cStor Storage Pool</h3>
-
 cStor Storage Pool(CSP) resources are cluster scoped. Status of CSPs can be obtained using the following way.
 
 ```
@@ -1416,7 +1403,6 @@ If anything went wrong then the error can be seen in cStor volume events `kubect
 
 <h3><a class="anchor" aria-hidden="true" id="verification-of-cStor-storage-volume-replica"></a>Verification of cStor Volume Replica</h3>
 
-
 cStor Volume Replica is namespace scoped resource. You have to provide the same namespace where OpenEBS is installed. Status of cStor Volume Replica can be obtained using the following way.
 
 ```
@@ -1480,7 +1466,6 @@ The following are the different type of STATUS information of cStor Volumes Repl
 
 
 <h3><a class="anchor" aria-hidden="true" id="expanding-jiva-storage-volumes"></a>Expanding Jiva Storage Volumes</h3>
-
 
 You can resize/expand the OpenEBS volume using the following procedure. Execute the commands from step 2 to 8 as root user on the node where application pod is running.
 

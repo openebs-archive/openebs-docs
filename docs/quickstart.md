@@ -23,11 +23,12 @@ sidebar_label: Quickstart
         <li>For using features like Local PV and Backup & Restore, you must require Kubernetes version 1.13 or above.
         </li>
         <li>For provisioning cStor volume via CSI driver support and performing basic operations on this volume such as expanding volume and snapshot & clone, you must require Kubernetes version 1.14 or above</li>
-        <li>Understand the <a href="/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
-        <li>Start <a href="/docs/next/installation.html">installation </a> through OpenEBS operator.</li>
-        <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses. More details can be find from <a href="/docs/next/ugcstor.html">here.</a></li>
-        <li>For high performance required applications which manage their own replication, data protection and other storage features, provision OpenEBS Local PV. More details can be find from <a href="/docs/next/uglocalpv.html">here.</a></li>
+        <li>Understand the <a href="/v160/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
+        <li>Start <a href="/v160/docs/next/installation.html">installation </a> through OpenEBS operator.</li>
+        <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses. More details can be find from <a href="/v160/docs/next/ugcstor.html">here.</a></li>
+        <li>For high performance required applications which manage their own replication, data protection and other storage features, provision OpenEBS Local PV. More details can be find from <a href="/v160/docs/next/uglocalpv.html">here.</a></li>
     </ul>
+
 
 
 
@@ -47,28 +48,27 @@ sidebar_label: Quickstart
 <font size="5">As a first step, follow the instructions to setup or verify iSCSI clients on any of the platforms below </font>
 
 <div class="emphasize">
+[Ubuntu](/v160/docs/next/prerequisites.html#ubuntu)
 
-[Ubuntu](/docs/next/prerequisites.html#ubuntu)
+[RHEL](/v160/docs/next/prerequisites.html#rhel)
 
-[RHEL](/docs/next/prerequisites.html#rhel)
+[CentOS](/v160/docs/next/prerequisites.html#centos)
 
-[CentOS](/docs/next/prerequisites.html#centos)
+[OpenShift](/v160/docs/next/prerequisites.html#openshift)
 
-[OpenShift](/docs/next/prerequisites.html#openshift)
+[Rancher](/v160/docs/next/prerequisites.html#rancher)
 
-[Rancher](/docs/next/prerequisites.html#rancher)
+[ICP](/v160/docs/next/prerequisites.html#icp)
 
-[ICP](/docs/next/prerequisites.html#icp)
+[EKS](/v160/docs/next/prerequisites.html#eks)
 
-[EKS](/docs/next/prerequisites.html#eks)
+[GKE](/v160/docs/next/prerequisites.html#gke)
 
-[GKE](/docs/next/prerequisites.html#gke)
+[AKS](/v160/docs/next/prerequisites.html#aks)
 
-[AKS](/docs/next/prerequisites.html#aks)
+[Digital Ocean](/v160/docs/next/prerequisites.html#do)
 
-[Digital Ocean](/docs/next/prerequisites.html#do)
-
-[Konvoy](/docs/next/prerequisites.html#konvoy)
+[Konvoy](/v160/docs/next/prerequisites.html#konvoy)
 
 <br>
 
