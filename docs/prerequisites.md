@@ -118,7 +118,7 @@ systemctl status iscsid
 
 
 
-**Install the iSCSI tools**
+**Install iSCSI tools**
 
 If iSCSI initiator is not installed on your node, install
 `open-iscsi` packages using the following commands.
@@ -183,7 +183,7 @@ Feb 19 12:19:09 master-1550555590.mayalab.com iscsid[2137]: iSCSI daemon with pi
 
 
 
-**Install the iSCSI tools** 
+**Install iSCSI tools** 
 
 If iSCSI initiator is not installed on your node, install
 `iscsi-initiator-utils` packages using the following command.
@@ -222,7 +222,7 @@ sudo systemctl enable iscsid && sudo systemctl start iscsid
 
 
 
-**Install the iSCSI tools**
+**Install iSCSI tools**
 
 If an iSCSI initiator is not installed on your node, install
 `iscsi-initiator-utils` packages using the following command.
@@ -273,7 +273,7 @@ sudo systemctl enable iscsid && sudo systemctl start iscsid
 
 
 
-**Install the iSCSI tools**
+**Install iSCSI tools**
 
 If iSCSI initiator is not installed on your node, install
 `iscsi-initiator-utils` packages using the following command.
@@ -354,7 +354,7 @@ service open-iscsi status
 
 
 
-**Install the iSCSI tools**
+**Install iSCSI tools**
 
 You have to get the kubelet container ID using the steps mentioned in
 the above section. Once kubelet container ID is obtained, you need to
