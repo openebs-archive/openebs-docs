@@ -146,9 +146,6 @@ spec:
   poolSpec:
     poolType: striped
   # NOTE - Appropriate disks need to be fetched using `kubectl get blockdevices -n openebs`
-  #
- # NOTE - Appropriate disks need to be fetched using `kubectl get blockdevices -n openebs`
-  #
   # `Block devices` is a custom resource supported by OpenEBS with `node-disk-manager`
   # as the disk operator
 # Replace the following with actual disk CRs from your cluster `kubectl get blockdevices -n openebs`

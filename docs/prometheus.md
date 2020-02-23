@@ -162,10 +162,6 @@ spec:
       - blockdevice-ceaab442d802ca6aae20c36d20859a0b
 ```
 
-
-
-
-
 **Prometheus StorageClass** 
 
 ```yaml
@@ -194,11 +190,9 @@ metadata:
 provisioner: openebs.io/provisioner-iscsi
 ```
 
-
-
 **PVC spec for Prometheus**
 
-```
+```yaml
 #PersistentVolumeClaim for prometheus
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -214,11 +208,9 @@ spec:
       storage: 500G  
 ```
 
-
-
 **PVC spec for Grafana**
 
-```
+```yaml
 #PersistentVolumeClaim for grafana
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -231,13 +223,10 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50G   
-     
+      storage: 50G
 ```
 
-See the <a href="https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/grafana-cstor/grafana-cstor-deployment.yaml" target="_blank"> sample spec files</a> for Grafana using cStor here. 
-
-
+See the <a href="https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/grafana-cstor/grafana-cstor-deployment.yaml" target="_blank"> sample spec files</a> for Grafana using cStor here.
 
 <br>
 
