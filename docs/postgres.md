@@ -145,7 +145,7 @@ spec:
   type: disk
   poolSpec:
     poolType: striped
-  # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
+  # NOTE - Appropriate disks need to be fetched using `kubectl get blockdevices -n openebs`
   #
  # NOTE - Appropriate disks need to be fetched using `kubectl get blockdevices -n openebs`
   #

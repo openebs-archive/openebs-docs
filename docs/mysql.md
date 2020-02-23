@@ -97,7 +97,7 @@ As in most cases, cStor pool may not be dedicated to just MySQL alone. It is rec
 
 **openebs-config.yaml**
 
-```bash
+```yaml
 
 #Use the following YAMLs to create a cStor Storage Pool.
 # and associated storage class.
@@ -128,7 +128,7 @@ spec:
 
 **openebs-sc-disk.yaml**
 
-```bash
+```yaml
 
 apiVersion: storage.k8s.io/v1
 kind: StorageClass

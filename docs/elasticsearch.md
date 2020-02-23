@@ -137,7 +137,7 @@ As in most cases, cStor pool may not be dedicated to just Elasticsearch database
 
 **openebs-config.yaml**
 
-```
+```yaml
 #Use the following YAMLs to create a cStor Storage Pool.
 # and associated storage class.
 apiVersion: openebs.io/v1alpha1

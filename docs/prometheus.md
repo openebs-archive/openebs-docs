@@ -143,7 +143,7 @@ As in most cases, cStor pool may not be dedicated to just Prometheus alone. It i
 
 **Sample cStor Pool spec**
 
-```bash
+```yaml
 apiVersion: openebs.io/v1alpha1
 kind: StoragePoolClaim
 metadata:
@@ -168,7 +168,7 @@ spec:
 
 **Prometheus StorageClass** 
 
-```
+```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
