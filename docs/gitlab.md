@@ -154,7 +154,7 @@ spec:
 
 **openebs-sc-disk.yaml**
 
-```
+```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
