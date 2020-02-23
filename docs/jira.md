@@ -53,7 +53,7 @@ jira-5bd96c488d-2gj8p   1/1     Running   0          2d14h
 
 **openebs-config.yaml**
 
-```
+```yaml
 #Use the following YAMLs to create a cStor Storage Pool.
 # and associated storage class.
 apiVersion: openebs.io/v1alpha1
@@ -65,21 +65,19 @@ spec:
   type: disk
   poolSpec:
     poolType: striped
-  # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
+  # NOTE - Appropriate disks need to be fetched using `kubectl get blockdevices -n openebs`
   #
-  # `Disk` is a custom resource supported by OpenEBS with `node-disk-manager`
+  # `Block devices` is a custom resource supported by OpenEBS with `node-disk-manager`
   # as the disk operator
-# Replace the following with actual disk CRs from your cluster `kubectl get disks`
+# Replace the following with actual disk CRs from your cluster `kubectl get blockdevices -n openebs`
 # Uncomment the below lines after updating the actual disk names.
-  disks:
-    diskList:
-# Replace the following with actual disk CRs from your cluster from `kubectl get disks`
-#   - disk-184d99015253054c48c4aa3f17d137b1
-#   - disk-2f6bced7ba9b2be230ca5138fd0b07f1
-#   - disk-806d3e77dd2e38f188fdaf9c46020bdc
-#   - disk-8b6fb58d0c4e0ff3ed74a5183556424d
-#   - disk-bad1863742ce905e67978d082a721d61
-#   - disk-d172a48ad8b0fb536b9984609b7ee653
+  blockDevices:
+    blockDeviceList:
+# Replace the following with actual disk CRs from your cluster from `kubectl get blockdevices -n openebs`
+#   - blockdevice-69cdfd958dcce3025ed1ff02b936d9b4
+#   - blockdevice-891ad1b581591ae6b54a36b5526550a2
+#   - blockdevice-ceaab442d802ca6aae20c36d20859a0b
+
 ---
 ```
 
