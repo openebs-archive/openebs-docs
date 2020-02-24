@@ -3,7 +3,8 @@ id: redis
 title: OpenEBS for Redis
 sidebar_label: Redis
 ---
-------
+
+---
 
 <img src="/docs/assets/svg/o-redis.svg" alt="OpenEBS and Redis" style="width:400px;">
 
@@ -13,7 +14,7 @@ sidebar_label: Redis
 
 <br>
 
-Redis is an open source (BSD licensed), in-memory **data structure store**, used as a database, cache and message broker.  Redis is deployed usually as a `StatefulSet` on Kubernetes and requires persistent storage for each instance of Redis Storage Manager instance. OpenEBS provides persistent volumes on the fly when Storage Managers are scaled up.
+Redis is an open source (BSD licensed), in-memory **data structure store**, used as a database, cache and message broker. Redis is deployed usually as a `StatefulSet` on Kubernetes and requires persistent storage for each instance of Redis Storage Manager instance. OpenEBS provides persistent volumes on the fly when Storage Managers are scaled up.
 
 <br>
 
@@ -21,13 +22,13 @@ Redis is an open source (BSD licensed), in-memory **data structure store**, used
 
 - No need to manage the local disks, they are managed by OpenEBS
 - Large size PVs can be provisioned by OpenEBS and Redis
-- Start with small storage and add disks as needed on the fly. Sometimes Redis instances are scaled up because of capacity on the nodes. With OpenEBS persistent volumes, capacity can be thin provisioned and disks can be added to OpenEBS on the fly without disruption of service 
+- Start with small storage and add disks as needed on the fly. Sometimes Redis instances are scaled up because of capacity on the nodes. With OpenEBS persistent volumes, capacity can be thin provisioned and disks can be added to OpenEBS on the fly without disruption of service
 - Redis sometimes need highly available storage, in such cases OpenEBS volumes can be configured with 3 replicas.
 - If required, take backup of the Redis data periodically and back them up to S3 or any object storage so that restoration of the same data is possible to the same or any other Kubernetes cluster
 
 <br>
 
-*Note: Redis can be deployed both as `Deployment` or as `StatefulSet`. When Redis deployed as `StatefulSet`, you don't need to replicate the data again at OpenEBS level. When Redis is deployed as `Deployment`, consider 3 OpenEBS replicas, choose the StorageClass accordingly.*
+_Note: Redis can be deployed both as `Deployment` or as `StatefulSet`. When Redis deployed as `StatefulSet`, you don't need to replicate the data again at OpenEBS level. When Redis is deployed as `Deployment`, consider 3 OpenEBS replicas, choose the StorageClass accordingly._
 
 <br>
 
@@ -53,25 +54,25 @@ Redis is an open source (BSD licensed), in-memory **data structure store**, used
 
 1. **Install OpenEBS**
 
-   If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
+   If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step.
 
 2. **Configure cStor Pool**
 
-    After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step. 
+   After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step.
 
-4. **Create Storage Class**
+3. **Create Storage Class**
 
-   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since Redis is a StatefulSet, it requires storage replication factor as 1. So cStor volume `replicaCount` is >=1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStor volume replica count as 1 is provided in the configuration details below.
+   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. Since Redis is a StatefulSet, it requires storage replication factor as 1. So cStor volume `replicaCount` is >=1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStor volume replica count as 1 is provided in the configuration details below.
 
-5. **Launch and test Redis**
+4. **Launch and test Redis**
 
-    Use stable Redis image with helm to deploy Redis in your cluster using the following command. In the following command, it will create a PVC with 8G size for data volume.
+   Use stable Redis image with helm to deploy Redis in your cluster using the following command. In the following command, it will create a PVC with 8G size for data volume.
 
-    ```
-    helm install --set master.persistence.storageClass=openebs-cstor-disk stable/redis
-    ```
+   ```
+   helm install --set master.persistence.storageClass=openebs-cstor-disk stable/redis
+   ```
 
-    For more information on installation, see Redis [documentation](https://github.com/helm/charts/tree/master/stable/redis).
+   For more information on installation, see Redis [documentation](https://github.com/helm/charts/tree/master/stable/redis).
 
 <br>
 
@@ -89,39 +90,29 @@ Deployment YAML spec files for Redis and OpenEBS resources are found [here](http
 
 [OpenEBS-CI dashboard of Redis](https://openebs.ci/redis-cstor)
 
-
-
 <br>
 
 <hr>
 
 <br>
-
-
 
 ## Post deployment Operations
 
 <br>
 
-**Monitor OpenEBS Volume size** 
+**Monitor OpenEBS Volume size**
 
-It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. 
+It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration.
 
 **Monitor cStor Pool size**
 
 As in most cases, cStor pool may not be dedicated to just Redis database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool).
-
-
 
 <br>
 
 <hr>
 
 <br>
-
-
-
-
 
 ## Configuration details
 
@@ -129,7 +120,7 @@ As in most cases, cStor pool may not be dedicated to just Redis database alone. 
 
 **openebs-config.yaml**
 
-```
+```yaml
 #Use the following YAMLs to create a cStor Storage Pool.
 # and associated storage class.
 apiVersion: openebs.io/v1alpha1
@@ -141,22 +132,18 @@ spec:
   type: disk
   poolSpec:
     poolType: striped
-  # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
+    # NOTE - Appropriate disks need to be fetched using `kubectl get blockdevices -n openebs`
   #
-  # `Disk` is a custom resource supported by OpenEBS with `node-disk-manager`
+  # `Block devices` is a custom resource supported by OpenEBS with `node-disk-manager`
   # as the disk operator
-# Replace the following with actual disk CRs from your cluster `kubectl get disks`
-# Uncomment the below lines after updating the actual disk names.
-  disks:
-    diskList:
-# Replace the following with actual disk CRs from your cluster from `kubectl get disks`
-#   - disk-184d99015253054c48c4aa3f17d137b1
-#   - disk-2f6bced7ba9b2be230ca5138fd0b07f1
-#   - disk-806d3e77dd2e38f188fdaf9c46020bdc
-#   - disk-8b6fb58d0c4e0ff3ed74a5183556424d
-#   - disk-bad1863742ce905e67978d082a721d61
-#   - disk-d172a48ad8b0fb536b9984609b7ee653
----
+  # Replace the following with actual disk CRs from your cluster `kubectl get blockdevices -n openebs`
+  # Uncomment the below lines after updating the actual disk names.
+  blockDevices:
+    blockDeviceList:
+# Replace the following with actual disk CRs from your cluster from `kubectl get blockdevices -n openebs`
+#   - blockdevice-69cdfd958dcce3025ed1ff02b936d9b4
+#   - blockdevice-891ad1b581591ae6b54a36b5526550a2
+#   - blockdevice-ceaab442d802ca6aae20c36d20859a0b
 ```
 
 **openebs-sc-disk.yaml**
@@ -172,7 +159,7 @@ metadata:
       - name: StoragePoolClaim
         value: "cstor-disk"
       - name: ReplicaCount
-        value: "1"       
+        value: "1"
 provisioner: openebs.io/provisioner-iscsi
 reclaimPolicy: Delete
 ---
@@ -194,16 +181,10 @@ reclaimPolicy: Delete
 
 ### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
 
-
-
 <br>
 
 <hr>
 <br>
-
-
-
-
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
@@ -217,7 +198,6 @@ reclaimPolicy: Delete
        a.appendChild(r);
    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
-
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
