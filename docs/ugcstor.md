@@ -113,8 +113,6 @@ spec:
       storageClassName: openebs-cstor-pool1-1-replica
 ```
 
-**Note**: After provisioning OpenEBS cStor volume, resiliency of the application can be checked by injecting chaos. Litmus is a Cloud-native Chaos Engineering tool which can be used to perform various chaos tests on Kubernetes in a cloud-native way. Some of the Litmus based chaos tests are mentioned [here](/docs/next/chaostest.html).
-
 <h3><a class="anchor" aria-hidden="true" id="monitoring-a-cStor-Volume"></a>Monitoring a cStor Volume</h3>
 
 
@@ -646,7 +644,28 @@ NAME                       READY   STATUS    RESTARTS   AGE
 busybox-66db7d9b88-kkktl   1/1     Running   0          2m16s
 ```
 </li>
+<li>
+To verify whether the target pod is successfully deployed, execute the following command:<br>
+
+```
+kubectl get pod -n <openebs_installed_namespace> | grep <pvc_name>
+```
+
+The target pod should be running as displayed below:
+
+```
+NAME                                                              READY   STATUS    RESTARTS   AGE
+pvc-3c8f3d76-0131-11ea-89a5-0cc47ab587b8-target-6566cc7885n4hdt   1/1     Running   0          2m16s
+```
+</li>
 </ol>
+
+> The resiliency of the application upon different undesired conditions such as forced reschedule, container crashes or slow network connectivity to cstor target pods can be verified by the following chaos experiments: <br>
+> <a href="https://docs.litmuschaos.io/docs/next/openebs-target-pod-failure"> OpenEBS target pod failure </a> <br>
+> <a href="https://docs.litmuschaos.io/docs/next/openebs-target-container-failure"> OpenEBS target (istgt) container failure </a> <br>
+> <a href="https://docs.litmuschaos.io/docs/next/openebs-target-network-delay"> OpenEBS target network delay  </a>
+
+
 <h3><a class="anchor" aria-hidden="true" id="deleting-a-cStor-volume"></a>Deleting a cStor Volume</h3>
 
 
@@ -911,6 +930,9 @@ cstor-disk-pool-ilz1-5587ff79bf-6djjf          3/3     Running   0          2m31
 If all pods are showing are running, then you can use these cStor pools for creating cStor volumes.
 
 **Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` . More details can be found [here](/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node).  If you find any issues, check common issues added in [troubleshooting](/docs/next/troubleshooting.html) section.
+
+> The resiliency of the cStor storage pool can be verified via `litmus` using <a href="https://docs.litmuschaos.io/docs/next/cStor-pool-validation/"> cStor-pool-validation </a> experiment.
+
 
 <br>
 
