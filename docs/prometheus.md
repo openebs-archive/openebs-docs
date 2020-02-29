@@ -71,7 +71,7 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
    Run `kubectl apply -f <prometheus.yaml>` to see Prometheus running. For more information on configuring more services to be monitored, see Prometheus documentation.
 
    ```
-   helm install stable/prometheus --storage-class=< openebs-cstor-3replica >
+   helm install stable/prometheus --set persistence.storageClass=< openebs-cstor-3replica >
    ```
 
 7. **Persistent volume for Grafana:**
@@ -143,7 +143,7 @@ As in most cases, cStor pool may not be dedicated to just Prometheus alone. It i
 
 **Sample cStor Pool spec**
 
-```
+```yaml
 apiVersion: openebs.io/v1alpha1
 kind: StoragePoolClaim
 metadata:
@@ -154,21 +154,17 @@ spec:
   maxPools: 3
   poolSpec:
     poolType: striped
-  # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
-  disks:
-    diskList:
-       - disk-3326ca3a735ba9cbe5a7753d12d5a55a
-       - disk-d80800ca121b85b136d6a50a1079c921
-       - disk-49e1ca76d1901a01ff6f366b8c53e44a
+  # NOTE - Appropriate disks need to be fetched using `kubectl get bd -n openebs`
+  blockDevices:
+    blockDeviceList:
+      - blockdevice-69cdfd958dcce3025ed1ff02b936d9b4
+      - blockdevice-891ad1b581591ae6b54a36b5526550a2
+      - blockdevice-ceaab442d802ca6aae20c36d20859a0b
 ```
-
-
-
-
 
 **Prometheus StorageClass** 
 
-```
+```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -194,11 +190,9 @@ metadata:
 provisioner: openebs.io/provisioner-iscsi
 ```
 
-
-
 **PVC spec for Prometheus**
 
-```
+```yaml
 #PersistentVolumeClaim for prometheus
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -214,11 +208,9 @@ spec:
       storage: 500G  
 ```
 
-
-
 **PVC spec for Grafana**
 
-```
+```yaml
 #PersistentVolumeClaim for grafana
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -231,13 +223,10 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50G   
-     
+      storage: 50G
 ```
 
-See the <a href="https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/grafana-cstor/grafana-cstor-deployment.yaml" target="_blank"> sample spec files</a> for Grafana using cStor here. 
-
-
+See the <a href="https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/grafana-cstor/grafana-cstor-deployment.yaml" target="_blank"> sample spec files</a> for Grafana using cStor here.
 
 <br>
 
