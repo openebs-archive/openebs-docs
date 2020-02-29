@@ -36,13 +36,13 @@ Below are advantage of using NFS provisioner over OpenEBS cStor volumes
 
 **Select or create a cStor pool**
 
-Select or <a href="/docs/next/configurepools.html">create a cStor pool</a> that satisfies the performance, and availability requirements
+Select or <a href="/docs/next/ugcstor.html#creating-cStor-storage-pools">create a cStor pool</a> that satisfies the performance, and availability requirements
 
 <br>
 
 **Select or create a cStor storage Class**
 
-<a href="/docs/next/configuresc.html">Create a storage class</a> to point to the above selected pool and also select number of replicas and default size of the volume
+<a href="/docs/next/ugcstor.html#creating-cStor-storage-class">Create a storage class</a> to point to the above selected pool and also select number of replicas and default size of the volume. 
 
 <br>
 
@@ -58,25 +58,29 @@ kubectl create ns <ns-nfs-wordpress1>
 
 Deploy NFS server provisioner into the above namespace using stable helm chart. Pass the following main parameter values. 
 
- - OpenEBS StorageClass to be used for the persistent data storage
- - NFS StorageClass to be created which can be used by the web application PVCs
- - Namespace for the NFS server provisioner which you have created in the previous section.
+ - **namespace**:  Namespace for the NFS server provisioner which you have created in the previous section.
+ - **name:** Release name for helm installation.
+ - **persistence.storageClass:** StorageClass used for provisioning cStor volume.
+ - **persistence.size:** cStor volume size which will be used for running nfs provisioner.
+ - **storageClass.name:** Provide a name for NFS StorageClass to be created which can be used by the web application PVCs.
 
 ```
- helm install stable/nfs-server-provisioner --namespace=<ns-nfs-wordpress1> --name=<provisioner-name> --set=persistence.enabled=true,persistence.storageClass=openebs-cstor-sparse,persistence.size=5Gi,storageClass.name=<nfs-sc-name>
+helm install stable/nfs-server-provisioner --namespace=<ns-nfs-wordpress1> --name=<release-name> --set=persistence.enabled=true,persistence.storageClass=<openebs-cstor-sc>,persistence.size=<cStor-volume-size>,storageClass.name=<nfs-sc-name>,storageClass.provisionerName=openebs.io/nfs
 ```
 
 An example helm install command is
 
-<font color="maroon" >```helm install stable/nfs-server-provisioner --namespace=nfs-wp-provisioner --name=openebs-nfs-wordpress --set=persistence.enabled=true,persistence.storageClass=openebs-sc-cstor-pool1,persistence.size=5Gi,storageClass.name=wordpress-nfs-sc1```</font>
+```
+helm install stable/nfs-server-provisioner --namespace=nfs-wp-provisioner --name=openebs-nfs-wordpress --set=persistence.enabled=true,persistence.storageClass=openebs-cstor-disk,persistence.size=5Gi,storageClass.name=wordpress-nfs-sc1,storageClass.provisionerName=openebs.io/nfs
+```
+
+**Note:**  It is recommended that the OpenEBS storage class specifies 10% more space than what is required by the RWM PVC. For example, if RWM PVC requires 100G, then provision cStor volume with 110G.
 
 <br>
 
 **Provision RWX volume using the PVC**
 
-Use the above storage class and create a new PVC and mount it inside the pod at a required mount point.
-
-
+Use the StorageClass which is created in above command and create a new PVC and use the volume in your applications.
 
 <br>
 
@@ -110,7 +114,7 @@ When multiple NFS shares are needed, use multiple NFS provisioners. Each NFS ser
 
 ### [cStor Overview](/docs/next/cstor.html)
 
-### [cStorPools](/docs/next/configurepools.html)
+### [cStorPools](/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
 ### [Setting up Object Storage](/docs/next/minio.html)
 

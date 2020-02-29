@@ -138,6 +138,7 @@ nav.toc .toggleNav {
 
 nav.toc .toggleNav ul li a {
     color: #262B3E;
+    display: block;
     font-size: 14px;
     padding-left: 10px;
 }

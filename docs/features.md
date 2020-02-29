@@ -8,24 +8,22 @@ sidebar_label: Features and Benefits
 
 <font size="6">OpenEBS Features</font>
 
-- [Containerized Storage for Containers](/docs/next/features.html#containerized-storage-for-containers)
-- [Synchronous replication](/docs/next/features.html#synchronous-replication)
-- [Snapshots and clones](/docs/next/features.html#snapshots-and-clones)
-- [Backup and Restore](/docs/next/features.html#backup-and-restore)
-- [Prometheus metrics and Grafana graphs](/docs/next/features.html#prometheus-metrics-for-workload-tuning)
+- [Containerized Storage for Containers](#containerized-storage-for-containers)
+- [Synchronous replication](#synchronous-replication)
+- [Snapshots and clones](#snapshots-and-clones)
+- [Backup and Restore](#backup-and-restore)
+- [Prometheus metrics and Grafana graphs](#prometheus-metrics-for-workload-tuning)
 
 
 
 <font size="6">OpenEBS Benefits</font>
 
-- [Granular policies per stateful workload](/docs/next/features.html#granular-policies-per-stateful-workload)
+- [Granular policies per stateful workload](#granular-policies-per-stateful-workload)
 
-- [Avoid Cloud Lock-in](/docs/next/features.html#avoid-cloud-lock-in)
-- [Reduced storage TCO upto 50%](/docs/next/features.html#reduced-storage-tco-upto-50)
-- [Native Hyperconvergence on Kubernetes](/docs/next/features.html#native-hyperconvergence-on-kubernetes)
+- [Avoid Cloud Lock-in](#avoid-cloud-lock-in)
+- [Reduced storage TCO upto 50%](#reduced-storage-tco-upto-50)
+- [Native Hyperconvergence on Kubernetes](#native-hyperconvergence-on-kubernetes)
 - [High availability - No Blast Radius](#high-availability)
-- [Free cross cloud visibility of stateful applications](/docs/next/features.html#free-cross-cloud-visibility-of-stateful-applications)
-
 
 
 For more information on how OpenEBS is used in cloud native environments,  visit the [use cases](/docs/next/usecases.html) section.
@@ -53,7 +51,7 @@ OpenEBS follows CAS architecture. Volumes provisioned through OpenEBS are always
 ### Synchronous Replication
 
 <img src="/docs/assets/svg/f-replication.svg" alt="Smiley face" style="width:200px;">
-OpenEBS synchronously replicates the data volume replicas for high availability. The replication happens across Kubernetes zone resulting in the cloud native applications to be highly available in cross AZ setups. This feature is especially becomes useful to build highly available stateful applications using local disks on cloud providers services such as GKE, EKS and AKS 
+OpenEBS synchronously replicates the data volume replicas for high availability. The replication happens across Kubernetes zone resulting in the cloud native applications to be highly available in cross AZ setups. This feature is especially useful to build highly available stateful applications using local disks on cloud providers services such as GKE, EKS and AKS 
 
 <hr>
 
@@ -116,7 +114,7 @@ With CAS architecture and being completely in user space, OpenEBS is a truly clo
 
 <img src="/docs/assets/svg/b-no-lockin.svg" alt="Smiley face" style="width:200px;">
 
-Even with Kubernetes, data gravity concerns exist on clouds. With Kubernetes Stateful applications can be moved across clouds. But with Stateful applications, the data is written to cloud provider storage infrastructure and results in the cloud lock-in of the Stateful applications. The OpenEBS, the data is written to the OpenEBS layer and it acts as the data abstraction layer. Using this data abstraction layer, data can be moved across Kubernetes layers eliminating the expensive cloud lock-in issue. 
+Even with Kubernetes, data gravity concerns exist on clouds. With Kubernetes Stateful applications can be moved across clouds. But with Stateful applications, the data is written to cloud provider storage infrastructure and results in the cloud lock-in of the Stateful applications. With the OpenEBS, the data is written to the OpenEBS layer and it acts as the data abstraction layer. Using this data abstraction layer, data can be moved across Kubernetes layers eliminating the expensive cloud lock-in issue. 
 
 <hr>
 
@@ -128,7 +126,7 @@ Even with Kubernetes, data gravity concerns exist on clouds. With Kubernetes Sta
 
 <img src="/docs/assets/svg/b-granular.svg" alt="Smiley face" style="width:200px;">
 
-Containerization of storage software and dedicating such controller for each volume brings in maximum granularity in storage policies. The storage parameters can be monitored on a per volume basis and storage policies can be dynamically updated at run time to achieve the desired result for a given workload. The policies are tested and tuned keeping only the particular workload in mind, neighbouring workloads are affected. The operations and maintenance of storage is greatly reduced because of this dedicated storage stack per workload
+Containerization of storage software and dedicating such controller for each volume brings in maximum granularity in storage policies. The storage parameters can be monitored on a per volume basis and storage policies can be dynamically updated at run time to achieve the desired result for a given workload. The policies are tested and tuned keeping only the particular workload in mind, neighbouring workloads are unaffected. The operations and maintenance of storage is greatly reduced because of this dedicated storage stack per workload.
 
 <hr>
 
@@ -141,7 +139,7 @@ Containerization of storage software and dedicating such controller for each vol
 
  <img src="/docs/assets/svg/b-lowtco.svg" alt="Smiley face" style="width:200px;">
 
-On most clouds, block storage on cloud is charged based on how much is purchased and not on how much is used. Thin provisioning feature of OpenEBS is useful in pooling the local storage or cloud storage and start giving out the data volumes to the stateful applications in whatever size they need. The storage can be added on the fly without any disruption to the volumes exposed to the workloads or applications. This process has shown cost savings of upto 50% in the medium to long term of running workloads on clouds
+On most clouds, block storage is charged based on how much is purchased and not on how much is used. Thin provisioning feature of OpenEBS is useful in pooling the local storage or cloud storage and start giving out the data volumes to the stateful applications in whatever size they need. The storage can be added on the fly without any disruption to the volumes exposed to the workloads or applications. This process has shown cost savings of upto 50% in the medium to long term of running workloads on clouds.
 
 <hr>
 
@@ -161,19 +159,11 @@ Node Disk Manager in OpenEBS enables disk management in a Kubernetes way or by u
 
 <img src="/docs/assets/svg/b-ha.svg" alt="High Availability" style="width:200px;"> 
 
-There is no blast radius effect. CAS architecture does not have the typical blast radius issue that is typically observed in the traditional storage systems. Metadata of the volume is not centralized and is kept local to the volume. Losing any node results in the loss of volume replicas present only on that node. As the volume data is synchronous replicated at least on to two other nodes, in the event of a node failure, the data continues to be available at the same performance levels.
+There is no blast radius effect. CAS architecture does not have the blast radius issue that is typically observed in the traditional storage systems. Metadata of the volume is not centralized and is kept local to the volume. Losing any node results in the loss of volume replicas present only on that node. As the volume data is synchronously replicated at least on two other nodes, in the event of a node failure, the data continues to be available at the same performance levels.
+
 
 <hr>
 
-<br>
-
-### Free Cross Cloud Visibility of Stateful Applications
-
-<img src="/docs/assets/svg/b-crosscloud.svg" alt="MayaOnline" style="width:200px;">
-
-MayaOnline is the SaaS service for OpenEBS enabled Kubernetes clusters that provide  comprehensive monitoring and management of OpenEBS volumes. Logs of all OpenEBS volume pods are instantly uploaded to MayaOnline and available for users through Kibana dashboard. Topology view on MayaOnline used very often to understand the Kubernetes resources when they are deployed at scale.
-
-<hr>
 
 <br>
 

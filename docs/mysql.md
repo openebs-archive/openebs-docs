@@ -47,13 +47,11 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
    If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
-2. **Connect to MayaOnline (Optional)** : Connecting  the Kubernetes cluster to <a href="app.mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
-
-3. **Configure cStor Pool** : After OpenEBS installation,  cStor pool has to be configured. As MySQL is a deployment, it need high availability at storage levele. OpenEBS cStor volume has to be configured with 3 replica. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor Pool is already configured as required go to Step 4 to create MySQL StorageClass. 
+2. **Configure cStor Pool** : After OpenEBS installation,  cStor pool has to be configured. As MySQL is a deployment, it need high availability at storage level. OpenEBS cStor volume has to be configured with 3 replica. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor Pool is already configured as required go to Step 4 to create MySQL StorageClass. 
 
 4. **Create Storage Class**
 
-   You must configure a StorageClass to provision cStor volume on cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies  are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. Since MySQL is a deployments, it requires high availability of data at storage level. So cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStorVolume Replica count as 3 is provided in the configuration details below.
+   You must configure a StorageClass to provision cStor volume on cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies  are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. Since MySQL is a deployments, it requires high availability of data at storage level. So cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStor volume replica count as 3 is provided in the configuration details below.
 
 5. **Launch and test Mysql**:
 
@@ -77,11 +75,11 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
 **Monitor OpenEBS Volume size** 
 
-It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
+It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. 
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just MySQL alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
+As in most cases, cStor pool may not be dedicated to just MySQL alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool) 
 
 **Maintain volume replica quorum during node upgrades**
 
@@ -99,7 +97,8 @@ As in most cases, cStor pool may not be dedicated to just MySQL alone. It is rec
 
 **openebs-config.yaml**
 
-```
+```yaml
+
 #Use the following YAMLs to create a cStor Storage Pool.
 # and associated storage class.
 apiVersion: openebs.io/v1alpha1
@@ -111,27 +110,26 @@ spec:
   type: disk
   poolSpec:
     poolType: striped
-  # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
+  # NOTE - Appropriate disks need to be fetched using `kubectl get bd -n openebs`
   #
-  # `Disk` is a custom resource supported by OpenEBS with `node-disk-manager`
+  # `Block Devices` is a custom resource supported by OpenEBS with `node-disk-manager`
   # as the disk operator
-# Replace the following with actual disk CRs from your cluster `kubectl get disks`
+# Replace the following with actual disk CRs from your cluster `kubectl get bd  -n openebs`
 # Uncomment the below lines after updating the actual disk names.
-  disks:
-    diskList:
-# Replace the following with actual disk CRs from your cluster from `kubectl get disks`
-#   - disk-184d99015253054c48c4aa3f17d137b1
-#   - disk-2f6bced7ba9b2be230ca5138fd0b07f1
-#   - disk-806d3e77dd2e38f188fdaf9c46020bdc
-#   - disk-8b6fb58d0c4e0ff3ed74a5183556424d
-#   - disk-bad1863742ce905e67978d082a721d61
-#   - disk-d172a48ad8b0fb536b9984609b7ee653
+  blockdevices:
+    blockDeviceList:
+# Replace the following with actual disk CRs from your cluster from `kubectl get bd  -n openebs`
+#   - blockdevice-69cdfd958dcce3025ed1ff02b936d9b4
+#   - blockdevice-891ad1b581591ae6b54a36b5526550a2
+#   - blockdevice-ceaab442d802ca6aae20c36d20859a0b
+  
 ---
 ```
 
 **openebs-sc-disk.yaml**
 
-```
+```yaml
+
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -142,7 +140,7 @@ metadata:
       - name: StoragePoolClaim
         value: "cstor-disk"
       - name: ReplicaCount
-        value: "3"       
+        value: "3"
 provisioner: openebs.io/provisioner-iscsi
 reclaimPolicy: Delete
 ---

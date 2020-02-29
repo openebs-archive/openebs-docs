@@ -13,7 +13,7 @@ sidebar_label: PostgreSQL
 
 <br>
 
-OpenEBS is deployed under PostgreSQL for a variety of reasons discussed below.  The basics are that PostgreSQL is typically deployed  as a `statefulset` on Kubernetes and requires persistent storage for each instance of PostgreSQL StorageManager. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
+OpenEBS is deployed under PostgreSQL for a variety of reasons discussed below.  The basics are that PostgreSQL is typically deployed  as a `StatefulSet` on Kubernetes and requires persistent storage for each instance of PostgreSQL StorageManager. OpenEBS provides persistent volumes on the fly when StorageManagers are scaled up.
 
 <br>
 
@@ -39,7 +39,7 @@ OpenEBS is deployed under PostgreSQL for a variety of reasons discussed below.  
 
 <br>
 
-<img src="/docs/assets/svg/postgresql-deployment.svg" alt="OpenEBS and ElasticSearch" style="width:100%;">
+<img src="/docs/assets/svg/postgresql-deployment.svg" alt="OpenEBS and PostgreSQL" style="width:100%;">
 
 As shown above, OpenEBS volumes need to be configured with single replica. This configuration works fine when the nodes (hence the OpenEBS cStor pool) is deployed across Kubernetes zones.
 
@@ -57,15 +57,13 @@ As shown above, OpenEBS volumes need to be configured with single replica. This 
 
    If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
-2. **Connect to MayaOnline (Optional)** : Connecting  the Kubernetes cluster to <a href="app.mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
+2. **Configure cStor Pool**
 
-3. **Configure cStor Pool**
-
-   If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/configurepools.html). As PostgreSQL is a StatefulSet application, it requires single storage replication factor. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
+   If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). As PostgreSQL is a StatefulSet application, it requires single storage replication factor. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
 
 4. **Create Storage Class**
 
-   You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the [Configure StoragePool](/docs/next/configurepools.html) section. In this solution,PostgreSQL is a deployment. Since it requires replication at the storage level so cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml** to consume cStor pool with cStorVolume Replica count as 3 is provided in the configuration details below.
+   You must configure a StorageClass to provision cStor volume on cStor pool. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes. The storage pool is created using the steps provided in the Step 3. In this solution,PostgreSQL is a deployment. Since it requires replication at the storage level so cStor volume `replicaCount` is 3. Sample YAML named **openebs-sc-disk.yaml** to consume cStor pool with cStor volume replica count as 3 is provided in the configuration details below.
 
 5. **Launch and test PostgreSQL**
 
@@ -111,11 +109,11 @@ Deployment YAML spec files for PostgreSQL and OpenEBS resources are found <a hre
 
 **Monitor OpenEBS Volume size** 
 
-It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
+It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. 
 
 **Monitor cStor Pool size**
 
-In some cases the cStor pool may not be dedicated to only the PostgreSQL database. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/configurepools.html#verifying-pool-status) 
+In some cases the cStor pool may not be dedicated to only the PostgreSQL database. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool). 
 
 
 
@@ -135,7 +133,7 @@ In some cases the cStor pool may not be dedicated to only the PostgreSQL databas
 
 **openebs-config.yaml**
 
-```
+```yaml
 #Use the following YAMLs to create a cStor Storage Pool.
 # and associated storage class.
 apiVersion: openebs.io/v1alpha1
@@ -147,27 +145,23 @@ spec:
   type: disk
   poolSpec:
     poolType: striped
-  # NOTE - Appropriate disks need to be fetched using `kubectl get disks`
-  #
-  # `Disk` is a custom resource supported by OpenEBS with `node-disk-manager`
+  # NOTE - Appropriate disks need to be fetched using `kubectl get blockdevices -n openebs`
+  # `Block devices` is a custom resource supported by OpenEBS with `node-disk-manager`
   # as the disk operator
-# Replace the following with actual disk CRs from your cluster `kubectl get disks`
+# Replace the following with actual disk CRs from your cluster `kubectl get blockdevices -n openebs`
 # Uncomment the below lines after updating the actual disk names.
-  disks:
-    diskList:
-# Replace the following with actual disk CRs from your cluster from `kubectl get disks`
-#   - disk-184d99015253054c48c4aa3f17d137b1
-#   - disk-2f6bced7ba9b2be230ca5138fd0b07f1
-#   - disk-806d3e77dd2e38f188fdaf9c46020bdc
-#   - disk-8b6fb58d0c4e0ff3ed74a5183556424d
-#   - disk-bad1863742ce905e67978d082a721d61
-#   - disk-d172a48ad8b0fb536b9984609b7ee653
+  blockDevices:
+    blockDeviceList:
+# Replace the following with actual disk CRs from your cluster from `kubectl get blockdevices -n openebs`
+#   - blockdevice-69cdfd958dcce3025ed1ff02b936d9b4
+#   - blockdevice-891ad1b581591ae6b54a36b5526550a2
+#   - blockdevice-ceaab442d802ca6aae20c36d20859a0b
 ---
 ```
 
 **openebs-sc-disk.yaml**
 
-```
+```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:

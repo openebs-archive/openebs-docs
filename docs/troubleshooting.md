@@ -7,32 +7,21 @@ sidebar_label: Troubleshooting
 
 <font size="5">General guidelines for troubleshooting</font>
 
-Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to monitor OpenEBS resources and volumes. Logs of OpenEBS pods available at MayaOnline are helpful for troubleshooting. Topology views of OpenEBS custom resources provide the live status which are helpful in the troubleshooting process.
-
-
-
 **Steps for troubleshooting:**
 
-- Join <a href="https://openebs.io/join-our-community" target="_blank">Slack OpenEBS Community</a>
-- Connect Kubernetes cluster to MayaOnline and observe the following
-  - Any alerts that may be relevant to the issue under troubleshooting 
-  - Logs that throw up any errors
-  - Status of custom resources of OpenEBS volumes in the topology view
+- Join <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a>
+- Search for similar issues added in this troubleshootiung section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
 <br>
 
 <hr>
 
-
-
 <font size="6">Areas of troubleshooting</font>
 
 <br>
 
 ## Installation
-
-
 
 [Installation failed because insufficient user rights](#install-failed-user-rights)
 
@@ -43,21 +32,20 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 [OpenEBS installation fails on Azure](#install-failed-azure-no-rbac-set).
 
 [A multipath.conf file claims all SCSI devices in OpenShift](#multipath-conf-claims-all-scsi-devices-openshift)
+
 <br>
-
-
 
 ## Uninstall
 
-
-
 [Whenever a Jiva PVC is deleted, a job will created and status is seeing as `completed`](#jiva-deletion-scrub-job)
 
+[cStor Volume Replicas are not getting deleted properly](#cvr-deletion)
 
+<br>
 
 ## Volume provisioning
 
-
+[Unable to create persistentVolumeClaim due to certificate verification error](#admission-server-ca)
 
 [Application complaining ReadOnly filesystem](#application-read-only)
 
@@ -81,17 +69,44 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 [Unable to mount XFS formatted volumes into Pod](#unable-to-mount-xfs-volume)
 
+[Unable to create or delete a PVC](#unable-to-create-or-delete-a-pvc)
+
+[Unable to provision cStor on DigitalOcean](#unable-to-provision-openebs-volume-on-DigitalOcean)
+
 <br>
 
 ## Kubernetes related
-
-
 
 [Kubernetes node reboots because of increase in memory consumed by Kubelet](#node-reboot-when-kubelet-memory-increases)
 
 [Application and OpenEBS pods terminate/restart under heavy I/O load](#Pods-restart-terminate-when-heavy-load)
 
+<br>
 
+## NDM related
+
+[Blockdevices are not detected by NDM in some of the nodes](#bd-from-some-nodes-are-not-detected)
+
+[Unable to discover some of disks in Proxmox servers by OpenEBS](#unable-to-discover-proxmox-disks)
+
+<br>
+
+## Jiva Volume related
+
+[Jiva replica pod logs showing meta file missing entry](#replica-pod-meta-file-error)
+
+<br>
+
+## cStor Volume related
+
+[One of the cStorVolumeReplica(CVR) will have its status as `Invalid` after corresponding pool pod gets recreated](#CVR-showing-status-as-invalid-after-poolpod-gets-recreated)
+
+[cStor volume become read only state](#cstor-volume-read-only)
+<br>
+
+## Others
+
+[Nodes in the cluster reboots frequently almost everyday in openSUSE CaaS](#reboot-cluster-nodes)
 
 <br>
 
@@ -99,9 +114,9 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 
 <br>
 
-
-
 <font size="6" color="blue">Installation</font>
+
+
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-user-rights"></a>Installation failed because of insufficient user rights</h3>
 
@@ -128,6 +143,8 @@ You must enable RBAC before OpenEBS installation. This can be done from the kube
 kubectl create clusterrolebinding  <cluster_name>-admin-binding --clusterrole=cluster-admin --user=<user-registered-email-with-the-provider>
 ```
 
+
+
 <h3><a class="anchor" aria-hidden="true" id="install-failed-iscsi-not-configured"></a>iSCSI client is not setup on Nodes. Pod is in ContainerCreating state.</h3>
 
 After OpenEBS installation, you may proceed with application deployment which will provision OpenEBS volume. This may fail due to the following error. This can be found by describing the application pod.
@@ -139,6 +156,8 @@ MountVolume.WaitForAttach failed for volume “pvc-ea5b871b-32d3-11e9-9bf5-0a8e9
 **Troubleshooting**
 
 This logs points that iscsid.service may not be enabled and running on your Nodes. You need to check if the service `iscsid.service` is running. If it is not running, you have to `enable` and `start` the service. You can refer [prerequisites](/docs/next/prerequisites.html) section and choose your platform to get the steps for enabling it.
+
+
 
 <h3><a class="anchor" aria-hidden="true" id="openebs-provsioner-restart-continuously"></a>Why does OpenEBS provisioner pod restart continuously?</h3>
 
@@ -173,7 +192,10 @@ Perform the following steps to verify if the issue is due to misconfiguration wh
 3. Use the latest version of network provider images.
 4. Try other network components such as Calico, kube-router etc. if you are not using any of these.
 
+
+
 <h3><a class="anchor" aria-hidden="true" id="install-failed-azure-no-rbac-set"></a>OpenEBS installation fails on Azure</h3>
+
 
 On AKS, while installing OpenEBS using Helm,  you may see the following error.
 
@@ -186,7 +208,10 @@ Error: release openebsfailed: clusterroles.rbac.authorization.k8s.io "openebs" i
 
 You must enable RBAC on Azure before OpenEBS installation. For more details, see [Prerequisites](/docs/next/prerequisites.html).
 
+
+
 <h3><a class="anchor" aria-hidden="true" id="multipath-conf-claims-all-scsi-devices-openshift"></a>A multipath.conf file claims all SCSI devices in OpenShift</h3>
+
 
 A multipath.conf file without either find_multipaths or a manual blacklist claims all SCSI devices.
 
@@ -205,44 +230,57 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 
 
-<br>
-
 <hr>
-
 <br>
 
 <font size="6" color="maroon">Un-Install</font>
-
-<br>
 
 
 
 <h3><a class="anchor" aria-hidden="true" id="jiva-deletion-scrub-job"></a>Whenever a Jiva based PVC is deleted, a new job gets created.</h3>
 
-As part of deleting the Jiva Volumes, OpenEBS launches scrub jobs for clearing data from the nodes. The completed jobs can be cleared using following command.
+
+As part of deleting the Jiva Volumes, OpenEBS launches scrub jobs for clearing data from the nodes. This job will be running in OpenEBS installed namespace. The completed jobs can be cleared using following command.
 
 ```
-kubectl delete jobs -l openebs.io/cas-type=jiva -n <namespace>
+kubectl delete jobs -l openebs.io/cas-type=jiva -n <openebs_namespace>
 ```
 
+In addition, the job is set with a TTL to get cleaned up, if the cluster version is greater than 1.12. However, for the feature to work, the alpha feature needs to be enabled in the cluster. More information can be read from [here](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#clean-up-finished-jobs-automatically).
 
 
-<br>
+
+<h3><a class="anchor" aria-hidden="true" id="cvr-deletion"></a>cStor Volume Replicas are not getting deleted properly</h3>
+
+
+Sometimes, there are chances that cStor volumes Replicas (CVR) may not be deleted properly if some unforeseen scenarios happened such as network loss during the deletion of PVC. To resolve this issue, perform the following command.
+
+```
+kubectl edit cvr <cvr_name> -n openebs
+```
+
+And then remove finalizers from the corresponding CVR. Need to remove following entries and save it.
+
+```
+finalizers:
+- cstorvolumereplica.openebs.io/finalizer
+```
+
+This will automatically remove the pending CVR and delete the cStor volume completely.
+
+
 
 <hr>
 <br>
 
 <font size="6" color="red"> Volume provisioning</font>
 
-<br>
-
 
 
 <h3><a class="anchor" aria-hidden="true" id="application-read-only"></a> Application complaining ReadOnly filesystem</h3>
 
+
 Application sometimes complain about the underlying filesystem has become ReadOnly.
-
-
 
 **Troubleshooting**
 
@@ -252,13 +290,50 @@ This can happen for many reasons.
 - Node is rebooted in adhoc manner (or unscheduled reboot) and Kubernetes is waiting for Kubelet to come backup to know that the node is rebooted and the pods on that node need to be rescheduled. Kubernetes can take upto 30 minutes as timeout before deciding the node does not comebackup and pods need to be rescheduled. During this time, the iSCSI initiator at the application pod has timeout and marked the underlying filesystem as ReadOnly
 - cStor target has lost quorum because of underlying node losses and target has marked the lun as ReadOnly
 
-Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kuberntes node reboots. 
+Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kubernetes node reboots. 
 
+<h3><a class="anchor" aria-hidden="true" id="admission-server-ca"></a>Unable to create persistentVolumeClaim due to certificate verification error</h3>
+
+
+An issue can appear when creating a PersistentVolumeClaim:
+
+```
+Error from server (InternalError):Internal error occurred: failed calling webhook "admission-webhook.openebs.io": Post https://admission-server-svc.openebs.svc:443/validate?timeout=30s: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "admission-server-ca")
+```
+
+**Troubleshooting**
+
+By default OpenEBS chart generates TLS certificates used by the `openebs-admission-controller`, while this is handy, it requires the admission controller to restart on each `helm upgrade` command. For most of the use cases, the admission controller would have restarted to update the certificate configurations, if not , then user will get the above mentioned error.
+
+**Workaround**
+
+This can be fixed by restarting the admission controller:
+
+```
+kubectl -n openebs get pods -o name | grep admission-server | xargs kubectl -n openebs delete
+```
 
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
 
-The setup environment where the issue occurs is rancher/rke with bare metal hosts running CentOS. After installing OpenEBS, OpenEBS pods are running, but application pod is in *ContainerCreating* state. It consume Jiva volume.The output of `kubectl get pods` is displayed as follows.
+
+By default OpenEBS chart generates TLS certificates used by the `openebs-admission-controller`, while this is handy, it requires the admission controller to restart on each `helm upgrade` command. For most of the use cases, the admission controller would have restarted to update the certificate configurations, if not , then user will get the above mentioned error.
+
+**Workaround**
+
+
+This can be fixed by restarting the admission controller:
+
+```
+kubectl -n openebs get pods -o name | grep admission-server | xargs kubectl -n openebs delete
+```
+
+
+<h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
+
+
+
+The setup environment where the issue occurs is rancher/rke with bare metal hosts running CentOS. After installing OpenEBS, OpenEBS pods are running, but application pod is in *ContainerCreating* state. It consume Jiva volume. The output of `kubectl get pods` is displayed as follows.
 
 ```
 NAME                                                             READY     STATUS              RESTARTS   AGE
@@ -277,6 +352,8 @@ Make sure the following prerequisites are done.
 2. Added extra_binds under kubelet service in cluster YAML
 
 More details are mentioned [here](/docs/next/prerequisites.html#rancher).
+
+
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-stuck-after-deployment"></a>Application pod is stuck in ContainerCreating state after deployment</h3>
 
@@ -311,7 +388,10 @@ More details are mentioned [here](/docs/next/prerequisites.html#rancher).
   - *allowHostDirVolumePlugin: true*
   - *runAsUser: runAsAny*
 
+
+
 <h3><a class="anchor" aria-hidden="true" id="cstor-pool-failed-centos-partion-disk"></a>Creating cStor pool fails on CentOS when there are partitions on the disk.</h3>
+
 
 Creating cStor pool fails with the following error message:
 
@@ -370,7 +450,10 @@ sdc           8:32   0 232.9G  0 disk
    sudo dmsetup remove centos-root
    ```
 
+
+
 <h3><a class="anchor" aria-hidden="true" id="application-crashloopbackoff"></a>Application pod enters CrashLoopBackOff states</h3>
+
 
 Application pod enters CrashLoopBackOff state
 
@@ -427,15 +510,57 @@ The procedure to ensure application recovery in the above cases is as follows:
 
 1. The above procedure works for applications that are either pods or deployments/statefulsets. In case of the latter, the application pod can be restarted (i.e., deleted) after step-4 (iscsi logout) as the deployment/statefulset controller will take care of rescheduling the application on a same/different node with the volume.
 
+
+
 <h3><a class="anchor" aria-hidden="true" id="cstor-pool-pod-not-running"></a>cStor pool pods are not running</h3>
+
 
 The cStor disk pods are not coming up after it deploy with the YAML. On checking the pool pod logs, it says `/dev/xvdg is in use and contains a xfs filesystem.`
 
 **Workaround:**
 
-cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is optional to wipe out the data from the disk if you use existing disks for cStor pool creation.
+cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is also recommended to wipe out the disks if you are using an used disk for cStor pool creation. The following steps will clear the file system from the disk.
+
+```
+sudo umount <block device path>
+wipefs -a <block device path>
+```
+
+The following is an example output of `lsblk` on node.
+
+<div class="co">
+NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0     7:0    0   89M  1 loop /snap/core/7713
+loop1     7:1    0   18M  1 loop /snap/amazon-ssm-agent/1480
+xvda    202:0    0  128G  0 disk
+└─xvda1 202:1    0  128G  0 part /
+xvdf    202:80   0   50G  0 disk /home/openebs-ebs
+</div>
+
+From the above output, it shows that `/dev/xvdf` is mounted on `/home/openebs-ebs`. The following commands will unmount disk first and then remove the file system.
+
+```
+sudo umount /dev/xvdf
+wipefs -a /dev/xvdf
+```
+
+After performing the above commands, verify the disk status using `lsblk` command:
+
+Example output:
+
+<div class="co">
+ubuntu@ip-10-5-113-122:~$ lsblk
+NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0     7:0    0   89M  1 loop /snap/core/7713
+loop1     7:1    0   18M  1 loop /snap/amazon-ssm-agent/1480
+xvda    202:0    0  128G  0 disk
+└─xvda1 202:1    0  128G  0 part /
+xvdf    202:80   0   50G  0 disk
+</div>
+
 
 <h3><a class="anchor" aria-hidden="true" id="Jiva-provisioning-failed-080"></a>OpenEBS Jiva PVC is not provisioning in 0.8.0</h3>
+
 
 Even all OpenEBS pods are in running state, unable to provision Jiva volume if you install through helm.
 
@@ -443,7 +568,10 @@ Even all OpenEBS pods are in running state, unable to provision Jiva volume if y
 
 Check the latest logs showing in the OpenEBS provisioner logs. If the particular PVC creation entry logs are not coming on the OpenEBS provisioner pod, then restart the OpenEBS provisioner pod. From 0.8.1 version, liveness probe feature will check the OpenEBS provisioner pod status periodically and ensure its availability for OpenEBS PVC creation.
 
+
+
 <h3><a class="anchor" aria-hidden="true" id="recovery-readonly-when-kubelet-is-container"></a>Recovery procedure for Read-only volume where kubelet is running in a container.</h3>
+
 
 In environments where the kubelet runs in a container, perform the following steps as part of the recovery procedure for a Volume-Read only issue.
 
@@ -458,7 +586,10 @@ In environments where the kubelet runs in a container, perform the following ste
    - Verify if the application pod is able to start using/writing into the newly mounted device.
 2. Once the application is back in "Running" state post recovery by following steps 1-9, if existing/older data is not visible (i.e., it comes up as a fresh instance), it is possible that the application pod is using the docker container filesystem instead of the actual PV (observed sometimes due to the reconciliation attempts by Kubernetes to get the pod to a desired state in the absence of the mounted iSCSI disk). This can be checked by performing a `df -h` or `mount` command inside the application pods. These commands should show the scsi device `/dev/sd*` mounted on the specified mount point. If not, the application pod can be forced to use the PV by restarting it (deployment/statefulset) or performing a docker stop of the application container on the node (pod).
 
+
+
 <h3><a class="anchor" aria-hidden="true" id="recovery-readonly-xfs-volume"></a>Recovery procedure for Read-only volume for XFS formatted volumes</h3>
+
 
 In case of `XFS` formatted volumes, perform the following steps once the iSCSI target is available in RW state & logged in:
 
@@ -472,7 +603,8 @@ In case of `XFS` formatted volumes, perform the following steps once the iSCSI t
 
 <h3><a class="anchor" aria-hidden="true" id="unable-to-clone-from-snapshot"></a>Unable to clone OpenEBS volume from snapshot</h3>
 
-Taken a snpashot of a PVC successfully. But unable to clone the volume from the snapshot.
+
+Taken a snapshot of a PVC successfully. But unable to clone the volume from the snapshot.
 
 **Troubleshooting:**
 
@@ -532,7 +664,10 @@ I0109 04:11:54.212249      1 snapshot-controller.go:197] [CONTROLLER] OnUpdate o
 
 This can be happen due to the stale entries of snapshot and snapshot data. By deleting those entries will resolve this issue. 
 
+
+
 <h3><a class="anchor" aria-hidden="true" id="unable-to-mount-xfs-volume"></a>Unable to mount XFS formatted volumes into Pod</h3>
+
 
 I created PVC with FSType as `xfs`. OpenEBS PV is successfully created and I have verified that iSCSI initiator is available on the Application node. But application pod is unable to mount the volume.
 
@@ -585,21 +720,84 @@ apt install xfsprogs
 
 
 
+<h3><a class="anchor" aria-hidden="true" id="unable-to-create-or-delete-a-pvc"></a>Unable to create or delete a PVC</h3>
+
+
+User is unable to create a new PVC or delete an existing PVC. While doing any of these operation, the following error is coming on the PVC.
+
+```
+Error from server (InternalError): Internal error occurred: failed calling webhook "admission-webhook.openebs.io": Post https://admission-server-svc.openebs.svc:443/validate?timeout=30s: Bad Gateway
+```
+
+**Workaround:**
+
+When a user creates or deletes a PVC, there are validation triggers and a request has been intercepted by the admission webhook controller after authentication/authorization from kube-apiserver.
+By default admission webhook service has been configured to 443 port and the error above suggests that either port 443 is not allowed to use in cluster or admission webhook service has to be allowed in k8s cluster Proxy settings.
+
+<hr>
+
+
+User is unable to create a new PVC or delete an existing PVC. While doing any of these operation, the following error is coming on the PVC.
+
+```
+Error from server (InternalError): Internal error occurred: failed calling webhook "admission-webhook.openebs.io": Post https://admission-server-svc.openebs.svc:443/validate?timeout=30s: Bad Gateway
+```
+
+**Workaround:**
+
+When a user creates or deletes a PVC, there are validation triggers and a request has been intercepted by the admission webhook controller after authentication/authorization from kube-apiserver.
+By default admission webhook service has been configured to 443 port and the error above suggests that either port 443 is not allowed to use in cluster or admission webhook service has to be allowed in k8s cluster Proxy settings.
+
+
+<br>
+<h3><a class="anchor" aria-hidden="true" id="unable-to-provision-openebs-volume-on-DigitalOcean"></a>Unable to provision OpenEBS volume on DigitalOcean</h3>
+<br>
+User is unable to provision cStor or jiva volume on DigitalcOcean, encountering error thrown from iSCSI PVs: 
 <br>
 
+```
+MountVolume.WaitForAttach failed for volume “pvc-293d3560-a5c3–41d5–8911–67f33115b8ee” : executable file not found in $PATH
+```
+
+**Resolution :**
+
+To avoid this issue, the Kubelet Service needs to be updated to mount the required packages to establish iSCSI connection to the target. Kubelet Service on all the nodes in the cluster should be updated.
+<blockquote>
+ The exact mounts may vary depending on the OS. <br><br>The following steps have been verified on:<br>
+1. Digital Ocean Kubernetes Release: 1.15.3-do.2<br>
+2. Nodes running OS Debian Release: 9.11
+</blockquote>
+
+
+
+ Add the below lines (volume mounts) to the file on each of the nodes:
+ ```
+ /etc/systemd/system/kubelet.service 
+ ```
+```
+-v /sbin/iscsiadm:/usr/bin/iscsiadm \
+-v /lib/x86_64-linux-gnu/libisns-nocrypto.so.0:/lib/x86_64-linux-gnu/libisns-nocrypto.so.0 \
+```
+
+<b>Restart the kubelet service using the following commands:</b>
+```
+systemctl daemon-reload
+service kubelet restart
+```
+
+To know more about provisioning cStor volume on DigitalOcean<a href="/docs/next/prerequisites.html#do"> click here</a>
 <hr>
 <br>
 
 
-
 <font size="6" color="green">Kubernetes related</font>
-
-<br>
 
 
 
 
 <h3><a class="anchor" aria-hidden="true" id="node-reboot-when-kubelet-memory-increases"></a>Kubernetes node reboots because of increase in memory consumed by Kubelet</h3>
+
+
 Sometime it is observed that iscsiadm is  continuously fails and repeats rapidly and for some reason this causes the memory consumption of kubelet to grow until the node goes out-of-memory and needs to be rebooted. Following type of error can be observed in journalctl and cstor-istgt container.
 
 
@@ -651,21 +849,23 @@ Feb 06 06:11:38 <hostname> kubelet[1063]: iscsiadm: failed to send SendTargets P
 
 The cause of high memory consumption of kubelet is mainly due to the following.
 
-There are 3 modules are involved - cstor-isgt, kubelet and iscsiInitiator(iscsiadm).
-kubelet runs iscsiadm command to do discovery on cstor-istgt.
-If there is any delay in receiving response of discovery opcode (either due to network or delay in processing on target side), iscsiadm retries few times, and, gets into infinite loop dumping error messages as below:
+There are 3 modules are involved - cstor-isgt, kubelet and iscsiInitiator(iscsiadm). kubelet runs iscsiadm command to do discovery on cstor-istgt. If there is any delay in receiving response of discovery opcode (either due to network or delay in processing on target side), iscsiadm retries few times, and, gets into infinite loop dumping error messages as below:
 
     iscsiadm: Connection to Discovery Address 127.0.0.1 failed
     iscsiadm: failed to send SendTargets PDU
     iscsiadm: connection login retries (reopen_max) 5 exceeded
     iscsiadm: Connection to Discovery Address 127.0.0.1 failed
-    iscsiadm: failed to send SendTargets PDU```
-    kubelet keeps taking this response and accumulates the memory.
+    iscsiadm: failed to send SendTargets PDU
+kubelet keeps taking this response and accumulates the memory. More details can be seen [here](https://github.com/openebs/openebs/issues/2382).
+
 **Workaround**
 
 Restart the corresponding istgt pod to avoid memory consumption.
 
+
+
 <h3><a class="anchor" aria-hidden="true" id="Pods-restart-terminate-when-heavy-load"></a>Application and OpenEBS pods terminate/restart under heavy I/O load</h3>
+
 
 This is caused due to lack of resources on the Kubernetes nodes, which causes the pods to evict under loaded conditions as the node becomes *unresponsive*. The pods transition from *Running* state to *unknown* state followed by *Terminating* before restarting again.
 
@@ -677,11 +877,316 @@ The above cause can be confirmed from the `kubectl describe pod` which displays 
 
 You can resolve this issue by upgrading the Kubernetes cluster infrastructure resources (Memory, CPU).
 
+
+
+<hr>
 <br>
+<font size="6" color="blue">NDM related</font>
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="bd-from-some-nodes-are-not-detected"></a>Blockdevices are not detected by NDM from some of the nodes</h3>
+
+
+One disk is attached per Node in a 3 Node cluster in a VM Environment where CentOS is underlying OS and `kubectl get blockdevice -n openebs`  return only one disk. Also if the particular node is restarted, from where the disk is detected then the description of the disk attached to that node gets modified. `lsblk` output from one of the nodes:
+
+```
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   32G  0 disk 
+|-sda1            8:1    0    1G  0 part /boot
+`-sda2            8:2    0   31G  0 part 
+  |-centos-root 253:0    0 27.8G  0 lvm  /
+  `-centos-swap 253:1    0  3.2G  0 lvm  [SWAP]
+sdb               8:16   0   50G  0 disk 
+sr0              11:0    1 1024M  0 rom 
+```
+
+**Troubleshooting:**
+
+Check `kubectl get blockdevice -o yaml` of one of the blockdevice and check its serial number. Also ensure that serial number of other 2 blockdevices are different. NDM detect and recognise the blockdevice based on their WWN, Model, Serial and Vendor. If the blockdevice have all the parameters same then NDM cannot differentiate the blockdevice and will create only 1 BlockdDevice CR for each unique parameter. To troubleshoot the same user has to make sure the blockdevices are having at least any one unique parameter from WWN, Model, Serial and Vendor. Usually this issue faced in virtualization environment like vSphere, KVM etc.
+
+**Resolution:**
+
+Download custom blockdevice CR YAML file from [here](https://raw.githubusercontent.com/openebs/node-disk-manager/master/deploy/crds/openebs_v1alpha1_blockdevice_cr.yaml) and apply with the details of each block device. In the sample spec, `ndm.io/managed:` is set to false. So NDM will not manage this <br>blockdevice.
+
+**Note:** If you are creating a block device CR manually for a custom device path, then you must add the corresponding device path under `exclude` filter so that NDM will not select the particular device for BD creation. For example, if block device CR is creating for `/dev/sdb` manually, then you must add `/dev/sdb` under `exclude` filter of NDM configuration. See [here](#Exclude-filters) for customizing the `exclude` filter in NDM configuration.
+
+<br>
+
+<h3><a class="anchor" aria-hidden="true" id="unable-to-discover-proxmox-disks"></a>Unable to discover some of disks in Proxmox servers by OpenEBS</h3>
+
+User is having a 3 node cluster with 8 disks attached on each node. But `kubectl get bd -n openebs` is not detecting all the blockdevices. It is detecting some of the blockdevices from each node. This information can be obtained by running `kubectl describe bd <bd_cr_name> -n openebs`.
+
+**Troubleshooting:**
+
+Check `kubectl get blockdevice -o yaml` of one of the blockdevice and its serial number. Also, ensure that the serial number of other 2 blockdevices are different. NDM detect and recognize the blockdevice based on their WWN, Model, Serial and Vendor. If the blockdevice have all the parameters same then NDM cannot differentiate the blockdevice and will create only 1 BlockdDevice CR for each unique parameter. To troubleshoot the same user has to make sure the blockdevices are having at least anyone unique parameter from WWN, Model, Serial and Vendor. Usually this issue is faced in virtualization environment like vSphere, KVM etc. More details abour NDM daemon set functionalities can be read from [here](/docs/next/ndm.html#ndm-daemonset-functions).
+
+**Resolution:**
+
+This can be resolved this by modifying the configuration file of a VM:
+
+- Open conf file by following command
+
+  ```
+  vi /etc/pve/qemu-server/101.conf
+  ```
+
+- Add a serial number by following way:
+
+  ```
+  scsi1: 
+  images:vm-101-disk-1,cache=writeback,discard=on,size=120G,ssd=1,serial=5fb20ba17c2f
+  ```
+
+- Restart the VM:
+
+  ```
+  qm shutdown 101 && qm start 101
+  ```
+
+- Verify the disk path for all the disks in a VM:
+
+  ```
+  ls -lah /dev/disk/by-id
+  ```
+
+- Repeat the same procedure on other nodes and ensure the uniqueness of disks in all the Nodes.
+
 
 <hr>
 
-<br><br>
+
+<br>
+
+<font size="6" color="maroon">Jiva volume related</font>
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="replica-pod-meta-file-error"></a>Jiva replica pod logs showing "Failed to find metadata"</h3>
+
+
+Jiva target pod may not be syncing data across all replicas when replica pod logs contains below kind of messages:
+
+```
+level=error msg="Error in request: Failed to find metadata for volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img"
+```
+
+**Troubleshooting**:
+
+Perform following steps to restore the missing metadata file of internal snapshots.
+
+- Check all replica pods are in running state. Faulty replica pod will be in `crashloopBackoff` state in OpenEBS 1.0.0 version.
+
+- Find the replica in `RW` mode using mayactl command, consider it as healthy.
+
+- Consider the replica that have above kind of error messages in its logs as faulty.
+
+- Log in to the nodes of healthy and faulty replica and list all the snapshots under **/var/openebs/<PV-name>**.
+
+  Example snippet of Healthy replica:
+
+  ```
+  revision.counter                                           volume-snap-792e7036-877d-4807-9641-4843c987d0a5.img
+  volume-head-005.img                                        volume-snap-792e7036-877d-4807-9641-4843c987d0a5.img.meta
+  volume-head-005.img.meta                                   volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img
+  volume-snap-15660574-e47d-4217-ac92-1497e5b654a4.img       volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img.meta
+  volume-snap-15660574-e47d-4217-ac92-1497e5b654a4.img.meta  volume-snap-cce9eb61-8f8b-42bd-ba44-8479ada98cee.img
+  volume-snap-2ac410ca-2716-4255-94b1-39105b627270.img       volume-snap-cce9eb61-8f8b-42bd-ba44-8479ada98cee.img.meta
+  volume-snap-2ac410ca-2716-4255-94b1-39105b627270.img.meta  volume-snap-d9f8d3db-9434-4f16-a5a7-b1b120ceae94.img
+  volume-snap-466d32e7-c443-46dd-afdd-8412e76f348e.img       volume-snap-d9f8d3db-9434-4f16-a5a7-b1b120ceae94.img.meta
+  volume-snap-466d32e7-c443-46dd-afdd-8412e76f348e.img.meta  volume.meta
+  ```
+
+  Example snippet of of faulty replica:
+
+  ```
+  revision.counter                                           volume-snap-792e7036-877d-4807-9641-4843c987d0a5.img
+  volume-head-005.img                                        volume-snap-792e7036-877d-4807-9641-4843c987d0a5.img.meta
+  volume-head-005.img.meta                                   volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img
+  volume-snap-15660574-e47d-4217-ac92-1497e5b654a4.img       volume-snap-15660574-e47d-4217-ac92-1497e5b654a4.img.meta  volume-snap-cce9eb61-8f8b-42bd-ba44-8479ada98cee.img
+  volume-snap-2ac410ca-2716-4255-94b1-39105b627270.img       volume-snap-cce9eb61-8f8b-42bd-ba44-8479ada98cee.img.meta
+  volume-snap-2ac410ca-2716-4255-94b1-39105b627270.img.meta  volume-snap-d9f8d3db-9434-4f16-a5a7-b1b120ceae94.img
+  volume-snap-466d32e7-c443-46dd-afdd-8412e76f348e.img       volume-snap-d9f8d3db-9434-4f16-a5a7-b1b120ceae94.img.meta
+  volume-snap-466d32e7-c443-46dd-afdd-8412e76f348e.img.meta  volume.meta
+  ```
+
+  From above snippet of faulty replica, metadata for the `volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img`  snapshot is not present.
+
+- If only one meta file is missing, then copy meta file name and content from one of the healthy replica to the faulty replica.
+
+  For above case, copy `volume-snap-b72764f0-4ca8-49b1-b9ca-57cb9dfb6fa9.img.meta`from healthy replica to faulty replica and restart the faulty replica. You can verify the logs of the replica pod to ensure that there are no error messages as mentioned above. 
+
+- If multiple meta files are missing, then delete all files from replica pods and then restart the faulty replica pod to rebuild from healthy replica.
+
+
+<hr>
+<br>
+
+<font size="6" color="brown">cStor Volume related</font> 
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="CVR-showing-status-as-invalid-after-poolpod-gets-recreated"></a>One of the cStorVolumeReplica(CVR) will have its status as `Invalid` after corresponding pool pod gets recreated</h3>
+
+When User delete a cStor pool pod, there are high chances for that corresponding pool-related CVR's can goes into `Invalid` state.
+Following is a sample output of `kubectl get cvr -n openebs`
+
+<div class="co">NAME                                                         USED   ALLOCATED   STATUS    AGE
+pvc-738f76c0-b553-11e9-858e-54e1ad4a9dd4-cstor-sparse-p8yp   6K     6K          Invalid   6m
+</div>
+
+**Troubleshooting**
+
+Sample logs of `cstor-pool-mgmt` when issue happens:
+<div class="co">rm /usr/local/bin/zrepl
+exec /usr/local/bin/cstor-pool-mgmt start
+<b>I0802 18:35:13.814623 6 common.go:205] CStorPool CRD found</b>
+I0802 18:35:13.822382 6 common.go:223] CStorVolumeReplica CRD found
+I0802 18:35:13.824957 6 new_pool_controller.go:103] Setting up event handlers
+I0802 18:35:13.827058 6 new_pool_controller.go:105] Setting up event handlers for CSP
+I0802 18:35:13.829547 6 new_replica_controller.go:118] will set up informer event handlers for cvr
+I0802 18:35:13.830341 6 new_backup_controller.go:104] Setting up event handlers for backup
+I0802 18:35:13.837775 6 new_restore_controller.go:103] Setting up event handlers for restore
+I0802 18:35:13.845333 6 run_pool_controller.go:38] Starting CStorPool controller
+I0802 18:35:13.845388 6 run_pool_controller.go:41] Waiting for informer caches to sync
+I0802 18:35:13.847407 6 run_pool_controller.go:38] Starting CStorPool controller
+I0802 18:35:13.847458 6 run_pool_controller.go:41] Waiting for informer caches to sync
+I0802 18:35:13.856572 6 new_pool_controller.go:124] cStorPool Added event : cstor-sparse-p8yp, 48d3b2ba-b553-11e9-858e-54e1ad4a9dd4
+I0802 18:35:13.857226 6 event.go:221] Event(v1.ObjectReference{Kind:"CStorPool", Namespace:"", Name:"cstor-sparse-p8yp", UID:"48d3b2ba-b553-11e9-858e-54e1ad4a9dd4", APIVersion:"openebs.io/v1alpha1", ResourceVersion:"1998", FieldPath:""}): type: 'Normal' reason: 'Synced' Received Resource create event
+I0802 18:35:13.867953 6 common.go:262] CStorPool found
+I0802 18:35:13.868007 6 run_restore_controller.go:38] Starting CStorRestore controller
+I0802 18:35:13.868019 6 run_restore_controller.go:41] Waiting for informer caches to sync
+I0802 18:35:13.868022 6 run_replica_controller.go:39] Starting CStorVolumeReplica controller
+I0802 18:35:13.868061 6 run_replica_controller.go:42] Waiting for informer caches to sync
+I0802 18:35:13.868098 6 run_backup_controller.go:38] Starting CStorBackup controller
+I0802 18:35:13.868117 6 run_backup_controller.go:41] Waiting for informer caches to sync
+I0802 18:35:13.946730 6 run_pool_controller.go:45] Starting CStorPool workers
+I0802 18:35:13.946931 6 run_pool_controller.go:51] Started CStorPool workers
+I0802 18:35:13.968344 6 run_replica_controller.go:47] Starting CStorVolumeReplica workers
+I0802 18:35:13.968441 6 run_replica_controller.go:54] Started CStorVolumeReplica workers
+I0802 18:35:13.968490 6 run_restore_controller.go:46] Starting CStorRestore workers
+I0802 18:35:13.968538 6 run_restore_controller.go:53] Started CStorRestore workers
+I0802 18:35:13.968602 6 run_backup_controller.go:46] Starting CStorBackup workers
+I0802 18:35:13.968689 6 run_backup_controller.go:53] Started CStorBackup workers
+I0802 18:35:43.869876 6 handler.go:456] cStorPool pending: 48d3b2ba-b553-11e9-858e-54e1ad4a9dd4
+I0802 18:35:43.869961 6 new_pool_controller.go:160] cStorPool Modify event : cstor-sparse-p8yp, 48d3b2ba-b553-11e9-858e-54e1ad4a9dd4
+I0802 18:35:43.870552 6 event.go:221] Event(v1.ObjectReference{Kind:"CStorPool", Namespace:"", Name:"cstor-sparse-p8yp", UID:"48d3b2ba-b553-11e9-858e-54e1ad4a9dd4", APIVersion:"openebs.io/v1alpha1", ResourceVersion:"2070", FieldPath:""}): type: 'Normal' reason: 'Synced' Received Resource modify event
+<b>I0802 18:35:44.905633 6 pool.go:93] Import command successful with true dontimport: false importattr: [import -c /tmp/pool1.cache -o cachefile=/tmp/pool1.cache cstor-48d3b2ba- b553-11e9-858e-54e1ad4a9dd4] out:</b>   
+</div>
+
+From the above highlighted logs, we can confirm `cstor-pool-mgmt` in new pod is communicating with `cstor-pool` in old pod as first highlighted log says `cstor pool found` then next highlighted one says pool is really `imported`.
+
+**Possible Reason:**
+
+When a cstor pool pod is deleted there are high chances that two cstor pool pods of same pool can present i.e old pool pod will be in `Terminating` state(which means not all the containers completely terminated) and new pool pod will be in `Running` state(might be few containers are in running state but not all). In this scenario `cstor-pool-mgmt` container in new pool pod is communicating with `cstor-pool` in old pool pod.  This can cause CVR resource to set to `Invalid`.
+
+**Note:** This issue has observed in all OpenEBS versions upto 1.2.
+
+**Resolution:**
+
+Edit the `Phase` of cStorVolumeReplica (cvr) from `Invalid` to `Offline`. After few seconds CVR will be `Healthy` or `Degraded` state depends on rebuilding progress.
+
+
+<h3><a class="anchor" aria-hidden="true" id="cstor-volume-read-only"></a>cStor volume become read only state</h3>
+
+Application mount point running on cStor volume went into read only state.
+
+**Possible Reason:**
+
+ If `cStorVolume` is `Offline` or corresponding target pod is unavailable for more than 120 seconds(iSCSI timeout) then the PV will be mounted as `read-only` filesystem. For understanding different states of cStor volume, more details can be found [here](/docs/next/kb.html#verification-of-cStor-storage-volume).
+
+**Troubleshooting**
+
+Check the status of corresponding cStor volume using the following command:
+```
+kubectl get cstorvolume -n <openebs_installed_namespace> -l openebs.io/persistent-volume=<PV_NAME>
+```
+
+If cStor volume exists in `Healthy` or `Degraded` state then restarting of the application pod alone will bring back cStor volume to `RW` mode. If cStor volume exists in `Offline`, reach out to <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a> for assistance. 
+
+<hr>
+
+<br>
+<font size="6" color="orange">Others</font>
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="reboot-cluster-nodes"></a>Nodes in the cluster reboots frequently almost everyday in openSUSE CaaS</h3>
+
+
+Setup the cluster using RKE with openSUSE CaaS MicroOS using CNI Plugin Cilium. Install OpenEBS, create a PVC and allocate to a fio job/ busybox. Run FIO test on the same. Observed nodes in the cluster getting restarted on a schedule basis.
+
+**Troubleshooting**
+
+Check journalctl logs of each nodes and check if similar logs are observed. In the following log snippets, showing the corresponding logs of 3 nodes.
+
+Node1:
+
+```
+Apr 12 00:21:01 mos2 transactional-update[7302]: /.snapshots/8/snapshot/root/.bash_history
+Apr 12 00:21:01 mos2 transactional-update[7302]: /.snapshots/8/snapshot/var/run/reboot-needed
+Apr 12 00:21:01 mos2 transactional-update[7302]: transactional-update finished - rebooting machine
+Apr 12 00:21:01 mos2 systemd-logind[1045]: System is rebooting.
+Apr 12 00:21:01 mos2 systemd[1]: transactional-update.service: Succeeded.
+Apr 12 00:21:01 mos2 systemd[1]: Stopped Update the system.
+```
+
+Node2: 
+
+```
+01:44:19 mos3 transactional-update[17442]: other mounts and will not be visible to the system:
+Apr 12 01:44:19 mos3 transactional-update[17442]: /.snapshots/8/snapshot/root/.bash_history
+Apr 12 01:44:19 mos3 transactional-update[17442]: /.snapshots/8/snapshot/var/run/reboot-needed
+Apr 12 01:44:19 mos3 transactional-update[17442]: transactional-update finished - rebooting machine
+Apr 12 01:44:20 mos3 systemd-logind[1056]: System is rebooting.
+Apr 12 01:44:20 mos3 systemd[1]: transactional-update.service: Succeeded.
+Apr 12 01:44:20 mos3 systemd[1]: Stopped Update the system.
+```
+
+Node3:
+
+```
+Apr 12 03:00:13 mos4 systemd[1]: snapper-timeline.service: Succeeded.
+Apr 12 03:30:00 mos4 rebootmgrd[1612]: rebootmgr: reboot triggered now!
+Apr 12 03:30:00 mos4 systemd[1]: rebootmgr.service: Succeeded.
+Apr 12 03:30:00 mos4 systemd-logind[1064]: System is rebooting.
+Apr 12 03:30:00 mos4 systemd[1]: Stopping open-vm-tools: vmtoolsd service for virtual machines hosted on VMware...
+Apr 12 03:30:00 mos4 systemd[1]: Stopped target Timers.
+Apr 12 03:30:00 mos4 systemd[1]: btrfs-scrub.timer: Succeeded.
+Apr 12 03:30:00 mos4 systemd[1]: Stopped Scrub btrfs filesystem, verify block checksums.
+Apr 12 03:30:00 mos4 systemd[1]: transactional-update.timer: Succeeded.
+```
+
+You can get more details to see if the cause of reboot is due to transactional update using below command outputs.
+
+```
+systemctl status rebootmgr
+systemctl status transactional-update.timer
+cat /etc/rebootmgr.conf
+cat /usr/lib/systemd/system/transactional-update.timer
+cat /usr/etc/transactional-update.conf
+```
+
+**Workaround:**
+
+There are 2 possible solutions.
+
+Approach1:
+
+DO the following on each nodes to stop the transactional update.
+
+```
+systemctl disable --now rebootmgr.service
+systemctl disable --now transactional-update.timer
+```
+
+This is the preferred approach.
+
+Approach2:
+
+Set the reboot timer schedule at different time i.e staggered at various interval of the day, so that only one nodes get rebooted at a time. 
+
+<br>
 
 ## See Also:
 

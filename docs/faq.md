@@ -26,11 +26,19 @@ sidebar_label: FAQs
 
 [Why NDM daemon set required privileged mode?](#why-ndm-priviledged)
 
-[How to install OpenEBS in OpenShift environment?](#OpenEBS-install-openshift-without-SELinux-disabled)
+[Does OpenEBS installation support in OpenShift 4.2?](#openebs-in-openshift-4.2)
 
 [What are the prerequisites other than general prerequisites for installing OpenEBS in Centos and OpenShift?](#OpenEBS-install-prerequisites-openshift-centos)
 
+[How to verify cStor volume is running fine?](#verify-cstor-volume-running-fine)
 
+[Can I use replica count as 2 in StorageClass if it is a single node cluster?](#replica-count-2-in-a-single-node-cluster)
+
+[How backup and restore is working with OpenEBS volumes?](#backup-restore-openebs-volumes)
+
+[Why customized parameters set on default OpenEBS StorageClasses are not getting persisted?](#customized-values-not-peristed-after-reboot)
+
+[Why NDM listens on host network?](#why-ndm-listens-on-host-network)
 
 <br>
 
@@ -72,42 +80,43 @@ sidebar_label: FAQs
 
 [How the data is distributed when cStor maxPools count is 3 and replicaCount as 2 in StorageClass?](#how-the-data-is-distributed-when-cstor-maxpools-count-is-3-and-replicacount-as-2-in-storageclass)
 
-[How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?](#how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions)
-
 [How to create a cStor volume on single cStor disk pool?](#create-cstor-volume-single-disk-pool)
 
 [How to get the details of cStor Pool,cStor Volume Replica ,Cstor Volumes and Disks ?](#more-info-pool-cvr-cv-disk) 
 
 [Does OpenEBS support encryption at rest?](#encryption-rest)
 
-[How Can I create cStor Pools using partitioned disks?](#create-cstor-pool-partioned-disks)
+[Can the same BDC name be used for claiming a new block device?](#same-bdc-claim-new-bd)
 
+</br>
 
-
-<br><br>
-
+<hr>
+</br>
 
 <font size="6" color="blue">General</font>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="What-is-most-distinctive-about-the-OpenEBS-architecture?"></a>What is most distinctive about the OpenEBS architecture?</h3>
+
 
 The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, a delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="Why-did-you-choose-iSCSI"></a>Why did you choose iSCSI? Does it introduce latency and decrease performance?</h3>
+
 
 We at OpenEBS strive to make OpenEBS simple to use using Kubernetes as much as possible to manage OpenEBS itself. iSCSI allows you to be more resilient in cases where the workload and the controller are not on the same host. In other words, the OpenEBS user or architect will not suffer an outage when the storage IO controller is not scheduled locally to the workload in need of storage. OpenEBS does a variety of things to improve performance elsewhere in the stack. More is to come via the cStor storage engine in order to have this level of flexibility.
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="where-is-my-data"></a>Where is my data stored and how can I see that?</h3>
+
 
 OpenEBS stores data in a configurable number of replicas. These are placed to maximize resiliency. For example, they are placed in different racks or availability zones.
 
@@ -139,13 +148,13 @@ To determine exactly where your data is physically stored, you can run the follo
          - name: openebs
   ```
 
-  
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="changes-on-k8s-for-openebs"></a>What changes are needed for Kubernetes or other subsystems to leverage OpenEBS?</h3>
+
 
 One of the major differences of OpenEBS versus other similar approaches is that no changes are required to run OpenEBS on Kubernetes. However, OpenEBS itself is a workload and the easy management of it is crucial especially as the Container Attached Storage (CAS) approach entails putting containers that are IO controller and replica controllers.
 
@@ -153,7 +162,7 @@ You can access the OpenEBS IO controller via iSCSI, exposed as a service. The no
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="get-started"></a>How do you get started and what is the typical trial deployment?</h3>
 
@@ -162,8 +171,7 @@ If you have a Kubernetes environment, you can deploy OpenEBS using the following
 `kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml`
 
 You can then begin running a workload against OpenEBS. There is a large and growing number of workload that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. If you seek for any help,You can join at <a href="https://openebs.io/join-our-community" target="_blank">Slack OpenEBS</a> community channel.
-
-Register at <a href="https://mayaonline.io/" target="_blank">MayaOnline</a> to receive free monitoring and a single view of stateful workloads of your Kubernetes environment. MayaOnline incorporates customized versions of Prometheus for monitoring, Grafana for metrics visualization and Scope to see the overall environment, and our MuleBot for ChatOps integration and more.  
+ 
 
 <a href="#top">Go to top</a>
 
@@ -171,80 +179,178 @@ Register at <a href="https://mayaonline.io/" target="_blank">MayaOnline</a> to r
 
 <h3><a class="anchor" aria-hidden="true" id="default-reclaim-policy"></a>What is the default OpenEBS Reclaim policy?</h3>
 
-The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim. In case of cStor volumes, data was being deleted as well. For jiva, from 0.8.0 version, the data is deleted via scrub jobs.
+The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim. 
+
+In case of cStor volumes, data was being deleted as well. 
+
+For jiva, from 0.8.0 version, the data is deleted via scrub jobs. The completed job can be deleted using `kubectl delete job <job_name> -n <namespace>`
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="why-ndm-priviledged"></a>Why NDM Daemon set required privileged mode?</h3>
+
 
 Currently, NDM Daemon set runs in the privileged mode. NDM requires privileged mode because it requires access to `/dev` and `/sys` directories for monitoring the devices attached and also to fetch the details of the attached device using various probes. 
 
 <a href="#top">Go to top</a>
 
-<br>
-
-<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-without-SELinux-disabled"></a>How to install OpenEBS in OpenShift environment?</h3>
-
-In earlier documentation, it was referred to install OpenEBS by disabling SELinux. But, you can install OpenEBS in OpenShift environment without disabling SELinux using the following steps.
-
-1. Add OpenEBS Service account to the privileged scc of OpenShift.
-
-   ```
-   oc adm policy add-scc-to-user privileged system:serviceaccount:openebs:openebs-maya-operator
-   ```
-
-2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
-
-   ```
-   wget https://openebs.github.io/charts/openebs-operator-0.8.2.yaml
-   ```
-
-3. Edit the downloaded openebs-operator YAML file by changing the hostPath from "/proc/1/mounts" to
-   "/etc/mtab" under openebs-ndm DaemonSet spec.
-
-   **Example snippet:**
-
-   ```
-   - name: procmount
-     hostPath:
-         path: /etc/mtab
-   ```
-
-4. Apply the modified the YAML using the following command. The OpenEBS operator YAML file name has to be changed based on the latest version.
-
-   ```
-   oc apply -f openebs-operator-0.8.2.yaml
-   ```
-
-5. Verify OpenEBS pods status by using `oc get pods -n openebs`
-
-<br>
-
-<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-prerequisites-openshift-centos"></a>What are the prerequisites other than general prerequisites for installing OpenEBS in Centos and OpenShift?</h3>
-
-If you are installing OpenEBS in CentOS or OpenShift,you must need to grant privileges to ndm pods. For installing OpenEBS in OpenShift environment,more details can be read [here](#OpenEBS-install-openshift-without-SELinux-disabled).
-
-<br>
 
 
+<h3><a class="anchor" aria-hidden="true" id="openebs-in-openshift-4.2"></a>Does OpenEBS installation support in OpenShift 4.2?</h3>
 
-<font size="6" color="orange">Data Protection</font>
+OpenEBS v1.5 installation is supported in OpenShift 4.2.
 
-<hr>
-
-<br>
-
-<h3><a class="anchor" aria-hidden="true" id="how-is-data-protected-what-happens-when-a-host-client-workload-or-a-data-center-fails"></a>How is data protected? What happens when a host, client workload, or a data center fails?</h3>
-
-Kubernetes provides many ways to enable resilience. OpenEBS leverages these wherever possible.  For example, say the IO container that has the iSCSI target fails. Well, it is spun back up by Kubernetes. The same applies to the underlying replica containers, where the data is actually stored. They are spun back up by Kubernetes. Now, the point of replicas is to ensure that when one or more of these replicas are being respun and then repopulated in the background by OpenEBS, the client applications still run.  OpenEBS takes a simple approach to ensuring that multiple replicas can be accessed by an IO controller using a configurable quorum or the minimum number of replica requirements. In addition, our new cStor checks for silent data corruption and in some cases can fix it in the background.  Silent data corruption, unfortunately, can occur from poorly engineered hardware and from other underlying conditions including those that your cloud provider is unlikely to report or identify.  
 
 <a href="#top">Go to top</a>
 
+
+<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-prerequisites-openshift-centos"></a>What are the prerequisites other than general prerequisites for installing OpenEBS in Centos and OpenShift?</h3>
+
+
+If you are installing OpenEBS in CentOS or OpenShift,you must need to grant privileges to ndm pods. For installing OpenEBS in OpenShift environment,more details can be read [here](/docs/next/kb.html#OpenEBS-install-openshift-4.1).
+
+<a href="#top">Go to top</a>
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="verify-cstor-volume-running-fine"></a>How to verify cStor volume is running fine?</h3>
+
+
+The following steps will help to verify the cStor volume running status.
+
+1. Check PVC is created successfully using the following command.
+
+   ```
+   kubectl get pvc -n <namespace>
+   ```
+
+2. If PVC is created successfully, check corresponding PV is also created successfully.
+
+   ```
+   kubectl get pv
+   ```
+
+3. Check the corresponding target pod of the cStor volume is running using the following command. 
+
+   ```
+   kubectl get pod -n openebs 
+   ```
+
+   The target pod should be in running state.
+
+4. Now check the status of cStor volume using the following command.
+
+   ```
+   kubectl get cstorvolume -n openebs
+   ```
+
+   The output of above command will show status as `Offline`, `Degraded` and `Healthy`. Following are the definition for each of these status.
+
+   **Init:** Init status of cStor volume is due to the following cases:
+
+   - when the cStor volume is created.
+   - when the replicas are not connected to target pod.
+
+   **Healthy:** Healthy status of cStor volume represents that 51% of healthy replicas are connected to the target and volume is ready IO operations.
+
+   **Degraded:** Minimum 51% of replicas are connected and some of these replicas are in  degraded state, then volume will be running as degraded state and IOs are operational in this state.
+
+   **Offline:** When number of replicas which is equal to Consistency Factor are not yet connected to the target due to network issues or some other reasons In this case, volume is not ready to perform IOs.
+
+   Note: If target pod of corresponding cStor volume is not running, then the status of cStor volume shown in the output of above command may be stale.
+
+5. Check the cStorVolumeReplica(CVR) status of the corresponding cStor volume using the following command.
+
+   ```
+   kubectl get cvr -n openebs
+   ```
+
+   Status of each cStor volume Replica can be found under `STATUS` field.
+
+   **Note:** If the pool pod of corresponding cStor volume replica is not running, then the status of CVR shown in the output of the above command may be stale.
+
+   The following are the different type of STATUS information of cStor Volumes Replica and their definition.
+
+   **Healthy:** Healthy state represents volume is healthy and volume data existing on this replica is up to date.
+
+   **Offline:** cStor volume replica status is offline due to the following cases:
+
+   - when the corresponding cStor pool is not available to create volume.
+   - when the creation of cStor volume fails.
+   - when the replica is not yet connected to the target.
+   
+   **Degraded:** cStor volume replica status is degraded due to the following case
+   
+   - when the cStor volume replica is connected to the target and rebuilding is not yet started on this replica.
+   
+   **Rebuilding:** cStor volume replica status is rebuilding when the cStor volume replica is undergoing rebuilding, that means, data sync with another replica.
+   
+   **Error:** cStor volume replica status is in error state due to the following cases:
+   
+   - when the volume replica data set is not existing in the pool.
+   - when an error occurs while getting the stats of cStor volume.
+   - when the unit of size is not mentioned in PVC spec. For example, if the size is 5 instead of 5G.
+   
+   **DeletionFailed:** cStor volume replica status is deletion failed while destroying cStor volumes fails.
+   
+   **Invalid:** cStor volume replica status is invalid when a new cstor-pool-mgmt container in a new pod is communicating with the old cstor-pool container in an old pod.
+   
+   **Init:** cStor volume replica status init represents the volume is not yet created.
+   
+   **Recreate:** cStor volume replica status recreate represents an intermediate state before importing the volume(this can happen only when pool pod got restarted) in case of a non-ephemeral disk. If the disk is ephemeral then this status represents volume is going to recreate.
+   
+   **NewReplicaDegraded:** cStor volume replica is newly created and it make successful connection with the target pod. 
+   
+   **ReconstructingNewReplica:** cStor volume replica is newly created and it started reconstructing entire data from another healthy replica.
+   
+   
+
+<h3><a class="anchor" aria-hidden="true" id="replica-count-2-in-a-single-node-cluster"></a>Can I use replica count as 2 in StorageClass if it is a single node cluster?</h3>
+
+
+While creating a StorageClass, if user mention replica count as 2 in a single node cluster, OpenEBS will not create the volume from 0.9  version onwards. It is required to match the number of replica count and number of nodes available in the cluster for provisioning OpenEBS Jiva and cStor volumes.
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="backup-restore-openebs-volumes"></a>How backup and restore is working with OpenEBS volumes?</h3>
+
+
+OpenEBS cStor volume is working based on cStor/ZFS snapshot using Velero. For OpenEBS Local PV and Jiva volume, it is based on restic using Velero.
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="customized-values-not-peristed-after-reboot"></a>Why customized parameters set on default OpenEBS StorageClasses are not getting persisted?</h3>
+
+
+The customized parameters set on default OpenEBS StorageClasses will not persist after restarting `maya-apiserver` pod or restarting the node where `maya-apiserver` pod is running. StorageClasses created by maya-apiserver are owned by it and it tries to overwrite them upon its creation.
+
+
+<h3><a class="anchor" aria-hidden="true" id="why-ndm-listens-on-host-network"></a>Why NDM listens on host network?</h3>
+
+
+NDM uses `udev` to monitor dynamic disk attach and detach events. `udev` listens on netlink socket of the host system to get those events. A container requires host network access so that it can listen on the socket. Therefore NDM requires host network access for the `udev` running inside the container to listen those disk related events. 
+
+
+<hr>
 <br>
 
+<font size="6" color="orange">Data Protection</font>
+
+
+
+<h3><a class="anchor" aria-hidden="true" id="how-is-data-protected-what-happens-when-a-host-client-workload-or-a-data-center-fails"></a>How is data protected? What happens when a host, client workload, or a data center fails?</h3>
+
+
+Kubernetes provides many ways to enable resilience. OpenEBS leverages these wherever possible.  For example, say the IO container that has the iSCSI target fails. Well, it is spun back up by Kubernetes. The same applies to the underlying replica containers, where the data is actually stored. They are spun back up by Kubernetes. Now, the point of replicas is to ensure that when one or more of these replicas are being respond and then repopulated in the background by OpenEBS, the client applications still run.  OpenEBS takes a simple approach to ensuring that multiple replicas can be accessed by an IO controller using a configurable quorum or the minimum number of replica requirements. In addition, our new cStor checks for silent data corruption and in some cases can fix it in the background.  Silent data corruption, unfortunately, can occur from poorly engineered hardware and from other underlying conditions including those that your cloud provider is unlikely to report or identify.  
+
+<a href="#top">Go to top</a>
+
+
+
 <h3><a class="anchor" aria-hidden="true" id="how-does-openebs-provide-high-availability-for-stateful-workloads"></a>How does OpenEBS provide high availability for stateful workloads?</h3>
+
 
 An OpenEBS Jiva volume is a controller deployed during OpenEBS installation. Volume replicas are defined by the parameter that you set. The controller is an iSCSI target while the replicas play the role of a disk. The controller exposes the iSCSI target while the actual data is written. The controller and each replica run inside a dedicated container. An OpenEBS Jiva volume controller exists as a single instance, but there can be multiple instances of OpenEBS Jiva volume replicas. Persistent data is synchronized between replicas. OpenEBS Jiva volume high availability is based on various scenarios as explained in the following sections. 
 
@@ -268,22 +374,22 @@ An OpenEBS Jiva volume is a controller deployed during OpenEBS installation. Vol
 
 <a href="#top">Go to top</a>
 
+
+
+<hr>
 <br>
-
-
 
 <font size="6" color="maroon">Best Practices</font>
 
-<hr>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="what-are-the-recommended-iscsi-timeout-settings-on-the-host"></a>What are the recommended iscsi timeout settings on the host?</h3>
+
 
 There are cases when application pod and OpenEBS cStor target pod are running on different nodes. In such cases, there may be chances that application can go to read only when K8s takes around 5 mins to re-schedule OpenEBS target pod to a new Node. To avoid such scenarios,default iscsi timeout values can be configured to the recommended one. 
 
 <h4><a class="anchor" aria-hidden="true" id="configure-iscsi-timeout"></a>Configure the iscsi timeout value</h4>
-
 The following explains the configuration change for 2 different scenarios.
 
 1. For New iSCSI sessions
@@ -317,25 +423,26 @@ Verify the configured value by running “iscsiadm -m session -P 3”  and check
 
 You may notice the change in the “Attached scsi disk” value. This causes volume to get unmounted and thus volume need to be remounted. Detailed steps for remounting volume are mentioned [here](https://blog.openebs.io/keeping-openebs-volumes-in-rw-state-during-node-down-scenarios-f2b54df94a32).
 
+
+
+<hr>
 <br>
-
-
 
 <font size="6" color="red">Miscellaneous</font>
 
-<hr>
 
-<br>
 
 <h3><a class="anchor" aria-hidden="true" id="what-changes-must-be-made-to-the-containers-on-which-openebs-runs"></a>What changes must be made to the containers on which OpenEBS runs?</h3>
+
 
 OpenEBS has been engineered so that it does not require any changes to the containers on which it runs. Similarly, Kubernetes itself does not require to be altered and no additional external orchestrator is required. However, the workloads that need storage must be running on hosts that have iSCSI initiators, which is a default configuration in almost all operating systems.
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="what-are-the-minimum-requirements-and-supported-container-orchestrators"></a>What are the minimum requirements and supported container orchestrators?</h3>
+
 
 OpenEBS is currently tightly integrated into Kubernetes. Support for Docker Swarm is something OpenEBS is looking at in future releases.
 
@@ -347,9 +454,10 @@ For enabling high availability, OpenEBS recommends having a minimum of 3 nodes i
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="why-would-you-use-openebs-on-ebs"></a>Why would you use OpenEBS on EBS?</h3>
+
 
 There are at least four common reasons for running OpenEBS on Amazon EBS that are listed as follows:
 
@@ -363,25 +471,16 @@ Other enterprise capabilities: OpenEBS adds other capabilities such as extremely
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="can-i-use-the-same-pvc-for-multiple-pods"></a>Can I use the same PVC for multiple Pods?</h3>
+
 
 Jiva and cStor volumes are exposed via block storage using iSCSI. Currently, only RWO is supported.
 
 <a href="#top">Go to top</a>
 
-<br>
 
-<h3><a class="anchor" aria-hidden="true" id="warning-messages-while-launching-pvc"></a>Warning Messages while Launching PVC</h3>
-
-If the following warning messages are displayed while launching an application, you can ignore these messages. These message are displayed only while launching an application pod initially and gets cleared on the subsequent attempt.What is most distinctive about the OpenEBS architecture?
-
-The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.
-
-<a href="#top">Go to top</a>
-
-<br>
 
 <h3><a class="anchor" aria-hidden="true" id="why-openebs-logical-size-and-openebs-actual-used-are-showing-in-different-size"></a>Why OpenEBS_logical_size and OpenEBS_actual_used are showing in different size?</h3>
 
@@ -389,23 +488,27 @@ The `OpenEBS_logical_size` and `OpenEBS_actual_used` parameters will start showi
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume"></a>What must be the disk mount status on Node for provisioning OpenEBS volume?</h3>
 
-OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume. 
+
+OpenEBS have three storage Engines, Jiva, cStor and LocalPV which can be used to provision OpenEBS volumes. 
 
 Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted). 
 
-cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes which does not have any filesystem and it should be unmounted on the Node. It is good to wipe out the disk if you use existing disks for cStor pool creation. 
+For LocalPV based on device, details of disk mount status can be obtained [here](/docs/next/uglocalpv.html#General-verification-for-disk-mount-status-for-Local-PV-based-on-device).
 
-In case you need to use Local SSDs as block devices, you will have to first unmount them and remove any the filesystem if it has. On GKE, the Local SSDs are formatted with ext4 and mounted under "/mnt/disks/". If local SSDs are not unmounted and not removed the file system, then cStor pool creation will fail.
+cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes which does not have any filesystem and it should be unmounted on the Node. It is recommended to wipe out the disk if it was previously used. 
+
+In case you need to use Local SSDs as block devices for provisioning cStor volume, you will have to first unmount them and remove any the filesystem if it has. On GKE, the Local SSDs are formatted with ext4 and mounted under "/mnt/disks/". If local SSDs are mounted and contains any file system, then cStor pool creation will fail.
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="how-openebs-detects-disks-for-creating-cstor-pool"></a>How OpenEBS detects disks for creating cStor Pool?</h3>
+
 
 Any block disks available on the node (that can be listed with say `lsblk`) will be discovered by OpenEBS. 
 Node Disk Manager(NDM) forms the DISK CRs in the following way
@@ -441,21 +544,23 @@ It is also possible to customize by adding more disk types associated with your 
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="provision-pvc-higher-than-physical-sapce"></a> Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?</h3>
+
 
 As of 0.8.0, the user is allowed to create PVCs that cross the available capacity of the pools in the Nodes. In the future release, it will validate with an option `overProvisioning=false`, the PVC request should be denied if there is not enough available capacity to provision the volume.
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method"></a>What is the difference between cStor Pool creation using manual method and auto method?</h3>
 
-By using manual method, you must give the selected disk name which is listed by NDM. This details has to be entered in the StoragePoolClaim YAML under `diskList`. See [storage pool](/docs/next/setupstoragepools.html#by-using-manual-method) for more info. 
+
+By using manual method, you must give the selected disk name which is listed by NDM. This details has to be entered in the StoragePoolClaim YAML under `diskList`. See [storage pool](/docs/next/ugcstor.html#creating-cStor-storage-pools) for more info. 
 It is also possible to change `maxPools` count and `poolType` in the StoragePoolClaim YAML. 
-Consider you have 4 nodes with 2 disks each. You can select `maxPools` count as 3, then cStor pool will create in any 3 nodes out of 4. The remaining disks belongs to 4th Node can be used for horizontal scale up in future.
+Consider you have 4 nodes with 2 disks each. You can select `maxPools` count as 3, then cStor pools will be created in any 3 nodes out of 4. The remaining disks belonging to 4th Node can be used for horizontal scale up in future.
 Advantage is that there is no restriction in the number of disks for the creation of cStor storage pool using `striped` or `mirrored` Type.
 
 By auto method, its not need to provide the disk details in the StoragePoolClaim YAML. You have to specify `maxPools` count to limit the storage pool creation in OpenEBS cluster and `poolType` for the type of storage pool such as Mirrored or Striped.  See [storage pool](/docs/next/setupstoragepools.html#by-using-auto-method) for more info.
@@ -470,96 +575,22 @@ If you set `maxPools` as 3 and `poolType` as `mirrored`, then Mirrored cStor poo
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="how-the-data-is-distributed-when-cstor-maxpools-count-is-3-and-replicacount-as-2-in-storageclass"></a>How the data is distributed when cStor maxPools count is 3 and replicaCount as 2 in StorageClass?</h3>
 
-If `maxPool` count is 3 in StoragePoolClaim, then 3 cStor storage pool will create if it meet the required number of Nodes,say 3 in this example.
-If `replicaCount` is 2 in StorageClass, then 2 OpenEBS volume will create on the top of any 2 cStor storage pool out of 3.
+
+If `maxPool` count is 3 in StoragePoolClaim, then 3 cStor storage pools will be created if it meets the required number of nodes, say 3 in this example.
+If `replicaCount` is 2 in StorageClass, then 2 replicas of an OpenEBS volume will be created on the top of any 2 cStor storage pool out of 3.
 
 <a href="#top">Go to top</a>
 
-<br>
 
-<h3><a class="anchor" aria-hidden="true" id="how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions"></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
-
-Apply the following YAML in your cluster.
-
-- Create a Privileged PSP
-
-  ```
-  apiVersion: extensions/v1beta1
-  kind: PodSecurityPolicy
-   metadata:
-     name: privileged
-     annotations:
-       seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
-   spec:
-     privileged: true
-     allowPrivilegeEscalation: true
-     allowedCapabilities:
-     - '*'
-     volumes:
-     - '*'
-     hostNetwork: true
-     hostPorts:
-     - min: 0
-       max: 65535
-     hostIPC: true
-     hostPID: true
-     runAsUser:
-       rule: 'RunAsAny'
-     seLinux:
-       rule: 'RunAsAny'
-     supplementalGroups:
-       rule: 'RunAsAny'
-     fsGroup:
-       rule: 'RunAsAny'    
-  ```
-
-- Associate the above PSP to a ClusterRole
-
-  ```
-  kind: ClusterRole
-  apiVersion: rbac.authorization.k8s.io/v1
-  metadata:
-    name: privilegedpsp
-  rules:
-  - apiGroups: ['extensions']
-    resources: ['podsecuritypolicies']
-    verbs:     ['use']
-    resourceNames:
-    - privileged
-  ```
-
-- Associate the above Privileged ClusterRole to OpenEBS Service Account
-
-  ```
-  apiVersion: rbac.authorization.k8s.io/v1
-  kind: ClusterRoleBinding
-  metadata:
-    annotations:
-      rbac.authorization.kubernetes.io/autoupdate: "true"
-    name: openebspsp
-  roleRef:
-    apiGroup: rbac.authorization.k8s.io
-    kind: ClusterRole
-    name: privilegedpsp
-  subjects:
-  - kind: ServiceAccount
-    name: openebs-maya-operator
-    namespace: openebs
-  ```
-
-- Proceed to install the OpenEBS. Note that the namespace and service account name used by the OpenEBS should match what is provided in   the above ClusterRoleBinding.
-
-<a href="#top">Go to top</a>
-
-<br>
 
 <h3><a class="anchor" aria-hidden="true" id="create-cstor-volume-single-disk-pool"></a>How to create a cStor volume on single cStor disk pool?</h3>
 
-You can give the maxPools count as 1 in StoragePoolClaim YAML and `replicaCount` as `1`in StorageClass YAML. In the following sample SPC and SC YAML, cStor pool is created using auto method. After applying this YAML, one cStor pool named cstor-disk will be created only in one Node and `StorageClass` named `openebs-cstor-disk`. Only requirement is that one node has at least one disk attached but unmounted. See [here](docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume) to understand more about disk mount status.
+
+You can give the maxPools count as 1 in StoragePoolClaim YAML and `replicaCount` as `1` in StorageClass YAML. In the following sample SPC and SC YAML, cStor pool is created using auto method. After applying this YAML, one cStor pool named cstor-disk will be created only in one Node and `StorageClass` named `openebs-cstor-disk`. Only requirement is that one node has at least one disk attached but unmounted. See [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume) to understand more about disk mount status.
 
 ```
 ---
@@ -590,9 +621,10 @@ provisioner: openebs.io/provisioner-iscsi
 
 <a href="#top">Go to top</a>
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="more-info-pool-cvr-cv-disk"></a>How to get the details like status, capacity etc. of cStor Pool, cStor Volume Replica, cStor Volumes and Disks using kubectl command?</h3>
+
 
 From 0.8.1 onwards, following command list down the info like status, size etc. using `kubectl get` command. These command will output similar to the following only if Kubernetes version of client and server are above 1.11.
 
@@ -618,7 +650,7 @@ kubectl get cvr -n openebs
 Following is an example output.
 
 ```
-NAME                                                              USED  ALLOCATED  STATUS    AGE
+NAME                                                              USED  ALLOCATED  	STATUS    AGE
 pvc-9ca83170-01e3-11e9-812f-54e1ad0c1ccc-sparse-claim-auto-lja7   6K    6K         Healthy   1h
 ```
 
@@ -648,77 +680,30 @@ NAME                                      SIZE          STATUS   AGE
 sparse-5a92ced3e2ee21eac7b930f670b5eab5   10737418240   Active   10m
 ```
 
-<br>
+
 
 <h3><a class="anchor" aria-hidden="true" id="encryption-rest"></a>Does OpenEBS support encryption at rest?</h3>
 
+
 You can achieve encryption at rest using LUKS. Example tutorial for enabling LUKS on CentOS is at: <a  href="https://wiki.centos.org/HowTos/EncryptedFilesystem" target="_blank">https://wiki.centos.org/HowTos/EncryptedFilesystem</a>
 
-<br>
 
-<h3><a class="anchor" aria-hidden="true" id="create-cstor-pool-partioned-disks"></a>How Can I create cStor Pools using partitioned disks?</h3>
 
-Currently,NDM is not selecting partition disks for creating device resource. But, you can create device resource for the partition disks manually. The following are the steps for the creation of device resource.
+<h3><a class="anchor" aria-hidden="true" id="same-bdc-claim-new-bd"></a>Can the same BDC name be used for claiming a new block device?</h3>
 
-1. Download the device CR YAML for creating the device CR manually. The sample device CR can be downloaded from [here](https://raw.githubusercontent.com/openebs/node-disk-manager/master/deploy/crds/openebs_v1alpha1_device_cr.yaml).
 
-2. Modify the downloaded device CR sample YAML with the partition disk information. Following is the sample device CR YAML.
-
-   ```
-   apiVersion: openebs.io/v1alpha1
-   kind: Device
-   metadata:
-     name: example-device
-     labels:
-       kubernetes.io/hostname: <host name in which disk/device is attached> # like gke-openebs-user-default-pool-044afcb8-bmc0
-       ndm.io/managed: "false" # for manual disk creation put false
-       ndm.io/disk-type: partition
-   status:
-     state: Active
-   spec:
-     capacity:
-       logicalSectorSize: <logical sector size of device> # like 512
-       storage: <total capacity in bits> #like 53687091200
-     details:
-       firmwareRevision: <firmware revision> #firmware version
-       model: <model name of device> # like PersistentDisk
-       serial: <serial no of disk> # like google-disk-2
-       compliance: <compliance of disk> #like "SPC-4"
-       vendor: <vendor of disk> #like Google
-     devlinks:
-     - kind: by-id
-       links:
-       - <link1> # like /dev/disk/by-id/scsi-0Google_PersistentDisk_disk-2
-       - <link2> # like /dev/disk/by-id/google-disk-2
-     - kind: by-path
-       links:
-       - <link1> # like /dev/disk/by-path/virtio-pci-0000:00:03.0-scsi-0:0:2:0 
-     Partitioned: No
-     path: <devpath> # like /dev/sdb1
-   ```
-
-   In the above device CR sample spec, following field must be filled before applying the YAML.
-
-   * kubernetes.io/hostname
-   * logicalSectorSize
-   * storage
-   * links
-     * This is applicable for both `by-id` and `by-path`
-   * path
-
-3. Repeat the same steps for each partitioned device that you have chosen for creating cStor pool.
-
-4. Get the `diskname` from `kubectl get disks` command and add the `diskname` in cStor StoragePoolClaim YAML. The steps for the creation of cStorStoragePool can be read [here](/docs/next/configurepools.html#creating-a-new-pool).
+No. It is recommended to create different BDC name for claiming an unclaimed disk manually.
 
 <br>
+
+<hr>
+
 
 ## See Also:
 
-### [Creating cStor Pool](/docs/next/configurepools.html)
+### [Creating cStor Pool](/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
-### [Provisioning cStor volumes](/docs/next/provisionvols.html)
-
-### [BackUp and Restore](/docs/next/backup.html)
+### [Provisioning cStor volumes](/docs/next/ugcstor.html#provisioning-a-cStor-volume)
 
 ### [Uninstall](/docs/next/uninstall.html)
 

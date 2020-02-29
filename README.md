@@ -1,4 +1,4 @@
-# OpenEBS-docs
+# OpenEBS Documentation
 
 [![Open Issues](https://img.shields.io/github/issues/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/issues)
 [![Open Pull Requests](https://img.shields.io/github/issues-pr/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/pulls)
@@ -14,7 +14,7 @@ Additional details on the Docusaurus project can be found [here](https://docusau
 ### Install Node.js
 
 ```bash
-sudo apt-get install python-software-properties
+sudo apt-get install software-properties-common
 curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 ```
 
@@ -52,7 +52,7 @@ The following procedure lists the tasks from the time you select an issue to pub
 
 1. Go through the [issues](https://github.com/openebs/openebs-docs/issues/), and select an issue you want to work on.
 
-2. Go to `openebs-docs/website`, and execute `npm start`. You can then preview the document at `http://localhost:3000/docs/next/quickstartguide.html`.
+2. Go to `openebs-docs/website`, and execute `npm start`. You can then preview the document at `http://localhost:3000/docs/next/overview.html`.
 
 3. Work on your issue and create and submit your pull request(PR) for the members to review. Do perform the DCO signoff. DCO stands for Developer Certificate of Origin. It requires the commit message to have a `Signed-off-by:` statement along with the email address of the author of that commit. You can do this using the following command `git commit -s -m 'Commit message related to the issue'`. You can read more about it [here](https://github.com/probot/dco#how-it-works).
 
@@ -64,7 +64,6 @@ The following procedure lists the tasks from the time you select an issue to pub
 
 ### License
 
-The project is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text. 
-
+The project is licensed under the Apache 2.0 License. See [LICENSE](LICENSE) for the full license text. 
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fopenebs%2Fopenebs-docs.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fopenebs%2Fopenebs-docs?ref=badge_large)

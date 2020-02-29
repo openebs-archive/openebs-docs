@@ -11,9 +11,10 @@ The `mayactl` is the command line tool for interacting with OpenEBS volumes and 
 
 <h3><a class="anchor" aria-hidden="true" id="summary"></a>Summary</h3>
 
+
 [Command used with mayactl](#commands-used-with-mayactl)
 
-[Accesssing mayactl](#accesssing-mayactl)
+[Accessing mayactl](#accessing-mayactl)
 
 [Using mayactl](#using-mayactl)
 
@@ -35,7 +36,7 @@ The following commands can be run using mayactl to get the details of OpenEBS vo
 
 
 
-## Accesssing mayactl
+## Accessing mayactl
 
 For getting access to `mayactl` command line tool, you have to login or execute into the maya-apiserver pod on Kubernetes. The steps are outlined below.
 
@@ -48,8 +49,6 @@ For getting access to `mayactl` command line tool, you have to login or execute 
    Following is an example output.
 
    <div class="co">maya-apiserver-7f5689b96b-tfssh                                   1/1       Running   0          10d</div>
-
-   
 
 2. It is possible that there are multiple instances of maya-apiserver pods for scaling purposes. You can run mayactl in any one of them. Shell into one of the pods using ` kubectl exec` command . You can do as following way.
 
@@ -85,7 +84,6 @@ Available Commands:
 
 
 <h3><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Volume"></a>mayactl for OpenEBS Storage Volume</h3>
-
 OpenEBS storage volume command usage examples are shown below.
 
 ```
@@ -167,9 +165,7 @@ mayactl volume stats --volname pvc-448deccf-40d9-11e9-a23b-0050569331ce -n opene
 
 <div class="co">Portal Details :
 ------ ---------
-IQN     :   
 Volume  :   pvc-dc3cb979-51ec-11e9-803f-42010a800179
-Portal  :   
 Size    :   5.000000
 Performance Stats :
 ------ ---------
@@ -184,8 +180,8 @@ LOGICAL(GB)      USED(GB)
 </div>
 
 
-<h3><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Pools"></a>mayactl for OpenEBS Storage Pools</h3>
 
+<h3><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Pools"></a>mayactl for OpenEBS Storage Pools</h3>
 OpenEBS storage pool command usage examples are shown below.
 
 ```
@@ -239,7 +235,7 @@ The following command show the description of OpenEBS StoragePool.
 ------ ------
 Storage Pool Name  : cstor-pool1-5lwv
 Node Name          : node3.mayalab.com
-CAS Template Used  : cstor-pool-create-default-0.8.2
+CAS Template Used  : cstor-pool-create-default-0.9.0
 CAS Type           : cstor
 StoragePoolClaim   : cstor-pool1
 UID                : fb2bd1d8-2f88-11e9-a23b-0050569331ce
@@ -251,8 +247,8 @@ disk-42b4fb20cd36896dfc2a486b977363de
 </div>
 
 
-<h3><a class="anchor" aria-hidden="true" id="mayactl-Version"></a>mayactl Version</h3>
 
+<h3><a class="anchor" aria-hidden="true" id="mayactl-Version"></a>mayactl Version</h3>
 OpenEBS installed version can be obtained using the following command. This will show the status of maya-apiserver and its URL.
 
 ```
@@ -261,14 +257,14 @@ mayactl version
 
  **Example Output:**
 
-<div class="co">Version: 0.8.2-released
-Git commit: b9efd8eaad9aa14d3ac3b04a772240b6e11a59b3
+<div class="co">Version: 1.2.0-released
+Git commit: c00fc22aab1425e824ed24ed4b7e6f49c9c1468c
 GO Version: go1.11.2
 GO ARCH: amd64
 GO OS: linux
-m-apiserver url:  http://10.64.0.13:5656
-m-apiserver status:  running
-</div>
+m-apiserver url:  http://10.44.1.5:5656
+m-apiserver status:  running</div>
+
 
 
 
@@ -277,7 +273,7 @@ m-apiserver status:  running
 
 ## See Also:
 
-### [Day 2 Operations](/docs/next/operations.html)
+### [FAQ](/docs/next/faq.html)
 
 ### [Troubleshooting Guide](/docs/next/troubleshooting.html)
 
