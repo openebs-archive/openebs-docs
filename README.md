@@ -40,7 +40,7 @@ cd openebs-docs
 ### Start the server
 
 ```bash
-cd openebs-docs/website
+cd website
 npm start
 ```
 
