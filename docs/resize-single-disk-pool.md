@@ -39,7 +39,9 @@ $ zpool set autoexpand=on cstor-5be1d388-60d3-11e9-8e67-42010aa00fcf
 
 If this is done already, that's fine.
 
-Now check `lsblk` output in corresponding node is showing the reflect size. General command for rescanning the SCSI bus on Linux is below.
+Perform this step from the host machine on which disk has been resized.
+
+Now check `lsblk` output on corresponding node is showing the reflected size. General command for rescanning the SCSI bus on Linux is provided below.
 
 ```
 sudo su -
@@ -81,6 +83,8 @@ Ensure there is a zfs partition listed against partion number 1. If there is a Z
 Note: If there is no ZFS partition, there could be a chance that a new disk is added to the Node. In this case, reach out to OpenEBS support @ https://openebs.io/join-our-slack-community for help.
 
 ### 6. Remove the buffering partition
+
+From the output got in Step 5, remove the buffering partition number. In this example, it is 9.
 
 ```
 parted /dev/sdb rm 9
