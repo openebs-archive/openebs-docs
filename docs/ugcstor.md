@@ -931,7 +931,7 @@ If all pods are showing are running, then you can use these cStor pools for crea
 
 **Note:** The cStor pool can be horizontally scale up on new OpenEBS Node by editing  the corresponding pool configuration YAML with the new disks name under `blockDeviceList` . More details can be found [here](/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node).  If you find any issues, check common issues added in [troubleshooting](/docs/next/troubleshooting.html) section.
 
-> The resiliency of the cStor storage pool can be verified via `litmus` using <a href="https://docs.litmuschaos.io/docs/next/cStor-pool-validation/"> cStor-pool-validation </a> experiment.
+> The resiliency of the cStor storage pool can be verified via `litmus` using <a href="https://docs.litmuschaos.io/docs/next/cStor-pool-chaos/"> cStor-pool-chaos </a> experiment.
 
 
 <br>
