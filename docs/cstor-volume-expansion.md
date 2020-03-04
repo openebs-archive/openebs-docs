@@ -1,25 +1,7 @@
 # How to expand a cStor Volume
 
 ## Introduction
-A cStor volume can be expanded by following the instructions. The following steps are mainly applicable for cStor volumes running on **OpenEBS version 1.2 and above** only.
-
-
-## Prerequisites
-Ensure all `cstorvolumereplicas` are in a `healthy` state before attempting to resize a volume.  User can verify their health with this command:
-
-```
-kubectl get cstorvolumereplica -n openebs | grep -i <pv_name>
-```
-Example command:
-```
-kubectl get cstorvolumereplica -n openebs | grep -i pvc-0546bc97-5e64-4f94-b18e-6929f615fb75
-```
-Example output:
-```
-pvc-0546bc97-5e64-4f94-b18e-6929f615fb75-cstor-disk-pool-5ouc   9.72M   171K        Healthy   87s
-pvc-0546bc97-5e64-4f94-b18e-6929f615fb75-cstor-disk-pool-mem3   9.72M   171K        Healthy   87s
-pvc-0546bc97-5e64-4f94-b18e-6929f615fb75-cstor-disk-pool-rg2q   9.72M   171K        Healthy   87s
-```
+A Non-CSI cStor volume can be expanded by following the instructions. The following steps are mainly applicable for cStor volumes running on **OpenEBS version 1.2 and above** only.
 
 ## Instructions
 
@@ -226,3 +208,5 @@ Example output:
 NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS     REASON   AGE
 pvc-0546bc97-5e64-4f94-b18e-6929f615fb75   30Gi       RWO            Delete           Bound    default/demo-vol1-claim   openebs-sc-new            10m
 ```
+
+**Note:** PVC capacity will be inconsistent with PV capacity. This will be fixed during migration of Non-CSI volumes to CSI volumes.
