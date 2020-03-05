@@ -1,6 +1,8 @@
 # Resizing a Volume
 ## Introduction
-A cStor volume can be resized by following these instructions.
+A cStor volume can be resized by following these instructions. This documnet help you to expand your cStor volume running with OpenEBS version 1.1 or below. 
+
+If you are using OpenEBS version 1.2 or  above, please follow the step mentioned [here](https://github.com/openebs/openebs-docs/blob/day_2_ops/docs/cstor-volume-expansion.md).
 
 ## Prerequisites
 Pleas make sure all cstorvolumereplicas are in a healthy state before attempting to resize a volume.  You can verify their health with this command:
