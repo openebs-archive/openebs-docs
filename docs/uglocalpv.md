@@ -7,7 +7,7 @@ sidebar_label: Local PV
 
 <br>
 
-<img src="/docs/assets/svg/4-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
+<img src="/v170/docs/assets/svg/4-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
 
 <br>
 
@@ -256,7 +256,7 @@ In this example, the above configuration YAML spec is saved as `demo-percona-mys
 
 **Note**: 
 
-- The Local PV volume will be provisioned  with `volumeMode` as `filesystem` by default. The supported filesystems are `ext4` and `xfs`.  This means Local PV volume will be created and formatted with one of these filesystem. If no filesystem is specified, by default Kubelet will format the BlockDevice as `ext4`. More details can be found [here](/docs/next/localpv.html#how-to-use-openebs-local-pvs).
+- The Local PV volume will be provisioned  with `volumeMode` as `filesystem` by default. The supported filesystems are `ext4` and `xfs`.  This means Local PV volume will be created and formatted with one of these filesystem. If no filesystem is specified, by default Kubelet will format the BlockDevice as `ext4`. More details can be found [here](/v170/docs/next/localpv.html#how-to-use-openebs-local-pvs).
 
 - With OpenEBS 1.5 version, Local PV volume has Raw Block Volume support. The Raw Block Volume support can be added to the path `spec.volumeMode` as `Block` in the Persistent Volume spec. Below is the sample PVC spec for provisioning Local PV Raw Block Volume.
 
@@ -334,7 +334,7 @@ OpenEBS volume can be backed up and restored along with the application using ve
 
 Velero is a utility to back up and restore your Kubernetes resource and persistent volumes. 
 
-To take backup and restore of OpenEBS Local PV, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Local PV which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](/docs/next/minio.html).
+To take backup and restore of OpenEBS Local PV, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Local PV which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](/v170/docs/next/minio.html).
 
 The following are the step by step procedure for taking backup and restore of application with OpenEBS Local PV.
 
@@ -540,7 +540,7 @@ Verify if the StorageClass is having the updated hostpath using the following co
 kubectl describe sc openebs-hostpath
 ```
 
-**Note**: If you are using a mount path of an external device as  `Basepath` for the default hostpath Storage Class, then you must add the corresponding block device path under **exclude** filter so that NDM will not select the particular disk for BD creation. For example, `/dev/sdb` is mounted as `/mnt/ext_device`, and if you are using `/mnt/ext_device` as Basepath in default StorageClass `openebs-hostpath`, then you must add `/dev/sdb` under **exclude** filter of NDM configuration. See [here](/docs/next/ugndm.html#Exclude-filters) for customizing the exclude filter in NDM configuration.
+**Note**: If you are using a mount path of an external device as  `Basepath` for the default hostpath Storage Class, then you must add the corresponding block device path under **exclude** filter so that NDM will not select the particular disk for BD creation. For example, `/dev/sdb` is mounted as `/mnt/ext_device`, and if you are using `/mnt/ext_device` as Basepath in default StorageClass `openebs-hostpath`, then you must add `/dev/sdb` under **exclude** filter of NDM configuration. See [here](/v170/docs/next/ugndm.html#Exclude-filters) for customizing the exclude filter in NDM configuration.
 
 <br>
 
@@ -548,10 +548,10 @@ kubectl describe sc openebs-hostpath
 
 
 
-### [Understand OpenEBS Local PVs ](/docs/next/localpv.html)
+### [Understand OpenEBS Local PVs ](/v170/docs/next/localpv.html)
 
 
-### [Node Disk Manager](/docs/next/ugndm.html)
+### [Node Disk Manager](/v170/docs/next/ugndm.html)
 
 
 <br>

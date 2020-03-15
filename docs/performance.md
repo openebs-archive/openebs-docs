@@ -9,7 +9,7 @@ sidebar_label: Performance testing
 
 **Setup cStorPool and StorageClass**
 
-Choose the appropriate disks (SSDs or SAS or Cloud disks) and [create pool](/docs/next/ugcstor.html#creating-cStor-storage-pools)  and [create StorageClass](/docs/next/ugcstor.html#creating-cStor-storage-class).  There are some performance tunings available and this configuration can be added in the corresponding StorageClass before provisioning the volume. The tunings are available in the [StorageClass](/docs/next/ugcstor.html#setting-performance-tunings) section. 
+Choose the appropriate disks (SSDs or SAS or Cloud disks) and [create pool](/v170/docs/next/ugcstor.html#creating-cStor-storage-pools)  and [create StorageClass](/v170/docs/next/ugcstor.html#creating-cStor-storage-class).  There are some performance tunings available and this configuration can be added in the corresponding StorageClass before provisioning the volume. The tunings are available in the [StorageClass](/v170/docs/next/ugcstor.html#setting-performance-tunings) section. 
 
 For performance testing, performance numbers vary based on the following factors.
 
@@ -24,7 +24,7 @@ The steps for running FIO based Storage benchmarking and viewing the results are
 
 ## See Also:
 
-### [Seeking help](/docs/next/support.html)
+### [Seeking help](/v170/docs/next/support.html)
 
 <br>
 

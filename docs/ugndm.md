@@ -7,7 +7,7 @@ sidebar_label: NDM
 
 <br>
 
-<img src="/docs/assets/svg/2-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
+<img src="/v170/docs/assets/svg/2-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
 
 <br>
 
@@ -228,7 +228,7 @@ Currently, NDM is not selecting partitioned disks for creating device resource. 
 ## See Also:
 
 
-### [Understanding Node Disk Manager](/docs/next/ndm.html)
+### [Understanding Node Disk Manager](/v170/docs/next/ndm.html)
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 <script>

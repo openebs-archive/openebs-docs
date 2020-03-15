@@ -41,7 +41,7 @@ The [Container Storage Interface](https://github.com/container-storage-interface
 
 - Kubernetes version 1.14 or higher is installed.
 - iSCSI initiator utils to be installed on all the worker nodes.
-- Recommended OpenEBS Version is 1.4 or above . The steps to install OpenEBS is [here](/docs/next/quickstart.html).
+- Recommended OpenEBS Version is 1.4 or above . The steps to install OpenEBS is [here](/v170/docs/next/quickstart.html).
 - You have access to install RBAC components into `kube-system` namespace. The OpenEBS cStor CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
 - You need to enable the feature gates `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` on `kubelet` in each worker node.
 - You need to enable the feature gates `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` on `kube-apiserver` in the master node.
@@ -1242,9 +1242,9 @@ In the above output, 2 PVs are created. As the `replicaSC` specified in storage 
 
 ## See Also:
 
-### [cStor Concepts](/docs/next/cstor.html)
+### [cStor Concepts](/v170/docs/next/cstor.html)
 
-### [cStor User Guide](/docs/next/ugcstor.html)
+### [cStor User Guide](/v170/docs/next/ugcstor.html)
 
 <hr>
 

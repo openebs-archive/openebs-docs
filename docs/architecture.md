@@ -10,7 +10,7 @@ OpenEBS follows the container attached storage or CAS model.  As a part of this 
 
 <br>
 
-<img src="/docs/assets/svg/openebs-arch.svg" alt="drawing" width="80%"/>
+<img src="/v170/docs/assets/svg/openebs-arch.svg" alt="drawing" width="80%"/>
 
 <br>
 
@@ -32,7 +32,7 @@ OpenEBS has many components, which can be grouped into the following categories.
 The control plane of an OpenEBS cluster is often referred to as Maya. The OpenEBS control plane is responsible for provisioning volumes, associated volume actions such as taking snapshots, making clones, creating storage policies, enforcing storage policies, exporting the volume metrics for consumption by Prometheus/grafana, and so on.
 
 
-![Maya is the control plane of OpenEBS](/docs/assets/openebs-maya-architecture.png)
+![Maya is the control plane of OpenEBS](/v170/docs/assets/openebs-maya-architecture.png)
 
 OpenEBS provides a [dynamic provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/openebs), which is the standard Kubernetes external storage plugin. The primary task of an OpenEBS PV provisioner is to initiate volume provisioning to application PODS and to implement the Kubernetes specification for PVs.
 
@@ -47,7 +47,7 @@ The above control plane components are explained in detail below.
 
 ### OpenEBS PV Provisioner
 
-![OpenEBS volume pods provisioning-overview](/docs/assets/volume-provisioning.png)
+![OpenEBS volume pods provisioning-overview](/v170/docs/assets/volume-provisioning.png)
 
 This component runs as a POD and makes provisioning decisions. 
 
@@ -57,11 +57,11 @@ Currently, the OpenEBS provisioner supports only one type of binding i.e. iSCSI.
 
 ### Maya-ApiServer
 
-![OpenEBS m-apiserver Internals](/docs/assets/m-apiserver.png)
+![OpenEBS m-apiserver Internals](/v170/docs/assets/m-apiserver.png)
 
 m-apiserver runs as a POD. As the name suggests, m-apiserver exposes the OpenEBS REST APIs. 
 
-m-apiserver is also responsible for creating deployment specification files required for creating the volume pods. After generating these specification files, it invokes kube-apiserver for scheduling the pods accordingly. At the end of volume provisioning by the OpenEBS PV provisioner, a Kubernetes object PV is created and is mounted on the application pod. The PV is hosted by the controller pod which is supported by a set of replica pods in different nodes. The controller pod and replica pods are part of the data plane and are described in more detail in the [Storage Engines](/docs/next/casengines.html) section.
+m-apiserver is also responsible for creating deployment specification files required for creating the volume pods. After generating these specification files, it invokes kube-apiserver for scheduling the pods accordingly. At the end of volume provisioning by the OpenEBS PV provisioner, a Kubernetes object PV is created and is mounted on the application pod. The PV is hosted by the controller pod which is supported by a set of replica pods in different nodes. The controller pod and replica pods are part of the data plane and are described in more detail in the [Storage Engines](/v170/docs/next/casengines.html) section.
 
 Another important task of the m-apiserver is volume policy management. OpenEBS provides very granular specification for expressing policies. m-apiserver interprets these YAML specifications, converts them into enforceable components and enforces them through volume-management sidecars.
 
@@ -78,7 +78,7 @@ Maya volume exporter is a sidecar for each of the storage controller pods (cStor
 - write block size
 - capacity stats
 
-![OpenEBS volume exporter data flow](/docs/assets/vol-exporter.png)
+![OpenEBS volume exporter data flow](/v170/docs/assets/vol-exporter.png)
 
 These statistics are typically pulled either by the Prometheus client that is installed and configured during OpenEBS installation.
 
@@ -86,7 +86,7 @@ These statistics are typically pulled either by the Prometheus client that is in
 
 Sidecars are also used for passing controller configuration parameters and volume policies to the volume controller pod which is a data plane and for passing replica configuration parameters and replica data protection parameters to the volume replica pod. 
 
-![volume management sidecars for cStor](/docs/assets/vol-mgmt-sidecars.png)
+![volume management sidecars for cStor](/v170/docs/assets/vol-mgmt-sidecars.png)
 
 <a name="DataPlane"></a>
 

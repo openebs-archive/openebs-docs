@@ -5,7 +5,7 @@ sidebar_label: Minio
 ---
 ------
 
-<img src="/docs/assets/o-minio.png" alt="OpenEBS and Minio" style="width:400px;">
+<img src="/v170/docs/assets/o-minio.png" alt="OpenEBS and Minio" style="width:400px;">
 
 <br>
 
@@ -33,7 +33,7 @@ Cloud native Object storage is easy to deploy with Minio and OpenEBS. Both run i
 
 <br>
 
-<img src="/docs/assets/svg/minio-deployment.svg" alt="OpenEBS and Minio" style="width:100%;">
+<img src="/v170/docs/assets/svg/minio-deployment.svg" alt="OpenEBS and Minio" style="width:100%;">
 
 <br>
 
@@ -46,11 +46,11 @@ Cloud native Object storage is easy to deploy with Minio and OpenEBS. Both run i
 
 1. **Install OpenEBS**
 
-   If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
+   If OpenEBS is not installed in your K8s cluster, this can done from [here](/v170/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
 2. **Configure cStor Pool**
 
-    After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. During cStor Pool creation, make sure that the maxPools parameter is set to >=4. If cStor pool is already configured, go to the next step. 
+    After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/v170/docs/next/ugcstor.html#creating-cStor-storage-pools). Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. During cStor Pool creation, make sure that the maxPools parameter is set to >=4. If cStor pool is already configured, go to the next step. 
 
 4. **Create Storage Class**
 
@@ -82,7 +82,7 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just Minio alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool) 
+As in most cases, cStor pool may not be dedicated to just Minio alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/v170/docs/next/ugcstor.html#monitor-pool) 
 
 <br>
 
@@ -153,11 +153,11 @@ reclaimPolicy: Delete
 
 <br>
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v170/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v170/docs/next/usecases.html)
 
-### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
+### [cStor pools overview](/v170/docs/next/cstor.html#cstor-pools)
 
 
 
