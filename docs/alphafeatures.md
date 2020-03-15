@@ -65,13 +65,13 @@ Depending on the OS, select the appropriate deployment file.
 - For Ubuntu 16.04 and CentOS:
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.7.0.yaml
+  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.8.0.yaml
   ```
 
 - For Ubuntu 18.04:
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.7.0-ubuntu-18.04.yaml
+  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.8.0-ubuntu-18.04.yaml
   ```
 
 Verify that the OpenEBS CSI Components are installed.
@@ -116,7 +116,7 @@ From above output, `openebs-cstor-csi-controller-0`  is running and `openebs-cst
 Apply CSPC operator YAML file using the following command:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.7.0.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.8.0.yaml
 ```
 
 Verify the status of CSPC operator using the following command:
@@ -384,7 +384,7 @@ The following section will give the steps to take snapshot and clone the cStor v
 
 - You will need to enable `VolumeSnapshotDataSource` Feature Gate on `kubelet` and `kube-apiserver`. Other general prerequisites related to cStor volume via CSI provisioner can be found from [here](#prerequisites-cstor-csi). 
 
-- Recommended OpenEBS Version is 1.7
+- Recommended OpenEBS Version is 1.8
 
 **Capture the snapshot and cloning the cStor volume:**
 
@@ -505,7 +505,7 @@ CSPC is a new schema for cStor pool provisioning and also refactors the code to 
 
 The current workflow to provision CSPC pool is as follows:
 
-1. OpenEBS should be installed. Recommended OpenEBS version is 1.7.
+1. OpenEBS should be installed. Recommended OpenEBS version is 1.8.
 2. Install CSPC operator using YAML.
 3. Identify the available blockdevices which are `Unclaimed` and `Active`.
 4. Apply the CSPC pool YAML spec by filling required fields.
@@ -516,7 +516,7 @@ The current workflow to provision CSPC pool is as follows:
 Latest OpenEBS version can be installed using the following command:
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.7.0.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.8.0.yaml
 ```
 
 Verify if OpenEBS pods are in `Running` state using the following command:
@@ -541,7 +541,7 @@ openebs-snapshot-operator-7d6dd4b77f-444zh    2/2     Running   0          81s
 
 Install CSPC operator by using the following command:
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.7.0.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.8.0.yaml
 ```
 Verify if CSPC operator is in `Running` state using the following command:
 ```
@@ -985,7 +985,7 @@ OpenEBS Jiva volumes can now be provisioned with CSI driver from OpenEBS 1.5 ver
 **Prerequisites:**
 
 - Kubernetes version 1.14 or higher
-- OpenEBS Version 1.5 or higher installed. Recommended OpenEBS version is 1.7.
+- OpenEBS Version 1.5 or higher installed. Recommended OpenEBS version is 1.8.
 - iSCSI initiator utils installed on all the worker nodes.
 - You have access to install RBAC components into `kube-system` namespace. The Jiva CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
 - Base OS on worker nodes can be Ubuntu 16.04, Ubuntu 18.04 or CentOS.
@@ -1003,7 +1003,7 @@ OpenEBS Jiva volumes can now be provisioned with CSI driver from OpenEBS 1.5 ver
 Latest OpenEBS version can be installed using the following command:
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.7.0.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.8.0.yaml
 ```
 
 Verify if OpenEBS pods are in `Running` state using the following command:
