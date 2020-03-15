@@ -446,7 +446,8 @@ openebs-snapshot-operator-5bdcdc9b77-v7n4w     2/2     Running   0          97s
 
 The control plane pods `openebs-provisioner`, `maya-apiserver` and `openebs-snapshot-operator` should be running. If you have configured nodeSelectors , check if they are scheduled on the appropriate nodes by listing the pods through `kubectl get pods -n openebs -o wide`
 
- 
+> The resiliency of the control plane can be verified via `litmus` using <a href="https://docs.litmuschaos.io/docs/next/openebs-control-plane-chaos/"> openebs-control-plane-chaos </a> experiment.
+  
 
 **Verify StorageClasses:**
 
