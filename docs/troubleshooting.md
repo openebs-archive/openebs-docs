@@ -73,6 +73,8 @@ sidebar_label: Troubleshooting
 
 [Unable to provision cStor on DigitalOcean](#unable-to-provision-openebs-volume-on-DigitalOcean)
 
+[Persistent volumes indefinitely remain in pending state](#persistent-volumes-indefinitely-remain-in-pending-state)
+
 <br>
 
 ## Kubernetes related
@@ -786,6 +788,40 @@ service kubelet restart
 ```
 
 To know more about provisioning cStor volume on DigitalOcean<a href="/docs/next/prerequisites.html#do"> click here</a>
+<hr>
+
+
+<br>
+<h3><a class="anchor" aria-hidden="true" id="persistent-volumes-indefinitely-remain-in-pending-state"></a>Persistent volumes indefinitely remain in pending state</h3>
+<br>
+If users have a strict firewall setup on their Kubernetes nodes, the provisioning of a PV from a storageclass backed by a cStor storage pool may fail. The pool can be created without any issue and even the storage class is created, but the PVs may stay in pending state indefinitely.
+<br>
+
+The output from the `openebs-provisioner` might look as follows:
+
+```
+$ kubectl -n openebs logs openebs-provisioner-796dc9d598-k86qn
+...
+I1117 13:12:43.103813       1 volume.go:73] OpenEBS volume provisioner namespace openebs
+I1117 13:12:43.109157       1 leaderelection.go:187] attempting to acquire leader lease  openebs/openebs.io-provisioner-iscsi...
+I1117 13:12:43.117628       1 leaderelection.go:196] successfully acquired lease openebs/openebs.io-provisioner-iscsi
+I1117 13:12:43.117999       1 event.go:221] Event(v1.ObjectReference{Kind:"Endpoints", Namespace:"openebs", Name:"openebs.io-provisioner-iscsi", UID:"09e04e2b-302a-454d-a160-fa384cbc69fe", APIVersion:"v1", ResourceVersion:"1270", FieldPath:""}): type: 'Normal' reason: 'LeaderElection' openebs-provisioner-796dc9d598-k86qn_f0833d66-093b-11ea-a950-0a580a2a0009 became leader
+I1117 13:12:43.122149       1 controller.go:636] Starting provisioner controller openebs.io/provisioner-iscsi_openebs-provisioner-796dc9d598-k86qn_f0833d66-093b-11ea-a950-0a580a2a0009!
+I1117 13:12:43.222583       1 controller.go:685] Started provisioner controller openebs.io/provisioner-iscsi_openebs-provisioner-796dc9d598-k86qn_f0833d66-093b-11ea-a950-0a580a2a0009!
+I1117 13:17:11.170266       1 controller.go:991] provision "default/mongodb" class "openebs-storageclass-250gb": started
+I1117 13:17:11.177260       1 event.go:221] Event(v1.ObjectReference{Kind:"PersistentVolumeClaim", Namespace:"default", Name:"mongodb", UID:"a764b1c0-105f-4f7c-a32d-88275622cb15", APIVersion:"v1", ResourceVersion:"2375", FieldPath:""}): type: 'Normal' reason: 'Provisioning' External provisioner is provisioning volume for claim "default/mongodb"
+E1117 13:17:41.177346       1 volume.go:164] Error when connecting to maya-apiserver Get http://10.43.83.204:5656/latest/volumes/pvc-a764b1c0-105f-4f7c-a32d-88275622cb15: dial tcp 10.43.83.204:5656: i/o timeout
+E1117 13:17:41.177446       1 cas_provision.go:111] Unexpected error occurred while trying to read the volume: Get http://10.43.83.204:5656/latest/volumes/pvc-a764b1c0-105f-4f7c-a32d-88275622cb15: dial tcp 10.43.83.204:5656: i/o timeout
+W1117 13:17:41.177555       1 controller.go:750] Retrying syncing claim "default/mongodb" because failures 0 < threshold 15
+E1117 13:17:41.177620       1 controller.go:765] error syncing claim "default/mongodb": failed to provision volume with StorageClass "openebs-storageclass-250gb": Get http://10.43.83.204:5656/latest/volumes/pvc-a764b1c0-105f-4f7c-a32d-88275622cb15: dial tcp 10.43.83.204:5656: i/o timeout
+...
+```
+
+**Workaround:**
+
+This issue has currently only been observed, if the underlying node uses a network bridge and if the setting `net.bridge.bridge-nf-call-iptables=1` in the `/etc/sysctl.conf` is present. The aforementioned setting is required in some Kubernetes installations, such as the Rancher Kubernetes Engine (RKE).
+
+To avoid this issue, open the port `5656/tcp` on the nodes that run the OpenEBS API pod. Alternatively, removing the network bridge _might_ work.
 <hr>
 <br>
 
