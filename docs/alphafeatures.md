@@ -14,7 +14,7 @@ This section give different features of OpenEBS which is presently in Alpha vers
 
 ## cStor
 
-[Running a sample application on a cStor volume provsioned via CSI provisioner](#running-sample-application-cstor-volume-using-csi-provisioner)
+[Running a sample application on a cStor volume provisioned via CSI provisioner](#running-sample-application-cstor-volume-using-csi-provisioner)
 
 [Provisioning cStor pool using CSPC operator](#provision-cstor-pool-using-cspc-operator)
 
@@ -45,7 +45,7 @@ The [Container Storage Interface](https://github.com/container-storage-interface
 - You have access to install RBAC components into `kube-system` namespace. The OpenEBS cStor CSI driver components are installed in `kube-system` namespace to allow them to be flagged as system critical components.
 - You need to enable the feature gates `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` on `kubelet` in each worker node.
 - You need to enable the feature gates `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` on `kube-apiserver` in the master node.
-- Base OS on worker nodes can  be Ubuntu 16.04, Ubuntu 18.04 or CentOS.
+- Base OS on worker nodes can be Ubuntu 16.04, Ubuntu 18.04 or CentOS.
 
 **Overview**
 
@@ -107,16 +107,16 @@ prometheus-to-sd-c5bwl                                      1/1     Running   0 
 prometheus-to-sd-s7fdv                                      1/1     Running   0          35m
 stackdriver-metadata-agent-cluster-level-8468cc67d8-p864w   1/1     Running   0          35m
 </div>
-  
+
 From above output, `openebs-cstor-csi-controller-0`  is running and `openebs-cstor-csi-node-hflmf` , `openebs-cstor-csi-node-mdgqq ` and `openebs-cstor-csi-node-rwshl ` running in each worker node.
     
 
 <h4><a class="anchor" aria-hidden="true" id="provision-a-cStor-Pool-Cluster-csi"></a>Provision a cStor Pool Cluster</h4>
 
-Apply CSPC operator YAML file using the following command:
+Apply cStor operator YAML file using the following command:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.8.0.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cstor-operator-1.8.0.yaml
 ```
 
 Verify the status of CSPC operator using the following command:
@@ -158,7 +158,7 @@ spec:
 
 Edit the following parameters in the sample CSPC YAML:
 
-- **blockDeviceName**:- Provide the block devices name to be used for provisioning cStor pool. Each storage pool will be created on one single node using the blockedvices attached to the node.
+- **blockDeviceName**:- Provide the block devices name to be used for provisioning cStor pool. Each storage pool will be created on a node using the blockdevices attached to the node.
 
 - **kubernetes.io/hostname**: Provide the hostname where the cStor pool will be created using the set of block devices.
 
@@ -320,7 +320,7 @@ The following section will give the steps to expand a cStor volume which is crea
 - Only dynamically provisioned cStor volumes can be resized.
 - You can only expand cStor volumes containing a file system if the file system is `ext3`, `ext4` or `xfs`.
 - Ensure that the corresponding StorageClass has the `allowVolumeExpansion` field set to `true` when the volume is provisioned.
-- You will need to enable `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` feature gates on `kubelets` and `kube-apiserver`. Other general prerequisites related to cStor volume via CSI provosioner can be found from [here](#prerequisites-cstor-csi). 
+- You will need to enable `ExpandCSIVolumes` and `ExpandInUsePersistentVolumes` feature gates on `kubelets` and `kube-apiserver`. Other general prerequisites related to cStor volume via CSI provisioner can be found from [here](#prerequisites-cstor-csi). 
 
 **Steps to perform the cStor volume expansion:**
 
@@ -373,8 +373,8 @@ The following section will give the steps to expand a cStor volume which is crea
       demo-csivol-claim   Bound    pvc-723283b6-02bc-11ea-a139-42010a8000b2   9Gi        RWO            openebs-csi-cstor-disk   68m
     </div>
 
-4. Check the size is reflected on the application pod where the above volume is mounted.
-    
+4. Check whether the size is reflected on the application pod where the above volume is mounted.
+   
 
 <h3><a class="anchor" aria-hidden="true" id="snapshot-clone-cstor-volume-created-using-csi-provisioner"></a>Snapshot and Cloning the cStor volume created using CSI provisioner</h3>
 
@@ -430,7 +430,7 @@ The following section will give the steps to take snapshot and clone the cStor v
    
    metedata.name :- Name of the snapshot
    
-   spec.snapshotClassName :- Name of the `snapshotClass` poiting to cStor CSI driver which you can get from step 2.
+   spec.snapshotClassName :- Name of the `snapshotClass` pointing to cStor CSI driver which you can get from step 2.
    
    spec.source.name :- Source PVC, for which you are going to take the snapshot.
 
@@ -541,7 +541,7 @@ openebs-snapshot-operator-7d6dd4b77f-444zh    2/2     Running   0          81s
 
 Install CSPC operator by using the following command:
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cspc-operator-1.8.0.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cstor-operator-1.8.0.yaml
 ```
 Verify if CSPC operator is in `Running` state using the following command:
 ```
@@ -555,7 +555,7 @@ cspc-operator-c4dc96bb9-zvfws   1/1     Running   0          115s
 
 <h4><a class="anchor" aria-hidden="true" id="identify-bd-for-cspc"></a>Identify the blockdevices</h4>
 
-Get the details of all blockdevice attached in the cluster using the following command. Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not contain any filesystem. These are the candidiates for CSPC pool creation which need to be used in next step.
+Get the details of all blockdevices attached in the cluster using the following command. Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not contain any filesystem. These are the candidates for CSPC pool creation which need to be used in next step.
 
 ```
 kubectl get bd -n openebs
@@ -599,13 +599,13 @@ spec:
       compression: "off"
 ```
 Here, we describe the parameters used in above CSPC pool creation template.
- 
+
  - CSPC_name :- Name of CSPC cluster
  - Node_name :- Name of node where pool is to be created using the available blockdevices attached to the node.
  - RAID_type :- RAID configuration used for pool creation. Supported RAID types are `stripe`, `mirror`, `raidz` and `raidz2`. If `spec.pools.raidGroups.type` is specified, then `spec.pools.poolConfig.defaultRaidGroupType` will not consider for the particular raid groups. 
  - blockdevice_name :- Identify the available blockdevices which are  `Unclaimed` and `Active`. Also verify these identified blockdevices does not conatin any filesystem.
- 
-This is a sample CSPC template YAMl configuration which will provision a cStor pool using CSPC operator. The following describe the pool details of one node. If there are multiple pools to be created on different nodes, add below configuration for each node.
+
+This is a sample CSPC template YAML configuration which will provision a cStor pool using CSPC operator. The following snippet describe the pool details of one node. If there are multiple pools to be created on different nodes, add below configuration for each node.
 
 ```
   - nodeSelector:
@@ -766,7 +766,7 @@ The following are some of the sample CSPC configuration YAML spec:
         compression: "off"	  
   ```
   
-  Next, you can provision a cStor volume and then provision applciation on this volume. The steps can be found [here](#running-sample-application-cstor-volume-using-csi-provisioner).
+  Next, you can provision a cStor volume and then provision application on this volume. The steps can be found [here](#running-sample-application-cstor-volume-using-csi-provisioner).
 
 <h4><a class="anchor" aria-hidden="true" id="verify-cspc-pool-details"></a>Verify CSPC Pool Details</h4>
 
@@ -827,7 +827,7 @@ The following steps will help to perform the blockdevice replacement in cStor po
 
 **Prerequisites:**
 
-1. There should be an blockdevice present on the same node where the old blockdevice is attached. The available blockdevice should be in `Unclaimed` & 'Active' state and does not contain any filesystem or partition.
+1. There should be a blockdevice present on the same node where the old blockdevice is attached. The available blockdevice should be in `Unclaimed` & 'Active' state and does not contain any filesystem or partition.
 
 2. The capacity of the new blockdevice should be greater than or equal to that of old blockdevice.
 
@@ -861,7 +861,7 @@ The following are the steps to perform blockdevice replacement:
   cstor-pool-mirror   106m
   </div>
   
-- Obtain the details of used blockdevices and avaiable blockdevices using the following command:
+- Obtain the details of used blockdevices and available blockdevices using the following command:
   
   ```
   kubectl get bd -n openebs
@@ -915,7 +915,7 @@ The following are the steps to perform blockdevice replacement:
 
 - Replace the selected blockdevice from the RAID group by editing the corresponding CSPC configuration. Only requirement is that, one blockdevice per raid group can be replaced at a time. The following command will edit the CSPC configuration and user can replace one blockdevice in the corresponding raid group by replacing with new blockdevice.
   ```
-  kubectl edit cspc cstor-pool-mirror -n openebs 
+  kubectl edit cspc <CSPC name> -n openebs 
   ```
   Example command:
   ```
@@ -924,7 +924,7 @@ The following are the steps to perform blockdevice replacement:
   
   After replacing the required blockdevice with new one, ensure that CSPC configuration is applied successfully with new blockdevice using the following command:
   ```
-  kubectl get cspi <CSPI-name>  -n openebs -o yaml
+  kubectl get cspi <CSPI-name> -n openebs -o yaml
   ```
   Example command:
   ```
@@ -973,7 +973,7 @@ The following are the steps to perform blockdevice replacement:
   </div>
   
   In the above example output, `blockdevice-41d4416f6199a14b706e2ced69e2694a` is replaced successfully with `blockdevice-c0179d93aebfd90c09a7a864a9148f85`.
-    
+  
   If resilvering on the pool is completed , state of old blockdevice will be changed to `Unclaimed` state and new blockdevice will be `Claimed`. In future, different verification methods will be added.
   
 <h3><a class="anchor" aria-hidden="true" id="running-sample-application-jiva-volume-using-csi-provisioner"></a>Run a sample application on Jiva volume provisioned via Jiva CSI Provisioner</h3>  
