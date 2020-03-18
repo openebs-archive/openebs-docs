@@ -77,9 +77,9 @@ Use a similar PVC spec or volumeClaimTemplate to use a StorageClass that is poin
 
 **AccessModes:** cStor provides iSCSI targets, which are appropriate for RWO (ReadWriteOnce) access mode and is suitable for all types of databases. For webscale applications like WordPress or any for any other NFS needs, you need RWM (ReadWriteMany) access mode. For RWM, you need NFS provisioner to be deployed along with cStor. See how to provision <a href="/docs/next/rwm.html" target="_blank">RWM PVC with OpenEBS </a>.
 
-**Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release (OpenEBS 0.9.0) and is active development, see [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in the very short time period. 
+**Size:** cStor supports thin provisioning by default, which means you can request any size of the volume through the PVC and get it provisioned. Resize of the volume is not fully supported through the OpenEBS control plane in the current release and it is under active development, see [roadmap](/docs/next/cstor.html#cstor-roadmap) for more details. Hence it is recommended to give good amount of buffer to the required size of the volume so that you don't need to resize immediately or in a very short time period. 
 
-The following shows the example PVC configuration for a Deployment and a StatefulSet application which uses a configured StorageClass to provision a cStor Volume. The provided StorageClass name will contain the StoragePoolClaim name and the cStor Volume will provisioned on a StoragePool associated to the StroagePoolClaim.
+The following shows the example PVC configuration for a Deployment and a StatefulSet application which uses a configured StorageClass to provision a cStor Volume. The provided StorageClass should have been configured with StoragePoolClaim property, so the cStor Volume will be provisioned on the StoragePools associated to the StoragePoolClaim.
 
 <font size="4">**Example configuration for requesting OpenEBS volume for a Deployment**</font>
 
@@ -1070,7 +1070,8 @@ StorageClass definition is an important task in the planning and execution of Op
 
 **Step1:** Decide the cStorPool and get the StoragePoolClaim name associated to it.
 
-**Step2:** Which application uses it? Decide the replicaCount based on your reqiurement. OpenEBS doesn't restrict the replica count to set, but only maximum up to 5 are allowed. It depends how users configure it, but for the availability of volumes at least  (n/2 + 1) replicas should be up and connected to the target, where `n` is the `replicaCount`. The following are some example cases:
+**Step2:** Which application uses it? Decide the replicaCount based on your requirement. OpenEBS doesn't restrict the replica count to set, but only maximum up to 5 replicas are allowed. It depends how users configure it, but for the availability of volumes at least  (n/2 + 1) replicas should be up and connected to the target, where `n` is the `replicaCount`. The following are some example cases:
+
 - If user configured replica count as 2, then always 2 replicas should be available to perform operations on volume.
 - If replica count as 3 it should require at least 2 replicas should be available for volume to be operational. 
 - If replica count as 5 it should require at least 3 replicas should be available for volume to be operational.
@@ -1085,7 +1086,7 @@ StorageClass definition is an important task in the planning and execution of Op
 
 <h4><a class="anchor" aria-hidden="true" id="example-configuration-of-openEBS-storageClass"></a>Example Configuration of OpenEBS StorageClass</h4>
 
-You can create a new StorageClass YAML called **openebs-sc-rep3.yaml** and add content to it from below. The following will create a StorageClass of OpenEBS volume replica of `1`, Storage Pool as `cstor-pool2` and CAS type as `cstor`.
+You can create a new StorageClass YAML called **openebs-sc-rep3.yaml** and add content to it from below. By using this spec, a StorageClass will be created with 3 OpenEBS cStor replicas and will configure them on the pools associated with the `StoragePoolClaim:cstor-disk-pool` .
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -1107,7 +1108,7 @@ provisioner: openebs.io/provisioner-iscsi
 <h3><a class="anchor" aria-hidden="true" id="cstor-storage-policies"></a>Setting Storage Policies</h3>
 
 
-Below table lists the storage policies supported by cStor. These policies should be built into StorageClass and apply them through PersistentVolumeClaim or VolumeClaimTemplates interface.
+Below table lists the storage policies supported by cStor. These policies should be built into StorageClass and apply them through PersistentVolumeClaim or VolumeClaimTemplates interface. `StoragePoolClaim` is the mandatory policy to be specified in all the storage class definitions.
 
 | cStor Storage Policy                                         | Mandatory | Default                                 | Purpose                                                      |
 | ------------------------------------------------------------ | --------- | --------------------------------------- | ------------------------------------------------------------ |
@@ -1130,18 +1131,40 @@ Below table lists the storage policies supported by cStor. These policies should
 
 <br>
 
-<h4><a class="anchor" aria-hidden="true" id="Replica-Count-Policy"></a>Replica Count Policy</h4>
 
-You can specify the cStor volume replica count using the *ReplicaCount* property. In the following example, the ReplicaCount is specified as 3. Hence, three cStor volume replicas will be created.
+
+<h4><a class="anchor" aria-hidden="true" id="Storage-Pool-Claim-Policy"></a>Storage Pool Claim Policy</h4>
+
+You can specify the cStor Pool Claim name using the *value* for *StoragePoolClaim* property. This will help you choose cStor storage pool where OpenEBS volume will be created. Following is the default StorageClass template where cStor volume will be created on default cStor Sparse Pool.
 
 ```
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  name: openebs-sc-spc
+  annotations:
+    cas.openebs.io/config: |
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
+    openebs.io/cas-type: cstor
+provisioner: openebs.io/provisioner-iscsi
+```
+
+<h4><a class="anchor" aria-hidden="true" id="Replica-Count-Policy"></a>Replica Count Policy</h4>
+
+You can specify the cStor volume replica count using the *ReplicaCount* property. You need to ensure that the replica count should not be more than the pools created in the respective StoragePoolClaim.  In the following example, the ReplicaCount is specified as 3. Hence, three cStor volume replicas will be created.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-sc-rep3
   annotations:
     cas.openebs.io/config: |
       - name: ReplicaCount
         value: "3"
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1154,10 +1177,13 @@ You can specify the cStor Volume Controller Image using the *value* for *VolumeC
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  name: openebs-cstor-mgmt-sc
   annotations:
     cas.openebs.io/config: |
       - name: VolumeControllerImage
         value: quay.io/openebs/cstor-volume-mgmt:1.8.0
+      - name: StoragePoolClaim
+        value: "cstor-disk-pool"
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1170,26 +1196,13 @@ You can specify the cStor Target Image using the *value* for *VolumeTargetImage*
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  name: openebs-cstor-target-sc
   annotations:
     cas.openebs.io/config: |
       - name: VolumeTargetImage
         value:quay.io/openebs/cstor-istgt:1.8.0
-    openebs.io/cas-type: cstor
-provisioner: openebs.io/provisioner-iscsi
-```
-
-<h4><a class="anchor" aria-hidden="true" id="Storage-Pool-Claim-Policy"></a>Storage Pool Claim Policy</h4>
-
-You can specify the cStor Pool Claim name using the *value* for *StoragePoolClaim* property. This will help you choose cStor storage pool where OpenEBS volume will be created. Following is the default StorageClass template where cStor volume will be created on default cStor Sparse Pool.
-
-```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  annotations:
-    cas.openebs.io/config: |
       - name: StoragePoolClaim
-        value: "cstor-sparse-pool"
+        value: "cstor-disk-pool"
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1202,10 +1215,13 @@ You can specify the cStor volume monitor feature which can be set using *value* 
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  name: openebs-sc-monitoring
   annotations:
     cas.openebs.io/config: |
       - enabled: "true"
         name: VolumeMonitor
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1218,10 +1234,13 @@ You can specify the monitoring image policy for a particular volume using *value
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  name: openebs-sc-monitor-image
   annotations:
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
         value: quay.io/openebs/m-exporter:1.8.0
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1234,10 +1253,13 @@ You can specify the file system type for the cStor volume where application will
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  name: openebs-sc-fstype
   annotations:
     cas.openebs.io/config: |
       - name: FSType
         value: ext4
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1250,11 +1272,14 @@ You can specify the *TargetNodeSelector* where Target pod has to be scheduled us
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  name: openebs-sc-targetselector
   annotations:
     cas.openebs.io/config: |
       - name: TargetNodeSelector
         value: |-
             node: appnode
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1267,12 +1292,15 @@ You can specify the *TargetResourceLimits* to restrict the memory and cpu usage 
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  name: openebs-sc-target-resource
   annotations:
     cas.openebs.io/config: |
       - name: TargetResourceLimits
         value: |-
             memory: 1Gi
             cpu: 100m
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1285,11 +1313,14 @@ You can specify the *TargetResourceRequests* to specify resource requests that n
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  name: opeenbs-sc-tgt-request
   annotations:
     cas.openebs.io/config: |
       - name: TargetResourceRequests
         value: |-
             ephemeral-storage: "100Mi"
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1321,12 +1352,15 @@ You can specify the *AuxResourceLimits* which allow you to set limits on side ca
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  name: openebs-sc-aux-limit
   annotations:
     cas.openebs.io/config: |
       - name:  AuxResourceLimits
         value: |-
             memory: 0.5Gi
             cpu: 100m
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1339,6 +1373,7 @@ This feature is useful in cases where user has to specify minimum requests like 
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  name: openebs-sc-aux-request
   annotations:
     cas.openebs.io/config: |
       - name: AuxResourceRequests
@@ -1346,6 +1381,8 @@ metadata:
             memory: 0.5Gi
             cpu: 100m
             ephemeral-storage: "100Mi"
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool"
     openebs.io/cas-type: cstor
 provisioner: openebs.io/provisioner-iscsi
 ```
@@ -1358,11 +1395,11 @@ The configuration for implementing this policy is different for deployment and S
 
 <h5><a class="anchor" aria-hidden="true" id="for-statefulset-applications"></a>For StatefulSet Applications</h5>
 
-In the case of provisioning StatfulSet applications with replication factor of  greater than "1" and volume replication factor of equal to "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application resides. This feature can be achieved by using either of the following approaches.
+In the case of provisioning StatfulSet applications with replication factor greater than "1" and volume replication factor equal to "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application pod resides. This feature can be achieved by using either of the following approaches.
 
 **Approach 1:**
 
-In this approach, modification is required on StatefulSet spec and corresponding StorageClass being referred in the StatefulSet spec. Add openebs.io/sts-target-affinity: <metadata.name of STS> label in StatefulSet spec to the following fields.
+In this approach, modification is required on StatefulSet spec and corresponding StorageClass being used in the StatefulSet spec. Add `openebs.io/sts-target-affinity: <metadata.name of STS>` label in StatefulSet spec to the following fields.
 
 - spec.selector.matchLabels  
 - spec.template.labels
@@ -1373,24 +1410,24 @@ In this approach, modification is required on StatefulSet spec and corresponding
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-name: test-application
-labels:
-  app: test-application
-spec:
-serviceName: test-application
-replicas: 1
-selector:
-  matchLabels:
+  name: test-application
+  labels:
     app: test-application
-    openebs.io/sts-target-affinity: test-application
-template:
-  metadata:
-    labels:
+spec:
+  serviceName: test-application
+  replicas: 1
+  selector:
+    matchLabels:
       app: test-application
       openebs.io/sts-target-affinity: test-application
+  template:
+    metadata:
+      labels:
+        app: test-application
+        openebs.io/sts-target-affinity: test-application
 ```
 
-Do the following changes in the StorageClass that is referred by the claimTemplates of this StatefulSet.
+Do the following changes in the StorageClass that is referred in the claimTemplates of this StatefulSet.
 
 - Set volumeBindingMode to WaitForFirstConsumer
 
@@ -1400,21 +1437,21 @@ Do the following changes in the StorageClass that is referred by the claimTempla
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-name: cstor-sts
-annotations:
-  openebs.io/cas-type: cstor
-  cas.openebs.io/config: |
-    - name: ReplicaCount
-      value: "3"
-    - name: StoragePoolClaim
-      value: "cstor-sparse-pool" 
+  name: cstor-sts
+  annotations:
+    openebs.io/cas-type: cstor
+    cas.openebs.io/config: |
+      - name: ReplicaCount
+        value: "1"
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool" 
 provisioner: openebs.io/provisioner-iscsi
 volumeBindingMode: WaitForFirstConsumer
 ```
 
 **Approach 2:**
 
-This approach is useful when user/tool does not have control over the StatefulSet spec. in this case, it requires a new StorageClass per StatefulSet application.
+This approach is useful when user/tool does not have control over the StatefulSet spec. In this case, it requires a new StorageClass per StatefulSet application.
 
 Add following changes in the StorageClass that is referred to by the claimTemplates of this StatefulSet.
 
@@ -1428,21 +1465,21 @@ Add following changes in the StorageClass that is referred to by the claimTempla
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-name: cstor-sts
-labels:
-  openebs.io/sts-target-affinity: test-application # name of StatefulSet application
-annotations:
-  openebs.io/cas-type: cstor
-  cas.openebs.io/config: |
-    - name: ReplicaCount
-      value: "3"
-    - name: StoragePoolClaim
-      value: "cstor-sparse-pool" 
+  name: cstor-sts
+  labels:
+    openebs.io/sts-target-affinity: test-application # name of StatefulSet application
+  annotations:
+    openebs.io/cas-type: cstor
+    cas.openebs.io/config: |
+      - name: ReplicaCount
+        value: "3"
+      - name: StoragePoolClaim
+        value: "cstor-sparse-pool" 
 provisioner: openebs.io/provisioner-iscsi
 volumeBindingMode: WaitForFirstConsumer
 ```
 
-**Note:** It is recommended to do application pod stickiness for seamless working of the above approaches. Example YAML spec for STS can be get from [here](https://raw.githubusercontent.com/openebs/openebs/12be2bbdb244d50c8c0fd48b59d520f86aa3a4a6/k8s/demo/mongodb/demo-mongo-cstor-taa.yaml).
+**Note:** It is recommended to do application pod stickiness for seamless working of the above approaches. Example YAML spec for STS can be referred from [here](https://raw.githubusercontent.com/openebs/openebs/12be2bbdb244d50c8c0fd48b59d520f86aa3a4a6/k8s/demo/mongodb/demo-mongo-cstor-taa.yaml).
 
 <h5><a class="anchor" aria-hidden="true" id="for-deployment-applications"></a>For Deployment Applications</h5>
 This feature makes use of the Kubernetes Pod Affinity feature that is dependent on the Pod labels. User will need to add the following label to both Application and PVC.
@@ -2132,7 +2169,7 @@ This section provide the steps for scaling up the replica of a cStor volume.
     </div>
 
     In the above snippet, `desiredReplicationFactor` is updated to 2 from 1.
-   Example output:
+      Example output:
 
     <div class="co">
     cstorvolume.openebs.io/pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8 edited
@@ -2201,7 +2238,7 @@ This section provide the steps for scaling up the replica of a cStor volume.
 <h3><a class="anchor" aria-hidden="true" id="scaling-down-of-cstor-volume-replica"></a>Scaling down cStor Volume Replica</h3>
 
 
-This section prvoide the steps for scaling down the replica of a cStor volume.
+This section provide the steps for scaling down the replica of a cStor volume.
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisites-cstor-scale-down"></a>Prerequisites</h4>
 
@@ -2267,7 +2304,7 @@ This section prvoide the steps for scaling down the replica of a cStor volume.
    <div class="co">
      replicaid: 4858867E8F150C533A2CF30A5D5FD8C6
    </div>
-    
+   
    From the above output, `replicaid` of the identified cStor volume replica is `4858867E8F150C533A2CF30A5D5FD8C6`.
    
 3. Modify the corresponding cStor volume specification to remove the identified cStor volume replica and update the `desiredReplicationFactor`. The cStor volume can be edited by using the following command:
