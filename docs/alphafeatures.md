@@ -65,13 +65,13 @@ Depending on the OS, select the appropriate deployment file.
 - For Ubuntu 16.04 and CentOS:
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.8.0.yaml
+  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.9.0.yaml
   ```
 
 - For Ubuntu 18.04:
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.8.0-ubuntu-18.04.yaml
+  kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/csi-operator-1.9.0-ubuntu-18.04.yaml
   ```
 
 Verify that the OpenEBS CSI Components are installed.
@@ -116,7 +116,7 @@ From above output, `openebs-cstor-csi-controller-0`  is running and `openebs-cst
 Apply cStor operator YAML file using the following command:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cstor-operator-1.8.0.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cstor-operator-1.9.0.yaml
 ```
 
 Verify the status of CSPC operator using the following command:
@@ -516,7 +516,7 @@ The current workflow to provision CSPC pool is as follows:
 Latest OpenEBS version can be installed using the following command:
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.8.0.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.9.0.yaml
 ```
 
 Verify if OpenEBS pods are in `Running` state using the following command:
@@ -541,7 +541,7 @@ openebs-snapshot-operator-7d6dd4b77f-444zh    2/2     Running   0          81s
 
 Install CSPC operator by using the following command:
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cstor-operator-1.8.0.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cstor-operator-1.9.0.yaml
 ```
 Verify if CSPC operator is in `Running` state using the following command:
 ```
@@ -1003,7 +1003,7 @@ OpenEBS Jiva volumes can now be provisioned with CSI driver from OpenEBS 1.5 ver
 Latest OpenEBS version can be installed using the following command:
 
 ```
-kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.8.0.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.9.0.yaml
 ```
 
 Verify if OpenEBS pods are in `Running` state using the following command:
