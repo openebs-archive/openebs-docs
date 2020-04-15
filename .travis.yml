@@ -25,7 +25,7 @@ after_success:
        docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$TRAVIS_BRANCH-$COMMIT . && docker push $REPO;
     fi
  
- - if [ "$TRAVIS_BRANCH" = "1.8.0" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/openebsdocsversion;
+  - if [ "$TRAVIS_BRANCH" = "1.8.0" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/openebsdocsversion;
        docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$TRAVIS_BRANCH-$COMMIT . && docker push $REPO;
     fi
        
