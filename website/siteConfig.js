@@ -11,7 +11,7 @@ const siteConfig = {
   title: '' /* title for your website */,
   tagline: 'A website for OpenEBS Documentation',
   url: 'https://docs.openebs.io' /* your website url */,
-  baseUrl: '/' /* base url for your project */,
+  baseUrl: '/v180/' /* base url for your project */,
   projectName: 'OpenEBS',
 
   algolia: {
