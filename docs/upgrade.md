@@ -5,9 +5,9 @@ sidebar_label: Upgrade
 ---
 ------
 
-Latest stable version of OpenEBS is 1.8.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/1.8.0).  Upgrade to the latest OpenEBS 1.8.0 version is supported only from 1.0.0, 1.1.0, 1.2.0, 1.3.0, 1.4.0, 1.5.0, 1.6.0 and 1.7.0 and the steps for upgrading from these versions can be found [here](https://github.com/openebs/openebs/blob/master/k8s/upgrades/README.md).
+Latest stable version of OpenEBS is 1.9.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/1.9.0).  Upgrade to the latest OpenEBS 1.9.0 version is supported only from 1.0.0, 1.1.0, 1.2.0, 1.3.0, 1.4.0, 1.5.0, 1.6.0, 1.7.0 and 1.8.0 and the steps for upgrading from these versions can be found [here](https://github.com/openebs/openebs/blob/master/k8s/upgrades/README.md).
 
-OpenEBS v1.8 includes a critical fix (#2956) for Jiva volumes that are running in version 1.6 and 1.7. You must use these [pre-upgrade steps](https://github.com/openebs/charts/tree/master/scripts/jiva-tools) to check if your jiva volumes are impacted. If they are, please reach out to us on [OpenEBS Slack] (https://openebs-community.slack.com/messages/openebs-users/)  or [Kubernetes Slack #openebs channel](https://kubernetes.slack.com/messages/openebs/) for helping you with the upgrade.
+Note: If you are upgrading Jiva volumes that are running in version 1.6 and 1.7, you must use these [pre-upgrade steps](https://github.com/openebs/charts/tree/master/scripts/jiva-tools) to check if your jiva volumes are impacted by [#2956](https://github.com/openebs/openebs/issues/2956). If they are, please reach out to us on [OpenEBS Slack] (https://openebs-community.slack.com/messages/openebs-users/)  or [Kubernetes Slack #openebs channel](https://kubernetes.slack.com/messages/openebs/) for helping you with the upgrade.
 
 
 ## Supported upgrade paths
