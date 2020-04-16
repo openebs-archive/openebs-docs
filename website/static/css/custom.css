@@ -403,3 +403,23 @@ redoc .operation-type {
   background-color: #FEF0EB;
   border-radius: 15px;
 }
+
+/* Adding Custom CSS for Feedback section */
+#feedback-question {
+    padding-bottom: 8px;
+}
+.feedback-button {
+    float: none;
+    color: #3A5EE6;
+}
+.feedback-button:hover {
+    color: #fff;
+}
+.feedback-button__disabled, .feedback-button__disabled:hover {
+    color: #a9a9a9;
+    background-color: inherit;
+}
+.feedback-response__hidden {
+    visibility: hidden;
+    display: none;
+}
