@@ -381,25 +381,23 @@ redoc .operation-type {
   clear: both;
 }
 
-.nocopy {
-    background: #F0F0F0;
-    color: #000;
+.co {
+  margin: 20px 0;
+  padding: .5em;
+  font-size: 13px;
+  font-family: monospace, monospace;
+  white-space: pre;
+  background-color: #F0F0F0;
+  border-radius: 8px;
+  overflow-x: auto;
 }
 
-.co {
-  -webkit-column-width: 700px; /* Chrome, Safari, Opera */
-  -moz-column-width: 700px; /* Firefox */
-  column-width: 700px;
-  padding-left: 50px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: 14px;
-  font-family: monospace, monospace;
-  white-space: pre-wrap;
-  /*background-color: #f7f7f7;
-  background-color: #FCF2E8;
-  background-color: #fff5ee;
-  background-color: #fff8f3;*/
-  background-color: #FEF0EB;
-  border-radius: 15px;
+blockquote {
+  background-color: #E1F5FE !important;
 }
+
+blockquote.warning {
+  background-color: #FEF0EB !important;
+}
+
+
