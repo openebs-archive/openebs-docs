@@ -142,7 +142,7 @@ The default Storage Class is called `openebs-hostpath` and its `BasePath` is con
    The `volumeBindingMode` MUST ALWAYS be set to `WaitForFirstConsumer`. `volumeBindingMode: WaitForFirstConsumer` instructs Kubernetes to initiate the creation of PV only after Pod using PVC is scheduled to the node.
    :::
 
-2. Edit `local-hostpath-sc.yaml` and update the Storage Class `metadata.name` and `cas.openebs.io/config.BasePath` with your desired values. 
+2. Edit `local-hostpath-sc.yaml` and update with your desired values for `metadata.name` and `cas.openebs.io/config.BasePath`.
 
    :::note 
    If the `BasePath` does not exist on the node, *OpenEBS Dynamic Local PV Provisioner* will attempt to create the directory, when the first Local Volume is scheduled on to that node. You MUST ensure that the value provided for `BasePath` is a valid absolute path. 
@@ -161,19 +161,33 @@ The default Storage Class is called `openebs-hostpath` and its `BasePath` is con
 
 ## Install verification
 
-Once you have installed OpenEBS, verify that OpenEBS Local PV provisioner is running. 
+Once you have installed OpenEBS, verify that *OpenEBS Local PV provisioner* is running and Hostpath StorageClass is created. 
 
-To verify, execute the following command. Replace `-n openebs` with the namespace where you installed OpenEBS. 
+1. To verify *OpenEBS Local PV provisioner* is running, execute the following command. Replace `-n openebs` with the namespace where you installed OpenEBS. 
 
-  ```
-  $ kubectl get pods -n openebs -l openebs.io/component-name=openebs-localpv-provisioner
-  ```
+   ```
+   kubectl get pods -n openebs -l openebs.io/component-name=openebs-localpv-provisioner
+   ```
 
-The output should indicate `openebs-localpv-provisioner` pod is running. 
-<div class="co">
-  NAME                                           READY   STATUS    RESTARTS   AGE
-  openebs-localpv-provisioner-5ff697f967-nb7f4   1/1     Running   0          2m49s
-</div>
+   The output should indicate `openebs-localpv-provisioner` pod is running. 
+   <div class="co">
+   NAME                                           READY   STATUS    RESTARTS   AGE
+   openebs-localpv-provisioner-5ff697f967-nb7f4   1/1     Running   0          2m49s
+   </div>
+
+2. To verify *OpenEBS Local PV Hostpath* Storageclass is created, execute the following command. 
+
+   ```
+   kubectl get sc
+   ```
+
+   The output should indicate either the default StorageClass `openebs-hostpath` and/or custom StorageClass `local-hostpath` are displayed.
+   <div class="co">
+   NAME                        PROVISIONER                                                AGE
+   local-hostpath              openebs.io/local                                           5h26m
+   openebs-hostpath            openebs.io/local                                           6h4m
+   </div>
+
 
 ## Create a PersistentVolumeClaim
 
