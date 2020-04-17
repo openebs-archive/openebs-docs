@@ -37,9 +37,8 @@ kubectl get pod hello-local-hostpath-pod
 kubectl get pvc local-hostpath-pvc
 ```
 
-For the more detailed setup, skip to the next section.
+For a more detailed walkthrough of the setup, follow along the rest of this document.
 :::
-
 
 ## Minimum Versions
 
@@ -55,7 +54,7 @@ Setup the directory on the nodes where Local PV Hostpaths will be created. This 
 - In the case of bare-metal Kubernetes nodes, a mounted directory using the additional drive or SSD. (Example: An SSD available at `/dev/sdb`, can be formatted with Ext4 and mounted as `/mnt/openebs-local`) 
 - In the case of cloud or virtual instances, a mounted directory created from attaching an external cloud volume or virtual disk. (Example, in GKE, a Local SSD can be used which will be available at `/mnt/disk/ssd1`.)
 
-:::tip air-gapped environment
+:::note air-gapped environment
 If you are running your Kubernetes cluster in an air-gapped environment, make sure the following container images are available in your local repository.
 - quay.io/openebs/localpv-provisioner
 - quay.io/openebs/linux-utils
