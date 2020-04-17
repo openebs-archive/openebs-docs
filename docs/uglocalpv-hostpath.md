@@ -113,25 +113,11 @@ You can skip this section if you have already installed OpenEBS.
      helm install --namespace openebs --name openebs stable/openebs
      ```
 
-## Install verification
+## Create StorageClass
 
-Once you have installed OpenEBS, verify that OpenEBS Local PV provisioner is running. 
+You can skip this section if you would like to use default OpenEBS Local PV Hostpath StorageClass created by OpenEBS. 
 
-To verify, execute the following command. Replace `-n openebs` with the namespace where you installed OpenEBS. 
-
-  ```
-  $ kubectl get pods -n openebs -l openebs.io/component-name=openebs-localpv-provisioner
-  ```
-
-The output should indicate `openebs-localpv-provisioner` pod is running. 
-<div class="co">
-  NAME                                           READY   STATUS    RESTARTS   AGE
-  openebs-localpv-provisioner-5ff697f967-nb7f4   1/1     Running   0          2m49s
-</div>
-
-## (Optional) Create StorageClass
-
-You can skip this section if you would like to use default OpenEBS Local PV Hostpath StorageClass created by OpenEBS. The default Storage Class is called `openebs-hostpath` and its `BasePath` is configured as `/var/openebs/local`. 
+The default Storage Class is called `openebs-hostpath` and its `BasePath` is configured as `/var/openebs/local`. 
 
 1. To create your own StorageClass with custom `BasePath`, save the following StorageClass definition as `local-hostpath-sc.yaml`
 
@@ -156,10 +142,10 @@ You can skip this section if you would like to use default OpenEBS Local PV Host
    The `volumeBindingMode` MUST ALWAYS be set to `WaitForFirstConsumer`. `volumeBindingMode: WaitForFirstConsumer` instructs Kubernetes to initiate the creation of PV only after Pod using PVC is scheduled to the node.
    :::
 
-2. Edit `local-hostpath-sc.yaml` and update the Storage Class `name` and `BasePath` with your desired values. 
+2. Edit `local-hostpath-sc.yaml` and update the Storage Class `metadata.name` and `cas.openebs.io/config.BasePath` with your desired values. 
 
    :::note 
-   If the `BasePath` does not exist on the node, *OpenEBS Dynamic Local PV Provisioner* will attempt to create the directory, when the first Local Volume is scheduled on to that node. You MUST ensure that the value provided for `BasePath` is the absolute path and is valid. 
+   If the `BasePath` does not exist on the node, *OpenEBS Dynamic Local PV Provisioner* will attempt to create the directory, when the first Local Volume is scheduled on to that node. You MUST ensure that the value provided for `BasePath` is a valid absolute path. 
    :::
 
 3. Create OpenEBS Local PV Hostpath Storage Class. 
@@ -172,6 +158,22 @@ You can skip this section if you would like to use default OpenEBS Local PV Host
    kubectl get sc local-hostpath -o yaml
    ```
 
+
+## Install verification
+
+Once you have installed OpenEBS, verify that OpenEBS Local PV provisioner is running. 
+
+To verify, execute the following command. Replace `-n openebs` with the namespace where you installed OpenEBS. 
+
+  ```
+  $ kubectl get pods -n openebs -l openebs.io/component-name=openebs-localpv-provisioner
+  ```
+
+The output should indicate `openebs-localpv-provisioner` pod is running. 
+<div class="co">
+  NAME                                           READY   STATUS    RESTARTS   AGE
+  openebs-localpv-provisioner-5ff697f967-nb7f4   1/1     Running   0          2m49s
+</div>
 
 ## Create a PersistentVolumeClaim
 
