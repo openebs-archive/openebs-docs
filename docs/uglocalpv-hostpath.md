@@ -22,15 +22,21 @@ This guide will help you to set up and use OpenEBS Local Persistent Volumes back
 
 OpenEBS Local PV uses volume topology aware pod scheduling enhancements introduced by [Kubernetes Local Volumes](https://kubernetes.io/docs/concepts/storage/volumes/#local)
 
-:::tip QUICKSTART
-QuickStart
+<br>
 
-If you have OpenEBS already installed, you can create an example pod that persists to *OpenEBS Local PV Hostpath* with following kubectl commands. 
+:::tip QUICKSTART
+If you have OpenEBS already installed, you can create an example pod that persists data to *OpenEBS Local PV Hostpath* with following kubectl commands. 
 ```
 kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-hostpath-pvc.yaml
 kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-hostpath-pod.yaml
-kubectl get pod hello-local-hostpath-pod
 ```
+
+Verify pod is running and OpenEBS Local PV Hostpath is created using the following commands. 
+```
+kubectl get pod hello-local-hostpath-pod
+kubectl get pvc local-hostpath-pvc
+```
+
 For the more detailed setup, skip to the next section.
 :::
 
