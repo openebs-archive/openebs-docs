@@ -77,19 +77,24 @@ You can skip this section if you have already installed OpenEBS.
 *OpenEBS Dynamic Local Provisioner* offers some configurable parameters that can be applied during the OpenEBS Installation. Some key configurable parameters available for OpenEBS Dynamic Local Provisioner are:
 
 - Docker repository Local PV provisioner container image.
+  <div class="co">
   - *Default value:* `quay.io/openebs/provisioner-localpv`
   - *YAML specification:* `spec.image` on Deployment(`localpv-provisioner`)
   - *Helm key:* `localprovisioner.image`
+  </div>
 
-- Directory on the node where Local PV volumes will be created
-  - *Default value:* `/var/openebs/local`
-  - *YAML specification:* ENV(`OPENEBS_IO_LOCALPV_HOSTPATH_DIR`) on Deployment(`maya-apiserver`)
-  - *Helm key:* `localprovisioner.basePath`
+  | Parameter Description | Directory on the node where Local PV volumes will be created
+  | Default value | `/var/openebs/local`
+  | YAML specification | ENV(`OPENEBS_IO_LOCALPV_HOSTPATH_DIR`) on Deployment(`maya-apiserver`)
+  | Helm key | `localprovisioner.basePath`
   
 - Docker repository for Helper pod container image. *OpenEBS Dynamic Local Provisioner* uses a helper pod to create and delete volume directories.
-  - *Default value:* `quay.io/openebs/linux-utils` 
-  - *YAML specification:* ENV(`OPENEBS_IO_HELPER_IMAGE`) on Deployment(`localpv-provisioner`) 
-  - *Helm key:* `helper.image`
+
+  ~~~
+  Default value: quay.io/openebs/linux-utils
+  YAML specification: Environment Variable (OPENEBS_IO_HELPER_IMAGE) on Deployment(localpv-provisioner) 
+  Helm key: helper.image
+  ~~~
 
 You can proceed with your preferred mode of installation. 
 - Install using kubectl
