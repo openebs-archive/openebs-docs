@@ -18,7 +18,7 @@ If you are on `Kubernetes Slack`, please join the <a href="https://kubernetes.sl
 
 ## Blogs
 
-Community blogs are available at [https://blog.openebs.io](https://blog.openebs.io). 
+Community blogs are available at [https://openebs.io/blog/](https://openebs.io/blog/). 
 
 
 

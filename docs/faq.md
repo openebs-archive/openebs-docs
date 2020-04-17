@@ -421,7 +421,7 @@ iscsiadm -m node -T <target> -p ip:port -o update -n node.session.timeo.replacem
 
 Verify the configured value by running “iscsiadm -m session -P 3”  and check "Recovery Timeout" value under "Timeouts". It should be configured as 300.
 
-You may notice the change in the “Attached scsi disk” value. This causes volume to get unmounted and thus volume need to be remounted. Detailed steps for remounting volume are mentioned [here](https://blog.openebs.io/keeping-openebs-volumes-in-rw-state-during-node-down-scenarios-f2b54df94a32).
+You may notice the change in the “Attached scsi disk” value. This causes volume to get unmounted and thus volume need to be remounted. Detailed steps for remounting volume are mentioned [here](https://openebs.io/blog/keeping-openebs-volumes-in-rw-state-during-node-down-scenarios/).
 
 
 
