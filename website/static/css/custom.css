@@ -409,15 +409,36 @@ redoc .operation-type {
     padding-bottom: 8px;
 }
 .feedback-button {
-    float: none;
-    color: #3A5EE6;
+    box-sizing: border-box;
+    min-width: 0px;
+    -webkit-appearance: none;
+    display: inline-block;
+    text-align: center;
+    line-height: inherit;
+    font-size: inherit;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: white;
+    background-color: #F26D00;
+    cursor: pointer;
+    width: 100px;
+    margin: 0px;
+    text-decoration: none;
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 0px;
+    margin-right: 16px;
 }
 .feedback-button:hover {
     color: #fff;
 }
 .feedback-button__disabled, .feedback-button__disabled:hover {
     color: #a9a9a9;
-    background-color: inherit;
+    background-color: #EFEFF2;
 }
 .feedback-response__hidden {
     visibility: hidden;
