@@ -381,6 +381,11 @@ redoc .operation-type {
   clear: both;
 }
 
+.nocopy {
+  background: #F0F0F0;
+  color: #000;
+}
+
 .co {
   margin: 20px 0;
   padding: .5em;
@@ -391,13 +396,4 @@ redoc .operation-type {
   border-radius: 8px;
   overflow-x: auto;
 }
-
-blockquote {
-  background-color: #E1F5FE !important;
-}
-
-blockquote.warning {
-  background-color: #FEF0EB !important;
-}
-
 
