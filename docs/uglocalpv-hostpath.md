@@ -78,23 +78,22 @@ You can skip this section if you have already installed OpenEBS.
 
 - Docker repository Local PV provisioner container image.
   <div class="co">
-  - *Default value:* `quay.io/openebs/provisioner-localpv`
-  - *YAML specification:* `spec.image` on Deployment(`localpv-provisioner`)
-  - *Helm key:* `localprovisioner.image`
+  Default value: quay.io/openebs/provisioner-localpv
+  YAML specification: spec.image on Deployment(localpv-provisioner)
+  Helm key: localprovisioner.image
   </div>
-
-  | Parameter Description | Directory on the node where Local PV volumes will be created
-  | Default value | `/var/openebs/local`
-  | YAML specification | ENV(`OPENEBS_IO_LOCALPV_HOSTPATH_DIR`) on Deployment(`maya-apiserver`)
-  | Helm key | `localprovisioner.basePath`
-  
+- Directory on the node where Local PV volumes will be created
+  <div class="co">
+  Default value: /var/openebs/local
+  YAML specification: Environment Variable (OPENEBS_IO_LOCALPV_HOSTPATH_DIR) on Deployment(maya-apiserver)
+  Helm key: localprovisioner.basePath
+  </div>
 - Docker repository for Helper pod container image. *OpenEBS Dynamic Local Provisioner* uses a helper pod to create and delete volume directories.
-
-  ~~~
+  <div class="co">
   Default value: quay.io/openebs/linux-utils
   YAML specification: Environment Variable (OPENEBS_IO_HELPER_IMAGE) on Deployment(localpv-provisioner) 
   Helm key: helper.image
-  ~~~
+  </div>
 
 You can proceed with your preferred mode of installation. 
 - Install using kubectl
