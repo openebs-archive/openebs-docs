@@ -56,6 +56,10 @@ const siteConfig = {
   stylesheets: [
     '/css/code-blocks-buttons.css',
   ],
+  markdownPlugins: [
+    // Highlight admonitions.
+    require('remarkable-admonitions')({ icon: 'svg-inline' })
+  ],
 };
 
 module.exports = siteConfig;
