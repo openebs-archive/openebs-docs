@@ -13,7 +13,7 @@ sidebar_label: Local PV Hostpath
 
 This guide will help you to set up and use OpenEBS Local Persistent Volumes backed by Hostpath. 
 
-*OpenEBS Dynamic Local PV provisioner* can create Kubernetes Local Persistent Volumes using an unique Hostpath (directory) on the node to persist data, hereafter referred as OpenEBS Local PV Hostpath volumes. 
+*OpenEBS Dynamic Local PV provisioner* can create Kubernetes Local Persistent Volumes using a unique Hostpath (directory) on the node to persist data, hereafter referred to as *OpenEBS Local PV Hostpath* volumes. 
 
 *OpenEBS Local PV Hostpath* volumes have the following advantages compared to native Kubernetes hostpath volumes. 
 - OpenEBS Local PV Hostpath allows your applications to access hostpath via StorageClass, PVC, and PV. This provides you the flexibility to change the PV providers without having to redesign your Application YAML. 
@@ -22,6 +22,17 @@ This guide will help you to set up and use OpenEBS Local Persistent Volumes back
 
 OpenEBS Local PV uses volume topology aware pod scheduling enhancements introduced by [Kubernetes Local Volumes](https://kubernetes.io/docs/concepts/storage/volumes/#local)
 
+:::tip QUICKSTART
+QuickStart
+
+If you have OpenEBS already installed, you can create an example pod that persists to *OpenEBS Local PV Hostpath* with following kubectl commands. 
+```
+kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-hostpath-pvc.yaml
+kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-hostpath-pod.yaml
+kubectl get pod hello-local-hostpath-pod
+```
+For the more detailed setup, skip to the next section.
+:::
 
 
 ## Minimum Versions
@@ -31,18 +42,21 @@ OpenEBS Local PV uses volume topology aware pod scheduling enhancements introduc
 
 ## Prerequisites
 
-Setup the directory on the nodes where Local PV Hostpaths will be created. This location will be referred to as `BasePath`. The default location is `/var/openebs/local`.  
+Setup the directory on the nodes where Local PV Hostpaths will be created. This directory will be referred to as `BasePath`. The default location is `/var/openebs/local`.  
 
 `BasePath` can be any of the following:
 - A directory on root disk (or `os disk`). (Example: `/var/openebs/local`). 
-- A directory on a mounted data disk. Typically data disk is either an additional SSD/Drive attached to the node in case of Baremetal Kubernetes nodes or Cloud Volumes, Virtual Disks in case of Cloud or Virtual Machines respectively. When using data disks, you are required to have the disk formatted and mounted. You can use any filesystem like ext3, xfs and so forth. (Example: `/dev/sdb` formatted with `ext4` mounted as `/mnt/openebs-local`).
+- In the case of bare-metal Kubernetes nodes, a mounted directory using the additional drive or SSD. (Example: An SSD available at `/dev/sdb`, can be formatted with Ext4 and mounted as `/mnt/openebs-local`) 
+- In the case of cloud or virtual instances, a mounted directory created from attaching an external cloud volume or virtual disk. (Example, in GKE, a Local SSD can be used which will be available at `/mnt/disk/ssd1`.)
 
+:::tip air-gapped environment
 If you are running your Kubernetes cluster in an air-gapped environment, make sure the following container images are available in your local repository.
 - quay.io/openebs/localpv-provisioner
 - quay.io/openebs/linux-utils
+:::
 
-:::note For *Rancher RKE cluster*
-You must configure kubelet service with `extra_binds` for `BasePath`. If your `BasePath` is the default directory `/var/openebs/local`, then extra_binds section should have the following details:
+:::note Rancher RKE cluster
+If you are using the Rancher RKE cluster, you must configure kubelet service with `extra_binds` for `BasePath`. If your `BasePath` is the default directory `/var/openebs/local`, then extra_binds section should have the following details:
 ```
 services:
   kubelet:
@@ -51,33 +65,26 @@ services:
 ```
 :::
 
-<br>
-
 ## Install 
 
 You can skip this section if you have already installed OpenEBS.
 
-OpenEBS Dynamic Local Provisioner offers some configurable parameters that can be applied during the OpenEBS Installation.
+*OpenEBS Dynamic Local Provisioner* offers some configurable parameters that can be applied during the OpenEBS Installation. Some key configurable parameters available for OpenEBS Dynamic Local Provisioner are:
 
-OpenEBS can be installed either via `kubectl` or `helm`.
-- When using `kubectl` to install, the configurable parameters can be set by editing the Environment variables in the YAML file.
-- When using `helm` to install, the configurable parameters can be set either by using `values.yaml` file or by specifying `--set key=value` to the `helm install` command.
-
-Some key configurable parameters available for OpenEBS Dynamic Local Provisioner are:
 - Docker repository Local PV provisioner container image.
-  - Default value: `quay.io/openebs/provisioner-localpv`
-  - YAML specification: `spec.image` on Deployment(`localpv-provisioner`)
-  - Helm key: `localprovisioner.image`
+  - *Default value:* `quay.io/openebs/provisioner-localpv`
+  - *YAML specification:* `spec.image` on Deployment(`localpv-provisioner`)
+  - *Helm key:* `localprovisioner.image`
 
 - Directory on the node where Local PV volumes will be created
-  - Default value: `/var/openebs/local`
-  - YAML specification: ENV(`OPENEBS_IO_LOCALPV_HOSTPATH_DIR`) on Deployment(`maya-apiserver`)
-  - Helm key: `localprovisioner.basePath`
+  - *Default value:* `/var/openebs/local`
+  - *YAML specification:* ENV(`OPENEBS_IO_LOCALPV_HOSTPATH_DIR`) on Deployment(`maya-apiserver`)
+  - *Helm key:* `localprovisioner.basePath`
   
-- Docker repository for Helper pod container image. The helper pod is used to create and delete volume directories.
-  - Default value: `quay.io/openebs/linux-utils` 
-  - YAML specification: ENV(`OPENEBS_IO_HELPER_IMAGE`) on Deployment(`localpv-provisioner`) 
-  - Helm key: `helper.image`
+- Docker repository for Helper pod container image. *OpenEBS Dynamic Local Provisioner* uses a helper pod to create and delete volume directories.
+  - *Default value:* `quay.io/openebs/linux-utils` 
+  - *YAML specification:* ENV(`OPENEBS_IO_HELPER_IMAGE`) on Deployment(`localpv-provisioner`) 
+  - *Helm key:* `helper.image`
 
 You can proceed with your preferred mode of installation. 
 - Install using kubectl
@@ -112,44 +119,47 @@ The output should indicate `openebs-localpv-provisioner` pod is running.
   openebs-localpv-provisioner-5ff697f967-nb7f4   1/1     Running   0          2m49s
 </div>
 
-## Create StorageClass
+## (Optional) Create StorageClass
 
-You can skip this section, if you would like to use default OpenEBS Local PV Hostpath StorageClass created by OpenEBS. The default Storage Class is called `openebs-hostpath` and its `BasePath` is configured as `/var/openebs/local`. 
+You can skip this section if you would like to use default OpenEBS Local PV Hostpath StorageClass created by OpenEBS. The default Storage Class is called `openebs-hostpath` and its `BasePath` is configured as `/var/openebs/local`. 
 
-1. To create your own StorageClass with custom `BasePath`, save the following StorageClass definition as `custom-local-sc.yaml`
+1. To create your own StorageClass with custom `BasePath`, save the following StorageClass definition as `local-hostpath-sc.yaml`
 
    ```
    apiVersion: storage.k8s.io/v1
    kind: StorageClass
    metadata:
-     name: custom-local-hostpath
+     name: local-hostpath
      annotations:
        openebs.io/cas-type: local
        cas.openebs.io/config: |
          - name: StorageType
            value: hostpath
          - name: BasePath
-           value: /var/openebs/custom
+           value: /var/local-hostpath
    provisioner: openebs.io/local
    reclaimPolicy: Delete
    volumeBindingMode: WaitForFirstConsumer
    ```
-   > **NOTE:** The `volumeBindingMode` MUST be set as `WaitForFirstConsumer`. `volumeBindingMode: WaitForFirstConsumer` instructs Kubernetes to initiate creation of PV only after Pod using PVC is scheduled to node.</p>
 
    :::note 
-   The `volumeBindingMode` MUST be set as `WaitForFirstConsumer`. `volumeBindingMode: WaitForFirstConsumer` instructs Kubernetes to initiate creation of PV only after Pod using PVC is scheduled to node.</p>
+   The `volumeBindingMode` MUST ALWAYS be set to `WaitForFirstConsumer`. `volumeBindingMode: WaitForFirstConsumer` instructs Kubernetes to initiate the creation of PV only after Pod using PVC is scheduled to the node.
    :::
 
-2. Edit `custom-local-sc.yaml` and update the Storage Class `name` and `BasePath` with your desired values. 
+2. Edit `local-hostpath-sc.yaml` and update the Storage Class `name` and `BasePath` with your desired values. 
+
+   :::note 
+   If the `BasePath` does not exist on the node, *OpenEBS Dynamic Local PV Provisioner* will attempt to create the directory, when the first Local Volume is scheduled on to that node. You MUST ensure that the value provided for `BasePath` is the absolute path and is valid. 
+   :::
 
 3. Create OpenEBS Local PV Hostpath Storage Class. 
    ```
-   kubectl apply -f custom-local-sc.yaml
+   kubectl apply -f local-hostpath-sc.yaml
    ```
 
 4. Verify that the StorageClass is successfully created. 
    ```
-   kubectl get sc custom-local-hostpath -o yaml
+   kubectl get sc local-hostpath -o yaml
    ```
 
 
