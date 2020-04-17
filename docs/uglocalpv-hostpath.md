@@ -7,10 +7,6 @@ sidebar_label: Local PV Hostpath
 
 <br>
 
-<img src="/docs/assets/svg/4-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
-
-<br>
-
 This guide will help you to set up and use OpenEBS Local Persistent Volumes backed by Hostpath. 
 
 *OpenEBS Dynamic Local PV provisioner* can create Kubernetes Local Persistent Volumes using a unique Hostpath (directory) on the node to persist data, hereafter referred to as *OpenEBS Local PV Hostpath* volumes. 
@@ -31,7 +27,7 @@ kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-
 kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-hostpath-pod.yaml
 ```
 
-Verify pod is running and OpenEBS Local PV Hostpath is created using the following commands. 
+Verify using below kubectl commands that example pod is running and is using a OpenEBS Local PV Hostpath.
 ```
 kubectl get pod hello-local-hostpath-pod
 kubectl get pvc local-hostpath-pvc
@@ -74,43 +70,48 @@ services:
 
 You can skip this section if you have already installed OpenEBS.
 
-*OpenEBS Dynamic Local Provisioner* offers some configurable parameters that can be applied during the OpenEBS Installation. Some key configurable parameters available for OpenEBS Dynamic Local Provisioner are:
+1. Prepare to install OpenEBS by providing custom values for configurable parameters. 
 
-- Docker repository Local PV provisioner container image.
-  <div class="co">
-  Default value: quay.io/openebs/provisioner-localpv
-  YAML specification: spec.image on Deployment(localpv-provisioner)
-  Helm key: localprovisioner.image
-  </div>
-- Directory on the node where Local PV volumes will be created
-  <div class="co">
-  Default value: /var/openebs/local
-  YAML specification: Environment Variable (OPENEBS_IO_LOCALPV_HOSTPATH_DIR) on Deployment(maya-apiserver)
-  Helm key: localprovisioner.basePath
-  </div>
-- Docker repository for Helper pod container image. *OpenEBS Dynamic Local Provisioner* uses a helper pod to create and delete volume directories.
-  <div class="co">
-  Default value: quay.io/openebs/linux-utils
-  YAML specification: Environment Variable (OPENEBS_IO_HELPER_IMAGE) on Deployment(localpv-provisioner) 
-  Helm key: helper.image
-  </div>
+   *OpenEBS Dynamic Local Provisioner* offers some configurable parameters that can be applied during the OpenEBS Installation. Some key configurable parameters available for OpenEBS Dynamic Local Provisioner are:
 
-You can proceed with your preferred mode of installation. 
-- Install using kubectl
-  
-  If you would like to change the default parameters, download the `openebs-operator.yaml` and make the necessary changes before applying. 
-  ```
-  kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
-  ```
+   - The location of the *OpenEBS Dynamic Local PV provisioner* container image.
+     <div class="co">
+     Default value: quay.io/openebs/provisioner-localpv
+     YAML specification: spec.image on Deployment(localpv-provisioner)
+     Helm key: localprovisioner.image
+     </div>
 
-- Install using helm stable charts
+   - The location of the *Provisioner Helper* container image. *OpenEBS Dynamic Local Provisioner* create a *Provisioner Helper* pod to create and delete hostpath directories on the nodes.
+     <div class="co">
+     Default value: quay.io/openebs/linux-utils
+     YAML specification: Environment Variable (OPENEBS_IO_HELPER_IMAGE) on Deployment(localpv-provisioner) 
+     Helm key: helper.image
+     </div>
+
+   - The absolute path on the node where the Hostpath directory of a Local PV Volume will be created.
+     <div class="co">
+     Default value: /var/openebs/local
+     YAML specification: Environment Variable (OPENEBS_IO_LOCALPV_HOSTPATH_DIR) on Deployment(maya-apiserver)
+     Helm key: localprovisioner.basePath
+     </div>
+
+2. You can proceed to install OpenEBS either using kubectl or helm using the steps below. 
+
+   - Install using kubectl
   
-  If you would like to change the default parameters, Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
+     If you would like to change the default values for any of the configurable parameters mentioned in the previous step, download the `openebs-operator.yaml` and make the necessary changes before applying. 
+     ```
+     kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
+     ```
+
+   - Install using helm stable charts
   
-  ```
-  helm repo update
-  helm install --namespace openebs --name openebs stable/openebs
-  ```
+     If you would like to change the default values for any of the configurable parameters mentioned in the previous step, specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
+  
+     ```
+     helm repo update
+     helm install --namespace openebs --name openebs stable/openebs
+     ```
 
 ## Install verification
 
