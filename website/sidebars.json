@@ -22,19 +22,14 @@
 	"installation", 
 	"ugndm", 
 	"ugcstor", 
-	"jivaguide", 
-	{
-		"type": "subcategory",
-		"label": "Local PV Hostpath",
-		"ids": [
-			"uglocalpv-hostpath"
-		]
-	},
+	"jivaguide",
+	"uglocalpv-hostpath",
 	"uglocalpv", 
 	"mayactl", 
 	"upgrade", 
 	"uninstall" 
 	],
+    
     "Stateful Applications": [
 	"mysql", 
 	"prometheus", 
