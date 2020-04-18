@@ -23,7 +23,13 @@
 	"ugndm", 
 	"ugcstor", 
 	"jivaguide", 
-	"uglocalpv-hostpath", 
+	{
+		"type": "subcategory",
+		"label": "Local PV Hostpath",
+		"ids": [
+			"uglocalpv-hostpath"
+		]
+	},
 	"uglocalpv", 
 	"mayactl", 
 	"upgrade", 
