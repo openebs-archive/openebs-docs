@@ -382,24 +382,58 @@ redoc .operation-type {
 }
 
 .nocopy {
-    background: #F0F0F0;
-    color: #000;
+  background: #F0F0F0;
+  color: #000;
 }
 
 .co {
-  -webkit-column-width: 700px; /* Chrome, Safari, Opera */
-  -moz-column-width: 700px; /* Firefox */
-  column-width: 700px;
-  padding-left: 50px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: 14px;
+  margin: 20px 0;
+  padding: .5em;
+  font-size: 13px;
   font-family: monospace, monospace;
-  white-space: pre-wrap;
-  /*background-color: #f7f7f7;
-  background-color: #FCF2E8;
-  background-color: #fff5ee;
-  background-color: #fff8f3;*/
-  background-color: #FEF0EB;
-  border-radius: 15px;
+  white-space: pre;
+  background-color: #F0F0F0;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+/* Adding Custom CSS for Feedback section */
+#feedback-question {
+    padding-bottom: 8px;
+}
+.feedback-button {
+    box-sizing: border-box;
+    min-width: 0px;
+    -webkit-appearance: none;
+    display: inline-block;
+    text-align: center;
+    line-height: inherit;
+    font-size: inherit;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: white;
+    background-color: #F26D00;
+    cursor: pointer;
+    width: 100px;
+    margin: 0px;
+    text-decoration: none;
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 0px;
+    margin-right: 16px;
+}
+.feedback-button:hover {
+    color: #fff;
+}
+.feedback-button__disabled, .feedback-button__disabled:hover {
+    color: #a9a9a9;
+    background-color: #EFEFF2;
+}
+.feedback-response__hidden {
+    visibility: hidden;
+    display: none;
 }
