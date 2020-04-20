@@ -219,7 +219,7 @@ You should specify the correct `cstorPoolCluster` name from your cluster and spe
 
 **Note:** The `replicaCount` should be less than or equal to the max pools available.
 
-Sample StorageClass YAML spec can be found in [github repo](https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/sc.yaml). 
+Sample StorageClass YAML spec can be found in [github repo](https://raw.githubusercontent.com/openebs/cstor-csi/v1.9.x/examples/csi-storageclass.yaml). 
 
 Apply the above sample Storage Class YAML using the following command:
 
@@ -250,7 +250,7 @@ The StorageClass `openebs-csi-cstor-disk` is created successfully.
 Run your application by specifying the above created StorageClass for creating the PVC. Sample application YAML can be downloaded using the following command:
 
 ```
-wget https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/busybox-csi-cstor-sparse.yaml
+wget https://raw.githubusercontent.com/openebs/cstor-csi/v1.9.x/examples/busybox-csi-cstor-sparse.yaml
 ```
 
 Modify the YAML spec with required PVC storage size, storageClassName. In this example, `storageClassName` is updated with `openebs-csi-cstor-disk`. 
@@ -410,7 +410,7 @@ The following section will give the steps to take snapshot and clone the cStor v
    ```
 2. Create a snapshot class pointing to cStor CSI driver. The following command will create a snapshot class pointing to cStor CSI driver:
    ```
-   kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/snapshot-class.yaml
+   kubectl apply -f https://raw.githubusercontent.com/openebs/cstor-csi/v1.9.x/deploy/snapshot-class.yaml
    ```
    Verify if snapshot class is created successfully using the following command:
    ```
@@ -423,7 +423,7 @@ The following section will give the steps to take snapshot and clone the cStor v
    ```
 3. Get the YAML for snapshot creation of a PVC using the following command:
    ```
-   wget https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/snapshot.yaml
+   wget https://github.com/openebs/cstor-csi/blob/v1.9.x/examples/csi-snapshot.yaml
    ```
    In this example, downloaded file is saved as `snapshot.yaml`.
 4. Edit the snapshot.yaml which is created in previous step to update:
@@ -436,7 +436,7 @@ The following section will give the steps to take snapshot and clone the cStor v
 
 5. Apply the modified snapshot YAML using the following command:
    ```
-   kubectl apply -f snapshot.yaml
+   kubectl apply -f csi-snapshot.yaml
    ```
    Verify if the snapshot has been created successfully using the following command:
    ```
@@ -451,9 +451,9 @@ The following section will give the steps to take snapshot and clone the cStor v
    
 6. Now, let's create clone volume using the above snapshot. Get the PVC YAML spec for creating the clone volume from the given snapshot.
    ```
-   wget https://raw.githubusercontent.com/openebs/cstor-csi/master/deploy/pvc-clone.yaml
+   wget https://github.com/openebs/cstor-csi/blob/v1.9.x/examples/csi-pvc-clone.yaml
    ```
-   The downloaded file is saved as `pvc-clone.yaml`.
+   The downloaded file is saved as `csi-pvc-clone.yaml`.
 
 7. Edit the downloaded clone PVC YAML spec to update:
    
@@ -465,7 +465,7 @@ The following section will give the steps to take snapshot and clone the cStor v
 8. Run the following command with the modified clone PVC YAML to create a cloned PVC.
 
    ```
-   kubectl apply -f pvc-clone.yaml
+   kubectl apply -f csi-pvc-clone.yaml
    ```
    
 9. Verify the status of new cloned PVC and PV using the following command:
