@@ -4552,6 +4552,10 @@ regjsparser@^0.6.0:
   dependencies:
     jsesc "~0.5.0"
 
+remarkable-admonitions@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/remarkable-admonitions/-/remarkable-admonitions-0.2.2.tgz#8765f9ec66be4f4c651a4e1cfb559dd7f920819c"
+
 remarkable@^1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/remarkable/-/remarkable-1.7.1.tgz#aaca4972100b66a642a63a1021ca4bac1be3bff6"
@@ -5076,8 +5080,8 @@ string_decoder@~1.1.1:
     safe-buffer "~5.1.0"
 
 stringstream@~0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/stringstream/-/stringstream-0.0.5.tgz#4e484cd4de5a0bbbee18e46307710a8a81621878"
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/stringstream/-/stringstream-0.0.6.tgz#7880225b0d4ad10e30927d167a1d6f2fd3b33a72"
 
 strip-ansi@3.0.1, strip-ansi@^3.0.0:
   version "3.0.1"
