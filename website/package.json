@@ -12,11 +12,11 @@
     "docusaurus": "^1.0.12"
   },
   "dependencies": {
-    "extend":">=3.0.2",
-    "lodash":">=4.17.13",
     "cryptiles": "^4.1.2",
+    "extend": ">=3.0.2",
     "hawk": "^7.0.7",
+    "lodash": ">=4.17.13",
     "macaddress": "^0.2.9",
-    "remarkable-admonitions": "^0.2.1"
+    "remarkable-admonitions": "^0.2.2"
   }
 }
