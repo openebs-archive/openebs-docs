@@ -61,7 +61,7 @@ class Footer extends React.Component {
            <div>
              <a href="https://mayadata.io" target="_blank">
              <img
-                src={`https://openebs.io/assets/images/mayadata.svg`}
+                src={`${this.props.config.baseUrl}docs/assets/mayadata-primary.svg`}
                 alt="mayadata.io"
                 width="130"
                 height="110"
@@ -69,7 +69,7 @@ class Footer extends React.Component {
             </a>
             </div>
 	  <div>
-		<a href="https://mayaonline.io" target="_blank">Get OpenEBS support through MayaOnline</a>
+		<a href="https://director.mayadata.io" target="_blank">Get OpenEBS support through Director</a>
           </div>
           </div>
         </section>
