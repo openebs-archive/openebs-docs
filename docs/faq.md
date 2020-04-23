@@ -40,6 +40,8 @@ sidebar_label: FAQs
 
 [Why NDM listens on host network?](#why-ndm-listens-on-host-network)
 
+[How to handle replicas with slow disks or slow connectivity in case of cStor volumes?](#slow-replicas-in-cstor-volumes)
+
 <br>
 
 ## Data Protection
@@ -332,6 +334,18 @@ The customized parameters set on default OpenEBS StorageClasses will not persist
 
 NDM uses `udev` to monitor dynamic disk attach and detach events. `udev` listens on netlink socket of the host system to get those events. A container requires host network access so that it can listen on the socket. Therefore NDM requires host network access for the `udev` running inside the container to listen those disk related events. 
 
+
+<h3><a class="anchor" aria-hidden="true" id="slow-replicas-in-cstor-volume"></a>How to handle replicas with slow disks or slow connectivity in case of cStor volumes?</h3>
+
+
+CStor target pod disconnects a replica if IO response is not received from a replica within 60 seconds. This can happen due to slow disks in cStor pools or slow connectivity between target pod and cStor pool pods. In order to allow tuning of IO wait time from its default value of 60 seconds, there is an environment variable IO_MAX_WAIT_TIME in `cstor-istgt` container of target pod.
+Add below kind of configuration in target pod deployment under `env` section of `cstor-istgt` container:
+```
+            env:
+            - name: IO_MAX_WAIT_TIME
+              value: 120
+```
+Please note that target pod gets restarts which can impact ongoing IOs.
 
 <hr>
 <br>
