@@ -15,7 +15,7 @@ Additional details on the Docusaurus project can be found [here](https://docusau
 
 ```bash
 sudo apt-get install software-properties-common
-curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
 ```
 
 ### Get the latest Node.js package

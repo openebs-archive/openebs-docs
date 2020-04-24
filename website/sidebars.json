@@ -29,7 +29,6 @@
 	"upgrade", 
 	"uninstall" 
 	],
-    
     "Stateful Applications": [
 	"mysql", 
 	"prometheus", 
