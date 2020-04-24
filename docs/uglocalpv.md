@@ -47,542 +47,275 @@ For a more detailed walkthrough of the setup, follow along the rest of this docu
 - Kubernetes 1.12 or higher is required
 - OpenEBS 1.0 or higher is required.
 
+## Create a PersistentVolumeClaim
+
+The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolumeClaims to request Device backed Local PV from *OpenEBS Dynamic Local PV provisioner*.
+
+1. Here is the configuration file for the PersistentVolumeClaim. Save the following PersistentVolumeClaim definition as `local-device-pvc.yaml`
+
+   ```
+   kind: PersistentVolumeClaim
+   apiVersion: v1
+   metadata:
+     name: local-device-pvc
+   spec:
+     storageClassName: openebs-device
+     accessModes:
+       - ReadWriteOnce
+     resources:
+       requests:
+         storage: 5G
+   ```
+
+2. Create the PersistentVolumeClaim
+
+   ```
+   kubectl apply -f local-device-pvc.yaml
+   ```
+
+3. Look at the PersistentVolumeClaim:
+   
+   ```
+   kubectl get pvc local-device-pvc
+   ```
+
+   The output shows that the `STATUS` is `Pending`. This means PVC has not yet been used by an application pod. The next step is to create a Pod that uses your PersistentVolumeClaim as a volume.
+
+   <div class="co">
+   NAME               STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS     AGE
+   local-device-pvc   Pending                                      openebs-device   31s
+   </div>
+
+## Create Pod to consume OpenEBS Local PV backed by Block Device
+
+1. Here is the configuration file for the Pod that uses Local PV. Save the following Pod definition to `local-device-pod.yaml`.
+
+   ```
+   apiVersion: v1
+   kind: Pod
+   metadata:
+     name: hello-local-device-pod
+   spec:
+     volumes:
+     - name: local-storage
+       persistentVolumeClaim:
+         claimName: local-device-pvc
+     containers:
+     - name: hello-container
+       image: busybox
+       command:
+          - sh
+          - -c
+          - 'echo "Hello from OpenEBS Local PV." >> /mnt/store/greet.txt; tail -f /dev/null;'
+       volumeMounts:
+       - mountPath: /mnt/store
+         name: local-storage
+   ```
+
+2. Create the Pod:
+
+   ```
+   kubectl apply -f local-device-pod.yaml
+   ```
+
+3. Verify that the container in the Pod is running;
+
+   ```
+   kubectl get pod hello-local-device-pod
+   ```
+
+4. Verify that the container is using the Local PV Hostpath 
+   ```
+   kubectl describe pod hello-local-device-pod
+   ```
+
+   The output shows that the Pod is running on `Node: gke-kmova-helm-default-pool-3a63aff5-1tmf` and using the peristent volume provided by `local-describe-pvc`.
+
+   <div class="co">
+   Name:         hello-local-device-pod
+   Namespace:    default
+   Priority:     0
+   Node:         gke-kmova-helm-default-pool-92abeacf-89nd/10.128.0.16
+   Start Time:   Thu, 16 Apr 2020 17:56:04 +0000  
+   ...  
+   Volumes:
+     local-storage:
+       Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+       ClaimName:  local-device-pvc
+       ReadOnly:   false
+   ...
+   </div>
+
+5. Look at the PersistentVolumeClaim again to see the details about the dynamically provisioned Local PersistentVolume
+   ```
+   kubectl get pvc local-device-pvc
+   ```
+
+   The output shows that the `STATUS` is `Bound`. A new Persistent Volume `pvc-79d25095-eb1f-4028-9843-7824cb82f07f` has been created. 
+
+   <div class="co">
+   NAME               STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS     AGE
+   local-device-pvc   Bound    pvc-79d25095-eb1f-4028-9843-7824cb82f07f   5G         RWO            openebs-device   5m56s
+   </div>
+
+6. Look at the PersistentVolume details to see where the data is stored. Replace the PVC name with the one that was displayed in the previous step. 
+   ```
+   kubectl get pv pvc-79d25095-eb1f-4028-9843-7824cb82f07f -o yaml
+   ```
+   The output shows that the PV was provisioned in response to PVC request  `spec.claimRef.name: local-device-pvc`. 
+
+   <div class="co">
+   apiVersion: v1
+   kind: PersistentVolume
+   metadata:
+     name: pvc-79d25095-eb1f-4028-9843-7824cb82f07f
+     annotations:
+       pv.kubernetes.io/provisioned-by: openebs.io/local
+     ...
+   spec:
+     accessModes:
+       - ReadWriteOnce
+     capacity:
+       storage: 5G
+     claimRef:
+       apiVersion: v1
+       kind: PersistentVolumeClaim
+       name: local-device-pvc
+       namespace: default
+       resourceVersion: "291148"
+       uid: 79d25095-eb1f-4028-9843-7824cb82f07f 
+     ...
+     ...
+     local:
+       fsType: ""
+       path: /mnt/disks/ssd0
+     nodeAffinity:
+       required:
+         nodeSelectorTerms:
+         - matchExpressions:
+           - key: kubernetes.io/hostname
+             operator: In
+             values:
+             - gke-kmova-helm-default-pool-92abeacf-89nd
+     persistentVolumeReclaimPolicy: Delete
+     storageClassName: openebs-device
+     volumeMode: Filesystem
+   status:
+     phase: Bound
+   </div>
+   <br/>
+
+:::note 
+A few important characteristics of a *OpenEBS Local PV* can be seen from the above output: 
+- `spec.nodeAffinity` specifies the Kubernetes node where the Pod using the local volume is scheduled. 
+- `spec.local.path` specifies the path of the block device associated with this PV.
+:::
+
+7. *OpenEBS Dynamic Local Provisioner* would have created a BlockDeviceClaim to get a BlockDevice from NDM. The BlockDeviceClaim will be having the same name as the PV name. Look at the BlockDeviceClaim details to see which Block Device is being used. Replace the PVC Name in the below command with the PVC name that was displayed in the previous step. 
+   ```
+   kubectl get bdc -n openebs bdc-pvc-79d25095-eb1f-4028-9843-7824cb82f07f
+   ```
+
+   The output shows that the `PHASE` is `Bound`, and provides the name of the Block Device `blockdevice-d1ef1e1b9dccf224e000c6f2e908c5f2`
+
+   <div class="co">
+   NAME                                           BLOCKDEVICENAME                                PHASE   AGE
+   bdc-pvc-79d25095-eb1f-4028-9843-7824cb82f07f   blockdevice-d1ef1e1b9dccf224e000c6f2e908c5f2   Bound   12m
+   </div>
+
+8. Look at the BlockDevice details to see where the data is stored. Replace the BDC name with the one that was displayed in the previous step. 
+   ```
+   kubectl get bd -n openebs blockdevice-d1ef1e1b9dccf224e000c6f2e908c5f2 -o yaml
+   ```
+   The output shows that the BD is on the node `spec.nodeAttributes.nodeName: gke-kmova-helm-default-pool-92abeacf-89nd`. 
+
+   <div class="co">
+   apiVersion: openebs.io/v1alpha1
+   kind: BlockDevice
+   metadata:
+     name: blockdevice-d1ef1e1b9dccf224e000c6f2e908c5f2
+     namespace: openebs
+   ...
+   spec:
+     capacity:
+       logicalSectorSize: 4096
+       physicalSectorSize: 4096
+       storage: 402653184000
+     claimRef:
+       apiVersion: openebs.io/v1alpha1
+       kind: BlockDeviceClaim
+       name: bdc-pvc-79d25095-eb1f-4028-9843-7824cb82f07f
+       namespace: openebs
+       uid: 8efe7480-9117-4f51-b271-84ee51a94684
+     details:
+       compliance: SPC-4
+       deviceType: disk
+       driveType: SSD
+       hardwareSectorSize: 4096
+       logicalBlockSize: 4096
+       model: EphemeralDisk
+       physicalBlockSize: 4096
+       serial: local-ssd-0
+       vendor: Google
+     devlinks:
+     - kind: by-id
+       links:
+       - /dev/disk/by-id/scsi-0Google_EphemeralDisk_local-ssd-0
+       - /dev/disk/by-id/google-local-ssd-0
+     - kind: by-path
+       links:
+       - /dev/disk/by-path/pci-0000:00:04.0-scsi-0:0:1:0
+     filesystem:
+       fsType: ext4
+       mountPoint: /mnt/disks/ssd0
+     nodeAttributes:
+       nodeName: gke-kmova-helm-default-pool-92abeacf-89nd
+     partitioned: "No"
+     path: /dev/sdb
+     status:
+       claimState: Claimed
+       state: Active 
+   </div>
+   <br/>
+
+:::note 
+A few important details from the above Block Device are:
+- `spec.filesystem` indicates if the BlockDevice has been formatted and the path where it has been mounted. 
+  - If the block device is pre-formatted as in the above case, the PV will be created with path as `spec.filesystem.mountPoint`.
+  - If the block device is not formatted, it will be formatted with the filesystem specified in the PVC and StorageClass. Default is `ext4`.
+:::
 
 
+## Cleanup
 
-<h2><a class="anchor" aria-hidden="true" id="user-operations"></a>Prerequisites</h2>
-- Kubernetes 1.12 or higher is required to use OpenEBS Local PV. 
-- An unclaimed block device on worker node where application is going to schedule, for provisioning OpenEBS Local PV based device.
-
-<br>
-
-## User Operations
-
-[Provision OpenEBS Local PV Based on hostpath](#Provision-OpenEBS-Local-PV-based-on-hostpath)
-
-[Provision OpenEBS Local PV Based on Device](#Provision-OpenEBS-Local-PV-based-on-Device)
-
-[Backup and Restore](#backup-and-restore)
-
-
-
-## Admin Operations
-
-[General Verification of Block Device Mount Status for Local PV Based on Device](#General-verification-for-disk-mount-status-for-Local-PV-based-on-device)
-
-[Configure hostpath](#configure-hostpath)
-
-
-
-
-
-<h2><a class="anchor" aria-hidden="true" id="user-operations"></a>User Operations</h2>
-
-<h3><a class="anchor" aria-hidden="true" id="Provision-OpenEBS-Local-PV-based-on-hostpath"></a>Provision OpenEBS Local PV based on hostpath</h3>
-The simplest way to provision an OpenEBS Local PV based on hostpath is to use the default StorageClass which is created as part of latest operator YAML. The default StorageClass name for hostpath configuration is `openebs-hostpath`. The default hostpath is configured as `/var/openebs/local`. 
-
-
-The following is the sample deployment configuration of Percona application which is going to consume OpenEBS Local PV. For utilizing OpenEBS Local PV based on hostpath, use default StorageClass name as `openebs-hostpath` in the PVC spec of the Percona deployment.
+Delete the Pod, the PersistentVolumeClaim and StorageClass that you might have created. 
 
 ```
----
-apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: percona
-  labels:
-    name: percona
-spec:
-  replicas: 1
-  selector: 
-    matchLabels:
-      name: percona 
-  template: 
-    metadata:
-      labels: 
-        name: percona
-    spec:
-      securityContext:
-        fsGroup: 999
-      tolerations:
-      - key: "ak"
-        value: "av"
-        operator: "Equal"
-        effect: "NoSchedule"
-      containers:
-        - resources:
-            limits:
-              cpu: 0.5
-          name: percona
-          image: percona
-          args:
-            - "--ignore-db-dir"
-            - "lost+found"
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: k8sDem0
-          ports:
-            - containerPort: 3306
-              name: percona
-          volumeMounts:
-            - mountPath: /var/lib/mysql
-              name: demo-vol1
-      volumes:
-        - name: demo-vol1
-          persistentVolumeClaim:
-            claimName: demo-vol1-claim
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: demo-vol1-claim
-spec:
-  storageClassName: openebs-hostpath
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5G
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: percona-mysql
-  labels:
-    name: percona-mysql
-spec:
-  ports:
-    - port: 3306
-      targetPort: 3306
-  selector:
-      name: percona
+kubectl delete pod hello-local-device-pod
+kubectl delete pvc local-device-pvc
+kubectl delete sc local-hostpath
 ```
 
-Deploy the application using the following command. In this example, the above configuration YAML spec is saved as `demo-percona-mysql-pvc.yaml`
-
-```
-kubectl apply -f demo-percona-mysql-pvc.yaml
-```
-
-The Percona application will be running on the OpenEBS local PV on hostpath. Verify if the application is running using the following command.
-
-```
-kubectl get pod -n <namespace>
-```
-
-In this documentation we are using default namespace. Default namespace may or may not be specified in commands. So, the command will be:
-
-```
-kubectl get pod
-```
-The output will be similar to the following.
-
-<div class="co">NAME                       READY   STATUS    RESTARTS   AGE
-percona-7b64956695-hs7tv   1/1     Running   0          21s</div>
-
-Verify PVC status using the following command.
-
-```
-kubectl get pvc -n <namespace>
-```
-
-The output will be similar to the following.
-
-<div class="co">NAME              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
-demo-vol1-claim   Bound    pvc-2e4b123e-88ff-11e9-bc28-42010a8001ff   5G         RWO            openebs-hostpath   28s</div>
-
-Verify PV status using the following command.
-
+Verify that the PV that was dynamically created is also deleted. 
 ```
 kubectl get pv
 ```
 
-The output will be similar to the following.
+## Troubleshooting 
 
-<div class="co">NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS       REASON   AGE
-pvc-2e4b123e-88ff-11e9-bc28-42010a8001ff   5G         RWO            Delete           Bound    default/demo-vol1-claim   openebs-hostpath            22s</div>
-
-
-
-
-<h3><a class="anchor" aria-hidden="true" id="Provision-OpenEBS-Local-PV-based-on-Device"></a>Provision OpenEBS Local PV Based on Device</h3>
-
-The simplest way to provision an OpenEBS Local PV based on device is to use the default StorageClass for OpenEBS  Local PV based of device which is created as part of latest operator YAML. The default StorageClass name for OpenEBS Local PV based on device configuration is `openebs-device`. 
-
-The following is the sample deployment configuration of Percona application which is going to consume OpenEBS Local PV based on device. For utilizing default OpenEBS Local PV based on device, use default StorageClass name as `openebs-device` in the PVC spec of the Percona deployment. 
+Review the logs of the OpenEBS Local PV provisioner. OpenEBS Dynamic Local Provisioner logs can be fetched using. 
 
 ```
----
-apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: percona
-  labels:
-    name: percona
-spec:
-  replicas: 1
-  selector: 
-    matchLabels:
-      name: percona 
-  template: 
-    metadata:
-      labels: 
-        name: percona
-    spec:
-      securityContext:
-        fsGroup: 999
-      tolerations:
-      - key: "ak"
-        value: "av"
-        operator: "Equal"
-        effect: "NoSchedule"
-      containers:
-        - resources:
-            limits:
-              cpu: 0.5
-          name: percona
-          image: percona
-          args:
-            - "--ignore-db-dir"
-            - "lost+found"
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: k8sDem0
-          ports:
-            - containerPort: 3306
-              name: percona
-          volumeMounts:
-            - mountPath: /var/lib/mysql
-              name: demo-vol1
-      volumes:
-        - name: demo-vol1
-          persistentVolumeClaim:
-            claimName: demo-vol1-claim
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: demo-vol1-claim
-spec:
-  storageClassName: openebs-device
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5G
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: percona-mysql
-  labels:
-    name: percona-mysql
-spec:
-  ports:
-    - port: 3306
-      targetPort: 3306
-  selector:
-      name: percona
+kubectl logs -n openebs -l openebs.io/component-name=openebs-localpv-provisioner
 ```
 
-In this example, the above configuration YAML spec is saved as `demo-percona-mysql-pvc.yaml`
+## Support
 
-**Note**: 
-
-- The Local PV volume will be provisioned  with `volumeMode` as `filesystem` by default. The supported filesystems are `ext4` and `xfs`.  This means Local PV volume will be created and formatted with one of these filesystem. If no filesystem is specified, by default Kubelet will format the BlockDevice as `ext4`. More details can be found [here](/docs/next/localpv.html#how-to-use-openebs-local-pvs).
-
-- With OpenEBS 1.5 version, Local PV volume has Raw Block Volume support. The Raw Block Volume support can be added to the path `spec.volumeMode` as `Block` in the Persistent Volume spec. Below is the sample PVC spec for provisioning Local PV Raw Block Volume.
-
-  ```
-  apiVersion: v1
-  kind: PersistentVolumeClaim
-  metadata:
-    name: my-pvc
-  spec:
-    accessModes:
-      - ReadWriteOnce
-    volumeMode: Block
-    storageClassName: openebs-device
-    resources:
-      requests:
-        storage: 10Gi
-  ```
-
-Run the following command to provision application using the above saved YAML spec.
-
-```
-kubectl apply -f demo-percona-mysql-pvc.yaml
-```
-
-The Percona application now runs using the OpenEBS local PV volume on device. Verify the application running status using the following command.
-
-```
-kubectl get pod
-```
-
-The output will be similar to the following.
-
-<div class="co">NAME                       READY   STATUS    RESTARTS   AGE
-percona-7b64956695-lnzq4   1/1     Running   0          46s</div>
-
-Verify the PVC status using the following command.
-
-```    
-kubectl get pvc
-```
-
-The output will be similar to the following.
-
-<div class="co">NAME              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS     AGE
-demo-vol1-claim   Bound    pvc-d0ea3a06-88fe-11e9-bc28-42010a8001ff   5G         RWO            openebs-device   38s</div>
-
-Verify the PV status using the following command.
-
-```    
-kubectl get pv
-```
-
-The output will be similar to the following.
-
-<div class="co">NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                     STORAGECLASS     REASON   AGE
-pvc-d0ea3a06-88fe-11e9-bc28-42010a8001ff   5G         RWO            Delete           Bound    default/demo-vol1-claim   openebs-device            35s</div>
-
-
-
-
-<h3><a class="anchor" aria-hidden="true" id="backup-and-restore"></a>Backup and Restore</h3>
-
-OpenEBS volume can be backed up and restored along with the application using velero plugin. It helps the user for backing up the  OpenEBS volumes to a third party storage location and then restore the data whenever it is needed. The steps for taking backup and restore are as follows.
-
-<h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
-
-- Mount propagation feature has to be enabled on Kubernetes, otherwise the data written from the pods will not visible in the restic daemonset pod on the same node. It is enabled by default from Kubernetes version 1.12. More details can be get from [here](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/). 
-- Latest tested Velero version is 1.1.0.
-- Create required storage provider configuration to store the backup data.
-- Create required storage class on destination cluster.
-- Annotate required application pod that contains a volume to back up.
-- Add a common label to all the resources associated to the application that you want to backup. For example, add an application label selector in associated components such as PVC,SVC etc.
-
-<h4><a class="anchor" aria-hidden="true" id="overview"></a>Overview</h3>
-
-Velero is a utility to back up and restore your Kubernetes resource and persistent volumes. 
-
-To take backup and restore of OpenEBS Local PV, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Local PV which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](/docs/next/minio.html).
-
-The following are the step by step procedure for taking backup and restore of application with OpenEBS Local PV.
-
-1. Install Velero
-2. Annotate Application Pod
-3. Creating and Managing Backups
-4. Steps for Restore
-
-<h4><a class="anchor" aria-hidden="true" id="install-velero"></a>Install Velero (Formerly known as ARK)</h3>
-
-Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.1.0/>) to install and configure Velero and follow [restic integration documentation](https://velero.io/docs/v1.1.0/restic/) for setting up and usage of restic support.
-
-While installing Velero plugin in your cluster,  specify `--use-restic` to enable restic support. 
-
-Verify using the following command if restic pod and Velero pod are running after installing velero with restic support.
-
-```
-kubectl get pod -n velero
-```
-
-The following is an example output in a single node cluster.
-
-```
-NAME                      READY   STATUS    RESTARTS   AGE
-restic-ksfqr              1/1     Running   0          21s
-velero-84b9b44d88-gn8dk   1/1     Running   0          25m
-```
-
-<h4><a class="anchor" aria-hidden="true" id="annotate-appliction"></a>Annotate Application Pod</h3>
-
-Run the following  to annotate each application pod that contains a volume to back up.
-
-```
-kubectl -n YOUR_POD_NAMESPACE annotate pod/YOUR_POD_NAME backup.velero.io/backup-volumes=YOUR_VOLUME_NAME_1,YOUR_VOLUME_NAME_2,...
-```
-
-In the above example command, where the volume names are the names of the volumes specified in the application pod spec.
-
-Example Spec:
-
-If application spec contains the volume name as mentioned below, then use volume name as `storage` in the below command.
-
-```
-    spec:
-      # Refer to the PVC created earlier
-      volumes:
-      - name: storage
-        persistentVolumeClaim:
-          # Name of the PVC created earlier
-                claimName: minio-pv-claim
-      containers:
-      - name: minio
-```
-
-And if the application pod name is  `minio-deployment-7fc6cdfcdc-8r84h` , use the following command to annotate the application.
-
-```
-kubectl -n default annotate pod/minio-deployment-7fc6cdfcdc-p6hlq backup.velero.io/backup-volumes=storage
-```
-
-<h4><a class="anchor" aria-hidden="true" id="managing-backup"></a>Creating and Managing Backups</h3>
-
-Take the backup using the below command.
-
-```
-velero backup create <backup_name> -l <app-label-selector>
-```
-
-Example:
-
-
-```
-velero backup create hostpathbkp1 -l app=minio
-```
-
-The above command shown in example will take backup of all resources which has a common label `app=minio`.  
-
-**Note:** You can use `--selector` as a flag in backup command  to filter specific resources or use a combo of `--include-namespaces` and `--exclude-resources` to exclude specific resources in the specified namespace. More details can be read from [here](https://heptio.github.io/velero/v0.11.0/api-types/backup.html).
-
-After taking backup, verify if backup is taken successfully by using following command.
-
-```
-velero backup get
-```
-
-The following is a sample output.
-
-```
-NAME             STATUS                      CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
-hostpathbkp1     Completed                   2019-06-14 14:57:01 +0530 IST   29d       default            app=minio
-```
-
-You will get more details about the backup using the following command.
-
-```
-velero backup describe hostpathbkp1
-```
-
-Once the backup is completed you should see the `Phase` marked as `Completed` in the output of above command.
-
-<h4><a class="anchor" aria-hidden="true" id="steps-for-restore"></a>Steps for Restore</h3>
-
-Velero backup can be restored onto a new cluster or to the same cluster. An OpenEBS PV *with the same name as the original PV* will be created and application will run using the restored OpenEBS volume.
-
-**Prerequisites**
-
-- Ensure same namespace, StorageClass configuration and PVC configuration of the source PVC must be created in your destination cluster. 
-- Ensure at least one unclaimed block device is present on the destination to restore OpenEBS Local PV provisioned with device.
-
-On the target cluster, restore the application using the below command.
-
-```
-velero restore create --from-backup <backup-name>
-```
-
-Example:
-
-```
-velero restore create --from-backup hostpathbkp1
-```
-
-The following can be used to obtain the restore job status.
-
-```
-velero restore get
-```
-
-The following is an example output. Once the restore is completed you should see the status marked as `Completed`.
-
-```
-NAME                            BACKUP           STATUS      WARNINGS   ERRORS   CREATED                         SELECTOR
-hostpathbkp1-20190614151818     hostpathbkp1     Completed   34         0        2019-06-14 15:18:19 +0530 IST   <none>
-```
-
-Verify application status using the following command
-
-```
-kubectl get pod -n <namespace>
-```
-
-Verify PVC status using the following command.
-
-```
-kubectl get pvc -n <namespace>
-```
-
-<br>
-
-<hr>
-
-<h2><a class="anchor" aria-hidden="true" id="admin-operations"></a>Admin Operations</h2>
-
-<h3><a class="anchor" aria-hidden="true" id="General-verification-for-disk-mount-status-for-Local-PV-based-on-device"></a>General Verification of Block Device Mount Status for Local PV Based on Device</h3>
-
-The application can be provisioned using OpenEBS Local PV based on device. For provisioning OpenEBS Local PV using the block devices attached to the nodes, the block devices should be in one of the following states.
-
-- User has attached the block device, formatted and mounted them.
-  - For Example: Local SSD in GKE.
-- User has attached the block device, un-formatted and not mounted them.
-  - For Example: GPD in GKE.
-- User has attached the block device, but device has only device path and no dev links.
-  - For Example: VM with VMDK disks or AWS node with EBS
-
-
-
-<h3><a class="anchor" aria-hidden="true" id="configure-hostpath"></a>Configure hostpath</h3>
-
-The default hostpath is configured as `/var/openebs/local`,  which can either be changed during the OpenEBS operator install by passing in the `OPENEBS_IO_BASE_PATH` ENV parameter to the OpenEBS Local PV dynamic provisioner deployment spec or via the StorageClass. The example for both approaches are shown below.
-
-<h4><a class="anchor" aria-hidden="true" id="using-openebs-opeartor"></a>Using OpenEBS operator YAML</h3>
-
-The example of changing the ENV variable to the Local PV dynamic provisioner deployment spec in the operator YAML. This has to be done before applying openebs operator YAML file.
-
-```
-name: OPENEBS_IO_BASE_PATH
-value: “/mnt/”
-```
-
-<h4><a class="anchor" aria-hidden="true" id="using-storageclass"></a>Using StorageClass</h3>
-
-The Example for changing the Basepath via StorageClass
-
-```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: openebs-hostpath
-  annotations:
-    openebs.io/cas-type: local
-    cas.openebs.io/config: |
-      - name: BasePath
-        value: "/mnt/"
-provisioner: openebs.io/local
-volumeBindingMode: WaitForFirstConsumer
-reclaimPolicy: Delete
-```
-
-Apply the above StorageClass configuration after making the necessary changes and use this StorageClass name in the corresponding PVC specification to provision application on OpenEBS Local PV based on the customized hostpath.
-
-Verify if the StorageClass is having the updated hostpath using the following command and verify the `value` is set properly for the `BasePath` config value.
-
-```
-kubectl describe sc openebs-hostpath
-```
-
-**Note**: If you are using a mount path of an external device as  `Basepath` for the default hostpath Storage Class, then you must add the corresponding block device path under **exclude** filter so that NDM will not select the particular disk for BD creation. For example, `/dev/sdb` is mounted as `/mnt/ext_device`, and if you are using `/mnt/ext_device` as Basepath in default StorageClass `openebs-hostpath`, then you must add `/dev/sdb` under **exclude** filter of NDM configuration. See [here](/docs/next/ugndm.html#Exclude-filters) for customizing the exclude filter in NDM configuration.
-
-<br>
+If you encounter issues or have a question, file an [Github issue](https://github.com/openebs/openebs/issues/new), or talk to us on the [#openebs channel on the Kubernetes Slack server](https://kubernetes.slack.com/messages/openebs/).
 
 ## See Also:
 
-
-
 ### [Understand OpenEBS Local PVs ](/docs/next/localpv.html)
-
 
 ### [Node Disk Manager](/docs/next/ugndm.html)
 
