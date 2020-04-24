@@ -57,6 +57,15 @@ The block devices can be any of the following:
 - Cloud Provider Disks like EBS or GPD attached to a Kubernetes node (Cloud instances. GKE or EKS) 
 - Virtual Disks like a vSAN volume or VMDK disk attached to a Kubernetes node (Virtual Machine)
 
+## Install
+
+### Block Device Tagging
+
+You can reserve block devices in the cluster that you would like the *OpenEBS Dynamic Local Provisioner* to pick up some specific block devices available on the node. You can use the NDM Block Device tagging feature to reserve the devices. For example, if you would like Local SSDs on your cluster for running Mongo stateful application. You can tag a few devices in the cluster with a tag named `mongo`.
+
+```
+kubectl label bd -n openebs blockdevice-0052b132e6c5800139d1a7dfded8b7d7 openebs.io/block-device-tag=mongo
+```
 
 ## Create StorageClass
 
@@ -79,7 +88,7 @@ The default Storage Class is called `openebs-device`. If the block devices are n
          - name: FSType
            value: xfs
          - name: BlockDeviceTag
-           value: "mongo
+           value: "mongo"
    provisioner: openebs.io/local
    reclaimPolicy: Delete
    volumeBindingMode: WaitForFirstConsumer
@@ -88,6 +97,26 @@ The default Storage Class is called `openebs-device`. If the block devices are n
    The `volumeBindingMode` MUST ALWAYS be set to `WaitForFirstConsumer`. `volumeBindingMode: WaitForFirstConsumer` instructs Kubernetes to initiate the creation of PV only after Pod using PVC is scheduled to the node.
    :::
 
+2. Edit `local-device-sc.yaml` and update with your desired values for:
+
+   - `metadata.name`
+   - `cas.openebs.io/config.FSType`
+   - `cas.openebs.io/config.BlockDeviceTag`
+
+   :::note 
+   When specifying the value for BlockDeviceTag, you must already have Block Devices on the nodes labelled with the tag. See [Block Device Tagging](#block-device-tagging)
+   :::
+
+3. Create OpenEBS Local PV Hostpath Storage Class. 
+   ```
+   kubectl apply -f local-hostpath-sc.yaml
+   ```
+
+4. Verify that the StorageClass is successfully created. 
+   ```
+   kubectl get sc local-hostpath -o yaml
+   ```
+   
 ## Create a PersistentVolumeClaim
 
 The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolumeClaims to request Device backed Local PV from *OpenEBS Dynamic Local PV provisioner*.
