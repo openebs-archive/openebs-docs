@@ -22,7 +22,7 @@ The following content is directly taken from Rancher's LongHorn [announcement do
 
 ------
 
-Jiva replicas are built using Linux sparse files, which support thin provisioning. Jiva does not maintain additional metadata to indicate which blocks are used. The block size is 4K. When you take a snapshot, you create a differencing disk. As the number of snapshots grows, the differencing disk chain could get quite long. To improve read performance, Jiva, therefore, maintains a read index that records which differencing disk holds valid data for each 4K block. In the following figure, the volume has eight blocks. The read index has eight entries and is filled up lazily as read operation takes place. A write operation resets the read index, causing it to point to the live data. ![Longhorn read index](/docs/assets/Longhorn-blog-latest.png)
+Jiva replicas are built using Linux sparse files, which support thin provisioning. Jiva does not maintain additional metadata to indicate which blocks are used. The block size is 4K. When you take a snapshot, you create a differencing disk. As the number of snapshots grows, the differencing disk chain could get quite long. To improve read performance, Jiva, therefore, maintains a read index that records which differencing disk holds valid data for each 4K block. In the following figure, the volume has eight blocks. The read index has eight entries and is filled up lazily as read operation takes place. A write operation resets the read index, causing it to point to the live data. ![Longhorn read index](/docs/assets/Longhorn_blog.png)
 
 
 
