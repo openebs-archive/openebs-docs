@@ -47,6 +47,47 @@ For a more detailed walkthrough of the setup, follow along the rest of this docu
 - Kubernetes 1.12 or higher is required
 - OpenEBS 1.0 or higher is required.
 
+## Prerequisites
+
+For provisioning Local PV using the block devices, the Kubernetes nodes should have block devices attached to the nodes. The block devices can optionally be formatted and mounted. 
+
+The block devices can be any of the following:
+
+- SSD, NVMe or Hard Disk attached to a Kubernetes node (Bare metal server)
+- Cloud Provider Disks like EBS or GPD attached to a Kubernetes node (Cloud instances. GKE or EKS) 
+- Virtual Disks like a vSAN volume or VMDK disk attached to a Kubernetes node (Virtual Machine)
+
+
+## Create StorageClass
+
+You can skip this section if you would like to use default OpenEBS Local PV Device StorageClass created by OpenEBS. 
+
+The default Storage Class is called `openebs-device`. If the block devices are not formatted, the devices will be formatted with `ext4`. 
+
+1. To create your own StorageClass to customize how Local PV with devices are created. For instance, if you would like to run MongoDB stateful applications with Local PV device, you would want to set the default filesystem as `xfs` and/or also dedicate some devices on node that you want to use for Local PV. Save the following StorageClass definition as `local-device-sc.yaml`
+
+   ```
+   apiVersion: storage.k8s.io/v1
+   kind: StorageClass
+   metadata:
+     name: local-device
+     annotations:
+       openebs.io/cas-type: local
+       cas.openebs.io/config: |
+         - name: StorageType
+           value: device
+         - name: FSType
+           value: xfs
+         - name: BlockDeviceTag
+           value: "mongo
+   provisioner: openebs.io/local
+   reclaimPolicy: Delete
+   volumeBindingMode: WaitForFirstConsumer
+   ```
+   :::note 
+   The `volumeBindingMode` MUST ALWAYS be set to `WaitForFirstConsumer`. `volumeBindingMode: WaitForFirstConsumer` instructs Kubernetes to initiate the creation of PV only after Pod using PVC is scheduled to the node.
+   :::
+
 ## Create a PersistentVolumeClaim
 
 The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolumeClaims to request Device backed Local PV from *OpenEBS Dynamic Local PV provisioner*.
