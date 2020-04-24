@@ -1,7 +1,7 @@
 ---
 id: uglocalpv
-title: OpenEBS Local PV User Guide
-sidebar_label: Local PV
+title: OpenEBS Local PV Device User Guide
+sidebar_label: Local PV Device
 ---
 ------
 
