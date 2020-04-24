@@ -171,6 +171,8 @@ The default Storage Class is called `openebs-device`. If the block devices are n
    - `cas.openebs.io/config.BlockDeviceTag`
 
    :::note 
+   Block Device Tag support for Local Volumes was introduced in OpenEBS 1.9. 
+   
    When specifying the value for BlockDeviceTag, you must already have Block Devices on the nodes labelled with the tag. See [Block Device Tagging](#block-device-tagging)
    :::
 
@@ -222,6 +224,30 @@ The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolu
    NAME               STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS     AGE
    local-device-pvc   Pending                                      openebs-device   31s
    </div>
+
+### Using Raw Block Volume
+
+By default, Local PV volume will be provisioned with volumeMode as filesystem. If you would like to use it as [Raw Block Volume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#raw-block-volume-support), specify `spec.volumeMode` as `Block` in the Persistent Volume Claim spec. Here is the configuration file for the PersistentVolumeClaim with Raw Block Volume Support. 
+
+   ```
+   kind: PersistentVolumeClaim
+   apiVersion: v1
+   metadata:
+     name: local-device-pvc-block
+   spec:
+     storageClassName: openebs-device
+     volumeMode: Block
+     accessModes:
+       - ReadWriteOnce
+     resources:
+       requests:
+         storage: 5G
+   ```
+
+   :::note 
+   Raw Block Volume support was introduced for OpenEBS Local PV OpenEBS 1.5. 
+   :::
+
 
 ## Create Pod to consume OpenEBS Local PV backed by Block Device
 
