@@ -21,6 +21,9 @@ OpenEBS Local PV uses volume topology aware pod scheduling enhancements introduc
 <br>
 
 :::tip QUICKSTART
+
+OpenEBS Local PV Hostpath volumes will be created under `/var/openebs/local` directory. You can customize the location by [configuring install parameters](#install) or by creating new [StorageClass](#create-storageclass). 
+
 If you have OpenEBS already installed, you can create an example pod that persists data to *OpenEBS Local PV Hostpath* with following kubectl commands. 
 ```
 kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-hostpath-pvc.yaml
@@ -248,7 +251,7 @@ The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolu
        command:
           - sh
           - -c
-          - 'echo "Hello from OpenEBS Local PV." >> /mnt/data/greet.txt; tail -f /dev/null;'
+          - 'echo "Hello from OpenEBS Local PV." >> /mnt/store/greet.txt; tail -f /dev/null;'
        volumeMounts:
        - mountPath: /mnt/store
          name: local-storage
