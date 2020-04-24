@@ -11,11 +11,44 @@ sidebar_label: Local PV
 
 <br>
 
+This guide will help you to set up and use OpenEBS Local Persistent Volumes backed by Block Devices.
+
+*OpenEBS Dynamic Local PV provisioner* can create Kubernetes Local Persistent Volumes using block devices available on the node to persist data, hereafter referred to as *OpenEBS Local PV Device* volumes. 
+
+*OpenEBS Local PV Device* volumes have the following advantages compared to native Kubernetes Local Peristent Volumes. 
+- Dynamic Volume provisioner as opposed to a Static Provisioner. 
+- Better management of the Block Devices used for creating Local PVs by OpenEBS NDM. NDM provides capabilities like discovering Block Device properties, setting up Device Pools/Filters, metrics collection and ability to detect if the Block Devices have moved across nodes. 
+
+OpenEBS Local PV uses volume topology aware pod scheduling enhancements introduced by [Kubernetes Local Volumes](https://kubernetes.io/docs/concepts/storage/volumes/#local)
+
+<br>
+
+:::tip QUICKSTART
+
+OpenEBS Local PV Device volumes will be created using the Block Devices available on the node. You can customize which block devices can be used for creating Local PVs by [configuring NDM parameters](#install) and/or by creating new [StorageClass](#create-storageclass). 
+
+If you have OpenEBS already installed, you can create an example pod that persists data to *OpenEBS Local PV Device* with following kubectl commands. 
+```
+kubectl apply -f https://openebs.github.io/charts/examples/local-device/local-device-pvc.yaml
+kubectl apply -f https://openebs.github.io/charts/examples/local-device/local-device-pod.yaml
+```
+
+Verify using below kubectl commands that example pod is running and is using a OpenEBS Local PV Device.
+```
+kubectl get pod hello-local-device-pod
+kubectl get pvc local-device-pvc
+```
+
+For a more detailed walkthrough of the setup, follow along the rest of this document.
+:::
+
+## Minimum Versions
+
+- Kubernetes 1.12 or higher is required
+- OpenEBS 1.0 or higher is required.
 
 
-A local PV represents a mounted local storage device such as a disk or a hostpath (or subpath) directory.  Local PVs are an extension to hostpath volumes, but are more secure. 
 
-OpenEBS Dynamic Local PV provisioner will help provisioning the Local PVs dynamically by integrating into the features offered by OpenEBS Node Storage Device Manager, and also offers the flexibility to either select a complete storage device or a hostpath (or subpath) directory.
 
 <h2><a class="anchor" aria-hidden="true" id="user-operations"></a>Prerequisites</h2>
 - Kubernetes 1.12 or higher is required to use OpenEBS Local PV. 
