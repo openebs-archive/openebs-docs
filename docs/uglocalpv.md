@@ -59,7 +59,74 @@ The block devices can be any of the following:
 
 ## Install
 
-### Block Device Tagging
+### Customize NDM and Install
+
+You can skip this section if you have already installed OpenEBS.
+
+*OpenEBS Dynamic Local Provisioner* uses the Block Devices discovered by NDM to create Local PVs. NDM offers some configurable parameters that can be applied during the OpenEBS Installation. Some key configurable parameters available for NDM are:
+
+1. Prepare to install OpenEBS by providing custom values for configurable parameters.
+   - The location of the *OpenEBS Dynamic Local PV provisioner* container image.
+     <div class="co">
+     Default value: quay.io/openebs/provisioner-localpv
+     YAML specification: spec.image on Deployment(localpv-provisioner)
+     Helm key: localprovisioner.image
+     </div>  
+
+   - The location of the *OpenEBS NDM DaemonSet* container image. NDM DaemonSet helps with discovering block devices attached to a node and creating Block Device Resources.
+     <div class="co">
+     Default value: quay.io/openebs/node-disk-manager-amd64
+     YAML specification: spec.image on DaemonSet(openebs-ndm)
+     Helm key: ndm.image
+     </div>  
+
+   - The location of the *OpenEBS NDM Operator* container image. NDM Operator helps with allocating Block Devices to Block Device Claims raised by *OpenEBS Dynamic Local PV Provisioner*. 
+     <div class="co">
+     Default value: quay.io/openebs/node-disk-operator-amd64
+     YAML specification: spec.image on Deployment(openebs-ndm-operator)
+     Helm key: ndmOperator.image
+     </div>  
+
+   - The location of the *Provisioner Helper* container image. *OpenEBS Dynamic Local Provisioner* create a *Provisioner Helper* pod to clean up the data from the block device after the PV has been deleted.
+     <div class="co">
+     Default value: quay.io/openebs/linux-utils
+     YAML specification: Environment Variable (CLEANUP_JOB_IMAGE) on Deployment(ndm-operator) 
+     Helm key: helper.image
+     </div>
+
+   - Specify the list of block devices for which BlockDevice CRs must be created. A comma seperated values of path regular expressions can be specified. 
+     <div class="co">
+     Default value: all
+     YAML specification: data."node-disk-manager.config".filterconfigs.key["path-filter"].include on ConfigMap(openebs-ndm-config)
+     Helm key: ndm.filters.includePaths
+     </div>
+
+   - Specify the list of block devices for which BlockDevice CRs must not be created. A comma seperated values of path regular expressions can be specified. 
+     <div class="co">
+     Default value: "loop,fd0,sr0,/dev/ram,/dev/dm-,/dev/md"
+     YAML specification: data."node-disk-manager.config".filterconfigs.key["path-filter"].exclude on ConfigMap(openebs-ndm-config)
+     Helm key: ndm.filters.excludePaths
+     </div>
+
+2. You can proceed to install OpenEBS either using kubectl or helm using the steps below. 
+
+   - Install using kubectl
+  
+     If you would like to change the default values for any of the configurable parameters mentioned in the previous step, download the `openebs-operator.yaml` and make the necessary changes before applying. 
+     ```
+     kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
+     ```
+
+   - Install using helm stable charts
+  
+     If you would like to change the default values for any of the configurable parameters mentioned in the previous step, specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
+  
+     ```
+     helm repo update
+     helm install --namespace openebs --name openebs stable/openebs
+     ```
+
+### (Optional) Block Device Tagging
 
 You can reserve block devices in the cluster that you would like the *OpenEBS Dynamic Local Provisioner* to pick up some specific block devices available on the node. You can use the NDM Block Device tagging feature to reserve the devices. For example, if you would like Local SSDs on your cluster for running Mongo stateful application. You can tag a few devices in the cluster with a tag named `mongo`.
 
