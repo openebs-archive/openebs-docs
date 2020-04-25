@@ -176,14 +176,14 @@ The default Storage Class is called `openebs-device`. If the block devices are n
    When specifying the value for BlockDeviceTag, you must already have Block Devices on the nodes labelled with the tag. See [Block Device Tagging](#block-device-tagging)
    :::
 
-3. Create OpenEBS Local PV Hostpath Storage Class. 
+3. Create OpenEBS Local PV Device Storage Class. 
    ```
-   kubectl apply -f local-hostpath-sc.yaml
+   kubectl apply -f local-device-sc.yaml
    ```
 
 4. Verify that the StorageClass is successfully created. 
    ```
-   kubectl get sc local-hostpath -o yaml
+   kubectl get sc local-device -o yaml
    ```
    
 ## Create a PersistentVolumeClaim
@@ -269,7 +269,7 @@ By default, Local PV volume will be provisioned with volumeMode as filesystem. I
        command:
           - sh
           - -c
-          - 'echo "Hello from OpenEBS Local PV." >> /mnt/store/greet.txt; tail -f /dev/null;'
+          - 'while true; do echo "`date` [`hostname`] Hello from OpenEBS Local PV." >> /mnt/store/greet.txt; sleep $(($RANDOM % 5 + 300)); done'
        volumeMounts:
        - mountPath: /mnt/store
          name: local-storage
@@ -287,7 +287,7 @@ By default, Local PV volume will be provisioned with volumeMode as filesystem. I
    kubectl get pod hello-local-device-pod
    ```
 
-4. Verify that the container is using the Local PV Hostpath 
+4. Verify that the container is using the Local PV Device 
    ```
    kubectl describe pod hello-local-device-pod
    ```
@@ -456,7 +456,7 @@ Delete the Pod, the PersistentVolumeClaim and StorageClass that you might have c
 ```
 kubectl delete pod hello-local-device-pod
 kubectl delete pvc local-device-pvc
-kubectl delete sc local-hostpath
+kubectl delete sc local-device
 ```
 
 Verify that the PV that was dynamically created is also deleted. 
@@ -464,6 +464,96 @@ Verify that the PV that was dynamically created is also deleted.
 kubectl get pv
 ```
 
+## Backup and Restore
+
+OpenEBS Local Volumes can be backed up and restored along with the application using [Velero](https://velero.io).
+
+:::note
+The following steps assume that you already have Velero with Restic integration is configured. If not, please follow the [Velero Documentation](https://velero.io/docs/) to proceed with install and setup of Velero.  If you encounter any issues or have questions, talk to us on the [#openebs channel on the Kubernetes Slack server](https://kubernetes.slack.com/messages/openebs/).
+:::
+
+### Backup
+
+The following steps will help you to prepare and backup the data from the volume created for the example pod (`hello-local-device-pod`), with the volume mount (`local-storage`). 
+
+1. Prepare the application pod for backup. Velero uses Kubernetes labels to select the pods that need to be backed up. Velero uses annotation on the pods to determine which volumes need to be backed up. For the example pod launched in this guide, you can inform velero to backup by specifing the following label and annotation. 
+   
+   ```
+   kubectl label pod hello-local-device-pod app=test-velero-backup
+   kubectl annotate pod hello-local-device-pod backup.velero.io/backup-volumes=local-storage
+   ```
+2. Create a Backup using velero. 
+
+   ```
+   velero backup create bbb-01 -l app=test-velero-backup
+   ```
+
+3. Verify that backup is successful. 
+
+   ```
+   velero backup describe bbb-01 --details
+   ```
+
+   On successful completion of the backup, the output of the backup describe command will show the following:
+   <div class="co">
+   ...
+   Restic Backups:
+     Completed:
+       default/hello-local-device-pod: local-storage
+   </div>
+ 
+### Restore
+
+1. Install and Setup Velero, with the same provider where backups were saved. Verify that backups are accessible. 
+   
+   ```
+   velero backup get
+   ```
+   
+   The output of should display the backups that were taken successfully. 
+   <div class="co">
+   NAME     STATUS      CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
+   bbb-01   Completed   2020-04-25 15:49:46 +0000 UTC   29d       default            app=test-velero-backup
+   </div>
+
+2. Restore the application. 
+
+   :::note
+   Local PVs are created with node affinity. As the node names will change when a new cluster is created, create the required PVC(s) prior to proceeding with restore.
+   :::
+   
+   Replace the path to the PVC yaml in the below commands, with the PVC that you have created. 
+   ```
+   kubectl apply -f https://openebs.github.io/charts/examples/local-device/local-device-pvc.yaml
+   velero restore create rbb-01 --from-backup bbb-01 -l app=test-velero-backup
+   ```
+
+3. Verify that application is restored.
+
+   ```
+   velero restore describe rbb-01
+   ```
+   
+   Depending on the data, it may take a while to initialize the volume. On successful restore, the output of the above command should show:
+   <div class="co">
+   ...
+   Restic Restores (specify --details for more information):
+     Completed:  1
+   </div>
+   
+4. Verify that data has been restored. The application pod used in this example, write periodic messages (greetings) to the volume. 
+
+   ```
+   kubectl exec hello-local-device-pod -- cat /mnt/store/greet.txt
+   ```
+   
+   The output will show that backed up data as well as new greetings that started appearing after application pod was restored. 
+   <div class="co">
+   Sat Apr 25 15:41:30 UTC 2020 [hello-local-device-pod] Hello from OpenEBS Local PV.
+   Sat Apr 25 15:46:30 UTC 2020 [hello-local-device-pod] Hello from OpenEBS Local PV.
+   Sat Apr 25 16:11:25 UTC 2020 [hello-local-device-pod] Hello from OpenEBS Local PV.
+   </div>
+   
 ## Troubleshooting 
 
 Review the logs of the OpenEBS Local PV provisioner. OpenEBS Dynamic Local Provisioner logs can be fetched using. 
