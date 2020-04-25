@@ -23,7 +23,8 @@
 	"ugndm", 
 	"ugcstor", 
 	"jivaguide", 
-	"uglocalpv", 
+	"uglocalpv-hostpath", 
+	"uglocalpv-device", 
 	"mayactl", 
 	"upgrade", 
 	"uninstall" 
