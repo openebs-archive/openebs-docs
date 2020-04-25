@@ -511,7 +511,7 @@ OpenEBS have three storage Engines, Jiva, cStor and LocalPV which can be used to
 
 Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted). 
 
-For LocalPV based on device, details of disk mount status can be obtained [here](/docs/next/uglocalpv.html#General-verification-for-disk-mount-status-for-Local-PV-based-on-device).
+For LocalPV based on device, details of disk mount status can be obtained [here](/docs/next/ndm.html).
 
 cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes which does not have any filesystem and it should be unmounted on the Node. It is recommended to wipe out the disk if it was previously used. 
 
