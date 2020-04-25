@@ -239,19 +239,19 @@ The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolu
    apiVersion: v1
    kind: Pod
    metadata:
-     name: hello-localpv-pod
+     name: hello-local-hostpath-pod
    spec:
      volumes:
      - name: local-storage
        persistentVolumeClaim:
          claimName: local-hostpath-pvc
      containers:
-     - name: hello-localpv-container
+     - name: hello-container
        image: busybox
        command:
           - sh
           - -c
-          - 'echo "Hello from OpenEBS Local PV." >> /mnt/store/greet.txt; tail -f /dev/null;'
+          - 'while true; do echo "`date` [`hostname`] Hello from OpenEBS Local PV." >> /mnt/store/greet.txt; sleep $(($RANDOM % 5 + 300)); done'
        volumeMounts:
        - mountPath: /mnt/store
          name: local-storage
@@ -263,21 +263,26 @@ The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolu
    kubectl apply -f local-hostpath-pod.yaml
    ```
 
-3. Verify that the container in the Pod is running;
+3. Verify that the container in the Pod is running.
 
    ```
-   kubectl get pod hello-localpv-pod
+   kubectl get pod hello-local-hostpath-pod
    ```
+4. Verify that the data is being written to the volume.
 
-4. Verify that the container is using the Local PV Hostpath 
    ```
-   kubectl describe pod hello-localpv-pod
+   kubectl exec hello-local-hostpath-pod -- cat /mnt/store/greet.txt
+   ```
+   
+5. Verify that the container is using the Local PV Hostpath.
+   ```
+   kubectl describe pod hello-local-hostpath-pod
    ```
 
    The output shows that the Pod is running on `Node: gke-kmova-helm-default-pool-3a63aff5-1tmf` and using the peristent volume provided by `local-hostpath-pvc`.
 
    <div class="co">
-   Name:         hello-localpv-pod
+   Name:         hello-local-hostpath-pod
    Namespace:    default
    Priority:     0
    Node:         gke-kmova-helm-default-pool-3a63aff5-1tmf/10.128.0.28
@@ -291,7 +296,7 @@ The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolu
    ...
    </div>
 
-5. Look at the PersistentVolumeClaim again to see the details about the dynamically provisioned Local PersistentVolume
+6. Look at the PersistentVolumeClaim again to see the details about the dynamically provisioned Local PersistentVolume
    ```
    kubectl get pvc local-hostpath-pvc
    ```
@@ -303,7 +308,7 @@ The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolu
    local-hostpath-pvc   Bound    pvc-864a5ac8-dd3f-416b-9f4b-ffd7d285b425   5G         RWO            openebs-hostpath   28m
    </div>
 
-6. Look at the PersistentVolume details to see where the data is stored. Replace the PVC name with the one that was displayed in the previous step. 
+7. Look at the PersistentVolume details to see where the data is stored. Replace the PVC name with the one that was displayed in the previous step. 
    ```
    kubectl get pv pvc-864a5ac8-dd3f-416b-9f4b-ffd7d285b425 -o yaml
    ```
@@ -361,7 +366,7 @@ A few important characteristics of a *OpenEBS Local PV* can be seen from the abo
 Delete the Pod, the PersistentVolumeClaim and StorageClass that you might have created. 
 
 ```
-kubectl delete pod hello-localpv-pod
+kubectl delete pod hello-local-hostpath-pod
 kubectl delete pvc local-hostpath-pvc
 kubectl delete sc local-hostpath
 ```
