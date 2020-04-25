@@ -226,7 +226,9 @@ A short summary is provided below.
 
 ### [Jiva User Guide](/docs/next/jivaguide.html)
 
-### [Local PV User Guide](/docs/next/uglocalpv.html)
+### [Local PV Hospath User Guide](/docs/next/uglocalpv-hostpath.html)
+
+### [Local PV Device User Guide](/docs/next/uglocalpv-device.html)
 
 
 
