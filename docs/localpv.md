@@ -52,6 +52,47 @@ OpenEBS provides different types of Local Volumes that can be used to provide lo
 - When applications expect replication from storage.
 - When the volume size may need to be changed dynamically but the underlying disk is not resizable. 
 
+## Backup and Restore 
+
+OpenEBS Local Volumes can be backed up and restored along with the application using [Velero](https://velero.io). 
+
+Velero uses [Restic](https://github.com/restic/restic) for backing up and restoring Kubernetes local volumes. Velero can be configured to save the backups either in the cloud or on-premise with any S3 compatible storage like Minio. When user initiates the backup, Velero via the Restic, will copy the entire data from the Local PV to the remote location. Later, when the user wants to restore the application, velero injects an init container into the application that will download and populate the data into the volume from the backed up location. For more details on how Velero Restic works, please see documentation on [Velero Restic integration](https://velero.io/docs/v1.3.2/restic/). 
+
+While the preferred way for Backup and Restore for cloud native applications using Local Volumes is to use the application specific backup solution, you can use the Velero based Backup and Restore in the following cases:
+- Application doesn't natively provide a Backup and Restore solution
+- Schedule a Daily or weekly backups of the data during a off-peak hours
+- Migrating the application using Local Volumes to a new Cluster. 
+
+You can refer to the [Local PV user guides](#see-also) for detailed instructions on Backup and Restore. 
+
+A quick summary of the steps to backup include:
+
+1. Install and Setup Velero by following the [Velero Documentation](https://velero.io/docs/).  
+
+2. Prepare the application that needs to be backed up. Label and annotate the application, indicating that you would like to use velero to backup the volumes. For example, if you would like to backup an application pod named `hello-local-hostpath-pod` with a volume mount `local-storage`, you would need to run the following commands. 
+   
+   ```
+   kubectl label pod hello-local-hostpath-pod app=test-velero-backup
+   kubectl annotate pod hello-local-hostpath-pod backup.velero.io/backup-volumes=local-storage
+   ```
+3. Use velero to backup the application. 
+   ```
+   velero backup create bbb-01 -l app=test-velero-backup
+   ```
+
+A quick summary of the steps to restore include:
+
+1. Install and Setup Velero, with the same provider where backups were saved. 
+
+2. Local PVs are created with node affinity. As the node names will change when a new cluster is created, create the required PVC(s) prior to proceeding with restore. 
+   ```
+   kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-hostpath-pvc.yaml
+   ```
+   
+3. Use velero to restore the application and populate the data into the volume from the backup. 
+   ```
+   velero restore create rbb-01 --from-backup bbb-01 -l app=test-velero-backup
+   ```
 
 ## Limitations (or Roadmap items ) of OpenEBS Local PVs
 
