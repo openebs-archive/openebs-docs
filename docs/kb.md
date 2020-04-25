@@ -662,7 +662,7 @@ The detailed information of each steps are provided below.
     openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   57m
     ```
 
-  - The default StorageClass `openebs-hostpath` can be used to create local PV on the path `/var/openebs/local` in your Kubernetes node. You can either use `openebs-hostpath` storage class to create volumes or create new storage class by following the steps mentioned [here](/docs/next/uglocalpv.html).
+  - The default StorageClass `openebs-hostpath` can be used to create local PV on the path `/var/openebs/local` in your Kubernetes node. You can either use `openebs-hostpath` storage class to create volumes or create new storage class by following the steps mentioned [here](/docs/next/uglocalpv-hostpath.html).
 
     **Note:** OpenEBS local PV will not be bound until the application pod is scheduled as its **volumeBindingMode** is set to **WaitForFirstConsumer.** Once the application pod is scheduled on a certain node, OpenEBS Local PV will be bound on that node.
 

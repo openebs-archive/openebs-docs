@@ -92,7 +92,7 @@ More details can be find from [here](/docs/next/ugndm.html).
 
 ### [OpenEBS Architecture](/docs/next/architecture.html)
 
-### [Local PV User Guide](/docs/next/uglocalpv.html)
+### [Local PV User Guide](/docs/next/uglocalpv-device.html)
 
 ### [cStor User Guide](/docs/next/ugcstor.html)
 

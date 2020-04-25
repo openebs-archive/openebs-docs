@@ -1,104 +1,43 @@
 ---
 id: localpv
-title: OpenEBS LocalPV
+title: OpenEBS Local PV 
 sidebar_label: Local PV
 ---
 ------
 
-
+<br>
 
 ## Overview
 
-OpenEBS Local PV is a CAS engine that can create persistent volumes using either local disks or host paths on the worker nodes. With this CAS engine, the performance will be equivalent to local disk or the file system (host path) on which the volumes are created. Many cloud native applications may not require advanced storage features like replication, snapshots and clones as they themselves can handles those. Such applications require access to managed disks as persistent volumes. 
+OpenEBS provides Dynamic PV provisioners for [Kubernetes Local Volumes](https://kubernetes.io/docs/concepts/storage/volumes/#local). A local volume implies that storage is available only from a single node.  A local volume represents a mounted local storage device such as a disk, partition or directory. 
+
+As the Local Volume is accessible only from a single node, local volumes are subject to the availability of the underlying node and are not suitable for all applications. If a node becomes unhealthy, then the local volume will also become inaccessible, and a Pod using it will not be able to run. Applications using local volumes must be able to tolerate this reduced availability, as well as potential data loss, depending on the durability characteristics of the underlying disk.
 
 
+## Use Cases
 
-## Benefits of OpenEBS Local PVs
+Examples of good workloads that can benefit from local volumes are: 
 
-OpenEBS Local PVs are analogous to Kubernetes LocalPV. In addition, OpenEBS LocalPVs have the following benefits.
+- Replicated databases like MongoDB, Cassandra
+- Stateful workloads that can be configured with their own high-availability configuration like Elastic, MinIO 
+- Edge workloads that typically run on a single node or in Single node Kubernetes Clusters.
 
-- Local PVs are provisioned dynamically by OpenEBS Local PV provisioner.  When the Local PV is provisioned with the default StorageClass with storage-type as :
-  -  `hostpath`, the default `BasePath` is created dynamically on the node and mapped to the Local PV. 
-  -  `device`,  one of the  matching BlockDevice on the node is claimed and mapped to the Local PV.
-- BlockDevice for Local PVs are managed by OpenEBS NDM. Disk IO metrics of managed devices can also be obtained with help of NDM.
-- Provisioning of Local PVs is done through the Kubernetes standards. Admin users create storage class to enforce the storage type (device or hostpath) and put additional control through RBAC policies.
-- By specifying the node selector in the application spec YAML , the application pods can be scheduled on specific nodes. After scheduling the application pod, OpenEBS Local PV will be deployed on the same node. It guarantees that the pod is always rescheduled on the same node to retain access to the data all the time.
+OpenEBS helps users to take local volumes into production by providing features that are currently missing in Kubernetes like:
 
+- Dynamic PV Provisioners for local volumes.
+- Local Volumes backed by hostpath on filesystems like Ext3, XFS or ZFS.
+- Monitoring the health of underlying devices or storage used to create Local Volumes. 
+- Capacity management features like over-provisioning and/or quota enforcement. 
+- Make use of the underlying storage capabilities like snapshot, clone, compression and so forth when local volumes are backed by advanced filesystem like ZFS. 
+- Backup and Restore via Velero. 
+- Secure the local volumes via LUKS or by using in-build encryption support of the underlying filesystem like ZFS.
 
+## Quick Start Guides
 
-## How to use OpenEBS Local PVs
+OpenEBS provides different types of Local Volumes that can be used to provide locally mounted storage to Kubernetes Stateful workloads. Follow these guides to get started with each type of Local Volume. 
 
-OpenEBS create two Storage Classes of Local PVs by default as `openebs-hostpath` and `openebs-device`. For simple provisioning of OpenEBS Local PV, these default Storage Classes can be used. More details can be found  [here](/docs/next/uglocalpv.html).   
-
-End users or developers will provision the OpenEBS Local PVs like any other PV, by creating a PVC using a StorageClass provided by the admin user. The StorageClass has `volumeBindingMode: WaitForFirstConsumer` which means delay volume binding until application pod is scheduled on the node.
-
-<h4><a class="anchor" aria-hidden="true" id="openebs-localpv-device"></a>OpenEBS Local PV based on device</h4>
-
-Admin user can create a customized StorageClass using the following sample configuration.
-
-```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: openebs-device
-  annotations:
-    openebs.io/cas-type: local
-    cas.openebs.io/config: |
-      - name: StorageType
-        value: "device"
-      - name: FSType
-        value: ext4
-provisioner: openebs.io/local
-reclaimPolicy: Delete
-volumeBindingMode: WaitForFirstConsumer
-```
-
-When a PVC is created using the above StorageClass, OpenEBS Local PV Provisioner uses NDM operator to  claim a matching BlockDevice from the worker node where the application pod is scheduled. 
-
-The Local PV volume will be provisioned with `volumeMode` as `filesystem` by default. Kubelet will format the block device with the filesystem specified as `FSType` under `cas.openebs.io/config` to the path `metadata.annotations` in the StorageClass while provisioning the Local PV.  Currently supported filesystems are `ext4` and `xfs`. If no `FSType` is specified, by default Kubelet will format the BlockDevice as `ext4`.
-
-From OpenEBS 1.5, Local PV volume has Raw Block Volume support. The Raw Block Volume support can be added to the path `spec.volumeMode` as `Block` in the Persistent Volume spec. The sample YAML spec of PVC to provision Local PV on Raw Block volume can be found [here](/docs/next/uglocalpv.html#Provision-OpenEBS-Local-PV-based-on-Device).
-
-For provisioning Local PV using the BlockDevice attached to the nodes, the BlockDevice should be in one of the following states:
-
-- User has attached the BlockDevice, formatted and mounted them. This means, the BlockDevice is already formatted and is mounted on the worker node.
-
-  - For Example: Local SSD in GKE.
-
-- User has attached the BlockDevice, un-formatted and not mounted. This means, the BlockDevice is attached on the worker node without any file system.
-
-  - For Example: GPD in GKE.
-
-- User has attached the block device, but device has only device path and no dev links.
-
-  - For Example: VM with VMDK disks or AWS node with EBS.
-
-
-<h4><a class="anchor" aria-hidden="true" id="openebs-localpv-hostpath"></a>OpenEBS Local PV based on hostpath</h4>
-
-Admin user creates a customized StorageClass using the following sample configuration.
-
-```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: openebs-hostpath
-  annotations:
-    openebs.io/cas-type: local
-    cas.openebs.io/config: |
-      - name: BasePath
-        value: "/var/openebs/local"
-      - name: StorageType
-        value: "hostpath"
-provisioner: openebs.io/local
-reclaimPolicy: Delete
-volumeBindingMode: WaitForFirstConsumer
-```
-
-When a PVC is created using the above StorageClass, OpenEBS Local PV  provisioner will create a new sub directory inside the `BasePath` and maps it to the PV.
-
-**Note:** If default `Basepath` needs to be changed by mentioning different hostpath, then the specified hostpath(directory) must be present of the Node.  
-
+- [OpeneBS Local PV using Hostpath](/docs/next/uglocalpv-hostpath.html)
+- [OpeneBS Local PV using Block Devices](/docs/next/uglocalpv-device.html)
 
 
 ## When to use OpenEBS Local PVs
@@ -111,10 +50,49 @@ When a PVC is created using the above StorageClass, OpenEBS Local PV  provisione
 ## When not to use OpenEBS Local PVs
 
 - When applications expect replication from storage.
-
 - When the volume size may need to be changed dynamically but the underlying disk is not resizable. 
 
-  
+## Backup and Restore 
+
+OpenEBS Local Volumes can be backed up and restored along with the application using [Velero](https://velero.io). 
+
+Velero uses [Restic](https://github.com/restic/restic) for backing up and restoring Kubernetes local volumes. Velero can be configured to save the backups either in the cloud or on-premise with any S3 compatible storage like Minio. When user initiates the backup, Velero via the Restic, will copy the entire data from the Local PV to the remote location. Later, when the user wants to restore the application, velero injects an init container into the application that will download and populate the data into the volume from the backed up location. For more details on how Velero Restic works, please see documentation on [Velero Restic integration](https://velero.io/docs/v1.3.2/restic/). 
+
+While the preferred way for Backup and Restore for cloud native applications using Local Volumes is to use the application specific backup solution, you can use the Velero based Backup and Restore in the following cases:
+- Application doesn't natively provide a Backup and Restore solution
+- Schedule a Daily or weekly backups of the data during a off-peak hours
+- Migrating the application using Local Volumes to a new Cluster. 
+
+You can refer to the [Local PV user guides](#see-also) for detailed instructions on Backup and Restore. 
+
+A quick summary of the steps to backup include:
+
+1. Install and Setup Velero by following the [Velero Documentation](https://velero.io/docs/).  
+
+2. Prepare the application that needs to be backed up. Label and annotate the application, indicating that you would like to use velero to backup the volumes. For example, if you would like to backup an application pod named `hello-local-hostpath-pod` with a volume mount `local-storage`, you would need to run the following commands. 
+   
+   ```
+   kubectl label pod hello-local-hostpath-pod app=test-velero-backup
+   kubectl annotate pod hello-local-hostpath-pod backup.velero.io/backup-volumes=local-storage
+   ```
+3. Use velero to backup the application. 
+   ```
+   velero backup create bbb-01 -l app=test-velero-backup
+   ```
+
+A quick summary of the steps to restore include:
+
+1. Install and Setup Velero, with the same provider where backups were saved. 
+
+2. Local PVs are created with node affinity. As the node names will change when a new cluster is created, create the required PVC(s) prior to proceeding with restore. 
+   ```
+   kubectl apply -f https://openebs.github.io/charts/examples/local-hostpath/local-hostpath-pvc.yaml
+   ```
+   
+3. Use velero to restore the application and populate the data into the volume from the backup. 
+   ```
+   velero restore create rbb-01 --from-backup bbb-01 -l app=test-velero-backup
+   ```
 
 ## Limitations (or Roadmap items ) of OpenEBS Local PVs
 
@@ -126,7 +104,6 @@ When a PVC is created using the above StorageClass, OpenEBS Local PV  provisione
 <br>
 
 <hr>
-<br>
 
 ## See Also:
 
@@ -134,7 +111,9 @@ When a PVC is created using the above StorageClass, OpenEBS Local PV  provisione
 
 ### [Understanding NDM](/docs/next/ndm.html)
 
-### [Local PV User Guide](/docs/next/uglocalpv.html)
+### [Local PV Hostpath User Guide](/docs/next/uglocalpv-hostpath.html)
+
+### [Local PV Device User Guide](/docs/next/uglocalpv-device.html)
 
 <br>
 
