@@ -403,3 +403,49 @@ redoc .operation-type {
   background-color: #FEF0EB;
   border-radius: 15px;
 }
+
+
+/* merge "Copy" code block button into custom.css */
+pre {
+    position: relative;
+  }
+  
+  pre .btnIcon {
+    position: absolute;
+    margin: 0;
+    top: 4px;
+    z-index: 2;
+    cursor: pointer;
+    border: 1px solid transparent;
+    color: #383030;
+    background-color: #f5f4f7;
+    /*height: 30px;*/
+    transition: all .25s ease-out;
+  }
+  
+  pre .btnIcon:hover {
+    text-decoration: none;
+    background-color: #fff;
+  }
+  
+  .btnIcon__body {
+    align-items: center;
+    display: flex;
+    margin: 0 0;
+    padding: 0 0;
+  }
+  
+  .btnIcon svg {
+    fill: currentColor;
+    margin-right: .4em;
+  }
+  
+  .btnIcon__label {
+    font-size: 11px;
+  }
+  
+  .btnClipboard {
+    right: 1px;
+    border-radius: 4px;
+    padding: 0 8px;
+  }
