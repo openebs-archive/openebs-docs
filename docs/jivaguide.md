@@ -72,7 +72,7 @@ In this mode, local disks on each node has to be formatted and mounted at a dire
 
 
 <h3><a class="anchor" aria-hidden="true" id="provision-sample-application-with-jiva-volume"></a>Provision Sample Applications with Jiva Volume</h3>
-   
+
 <h3>1.Percona</h3>
 
 Here we illustrate the usage of default Jiva storage class. In the following example manifest, the default storage class `openebs-jiva-default` is specified in `PersistentVolumeClaim` specification. So, the Jiva volume will be created with 3 replicas adhering to the default configuration. The manifest for deploying Percona can be downloaded from <a href="https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/percona/percona-openebs-deployment.yaml"> here</a> or use the following spec.
@@ -161,7 +161,7 @@ Here we illustrate the usage of default Jiva storage class. In the following exa
   Now, Percona application runs inside jiva default storage pool.
 
 <h3>2.Busybox</h3>
-   
+
    Before provisioning the application ensure that all the below mentioned steps are carried out:
 <ol>
  <li>
@@ -260,7 +260,7 @@ The application pods should be running as displayed below
 ```
 NAME                       READY   STATUS    RESTARTS   AGE
 busybox-66db7d9b88-kkktl   1/1     Running   0          2m16s
-``` 
+```
 </li>
 </ol>
 
@@ -591,7 +591,6 @@ Below table lists the storage policies supported by Jiva. These policies can be 
 | [ReplicaResourceRequests](#ReplicaResourceRequests-Policy)       |           | Decided by Kubernetes scheduler   | Configuring resource requests that need to be available to the Replica.     |
 | [ReplicaResourceLimits](#ReplicaResourceLimits-Policy)       |           | Decided by Kubernetes scheduler   | Allow you to specify resource limits for the Replica.        |
 | [Target Affinity](#Target-Affinity-Policy)                   |           | Decided by Kubernetes scheduler   | The policy specifies the label `key: value` pair to be used both on the Jiva target and on the application being used so that application pod and Jiva target pod are scheduled on the same node. |
-| [OpenEBS Namespace Policy for Jiva Pods](#deploy-in-openEBS-namespace) |           | false                             | Jiva Pod will be deployed in PVC name space by default. With the value as `true`, Jiva Pods will run in OpenEBS namespace. |
 
 <h4><a class="anchor" aria-hidden="true" id="Replica-Count-Policy"></a>Replica Count Policy</h4>
 
@@ -968,31 +967,7 @@ The Stateful workloads access the OpenEBS storage volume by connecting to the Vo
       openebs.io/target-affinity: fio-jiva
   ```
 
-**Note**: *This feature works only for cases where there is a single application pod instance associated to a PVC.  Example YAML spec for application deployment can be get from [here](https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/fio/demo-fio-jiva-taa.yaml). In the case of STS, this feature is supported only for single replica StatefulSet.*
-
-<h4><a class="anchor" aria-hidden="true" id="deploy-in-openEBS-namespace"></a>OpenEBS Namespace Policy for Jiva Pods</h4>
-
-This StorageClass Policy is for deploying the Jiva pods in OpenEBS Namespace. By default, the value is `false`, so Jiva Pods will deploy in PVC namespace. The following are the main requirement of running Jiva pods in OpenEBS namespace.
-
-* With default value, granting additional privileges to Jiva pods to access hostpath might involve granting privileges to the entire namespace of PVC. With enabling this value as`true` , Jiva pods will get additional privileges to access hostpath in OpenEBS namespace. 
-
-* To avoid duplicate Jiva Pod creation during the restoration using Velero.
-
-The following is a snippet of an StorageClass YAML spec for running Jiva pods in `openebs` namespace.
-
-```
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: jiva-pods-in-openebs-ns
-  annotations:
-    openebs.io/cas-type: jiva
-    cas.openebs.io/config: |
-      - name: DeployInOpenEBSNamespace
-        enabled: "true"
-provisioner: openebs.io/provisioner-iscsi
-```
-
+**Note**: *This feature works only for cases where there is a single application pod instance associated to a PVC.  Example YAML spec for application deployment can be get from [here](https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/fio/demo-fio-jiva-taa.yaml). In the case of STS, this feature is supported only for single replica StatefulSet.
 
 <br>
 
