@@ -42,6 +42,7 @@ const siteConfig = {
     primaryColor: '#a9a9a9',
     secondaryColor: '#205C3B',
   },
+  gaTrackingId: 'UA-92076314-12',
   // organizationName: 'deltice', // or set an env variable ORGANIZATION_NAME
   // projectName: 'test-site', // or set an env variable PROJECT_NAME
   highlight: {
