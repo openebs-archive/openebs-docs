@@ -42,6 +42,7 @@ const siteConfig = {
     primaryColor: '#a9a9a9',
     secondaryColor: '#205C3B',
   },
+  gaTrackingId: 'UA-92076314-12',
   // organizationName: 'deltice', // or set an env variable ORGANIZATION_NAME
   // projectName: 'test-site', // or set an env variable PROJECT_NAME
   highlight: {
@@ -53,9 +54,7 @@ const siteConfig = {
     'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js',
     '/js/code-blocks-buttons.js',
   ],
-  stylesheets: [
-    '/css/code-blocks-buttons.css',
-  ],
+  stylesheets: [],
 };
 
 module.exports = siteConfig;
