@@ -6,7 +6,9 @@
     "publish-gh-pages": "docusaurus-publish",
     "write-translations": "docusaurus-write-translations",
     "version": "docusaurus-version",
-    "rename-version": "docusaurus-rename-version"
+    "rename-version": "docusaurus-rename-version",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "devDependencies": {
     "docusaurus": "^1.0.12"
@@ -17,6 +19,8 @@
     "hawk": "^7.0.7",
     "lodash": ">=4.17.13",
     "macaddress": "^0.2.9",
-    "remarkable-admonitions": "^0.2.2"
-  }
+    "remarkable-admonitions": "^0.2.2",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
