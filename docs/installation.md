@@ -96,7 +96,7 @@ Installed helm version can be obtained by using the following command:
 ```
 helm version
 ```
-Example ouptut:
+Example output:
 
 <div class="co">
 Client: &version.Version{SemVer:"v2.16.1", GitCommit:"bbdfe5e7803a12bbdf97e94cd847859890cf4050", GitTreeState:"clean"}
@@ -116,17 +116,17 @@ See [helm docs](https://helm.sh/docs/intro/install/#from-script) for setting up 
 ```
 helm version
 ```
-Example ouptut:
+Example output:
 
 <div class="co">
 version.BuildInfo{Version:"v3.0.2", GitCommit:"19e47ee3283ae98139d98460de796c1be1e3975f", GitTreeState:"clean", GoVersion:"go1.13.5"}
 </div>
 
-OpenEBS instalaltion with helm v3 can be done by 2 ways:
+OpenEBS installation with helm v3 can be done in 2 ways:
 
 **Option 1:** Helm v3 takes the current namespace from the local kube config and use that namespace the next time the user executes helm commands. If it is not present, the default namespace is used. Assign the `openebs` namespace to the current context and run the following commands to install openebs in `openebs` namespace. 
 
-To view current context, run the following:
+To view the current context, run the following:
 ```
 kubectl config current-context
 ```
@@ -162,12 +162,12 @@ To view the chart
 ```
 helm ls -n openebs
 ```
-The above commans will install OpenEBS in `openebs` namespace and chart name as `openebs` 
+The above command will install OpenEBS in `openebs` namespace and chart name as `openebs` 
 
 
 **Note:** 
 
-1. Since Kubernetes 1.12, if any containers does not set its resource requests & limits values, it results into eviction. It is recommended to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be obtained from [here](#example-configuration-pod-resource-requests).
+1. Since Kubernetes 1.12, if any containers do not set its resource requests & limits values, it results in eviction. It is recommended to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be obtained from [here](#example-configuration-pod-resource-requests).
 
 2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
 
@@ -221,7 +221,7 @@ Default values for Helm Chart parameters are provided [below](#helm-values).
 After doing the custom configuration in the values.yaml file, run the below command to do the custom installation.
 
 ```
-helm install --namespace <custom_namespace> --name openebs stable/openebs -f values.yaml --version 1.9.0
+helm install --namespace <custom_namespace> openebs stable/openebs -f values.yaml --version 1.9.0
 ```
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
@@ -242,7 +242,7 @@ kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.9.0.yaml
 
 **Note:** 
 
-1. Since Kubernetes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests). 
+1. Since Kubernetes 1.12,  if any pod containers do not set its resource requests & limits values, it results in eviction. It is recommended to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be found [here](#example-configuration-pod-resource-requests). 
 
 2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
 
@@ -343,9 +343,9 @@ The following configuration must added as environmental variable in the maya-api
 
 <h4><a class="anchor" aria-hidden="true" id="default-cstor-sparse-pool"></a>Default cStorSparsePool</h4>
 
-The OpenEBS installation will create default cStor sparse pool based on this configuration value. If "true",  default cStor sparse pools will be configured, if "false", it will not be configure a default cStor sparse pool. The default configured value is "false". The use of cStor sparse pool is for testing purposes only. 
+The OpenEBS installation will create default cStor sparse pool based on this configuration value. If "true",  default cStor sparse pools will be configured, if "false", it will not configure a default cStor sparse pool. The default configured value is "false". The use of cStor sparse pool is for testing purposes only. 
 
-The following configuration must be added as environmental variable in the `maya-apiserver` deployment specification for the installation of cStor pool using sparse disks. This change must be done before applying the OpenEBS operator YAML file. 
+The following configuration must be added as an environmental variable in the `maya-apiserver` deployment specification for the installation of cStor pool using sparse disks. This change must be done before applying the OpenEBS operator YAML file. 
 
 **Example:**
 
@@ -375,7 +375,7 @@ The following configuration must added as environmental variable in the `maya-ap
 
 <h4><a class="anchor" aria-hidden="true" id="basepath-for-openEBS-local-pv "></a>Basepath for OpenEBS Local PV</h4>
 
-By default the hostpath is configured as `/var/openebs/local` for Local PV based on hostpath, which can be changed during the OpenEBS operator install by passing the `OPENEBS_IO_BASE_PATH` ENV parameter to the Local PV dynamic provisioner deployment. 
+By default, the hostpath is configured as `/var/openebs/local` for Local PV based on hostpath, which can be changed during the OpenEBS operator install by passing the `OPENEBS_IO_BASE_PATH` ENV parameter to the Local PV dynamic provisioner deployment. 
 
 ```
 # environment variable
@@ -421,13 +421,13 @@ As a next step [verify](#verifying-openebs-installation) your installation and d
 
 **Verify pods:**
 
-List the pods in `<openebs>` name space 
+List the pods in `<openebs>` namespace 
 
 ```
 kubectl get pods -n openebs
 ```
 
-In the successful installation of OpenEBS, you should see an example output like below.
+In case of the successful installation of OpenEBS, you should see an example output like below.
 
 <div class="co">
 NAME                                           READY   STATUS    RESTARTS   AGE
@@ -447,7 +447,7 @@ openebs-snapshot-operator-5bdcdc9b77-v7n4w     2/2     Running   0          97s
 The control plane pods `openebs-provisioner`, `maya-apiserver` and `openebs-snapshot-operator` should be running. If you have configured nodeSelectors , check if they are scheduled on the appropriate nodes by listing the pods through `kubectl get pods -n openebs -o wide`
 
 > The resiliency of the control plane can be verified via `litmus` using <a href="https://docs.litmuschaos.io/docs/next/openebs-control-plane-chaos/"> openebs-control-plane-chaos </a> experiment.
-  
+
 
 **Verify StorageClasses:**
 
