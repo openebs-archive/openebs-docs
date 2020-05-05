@@ -16,7 +16,7 @@
     "extend": ">=3.0.2",
     "hawk": "^7.0.7",
     "lodash": ">=4.17.13",
-    "macaddress": "^0.2.9",
+    "macaddress": "^0.4.3",
     "remarkable-admonitions": "^0.2.2"
   }
 }
