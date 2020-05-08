@@ -563,7 +563,7 @@ It is also possible to change `maxPools` count and `poolType` in the StoragePool
 Consider you have 4 nodes with 2 disks each. You can select `maxPools` count as 3, then cStor pools will be created in any 3 nodes out of 4. The remaining disks belonging to 4th Node can be used for horizontal scale up in future.
 Advantage is that there is no restriction in the number of disks for the creation of cStor storage pool using `striped` or `mirrored` Type.
 
-By auto method, its not need to provide the disk details in the StoragePoolClaim YAML. You have to specify `maxPools` count to limit the storage pool creation in OpenEBS cluster and `poolType` for the type of storage pool such as Mirrored or Striped.  See [storage pool](/v180/docs/next/setupstoragepools.html#by-using-auto-method) for more info.
+By auto method, its not need to provide the disk details in the StoragePoolClaim YAML. You have to specify `maxPools` count to limit the storage pool creation in OpenEBS cluster and `poolType` for the type of storage pool such as Mirrored or Striped.  See [storage pool](/v180/docs/next/ugcstor.html#creating-cStor-storage-pools) for more info.
 
 But the following are the limitations with this approach.
 
@@ -713,27 +713,3 @@ No. It is recommended to create different BDC name for claiming an unclaimed dis
 
 <br>
 
-
-
-<!-- Hotjar Tracking Code for https://docs.openebs.io -->
-
-<script>
-   (function(h,o,t,j,a,r){
-       h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-       h._hjSettings={hjid:785693,hjsv:6};
-       a=o.getElementsByTagName('head')[0];
-       r=o.createElement('script');r.async=1;
-       r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-       a.appendChild(r);
-   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-</script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-92076314-12');
-</script>
