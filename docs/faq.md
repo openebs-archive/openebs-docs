@@ -711,7 +711,7 @@ Currently, device encryption is a manual operation, and the steps for encrypting
 
 <a  href="https://github.com/openebs/openebs-docs/blob/day_2_ops/docs/uglocalpv_volume_encrypt.md" target="_blank">How to use encryption with LocalPV</a>
 
-It is recommended to store encrpyion keys in a secure secret store. Kubernetes Secrets or Vault can be used as a secret provider. 
+It is recommended to store encryption keys in a secure secret store. Kubernetes Secrets or Vault can be used as a secret provider. 
 
 Although block-level encryption is faster than filesystem encryption such as eCryptfs you should be aware that encryption overall increases CPU utilization and will have a small performance overhead on the LUKS encrypted devices.
 
