@@ -181,6 +181,7 @@ nvme0n1     259:1    0    128G  0 disk
 nvme2n1     259:4    0    100G  0 disk
 └─nvme2n1p1 259:6    0     20G  0 part
   └─backup1 254:0    0     20G  0 crypt /var/openebs/local
+```
 
 ### Step 7: Create an example pod using Local PV Hostpath volume
 ```
