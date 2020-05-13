@@ -694,12 +694,28 @@ NAME                                      SIZE          STATUS   AGE
 sparse-5a92ced3e2ee21eac7b930f670b5eab5   10737418240   Active   10m
 ```
 
+<a href="#top">Go to top</a>
+
 
 
 <h3><a class="anchor" aria-hidden="true" id="encryption-rest"></a>Does OpenEBS support encryption at rest?</h3>
 
 
-You can achieve encryption at rest using LUKS. Example tutorial for enabling LUKS on CentOS is at: <a  href="https://wiki.centos.org/HowTos/EncryptedFilesystem" target="_blank">https://wiki.centos.org/HowTos/EncryptedFilesystem</a>
+OpenEBS recommends LUKS encrypted drives with dm-crypt to achieve block-device encryption at rest. 
+
+OpenEBS team is working on introducing native encryption capabilities with the release of the Mayastor storage engine.
+
+Currently, device encryption is a manual operation, and the steps for encrypting the devices consumed by OpenEBS storage engines are explained separately for cStor and LocalPV below:
+
+<a  href="https://github.com/openebs/openebs-docs/blob/day_2_ops/docs/cstor_volume_encrypt.md" target="_blank">How to use encryption with cStor</a>
+
+<a  href="https://github.com/openebs/openebs-docs/blob/day_2_ops/docs/uglocalpv_volume_encrypt.md" target="_blank">How to use encryption with LocalPV</a>
+
+It is recommended to store encryption keys in a secure secret store. Kubernetes Secrets or Vault can be used as a secret provider. 
+
+Although block-level encryption is faster than filesystem encryption such as eCryptfs you should be aware that encryption overall increases CPU utilization and will have a small performance overhead on the LUKS encrypted devices.
+
+<a href="#top">Go to top</a>
 
 
 
@@ -707,6 +723,10 @@ You can achieve encryption at rest using LUKS. Example tutorial for enabling LUK
 
 
 No. It is recommended to create different BDC name for claiming an unclaimed disk manually.
+
+<a href="#top">Go to top</a>
+
+
 
 <br>
 
