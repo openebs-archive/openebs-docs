@@ -98,6 +98,7 @@ This will overwrite data on /dev/nvme2n1p1 irrevocably.
 Are you sure? (Type uppercase yes): YES
 Enter passphrase:
 Verify passphrase:
+```
 
 ### Step 4: Create a LUKS device mapping
 ```
