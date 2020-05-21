@@ -11,8 +11,8 @@ Note: The following steps are applicable only for OpenEBS version installed from
    ```
    kubectl get bd -n openebs
    NAME                                           NODENAME                                       SIZE          CLAIMSTATE   STATUS   AGE
-   blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-minio-default-pool-e076cf5f-q1k1   42949672960   Unclaimed    Active   10s
-   blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-minio-default-pool-e076cf5f-q1k1   42949672960   Claimed      Active   16h
+   blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-minio-default-pool-e076cf5f-q1k1   42949672960   Claimed      Active   10h
+   blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-minio-default-pool-e076cf5f-q1k1   42949672960   Unclaimed    Active   16s
    ```
 3. Get the `disk-id` and `nodename` of blockdevice which is going to be added to the cStor pool. This `disk-id` is required in step 11. The following command will obatin the `disk-id` and `nodename` of the corresponding blockdevice:
    
@@ -21,7 +21,7 @@ Note: The following steps are applicable only for OpenEBS version installed from
    ```
    Example command:
    ```
-   kubectl describe bd blockdevice-77f834edba45b03318d9de5b79af0734 -n openebs | grep -i "\(hostname\|by-id\)"
+   kubectl describe bd blockdevice-936911c5c9b0218ed59e64009cc83c8f -n openebs | grep -i "\(hostname\|by-id\)"
    ```
    Example output:
    ```
@@ -180,7 +180,7 @@ Note: The following steps are applicable only for OpenEBS version installed from
    NAME                   ALLOCATED   FREE    CAPACITY   STATUS    TYPE      AGE
    cstor-disk-pool-f7gq   688K        39.7G   39.8G      Healthy   striped   15m
    ```
-   In the above example, only one cStor pool is running. If there are multiple cStor pools running on the cluster, identify the pool which need to be expanded and find the avaialble blockdevice on the same node where associated pool pod is running . The availble blockdevice should be `Active`, `Unclaimed` and does not contain any filesystem. 
+   In the above example, only one cStor pool is running. If there are multiple cStor pools running on the cluster, identify the pool which need to be expanded and find the avaialble blockdevice on the same node where associated pool pod is running . The availble blockdevice should be `Active`, `Unclaimed`(it should be in claimed before adding to pool) and does not contain any filesystem.
    
 9. Find the pool pod that is running on that host where the cStor pool need to be expanded.
    ```
