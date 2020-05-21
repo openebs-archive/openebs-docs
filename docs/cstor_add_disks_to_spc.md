@@ -180,7 +180,7 @@ Note: The following steps are applicable only for OpenEBS version installed from
    NAME                   ALLOCATED   FREE    CAPACITY   STATUS    TYPE      AGE
    cstor-disk-pool-f7gq   688K        39.7G   39.8G      Healthy   striped   15m
    ```
-   In the above example, only one cStor pool is running. If there are multiple cStor pools running on the cluster, identify the pool which need to be expanded and find the avaialble blockdevice on the same node where associated pool pod is running . The availble blockdevice should be `Active`, `Unclaimed`(it should be in claimed before adding to pool) and does not contain any filesystem.
+   In the above example, only one cStor pool is running. If there are multiple cStor pools running on the cluster, identify the pool which need to be expanded and find the avaialble blockdevice on the same node where associated pool pod is running . The availble blockdevice should be `Active`, `Unclaimed` and does not contain any filesystem.
    
 9. Find the pool pod that is running on that host where the cStor pool need to be expanded.
    ```
@@ -221,7 +221,7 @@ Note: The following steps are applicable only for OpenEBS version installed from
     errors: No known data errors
     ```
    
-11. Add the new disk to the pool by adding `disk-id` which is obtained in step 3. For the `disk-id`, it requires only the name of the device, not the full path that found in the disk description. For example, in case of example output in step 3, use `scsi-0Google_PersistentDisk_ranjith-disk2` as `DISK_ID` in below command.
+11. Add the new disk to the pool by adding `disk-id` which is obtained in step 3. For the `disk-id`, it requires only the name of the device, not the full path that found in the disk description. For example, in case of example output in step 3, use `scsi-0Google_PersistentDisk_ranjith-disk2` as `DISK_ID` in below command. Ensure the corresponding BD should be in claimed state before triggering the command.
 
     ```
     kubectl -n openebs exec -it <POOL_POD_NAME> -c cstor-pool -- zpool add <POOL_NAME> <DISK_ID>
