@@ -21,7 +21,7 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 
 <font size="6">Quickstart</font>
 
-- OpenEBS requires iSCSI client to be configured and iscsid service
+- OpenEBS requires iSCSI client to be configured and `iscsid` service
   running on the worker nodes.
   Verify if [iSCSI service is up](/docs/next/prerequisites.html) and
   running before starting the installation.
@@ -31,7 +31,7 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
   ```
   helm install --namespace openebs --name openebs stable/openebs --version 1.10.0
   ```
-  More infromation about openebs installation using different helm version can be found [here](/docs/next/installation.html#installation-through-helm).
+  More information about OpenEBS installation using different Helm versions can be found [here](/docs/next/installation.html#installation-through-helm).
 
   (or)
 
@@ -44,7 +44,7 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 - [Verify if OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation)
   and start provisioning OpenEBS volumes through Kubernetes PVC
   interface by using `kubectl` command. For more details on how to
-  provision different types of OpenEBS volumes, see guides for [cStor volume](/docs/next/ugcstor.html), [Jiva Volume](/docs/next/jivaguide.html), [OpenEBS Local Volume - Hostpath](/docs/next/uglocalpv-hostpath.html) and [OpenEBS Local Volume - Device](/docs/next/uglocalpv-device.html).
+  provision different types of OpenEBS volumes, see guides for [cStor Volume](/docs/next/ugcstor.html), [Jiva Volume](/docs/next/jivaguide.html), [OpenEBS Local Volume - Hostpath](/docs/next/uglocalpv-hostpath.html) and [OpenEBS Local Volume - Device](/docs/next/uglocalpv-device.html).
 
 <br>
 
