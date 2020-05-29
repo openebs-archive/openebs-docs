@@ -6,7 +6,7 @@ sidebar_label: Features and Benefits
 
 ------
 
-| <font size="6">OpenEBS Features</font> | <font size="6">OpenEBS Benefits</font> |
+| <font size="3">OpenEBS Features</font> | <font size="3">OpenEBS Benefits</font> |
 |--------------------|--------------------|
 | [Containerized storage for containers](#containerized-storage-for-containers) | [Granular policies per stateful workload](#granular-policies-per-stateful-workload) |
 | [Synchronous replication](#synchronous-replication) | [Avoid Cloud Lock-in](#avoid-cloud-lock-in) |
