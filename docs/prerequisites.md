@@ -96,7 +96,7 @@ If the service status is shown as `Inactive`, then you may have to enable and
 start iscsid service using the following command.
 
 ```
-sudo systemctl enable iscsid && sudo systemctl start iscsid
+sudo systemctl enable --now iscsid
 ```
 
 The following is the expected output.
@@ -126,7 +126,7 @@ If iSCSI initiator is not installed on your node, install
 ```
 sudo apt-get update
 sudo apt-get install open-iscsi
-sudo systemctl enable iscsid && sudo systemctl start iscsid
+sudo systemctl enable --now iscsid
 ```
 
 You can verify the iSCSI installation from above section.
@@ -156,7 +156,7 @@ If the status is shown as `Inactive`, then you may have to enable and
 start the iscsid service using the following command.
 
 ```
-sudo systemctl enable iscsid && sudo systemctl start iscsid
+sudo systemctl enable --now iscsid
 ```
 
 The following is the expected output. 
@@ -217,7 +217,7 @@ If the status is showing as `Inactive`, then you may have to enable and
 start the iscsid service using the following command.
 
 ```
-sudo systemctl enable iscsid && sudo systemctl start iscsid
+sudo systemctl enable --now iscsid
 ```
 
 
@@ -268,7 +268,7 @@ If the status is shown as `Inactive`, then you may have to enable and
 start the iscsid service using the following command.
 
 ```
-sudo systemctl enable iscsid && sudo systemctl start iscsid
+sudo systemctl enable --now iscsid
 ```
 
 
@@ -519,8 +519,8 @@ In the above snippet, default hostpath for Local PV (/var/openebs/local), which 
 
 | Operating system      | iSCSI Package         | Commands                                                     |
 | --------------------- | --------------------- | ------------------------------------------------------------ |
-| RHEL / CentOS         | iscsi-initiator-utils | yum install iscsi-initiator-utils -y <br />sudo systemctl enable iscsid && sudo systemctl start iscsid<br />modprobe iscsi_tcp<br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
-| Ubuntu 16.04 / Debian | open-iscsi            | sudo apt install open-iscsi<br />sudo systemctl enable iscsid && sudo systemctl start iscsid<br />modprobe iscsi_tcp<br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
+| RHEL / CentOS         | iscsi-initiator-utils | yum install iscsi-initiator-utils -y <br />sudo systemctl enable --now iscsid<br />modprobe iscsi_tcp<br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
+| Ubuntu 16.04 / Debian | open-iscsi            | sudo apt install open-iscsi<br />sudo systemctl enable --now iscsid<br />modprobe iscsi_tcp<br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
 
 
 
