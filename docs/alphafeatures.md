@@ -116,7 +116,7 @@ From above output, `openebs-cstor-csi-controller-0`  is running and `openebs-cst
 Apply cStor operator YAML file using the following command:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cstor-operator-1.9.0.yaml
+kubectl apply -f https://raw.githubusercontent.com/openebs/charts/master/docs/cstor-operator-1.10.0.yaml
 ```
 
 Verify the status of CSPC operator using the following command:
