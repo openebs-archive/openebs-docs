@@ -172,7 +172,7 @@ If you have a Kubernetes environment, you can deploy OpenEBS using the following
 
 `kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml`
 
-You can then begin running a workload against OpenEBS. There is a large and growing number of workload that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. If you seek for any help,You can join at <a href="https://openebs.io/join-our-community" target="_blank">Slack OpenEBS</a> community channel.
+You can then begin running a workload against OpenEBS. There is a large and growing number of workload that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. If you need additional help, contact <a href="/docs/next/support.html" target="_blank">OpenEBS Support channels</a>.
  
 
 <a href="#top">Go to top</a>

@@ -9,7 +9,7 @@ sidebar_label: Troubleshooting
 
 **Steps for troubleshooting:**
 
-- Join <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a>
+- Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Support</a>.
 - Search for similar issues added in this troubleshootiung section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
@@ -1138,7 +1138,7 @@ Check the status of corresponding cStor volume using the following command:
 kubectl get cstorvolume -n <openebs_installed_namespace> -l openebs.io/persistent-volume=<PV_NAME>
 ```
 
-If cStor volume exists in `Healthy` or `Degraded` state then restarting of the application pod alone will bring back cStor volume to `RW` mode. If cStor volume exists in `Offline`, reach out to <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a> for assistance. 
+If cStor volume exists in `Healthy` or `Degraded` state then restarting of the application pod alone will bring back cStor volume to `RW` mode. If cStor volume exists in `Offline`, reach out to <a href="/docs/next/support.html" target="_blank">Slack OpenEBS Community</a> for assistance. 
 
 <hr>
 
