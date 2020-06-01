@@ -7,7 +7,7 @@ sidebar_label: Alpha Features
 
 
 
-This section give different features of OpenEBS which is presently in Alpha version. These features are not recommend to perform on a production clusters. We suggest to familiarize these features on test clusters and reach out to OpenEBS [Community via slack](/docs/next/support.html) if you have  any queries or help on trying out these features.
+This section contains different features of OpenEBS which are presently in Alpha version. These features are not recommended to be used in production. We suggest you to familiarize and try these features on test clusters and reach out to [OpenEBS Community](/docs/next/support.html) if you have any queries, feedback or need help on these features.
 
 **Note** : Upgrade is not supported for features in Alpha version.
 

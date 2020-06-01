@@ -53,23 +53,7 @@ class Footer extends React.Component {
             </a>
             </div>
 	  <div>
-		<a href="https://openebs.io/join-our-slack-community" target="_blank">Get in touch with OpenEBS community via Slack</a>
-          </div>
-          </div>
-          <div>
-           <br />
-           <div>
-             <a href="https://mayadata.io" target="_blank">
-             <img
-                src={`${this.props.config.baseUrl}docs/assets/mayadata-primary.svg`}
-                alt="mayadata.io"
-                width="130"
-                height="110"
-              />
-            </a>
-            </div>
-	  <div>
-		<a href="https://director.mayadata.io" target="_blank">Get OpenEBS support through Director Online</a>
+		<a href="/docs/next/support.html" target="_blank">Get in touch with OpenEBS community</a>
           </div>
           </div>
         </section>

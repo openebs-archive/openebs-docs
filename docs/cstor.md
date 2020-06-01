@@ -298,7 +298,7 @@ Following are most commonly observed areas of troubleshooting
 
    **Resolution**: 
 
-   This error eventually could get rectified on the further retries, volume gets mounted and application is started. This error is usually seen when cStor target takes some time to initialize  on low speed networks as it takes time to download cStor image binaries from repositories ( or )  or because the cstor target is waiting for the replicas to connect and establish quorum. If the error persists beyond 5 minutes, logs need to be verified, contact support or seek help on the <a href="/docs/next/support.html" target="_blank">Slack OpenEBS Community</a>.<br>
+   This error eventually could get rectified on the further retries, volume gets mounted and application is started. This error is usually seen when cStor target takes some time to initialize  on low speed networks as it takes time to download cStor image binaries from repositories ( or )  or because the cstor target is waiting for the replicas to connect and establish quorum. If the error persists beyond 5 minutes, logs need to be verified, contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.<br>
 
 4. **Kubelet seen consuming high RAM usage with cStor volumes**
 
