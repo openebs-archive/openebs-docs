@@ -101,6 +101,12 @@ footer .sitemap .nav-home {
   transition: initial;
 }
 
+footer .sitemap a {
+  justify-content: center;
+  align-content: center;
+  display: flex;
+}
+
 /* NAV bar */
 
 .fixedHeaderContainer header img#logo {
