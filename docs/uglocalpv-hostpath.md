@@ -258,7 +258,7 @@ The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolu
    ```
 
    :::note
-   As the Local PV storage classes use `waitForFirstConsumer`, do not use `nodeName` in the Pod spec to specify node affinity. If `nodeName` is used in the Pod spec, then PVC will remain in pending state. For more details refer https://github.com/openebs/openebs/issues/2915.
+   As the Local PV storage classes use `waitForFirstConsumer`, do not use `nodeName` in the Pod spec to specify node affinity. If `nodeName` is used in the Pod spec, then PVC will remain in `pending` state. For more details refer https://github.com/openebs/openebs/issues/2915.
    :::
 
 2. Create the Pod:
