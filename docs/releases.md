@@ -43,7 +43,7 @@ sidebar_label: Releases
 
 <br>
 
-### 0.2.0
+## 0.2.0
 
 Change summary
 
@@ -58,8 +58,6 @@ Additional Details:
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v0.2)
 
 <br>
-
-
 
 
 
