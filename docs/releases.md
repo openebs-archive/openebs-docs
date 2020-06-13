@@ -43,6 +43,22 @@ sidebar_label: Releases
 
 <br>
 
+### 0.2.0
+
+Change summary
+
+- Integrated OpenEBS FlexVolume Driver and Dynamically Provision OpenEBS Volumes into Kubernetes.
+- Support Maya api server to provides new AWS EBS-like API for provisioning Block Storage.
+- Enhanced Maya api server to Hyper Converged with Nomad Scheduler.
+- Backup/Restore Data from Amazon S3.
+- Node Failure Resiliency Fixes
+
+Additional Details: 
+- [Release Blog](https://openebs.io/blog/openebs-sprinting-ahead-0-2-released/)
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v0.2)
+
+<br>
+
 
 
 
