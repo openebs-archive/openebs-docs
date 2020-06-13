@@ -39,23 +39,33 @@ sidebar_label: Releases
 | 0.5.0                            | [Release Blog](https://openebs.io/blog/openebs-0-5-enables-storage-policies-for-kubernetes-persistent-volumes/) <br><br>[Release Notes](https://github.com/openebs/openebs/releases/tag/v0.5.0) | -Changed the custom resource (Disk) used in earlier releases has been changed to Block Device.<br>- Enhanced   Storage Policy Enforcement Framework for Jiva.<br/>- Extend OpenEBS API Server to expose volume snapshot API.<br/>- Support for deploying OpenEBS via helm charts.<br/>- Sample Prometheus configuration for collecting OpenEBS Volume Metrics.<br/>- Sample Grafana OpenEBS Volume Dashboard - using the prometheus Metrics |
 | 0.4.0                            | [Release Blog](https://openebs.io/blog/quick-update-on-openebs-v0-4-a-developer-friendly-release/)<br><br>[Release Notes](https://github.com/openebs/openebs/releases/tag/v0.4.0) | - Enhanced   MAYA cli support for managing snapshots,usage statistics.<br/>- Support OpenEBS Maya API Server uses the Kubernetes scheduler logic to place OpenEBS Volume Replicas on different nodes<br/>- Support Extended deployment of OpenEBS in AWS.<br/>- Support OpenEBS can be deployed in a minikube setup.<br/>- Enhanced openebs-k8s-provisioner from crashloopbackoff state |
 | 0.3.0                            | [Release Blog](https://openebs.io/blog/openebs-on-the-growth-path-releases-0-3/)<br><br>[Release Notes](https://github.com/openebs/openebs/releases/tag/v0.3) | - Support   OpenEBS hyper-converged with Kubernetes Minion Nodes.<br/>- Enable OpenEBS via the openebs-operator.yaml<br/>-  Supports creation of OpenEBS volumes using Dynamic Provisioner.<br/>- Storage functionality and Orchestration/Management functionality is delivered as container images on DockerHub. |
-| 0.2.0                            | [Release Blog](https://openebs.io/blog/openebs-sprinting-ahead-0-2-released/)<br><br>[Release Notes](https://github.com/openebs/openebs/releases/tag/v0.2) | - Integrated   OpenEBS FlexVolume Driver and Dynamically Provision OpenEBS Volumes into Kubernetes.<br/>- Support Maya api server to provides new AWS EBS-like API for   provisioning Block Storage.<br/>- Enhanced Maya api server to Hyper Converged with Nomad Scheduler.<br/>- Backup/Restore Data from Amazon S3.<br/>- Node Failure Resiliency Fixes |
 
 <br>
 
-## 0.2.0
+## 0.3.0
 
-Change summary
-
-- Integrated OpenEBS FlexVolume Driver and Dynamically Provision OpenEBS Volumes into Kubernetes.
-- Support Maya api server to provides new AWS EBS-like API for provisioning Block Storage.
-- Enhanced Maya api server to Hyper Converged with Nomad Scheduler.
-- Backup/Restore Data from Amazon S3.
-- Node Failure Resiliency Fixes
+Change summary:
+-	Support   OpenEBS hyper-converged with Kubernetes Minion Nodes.
+-	Enable OpenEBS via the openebs-operator.yaml
+-	Supports creation of OpenEBS volumes using Dynamic Provisioner.
+-	Storage functionality and Orchestration/Management functionality is delivered as container images on DockerHub.
 
 Additional Details: 
-- [Release Blog](https://openebs.io/blog/openebs-sprinting-ahead-0-2-released/)
-- [Release Notes](https://github.com/openebs/openebs/releases/tag/v0.2)
+-	[Release Blog](https://openebs.io/blog/openebs-on-the-growth-path-releases-0-3/)
+-	[Release Notes](https://github.com/openebs/openebs/releases/tag/v0.3)
+
+## 0.2.0
+
+Change summary:
+-	Integrated OpenEBS FlexVolume Driver and Dynamically Provision OpenEBS Volumes into Kubernetes.
+-	Support Maya api server to provides new AWS EBS-like API for provisioning Block Storage.
+-	Enhanced Maya api server to Hyper Converged with Nomad Scheduler.
+-	Backup/Restore Data from Amazon S3.
+-	Node Failure Resiliency Fixes
+
+Additional Details: 
+-	[Release Blog](https://openebs.io/blog/openebs-sprinting-ahead-0-2-released/)
+-	[Release Notes](https://github.com/openebs/openebs/releases/tag/v0.2)
 
 <br>
 
