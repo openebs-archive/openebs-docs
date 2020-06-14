@@ -52,8 +52,7 @@
 	"kb", 
 	"alphafeatures"
 	],
-    "Release Notes": [
-	"releases", 
+    "Deprecated Releases": [
 	"releases-0x" 
 	]
   }
