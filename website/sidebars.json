@@ -51,6 +51,9 @@
 	"troubleshooting", 
 	"kb", 
 	"alphafeatures"
+	],
+    "Deprecated Releases": [
+	"releases-0x" 
 	]
   }
 }
