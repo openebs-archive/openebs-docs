@@ -51,6 +51,10 @@
 	"troubleshooting", 
 	"kb", 
 	"alphafeatures"
+	],
+    "Release Notes": [
+	"releases", 
+	"releases-0x" 
 	]
   }
 }
