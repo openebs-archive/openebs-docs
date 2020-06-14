@@ -10,17 +10,180 @@ sidebar_label: Releases
 
 
 
+## 1.10.0 - May 15 2020
+
+<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
+
+**New capabilities**
+- The first release of OpenEBS Mayastor developed using NVMe based architecture, targetted at addressing performance requirements of IO-intensive workloads is ready for alpha testing. For detailed instructions on how to get started with Mayastor please refer to this [Quickstart guide](https://github.com/openebs/Mayastor/blob/master/doc/quick.md). 
+- Enhancements to OpenEBS ZFS Local PV that includes resolving issues found during scale testing, fully functional CSI driver, and sample Grafana Dashboard for monitoring metrics on ZFS Volumes and Pools. For detailed instructions on how to get started with ZFS Local PV please refer to the [Quick start guide](https://github.com/openebs/zfs-localpv). 
+
+**Key Improvements**
+- Added support for cloning a cStor volume into a different namespace using remote Backup.
+- Added support to enable/disable the installations of CRDs from within the OpenEBS containers.
+- Optimizing the Helm values for air-gapped environments. 
+- Add support for specifying custom node labels in StorageClass allowedTopologies. Supported by ZFS Local PV.
+
+**Key Bug Fixes**
+- Fixes an issue BlockDevice objects were getting created for transient devices.
+- Fixes an issue where the deletion of a failed Backup would cause a panic to the Velero Plugin.
+- Fixes an issue with ZFS Local PV driver registration on microk8s snap.
+- Fixes an issue with pod creation problems due to slow mounting/attaching. |
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.10.0)
+- [Upgrade Steps](/docs/next/upgrade.html)
 
 
-| Release Version                  | Notes                                                        | Highlights                                                   |
-| -------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| <br/><font size="5">1.10.0</font> | <br><font size="4">Latest Release</font><br/> (Recommended)<br/> [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.10.0)<br/> [Upgrade Steps](/docs/next/upgrade.html)<br/> | <br/><br/>**New capabilities**<br/><br/> - The first release of OpenEBS Mayastor developed using NVMe based architecture, targetted at addressing performance requirements of IO-intensive workloads is ready for alpha testing. For detailed instructions on how to get started with Mayastor please refer to this [Quickstart guide](https://github.com/openebs/Mayastor/blob/master/doc/quick.md). <br/> - Enhancements to OpenEBS ZFS Local PV that includes resolving issues found during scale testing, fully functional CSI driver, and sample Grafana Dashboard for monitoring metrics on ZFS Volumes and Pools. For detailed instructions on how to get started with ZFS Local PV please refer to the [Quick start guide](https://github.com/openebs/zfs-localpv). <br/><br/>**Key Improvements**<br/><br/> - Added support for cloning a cStor volume into a different namespace using remote Backup.  <br/> - Added support to enable/disable the installations of CRDs from within the OpenEBS containers. <br/> - Optimizing the Helm values for air-gapped environments. <br/> - Add support for specifying custom node labels in StorageClass allowedTopologies. Supported by ZFS Local PV. <br/><br/>**Key Bug Fixes**<br/><br/> - Fixes an issue BlockDevice objects were getting created for transient devices. <br/> - Fixes an issue where the deletion of a failed Backup would cause a panic to the Velero Plugin. <br/> - Fixes an issue with ZFS Local PV driver registration on microk8s snap. <br/> - Fixes an issue with pod creation problems due to slow mounting/attaching. |
-| <br/><font size="5">1.9.0</font> |  [Release Notes](https://github.com/openebs/openebs/releases/tag/1.9.0)<br/> [Upgrade Steps](/v190/docs/next/upgrade.html)<br/> | <br>**Key Improvements** <br/>- Added support for cloning a cStor volume into a different namespace.<br/> - Added support to upgrade multiple volumes using a single command.<br/> - Added support for reserving block devices that can be used by Local PV.<br/> - Added support to migrate Jiva related Kubernetes objects from PVC namespace to OpenEBS. After migration, the administrator can tighten RBAC policies for OpenEBS Service Account.<br/> - Added support for taking out faulty Jiva replica without causing a restart to other healthy replicas.<br/> <br>**Key Bug Fixes<br/>**- Fixes an issue where scheduled remote backups result in consuming extra capacity on the local storage pools. Support for re-claiming the capacity on the cStor Pools, by deleting the snapshots that have been successfully backed up to a remote location.<br/> - Fixes an issue where some of the OpenEBS containers were using an older unsupported alpine image for base docker image.<br/> - Fixes an issue where the Backup of cStor volumes with 50G or higher capacity to MinIO or AWS can fail.<br/> - Fixes an issue where Jiva replica can fail to initialize due to partially written metadata file, caused by node/pod restart.<br/> - Fixes an issue where labels added to BlockDevices were not retained for NDM pod is restarted.<br/> - Fixes an issue where Jiva cleanup jobs were not scheduled due to nodes being tainted.<br/> - Fixes a panic in Local PV provisioner, while processing a PV delete request with a hostname that is no longer present in the cluster.<br/> - Fixes an issue where volumeBindingMode: WaitForFirstConsumer will make provisioning fail for cStor.<br/> <br>**Alpha Features** <br/> - Support for generating automated ARM images cStor, Local PV provisioner and control plane components.<br/> - Support for generating ppc64le images for Local PV provisioner and Jiva components.<br/> - Support for automated e2e testing for ZFS Local PV and fixing issues reported by the alpha users.<br/> |
-| <br/><font size="5">1.8.0</font> | [Release Notes](https://github.com/openebs/openebs/releases/tag/1.8.0)<br/> [Upgrade Steps](/docs/next/upgrade.html)<br/> | <br>**Key Changes** <br/> - Added support for configuring capacity threshold limit for a cStor Pool. The default threshold limit is set at 85%. The threshold setting has been introduced to avoid a scenario where pool capacity is fully utilized, resulting in failure of all kinds of operations - including pool expansion.<br/> - Validated that OpenEBS cStor can be used with K3OS(k3os-v0.9.0).<br/> - Fixes an issue where Jiva volumes could cause data loss when a node restarts during an ongoing space reclamation at its replica.<br/>- Fixes an issue where cStor restore from scheduled backup fails, if the first scheduled backup was aborted.<br/>- Fixes an issue where upgrade scripts were failing on Mac.<br/>- Fixes documentation references to deprecated `disk` custom resource in example YAMLs.<br/>- Fixes documentation to include a troubleshooting section to work with api server ports blocked due to advanced network configuration.<br/><br>**Alpha Features** <br/>- Support for generating automated ARM builds for Jiva.<br/>- Support for generating automated ppc64le builds for Node Disk Manager.<br/>- Support for volume expansion of ZFS Local PV and add automated e2e tests.<br/>- Support for declarative scale up and down of cstor volume replicas, increasing the e2e coverage and fixing the issue uncovered.<br/>- Incorporate the feedback on the cStor Custom Resource Schema and work towards v1 schema.<br/> |
-| <br/><font size="5">1.7.0</font> | [Release Notes](https://github.com/openebs/openebs/releases/tag/1.7.0)<br/> [Upgrade Steps](/v170/docs/next/upgrade.html)<br/> | - Fixes an issue where Jiva Replicas could get stuck in WO or NA state, when the size of the replica data grows beyond 300GB.<br/>- Fixes an issue where unused custom resources from older versions are left in the etcd, even after openebs is upgraded. <br/>- Fixes an issue where cleanup of Jiva volumes on OpenShift 4.2 environment was failing.- Fixes an issue where custom resources used by cStor Volumes fail to get deleted when the underlying pool was removed prior to deleting the volumes.<br/>- Fixes an issue where a cStor Volume Replica would be incorrectly marked as invalid due to a race condition caused between a terminating and its corresponding newly launched pool pods. <br>**Alpha Features** <br/>- Support for generating automated ARM builds for NDM.<br/>- Support for managing snapshot and clones of ZFS Local PV.<br/>- Support for setting up PDB and PriorityClasses on cStor Pool Pods. Increasing the e2e coverage and fixing the issue uncovered.<br/>- Support for resizing Jiva Volume via CSI driver and other bug fixes.<br/> |
-| <br/><font size="5">1.6.0</font> | <br/> [Release Notes](https://github.com/openebs/openebs/releases/tag/1.6.0)<br/> [Upgrade Steps](/v160/docs/next/upgrade.html)<br/> | - Add support for building cStor on ARM builds by moving cstor-pool-mgmt, cstor-volume-mgmt, maya-exporter and cspi-mgmt build scripts to their specific folders and add arm build scripts.<br/>- Add support for provisioning Local PV hostpath when the nodes are tainted. It also handles the implementation of Local PV helper pods where the cleanup pod will be launched with the tolerations.<br>- Enhance the logging mechanism for cStor pool pods during pool import time. These changes of logs will help to identify the existence of bad disk on the node.<br>- Support for enabling core dump by adding an ENV variable ENABLE_COREDUMP= “1” for cStor pool pod to control whether cores need to be dumped in case of process crashes. By default, dumping cores will be disabled. Make sure this environment variable is not enabled if mountPoint of `SparseDir` has been changed in CAS Templates.<br>- Enhance upgrade logs by providing pool and volume status information during the upgrade and also helps in estimating the time taken for deployment pods to come up.<br>-  Improves Jiva rebuilding process by checkpointing the io numbers. Now only those snapshots will be synced which has less no of io’s.<br/>- Fixes an issue with Jiva controller by removing WO replica if new replica with greater revision count get added to controller.<br/>- Disable core dump in NDM daemon by default. This can be enabled by setting an ENV variable `ENABLE_COREDUMP` to `1`. Core files will be stored inside /var/openebs/ndm/core.<br/>- Fixes issues in default core dumping location for NDM. System core pattern which is common for all processes on the node will not be modified. NDM will dump the cores in a location under openebs base directory. NDM process will be launched from the openebs directory, so core files will get automatically written to the $PWD, without requiring to change the core pattern.<br/> - Fixes an issue in NDM which caused cleanup pods not being scheduled on nodes with taints, causing BD to be stuck in release state. The fix will add tolerations for the node taints to the cleanup pod.<br/>- Fixes an issue in `cstor-velero plugin` for getting the StorageClass name from the annotation if StorageClass is mentioned in PVC Annotation, not in PVC spec.<br/>- Fixes an issue while cloning an filesystem based cStor volume, get the FStype info from the CAS config instead of using the default ext4 FSType.<br/>- Fixes an issue during upgrade where image tag contains multiple “:”. This usually happens where the proxy image URL is used which can contain multiple “:”.<br>**Alpha Features**<br>- Adding support to have the ZFS Local PV Provisioner in HA mode. Default replica count is set 1 and by changing the replica count will enable a new Provisioner pod with anti-affinity so that no two pods get scheduled on the same node.<br>- Adding volume metric information for ZFS Local PV. These metrics can be collected using Prometheus.<br>- Add support for configuring volume policies such as tolerations, nodeSelector , priorityClass, resourceLimits for main and sidecar target pod containers of cStor CSI volume using CStorVolumePolicy resource.<br>- Add metrics support for cStor CSI volume which can be pulled by Prometheus to show the metrics in k8s cluster. Available metrics are `Total capacity`, `Used capacity` and `Available capacity` in Bytes.<br>- Add raw block volume support for cStor CSI volume to be attached as Raw Block Volume to pods.<br>- Add support for performing CSPC general validation in admission server. Some of the checks are included based on scenarios like use of duplicate block devices, duplicate nodes, block device should not be claimed by other CSPC/third party, the capacity validations of replacing block devices etc.<br>- Add support for new setting requests and limits to cStor pool pod sidecar containers via poolConfig. It will take default auxResource values if it is not specified in poolConfig for a particular pool. The default can be specified in `spec.auxResources.requests` and `spec.auxResources.limits`. These values will be applied for all the pool configuration mentioned in the CSPC spec. It is also possible to specify separate auxResource values to each pool separately by adding those details to the poolConfig for a particular pool.<br>- Configure Jiva CSI Driver to listen to custom ports for metrics.<br>- Add metrics support for Jiva CSI volume which can be pulled by Prometheus to show the metrics in k8s cluster. Available metrics are `Total capacity`, `Used capacity` and `Available capacity` in Bytes.<br> |
-| <br/>1.5.0                       | <br/> [Release Notes](https://github.com/openebs/openebs/releases/tag/1.5.0)<br/> [Upgrade Steps](/v150/docs/next/upgrade.html)<br/> | - Support BlockVolumeMode for OpenEBS Local PV backed by devices<br>- Support ZFS as a filesystem type for OpenEBS ZFS Local PV.<br>- Support for Block Device Replacement via the cStor YAML file (using new schema)<br>- Support resizing and remounting of Volumes when using cStor CSI Driver<br>- Support for generating of ARM builds for cStor Data Engine.<br>- Introduce block device hierarchy to NDM. 4 fields `Parent` ,`Partitions`, `Holders` and `Slaves` are used in defining the hierarchy tree of a device. Also, all the dependent devices of the discovered block device will be logged during the initial udev scan to get the disk level hierarchy of each node in the cluster. <br>- Add support for applications to provision a "zfs" filesystem directly in the ZFS POOL storage which will get the optimal performance. <br>- Enhanced the cStor pools to handle auto scale down scenarios to avoid shutting down the node where cStor pool is running. This is achieved by adding cluster-autoscaler.kubernetes.io/safe-to-evict": "false"  to the annotation of each cStor pool pod.<br>- Fixes an issue with liveness probe on `cstor-pool` container by adding a timeout setting for command execution. Setting the timeout value as 120 sec will kill the process if command exceeds more than 120 seconds.<br>- Fixes an issue in cStor CSI volume unit size conversion while transitioning from PVC to CVC storage capacity the way kubernetes handles, by converting to Gi.<br>- Fixes a bug where OpenEBS Local PV with hostpaths in OpenShift 4.1 environments was failing.<br>- Fixes a vulnerability issue with default helper pod image by using the latest tag for helper pods so new version of OpenEBS will automatically get updated with new images. |
-| <br/>1.4.0                       | <br/> [Release Notes](https://github.com/openebs/openebs/releases/tag/1.4.0)<br/> [Upgrade Steps](/v140/docs/next/upgrade.html)<br/> | - Support for scale down of cStor volume replicas<br>- Support an alpha feature in NDM to add Prometheus exporter for exposing disk-level metrics. This Cluster level exporter gives details of blockdevice such as state, claim state etc.<br>- Support of setup arm builds for apiserver and local provisioner. The images  will be built on top of arm64v8/ubuntu:18.04.<br>- Supporting automated creation of TLS certificate signed by Kubernetes cluster root Certificate Authority for external admission-webhook-server. This will establish a trust to secure the communication between admission-webhook-server and kube-apiserver.<br>- Support the snapshot and clone feature in cStor volume provisioned via CSI provisioner. This feature will be available in alpha.<br>- Support of encryption feature in Local PV created on a  ZFS based storage pool.<br>- Support of adding topology information for Local PV on ZFS based storage pool. The details of appropriate ZFS storage pool can be mentioned in corresponding StorageClass via topology so that the scheduler will take care of scheduling the application on the appropriate node.<br>- Support for scheduling Local PV on appropriate ZFS storage pool on a node which has less number of Local PV volume provisioned in the given pool.<br>- Support of XFS file system for Local PV creation on ZFS based storage pools.<br>- Enhanced cStor volume description by fixing output of `knownreplicas` information which will help to maintain trusty/known replica information of the particular cStor volume in the cStor volume specification.<br>- Enhanced cStor volume replica status with additional 2 phases based on different scenarios. The additional phases are `NewReplicaDegraded ` and `ReconstructingNewReplica `.<br>- Enhanced `maya-exporter` by adding pool last sync time metric as `openebs_zpool_last_sync_time ` . This also modifies value of `openebs.io:livenesstimestamp` in cStor pool YAML to set date in epoch timestamp.<br>- Enhanced admission webhook server by adding missing labels in config,secret and service and will fatal out when a missing ENV's error and configs happen.<br>- Fixes a bug in Jiva where Jiva replica pods are stuck in `crashedloopbackoff` state after a restart.<br>- Fixes a bug in cStor target while rebuilding process in a single replica quorum case.<br>- Fixes a bug in NDM for device detection in KVM-based virtual machines.. A new disk model `QEMU_HARDDISK` is added to the list of disk models.<br>- Fixes a bug in NDM, where the os-disk filter was not able to exclude the blockdevices if the OS  was installed on an NVMe device. |
+## 1.9.0 - Apr 15 2020
+
+**Key Improvements**
+- Added support for cloning a cStor volume into a different namespace.
+- Added support to upgrade multiple volumes using a single command.
+- Added support for reserving block devices that can be used by Local PV.
+- Added support to migrate Jiva related Kubernetes objects from PVC namespace to OpenEBS. After migration, the administrator can tighten RBAC policies for OpenEBS Service Account.
+- Added support for taking out faulty Jiva replica without causing a restart to other healthy replicas.
+
+**Key Bug Fixes**
+- Fixes an issue where scheduled remote backups result in consuming extra capacity on the local storage pools. Support for re-claiming the capacity on the cStor Pools, by deleting the snapshots that have been successfully backed up to a remote location.
+- Fixes an issue where some of the OpenEBS containers were using an older unsupported alpine image for base docker image.
+- Fixes an issue where the Backup of cStor volumes with 50G or higher capacity to MinIO or AWS can fail.
+- Fixes an issue where Jiva replica can fail to initialize due to partially written metadata file, caused by node/pod restart.
+- Fixes an issue where labels added to BlockDevices were not retained for NDM pod is restarted.
+- Fixes an issue where Jiva cleanup jobs were not scheduled due to nodes being tainted.
+- Fixes a panic in Local PV provisioner, while processing a PV delete request with a hostname that is no longer present in the cluster.
+- Fixes an issue where volumeBindingMode: WaitForFirstConsumer will make provisioning fail for cStor.
+
+**Alpha Features**
+- Support for generating automated ARM images cStor, Local PV provisioner and control plane components.
+- Support for generating ppc64le images for Local PV provisioner and Jiva components.
+- Support for automated e2e testing for ZFS Local PV and fixing issues reported by the alpha users.
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/1.9.0)
+- [Upgrade Steps](/v190/docs/next/upgrade.html)
+
+## 1.8.0 - Mar 15 2020
+
+**Key Changes**
+- Added support for configuring capacity threshold limit for a cStor Pool. The default threshold limit is set at 85%. The threshold setting has been introduced to avoid a scenario where pool capacity is fully utilized, resulting in failure of all kinds of operations - including pool expansion.
+- Validated that OpenEBS cStor can be used with K3OS(k3os-v0.9.0).
+- Fixes an issue where Jiva volumes could cause data loss when a node restarts during an ongoing space reclamation at its replica.
+- Fixes an issue where cStor restore from scheduled backup fails, if the first scheduled backup was aborted.
+- Fixes an issue where upgrade scripts were failing on Mac.
+- Fixes documentation references to deprecated `disk` custom resource in example YAMLs.
+- Fixes documentation to include a troubleshooting section to work with api server ports blocked due to advanced network configuration.
+
+**Alpha Features**
+- Support for generating automated ARM builds for Jiva.
+- Support for generating automated ppc64le builds for Node Disk Manager.
+- Support for volume expansion of ZFS Local PV and add automated e2e tests.
+- Support for declarative scale up and down of cstor volume replicas, increasing the e2e coverage and fixing the issue uncovered.
+- Incorporate the feedback on the cStor Custom Resource Schema and work towards v1 schema.
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/1.8.0)
+- [Upgrade Steps](/v180/docs/next/upgrade.html)
+
+
+## 1.7.0 - Feb 15 2020
+
+**Change summary:**
+- Fixes an issue where Jiva Replicas could get stuck in WO or NA state, when the size of the replica data grows beyond 300GB.
+- Fixes an issue where unused custom resources from older versions are left in the etcd, even after openebs is upgraded. 
+- Fixes an issue where cleanup of Jiva volumes on OpenShift 4.2 environment was failing.
+- Fixes an issue where custom resources used by cStor Volumes fail to get deleted when the underlying pool was removed prior to deleting the volumes.
+- Fixes an issue where a cStor Volume Replica would be incorrectly marked as invalid due to a race condition caused between a terminating and its corresponding newly launched pool pods. 
+
+**Alpha Features**
+- Support for generating automated ARM builds for NDM.
+- Support for managing snapshot and clones of ZFS Local PV.
+- Support for setting up PDB and PriorityClasses on cStor Pool Pods. Increasing the e2e coverage and fixing the issue uncovered.
+- Support for resizing Jiva Volume via CSI driver and other bug fixes.
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/1.7.0)
+- [Upgrade Steps](/v170/docs/next/upgrade.html)
+
+
+## 1.6.0 - Jan 15 2020
+
+**Change summary:**
+- Add support for building cStor on ARM builds by moving cstor-pool-mgmt, cstor-volume-mgmt, maya-exporter and cspi-mgmt build scripts to their specific folders and add arm build scripts.
+- Add support for provisioning Local PV hostpath when the nodes are tainted. It also handles the implementation of Local PV helper pods where the cleanup pod will be launched with the tolerations.
+- Enhance the logging mechanism for cStor pool pods during pool import time. These changes of logs will help to identify the existence of bad disk on the node.
+- Support for enabling core dump by adding an ENV variable ENABLE_COREDUMP= “1” for cStor pool pod to control whether cores need to be dumped in case of process crashes. By default, dumping cores will be disabled. Make sure this environment variable is not enabled if mountPoint of `SparseDir` has been changed in CAS Templates.
+- Enhance upgrade logs by providing pool and volume status information during the upgrade and also helps in estimating the time taken for deployment pods to come up.
+-  Improves Jiva rebuilding process by checkpointing the io numbers. Now only those snapshots will be synced which has less no of io’s.
+- Fixes an issue with Jiva controller by removing WO replica if new replica with greater revision count get added to controller.
+- Disable core dump in NDM daemon by default. This can be enabled by setting an ENV variable `ENABLE_COREDUMP` to `1`. Core files will be stored inside /var/openebs/ndm/core.
+- Fixes issues in default core dumping location for NDM. System core pattern which is common for all processes on the node will not be modified. NDM will dump the cores in a location under openebs base directory. NDM process will be launched from the openebs directory, so core files will get automatically written to the $PWD, without requiring to change the core pattern.
+- Fixes an issue in NDM which caused cleanup pods not being scheduled on nodes with taints, causing BD to be stuck in release state. The fix will add tolerations for the node taints to the cleanup pod.
+- Fixes an issue in `cstor-velero plugin` for getting the StorageClass name from the annotation if StorageClass is mentioned in PVC Annotation, not in PVC spec.
+- Fixes an issue while cloning an filesystem based cStor volume, get the FStype info from the CAS config instead of using the default ext4 FSType.
+- Fixes an issue during upgrade where image tag contains multiple “:”. This usually happens where the proxy image URL is used which can contain multiple “:”.
+
+**Alpha Features**
+- Adding support to have the ZFS Local PV Provisioner in HA mode. Default replica count is set 1 and by changing the replica count will enable a new Provisioner pod with anti-affinity so that no two pods get scheduled on the same node.
+- Adding volume metric information for ZFS Local PV. These metrics can be collected using Prometheus.
+- Add support for configuring volume policies such as tolerations, nodeSelector , priorityClass, resourceLimits for main and sidecar target pod containers of cStor CSI volume using CStorVolumePolicy resource.
+- Add metrics support for cStor CSI volume which can be pulled by Prometheus to show the metrics in k8s cluster. Available metrics are `Total capacity`, `Used capacity` and `Available capacity` in Bytes.
+- Add raw block volume support for cStor CSI volume to be attached as Raw Block Volume to pods.
+- Add support for performing CSPC general validation in admission server. Some of the checks are included based on scenarios like use of duplicate block devices, duplicate nodes, block device should not be claimed by other CSPC/third party, the capacity validations of replacing block devices etc.
+- Add support for new setting requests and limits to cStor pool pod sidecar containers via poolConfig. It will take default auxResource values if it is not specified in poolConfig for a particular pool. The default can be specified in `spec.auxResources.requests` and `spec.auxResources.limits`. These values will be applied for all the pool configuration mentioned in the CSPC spec. It is also possible to specify separate auxResource values to each pool separately by adding those details to the poolConfig for a particular pool.
+- Configure Jiva CSI Driver to listen to custom ports for metrics.
+- Add metrics support for Jiva CSI volume which can be pulled by Prometheus to show the metrics in k8s cluster. Available metrics are `Total capacity`, `Used capacity` and `Available capacity` in Bytes.
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/1.6.0)
+- [Upgrade Steps](/v160/docs/next/upgrade.html)
+
+
+## 1.5.0 - Dec 15 2019
+
+**Change summary:**
+- Support BlockVolumeMode for OpenEBS Local PV backed by devices
+- Support ZFS as a filesystem type for OpenEBS ZFS Local PV.
+- Support for Block Device Replacement via the cStor YAML file (using new schema)
+- Support resizing and remounting of Volumes when using cStor CSI Driver
+- Support for generating of ARM builds for cStor Data Engine.
+- Introduce block device hierarchy to NDM. 4 fields `Parent` ,`Partitions`, `Holders` and `Slaves` are used in defining the hierarchy tree of a device. Also, all the dependent devices of the discovered block device will be logged during the initial udev scan to get the disk level hierarchy of each node in the cluster. 
+- Add support for applications to provision a "zfs" filesystem directly in the ZFS POOL storage which will get the optimal performance. 
+- Enhanced the cStor pools to handle auto scale down scenarios to avoid shutting down the node where cStor pool is running. This is achieved by adding cluster-autoscaler.kubernetes.io/safe-to-evict": "false"  to the annotation of each cStor pool pod.
+- Fixes an issue with liveness probe on `cstor-pool` container by adding a timeout setting for command execution. Setting the timeout value as 120 sec will kill the process if command exceeds more than 120 seconds.
+- Fixes an issue in cStor CSI volume unit size conversion while transitioning from PVC to CVC storage capacity the way kubernetes handles, by converting to Gi.
+- Fixes a bug where OpenEBS Local PV with hostpaths in OpenShift 4.1 environments was failing.
+- Fixes a vulnerability issue with default helper pod image by using the latest tag for helper pods so new version of OpenEBS will automatically get updated with new images. |
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/1.5.0)
+- [Upgrade Steps](/v150/docs/next/upgrade.html)
+
+
+## 1.4.0 - Nov 15 2019
+
+**Change summary:**
+- Support for scale down of cStor volume replicas
+- Support an alpha feature in NDM to add Prometheus exporter for exposing disk-level metrics. This Cluster level exporter gives details of blockdevice such as state, claim state etc.
+- Support of setup arm builds for apiserver and local provisioner. The images  will be built on top of arm64v8/ubuntu:18.04.
+- Supporting automated creation of TLS certificate signed by Kubernetes cluster root Certificate Authority for external admission-webhook-server. This will establish a trust to secure the communication between admission-webhook-server and kube-apiserver.
+- Support the snapshot and clone feature in cStor volume provisioned via CSI provisioner. This feature will be available in alpha.
+- Support of encryption feature in Local PV created on a  ZFS based storage pool.
+- Support of adding topology information for Local PV on ZFS based storage pool. The details of appropriate ZFS storage pool can be mentioned in corresponding StorageClass via topology so that the scheduler will take care of scheduling the application on the appropriate node.
+- Support for scheduling Local PV on appropriate ZFS storage pool on a node which has less number of Local PV volume provisioned in the given pool.
+- Support of XFS file system for Local PV creation on ZFS based storage pools.
+- Enhanced cStor volume description by fixing output of `knownreplicas` information which will help to maintain trusty/known replica information of the particular cStor volume in the cStor volume specification.
+- Enhanced cStor volume replica status with additional 2 phases based on different scenarios. The additional phases are `NewReplicaDegraded ` and `ReconstructingNewReplica `.
+- Enhanced `maya-exporter` by adding pool last sync time metric as `openebs_zpool_last_sync_time ` . This also modifies value of `openebs.io:livenesstimestamp` in cStor pool YAML to set date in epoch timestamp.
+- Enhanced admission webhook server by adding missing labels in config,secret and service and will fatal out when a missing ENV's error and configs happen.
+- Fixes a bug in Jiva where Jiva replica pods are stuck in `crashedloopbackoff` state after a restart.
+- Fixes a bug in cStor target while rebuilding process in a single replica quorum case.
+- Fixes a bug in NDM for device detection in KVM-based virtual machines.. A new disk model `QEMU_HARDDISK` is added to the list of disk models.
+- Fixes a bug in NDM, where the os-disk filter was not able to exclude the blockdevices if the OS  was installed on an NVMe device.
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/1.4.0)
+- [Upgrade Steps](/v140/docs/next/upgrade.html)
 
 ## 1.3.0 - Oct 15 2019
 
