@@ -8,11 +8,14 @@ sidebar_label: Releases 0.x
 
 <br>
 
-## 0.9.0
+## 0.9.0 - May 24 2019
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+
+**Change summary:**
 
 - Enhanced the cStor Data Engine containers to contain troubleshooting utilities.
 - Enhanced cStor Data Engine to allow interoperability of cStor Replicas across different versions. 
@@ -31,16 +34,18 @@ Change summary:
 - Fixes an issue where user was able to delete a PVC, even if there were clones created from it, resulting in data loss for the cloned volumes.
 - Fixes an issue where cStor Volumes failed to provision if the `/var/openebs/` directory was not editable by cStor pods like in the case of SuSE Platforms.
 - Fixes an issue where Jiva Volume - Target can mark a replica as offline if the replica takes longer than 30s to complete the sync/unmap IO.
-- Fixes an issue with Jiva volume - space reclaim thread, that was erroring out with an exception if the replica is disconnected from the target. |
+- Fixes an issue with Jiva volume - space reclaim thread, that was erroring out with an exception if the replica is disconnected from the target. 
 
-Additional Details:
+**Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/0.9) 
 
-## 0.8.2
+## 0.8.2 - Apr 15 2019
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - Enhanced the metrics exported by cStor Pools to include details of the provisioning errors.
 - Fixed an issue causing cStor Volume Replica CRs to be stuck, when the OpenEBS namespace was being deleted.
 - Fixed an issue where a newly added cStor Volume Replica may not be successfully registered with the cStor target, if the cStor tries to connect to Replica before the replica is completely initialised.
@@ -51,15 +56,17 @@ Change summary:
 - Toleration policy support for cStorStoragePool.
 
 
-Additional Details:
+**Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/0.8.2)
 
 
-## 0.8.1
+## 0.8.1 - Feb 23 2019
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - Ephemeral Disk Support
 - Enhanced the placement of cStor volume replica in a distributed randomly between the available pools.
 - Enhanced the NDM to fetch additional details about the underlying disks via SeaChest.
@@ -67,16 +74,18 @@ Change summary:
 - Enhanced the OpenEBS CRDs to include custom columns to be displayed using  `kubectl get ` output of the CR. This feature requires K8s 1.11 or higher.
 - Fixed an issue where cStor volume causes timeout for iSCSI discovery command and can potentially trigger a K8s vulnerability that can bring down a node with high RAM usage.
 
-Addition Details:
+**Addition details:**
 - [Release Blog](https://openebs.io/blog/openebs-releases-0-8-1-with-stability-fixes-and-improved-documentation/)
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/0.8.1) 
 
 
-## 0.8.0
+## 0.8.0 - Dec 07 2018
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - cStor Snapshot & Clone
 - cStor volume & Pool runtime status
 - Target Affinity for both Jiva & cStor
@@ -86,15 +95,17 @@ Change summary:
 - Enhance Jiva to support sync and unmap IOs
 - Enhance cStor for recreating pool by automatically selecting the disks.
 
-Additional Details: 
+**Additional details:**
 - [Release Blog](https://openebs.io/blog/openebs-0-8-release-allows-you-to-snapshot-and-clone-cstor-volumes/)
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/0.8)
 
-## 0.7.2
+## 0.7.2 - Nov 20 2018
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - Fixes an issue where cStor volume used space was showing a very low value than actually used.
 - Fixes an issue where cStor replica snapshots created for the rebuild were not deleted, causing space reclamation to fail.
 - Support for clearing space used by Jiva replica after the volume is deleted using Cron Job.
@@ -103,30 +114,34 @@ Change summary:
 - Enhanced Jiva related to internal snapshots for rebuilding Jiva.
 - Enhanced exporting cStor volume metrics to prometheus
 
-Additional Details: 
+**Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/0.7.2)
 
-## 0.7.0
+## 0.7.0 - Sep 09 2018
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - Enhanced NDM to discover block devices attached to Nodes.
 - Alpha support for cStor Engine
 - Naming convention of Jiva Storage pool as 'default' and StorageClass as 'openebs-jiva-default'
 - Naming convention of cStor Storage pool as 'cstor-sparse-pool' and StorageClass as 'openebs-cstor-sparse'
 - Support for specifying replica count,CPU/Memory Limits per PV,Choice of  Storage Engine, Nodes on which data copies should be copied.
 
-Additional Details: 
+**Additional details:**
 - [Release Blog](https://openebs.io/blog/openebs-0-7-release-pushes-cstor-storage-engine-to-field-trials/)
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v0.7)
 
 
-## 0.6.0
+## 0.6.0 - Jul 20 2018
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - Fixes an issue where jiva replica data was not clean up if the PVC and its namespace were deleted prior to scrub job completion.
 - Fixes an issue where jiva replicas failed to register with its target if there was an error during initial registration.
 - Integrate the Volume Snapshot capabilities with Kubernetes Snapshot controller.
@@ -137,15 +152,17 @@ Change summary:
 - Enhanced Jiva volume to handle more read only volume  scenarios
 
 
-Additional Details: 
+**Additional details:**
 - [Release Blog](https://openebs.io/blog/openebs-0-6-serves-ios-amidst-chaos-and-much-more/)
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v0.6)
 
-## 0.5.4
+## 0.5.4 - May 14 2018
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - Fixes an issue where NDM would create a partitioned OS device as a block device.
 - Provision to specify filesystems other than ext4 (default).
 - Support for XFS filesystem format for mongodb StatefulSet using OpenEBS Persistent Volume.
@@ -153,100 +170,114 @@ Change summary:
 - OpenEBS is now available as a stable chart from Kubernetes 
 
 
-Additional Details: 
+**Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v0.5.4)
 
-## 0.5.3
+## 0.5.3 - Mar 14 2018
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - Fixes an issue where jiva replica data was not clean up if the PVC and its namespace were deleted prior to scrub job completion.
 - Fixed usage of StoragePool issue when RBAC settings are applied
 - Enhanced memory consumption usage for Jiva Volume
 
-Additional Details: 
+**Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v0.5.3)
 
-## 0.5.2
+## 0.5.2 - Feb 07 2018
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - Support to set non-SSL Kubernetes endpoints to use by specifying the ENV variables on  maya-apiserver and  openebs-provisioner.
 
-Additional Details: 
+**Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v0.5.2)
 
-## 0.5.1
+## 0.5.1 - Jan 10 2018
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - Upgraded the base ubuntu images for the containers to fix the security vulnerabilities reported in Ubuntu Xenial.
 - Support to use Jiva volume from CentOS iSCSI Initiator
 - Support openebs-k8s-provisioner to be launched in non-default namespace
 
 
-Additional Details: 
+**Additional details:** 
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v0.5.1)
 
-## 0.5.0
+## 0.5.0 - Nov 30 2017
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - Enhanced Storage Policy Enforcement Framework for Jiva.
 - Extend OpenEBS API Server to expose volume snapshot API.
 - Support for deploying OpenEBS via helm charts.
 - Sample Prometheus configuration for collecting OpenEBS Volume Metrics.
 - Sample Grafana OpenEBS Volume Dashboard - using the prometheus Metrics
 
-Additional Details: 
+**Additional details:**
 - [Release Blog](https://openebs.io/blog/openebs-0-5-enables-storage-policies-for-kubernetes-persistent-volumes/)
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v0.5.0)
 
-## 0.4.0
+## 0.4.0 - Sep 08 2017
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - Enhanced MAYA cli support for managing snapshots,usage statistics.
 - Support OpenEBS Maya API Server uses the Kubernetes scheduler logic to place OpenEBS Volume Replicas on different nodes
 - Support Extended deployment of OpenEBS in AWS.
 - Support OpenEBS can be deployed in a minikube setup.
 - Enhanced openebs-k8s-provisioner to recover from crashloopbackoff state
 
-Additional Details: 
+**Additional details:**
 - [Release Blog](https://openebs.io/blog/quick-update-on-openebs-v0-4-a-developer-friendly-release/)
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v0.4.0)
 
-## 0.3.0
+## 0.3.0 - Jun 29 2017
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - Support OpenEBS hyper-converged with Kubernetes Minion Nodes.
 - Enable OpenEBS via the openebs-operator.yaml
 - Supports creation of OpenEBS volumes using Dynamic Provisioner.
 - Storage functionality and Orchestration/Management functionality is delivered as container images on DockerHub.
 
-Additional Details: 
+**Additional details:**
 - [Release Blog](https://openebs.io/blog/openebs-on-the-growth-path-releases-0-3/)
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v0.3)
 
-## 0.2.0
+## 0.2.0 - Apr 07 2017
 
-** Note: This release has been deprecated **
+::: Deprecation notice
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+:::
 
-Change summary:
+**Change summary:**
 - Integrated OpenEBS FlexVolume Driver and Dynamically Provision OpenEBS Volumes into Kubernetes.
 - Support Maya api server to provides new AWS EBS-like API for provisioning Block Storage.
 - Enhanced Maya api server to Hyper Converged with Nomad Scheduler.
 - Backup/Restore Data from Amazon S3.
 - Node Failure Resiliency Fixes
 
-Additional Details: 
+**Additional details:** 
 - [Release Blog](https://openebs.io/blog/openebs-sprinting-ahead-0-2-released/)
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v0.2)
 
@@ -255,6 +286,8 @@ Additional Details:
 
 
 ## See Also:
+
+### [OpenEBS Upgrade](/docs/next/upgrade.html)
 
 ### [OpenEBS Releases](/docs/next/releases.html)
 
