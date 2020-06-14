@@ -4,17 +4,20 @@
 	"overview",
 	"features", 
 	"usecases", 
+	"performance", 
 	"releases", 
-	"support"
+	"support",
+	"alphafeatures"
 	],
     "Concepts": [
 	"cas", 
 	"architecture", 
 	"casengines",
+	"ndm",
 	"cstor",
 	"jiva", 
 	"localpv", 
-	"ndm"
+	"rwm"
 	],
     "User Guides": [
 	"quickstart", 
@@ -41,16 +44,15 @@
 	"postgres", 
 	"redis", 
 	"mongo", 
-	"jira", 
-	"rwm"
+	"jira"
 	],
-    "Advanced Topics": [
-	"performance", 
-	"faq", 
+    "Troubleshooting": [
 	"k8supgrades", 
-	"troubleshooting", 
-	"kb", 
-	"alphafeatures"
+	"t-install", 
+	"kb" 
+	],
+    "FAQ": [
+	"faq-general"
 	],
     "Deprecated Releases": [
 	"releases-0x" 
