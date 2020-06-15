@@ -10,9 +10,39 @@ sidebar_label: Releases
 
 
 
-## 1.10.0 - May 15 2020
+## 1.11.0 - Jun 15 2020
 
 <br><font size="4">Latest Release</font><br/> (Recommended)<br/>
+
+
+**New capabilities:**
+
+- OpenEBS Mayastor continues its momentum by adding support for Rebuild, NVMe-oF Support, enhanced supportability and several other fixes. For detailed instructions on how to get started with Mayastor please refer to this [Quickstart guide](https://github.com/openebs/Mayastor/blob/master/doc/quick.md).
+- OpenEBS ZFS Local PV has been declared as _beta_. For detailed instructions on how to get started with ZFS Local PV please refer to the [Quick start guide](https://github.com/openebs/zfs-localpv).
+- OpenEBS cStor CSI support is marked as feature-complete and further releases will focus on additional integration and e2e tests. 
+
+**Key Improvements:**
+
+- Enhanced helm charts to make NDM `filterconfigs.state` configurable.
+- Added configuration to exclude `rbd` devices from being used for creating Block Devices.
+- Added support to display FSType information in Block Devices.
+- Add support to mount ZFS datasets using legacy mount property to allow for multiple mounts on a single node.
+- Add additional automation tests for validating ZFS Local PV and cStor Backup/Restore.
+
+**Key Bug Fixes:**
+
+- Fixes an issue where volumes meant to be filesystem datasets got created as zvols due to misspelled case for StorageClass parameter.
+- Fixes an issue where the read-only option was not being set of ZFS volumes.
+- Fixes an issue where incorrect pool name or other parameters in Storage Class would result in stale ZFS Volume CRs being created.
+- Fixes an issue where the user configured ENV variable for MAX_CHAIN_LENGTH was not being read by Jiva.
+- Fixes an issue where cStor Pool was being deleted forcefully before the replicas on cStor Pool were deleted. This can cause data loss in situations where SPCs are incorrectly edited by the user, and a cStor Pool deletion is attempted.
+- Fixes an issue where a failure to delete the cStor Pool on the first attempt will leave an orphaned cStor custom resource (CSP) in the cluster.
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.11.0)
+- [Upgrade Steps](/docs/next/upgrade.html)
+
+## 1.10.0 - May 15 2020
 
 **New capabilities**
 - The first release of OpenEBS Mayastor developed using NVMe based architecture, targetted at addressing performance requirements of IO-intensive workloads is ready for alpha testing. For detailed instructions on how to get started with Mayastor please refer to this [Quickstart guide](https://github.com/openebs/Mayastor/blob/master/doc/quick.md). 
@@ -32,7 +62,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.10.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v1100/docs/next/upgrade.html)
 
 
 ## 1.9.0 - Apr 15 2020
