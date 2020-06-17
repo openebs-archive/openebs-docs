@@ -25,7 +25,15 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl get spc 
   ```
 
-  There should not have any entries of OpenEBS SPC.
+  There should not have any entries of OpenEBS SPC. 
+  
+- Ensure that there is no stale BlockDeviceClaims are present in the cluster. You can verify the status using the following command. 
+  
+  ```
+  kubectl get bdc -n <openebs namespace>
+  ```
+  
+  If anything found, remove the finalizer entry from the corresponding BDC.
 
 - Ensure that no OpenEBS volume or pool pods are in terminating state . You can check the running status of Pods using the following command.
 
@@ -59,6 +67,7 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl delete crd cstorpoolinstances.openebs.io
   kubectl delete crd cstorvolumeclaims.openebs.io
   kubectl delete crd cstorvolumereplicas.openebs.io
+  kubectl delete crd cstorvolumepolicies.openebs.io
   kubectl delete crd cstorvolumes.openebs.io
   kubectl delete crd runtasks.openebs.io
   kubectl delete crd storagepoolclaims.openebs.io
