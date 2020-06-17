@@ -84,8 +84,8 @@ and <a href="/v100/docs/next/usecases.html" target="">Use cases</a>.
 	</a>
   </div>
   <div class="">
-	<a href="/v100/docs/next/mayaonline.html">
-		<img src="/docs/assets/intro-mo.png" alt="Connecting to MayaOnline" style="float:left;width:250px;">
+	<a href="/v100/docs/next/kubera.html">
+		<img src="/docs/assets/intro-mo.png" alt="Connecting to Kubera" style="float:left;width:250px;">
 	</a>
   </div>
   <div class="">

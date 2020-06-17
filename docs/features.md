@@ -168,9 +168,9 @@ There is no blast radius effect. CAS architecture does not have the typical blas
 
 ### Free Cross Cloud Visibility of Stateful Applications
 
-<img src="/docs/assets/svg/b-crosscloud.svg" alt="MayaOnline" style="width:200px;">
+<img src="/docs/assets/svg/b-crosscloud.svg" alt="Kubera" style="width:200px;">
 
-MayaOnline is the SaaS service for OpenEBS enabled Kubernetes clusters that provide  comprehensive monitoring and management of OpenEBS volumes. Logs of all OpenEBS volume pods are instantly uploaded to MayaOnline and available for users through Kibana dashboard. Topology view on MayaOnline used very often to understand the Kubernetes resources when they are deployed at scale.
+Kubera is the SaaS service for OpenEBS enabled Kubernetes clusters that provide  comprehensive monitoring and management of OpenEBS volumes. Logs of all OpenEBS volume pods are instantly uploaded to Kubera and available for users through Kibana dashboard. Topology view on Kubera used very often to understand the Kubernetes resources when they are deployed at scale.
 
 <hr>
 

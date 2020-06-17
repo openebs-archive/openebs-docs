@@ -425,7 +425,7 @@ This will verify all the OpenEBS components are successfully upgraded to the lat
 
 ### [Releases](/v100/docs/next/releases.html)
 
-### [MayaOnline](/v100/docs/next/mayaonline.html)
+### [Kubera](/v100/docs/next/kubera.html)
 
 
 

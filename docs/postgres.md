@@ -57,7 +57,7 @@ As shown above, OpenEBS volumes need to be configured with single replica. This 
 
    If OpenEBS is not installed in your K8s cluster, this can done from [here](/v100/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
-2. **Connect to MayaOnline (Optional)** : Connecting  the Kubernetes cluster to <a href="https://mayaonline.io" target="_blank">MayaOnline</a> provides good visibility of storage resources. MayaOnline has various **support options for enterprise customers**.
+2. **Connect to Kubera (Optional)** : Connecting  the Kubernetes cluster to <a href="https://kubera.mayadata.io" target="_blank">Kubera</a> provides good visibility of storage resources. Kubera has various **support options for enterprise customers**.
 
 3. **Configure cStor Pool**
 
@@ -111,7 +111,7 @@ Deployment YAML spec files for PostgreSQL and OpenEBS resources are found <a hre
 
 **Monitor OpenEBS Volume size** 
 
-It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using MayaOnline.
+It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. However, an alert can be setup for volume size threshold using Kubera.
 
 **Monitor cStor Pool size**
 
