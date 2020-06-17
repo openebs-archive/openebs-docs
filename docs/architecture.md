@@ -80,7 +80,7 @@ Maya volume exporter is a sidecar for each of the storage controller pods (cStor
 
 ![OpenEBS volume exporter data flow](/docs/assets/vol-exporter.png)
 
-These statistics are typically pulled either by the Prometheus client that is installed and configured during OpenEBS installation or by the Weave Cortex agent that is installed and configured during connectivity to [Kubera](https://director.mayadata.io).
+These statistics are typically pulled either by the Prometheus client that is installed and configured during OpenEBS installation or by the Weave Cortex agent that is installed and configured during connectivity to [Kubera](https://kubera.mayadata.io).
 
 ### Volume Management Sidecars
 
