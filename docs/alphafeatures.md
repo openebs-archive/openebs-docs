@@ -23,7 +23,7 @@ The list of alpha features include:
 
 ## Mayastor
 
-OpenEBS Mayastor developed using NVMe based architecture, targeted at addressing performance requirements of IO-intensive workloads is ready for alpha testing. For detailed instructions on how to get started with Mayastor please refer this [Quick-start guide](https://github.com/openebs/Mayastor/blob/master/doc/quick.md).
+OpenEBS Mayastor developed using NVMe based architecture, targeted at addressing performance requirements of IO-intensive workloads is ready for alpha testing. For detailed instructions on how to get started with Mayastor please refer this [Quick-start guide](https://github.com/openebs/Mayastor/blob/develop/deploy/README.md).
 
 The following features are supported:
 - Creation of a Mayastor pool using block device attached to the node.
