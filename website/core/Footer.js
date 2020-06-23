@@ -26,55 +26,55 @@ GithubButton.propTypes = {
 };
 
 class Footer extends React.Component {
-    docUrl(doc, language) {
-        const baseUrl = this.props.config.baseUrl;
-        return baseUrl + 'docs/' + (language ? language + '/' : '') + doc;
-    }
+  docUrl(doc, language) {
+    const baseUrl = this.props.config.baseUrl;
+    return baseUrl + 'docs/' + (language ? language + '/' : '') + doc;
+  }
 
-    pageUrl(doc, language) {
-        const baseUrl = this.props.config.baseUrl;
-        return baseUrl + (language ? language + '/' : '') + doc;
-    }
+  pageUrl(doc, language) {
+    const baseUrl = this.props.config.baseUrl;
+    return baseUrl + (language ? language + '/' : '') + doc;
+  }
 
-    render() {
-        return (
+  render() {
+    return (
       <footer className="nav-footer" id="footer">
         <section className="sitemap">
           <div>
-           <br />
-           <div>
-             <a href="https://openebs.io" target="_blank">
-             <img
-                src={`${this.props.config.baseUrl}docs/assets/openebs-logo.svg`}
-                alt={this.props.config.title}
-                width="130"
-                height="110"
-              />
-            </a>
+            <br />
+            <div>
+              <a href="https://openebs.io" target="_blank">
+                <img
+                  src={`${this.props.config.baseUrl}docs/assets/openebs-logo.svg`}
+                  alt={this.props.config.title}
+                  width="130"
+                  height="110"
+                />
+              </a>
             </div>
-	  <div>
-		<a href="https://openebs.io/join-our-community" target="_blank">Get in touch with OpenEBS community via Slack</a>
-          </div>
+            <div>
+              <a href="https://openebs.io/join-our-community" target="_blank">Get in touch with OpenEBS community via Slack</a>
+            </div>
           </div>
           <div>
-           <br />
-           <div>
-             <a href="https://mayadata.io" target="_blank">
-             <img
-                src={`${this.props.config.baseUrl}docs/assets/mayadata-primary.svg`}
-                alt="mayadata.io"
-                width="130"
-                height="110"
-              />
-            </a>
+            <br />
+            <div>
+              <a href="https://mayadata.io" target="_blank">
+                <img
+                  src={`${this.props.config.baseUrl}docs/assets/mayadata-primary.svg`}
+                  alt="mayadata.io"
+                  width="130"
+                  height="110"
+                />
+              </a>
             </div>
-	  <div>
-		<a href="https://director.mayadata.io" target="_blank">Get OpenEBS support through Director</a>
-          </div>
+            <div>
+              <a href="https://kubera.mayadata.io" target="_blank">Get OpenEBS support through Director</a>
+            </div>
           </div>
         </section>
 
-        
+
         <section className="copyright">
           {this.props.config.copyright && (
             <span>{this.props.config.copyright}</span>
@@ -83,7 +83,7 @@ class Footer extends React.Component {
       </footer>
     );
 
-    }
+  }
 }
 
 module.exports = Footer;

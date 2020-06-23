@@ -5,16 +5,16 @@ sidebar_label: Troubleshooting
 ---
 ------
 
-<font size="5">General guidelines for troubleshooting</font>
+<h1>General guidelines for troubleshooting</h1>
 
-Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to monitor OpenEBS resources and volumes. Logs of OpenEBS pods available at MayaOnline are helpful for troubleshooting. Topology views of OpenEBS custom resources provide the live status which are helpful in the troubleshooting process.
+Connecting Kubernetes cluster to Kubera is the simplest and easiest way to monitor OpenEBS resources and volumes. Logs of OpenEBS pods available at Kubera are helpful for troubleshooting. Topology views of OpenEBS custom resources provide the live status which are helpful in the troubleshooting process.
 
 
 
 **Steps for troubleshooting:**
 
 - Join <a href="https://openebs.org/community" target="_blank">Slack OpenEBS Community</a>
-- Connect Kubernetes cluster to MayaOnline and observe the following
+- Connect Kubernetes cluster to Kubera and observe the following
   - Any alerts that may be relevant to the issue under troubleshooting 
   - Logs that throw up any errors
   - Status of custom resources of OpenEBS volumes in the topology view
@@ -23,7 +23,7 @@ Connecting Kubernetes cluster to MayaOnline is the simplest and easiest way to m
 <br>
 
 <hr>
-<font size="6">Areas of troubleshooting</font>
+<h2>Areas of troubleshooting</h2>
 
 <br>
 

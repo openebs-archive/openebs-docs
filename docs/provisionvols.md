@@ -119,7 +119,7 @@ openebs_writes # Write Input/Outputs on Volume
 
 
 
-Grafana charts can be built for the above Prometheus metrics. Some metrics OpenEBS volumes are available automatically at MayaOnline when you connect the Kubernetes cluster to it. See an example screenshot below.
+Grafana charts can be built for the above Prometheus metrics. Some metrics OpenEBS volumes are available automatically at Kubera when you connect the Kubernetes cluster to it. See an example screenshot below.
 
 
 
@@ -176,7 +176,7 @@ More details about the upgrading of cStor volumes are mentioned in the Upgrade s
 
 ### [Troubleshooting guide](/docs/next/troubleshooting.html)
 
-### [Connecting to MayaOnline](/docs/next/mayaonline.html)
+### [Connecting to Kubera](/docs/next/kubera.html)
 
 <hr>
 

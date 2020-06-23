@@ -22,7 +22,7 @@ In either case, when the nodes are rebooted, the OpenEBS volume targets loose ac
 
 It is recommended that before a Kubernetes node is rebooted, make sure all the replicas of all OpenEBS volumes are healthy/online and there is no rebuild process is ongoing.
 
-MayaOnline topology view of an OpenEBS volume provides [detailed status of all the replicas](/docs/next/mayaonline.html#cstor-custom-resources-view). 
+Kubera topology view of an OpenEBS volume provides [detailed status of all the replicas](/docs/next/kubera.html#cstor-custom-resources-view). 
 
 
 
@@ -30,7 +30,7 @@ MayaOnline topology view of an OpenEBS volume provides [detailed status of all t
 
 ## See Also:
 
-### [Connecting to MayaOnline](/v100/docs/next/mayaonline.html)
+### [Connecting to Kubera](/v100/docs/next/kubera.html)
 
 ### [Seeking help](/v100/docs/next/support.html)
 
