@@ -103,7 +103,7 @@ User's data is never looked into or exported to Kubera by the agents.
 
 #### [Connect to Kubera](https://kubera.mayadata.io/)
 
-#### [Getting started with Kubera](https://help.mayadata.io/hc/en-us/articles/360033029212-Getting-started-with-DirectorOnline)
+#### [Getting started with Kubera](https://help.mayadata.io/hc/en-us/articles/360033029212-Getting-started-with-Kubera)
 
 <br>
 
