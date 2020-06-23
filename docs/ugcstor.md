@@ -138,7 +138,7 @@ openebs_write_time # Write time on volume
 openebs_writes # Write Input/Outputs on Volume
 ```
 
-Grafana charts can be built for the above Prometheus metrics. Some metrics OpenEBS volumes are available automatically at Director Online when you connect the Kubernetes cluster to it. See an example screenshot below.
+Grafana charts can be built for the above Prometheus metrics. Some metrics OpenEBS volumes are available automatically at Kubera when you connect the Kubernetes cluster to it. See an example screenshot below.
 
 <img src="/docs/assets/svg/volume-monitor.svg" alt="OpenEBS configuration flow" style="width:100%">
 

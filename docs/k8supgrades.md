@@ -20,7 +20,7 @@ In either case, when the nodes are rebooted, the OpenEBS volume targets loose ac
 
 It is recommended that before a Kubernetes node is rebooted, make sure all the replicas of all OpenEBS volumes are healthy/online and there is no rebuild process is ongoing.
 
-Director Online topology view of an OpenEBS volume provides [detailed status of all the replicas](/v140/docs/next/directoronline.html#cstor-custom-resources-view). 
+Kubera topology view of an OpenEBS volume provides [detailed status of all the replicas](/v140/docs/next/kubera.html#cstor-custom-resources-view). 
 
 
 
@@ -28,7 +28,7 @@ Director Online topology view of an OpenEBS volume provides [detailed status of 
 
 ## See Also:
 
-### [Connecting to Director Online](/v140/docs/next/directoronline.html)
+### [Connecting to Kubera](/v140/docs/next/kubera.html)
 
 ### [Seeking help](/v140/docs/next/support.html)
 

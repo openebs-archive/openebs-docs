@@ -31,7 +31,7 @@ From 0.5.3 or 0.5.4 to 0.6.0 - Get the steps from [here](https://v06-docs.openeb
 
 ### [Releases](/v140/docs/next/releases.html)
 
-### [Director Online](/v140/docs/next/directoronline.html)
+### [Kubera](/v140/docs/next/kubera.html)
 
 
 
