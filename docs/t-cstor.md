@@ -7,8 +7,6 @@ sidebar_label: cStor
 
 <font size="5">General guidelines for troubleshooting</font>
 
-**Steps for troubleshooting:**
-
 - Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 - Search for similar issues added in this troubleshootiung section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
@@ -17,21 +15,13 @@ sidebar_label: cStor
 <hr>
 <br>
 
-## cStor Volume related
-
 [One of the cStorVolumeReplica(CVR) will have its status as `Invalid` after corresponding pool pod gets recreated](#CVR-showing-status-as-invalid-after-poolpod-gets-recreated)
 
 [cStor volume become read only state](#cstor-volume-read-only)
-<br>
-
 
 <br>
 <hr>
 <br>
-
-
-<font size="6" color="brown">cStor Volume related</font> 
-
 
 <h3><a class="anchor" aria-hidden="true" id="CVR-showing-status-as-invalid-after-poolpod-gets-recreated"></a>One of the cStorVolumeReplica(CVR) will have its status as `Invalid` after corresponding pool pod gets recreated</h3>
 

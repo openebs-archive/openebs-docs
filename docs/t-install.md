@@ -7,21 +7,13 @@ sidebar_label: Install
 
 <font size="5">General guidelines for troubleshooting</font>
 
-**Steps for troubleshooting:**
-
 - Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 - Search for similar issues added in this troubleshootiung section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
 <br>
-
 <hr>
-
-<font size="6">Areas of troubleshooting</font>
-
 <br>
-
-## Installation
 
 [Installation failed because insufficient user rights](#install-failed-user-rights)
 
@@ -34,14 +26,8 @@ sidebar_label: Install
 [A multipath.conf file claims all SCSI devices in OpenShift](#multipath-conf-claims-all-scsi-devices-openshift)
 
 <br>
-<br>
-
 <hr>
-
 <br>
-
-<font size="6" color="blue">Installation</font>
-
 
 
 <h3><a class="anchor" aria-hidden="true" id="install-failed-user-rights"></a>Installation failed because of insufficient user rights</h3>
@@ -156,8 +142,8 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 
 
-<hr>
 <br>
+<hr>
 <br>
 
 ## See Also:
@@ -169,8 +155,6 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 ### [Latest release notes](/docs/next/releases.html)
 
 <br>
-
 <hr>
-
 <br>
 

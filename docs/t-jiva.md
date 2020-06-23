@@ -7,8 +7,6 @@ sidebar_label: Jiva
 
 <font size="5">General guidelines for troubleshooting</font>
 
-**Steps for troubleshooting:**
-
 - Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 - Search for similar issues added in this troubleshootiung section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
@@ -18,11 +16,7 @@ sidebar_label: Jiva
 <br>
 
 
-## Jiva Volume related
-
 [Jiva replica pod logs showing meta file missing entry](#replica-pod-meta-file-error)
-
-<br>
 
 <br>
 <hr>

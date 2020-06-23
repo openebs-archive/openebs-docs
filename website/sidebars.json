@@ -3,11 +3,10 @@
     "Introduction": [
 	"overview",
 	"features", 
+	"alphafeatures",
 	"usecases", 
-	"performance", 
 	"releases", 
-	"support",
-	"alphafeatures"
+	"support"
 	],
     "Concepts": [
 	"cas", 
@@ -56,6 +55,7 @@
 	"t-others"
 	],
     "Additional Info": [
+	"performance", 
 	"faq",
 	"k8supgrades", 
 	"kb" 

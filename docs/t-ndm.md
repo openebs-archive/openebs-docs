@@ -7,8 +7,6 @@ sidebar_label: NDM
 
 <font size="5">General guidelines for troubleshooting</font>
 
-**Steps for troubleshooting:**
-
 - Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 - Search for similar issues added in this troubleshootiung section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
@@ -16,8 +14,6 @@ sidebar_label: NDM
 <br>
 <hr>
 <br>
-
-## NDM related
 
 [Blockdevices are not detected by NDM in some of the nodes](#bd-from-some-nodes-are-not-detected)
 
@@ -105,8 +101,6 @@ This can be resolved this by modifying the configuration file of a VM:
 ### [Latest release notes](/docs/next/releases.html)
 
 <br>
-
 <hr>
-
 <br>
 

@@ -7,8 +7,6 @@ sidebar_label: Volume Provisioning
 
 <font size="5">General guidelines for troubleshooting</font>
 
-**Steps for troubleshooting:**
-
 - Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 - Search for similar issues added in this troubleshootiung section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
@@ -16,8 +14,6 @@ sidebar_label: Volume Provisioning
 <br>
 <hr>
 <br>
-
-## Volume provisioning
 
 [Unable to create persistentVolumeClaim due to certificate verification error](#admission-server-ca)
 
@@ -49,7 +45,6 @@ sidebar_label: Volume Provisioning
 
 [Persistent volumes indefinitely remain in pending state](#persistent-volumes-indefinitely-remain-in-pending-state)
 
-<br>
 <br>
 <hr>
 <br>
@@ -597,6 +592,8 @@ E1117 13:17:41.177620       1 controller.go:765] error syncing claim "default/mo
 This issue has currently only been observed, if the underlying node uses a network bridge and if the setting `net.bridge.bridge-nf-call-iptables=1` in the `/etc/sysctl.conf` is present. The aforementioned setting is required in some Kubernetes installations, such as the Rancher Kubernetes Engine (RKE).
 
 To avoid this issue, open the port `5656/tcp` on the nodes that run the OpenEBS API pod. Alternatively, removing the network bridge _might_ work.
+
+<br>
 <hr>
 <br>
 

@@ -7,15 +7,13 @@ sidebar_label: Uninstall
 
 <font size="5">General guidelines for troubleshooting</font>
 
-**Steps for troubleshooting:**
-
 - Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 - Search for similar issues added in this troubleshootiung section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
 <br>
-
 <hr>
+<br>
 
 ## Uninstall
 
@@ -23,9 +21,9 @@ sidebar_label: Uninstall
 
 [cStor Volume Replicas are not getting deleted properly](#cvr-deletion)
 
+<br>
 <hr>
 <br>
-
 
 <h3><a class="anchor" aria-hidden="true" id="jiva-deletion-scrub-job"></a>Whenever a Jiva based PVC is deleted, a new job gets created.</h3>
 
@@ -59,6 +57,7 @@ finalizers:
 This will automatically remove the pending CVR and delete the cStor volume completely.
 
 
+<br>
 <hr>
 <br>
 
