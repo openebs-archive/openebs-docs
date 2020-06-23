@@ -47,12 +47,18 @@
 	"jira"
 	],
     "Troubleshooting": [
-	"k8supgrades", 
-	"t-install", 
-	"kb" 
+	"t-install",
+	"t-uninstall",
+	"t-ndm",
+	"t-volume-provisioning",
+	"t-jiva",
+	"t-cstor",
+	"t-others"
 	],
-    "FAQ": [
-	"faq-general"
+    "Additional Info": [
+	"faq",
+	"k8supgrades", 
+	"kb" 
 	],
     "Deprecated Releases": [
 	"releases-0x" 
