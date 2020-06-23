@@ -457,7 +457,7 @@ For using real disks, you have to create [cStorPools](/v120/docs/next/ugcstor.ht
 
 
 
-To monitor the OpenEBS volumes and obtain corresponding logs, connect to the free SaaS service MayaOnline. See connecting to [Director Online](/v120/docs/next/directoronline.html). 
+To monitor the OpenEBS volumes and obtain corresponding logs, connect to the free SaaS service Kubera. See connecting to [Kubera](/v120/docs/next/kubera.html). 
 
 
 
