@@ -30,7 +30,7 @@ Support for performance tuning for specific workloads can be obtained through th
 
 ## See Also:
 
-### [Connecting to DirectorOnline](/v110/docs/next/mayaonline.html)
+### [Connecting to DirectorOnline](/v110/docs/next/kubera.html)
 
 ### [Seeking help](/v110/docs/next/support.html)
 

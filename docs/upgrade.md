@@ -31,7 +31,7 @@ From 0.5.3 or 0.5.4 to 0.6.0 - Get the steps from [here](https://v06-docs.openeb
 
 ### [Releases](/v110/docs/next/releases.html)
 
-### [MayaOnline](/v110/docs/next/mayaonline.html)
+### [Kubera](/v110/docs/next/kubera.html)
 
 
 
