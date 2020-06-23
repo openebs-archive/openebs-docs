@@ -226,17 +226,17 @@ For this to work, cStor StorageClass has to be configured with `ReplicaCount=3`.
 
 ## Monitoring cStor Pools and Volumes
 
-The easiest way to monitor cStor pools and volumes is through Director Online. The volume metrics are scraped and uploaded to Director Online where users can browse historical volume performance. Director Online also provides the topology view where detailed live status of Volumes, snapshots, clones, pools and disks is obtained. Through the topology view , users get granular details of each of these Kubernetes resources in an intuitive graphical user interface. 
+The easiest way to monitor cStor pools and volumes is through Kubera. The volume metrics are scraped and uploaded to Kubera where users can browse historical volume performance. Kubera also provides the topology view where detailed live status of Volumes, snapshots, clones, pools and disks is obtained. Through the topology view , users get granular details of each of these Kubernetes resources in an intuitive graphical user interface. 
 
 <br>
 
-Links to screenshots of some of the cStor resources in Director Online are shown below.
+Links to screenshots of some of the cStor resources in Kubera are shown below.
 
-[Pool topology view](/v130/docs/next/directoronline.html#cstor-pool-view)
+[Pool topology view](/v130/docs/next/kubera.html#cstor-pool-view)
 
-[Volume POD topology view](/docs/next/directoronline.html#cstor-volume-pod-view)
+[Volume POD topology view](/docs/next/kubera.html#cstor-volume-pod-view)
 
-[Volume CR topology view](/docs/next/directoronline.html#cstor-custom-resources-view)
+[Volume CR topology view](/docs/next/kubera.html#cstor-custom-resources-view)
 
 <br>
 
