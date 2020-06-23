@@ -24,13 +24,13 @@ The steps for running FIO based Storage benchmarking and viewing the results are
 
 <font size="6">Support for Performance tuning </font>
 
-Support for performance tuning for specific workloads can be obtained through the premium plan on DirectorOnline. Connect your cluster to <a href="https://director.mayadata.io" target="_blank">DirectorOnline</a>, start the cluster on evaluation plan and seek support for performance tuning. 
+Support for performance tuning for specific workloads can be obtained through the premium plan on Kubera. Connect your cluster to <a href="https://kubera.mayadata.io" target="_blank">Kubera</a>, start the cluster on evaluation plan and seek support for performance tuning. 
 
 <br>
 
 ## See Also:
 
-### [Connecting to DirectorOnline](/v110/docs/next/kubera.html)
+### [Connecting to Kubera](/v110/docs/next/kubera.html)
 
 ### [Seeking help](/v110/docs/next/support.html)
 
