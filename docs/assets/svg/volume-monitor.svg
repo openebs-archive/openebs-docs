@@ -30,7 +30,7 @@
 			c0,11-8.9,20-19.9,20C1869.9,903.7,1869.9,903.7,1869.8,903.7z"/>
 		<path class="st1" d="M1577.5,88.6h-1132c-8.6,0-15.6-5.1-15.6-11.5l0,0V36.7c0-6.4,7-11.5,15.6-11.5h1131.9
 			c8.6,0,15.6,5.1,15.6,11.5v40.4C1593,83.4,1586.1,88.5,1577.5,88.6C1577.5,88.6,1577.5,88.6,1577.5,88.6z"/>
-		<text transform="matrix(0.94 0 0 1 502.1512 69.3614)" class="st2 st3 st4">Grafana dashboard for OpenEBS volume metrics at MayaOnline</text>
+		<text transform="matrix(0.94 0 0 1 502.1512 69.3614)" class="st2 st3 st4">Grafana dashboard for OpenEBS volume metrics at Kubera</text>
 		<g id="rdw2ya.tif">
 			
 				<image style="overflow:visible;" width="3346" height="1414" id="Layer_0_1_" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAADRQAAAWICAYAAAB+gamVAAAACXBIWXMAABYlAAAWJQFJUiTwAAAA
