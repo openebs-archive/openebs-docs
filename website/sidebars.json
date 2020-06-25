@@ -46,13 +46,13 @@
 	"jira"
 	],
     "Troubleshooting": [
+	"troubleshooting",
 	"t-install",
 	"t-uninstall",
 	"t-ndm",
 	"t-volume-provisioning",
 	"t-jiva",
-	"t-cstor",
-	"t-others"
+	"t-cstor"
 	],
     "Additional Info": [
 	"performance", 
