@@ -1,15 +1,21 @@
 ---
-id: t-others
-title: Troubleshooting OpenEBS - Other
-sidebar_label: Others
+id: troubleshooting
+title: Troubleshooting OpenEBS - Overview
+sidebar_label: Overview
 ---
 ------
 
 <font size="5">General guidelines for troubleshooting</font>
 
-- Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
-- Search for similar issues added in this troubleshootiung section.
-- Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
+-	Search for similar issues mentioned in this page as well as the following troubleshooting sections.
+	-	<a href="/docs/next/t-install.html" target="_blank">Troubleshooting Install</a>.
+	-	<a href="/docs/next/t-uninstall.html" target="_blank">Troubleshooting Uninstall</a>.
+	-	<a href="/docs/next/t-ndm.html" target="_blank">Troubleshooting NDM</a>.
+	-	<a href="/docs/next/t-jiva.html" target="_blank">Troubleshooting Jiva</a>.
+	-	<a href="/docs/next/t-cstor.html" target="_blank">Troubleshooting cStor</a>.
+-	Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
+-	Search for similar issues on <a href="https://github.com/openebs/openebs/issues" target="_blank">OpenEBS GitHub repository</a>.
+-	Search for any reported issues on <a href="https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>.
 
 <br>
 <hr>
@@ -204,6 +210,16 @@ Set the reboot timer schedule at different time i.e staggered at various interva
 <br>
 
 ## See Also:
+
+### [Troubleshooting Install](/docs/next/t-install.html)
+
+### [Troubleshooting Uninstall](/docs/next/t-uninstall.html) 
+
+### [Troubleshooting NDM](/docs/next/t-ndm.html)
+
+### [Troubleshooting Jiva](/docs/next/t-jiva.html)
+
+### [Troubleshooting cStor](/docs/next/t-cstor.html)
 
 ### [FAQs](/docs/next/faq.html)
 
