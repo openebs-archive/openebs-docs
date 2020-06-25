@@ -8,14 +8,14 @@ sidebar_label: Support
 
 ## GitHub
 
-Raise an [issue](https://github.com/openebs/openebs/issues/new)
+Raise an [GitHub issue](https://github.com/openebs/openebs/issues/new)
 
 ## Slack
 
-You can reach out to OpenEBS contributors and maintainers through any of the following Slack Channels. 
+You can reach out to OpenEBS contributors and maintainers through following [Kubernetes Slack](https://slack.k8s.io) Slack Channels. If you are already signed up to Kubernetes slack, join the following channels:  
 
-- Join the [#openebs](https://kubernetes.slack.com/messages/openebs/) channel on the [Kubernetes Slack](https://slack.k8s.io).
-- Join the [#openebs](https://cloud-native.slack.com/messages/openebs/) channel on the [CNCF Slack](https://slack.cncf.io).
+- Join the [#openebs](https://kubernetes.slack.com/messages/openebs/) for user discussions.
+- Join the [#openebs-dev](https://cloud-native.slack.com/messages/openebs-dev/) for contributor discussions.
 
 
 ## Blogs
@@ -44,8 +44,13 @@ This is a list of third-party companies and individuals who provide products or 
 - [MayaData](https://mayadata.io/)
 
 <br>
-
 <hr>
-
 <br>
 
+## See Also:
+
+### [Troubleshooting](/docs/next/troubleshooting.html)
+
+### [FAQs](/docs/next/faq.html)
+
+### [Latest release notes](/docs/next/releases.html)
