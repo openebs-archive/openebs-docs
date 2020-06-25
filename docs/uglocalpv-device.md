@@ -164,6 +164,10 @@ The default Storage Class is called `openebs-device`. If the block devices are n
    The `volumeBindingMode` MUST ALWAYS be set to `WaitForFirstConsumer`. `volumeBindingMode: WaitForFirstConsumer` instructs Kubernetes to initiate the creation of PV only after Pod using PVC is scheduled to the node.
    :::
 
+   :::note 
+   The `FSType` will take effect only if the underlying block device is not formatted. For instance if the block device is formatted with "Ext4", specifying "XFS" in the storage class will not clear Ext4 and format with XFS. If the block devices are already formatted, you can clear the filesystem information using `wipefs -f -a <device-path>`. After the filesystem has been cleared, NDM pod on the node needs to be restarted to update the Block Device.
+   :::
+
 2. Edit `local-device-sc.yaml` and update with your desired values for:
 
    - `metadata.name`
