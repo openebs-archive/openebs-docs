@@ -100,6 +100,8 @@ Server: &version.Version{SemVer:"v2.16.8", GitCommit:"145206680c1d5c28e3fcf30d6f
 In the **default installation mode**, use the following command to install the latest version of OpenEBS in `openebs` namespace.
 
 ```
+helm repo add openebs https://openebs.github.io/charts
+helm repo update
 helm install --namespace openebs --name openebs openebs/openebs
 ```
 
@@ -134,6 +136,8 @@ kubectl create ns openebs
 ```
 Install openebs with chart name as `openebs`:
 ```
+helm repo add openebs https://openebs.github.io/charts
+helm repo update
 helm install openebs openebs/openebs
 ```
 To view the chart
@@ -150,6 +154,8 @@ kubectl create ns openebs
 ```
 Install openebs with chart name as `openebs`:
 ```
+helm repo add openebs https://openebs.github.io/charts
+helm repo update
 helm install --namespace openebs openebs openebs/openebs
 ```
 To view the chart
