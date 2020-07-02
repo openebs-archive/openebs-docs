@@ -25,17 +25,15 @@ In spite of doing all of the above, NDM contributes to overall ease of provision
 
 <br>
 
-NDM is deployed as a daemonset during installation of OpenEBS. NDM daemonset discovers the disks on each node and creates a custom resource called Block Device or BD. This `blockdevice` CR is newly implemented in 1.0.0 release of OpenEBS and the old `disk` CR will be deprecated in the future releases. 
-
-Using `disk` CRs in SPC configuration spec will continue to work as NDM is backward compatible. 
+NDM is deployed as a daemonset during installation of OpenEBS. NDM daemonset discovers the disks on each node and creates a custom resource called Block Device or BD.
 
 
 
 ## Privileged access
 
-NDM daemon runs in containers and has to access the underlying storage devices and run in Privileged mode. NDM requires privileged mode because it requires access to /dev and /sys directories for monitoring the attached devices and also to fetch the details of the attached device using various probes. NDM is responsible for the discovery of block devices and filtering out devices that should not be used by OpenEBS; for example the disk that has OS filesystem. Earlier, to detect the OS disk, the NDM pod by default mounted the `/proc/1/mounts` file, which is restricted on nodes that have SELinux=on. This is now fixed by mounting the `/proc` directory of the host inside the container and then loading the mount file.
+NDM daemon runs in containers and has to access the underlying storage devices and run in Privileged mode. NDM requires privileged mode because it requires access to /dev, /proc and /sys directories for monitoring the attached devices and also to fetch the details of the attached device using various probes. NDM is responsible for the discovery of block devices and filtering out devices that should not be used by OpenEBS; for example, detecting the disk that has OS filesystem. NDM pod by default mounts the `/proc` directory of the host inside the container and then load the `/proc/1/mounts` file to find the disk used by OS.
 
-So at a high level, to allow OpenEBS to run in privileged mode in selinux=on nodes, the cluster should be configured to grant privileged access to OpenEBS service account.
+To allow OpenEBS to run in privileged mode in `selinux=on` nodes, the cluster should be configured to grant privileged access to OpenEBS service account.
 
 
 
@@ -45,26 +43,25 @@ So at a high level, to allow OpenEBS to run in privileged mode in selinux=on nod
 
 - *Discover* block devices attached to a Kubernetes Node
   - Discover block devices on startup - create and/or update status.
-  - Maintain cluster-wide unique id of the disk using the following schemes:
-    - Hash of WWN, Serial, Vendor, Model ( if available and unique across nodes )
-    - Hash of Path, Hostname ( for ephemeral disks or if above values are unavailable)
+  - Maintain cluster-wide unique id of the disk using the following scheme:
+    - md5 hash of WWN / PartitionUUID / FileSystemUUID.
 - Detect block device addition/removal from a node and update the status of Block device.
 - Add `blockDevice` as Kubernetes custom resource with following properties:
   - spec: The following will be updated if they are available.
     - Device Path
-    - Device Links ( by id, by name)
+    - Device Links (by id, by name)
     - Vendor and Model information
     - WWN and Serial
     - Capacity
-    - Sector Size
+    - Sector and Block Size
   - labels:
     - hostname (kubernetes.io/hostname)
     - blockdevice-type (ndm.io/blockdevice-type)
     - Managed (ndm.io/managed)
   - status can have the following values:
-    - Active : Block device is detected on the node
-    - Inactive : Block device was detected earlier but doesn't exist at the given node anymore
-    - Unknown : The NDM was stopped on the node where Block device was last detected
+    - Active : Block device is available on the node
+    - Inactive : Block device is not available on the given node anymore
+    - Unknown : NDM was stopped on the node where Block device was last detected / not able to determine the status
 
 ## Filters:
 
