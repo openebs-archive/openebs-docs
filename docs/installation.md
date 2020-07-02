@@ -13,8 +13,6 @@ sidebar_label: Installation
 
 <font size="6">Summary:</font>
 
-
-
 - Verify if [iSCSI client](#verify-iscsi-client) is running
 
 - Set Kubernetes [admin context](#set-cluster-admin-user-context-and-rbac) and RBAC
@@ -30,9 +28,7 @@ sidebar_label: Installation
 - [Post installation](#post-installation-considerations)
 
 <br>
-
 <hr>
-
 <br>
 
 ## Verify iSCSI client
@@ -42,7 +38,6 @@ sidebar_label: Installation
 iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However, it is recommended that the [iSCSI client is setup](/docs/next/prerequisites.html) and iscsid service is running on worker nodes before proceeding with the OpenEBS installation.
 
 <br>
-
 <hr>
 <br>
 
@@ -75,9 +70,7 @@ kubectl config use-context admin-ctx
 ```
 
 <br>
-
 <hr>
-
 <br>
 
 ## Installation through helm
@@ -99,14 +92,17 @@ helm version
 Example ouptut:
 
 <div class="co">
-Client: &version.Version{SemVer:"v2.16.1", GitCommit:"bbdfe5e7803a12bbdf97e94cd847859890cf4050", GitTreeState:"clean"}
+Client: &version.Version{SemVer:"v2.16.8", GitCommit:"145206680c1d5c28e3fcf30d6f596f0ba84fcb47", GitTreeState:"clean"}
+Server: &version.Version{SemVer:"v2.16.8", GitCommit:"145206680c1d5c28e3fcf30d6f596f0ba84fcb47", GitTreeState:"clean"}
 </div>
 
 
-In the **default installation mode**, use the following command to install OpenEBS in `openebs` namespace.
+In the **default installation mode**, use the following command to install the latest version of OpenEBS in `openebs` namespace.
 
 ```
-helm install --namespace openebs --name openebs stable/openebs --version 1.11.0
+helm repo add openebs https://openebs.github.io/charts
+helm repo update
+helm install --namespace openebs --name openebs openebs/openebs
 ```
 
 **For Helm v3** 
@@ -140,7 +136,9 @@ kubectl create ns openebs
 ```
 Install openebs with chart name as `openebs`:
 ```
-helm install openebs stable/openebs --version 1.11.0
+helm repo add openebs https://openebs.github.io/charts
+helm repo update
+helm install openebs openebs/openebs
 ```
 To view the chart
 ```
@@ -156,7 +154,9 @@ kubectl create ns openebs
 ```
 Install openebs with chart name as `openebs`:
 ```
-helm install --namespace openebs openebs stable/openebs --version 1.11.0 
+helm repo add openebs https://openebs.github.io/charts
+helm repo update
+helm install --namespace openebs openebs openebs/openebs
 ```
 To view the chart
 ```
@@ -221,7 +221,7 @@ Default values for Helm Chart parameters are provided [below](#helm-values).
 After doing the custom configuration in the values.yaml file, run the below command to do the custom installation.
 
 ```
-helm install --namespace <custom_namespace> --name openebs stable/openebs -f values.yaml --version 1.11.0
+helm install --namespace <custom_namespace> --name openebs openebs/openebs -f values.yaml
 ```
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
@@ -237,7 +237,7 @@ As a next step [verify](#verifying-openebs-installation) your installation and d
 In the **default installation mode**, use the following command to install OpenEBS. OpenEBS is installed in `openebs` namespace. 
 
 ```
-kubectl apply -f https://openebs.github.io/charts/1.11.0/openebs-operator.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
 ```
 
 **Note:** 
@@ -259,7 +259,7 @@ In the **custom installation mode**, you can achieve the following advanced conf
 - (Optional) Configure Environmental Variable in OpenEBS operator YAML
 
 
-For custom installation, <a href="https://openebs.github.io/charts/1.11.0/openebs-operator-1.11.0.yaml" target="_blank">download</a> the **openebs-operator-1.11.0** file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
+For custom installation, <a href="https://openebs.github.io/charts/openebs-operator.yaml" target="_blank">download</a> the **openebs-operator** YAML file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
 
 
 
@@ -272,8 +272,6 @@ Example nodeSelector configuration for OpenEBS control plane components is given
 <br>
 
 <font size="5">Setup nodeSelectors for Admission Controller</font> 
-
-
 
 The Admission controller to intercepts the requests to the Kubernetes API server prior to persistence of the object, but after the request is authenticated and authorized. This openebs admission controller implements additional custom admission policies to validate the incoming request. The following are the admission policies available with the latest main release.
 
@@ -403,7 +401,7 @@ If you would like to use a customized configuration, you can disable the install
 After doing the custom configuration in the downloaded openebs-operator.yaml file, run the below command to do the custom installation.
 
 ```
-kubectl apply -f <custom-openebs-operator-1.11.0.yaml>
+kubectl apply -f <modified openebs-operator.yaml>
 ```
 
 
@@ -638,68 +636,7 @@ ndm:
 
 <h3><a class="anchor" aria-hidden="true" id="helm-values"></a>Default Values for Helm Chart Parameters</h3>
 
-Download the values.yaml from [here](https://github.com/helm/charts/blob/master/stable/openebs/values.yaml) and update them as per your needs. The configurable parameters are described here for reading convenience.
-
-| PARAMETER                                    | DESCRIPTION                                  | DEFAULT                                            |
-| :------------------------------------------- | :------------------------------------------- | :------------------------------------------------- |
-| `rbac.create`                                | Enable RBAC Resources                        | `true`                                             |
-| `image.pullPolicy`                           | Container pull policy                        | `IfNotPresent`                                     |
-| `apiserver.image`                            | Docker Image for API Server                  | `quay.io/openebs/m-apiserver`                      |
-| `apiserver.imageTag`                         | Docker Image Tag for API Server              | `1.11.0`                                            |
-| `apiserver.replicas`                         | Number of API Server Replicas                | `1`                                                |
-| `apiserver.sparse.enabled`                   | Create Sparse Pool based on Sparsefile       | `false`                                            |
-| `provisioner.enabled	`                      | Enable Provisioner                           | `true`                                              |
-| `provisioner.image`                          | Docker Image for Provisioner                 | `quay.io/openebs/openebs-k8s-provisioner`          |
-| `provisioner.imageTag`                       | Docker Image Tag for Provisioner             | `1.11.0`                                            |
-| `provisioner.replicas`                       | Number of Provisioner Replicas               | `1`                                                |
-| `localprovisioner.image`                     | Image for localProvisioner                   | `quay.io/openebs/provisioner-localpv`              |
-| `localprovisioner.imageTag`                  | Image Tag for localProvisioner               | `1.11.0`                                            |
-| `localprovisioner.replicas`                  | Number of localProvisioner Replicas          | `1`                                                |
-| `localprovisioner.basePath`                  | BasePath for hostPath volumes on Nodes       | `/var/openebs/local`                               |
-| `webhook.enabled`                            | Enable admission server	                    | `true`                                             |
-| `webhook.image`                              | Image for admission server                   | `quay.io/openebs/admission-server`                 |
-| `webhook.imageTag`                           | Image Tag for admission server               | `1.11.0`                                            |
-| `webhook.replicas`                           | Number of admission server Replicas          | `1`                                                |
-| `snapshotOperator.enabled`                   | Enable Snapshot Provisioner	                | `true`                                             |
-| `snapshotOperator.provisioner.image`         | Docker Image for Snapshot Provisioner        | `quay.io/openebs/snapshot-provisioner`             |
-| `snapshotOperator.provisioner.imageTag`      | Docker Image Tag for Snapshot Provisioner    | `1.11.0`                                            |
-| `snapshotOperator.controller.image`          | Docker Image for Snapshot Controller         | `quay.io/openebs/snapshot-controller`              |
-| `snapshotOperator.controller.imageTag`       | Docker Image Tag for Snapshot Controller     | `1.11.0`                                            |
-| `snapshotOperator.replicas`                  | Number of Snapshot Operator Replicas         | `1`                                                |
-| `ndm.enabled`                                | Enable Node Disk Manager	                    | `true`                                             |
-| `ndm.image`                                  | Docker Image for Node Disk Manager           | `quay.io/openebs/node-disk-manager-amd64`          |
-| `ndm.imageTag`                               | Docker Image Tag for Node Disk Manager       | `0.6.0`                                           |
-| `ndm.sparse.path`                            | Directory where Sparse files are created     | `/var/openebs/sparse`                              |
-| `ndm.sparse.size`                            | Size of the sparse file in bytes             | `10737418240`                                      |
-| `ndm.sparse.count`                           | Number of sparse files to be created         | `0`                                                |
-| `ndm.filters.excludeVendors`                 | Exclude devices with specified vendor        | `CLOUDBYT,OpenEBS`                                 |
-| `ndm.filters.excludePaths`                   | Exclude devices with specified path patterns | `loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md` |
-| `ndm.filters.includePaths`                   | Include devices with specified path patterns | " "                                               |
-| `ndm.probes.enableSeachest`                  | Enable Seachest probe for NDM                | `false`                                            |
-| `ndmOperator.enabled`                        | Enable NDM Operator                          | `true`                                             |
-| `ndmOperator.image`                          | Image for NDM Operator                       | `quay.io/openebs/node-disk-operator-amd64`         |
-| `ndmOperator.imageTag`                       | Image Tag for NDM Operator                   | `0.6.0`                                           |
-| `jiva.image`                                 | Docker Image for Jiva                        | `quay.io/openebs/jiva`                             |
-| `jiva.imageTag`                              | Docker Image Tag for Jiva                    | `1.11.0`                                            |
-| `jiva.replicas`                              | Number of Jiva Replicas                      | `3`                                                |
-| `cstor.pool.image`                           | Docker Image for cStor Pool                  | `quay.io/openebs/cstor-pool`                       |
-| `jiva.defaultStoragePath`                    | hostpath used by default Jiva StorageClass   | `/var/openebs`                                     |
-| `cstor.pool.imageTag`                        | Docker Image Tag for cStor Pool              | `1.11.0`                                            |
-| `cstor.poolMgmt.image`                       | Docker Image for cStor Pool Management       | `quay.io/openebs/cstor-pool-mgmt`                  |
-| `cstor.poolMgmt.imageTag`                    | Docker Image Tag for cStor Pool Management   | `1.11.0`                                            |
-| `cstor.target.image`                         | Docker Image for cStor Target                | `quay.io/openebs/cstor-istgt`                      |
-| `cstor.target.imageTag`                      | Docker Image Tag for cStor Target            | `1.11.0`                                            |
-| `cstor.volumeMgmt.image`                     | Docker Image for cStor Volume Management     | `quay.io/openebs/cstor-volume-mgmt`                |
-| `cstor.volumeMgmt.imageTag`                  | Docker Image Tag for cStor Volume Management | `1.11.0`                                            |
-| `policies.monitoring.image`                  | Docker Image for Prometheus Exporter         | `quay.io/openebs/m-exporter`                       |
-| `policies.monitoring.imageTag`               | Docker Image Tag for Prometheus Exporter     | `1.11.0`                                            |
-| `analytics.enabled`                          | Enable sending stats to Google Analytics     | `true`                                             |
-| `analytics.pingInterval`                     | Duration(hours) between sending ping stat    | `24h`                                              |
-| `HealthCheck.initialDelaySeconds`            | Delay before liveness probe is initiated     | `30`                                               |
-| `HealthCheck.periodSeconds`                  | How often to perform the liveness probe      | `60`                                               |
-| `defaultStorageConfig.StorageConfig.enabled` | Enable default storage class installation    | `true`                                             |
-
-  
+Download the values.yaml from [here](https://github.com/openebs/charts/blob/master/charts/openebs/values.yaml) and update them as per your needs.
 
 <br>
 

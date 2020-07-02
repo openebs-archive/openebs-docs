@@ -12,31 +12,36 @@ Note: If you are upgrading Jiva volumes that are running in version 1.6 and 1.7,
 
 ## Supported upgrade paths
 
-From 0.9.0 to 1.0.0 - Get the steps from [here](https://docs.openebs.io/v100/docs/next/upgrade.html).
+:::note
+To upgrade to the latest version from your current version, you have to follow the below upgrade path.
+:::
 
-From 0.8.2 to 0.9.0 - Get the steps from [here](https://docs.openebs.io/v090/docs/next/upgrade.html).
+From 1.0.0 and higher to latest version - Get the steps from [here](https://github.com/openebs/openebs/blob/master/k8s/upgrades/README.md).
 
-From 0.8.1 to 0.8.2 - Get the steps from [here](https://v08-docs.openebs.io/v082/docs/next/upgrade.html).
+From 0.9.0 to 1.0.0 - Get the steps from [here](https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.9.0-1.0.0).
 
-From 0.8.0 to 0.8.1 - Get the steps from [here](https://v081-docs.openebs.io/docs/next/upgrade.html).
+From 0.8.2 to 0.9.0 - Get the steps from [here](https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.8.2-0.9.0).
 
-From 0.7.x to 0.8.0 - Get the steps from [here](https://v08-docs.openebs.io/docs/next/upgrade.html).
+From 0.8.1 to 0.8.2 - Get the steps from [here](https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.8.1-0.8.2).
 
-From 0.6.0 to 0.7.x - Get the steps from [here](https://v07-docs.openebs.io/docs/next/upgrade.html).
+From 0.8.0 to 0.8.1 - Get the steps from [here](https://github.com/openebs/openebs/tree/master/k8s/upgrades/0.8.0-0.8.1).
 
-From 0.5.3 or 0.5.4 to 0.6.0 - Get the steps from [here](https://v06-docs.openebs.io/docs/next/upgrade.html).
+From versions prior to 0.8.0 - Get the steps from [here](https://github.com/openebs/openebs/tree/master/k8s/upgrades).
 
-**Note:** You have to upgrade from your current version to the next version as per the supported path. 
+
 
 <hr>
 
 ## See Also:
 
-### [Releases](/docs/next/releases.html)
+### [See Release Notes](/docs/next/releases.html)
+
+### [Join our Community](/docs/next/support.html)
+
+### [Checkout Troubleshooting guides](/docs/next/troubleshooting.html)
 
 
 <br>
-
 <hr>
 <br>
 

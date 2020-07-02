@@ -26,17 +26,19 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
   Verify if [iSCSI service is up](/docs/next/prerequisites.html) and
   running before starting the installation.
 
-- Default installation works in most  of the cases. As a Kubernetes cluster-admin, start the default installation using either
+- Default installation works in most of the cases. As a Kubernetes cluster-admin, start the default installation using either
 
   ```
-  helm install --namespace openebs --name openebs stable/openebs --version 1.11.0
+  helm repo add openebs https://openebs.github.io/charts
+  helm repo update
+  helm install --namespace openebs --name openebs openebs/openebs
   ```
   More information about OpenEBS installation using different Helm versions can be found [here](/docs/next/installation.html#installation-through-helm).
 
   (or)
 
   ```
-  kubectl apply -f https://openebs.github.io/charts/1.11.0/openebs-operator.yaml
+  kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
   ```
   
   For advanced installation steps, see [Installation](/docs/next/installation.html) section.
