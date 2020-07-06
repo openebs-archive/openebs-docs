@@ -82,6 +82,14 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl delete crd cstorcompletedbackups.openebs.io
   kubectl delete crd cstorpoolclusters.openebs.io
   kubectl delete crd upgradetasks.openebs.io
+  kubectl delete crd cstorpoolclusters.cstor.openebs.io
+  kubectl delete crd cstorpoolinstances.cstor.openebs.io
+  kubectl delete crd cstorvolumeattachments.cstor.openebs.io
+  kubectl delete crd cstorvolumeconfigs.cstor.openebs.io
+  kubectl delete crd cstorvolumepolicies.cstor.openebs.io
+  kubectl delete crd cstorvolumereplicas.cstor.openebs.io
+  kubectl delete crd cstorvolumes.cstor.openebs.io
+
   ```
 
 
