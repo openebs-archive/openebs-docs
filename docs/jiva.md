@@ -12,7 +12,7 @@ sidebar_label: Jiva
 
 Each Jiva Volume comprises of a Controller (or Target) and a set of Replicas. Both Controller and Replica functionalities are provided by the same binary and hence the same [docker image](https://hub.docker.com/r/openebs/jiva/). Jiva simulates a block device which is exposed via an iSCSI target implementation(gotgt - part of the Controller). This block device is discovered and mounted remotely on the host where application pod is running. The Jiva Controller parallelly replicates the incoming IOs to its replicas. The Replica, in turn, writes these IOs to a sparse file.
 
-![Jiva storage engine of OpenEBS](/docs/assets/jiva.png)
+![Jiva storage engine of OpenEBS](/v1110/docs/assets/jiva.png)
 
 #### Jiva Sparse File Layout
 
@@ -24,7 +24,7 @@ The following content is modified with some architectural change as compared to 
 
 Jiva replicas are built using Linux sparse files, which support thin provisioning. Jiva does not maintain additional metadata to indicate which blocks are used. The block size is 4K. When a replica gets added at the controller, it creates an auto-generated snapshot(differencing disk). As the number of snapshots grows, the differencing disk chain could get quite long. To improve read performance, Jiva, therefore, maintains a read index table that records which differencing disk holds valid data for each 4K block. In the following figure, the volume has eight blocks. The read index table has eight entries and is filled up lazily as read operation takes place. A write operation writes the data on the latest file(head), deletes(fallocate) the corresponding block from the older snapshots(or differencing disks) and updates the index in the table, which now points to the live data.
 
-![Longhorn read index](/docs/assets/Longhorn-blog-new.png)
+![Longhorn read index](/v1110/docs/assets/Longhorn-blog-new.png)
 
 The read index table is kept in memory and consumes two bytes for each 4K block. A maximum of 512 auto-generated snapshots can be created for each volume. The read index table consumes a certain amount of in-memory space for each replica. A 1TB volume, for example, consumes 512MB of in-memory space.
 
@@ -42,9 +42,9 @@ When the controller detects failures in one of its replicas, it marks the replic
 
 ## See Also:
 
-### [Which storage engine should I use ?](/docs/next/casengines.html#cstor-vs-jiva-vs-localpv-features-comparison)
+### [Which storage engine should I use ?](/v1110/docs/next/casengines.html#cstor-vs-jiva-vs-localpv-features-comparison)
 
-### [Jiva User Guide ](/docs/next/jivaguide.html)
+### [Jiva User Guide ](/v1110/docs/next/jivaguide.html)
 
 <br>
 
