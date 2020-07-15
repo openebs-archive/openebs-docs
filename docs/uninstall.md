@@ -80,11 +80,6 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl delete crd cstorrestores.openebs.io
   kubectl delete crd cstorcompletedbackups.openebs.io
   kubectl delete crd upgradetasks.openebs.io
-  kubectl delete crd csidrivers.csi.storage.k8s.io
-  kubectl delete crd csinodeinfos.csi.storage.k8s.io
-  kubectl delete crd volumesnapshotclasses.snapshot.storage.k8s.io
-  kubectl delete crd volumesnapshotcontents.snapshot.storage.k8s.io
-  kubectl delete crd volumesnapshots.snapshot.storage.k8s.io
   kubectl delete crd cstorpoolclusters.cstor.openebs.io
   kubectl delete crd cstorpoolinstances.cstor.openebs.io
   kubectl delete crd cstorvolumeattachments.cstor.openebs.io
@@ -92,6 +87,15 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl delete crd cstorvolumepolicies.cstor.openebs.io
   kubectl delete crd cstorvolumereplicas.cstor.openebs.io
   kubectl delete crd cstorvolumes.cstor.openebs.io
+  ```
+
+  OpenEBS also installs some generic Kubernetes/CSI CRDs. In case OpenEBS is the only storage installed on your cluster, you can proceed to delete the following CRDs as well. 
+  ```
+  kubectl delete crd csidrivers.csi.storage.k8s.io
+  kubectl delete crd csinodeinfos.csi.storage.k8s.io
+  kubectl delete crd volumesnapshotclasses.snapshot.storage.k8s.io
+  kubectl delete crd volumesnapshotcontents.snapshot.storage.k8s.io
+  kubectl delete crd volumesnapshots.snapshot.storage.k8s.io
   ```
 
 
