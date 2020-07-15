@@ -16,18 +16,18 @@ sidebar_label: Releases
 
 ### Key Improvements:
 
-- [Build] Refactor and add multi-arch image generation support on the NDM repo. [node-disk-manager#428](https://github.com/openebs/node-disk-manager/pull/428) (@xUnholy)
-- [Install] Support specifying the webhook validation policy to fail/ignore via ENV (`ADMISSION_WEBHOOK_FAILURE_POLICY`) on admission server deployment. [maya#1726](https://github.com/openebs/maya/pull/1726) (@prateekpandey14)
-- [NDM] Enhanced NDM Operator to attach events to BDC CR while processing BDC operations. [node-disk-manager#425](https://github.com/openebs/node-disk-manager/pull/425) (@rahulchheda)
-- [ZFS Local PV] Add support for btrfs as an additional FS Type. [zfs-localpv#170](https://github.com/openebs/zfs-localpv/pull/170) (@pawanpraka1, @mikroskeem)
-- [ZFS Local PV] Add support for a shared mount on ZFS Volume to support RWX use cases. [zfs-localpv#164](https://github.com/openebs/zfs-localpv/pull/164) (@pawanpraka1, @stevefan1999-personal)
+- Refactor and add multi-arch image generation support on the NDM repo.
+- Support specifying the webhook validation policy to fail/ignore via ENV (`ADMISSION_WEBHOOK_FAILURE_POLICY`) on admission server deployment.
+- Enhanced NDM Operator to attach events to BDC CR while processing BDC operations.
+- Add support for btrfs as an additional FS Type.
+- Add support for a shared mount on ZFS Volume to support RWX use cases.
  
 
 ### Key Bug Fixes:
 
-- [Provisioners] Fixes a panic on maya-apiserver caused due to PVC names longer than 63 chars. [maya#1720](https://github.com/openebs/maya/pull/1720) (@kmova @stuartpb)
-- [Upgrade] Fixes an issue where the upgrade was failing some pre-flight checks when the maya-apiserver was deployed in HA mode. [maya#1720](https://github.com/openebs/maya/pull/1720) (@shubham14bajpai @utkudarilmaz)
-- [Upgrade] Fixes an issue where the upgrade was failing if the deployment rollout was taking longer than 5 min. [maya#1719](https://github.com/openebs/maya/pull/1719) (@shubham14bajpai @sgielen)
+- Fixes a panic on maya-apiserver caused due to PVC names longer than 63 chars.
+- Fixes an issue where the upgrade was failing some pre-flight checks when the maya-apiserver was deployed in HA mode.
+- Fixes an issue where the upgrade was failing if the deployment rollout was taking longer than 5 min.
 
 ### Other Updates:
 
@@ -35,6 +35,9 @@ sidebar_label: Releases
 - OpenEBS ZFS Local PV has been declared as _beta_. For detailed instructions on how to get started with ZFS Local PV please refer to the [Quick start guide](https://github.com/openebs/zfs-localpv).
 - OpenEBS cStor CSI support is marked as feature-complete and further releases will focus on additional integration and e2e tests. For detailed instructions on getting started with CSI driver for cStor, please refer to the [Quick start guide](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
 
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.12.0)
+- [Upgrade Steps](/docs/next/upgrade.html)
 
 
 ## 1.11.0 - Jun 15 2020
