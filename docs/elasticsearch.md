@@ -73,7 +73,7 @@ Advantages of using OpenEBS for Elasticsearch database:
    helm install --name es-test --set volumeClaimTemplate.storageClassName=openebs-cstor-disk elastic/Elasticsearch --version 6.6.0-alpha1
    ```
 
-   For more information on installation, see Elasticsearch [documentation](https://github.com/elastic/helm-charts/tree/master/Elasticsearch).
+   For more information on installation, see Elasticsearch [documentation](https://github.com/elastic/helm-charts/tree/master/elasticsearch).
 
 <br>
 
