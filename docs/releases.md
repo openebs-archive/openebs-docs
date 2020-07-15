@@ -10,10 +10,34 @@ sidebar_label: Releases
 
 
 
-## 1.11.0 - Jun 15 2020
+## 1.12.0 - Jul 15 2020
 
 <br><font size="4">Latest Release</font><br/> (Recommended)<br/>
 
+### Key Improvements:
+
+- [Build] Refactor and add multi-arch image generation support on the NDM repo. [node-disk-manager#428](https://github.com/openebs/node-disk-manager/pull/428) (@xUnholy)
+- [Install] Support specifying the webhook validation policy to fail/ignore via ENV (`ADMISSION_WEBHOOK_FAILURE_POLICY`) on admission server deployment. [maya#1726](https://github.com/openebs/maya/pull/1726) (@prateekpandey14)
+- [NDM] Enhanced NDM Operator to attach events to BDC CR while processing BDC operations. [node-disk-manager#425](https://github.com/openebs/node-disk-manager/pull/425) (@rahulchheda)
+- [ZFS Local PV] Add support for btrfs as an additional FS Type. [zfs-localpv#170](https://github.com/openebs/zfs-localpv/pull/170) (@pawanpraka1, @mikroskeem)
+- [ZFS Local PV] Add support for a shared mount on ZFS Volume to support RWX use cases. [zfs-localpv#164](https://github.com/openebs/zfs-localpv/pull/164) (@pawanpraka1, @stevefan1999-personal)
+ 
+
+### Key Bug Fixes:
+
+- [Provisioners] Fixes a panic on maya-apiserver caused due to PVC names longer than 63 chars. [maya#1720](https://github.com/openebs/maya/pull/1720) (@kmova @stuartpb)
+- [Upgrade] Fixes an issue where the upgrade was failing some pre-flight checks when the maya-apiserver was deployed in HA mode. [maya#1720](https://github.com/openebs/maya/pull/1720) (@shubham14bajpai @utkudarilmaz)
+- [Upgrade] Fixes an issue where the upgrade was failing if the deployment rollout was taking longer than 5 min. [maya#1719](https://github.com/openebs/maya/pull/1719) (@shubham14bajpai @sgielen)
+
+### Other Updates:
+
+- OpenEBS Mayastor continues its momentum by adding support for Rebuild, NVMe-oF Support, enhanced supportability, and several other fixes. For detailed instructions on how to get started with Mayastor please refer to this [Quickstart guide](https://github.com/openebs/Mayastor/blob/develop/deploy/README.md).
+- OpenEBS ZFS Local PV has been declared as _beta_. For detailed instructions on how to get started with ZFS Local PV please refer to the [Quick start guide](https://github.com/openebs/zfs-localpv).
+- OpenEBS cStor CSI support is marked as feature-complete and further releases will focus on additional integration and e2e tests. For detailed instructions on getting started with CSI driver for cStor, please refer to the [Quick start guide](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
+
+
+
+## 1.11.0 - Jun 15 2020
 
 **New capabilities:**
 
