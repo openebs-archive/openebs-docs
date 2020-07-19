@@ -152,7 +152,9 @@ filterconfigs:
 
 <h3><a class="anchor" aria-hidden="true" id="create-blockdevice-CRs-for-partitioned-disks"></a>Create blockdevice CRs for partitioned disks</h3>
 
-Currently, NDM is not selecting partitioned disks for creating device resource. But, you can create block device resource for the partitioned disks manually. The following are the steps for the creation of block device resource.
+**Note:** An alpha feature is available in NDM to automatically detect and create blockdevice resource for partitions. More details can be found [here](/docs/next/alphafeatures.html#ndm-discover-partitions).
+
+Currently by default, NDM is not selecting partitioned disks for creating device resource. But, you can create blockdevice resource for the partitioned disks or any unsupported disks manually. The following are the steps for the creation of block device resource.
 
 1. Create the sample block device CR YAML using the following spec. Following is the sample block device CR YAML.
 

@@ -71,7 +71,7 @@ To allow OpenEBS to run in privileged mode in `selinux=on` nodes, the cluster sh
   - If OpenEBS is installed using helm, update the filters in the configmap of values.yaml and do the helm upgrade
   - Or, directly edit NDM configmap using `kubectl edit` and update the filters
 
-More details can be find from [here](/docs/next/ugndm.html).
+More details can be found from [here](/docs/next/ugndm.html).
 
 ## NDM Roadmap:
 

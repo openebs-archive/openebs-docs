@@ -70,7 +70,7 @@ OpenEBS 1.10 added a feature in NDM to help with discovering partitions and virt
 
 This feature is not yet ready for production use cases and can be enabled via a feature gate flag. The feature gate can be enabled by:
 - adding an additional arg (`--feature-gates=GPTBasedUUID`) to NDM DaemonSet or 
-- via Helm flag `featureGates.GPTBasedUUID.featureGateFlag=GPTBasedUUID`
+- via setting the Helm flags `featureGates.enabled=true` and `featureGates.GPTBasedUUID.enabled=true`
 
 ## Support for ARM64 
 
