@@ -86,20 +86,6 @@ kubectl -n openebs get pods -o name | grep admission-server | xargs kubectl -n o
 ```
 
 
-<h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
-
-
-By default OpenEBS chart generates TLS certificates used by the `openebs-admission-controller`, while this is handy, it requires the admission controller to restart on each `helm upgrade` command. For most of the use cases, the admission controller would have restarted to update the certificate configurations, if not , then user will get the above mentioned error.
-
-**Workaround**
-
-
-This can be fixed by restarting the admission controller:
-
-```
-kubectl -n openebs get pods -o name | grep admission-server | xargs kubectl -n openebs delete
-```
-
 
 <h3><a class="anchor" aria-hidden="true" id="application-pod-not-running-Rancher"></a>Application pods are not running when OpenEBS volumes are provisioned on Rancher</h3>
 
