@@ -29,9 +29,10 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 - Default installation works in most of the cases. As a Kubernetes cluster-admin, start the default installation using either
 
   ```
+  kubectl create namespace openebs
   helm repo add openebs https://openebs.github.io/charts
   helm repo update
-  helm install --namespace openebs --name openebs openebs/openebs
+  helm install --namespace openebs openebs openebs/openebs
   ```
   More information about OpenEBS installation using different Helm versions can be found [here](/docs/next/installation.html#installation-through-helm).
 
