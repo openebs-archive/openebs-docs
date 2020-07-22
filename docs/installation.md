@@ -256,7 +256,7 @@ In the **custom installation mode**, you can achieve the following advanced conf
 - Choose a set of nodes for OpenEBS control plane pods
 - Choose a set of nodes for OpenEBS storage pool
 - You can customize the disk filters that need to be excluded from being used
-- (Optional) Configure Environmental Variable in OpenEBS operator YAML
+- (Optional) Configure with Environment Variables in OpenEBS operator YAML
 
 
 For custom installation, <a href="https://openebs.github.io/charts/openebs-operator.yaml" target="_blank">download</a> the **openebs-operator** YAML file, update the above configurations using the instructions below and proceed to installation with  `kubectl` command.
@@ -310,11 +310,12 @@ See an example configuration [here](#example-diskfilter-yaml)
 
 
 
-<font size="5">Configure Environmental Variable</font> 
+<font size="5">Configure with Environment Variables</font> 
 
 
 
-Some of the configurations related to cStor Target, default cStor sparse pool, default Storage configuration, Local PV Basepath, etc can be configured as environmental variable in the corresponding deployment specification. 
+Some of the configurations related to cStor Target, default cStor sparse pool, default Storage configuration, Local PV Basepath, etc can be configured as 
+variables in the corresponding deployment specification. 
 
 
 <h4><a class="anchor" aria-hidden="true" id="enable-core-dump"></a>Enable core dump</h4>
@@ -329,7 +330,7 @@ Dumping cores has been disabled by default for `cStor pool` and `NDM daemonset` 
 
 SparseDir is a hostPath directory where to look for sparse files. The default value is "/var/openebs/sparse". 
 
-The following configuration must added as environmental variable in the maya-apiserver deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
+The following configuration must added as environment variables in the maya-apiserver deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
 
 ```
  # environment variable
@@ -343,7 +344,7 @@ The following configuration must added as environmental variable in the maya-api
 
 The OpenEBS installation will create default cStor sparse pool based on this configuration value. If "true",  default cStor sparse pools will be configured, if "false", it will not be configure a default cStor sparse pool. The default configured value is "false". The use of cStor sparse pool is for testing purposes only. 
 
-The following configuration must be added as environmental variable in the `maya-apiserver` deployment specification for the installation of cStor pool using sparse disks. This change must be done before applying the OpenEBS operator YAML file. 
+The following configuration must be added as environment variables in the `maya-apiserver` deployment specification for the installation of cStor pool using sparse disks. This change must be done before applying the OpenEBS operator YAML file. 
 
 **Example:**
 
@@ -359,7 +360,7 @@ The following configuration must be added as environmental variable in the `maya
 
 Target Dir is a hostPath directory for target pod. The default value is "/var/openebs".  This value can override the existing host path introducing a `OPENEBS_IO_CSTOR_TARGET_DIR` ENV in maya-apiserver deployment. This configuration might required where underlying host OS does not have write permission on default OpenEBS path(/var/openebs/). 
 
-The following configuration must added as environmental variable in the `maya-apiserver` deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
+The following configuration must added as environment variables in the `maya-apiserver` deployment specification. This change must be done before applying the OpenEBS operator YAML file. 
 
 **Example:**
 
@@ -386,7 +387,7 @@ By default the hostpath is configured as `/var/openebs/local` for Local PV based
 <h4><a class="anchor" aria-hidden="true" id="default-storage-configuration "></a>Default Storage Configuration</h4>
 
 OpenEBS comes with default storage configuration like Jiva and Local PV storage classes and so forth. Each of the storage engines in OpenEBS is highly configurable and the customization is done via Storage Classes and associated Custom Resources. While the default storage configuration can be modified after installation, it is going to be overwritten by the OpenEBS API Server. The recommended approach for customizing is to have users create their own storage configuration using the default options as examples/guidance. 
-If you would like to use a customized configuration, you can disable the installation of the default storage configuration during the installation. The following configuration must be added as environmental variable in the `maya-apiserver` deployment specification to disable default storage configuration.
+If you would like to use a customized configuration, you can disable the installation of the default storage configuration during the installation. The following configuration must be added as environment variables in the `maya-apiserver` deployment specification to disable default storage configuration.
 
 ```
 # environment variable
