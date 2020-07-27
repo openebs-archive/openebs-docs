@@ -69,7 +69,7 @@ The backup and restore of OpenEBS volumes works with Kubernetes backup and resto
 
 <img src="/docs/assets/svg/f-prometheus.svg" alt="Prometheus and Tuning Icon" style="width:200px;">
 
-OpenEBS volumes are instrumented for granular data metrics such as volume IOPS, throughput, latency and data patterns. As OpenEBS follows the CAS pattern, stateful applications can be tuned for better performance by observing the traffic data patterns on Prometheus and modifying the storage policy parameters without worrying about neighboring workloads that are using OpenEBS thereby minimizing the incidence of "noise neighbor" issues.  
+OpenEBS volumes are instrumented for granular data metrics such as volume IOPS, throughput, latency and data patterns. As OpenEBS follows the CAS pattern, stateful applications can be tuned for better performance by observing the traffic data patterns on Prometheus and modifying the storage policy parameters without worrying about neighboring workloads that are using OpenEBS thereby minimizing the incidence of "noisy neighbor" issues.  
 
 <hr>
 <br>
