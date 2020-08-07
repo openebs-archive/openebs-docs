@@ -26,9 +26,9 @@ The list of alpha features include:
 OpenEBS Mayastor developed using NVMe based architecture, targeted at addressing performance requirements of IO-intensive workloads is ready for alpha testing. For detailed instructions on how to get started with Mayastor please refer this [Quick-start guide](https://github.com/openebs/Mayastor/blob/develop/deploy/README.md).
 
 The following features are supported:
-- Creation of a Mayastor pool using block device attached to the node.
+- Creation of a Mayastor pool using block device attached to the node or by direct connection to existing iSCSI or NVMe-oF exports.
 - CSI driver for managing Mayastor Volumes.
-- Support for accessing the Mayastor Volumes using iSCSI and NBD
+- Support for accessing the Mayastor Volumes using iSCSI and NVMe-oF TCP
 - Kubernetes Custom Resources for Mayastor Pool and Volumes, and Mayastor Storage Volume” (MSV) showing the status of the Volume.
 - Support for Prometheus metrics and sample Grafana dashboard
 - Workload protection via n-way synchronous replication (experimental)
