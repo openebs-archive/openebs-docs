@@ -261,20 +261,27 @@ OpenEBS volume can be backed up and restored along with the application using Op
 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h4>
 
-- Latest tested Velero version is 1.1.0.
+- Latest tested Velero version is 1.4.0.
 - Create required storage provider configuration to store the backup.
 - Create required OpenEBS storage pools and storage classes on destination cluster.
 - Add a common label to all the resources associated to the application that you want to backup. For example, add an application label selector in associated components such as PVC,SVC etc.
 
 <h4><a class="anchor" aria-hidden="true" id="install-velero"></a>Install Velero (Formerly known as ARK)</h3>
 
-Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.0.0/>) to install and configure Velero. 
+Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.4/>) to install and configure Velero.
 
 <h4><a class="anchor" aria-hidden="true" id="steps-for-backup"></a>Steps for Backup</h3>
 
 Velero is a utility to back up and restore your Kubernetes resource and persistent volumes.
 
-To do backup/restore of OpenEBS cStor volumes through Velero utility, you need to install and configure OpenEBS velero-plugin. If you are using OpenEBS velero-plugin then `velero backup` command invokes velero-plugin internally and takes a snapshot of cStor volume data and send it to remote storage location as mentioned in `06-volumesnapshotlocation.yaml`.  The configuration of `06-volumesnapshotlocation.yaml` can be  done in the next section.
+To do backup/restore of OpenEBS cStor volumes through Velero utility, you need to install and configure OpenEBS velero-plugin. OpenEBS velero-plugin can be installed using the below command:
+```
+velero plugin add openebs/velero-plugin:latest
+```
+
+Above command will install the latest OpenEBS velero-plugin image.
+
+If you are using OpenEBS velero-plugin then `velero backup` command invokes velero-plugin internally and takes a snapshot of cStor volume data and send it to remote storage location as mentioned in `06-volumesnapshotlocation.yaml`.  The configuration of `06-volumesnapshotlocation.yaml` can be  done in the next section.
 
 <h4><a class="anchor" aria-hidden="true" id="configure-volumesnapshotlocation"></a>Configure Volumesnapshot Location</h3>
 

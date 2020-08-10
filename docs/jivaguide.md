@@ -300,7 +300,7 @@ OpenEBS volume can be backed up and restore along with application using velero 
 <h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
 
 - Mount propagation feature has to be enabled on Kubernetes, otherwise the data written from the pods will not visible in the restic daemonset pod on the same node. It is enabled by default on Kubernetes version 1.12. More details can be get from [here](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/). 
-- Latest tested Velero version is 1.1.0.
+- Latest tested Velero version is 1.4.0.
 - Create required storage provider configuration to store the backup data.
 - Create required storage class on destination cluster.
 - Annotate required application pod that contains a volume to back up.
@@ -320,7 +320,7 @@ The following are the step by step procedure for taking backup and restore of ap
 
 <h4><a class="anchor" aria-hidden="true" id="install-velero"></a>Install Velero (Formerly known as ARK)</h3>
 
-Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.1.0/>) to install and configure Velero and follow [restic integration documentation](https://velero.io/docs/v1.1.0/restic/) for setting up and usage of restic support.
+Follow the instructions at [Velero documentation](<https://velero.io/docs/v1.4/>) to install and configure Velero and follow [restic integration documentation](https://velero.io/docs/v1.4/restic/) for setting up and usage of restic support.
 
 While installing Velero plugin in your cluster,  specify `--use-restic` to enable restic support. 
 
