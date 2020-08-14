@@ -7,7 +7,7 @@ sidebar_label: Uninstall
 
 <font size="5">General guidelines for troubleshooting</font>
 
-- Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
+- Contact <a href="/v1120/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 - Search for similar issues added in this troubleshootiung section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
@@ -63,11 +63,11 @@ This will automatically remove the pending CVR and delete the cStor volume compl
 
 ## See Also:
 
-### [FAQs](/docs/next/faq.html)
+### [FAQs](/v1120/docs/next/faq.html)
 
-### [Seek support or help](/docs/next/support.html)
+### [Seek support or help](/v1120/docs/next/support.html)
 
-### [Latest release notes](/docs/next/releases.html)
+### [Latest release notes](/v1120/docs/next/releases.html)
 
 <br>
 <hr>

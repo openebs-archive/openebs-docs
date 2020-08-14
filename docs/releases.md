@@ -12,8 +12,6 @@ sidebar_label: Releases
 
 ## 1.12.0 - Jul 15 2020
 
-<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
-
 ### Key Improvements:
 
 - Refactor and add multi-arch image generation support on the NDM repo.
@@ -37,7 +35,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.12.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v1120/docs/next/upgrade.html)
 
 
 ## 1.11.0 - Jun 15 2020
@@ -67,7 +65,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.11.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v1120/docs/next/upgrade.html)
 
 ## 1.10.0 - May 15 2020
 
@@ -339,13 +337,13 @@ sidebar_label: Releases
 
 ## See Also:
 
-### [OpenEBS Upgrade](/docs/next/upgrade.html)
+### [OpenEBS Upgrade](/v1120/docs/next/upgrade.html)
 
-### [OpenEBS 0.x Releases](/docs/next/releases-0x.html)
+### [OpenEBS 0.x Releases](/v1120/docs/next/releases-0x.html)
 
-### [OpenEBS FAQ](/docs/next/faq.html)
+### [OpenEBS FAQ](/v1120/docs/next/faq.html)
 
-### [Container Attached Storage or CAS](/docs/next/cas.html)
+### [Container Attached Storage or CAS](/v1120/docs/next/cas.html)
 
 <br><hr>
 

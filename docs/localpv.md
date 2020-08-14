@@ -36,8 +36,8 @@ OpenEBS helps users to take local volumes into production by providing features 
 
 OpenEBS provides different types of Local Volumes that can be used to provide locally mounted storage to Kubernetes Stateful workloads. Follow these guides to get started with each type of Local Volume. 
 
-- [OpeneBS Local PV using Hostpath](/docs/next/uglocalpv-hostpath.html)
-- [OpeneBS Local PV using Block Devices](/docs/next/uglocalpv-device.html)
+- [OpeneBS Local PV using Hostpath](/v1120/docs/next/uglocalpv-hostpath.html)
+- [OpeneBS Local PV using Block Devices](/v1120/docs/next/uglocalpv-device.html)
 
 
 ## When to use OpenEBS Local PVs
@@ -107,13 +107,13 @@ A quick summary of the steps to restore include:
 
 ## See Also:
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v1120/docs/next/architecture.html)
 
-### [Understanding NDM](/docs/next/ndm.html)
+### [Understanding NDM](/v1120/docs/next/ndm.html)
 
-### [Local PV Hostpath User Guide](/docs/next/uglocalpv-hostpath.html)
+### [Local PV Hostpath User Guide](/v1120/docs/next/uglocalpv-hostpath.html)
 
-### [Local PV Device User Guide](/docs/next/uglocalpv-device.html)
+### [Local PV Device User Guide](/v1120/docs/next/uglocalpv-device.html)
 
 <br>
 

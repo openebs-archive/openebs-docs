@@ -7,7 +7,7 @@ sidebar_label: NDM
 
 <br>
 
-<img src="/docs/assets/svg/2-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
+<img src="/v1120/docs/assets/svg/2-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
 
 <br>
 
@@ -152,7 +152,7 @@ filterconfigs:
 
 <h3><a class="anchor" aria-hidden="true" id="create-blockdevice-CRs-for-partitioned-disks"></a>Create blockdevice CRs for partitioned disks</h3>
 
-**Note:** An alpha feature is available in NDM to automatically detect and create blockdevice resource for partitions. More details can be found [here](/docs/next/alphafeatures.html#ndm-discover-partitions).
+**Note:** An alpha feature is available in NDM to automatically detect and create blockdevice resource for partitions. More details can be found [here](/v1120/docs/next/alphafeatures.html#ndm-discover-partitions).
 
 Currently by default, NDM is not selecting partitioned disks for creating device resource. But, you can create blockdevice resource for the partitioned disks or any unsupported disks manually. The following are the steps for the creation of block device resource.
 
@@ -230,6 +230,6 @@ Currently by default, NDM is not selecting partitioned disks for creating device
 ## See Also:
 
 
-### [Understanding Node Disk Manager](/docs/next/ndm.html)
+### [Understanding Node Disk Manager](/v1120/docs/next/ndm.html)
 
 
