@@ -9,10 +9,35 @@ sidebar_label: Releases
 <br>
 
 
+## 2.0.0 - Aug 15 2020
+
+<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
+
+### Key Improvements:
+
+- OpenEBS cStor provisioning with the new schema and CSI drivers has been declared as _beta_. For detailed instructions on how to get started with new cStor Operators please refer to the [Quick start guide](https://github.com/openebs/cstor-operators).
+- Significant improvements to NDM in supporting (and better handling) of partitions and virtual block devices across reboots. 
+- Enhanced the Jiva target controller to track the internal snapshots and re-claim the space.
+- Support for enabling/disabling leader election mechanism which involves interacting with kube-apiserver. In deployments where provisioners are configured with single replicas, the leader election can be disabled. The default value is enabled. The configuration is controlled via environment variable "LEADER_ELECTION" in operator yaml or via helm value (enableLeaderElection).
+
+### Key Bug Fixes:
+
+- Fixes an issue where NDM would fail to wipe the filesystem of the released sparse block device. 
+- Fixes an issue with the mounting of XFS cloned volume. 
+- Fixes an issue when PV with fsType: ZFS will fail if the capacity is not a multiple of record size specified in StorageClass. 
+
+### Other Updates:
+
+- OpenEBS Mayastor continues its momentum by adding support for Rebuild, NVMe-oF Support, enhanced supportability, and several other fixes. For detailed instructions on how to get started with Mayastor please refer to this [Quickstart guide](https://github.com/openebs/Mayastor/blob/develop/deploy/README.md).
+- Continuing the focus on additional integration and e2e tests for all engines, more documentation. 
+
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.0.0)
+- [Upgrade Steps](/docs/next/upgrade.html)
 
 ## 1.12.0 - Jul 15 2020
 
-<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
 
 ### Key Improvements:
 
