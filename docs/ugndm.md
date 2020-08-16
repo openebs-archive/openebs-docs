@@ -61,6 +61,7 @@ NDM do some filtering on the disks to exclude, for example boot disk. By default
 /dev/ram - ramdisks.
 /dev/dm -lvm.
 /dev/md -multiple device ( software RAID devices).
+/dev/rbd - ceph RBD devices
 ```
 
 The following is the snippet of NDM configuration file from openebs operator YAML which excludes the provided disks/paths.
@@ -80,7 +81,7 @@ filterconfigs:
     name: path filter
     state: true
     include: ""
-    exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"    
+    exclude: "loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md,/dev/rbd"    
 ```
 
 It is also possible to customize by adding more disk types associated with your nodes. For example, used disks, unwanted disks and so on. 
@@ -150,11 +151,10 @@ filterconfigs:
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="create-blockdevice-CRs-for-partitioned-disks"></a>Create blockdevice CRs for partitioned disks</h3>
+<h3><a class="anchor" aria-hidden="true" id="create-blockdevice-CRs-for-partitioned-disks"></a>Create blockdevice CRs for unsupported disks</h3>
 
-**Note:** An alpha feature is available in NDM to automatically detect and create blockdevice resource for partitions. More details can be found [here](/docs/next/alphafeatures.html#ndm-discover-partitions).
-
-Currently by default, NDM is not selecting partitioned disks for creating device resource. But, you can create blockdevice resource for the partitioned disks or any unsupported disks manually. The following are the steps for the creation of block device resource.
+Currently, NDM out of the box manages disks and partitions. If the user need to have blockdevice for other device types like lvm, md array, crypt etc or
+any unsupported device types, the blockdevice resource can be manually created using the following steps:
 
 1. Create the sample block device CR YAML using the following spec. Following is the sample block device CR YAML.
 
@@ -175,6 +175,7 @@ Currently by default, NDM is not selecting partitioned disks for creating device
         logicalSectorSize: 512
         storage: <total capacity in bytes> #like 53687091200
       details:
+        deviceType: <device type> # like disk, partition, lvm, crypt, md
         firmwareRevision: <firmware revision>
         model: <model name of blockdevice> # like PersistentDisk
         serial: <serial no of disk> # like google-disk-2
@@ -190,11 +191,11 @@ Currently by default, NDM is not selecting partitioned disks for creating device
         - <link1> # like /dev/disk/by-path/virtio-pci-0000:00:03.0-scsi-0:0:2:0
       nodeAttributes:
         nodeName: <node name> # output of `kubectl get nodes` can be used
-      path: <devpath> # like /dev/sdb1
+      path: <devpath> # like /dev/dm-0
 
    ```
 
-2. Modify the created block device CR sample YAML with the partition disk information. In the above block device CR sample spec, following fields must be filled before applying the YAML.
+2. Modify the created block device CR sample YAML with the disk information. In the above block device CR sample spec, following fields must be filled before applying the YAML.
 
    - name
      - Provide unique name for the blockdevice CR. In the above YAML spec, given name for the blockdevice CR is `example-blockdevice-1`
@@ -204,14 +205,16 @@ Currently by default, NDM is not selecting partitioned disks for creating device
       - Provide the storage capacity in `bytes` like `53687091200`.
    - logicalSectorSize
      - logical sector size of blockdevice. For example, 512, 4096 etc. Provided 512 in the above example snippet. This value can be changed as per the logical sector size of the device.
+   - deviceType
+     - Type of the device. This can be obtained from `lsblk` output. eg: lvm, crypt, nbd, md etc
    - links
      - This field should be filled for by-id and by-path. These details can be obtained from worker node by running the following command `udevadm info -q property -n <device_path>` 
    - nodeName
      - Name of the Node where the blockdevice is attached.  The output of `kubectl get nodes` can be used to obtain this value.
    - path
-     - The value should be like `/dev/sdb1`.
+     - The value should be like `/dev/dm-0` or `/dev/md0`.
    
-3. Apply the modified YAML file to create the blockdevice CR for the provided partitioned device path. 
+3. Apply the modified YAML file to create the blockdevice CR for the provided device path. 
    
    ```
    kubectl apply -f <blockdevice-cr.yaml> -n <openebs_namespace>
@@ -223,7 +226,7 @@ Currently by default, NDM is not selecting partitioned disks for creating device
 
 5. Verify if the blockdevice is created by running the following `kubectl get blockdevice -n openebs` command.
 
-**Note:** If you are creating a block device CR for a partitioned device path, then you must add the corresponding disk under **exclude** filter so that NDM will not select the particular disk for BD creation. For example, `/dev/sdb` have 2 partitions, say `/dev/sdb1` and `/dev/sdb2`. If block device CR is created for `/dev/sdb1` manually, then you must add `/dev/sdb` under **exclude** filter of NDM configuration. See [here](#Exclude-filters) for customizing the exclude filter in NDM configuration.
+**Note:** If you are creating a block device CR for an unsupported device, then you must add the corresponding disk under **exclude** filter so that NDM will not select the particular disk for BD creation. See [here](#Exclude-filters) for customizing the exclude filter in NDM configuration.
 
 <br>
 

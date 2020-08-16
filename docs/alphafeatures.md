@@ -64,14 +64,6 @@ OpenEBS cStor CSI Driver along with enhanced schema and cStor Operators that are
 For detailed instructions on how to get started with the new cStor operators please refer this [Quick-start guide](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md).
 
 
-## NDM - Discover Partitions 
-
-OpenEBS 1.10 added a feature in NDM to help with discovering partitions and virtual drives that don't have any uniquely identifiable attributes like a serial number or WWN. This feature makes use of the partition/filesystem id if it exists or will create a partition on an empty block device and use that partition id for unique identification. 
-
-This feature is not yet ready for production use cases and can be enabled via a feature gate flag. The feature gate can be enabled by:
-- adding an additional arg (`--feature-gates=GPTBasedUUID`) to NDM DaemonSet or 
-- via setting the Helm flags `featureGates.enabled=true` and `featureGates.GPTBasedUUID.enabled=true`
-
 ## Support for ARM64 
 
 OpenEBS 1.10 support arm64 images for cStor, Jiva and Local PV engines. The ARM64 version of OpenEBS can be deployed using the following [YAML](https://openebs.github.io/charts/openebs-operator-arm-dev.yaml). 
