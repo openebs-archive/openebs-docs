@@ -10,8 +10,8 @@ sidebar_label: Overview
 OpenEBS is the leading open-source project for container-attached and
 container-native storage on Kubernetes. OpenEBS adopts
 Container Attached Storage (CAS) approach, where each workload is
-provided with a dedicated storage controller. OpenEBS
-implements granular storage policies and isolation that enable users
+provided with a dedicated storage controller.
+OpenEBS implements granular storage policies and isolation that enable users
 to optimize storage for each specific workload. OpenEBS is built 
 completely in userspace making it highly portable to run across any OS/platform.
 
@@ -55,10 +55,12 @@ and <a href="https://github.com/openebs/openebs/blob/master/ADOPTERS.md" target=
 
 <br>
 
-## Picking the right OpenEBS Storage Engine
+## OpenEBS Storage Engines
 
-OpenEBS will consume the storage available on the Kubernetes worker
-nodes to dynamically provision Kubernetes Persistent Volumes. 
+OpenEBS is a Kubernetes native hyperconverged storage solution. 
+OpenEBS consumes the storage (disks, SSDs, cloud volumes, etc) available 
+on the Kubernetes worker nodes to dynamically provision Kubernetes 
+Persistent Volumes. 
 
 OpenEBS can provision different type of Local PV for Stateful Workloads 
 like Cassandra, MongoDB, Elastic, etc that are distributed in nature and 
