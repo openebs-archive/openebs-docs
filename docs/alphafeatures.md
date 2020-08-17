@@ -11,9 +11,7 @@ This page provides an overview of OpenEBS components and features presently in A
 
 The list of alpha features include:
 - [Mayastor](#mayastor)
-- [ZFS Local PV](#zfs-local-pv)
-- [cStor CSI Driver](#cstor-csi-driver)
-- [NDM - Discover Partitions](#ndm-discover-partitions)
+- [Dynamic Local PV - Rawfile](#dynamic-local-pv-rawfile)
 - [Support for ARM64](#support-for-arm64)
 
   :::note
@@ -34,39 +32,15 @@ The following features are supported:
 - Workload protection via n-way synchronous replication (experimental)
 - Shown to deliver significantly greater performance than Jiva and cStor engines
 
-## ZFS Local PV
+## Dynamic Local PV - Rawfile
 
-OpenEBS is developing a CSI driver for provisioning Local PVs that are backed by ZFS. ZFS Local PVs combine the ease of use of Local PVs with the stability and resiliency offered by ZFS against disk failures. As a Kubernetes SRE, you can setup ZFS Pools on the Kubernetes Worker nodes and make use of the OpenEBS ZFS Local PV to dynamically provision volumes backed by ZFS Datasets. 
+OpenEBS is developing a CSI driver for provisioning Local PVs that are backed by hostpath. 
 
-For additional details and detailed instructions on how to get started with OpenEBS ZFS Local PV please refer this [Quickstart guide](https://github.com/openebs/zfs-localpv#usage).
-
-The following features are supported:
-- CSI driver for managing ZFS Local Volumes.
-- Kubernetes Custom Resources for ZFS Local Volume showing the configuration and status of the Volume.
-- Snapshots and Clones
-- Scheduling Volumes based on the load per node. 
-- Setup ZFS encryption
-- Volume Resize
-- Volume provisioned as Raw Block Mode
-- Volume provisioned with Filesystem types - ZFS, XFS or Ext4
-- Support for Prometheus metrics and sample Grafana dashboard
-
-
-## cStor CSI Driver
-
-OpenEBS cStor CSI Driver along with enhanced schema and cStor Operators that are aimed at automating the Day 2 Operations like:
-- cStor Pool expansion by adding disk.
-- Adding and removing cStor Pool.
-- Replacing a failed/slow Block Device from cStor Pool with a new Block device.
-- Scale-up/scale-down cStor Volume Replicas.
-- cStor Volume capacity expansion.
-
-For detailed instructions on how to get started with the new cStor operators please refer this [Quick-start guide](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md).
-
+For additional details and detailed instructions on how to get started with OpenEBS Local PV - Rawfile please refer this [Quickstart guide](https://github.com/openebs/rawfile-localpv).
 
 ## Support for ARM64 
 
-OpenEBS 1.10 support arm64 images for cStor, Jiva and Local PV engines. The ARM64 version of OpenEBS can be deployed using the following [YAML](https://openebs.github.io/charts/openebs-operator-arm-dev.yaml). 
+Since version 1.10, OpenEBS supports arm64 images for cStor, Jiva and Local PV engines. The ARM64 version of OpenEBS can be deployed using the following [YAML](https://openebs.github.io/charts/openebs-operator-arm-dev.yaml). 
 
 Active development is under way to support multi-arch images. If you would like to help out with testing or building the multi-arch images, please reach out to [OpenEBS Community](/docs/next/support.html).
 

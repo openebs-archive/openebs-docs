@@ -13,6 +13,10 @@ sidebar_label: cStor
 
 This user guide section provides the operations need to performed by the User and the Admin for configuring cStor related tasks. 
 
+   :::note 
+   With OpenEBS 2.0, the recommended approach to provision cStor Pools is to use cStorPoolCluster(CSPC). For detailed instructions on how to get started with new cStor Operators please refer to the [Quickstart guide on Github](https://github.com/openebs/cstor-operators).
+   :::
+
 ## User operations
 
 [Provisioning a cStor volume](#provisioning-a-cStor-volume)
