@@ -5,28 +5,34 @@ sidebar_label: Overview
 ---
 ------
 
-<font size="6">Introduction</font>
+## Introduction ##
 
 OpenEBS is the leading open-source project for container-attached and
 container-native storage on Kubernetes. OpenEBS adopts
 Container Attached Storage (CAS) approach, where each workload is
 provided with a dedicated storage controller. OpenEBS
 implements granular storage policies and isolation that enable users
-to optimize storage for each specific workload. OpenEBS runs
-in user space and does not have any Linux kernel module dependencies.
+to optimize storage for each specific workload. OpenEBS is built 
+completely in userspace making it highly portable to run across any OS/platform.
+
+OpenEBS is a collection Storage Engines, allowing you to pick the right 
+storage solution for your Stateful workloads and the type of Kubernetes platform. 
+
 See OpenEBS  <a href="/docs/next/features.html">Features & Benefits</a>
-and <a href="/docs/next/usecases.html" target="">Use cases</a>.
+and <a href="https://github.com/openebs/openebs/blob/master/ADOPTERS.md" target="_blank">OpenEBS Adoption stories</a>.
+
 
 <br>
 
-<font size="6">Quickstart</font>
+## Quickstart
 
-- OpenEBS requires iSCSI client to be configured and `iscsid` service
+- When using synchronous replication, iSCSI is used to attach storage from OpenEBS to 
+  application pods. Hence OpenEBS requires iSCSI client to be configured and `iscsid` service
   running on the worker nodes.
   Verify if [iSCSI service is up](/docs/next/prerequisites.html) and
   running before starting the installation.
 
-- Default installation works in most of the cases. As a Kubernetes cluster-admin, start the default installation using either
+- Default installation works in most of the cases. As a *Kubernetes cluster-admin*, start the default installation using either
 
   ```
   helm repo add openebs https://openebs.github.io/charts
@@ -45,12 +51,44 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 
 - [Verify if OpenEBS is installed successfully](/docs/next/installation.html#verifying-openebs-installation)
   and start provisioning OpenEBS volumes through Kubernetes PVC
-  interface by using `kubectl` command. For more details on how to
-  provision different types of OpenEBS volumes, see guides for [cStor Volume](/docs/next/ugcstor.html), [Jiva Volume](/docs/next/jivaguide.html), [OpenEBS Local Volume - Hostpath](/docs/next/uglocalpv-hostpath.html) and [OpenEBS Local Volume - Device](/docs/next/uglocalpv-device.html).
+  interface by using `kubectl` command. 
 
 <br>
 
-<font size="6">Explore documentation</font>
+## Picking the right OpenEBS Storage Engine
+
+OpenEBS will consume the storage available on the Kubernetes worker
+nodes to dynamically provision Kubernetes Persistent Volumes. 
+
+OpenEBS can provision different type of Local PV for Stateful Workloads 
+like Cassandra, MongoDB, Elastic, etc that are distributed in nature and 
+have high availiability built into them. 
+Depending on the type of storage attached to your Kubernetes worker nodes, 
+you can select from Dynamic Local PV - Hostpath, Device, ZFS or Rawfile.
+
+OpenEBS can provision Persistent Volumes with features like synchronous replication, 
+snapshots and clones, backup and restore that can be used with Stateful workloads
+like Percona/MySQL, Jira, GitLab, etc. The replication also can be setup to be 
+across Kubernetes zones resulting in high availability for cross AZ setups. 
+Depending on the type of storage attached to your Kubernetes worker nodes and 
+application performance requirements, you can select from Jiva, cStor or Mayastor. 
+
+See the following table for recommendation on which engine is right for 
+you depending on the type of your application requirements and 
+storage available on your Kubernetes nodes. 
+
+| Application requirements   | Storage | OpenEBS Volumes
+|--- |--- |--- 
+| Protect against node failures, Synchronous replication, Snapshots, Clones, Thin provisioning | Use Disks/SSDs/Cloud Volumes | <a href="https://github.com/openebs/zfs-localpv" target="_blank">OpenEBS cStor</a>
+| Protect against node failures, Synchronous replication, Thin provisioning | Use hostpath or external mounted storage | [OpenEBS Jiva](/docs/next/jivaguide.html)
+| Low latency, Local PV | Use hostpath or external mounted storage | [Dynamic Local PV - Hostpath](/docs/next/uglocalpv-hostpath.html)
+| Low latency, Local PV | Use Disks/SSDs/Cloud Volumes | [Dynamic Local PV - Device](/docs/next/uglocalpv-device.html)
+| Low latency, Local PV, Snapshots, Clones | Use Disks/SSDs/Cloud Volumes | <a href="https://github.com/openebs/zfs-localpv" target="_blank">OpenEBS Dynamic Local PV - ZFS </a>
+
+OpenEBS is also developing <a href="https://github.com/openebs/Mayastor" target="_blank">Mayastor</a> and <a href="https://github.com/openebs/rawfile-localpv" target="_blank">Dynamic Local PV - Rawfile</a> storage engines available for alpha testing.
+
+
+## Explore documentation
 
 <br>
 
@@ -90,7 +128,7 @@ and <a href="/docs/next/usecases.html" target="">Use cases</a>.
 </div>
 <br>
 
-<font size="6">Run stateful applications on OpenEBS</font>
+## Run stateful applications on OpenEBS
 
 <br>
 <div class="row stateful-applications_row">
