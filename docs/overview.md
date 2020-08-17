@@ -81,7 +81,7 @@ storage available on your Kubernetes nodes.
 
 | Application requirements   | Storage | OpenEBS Volumes
 |--- |--- |--- 
-| Protect against node failures, Synchronous replication, Snapshots, Clones, Thin provisioning | Use Disks/SSDs/Cloud Volumes | <a href="https://github.com/openebs/zfs-localpv" target="_blank">OpenEBS cStor</a>
+| Protect against node failures, Synchronous replication, Snapshots, Clones, Thin provisioning | Use Disks/SSDs/Cloud Volumes | <a href="https://github.com/openebs/cstor-operators" target="_blank">OpenEBS cStor</a>
 | Protect against node failures, Synchronous replication, Thin provisioning | Use hostpath or external mounted storage | [OpenEBS Jiva](/docs/next/jivaguide.html)
 | Low latency, Local PV | Use hostpath or external mounted storage | [Dynamic Local PV - Hostpath](/docs/next/uglocalpv-hostpath.html)
 | Low latency, Local PV | Use Disks/SSDs/Cloud Volumes | [Dynamic Local PV - Device](/docs/next/uglocalpv-device.html)
