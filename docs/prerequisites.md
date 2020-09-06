@@ -451,29 +451,10 @@ service kubelet restart
 ## Kubernetes On-Prem Solutions
 
 
-
 <h3><a class="anchor" aria-hidden="true" id="openshift"></a>Red Hat OpenShift</h3>
 
-OpenEBS can be installed on Openshift configured with any of the following Operating
-Systems.
-
-1. RHEL 7
-2. CoreOS 
-
-Tested OpenShift versions are 3.10 and 4.2.
-
-<h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4>
-
-Latest tested RHEL versions are 7.5, 7.6.
-
-For setting up iSCSI clients on RHEL nodes, see the instructions [here](#rhel).
-
-
-
-<h4><a class="anchor" aria-hidden="true" id="On-Centos"></a>On CoreOS</h4>
-
-Latest tested RHEL CoreOs version is 4.2.
-
+Detailed [installation instructions for OpenEBS on OpenShift](kb.md#openshift-install) are in the Knowledge
+Base. 
 
 <br>
 
