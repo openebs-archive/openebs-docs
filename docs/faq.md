@@ -26,7 +26,7 @@ sidebar_label: FAQs
 
 [Why NDM daemon set required privileged mode?](#why-ndm-priviledged)
 
-[Does OpenEBS installation support in OpenShift 4.2?](#openebs-in-openshift-4.2)
+[Is OpenShift supported?](#openebs-in-openshift)
 
 [What are the prerequisites other than general prerequisites for installing OpenEBS in Centos and OpenShift?](#OpenEBS-install-prerequisites-openshift-centos)
 
@@ -200,18 +200,9 @@ Currently, NDM Daemon set runs in the privileged mode. NDM requires privileged m
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="openebs-in-openshift-4.2"></a>Does OpenEBS installation support in OpenShift 4.2?</h3>
+<h3><a class="anchor" aria-hidden="true" id="openebs-in-openshift"></a>Is OpenShift supported? </h3>
 
-OpenEBS v1.5 installation is supported in OpenShift 4.2.
-
-
-<a href="#top">Go to top</a>
-
-
-<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-prerequisites-openshift-centos"></a>What are the prerequisites other than general prerequisites for installing OpenEBS in Centos and OpenShift?</h3>
-
-
-If you are installing OpenEBS in CentOS or OpenShift,you must need to grant privileges to ndm pods. For installing OpenEBS in OpenShift environment,more details can be read [here](/docs/next/kb.html#OpenEBS-install-openshift-4.1).
+Yes. See the [detailed installation instructions for OpenShift](kb.md#openshift-install) for more information.
 
 <a href="#top">Go to top</a>
 

@@ -12,7 +12,7 @@ sidebar_label: Knowledge Base
 
 [How to scale up Jiva replica?](#how-to-scale-up-jiva-replica)
 
-[How to install OpenEBS in OpenShift 4.1?](#OpenEBS-install-openshift-4.1)
+[How to install OpenEBS in OpenShift 4.x?](#openshift-install)
 
 [How to enable Admission-Controller in OpenShift environment?](#enable-admission-controller-in-openshift)
 
@@ -248,75 +248,117 @@ From 0.9.0 OpenEBS version, Jiva pod deployment are scheduling with nodeAffinity
 
 </br>
 
-<h3><a class="anchor" aria-hidden="true" id="OpenEBS-install-openshift-4.1"></a>How to install OpenEBS in OpenShift 4.1</h3>
+<h3><a class="anchor" aria-hidden="true" id="openshift-install"></a>How to install OpenEBS in OpenShift 4.x</h3>
+
+#### Tested versions
+
+OpenEBS has been tested in the following configurations;
+
+| OpenShift Version | OS                                           | Status |
+|-------------------|----------------------------------------------|--------|
+| 4.2               | [RHEL7.6](prerequisites.md#rhel), CoreOS 4.2 | Tested |
+| 3.10              | [RHEL7.6](prerequisites.md#rhel), CoreOS 4.2 | Tested |
+
+#### Notes on security
+
+**Note:** Earlier documentation for installing OpenEBS on OpenShift required disabling SELinux. This is no longer necessary - SELinux does not need to be disabled now.
+
+**Note:** However, the OpenEBS operator, and some projects that use OpenEBS
+volumes do require privileged Security Context Constraints. This is described below. 
+
+<h4>Installation option: via the OperatorHub</h4>
+
+The easiest way to install OpenEBS is by using the operator in the OperatorHub; 
+
+![OpenShift in OperatorHub](/docs/assets/openshift-operatorhub.png)
+
+This guide recommends installing the operator into an empty `openebs`
+namespace.
+
+![OpenShift in OperatorHub](/docs/assets/openshift-operator-installnamespace.png)
+
+#### Installation option: via "manual" install</h4>
+
+1. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
+
+```
+wget https://openebs.github.io/charts/openebs-operator-1.2.0.yaml
+```
+
+2. Apply the modified the YAML using the following command. 
+
+```
+kubectl apply -f openebs-operator-1.2.0.yaml
+```
+
+#### Adding `privileged` SCC to the `openebs-maya-operator` service account
+
+The examples below assume you have installed OpenEBS in the `OpenEBS` project.
+If you have used another namespace, change `-n` accordingly. 
 
 
-In earlier documentation, it was referred to install OpenEBS by disabling SELinux. But, you can install OpenEBS in OpenShift environment without disabling SELinux using the following steps.
-
-1. Add OpenEBS Service account to the privileged scc of OpenShift.
-
-   ```
-   oc adm policy add-scc-to-user privileged system:serviceaccount:openebs:openebs-maya-operator
-   ```
-
-   Example output:
-
-   ```
-   scc "privileged" added to: ["system:serviceaccount:openebs:default"]
-   ```
-
-2. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
-
-   ```
-   wget https://openebs.github.io/charts/openebs-operator-1.2.0.yaml
-   ```
-
-3. Apply the modified the YAML using the following command. 
-
-   ```
-   kubectl apply -f openebs-operator-1.2.0.yaml
-   ```
-
-4. Verify OpenEBS pod status by using `kubectl get pods -n openebs`
-
-   <div class="co">NAME                                          READY   STATUS    RESTARTS   AGE
-   maya-apiserver-594699887-4x6bj                1/1     Running   0          60m
-   openebs-admission-server-544d8fb47b-lxd52     1/1     Running   0          60m
-   openebs-localpv-provisioner-59f96b699-dpf8l   1/1     Running   0          60m
-   openebs-ndm-4v6kj                             1/1     Running   0          60m
-   openebs-ndm-8g226                             1/1     Running   0          60m
-   openebs-ndm-kkpk7                             1/1     Running   0          60m
-   openebs-ndm-operator-74d9c78cdc-lbtqt         1/1     Running   0          60m
-   openebs-provisioner-5dfd95987b-nhwb9          1/1     Running   0          60m
-   openebs-snapshot-operator-5d58bd848b-94nnt    2/2     Running   0          60m </div>
-
-5. For provisioning OpenEBS volumes, you have to edit SCC to allow HostPath volumes and Privileged containers. This can be done by following way. 
-
-   <font size="5">Using “Privileged” SCC</font>
-
-   In OpenShift, the users are mapped to “Projects” & SCC are mapped to users (or serviceAccounts). This method is more preferred.
-   In case, where you want your application to run in privileged containers with particular user/serviceaccount, it can be added to the privileged SCC using following command from OpenShift cluster. 
-
-   ```
-   oc adm policy add-scc-to-user privileged system:serviceaccount:<project>:<serviceaccountname>  
-   ```
-
-   Example:
+Add the `privileged` SecurityContextConstraint (SCC) to the OpenEBS service account; 
 
    ```
-    oc adm policy add-scc-to-user privileged system:serviceaccount:openebs:default
+   oc adm policy add-scc-to-user privileged -z openebs-maya-operator -n openebs
    ```
 
-   **Note:** 
+Example output:
 
-   - In OpenShift each namespace automatically creates a project - into which one or more users can be created.
-   - An `oc apply` from inside a `project` will cause all resources to get created with same, i.e., project namespace.
+   ```
+   securitycontextconstraints.security.openshift.io/privileged added to: ["system:serviceaccount:openebs:openebs-maya-operator"]
+   ```
 
-    Example output:
+#### Quickly verifying the installation
 
-   <div class="co">scc "privileged" added to: ["system:serviceaccount:openebs:default"]</div>	
+Verify OpenEBS pod status by using `kubectl get pods -n openebs`, all pods
+should be "Running" after a few minutes. If pods are not running after a few
+minutes, start debugging with `oc get events` and viewing these container logs.
 
-6.  Now,you can provision OpenEBS volumes. More details for provisioning OpenEBS volumes can be obtained from the User Guide section.
+    NAME                                          READY   STATUS    RESTARTS   AGE
+    maya-apiserver-594699887-4x6bj                1/1     Running   0          60m
+    openebs-admission-server-544d8fb47b-lxd52     1/1     Running   0          60m
+    openebs-localpv-provisioner-59f96b699-dpf8l   1/1     Running   0          60m
+    openebs-ndm-4v6kj                             1/1     Running   0          60m
+    openebs-ndm-8g226                             1/1     Running   0          60m
+    openebs-ndm-kkpk7                             1/1     Running   0          60m
+    openebs-ndm-operator-74d9c78cdc-lbtqt         1/1     Running   0          60m
+    openebs-provisioner-5dfd95987b-nhwb9          1/1     Running   0          60m
+    openebs-snapshot-operator-5d58bd848b-94nnt    2/2     Running   0          60m
+
+If you are seeing errors with `hostNetwork` or similar, this is likely because
+the serviceAccount for that container has not been added to the `privileged` SCC.
+
+**Next Steps:** 
+
+* You may want to fully [verifying the OpenEBS installation](installation.md#verifying-openebs-installation) in more detail.
+* After verification, you probably want to [select a CAS
+  Engine](casengines.md).
+
+#### Adding `privileged` SCC to projects that use OpenEBS volumes
+
+When you create a PVC using a StorageClass for OpenEBS, a `ctrl` and `rep`
+deployment will be created for that PVC. The `rep` containers also need to be
+privileged. 
+
+Switch to a project that is using OpenEVS PVs; 
+
+```
+oc project myproject
+```
+
+To stop the whole project running as privileged, you could create a new serviceAccount for the project, and only run the Deployment/pvc-...-rep using that service account.
+
+However, an easy (and lazy, insecure) workaround is change this project's
+`default` ServiceAccount to be privileged.
+
+```
+oc adm policy add-scc-to-user privileged -z default -n myproject
+```
+
+**Note:** OpenShift automatically creates a project for every namespace, and a `default` ServiceAccount for every project.
+
+Once these permissions have been granted, you can provision persistant volumes using OpenEBS. See [CAS Engines](casengines.md) for more details. 
 
 <a href="#top">Go to top</a>
 
