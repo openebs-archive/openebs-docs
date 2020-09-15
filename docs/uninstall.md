@@ -27,13 +27,13 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
 
   There should not have any entries of OpenEBS SPC. 
   
-- Ensure that there is no stale BlockDeviceClaims are present in the cluster. You can verify the status using the following command. 
+- Ensure that there are no stale BlockDeviceClaims present in the cluster. You can verify the status using the following command. 
   
   ```
   kubectl get bdc -n <openebs namespace>
   ```
   
-  If anything found, remove the finalizer entry from the corresponding BDC.
+  If present, remove the finalizer entry from the corresponding BDC.
 
 - Ensure that no OpenEBS volume or pool pods are in terminating state . You can check the running status of Pods using the following command.
 
@@ -41,10 +41,11 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl get pods -n <openebs namespace>
   ```
 
-- Ensure that no `openebs` custom resources are present using the following command.
+- Ensure that no cStor volume custom resources are present using the following command.
 
   ```
   kubectl get cvr -n <openebs namespace>
+  kubectl get cstorvolume -n <openebs namespace>
   ```
 
 - Ensure to delete OpenEBS related `StorageClass`. You can check the status of OpenEBS related StorageClasses using the following command.
@@ -99,6 +100,14 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   ```
 
 
+- Ensure that there are no stale BlockDevices present in the cluster. You can verify the status using the following command. 
+  
+  ```
+  kubectl get bd -n <openebs namespace>
+  ```
+  
+  If present, remove the finalizer entry from the corresponding BD and then delete it.
+
 
 ## Deletion of Jiva Volumes
 
@@ -108,7 +117,7 @@ As part of deleting the Jiva Volumes - OpenEBS launches scrub jobs for clearing 
 kubectl delete jobs -l openebs.io/cas-type=jiva -n <openebs_namespace>
 ```
 
-In addition, the job is set with a TTL to get cleaned up, if the cluster version is greater than 1.12. However, for the feature to work, the alpha feature needs to be enabled in the cluster. More information can be read from [here](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#clean-up-finished-jobs-automatically).
+In addition, the job is set with a TTL to get cleaned up, if the Kubernetes version is greater than 1.12. However, for the feature to work, the Kubernetes alpha flag needs to be enabled in the cluster. More information can be read from [here](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#clean-up-finished-jobs-automatically).
 
 <br>
 
