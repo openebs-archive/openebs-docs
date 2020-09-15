@@ -106,7 +106,7 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl get bd -n <openebs namespace>
   ```
   
-  If present, remove the finalizer entry from the corresponding BD.
+  If present, remove the finalizer entry from the corresponding BD and then delete it.
 
 
 ## Deletion of Jiva Volumes
@@ -117,7 +117,7 @@ As part of deleting the Jiva Volumes - OpenEBS launches scrub jobs for clearing 
 kubectl delete jobs -l openebs.io/cas-type=jiva -n <openebs_namespace>
 ```
 
-In addition, the job is set with a TTL to get cleaned up, if the cluster Kubernetes version is greater than 1.12. However, for the feature to work, the alpha kubernetes feature needs to be enabled in the cluster. More information can be read from [here](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#clean-up-finished-jobs-automatically).
+In addition, the job is set with a TTL to get cleaned up, if the Kubernetes version is greater than 1.12. However, for the feature to work, the Kubernetes alpha flag needs to be enabled in the cluster. More information can be read from [here](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#clean-up-finished-jobs-automatically).
 
 <br>
 
