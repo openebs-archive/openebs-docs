@@ -7,7 +7,7 @@ sidebar_label: Quickstart
 
 <br>
 
-<a href="/docs/next/prerequisites.html"><img src="/docs/assets/svg/config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%"></a>
+<a href="/v200/docs/next/prerequisites.html"><img src="/docs/assets/svg/config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%"></a>
 
 
 
@@ -23,10 +23,10 @@ sidebar_label: Quickstart
         <li>For using features like Local PV and Backup & Restore, you must require Kubernetes version 1.13 or above.
         </li>
         <li>For provisioning cStor volume via CSI driver support and performing basic operations on this volume such as expanding volume and snapshot & clone, you must require Kubernetes version 1.14 or above</li>
-        <li>Understand the <a href="/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
-        <li>Start <a href="/docs/next/installation.html">installation </a> through OpenEBS operator.</li>
-        <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses. More details can be find from <a href="/docs/next/ugcstor.html">here.</a></li>
-        <li>For high performance required applications which manage their own replication, data protection and other storage features, provision OpenEBS Local PV. More details can be find from <a href="/docs/next/uglocalpv-device.html">here.</a></li>
+        <li>Understand the <a href="/v200/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
+        <li>Start <a href="/v200/docs/next/installation.html">installation </a> through OpenEBS operator.</li>
+        <li>For production deployments or to test OpenEBS volumes on real disks, create cStorPools, cStor-StorageClasses and start provisioning volumes using the newly created cStor-StorageClasses. More details can be find from <a href="/v200/docs/next/ugcstor.html">here.</a></li>
+        <li>For high performance required applications which manage their own replication, data protection and other storage features, provision OpenEBS Local PV. More details can be find from <a href="/v200/docs/next/uglocalpv-device.html">here.</a></li>
     </ul>
 
 
@@ -48,27 +48,27 @@ sidebar_label: Quickstart
 
 <div class="emphasize">
 
-[Ubuntu](/docs/next/prerequisites.html#ubuntu)
+[Ubuntu](/v200/docs/next/prerequisites.html#ubuntu)
 
-[RHEL](/docs/next/prerequisites.html#rhel)
+[RHEL](/v200/docs/next/prerequisites.html#rhel)
 
-[CentOS](/docs/next/prerequisites.html#centos)
+[CentOS](/v200/docs/next/prerequisites.html#centos)
 
-[OpenShift](/docs/next/prerequisites.html#openshift)
+[OpenShift](/v200/docs/next/prerequisites.html#openshift)
 
-[Rancher](/docs/next/prerequisites.html#rancher)
+[Rancher](/v200/docs/next/prerequisites.html#rancher)
 
-[ICP](/docs/next/prerequisites.html#icp)
+[ICP](/v200/docs/next/prerequisites.html#icp)
 
-[EKS](/docs/next/prerequisites.html#eks)
+[EKS](/v200/docs/next/prerequisites.html#eks)
 
-[GKE](/docs/next/prerequisites.html#gke)
+[GKE](/v200/docs/next/prerequisites.html#gke)
 
-[AKS](/docs/next/prerequisites.html#aks)
+[AKS](/v200/docs/next/prerequisites.html#aks)
 
-[Digital Ocean](/docs/next/prerequisites.html#do)
+[Digital Ocean](/v200/docs/next/prerequisites.html#do)
 
-[Konvoy](/docs/next/prerequisites.html#konvoy)
+[Konvoy](/v200/docs/next/prerequisites.html#konvoy)
 
 <br>
 

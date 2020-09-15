@@ -7,7 +7,7 @@ sidebar_label: Alpha Features
 
 
 
-This page provides an overview of OpenEBS components and features presently in Alpha version and under active development. These features are not recommended to be used in production. We suggest you to familiarize and try these features on test clusters and reach out to [OpenEBS Community](/docs/next/support.html) if you have any queries, feedback or need help on these features.
+This page provides an overview of OpenEBS components and features presently in Alpha version and under active development. These features are not recommended to be used in production. We suggest you to familiarize and try these features on test clusters and reach out to [OpenEBS Community](/v200/docs/next/support.html) if you have any queries, feedback or need help on these features.
 
 The list of alpha features include:
 - [Mayastor](#mayastor)
@@ -42,7 +42,7 @@ For additional details and detailed instructions on how to get started with Open
 
 Since version 1.10, OpenEBS supports arm64 images for cStor, Jiva and Local PV engines. The ARM64 version of OpenEBS can be deployed using the following [YAML](https://openebs.github.io/charts/openebs-operator-arm-dev.yaml). 
 
-Active development is under way to support multi-arch images. If you would like to help out with testing or building the multi-arch images, please reach out to [OpenEBS Community](/docs/next/support.html).
+Active development is under way to support multi-arch images. If you would like to help out with testing or building the multi-arch images, please reach out to [OpenEBS Community](/v200/docs/next/support.html).
 
 
 

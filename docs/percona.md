@@ -5,7 +5,7 @@ sidebar_label: Percona
 ---
 ------
 
-<img src="/docs/assets/o-percona.png" alt="OpenEBS and Percona" style="width:400px;">
+<img src="/v200/docs/assets/o-percona.png" alt="OpenEBS and Percona" style="width:400px;">
 
 
 
@@ -34,7 +34,7 @@ Percona is highly scalable and requires underlying persistent storage to be equa
 
 <br>
 
-<img src="/docs/assets/svg/percona-deployment.svg" alt="OpenEBS and Percona" style="width:100%;">
+<img src="/v200/docs/assets/svg/percona-deployment.svg" alt="OpenEBS and Percona" style="width:100%;">
 
 As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration works fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
 
@@ -48,11 +48,11 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 
 1. **Install OpenEBS**
 
-   If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
+   If OpenEBS is not installed in your K8s cluster, this can done from [here](/v200/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
 2. **Configure cStor Pool**
 
-   If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
+   If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/v200/docs/next/ugcstor.html#creating-cStor-storage-pools). If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
 
 4. **Create Storage Class**
 
@@ -94,11 +94,11 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just Percona database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool). 
+As in most cases, cStor pool may not be dedicated to just Percona database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/v200/docs/next/ugcstor.html#monitor-pool). 
 
 **Maintain volume replica quorum during node upgrades**
 
- cStor volume replicas need to be in quorum when applications are deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/docs/next/k8supgrades.html) for more details.
+ cStor volume replicas need to be in quorum when applications are deployed as `deployment` and cStor volume is configured to have `3 replicas`. Node reboots may be common during Kubernetes upgrade. Maintain volume replica quorum in such instances. See [here](/v200/docs/next/k8supgrades.html) for more details.
 
 <br>
 
@@ -213,11 +213,11 @@ spec:
 
 <br>
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v200/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v200/docs/next/usecases.html)
 
-### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
+### [cStor pools overview](/v200/docs/next/cstor.html#cstor-pools)
 
 
 

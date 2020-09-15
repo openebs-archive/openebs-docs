@@ -11,7 +11,7 @@ sidebar_label: Releases 0.x
 ## 0.9.0 - May 24 2019
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 
@@ -42,7 +42,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.8.2 - Apr 15 2019
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -63,7 +63,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.8.1 - Feb 23 2019
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -82,7 +82,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.8.0 - Dec 07 2018
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -102,7 +102,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.7.2 - Nov 20 2018
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -120,7 +120,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.7.0 - Sep 09 2018
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -138,7 +138,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.6.0 - Jul 20 2018
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -159,7 +159,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.5.4 - May 14 2018
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -176,7 +176,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.5.3 - Mar 14 2018
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -190,7 +190,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.5.2 - Feb 07 2018
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -202,7 +202,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.5.1 - Jan 10 2018
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -217,7 +217,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.5.0 - Nov 30 2017
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -234,7 +234,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.4.0 - Sep 08 2017
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -251,7 +251,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.3.0 - Jun 29 2017
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -267,7 +267,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 ## 0.2.0 - Apr 07 2017
 
 :::note Deprecation notice
-This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/docs/next/upgrade.html).
+This release has been deprecated. Please upgrade to the latest release. See [upgrade instructions](/v200/docs/next/upgrade.html).
 :::
 
 **Change summary:**
@@ -287,13 +287,13 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 
 ## See Also:
 
-### [OpenEBS Upgrade](/docs/next/upgrade.html)
+### [OpenEBS Upgrade](/v200/docs/next/upgrade.html)
 
-### [OpenEBS Releases](/docs/next/releases.html)
+### [OpenEBS Releases](/v200/docs/next/releases.html)
 
-### [OpenEBS FAQ](/docs/next/faq.html)
+### [OpenEBS FAQ](/v200/docs/next/faq.html)
 
-### [Container Attached Storage or CAS](/docs/next/cas.html)
+### [Container Attached Storage or CAS](/v200/docs/next/cas.html)
 
 <br><hr>
 

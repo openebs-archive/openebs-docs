@@ -11,8 +11,6 @@ sidebar_label: Releases
 
 ## 2.0.0 - Aug 15 2020
 
-<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
-
 ### Key Improvements:
 
 - OpenEBS cStor provisioning with the new schema and CSI drivers has been declared as _beta_. For detailed instructions on how to get started with new cStor Operators please refer to the [Quick start guide](https://github.com/openebs/cstor-operators).
@@ -34,7 +32,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.0.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v200/docs/next/upgrade.html)
 
 ## 1.12.0 - Jul 15 2020
 
@@ -62,7 +60,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.12.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v200/docs/next/upgrade.html)
 
 
 ## 1.11.0 - Jun 15 2020
@@ -92,7 +90,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.11.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v200/docs/next/upgrade.html)
 
 ## 1.10.0 - May 15 2020
 
@@ -364,13 +362,13 @@ sidebar_label: Releases
 
 ## See Also:
 
-### [OpenEBS Upgrade](/docs/next/upgrade.html)
+### [OpenEBS Upgrade](/v200/docs/next/upgrade.html)
 
-### [OpenEBS 0.x Releases](/docs/next/releases-0x.html)
+### [OpenEBS 0.x Releases](/v200/docs/next/releases-0x.html)
 
-### [OpenEBS FAQ](/docs/next/faq.html)
+### [OpenEBS FAQ](/v200/docs/next/faq.html)
 
-### [Container Attached Storage or CAS](/docs/next/cas.html)
+### [Container Attached Storage or CAS](/v200/docs/next/cas.html)
 
 <br><hr>
 
