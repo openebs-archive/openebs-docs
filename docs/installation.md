@@ -598,7 +598,7 @@ Find `apiServer`, `provisioner`, `snapshotOperator`, `admission-server` and `ndm
 ```
 provisioner:
   image: "quay.io/openebs/openebs-k8s-provisioner"
-  imageTag: "2.0.0"
+  imageTag: "2.1.0"
   replicas: 1
   nodeSelector: {}
   tolerations: []
@@ -616,7 +616,7 @@ In the `values.yaml`, find`ndm` section to update `excludeVendors:` and `exclude
 ```
 ndm:
   image: "quay.io/openebs/node-disk-manager-amd64"
-  imageTag: "0.8.0"
+  imageTag: "0.8.1"
   sparse:
     path: "/var/openebs/sparse"
     size: "10737418240"
