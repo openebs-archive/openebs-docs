@@ -8,10 +8,35 @@ sidebar_label: Releases
 
 <br>
 
+## 2.1.0 - Sept 15 2020
+
+<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
+
+### New capabilities:
+- OpenEBS ZFS Local PV adds support for Backup and Restore by enhancing the OpenEBS Velero Plugin. For detailed instructions to try this feature, please refer to this [doc](https://github.com/openebs/zfs-localpv/blob/master/docs/backup-restore.md). 
+- OpenEBS Mayastor continues its momentum by enhancing support for Rebuild and other fixes. For detailed instructions on how to get started with Mayastor please refer to this [Quickstart guide](https://mayastor.gitbook.io/introduction/).
+
+
+### Key Improvements:
+
+- Enhanced the Velero Plugin to perform Backup of a volume and Restore of another volume to run simultaneously. 
+- Added a validation to restrict OpenEBS Namespace deletion if there are pools are volumes are configured. The validation is added via Kubernetes admission webhook.  
+- Added support to restrict creation of cStor Pools (via CSPC) on Block Devices that are tagged (or reserved). 
+- Enhanced the NDM to automatically create a block device tag on the discovered device if the device matches a certain path name pattern. 
+
+### Key Bug Fixes:
+
+- Fixes an issue where local backup and restore of cStor volumes provisioned via CSI were failing. 
+- Fixes an issue where cStor CSI Volume remount would fail intermittently when application pod is restarted or after recovering from a network loss between application pod and target node. 
+- Fixes an issue where BDC cleanup by NDM would cause a panic, if the bound BD was manually deleted. 
+
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.1.0)
+- [Upgrade Steps](/docs/next/upgrade.html)
 
 ## 2.0.0 - Aug 15 2020
 
-<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
 
 ### Key Improvements:
 
