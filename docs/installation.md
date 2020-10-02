@@ -43,7 +43,7 @@ iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However
 
 
 
-## Set cluster-admin user context and RBAC
+## Set cluster-admin user context
 
 <br>
 
