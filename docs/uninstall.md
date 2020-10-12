@@ -108,7 +108,7 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   
   If present, remove the finalizer entry from the corresponding BD and then delete it.
   
-  After removing a pvc, we can still find a directory `/var/openebs/` having some of the volume sub-directory to store metadata info related to volume, for example `shared-pvc-69adec76-665e-46bc-b957-2b2f58338429-target` with no content. This can be removed manually once you successfully uninstall the OpenEBS cluster.
+  After removing a PVC, you may find a directory `/var/openebs/` on the nodes where the replica was created having some of the volume sub-directory to store metadata info related to the volume, for example `shared-pvc-69adec76-665e-46bc-b957-2b2f58338429-target` with no content. This can be removed manually using the `rm -rf` command once you successfully uninstall the OpenEBS cluster.
 
 ## Deletion of Jiva Volumes
 
