@@ -8,9 +8,46 @@ sidebar_label: Releases
 
 <br>
 
-## 2.1.0 - Sept 15 2020
+## 2.2.0 - Oct 15 2020
 
 <br><font size="4">Latest Release</font><br/> (Recommended)<br/>
+
+### New capabilities
+
+- OpenEBS ZFS Local PV adds support for Incremental Backup and Restore by enhancing the OpenEBS Velero Plugin. For detailed instructions to try this feature, please refer to this [doc](https://github.com/openebs/zfs-localpv/blob/master/docs/backup-restore.md). 
+
+- OpenEBS Mayastor instances now expose a gRPC API which is used to enumerate block disk devices attached to the host node, as an aid to the identification of suitable candidates for inclusion within storage Pools during configuration. This functionality is also accessible within the `mayastor-client` diagnostic utility. For further details on enhancements and bug fixes in Mayastor, please refer to [Mayastor release notes](https://github.com/openebs/Mayastor/releases/tag/v0.5.0).
+
+
+### Key Improvements
+
+- Enhanced the Velero Plugin to restore ZFS Local PV into a different cluster or a different node in the cluster. This feature depends on the Velero `velero.io/change-pvc-node: RestoreItemAction` feature.  https://github.com/openebs/velero-plugin/pull/118.
+
+- The Kubernetes custom resources for managing cStor Backup and Restore have been promoted to v1. This change is backward compatible with earlier resources and transparent to users. When the SPC resources are migrated to CSPC, the related Backup/Restore resources on older volumes are also upgraded to v1. https://github.com/openebs/upgrade/pull/59.
+
+- Enhanced the SPC to CSPC migration feature with multiple usability fixes like supporting migrating multiple volumes in parallel. https://github.com/openebs/upgrade/pull/52, ability to detect the changes in the underlying virtual disk resources (BDs) and automatically update them in CSPC https://github.com/openebs/upgrade/pull/53. Prior to this release, when migrating to CSPC, the user need to manually update the BDs. 
+
+- Enhanced the Velero Plugin to use custom certificates for S3 object storage. https://github.com/openebs/velero-plugin/pull/115.
+
+- Enhanced cStor Operators to allow users to specify the name of the new node for a previously configured cStor Pool. This will help with scenarios where a Kubernetes node can be replaced with a new node but can be attached with the block devices from the old node that contain cStor Pool and the volume data. https://github.com/openebs/cstor-operators/pull/167.
+
+- Enhanced NDM OS discovery logic for nodes that use `/dev/root` as the root filesystem. https://github.com/openebs/node-disk-manager/pull/492.
+
+- Enhanced NDM OS discovery logic to support excluding multiple devices that could be mounted as host filesystem directories. https://github.com/openebs/node-disk-manager/issues/224.
+
+### Key Bug Fixes
+
+- Fixes an issue where NDM could cause data loss by creating a partition table on an uninitialized iSCSI volume. This can happen due to a race condition between NDM pod initializing and iSCSI volume initializing after a node reboot and if the iSCSI volume is not fully initialized when NDM probes for device details. This issue has been observed with NDM 0.8.0 released with OpenEBS 2.0 and has been fixed in OpenEBS 2.1.1 and OpenEBS 2.2.0 (latest) release. 
+
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.2.0)
+- [Upgrade Steps](/docs/next/upgrade.html)
+
+<br>
+
+## 2.1.0 - Sept 15 2020
+
 
 ### New capabilities:
 - OpenEBS ZFS Local PV adds support for Backup and Restore by enhancing the OpenEBS Velero Plugin. For detailed instructions to try this feature, please refer to this [doc](https://github.com/openebs/zfs-localpv/blob/master/docs/backup-restore.md). 
