@@ -5,7 +5,7 @@ sidebar_label: Minio
 ---
 ------
 
-<img src="/docs/assets/o-minio.png" alt="OpenEBS and MinIO" style="width:400px;">
+<img src="/v210/docs/assets/o-minio.png" alt="OpenEBS and MinIO" style="width:400px;">
 
 <br>
 
@@ -33,7 +33,7 @@ sidebar_label: Minio
 
 <br>
 
-<img src="/docs/assets/minio-choose-engine.png" alt="OpenEBS and MinIO" style="width:400px;">
+<img src="/v210/docs/assets/minio-choose-engine.png" alt="OpenEBS and MinIO" style="width:400px;">
 
 <br>
 
@@ -108,7 +108,7 @@ Local PV can be provisioned by following of the options below:
 
   
 
-  <img src="/docs/assets/svg/Local-PV-standalone-default-minio.svg" alt="OpenEBS and MinIO Standalone localpv hostpath" style="width:400px;">
+  <img src="/v210/docs/assets/svg/Local-PV-standalone-default-minio.svg" alt="OpenEBS and MinIO Standalone localpv hostpath" style="width:400px;">
 
   
 
@@ -129,7 +129,7 @@ Local PV can be provisioned by following of the options below:
 
   
   
-  <img src="/docs/assets/svg/Local-PV-standalone-device-minio.svg" alt="OpenEBS and MinIO Standalone localpv device" style="width:400px;">
+  <img src="/v210/docs/assets/svg/Local-PV-standalone-device-minio.svg" alt="OpenEBS and MinIO Standalone localpv device" style="width:400px;">
   
   
   
@@ -164,7 +164,7 @@ Local PV can be provisioned by following of the options below:
 
   
 
-  <img src="/docs/assets/svg/Local-PV-Distributed-hostpath-minio.svg" alt="OpenEBS and MinIO Distributed localpv hostpath" style="width:400px;">
+  <img src="/v210/docs/assets/svg/Local-PV-Distributed-hostpath-minio.svg" alt="OpenEBS and MinIO Distributed localpv hostpath" style="width:400px;">
 
   
 
@@ -185,7 +185,7 @@ Local PV can be provisioned by following of the options below:
   
   
 
-  <img src="/docs/assets/svg/Local-PV-Distributed-device-minio.svg" alt="OpenEBS and MinIO Distributed localpv device" style="width:400px;">
+  <img src="/v210/docs/assets/svg/Local-PV-Distributed-device-minio.svg" alt="OpenEBS and MinIO Distributed localpv device" style="width:400px;">
   
   
   
@@ -227,7 +227,7 @@ The cStor volume can be provisioned using the following steps;
 
    
   
-  <img src="/docs/assets/svg/cstor-standalone-minio.svg" alt="OpenEBS and MinIO standalone cStor " style="width:400px;">
+  <img src="/v210/docs/assets/svg/cstor-standalone-minio.svg" alt="OpenEBS and MinIO standalone cStor " style="width:400px;">
   
   
   
@@ -255,7 +255,7 @@ The cStor volume can be provisioned using the following steps.
    
    
    
-   <img src="/docs/assets/svg/cstor-distributed-minio.svg" alt="OpenEBS and MinIO Distributed cStor " style="width:400px;">
+   <img src="/v210/docs/assets/svg/cstor-distributed-minio.svg" alt="OpenEBS and MinIO Distributed cStor " style="width:400px;">
    
    
    
@@ -294,7 +294,7 @@ The steps for provisioning MinIO application in standalone mode using Jiva volum
   
      
   
-    <img src="/docs/assets/svg/JIVA-standalone-default-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva default" style="width:400px;"> 
+    <img src="/v210/docs/assets/svg/JIVA-standalone-default-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva default" style="width:400px;"> 
   
     
   
@@ -319,7 +319,7 @@ The steps for provisioning MinIO application in standalone mode using Jiva volum
    
      
    
-     <img src="/docs/assets/svg/JIVA-standalone-storage-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva storage pool" style="width:400px;">
+     <img src="/v210/docs/assets/svg/JIVA-standalone-storage-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva storage pool" style="width:400px;">
    
      
    
@@ -356,7 +356,7 @@ Expansion of cStor volume size is under active development (https://github.com/o
 
 **Monitor cStor Pool size**
 
-In most cases the cStor pool may not be dedicated to just MinIO alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool) 
+In most cases the cStor pool may not be dedicated to just MinIO alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/v210/docs/next/ugcstor.html#monitor-pool) 
 
 <br>
 <hr>
@@ -364,11 +364,11 @@ In most cases the cStor pool may not be dedicated to just MinIO alone. It is rec
 ## See Also:
 
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v210/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v210/docs/next/usecases.html)
 
-### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
+### [cStor pools overview](/v210/docs/next/cstor.html#cstor-pools)
 
 
 

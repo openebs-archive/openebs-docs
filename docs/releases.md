@@ -10,8 +10,6 @@ sidebar_label: Releases
 
 ## 2.1.0 - Sept 15 2020
 
-<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
-
 ### New capabilities:
 - OpenEBS ZFS Local PV adds support for Backup and Restore by enhancing the OpenEBS Velero Plugin. For detailed instructions to try this feature, please refer to this [doc](https://github.com/openebs/zfs-localpv/blob/master/docs/backup-restore.md). 
 - OpenEBS Mayastor continues its momentum by enhancing support for Rebuild and other fixes. For detailed instructions on how to get started with Mayastor please refer to this [Quickstart guide](https://mayastor.gitbook.io/introduction/).
@@ -33,7 +31,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.1.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v210/docs/next/upgrade.html)
 
 ## 2.0.0 - Aug 15 2020
 
@@ -59,7 +57,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.0.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v210/docs/next/upgrade.html)
 
 ## 1.12.0 - Jul 15 2020
 
@@ -87,7 +85,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.12.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v210/docs/next/upgrade.html)
 
 
 ## 1.11.0 - Jun 15 2020
@@ -117,7 +115,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.11.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v210/docs/next/upgrade.html)
 
 ## 1.10.0 - May 15 2020
 
@@ -389,13 +387,13 @@ sidebar_label: Releases
 
 ## See Also:
 
-### [OpenEBS Upgrade](/docs/next/upgrade.html)
+### [OpenEBS Upgrade](/v210/docs/next/upgrade.html)
 
-### [OpenEBS 0.x Releases](/docs/next/releases-0x.html)
+### [OpenEBS 0.x Releases](/v210/docs/next/releases-0x.html)
 
-### [OpenEBS FAQ](/docs/next/faq.html)
+### [OpenEBS FAQ](/v210/docs/next/faq.html)
 
-### [Container Attached Storage or CAS](/docs/next/cas.html)
+### [Container Attached Storage or CAS](/v210/docs/next/cas.html)
 
 <br><hr>
 

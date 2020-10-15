@@ -270,16 +270,16 @@ volumes do require privileged Security Context Constraints. This is described be
 
 The easiest way to install OpenEBS is by using the operator in the OperatorHub; 
 
-![OpenShift in OperatorHub](/docs/assets/openshift-operatorhub.png)
+![OpenShift in OperatorHub](/v210/docs/assets/openshift-operatorhub.png)
 
 This guide recommends installing the operator into an empty `openebs`
 namespace.
 
-![OpenShift in OperatorHub](/docs/assets/openshift-operator-installnamespace.png)
+![OpenShift in OperatorHub](/v210/docs/assets/openshift-operator-installnamespace.png)
 
 #### Installation option: via "manual" install</h4>
 
-1. Find the latest OpenEBS release version from [here](/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
+1. Find the latest OpenEBS release version from [here](/v210/docs/next/releases.html) and download the latest OpenEBS operator YAML in your master node. The latest openebs-operator YAML file can be downloaded using the following way.
 
 ```
 wget https://openebs.github.io/charts/openebs-operator-1.2.0.yaml
@@ -704,7 +704,7 @@ The detailed information of each steps are provided below.
     openebs-snapshot-promoter   volumesnapshot.external-storage.k8s.io/snapshot-promoter   57m
     ```
 
-  - The default StorageClass `openebs-hostpath` can be used to create local PV on the path `/var/openebs/local` in your Kubernetes node. You can either use `openebs-hostpath` storage class to create volumes or create new storage class by following the steps mentioned [here](/docs/next/uglocalpv-hostpath.html).
+  - The default StorageClass `openebs-hostpath` can be used to create local PV on the path `/var/openebs/local` in your Kubernetes node. You can either use `openebs-hostpath` storage class to create volumes or create new storage class by following the steps mentioned [here](/v210/docs/next/uglocalpv-hostpath.html).
 
     **Note:** OpenEBS local PV will not be bound until the application pod is scheduled as its **volumeBindingMode** is set to **WaitForFirstConsumer.** Once the application pod is scheduled on a certain node, OpenEBS Local PV will be bound on that node.
 
