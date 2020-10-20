@@ -459,96 +459,70 @@ Base.
 <br>
 
 <h3><a class="anchor" aria-hidden="true" id="rancher"></a>Rancher</h3>
-- If you are using RancherOS as the operating system, you need to enable the iSCSI service and start it on all the worker nodes. 
-- If you are using Ubuntu or RHEL as the operating system, you need to 
-  - Verify if iSCSI initiators are installed on all nodes (and )
-  - Add the `extra_binds` under Kubelet service  in cluster YAML file to  mount the iSCSI binary and configuration inside the `kubelet`.
+
+You will need to enable iSCSI services on all of the hosts of your Rancher-based Kubernetes cluster.
+
+<h4><a class="anchor" aria-hidden="true" id="rancher-ubuntu-centos"></a>iSCSI services on RKE/Rancher 2.x</h4>
+
+**Step 1:** Verify iSCSI initiator is installed and services are running on all of the hosts (control plane/etcd/worker).
+
+| Operating system      | iSCSI Package         | Commands                                                     |
+| --------------------- | --------------------- | ------------------------------------------------------------ |
+| RHEL / CentOS         | iscsi-initiator-utils | sudo yum install iscsi-initiator-utils -y <br />sudo systemctl enable --now iscsid<br />modprobe iscsi_tcp<br />sudo bash -c 'echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf' |
+| Ubuntu / Debian       | open-iscsi            | sudo apt install -y open-iscsi<br />sudo systemctl enable --now iscsid<br />modprobe iscsi_tcp<br />sudo bash -c 'echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf' |
 
 
 
-<h4><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services On RancherOS</h4>
+**Step 2:** Add `extra_binds` under `services.kubelet` in cluster YAML
+After installing the initiator tool on your nodes, edit the YAML for your cluster. Edit the kubelet configuration section to mount the iSCSI binary and configuration, as shown in the sample below.
+
+For an RKE cluster, you can add the `extra_binds` to your cluster.yml file. For a Rancher 2.x cluster, you can edit your cluster's configuration options and add the `extra_binds` there.
+
+```yaml
+services:
+  kubelet: 
+    extra_binds: 
+    - "/etc/iscsi:/etc/iscsi"
+    - "/sbin/iscsiadm:/sbin/iscsiadm"
+    - "/var/lib/iscsi:/var/lib/iscsi"
+    - "/lib/modules"
+    - "/var/openebs/local:/var/openebs/local"
+```
+
+In the above snippet, default hostpath for Local PV (/var/openebs/local), which will be created on the worker node using `openebs-hostpath` StorageClass, is added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `openebs-hostpath` volume.
+
+
+<h4><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services on RancherOS</h4>
+
 To run iSCSI services, execute the following commands on each of the cluster hosts or nodes.
 
-```
+```sh
 sudo ros s enable open-iscsi
 sudo ros s up open-iscsi
 ```
 
-Run the below commands on all the nodes to make sure the below directories are persistent, by default these directories are ephemeral.
+Run below commands on all of the nodes to make sure the below directories are persistent. By default these directories are ephemeral.
 
-```
+```sh
 ros config set rancher.services.user-volumes.volumes  [/home:/home,/opt:/opt,/var/lib/kubelet:/var/lib/kubelet,/etc/kubernetes:/etc/kubernetes,/var/openebs]
 system-docker rm all-volumes
 reboot
 ```
 
-If you are using Jiva or Local PV for provisioning OpenEBS volume on hostpath, add default hostpath of corresponding storage engine to `extra_binds` under kubelet service in cluster YAML. If the volume is using a mounted path on the host, then you must add the mounted path under extra_binds section.
+Edit the kubelet configuration section of your RKE/Rancher 2.x cluster to mount the OpenEBS Local PV hostpath default directory on to the kubelet container.
 
-```
+```yaml
 services:
   kubelet:
     extra_binds:
-     - /var/openebs/local:/var/openebs/local
+    - "/var/openebs/local:/var/openebs/local"
 ```
 
 In the above snippet, default hostpath for Local PV (/var/openebs/local), which will be created on the worker node using `openebs-hostpath` StorageClass, is added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `openebs-hostpath` volume.
 
-
-
-<h4><a class="anchor" aria-hidden="true" id="rancher-ubuntu-centos"></a>iSCSI services on RHEL or Ubuntu 16.04</h4>
-**Step1:** Verify iSCSI initiator is installed and services are running
-
-| Operating system      | iSCSI Package         | Commands                                                     |
-| --------------------- | --------------------- | ------------------------------------------------------------ |
-| RHEL / CentOS         | iscsi-initiator-utils | yum install iscsi-initiator-utils -y <br />sudo systemctl enable --now iscsid<br />modprobe iscsi_tcp<br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
-| Ubuntu 16.04 / Debian | open-iscsi            | sudo apt install open-iscsi<br />sudo systemctl enable --now iscsid<br />modprobe iscsi_tcp<br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
-
-
-
-**Step2:** Add extra_binds under kubelet service in cluster YAML
-
-After installing the initiator tool on your nodes, edit the YAML for your cluster, editing the kubelet configuration to mount the iSCSI binary and configuration, as shown in the sample below. 
-
-    services:
-      	kubelet: 
-          extra_binds: 
-        	- "/etc/iscsi:/etc/iscsi"
-        	- "/sbin/iscsiadm:/sbin/iscsiadm"
-        	- "/var/lib/iscsi:/var/lib/iscsi"
-        	- "/lib/modules"
-
-
-
-<h4><a class="anchor" aria-hidden="true" id="rancher-ubuntu-18.04"></a>iSCSI services on Ubuntu 18.04 or CentOS 7.6</h4>
-**Step1:** By default, iSCSI service is not present on worker node. It will be running inside the kubelet. To verify presence of iSCSI service inside kubelet, run the following command:
-
-```
-docker exec kubelet iscsiadm -V
-```
-
-Example Output:
-
-```
-iscsiadm version 2.0-874
-```
-
-The following commands will enable the `iscsi_tcp` module and it will persist this changes to the system.
-
-| Operating system | iSCSI Package         | Commands                                                     |
-| ---------------- | --------------------- | ------------------------------------------------------------ |
-| Ubuntu 18.04     | open-iscsi            | modprobe iscsi_tcp <br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
-| CentOS 7.6       | iscsi-initiator-utils | modprobe iscsi_tcp <br />echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf |
-
-**Step 2:** If you are using Jiva or Local PV for provisioning OpenEBS volume on hostpath, add default hostpath of corresponding storage engine to `extra_binds` under kubelet service in cluster YAML. If the volume is using a mounted path on the host, then you must add the mounted path under `extra_binds` section.
-
-```
-services:
-  kubelet:
-    extra_binds:
-     - /var/openebs/local:/var/openebs/local
-```
-
-In the above snippet, default hostpath for Local PV (/var/openebs/local), which will be created on the worker node using `openebs-hostpath` StorageClass, is added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `openebs-hostpath` volume.
+:::note
+The CSI driver based implementation of cStor storage engine is **not compatible** with RancherOS.
+:::
 
 <br>
 
