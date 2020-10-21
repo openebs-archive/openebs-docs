@@ -468,8 +468,8 @@ You will need to enable iSCSI services on all of the hosts of your Rancher-based
 
 | Operating system      | iSCSI Package         | Commands                                                     |
 | --------------------- | --------------------- | ------------------------------------------------------------ |
-| RHEL / CentOS         | iscsi-initiator-utils | sudo yum install iscsi-initiator-utils -y <br />sudo systemctl enable --now iscsid<br />modprobe iscsi_tcp<br />sudo bash -c 'echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf' |
-| Ubuntu / Debian       | open-iscsi            | sudo apt install -y open-iscsi<br />sudo systemctl enable --now iscsid<br />modprobe iscsi_tcp<br />sudo bash -c 'echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf' |
+| RHEL / CentOS         | iscsi-initiator-utils | sudo yum install iscsi-initiator-utils -y <br />sudo systemctl enable --now iscsid |
+| Ubuntu / Debian       | open-iscsi            | sudo apt install -y open-iscsi<br />sudo systemctl enable --now iscsid |
 
 
 
