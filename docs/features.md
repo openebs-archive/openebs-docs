@@ -10,8 +10,8 @@ sidebar_label: Features and Benefits
 |--------------------|--------------------|
 | [Containerized storage for containers](#containerized-storage-for-containers) | [Granular policies per stateful workload](#granular-policies-per-stateful-workload) |
 | [Synchronous replication](#synchronous-replication) | [Avoid Cloud Lock-in](#avoid-cloud-lock-in) |
-| [Snapshots and clones](#snapshots-and-clones) | [Reduced storage TCO up to 50%](#reduced-storage-tco-upto-50) |
-| [Backup and restore](#backup-and-restore) | [Native HCI on Kubernetes](#native-hyperconvergence-on-kubernetes) |
+| [Snapshots and clones](#snapshots-and-clones) | [Reduced storage TCO up to 50%](#reduced-storage-tco-up-to-50) |
+| [Backup and restore](#backup-and-restore) | [Native HCI on Kubernetes](#natively-hyperconvergenced-on-kubernetes) |
 | [Prometheus metrics and Grafana dashboard](#prometheus-metrics-for-workload-tuning) | [High availability - No Blast Radius](#high-availability) |
 
 
