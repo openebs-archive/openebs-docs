@@ -89,7 +89,7 @@ Advantages of using OpenEBS for Elasticsearch database:
 
 A live deployment of Elasticsearch with Kibana using OpenEBS volumes can be seen at the website [www.openebs.ci](https://openebs.ci/)
 
-Deployment YAML spec files for Elasticsearch and OpenEBS resources are found [here](https://github.com/openebs/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/efk-server/Elasticsearch/es-statefulset.yaml)
+Deployment YAML spec files for Elasticsearch and OpenEBS resources are found [here](https://github.com/mayadata-io/e2e-infrastructure/blob/54fe55c5da8b46503e207fe0bc08f9624b31e24c/production/efk-server/elasticsearch/es-statefulset.yaml)
 
 [OpenEBS-CI dashboard of Elasticsearch](https://openebs.ci/logging)
 
