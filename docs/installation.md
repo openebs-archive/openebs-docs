@@ -15,7 +15,7 @@ sidebar_label: Installation
 
 - Verify if [iSCSI client](#verify-iscsi-client) is running
 
-- Set Kubernetes [admin context](#set-cluster-admin-user-context-and-rbac) and RBAC
+- Set Kubernetes [admin context](#set-cluster-admin-user-context)
 
 - Installation
   - **[helm](#installation-through-helm) chart** `(or)`
