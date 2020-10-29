@@ -54,7 +54,7 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl get sc
   ```
 
-- Delete the OpenEBS namespace using helm either via `helm delete <chart name> --purge` (if helm version is v2) or `helm uninstall <chart name> -n <namespace>` (if helm version is v3). It can aslo be deleted using kubectl as  `kubectl delete ns openebs` or you can delete the corresponding `openebs-operator` YAML using `kubectl delete -f <openebs-operator.yaml>`. You can check the status of OpenEBS namespace using the following command.
+- Delete the OpenEBS namespace using helm either via `helm delete <chart name> --purge` (if helm version is v2) or `helm uninstall <chart name> -n <namespace>` (if helm version is v3). It can also be deleted using kubectl as  `kubectl delete ns openebs` or you can delete the corresponding `openebs-operator` YAML using `kubectl delete -f <openebs-operator.yaml>`. You can check the status of OpenEBS namespace using the following command.
 
   ```
   kubectl get ns
