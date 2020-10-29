@@ -462,7 +462,7 @@ Base.
 
 You will need to enable iSCSI services on all of the hosts of your Rancher-based Kubernetes cluster.
 
-<h4><a class="anchor" aria-hidden="true" id="rancher-ubuntu-centos"></a>iSCSI services on RKE/Rancher 2.x</h4>
+<h4><a class="anchor" aria-hidden="true" id="rancher-rke"></a>iSCSI services on RKE/Rancher 2.x</h4>
 
 **Step 1:** Verify iSCSI initiator is installed and services are running on all of the hosts (control plane/etcd/worker).
 
@@ -492,7 +492,7 @@ services:
 In the above snippet, default hostpath for Local PV (/var/openebs/local), which will be created on the worker node using `openebs-hostpath` StorageClass, is added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `openebs-hostpath` volume.
 
 
-<h4><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services on RancherOS</h4>
+<h4><a class="anchor" aria-hidden="true" id="rancher-rancheros"></a>iSCSI services on RancherOS</h4>
 
 To run iSCSI services, execute the following commands on each of the cluster hosts or nodes.
 
