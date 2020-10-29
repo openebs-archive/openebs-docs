@@ -7,7 +7,6 @@ sidebar_label: Cassandra
 
 <img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Cassandra" style="width:400px;">
 
-# Running Cassandra with OpenEBS
 
 This tutorial provides detailed instructions to run a Kudo operator based Cassandra StatefulsSets with OpenEBS storage and perform some simple database operations to verify the successful deployment and it's performance benchmark.
 
@@ -237,7 +236,3 @@ $ kubectl kudo install cassandra --namespace=$namespace_name --instance $instanc
 
 ### [Understanding NDM](/docs/next/ugndm.html)
 
-
-
-<hr>
-<br>
