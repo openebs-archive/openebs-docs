@@ -177,7 +177,7 @@ The default Storage Class is called `openebs-device`. If the block devices are n
    :::note 
    Block Device Tag support for Local Volumes was introduced in OpenEBS 1.9. 
    
-   When specifying the value for BlockDeviceTag, you must already have Block Devices on the nodes labelled with the tag. See [Block Device Tagging](#block-device-tagging)
+   When specifying the value for BlockDeviceTag, you must already have Block Devices on the nodes labelled with the tag. See [Block Device Tagging](#optional-block-device-tagging)
    :::
 
 3. Create OpenEBS Local PV Device Storage Class. 
