@@ -5,38 +5,25 @@ sidebar_label: Cassandra
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Prometheus" style="width:400px;">
+<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Cassandra" style="width:400px;">
+
+# Running Cassandra with OpenEBS
+
+This tutorial provides detailed instructions to run a Kudo operator based Cassandra StatefulsSets with OpenEBS storage and perform some simple database operations to verify the successful deployment and it's performance benchmark.
 
 ## Introduction
 
-<br>
+Apache Cassandra is a free and open-source distributed NoSQL database management system designed to handle a large amounts of data across nodes, providing high availability with no single point of failure. It uses asynchronous masterless replication allowing low latency operations for all clients. 
 
-Apache Cassandra is a distributed NoSQL database management system designed to handle large amounts of data across nodes, providing high availability with no single point of failure. It uses asynchronous masterless replication allowing low latency operations for all clients. Cassandra is deployed usually as a `statefulset` on Kubernetes and requires persistent storage for each instance of Cassandra. OpenEBS provides persistent volumes on the fly when Cassandra instances are scaled up.
+OpenEBS is the most popular Open Source Container Attached Solution available for Kubernetes and is favored by many organizations for its simplicity and ease of management and it's highly flexible deployment options to meet the storage needs of any given stateful application.
 
-<br>
+Depending on the performance and high availability requirements of Cassandra, you can select to run Cassandra with the following deployment options:
 
-**Advantages of using OpenEBS for Cassandra database:**
+For optimal performance, deploy Cassandra with OpenEBS Local PV. If you would like to use storage layer capabilities like high availability, snapshots, incremental backups and restore and so forth, you can select OpenEBS cStor. 
 
-- No need to manage the local disks, they are managed by OpenEBS
-- Large size PVs can be provisioned by OpenEBS and Cassandra
-- Start with small storage and add disks as needed on the fly. Sometimes Cassandra instances are scaled up because of capacity on the nodes. With OpenEBS persistent volumes, capacity can be thin provisioned and disks can be added to OpenEBS on the fly without disruption of service 
-- Cassandra sometimes need highly available storage, in such cases OpenEBS volumes can be configured with 3 replicas.
-- If required, take backup of the Cassandra data periodically and back them up to S3 or any object storage so that restoration of the same data is possible to the same or any other Kubernetes cluster
+Whether you use OpenEBS Local PV or cStor, you can set up the Kubernetes cluster with all its nodes in a single availability zone/data center or spread across multiple zones/ data centers.
 
 <br>
-
-*Note: Cassandra can be deployed both as `deployment` or as `statefulset`. When Cassandra deployed as `statefulset`, you don't need to replicate the data again at OpenEBS level. When Cassandra is deployed as `deployment`, consider 3 OpenEBS replicas, choose the StorageClass accordingly.*
-
-
-
-<br>
-
-<hr>
-
-<br>
-
-
-
 
 
 ## Deployment model 
@@ -47,240 +34,210 @@ Apache Cassandra is a distributed NoSQL database management system designed to h
 
 <br>
 
-As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration work fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
 
+## Configuration workflow 
 
-
-<br>
-
-<hr>
-
-<br>
-
-
-
-## Configuration workflow
+1. Install OpenEBS
+2. Select OpenEBS storage engine
+3. Configure OpenEBS Local PV StorageClass
+4. Install Kudo operator
+5. Install Kudo based Cassandra
+6. Verify Cassandra is up and running
+7. Testing Cassandra performance on OpenEBS
 
 <br>
 
-1. **Install OpenEBS**
+### Install OpenEBS
 
-   If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
+If OpenEBS is not installed in your K8s cluster, this can be done from [here](https://docs.openebs.io/docs/next/overview.html). If OpenEBS is already installed, go to the next step.
 
-2. **Configure cStor Pool**
+### Select OpenEBS storage engine
 
-   After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). During cStor Pool creation, make sure that the maxPools parameter is set to >=3. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. If cStor pool is already configured, go to the next step.
+A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and chooses the right engine that suits your type of application requirements and storage available on your Kubernetes nodes. More information can be read from [here](https://docs.openebs.io/docs/next/overview.html#openebs-storage-engines).
 
-4. **Create Storage Class**
+### Configure OpenEBS Local PV StorageClass
 
-   You must configure a StorageClass to provision cStor volume on given cStor pool. StorageClass is the interface through which most of the OpenEBS storage policies are defined. In this solution we are using a StorageClass to consume the cStor Pool which is created using external disks attached on the Nodes.  Since Cassandra is a StatefulSet application, it requires only one replication at the storage level. So cStor volume `replicaCount` is 1. Sample YAML named **openebs-sc-disk.yaml**to consume cStor pool with cStor volume replica count as 1 is provided in the configuration details below.
+In this tutorial, OpenEBS Local PV device has been used as the storage engine for deploying Kudo Cassandra. There are 2 ways to use OpenEBS Local PV.
 
-5. **Launch and test Cassandra**
+- `openebs-hostpath` - Using this option, it will create Kubernetes Persistent Volumes that will store the data into OS host path directory at: /var/openebs/<cassandra-pv>/. Select this option, if you don’t have any additional block devices attached to Kubernetes nodes. You would like to customize the directory where data will be saved, create a new OpenEBS Local PV storage class using these [instructions](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass). 
+  
+- `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a Cassandra node. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](https://docs.openebs.io/docs/next/ugndm.html). 
 
-   Create a sample  `cassandra-statefulset.yaml` file in the Configuration details section. This can be applied to deploy Cassandra database  with OpenEBS. Run `kubectl apply -f cassandra-statefulset.yaml` to see Cassandra running. This will configure required PVC also.
+### Install Kudo operator to install Cassandra 
 
-   In other way , you can use Cassandra image with helm to deploy Cassandra in your cluster using the following command.
+- Make the environment to install Kudo operator using the following steps.
 
-   ```
-   helm install --namespace "cassandra" -n "cassandra" --storage-class=openebs-cstor-disk incubator/cassandra
-   ```
+  ```
+  $ export GOROOT=/usr/local/go
+  $ export GOPATH=$HOME/gopath
+  $ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+  ```
+- Choose the Kudo version. The latest version can be found [here](https://github.com/kudobuilder/kudo/releases). In the following command, selected Kudo version is v0.14.0. 
+  ```
+  VERSION=0.14.0
+  OS=$(uname | tr '[:upper:]' '[:lower:]')
+  ARCH=$(uname -m)
+  wget -O kubectl-kudo https://github.com/kudobuilder/kudo/releases/download/v${VERSION}/kubectl-kudo_${VERSION}_${OS}_${ARCH}
+  ```
+- Change the permission
+  ```
+  $ chmod +x kubectl-kudo
+  $ sudo mv kubectl-kudo /usr/local/bin/kubectl-kudo
+  ```
+- Install Cert-manager
 
+  Before installing the KUDO operator, the cert-manager must be already installed in your cluster. If not, install the cert-manager. The instruction can be found from [here](https://cert-manager.io/docs/installation/kubernetes/#installing-with-regular-manifests). Since our K8s version is v1.16.0, we have installed cert-manager using the following command.
+  ```
+  $ kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager.yaml
+  ```
+- Install Kudo operator using a specified version. In the following command, the selected version is v0.14.0.
+  ```
+  $ kubectl-kudo init --version 0.14.0
+  ```
+  Verify Kudo controller pods status
+  ```
+  $ kubectl get pod -n kudo-system
+  
+  NAME                        READY   STATUS    RESTARTS   AGE
+  kudo-controller-manager-0   1/1     Running   0          2m40s
+  ```
 
-
-<br>
-
-<hr>
-<br>
-
-
-
-## Post deployment Operations
-
-<br>
-
-**Monitor OpenEBS Volume size** 
-
-It is not seamless to increase the cStor volume size (refer to the roadmap item). Hence, it is recommended that sufficient size is allocated during the initial configuration. 
-
-**Monitor cStor Pool size**
-
-As in most cases, cStor pool may not be dedicated to just Cassandra database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool). 
-
-
-
-<br>
-
-<hr>
-
-<br>
-
-
-
-
-
-## Configuration details
-
-<br>
-
-**openebs-config.yaml**
-
-```yaml
-#Use the following YAMLs to create a cStor Storage Pool.
-# and associated storage class.
-apiVersion: openebs.io/v1alpha1
-kind: StoragePoolClaim
-metadata:
-  name: cstor-disk
-spec:
-  name: cstor-disk
-  type: disk
-  poolSpec:
-    poolType: striped
- # NOTE - Appropriate disks need to be fetched using `kubectl get blockdevices -n openebs`
-  #
-  # `Block devices` is a custom resource supported by OpenEBS with `node-disk-manager`
-  # as the disk operator
-# Replace the following with actual disk CRs from your cluster `kubectl get blockdevices -n openebs`
-# Uncomment the below lines after updating the actual disk names.
-  blockDevices:
-    blockDeviceList:
-# Replace the following with actual disk CRs from your cluster from `kubectl get blockdevices -n openebs`
-#   - blockdevice-69cdfd958dcce3025ed1ff02b936d9b4
-#   - blockdevice-891ad1b581591ae6b54a36b5526550a2
-#   - blockdevice-ceaab442d802ca6aae20c36d20859a0b
----
+### Install Kudo operator based Cassandra 
+     
+Install Kudo based Cassandra using OpenEBS storage engine. In this example, the storage class used is `openebs-device`. Before deploying Cassandra, ensure that there are enough  block devices that can be used to consume Cassandra application, by running `kubectl get bd -n openebs`.
+    
 ```
-
-**openebs-sc-disk.yaml**
-
-```yaml
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: openebs-cstor-disk
-  annotations:
-    openebs.io/cas-type: cstor
-    cas.openebs.io/config: |
-      - name: StoragePoolClaim
-        value: "cstor-disk"
-      - name: ReplicaCount
-        value: "1"
-provisioner: openebs.io/provisioner-iscsi
-reclaimPolicy: Delete
----
+$ export instance_name=cassandra-openebs
+$ export namespace_name=cassandra
+$ kubectl create ns cassandra 
+$ kubectl kudo install cassandra --namespace=$namespace_name --instance $instance_name -p NODE_STORAGE_CLASS=openebs-device
 ```
+  
+### Verify Cassandra is up and running
+  
+- Get the Cassandra Pods, StatefulSet, Service and PVC details. It should show that StatefulSet is deployed with 3 Cassandra pods in running state and a headless service is configured. 
+  ```
+  $kubectl get pod,service,sts,pvc -n cassandra  
+  
+  NAME                                    READY   STATUS    RESTARTS   AGE
+  cassandra-openebs-node-0   2/2          Running     0                4m
+  cassandra-openebs-node-1   2/2          Running     0                3m2s
+  cassandra-openebs-node-2   2/2          Running     0                3m24s
 
-**cassandra-statefulset.yaml**
+  NAME                         READY   AGE
+  statefulset.apps/cassandra   3/3     6m35s
 
-```
-apiVersion: apps/v1beta1
-kind: StatefulSet
-metadata:
-  name: cassandra
-  labels:
-    app: cassandra
-spec:
-  serviceName: cassandra
-  replicas: 3
-  selector:
-    matchLabels:
-      app: cassandra
-  template:
-    metadata:
-      labels:
-        app: cassandra
-    spec:
-      containers:
-      - name: cassandra
-        image: gcr.io/google-samples/cassandra:v11
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 7000
-          name: intra-node
-        - containerPort: 7001
-          name: tls-intra-node
-        - containerPort: 7199
-          name: jmx
-        - containerPort: 9042
-          name: cql
-        resources:
-          limits:
-            cpu: "500m"
-            memory: 1Gi
-          requests:
-           cpu: "500m"
-           memory: 1Gi
-        securityContext:
-          capabilities:
-            add:
-              - IPC_LOCK
-        lifecycle:
-          preStop:
-            exec:
-              command: ["/bin/sh", "-c", "PID=$(pidof java) && kill $PID && while ps -p $PID > /dev/null; do sleep 1; done"]
-        env:
-          - name: MAX_HEAP_SIZE
-            value: 512M
-          - name: HEAP_NEWSIZE
-            value: 100M
-          - name: CASSANDRA_SEEDS
-            value: "cassandra-0.cassandra.default.svc.cluster.local"
-          - name: CASSANDRA_CLUSTER_NAME
-            value: "K8Demo"
-          - name: CASSANDRA_DC
-            value: "DC1-K8Demo"
-          - name: CASSANDRA_RACK
-            value: "Rack1-K8Demo"
-          - name: CASSANDRA_AUTO_BOOTSTRAP
-            value: "false"
-          - name: POD_IP
-            valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
-        readinessProbe:
-          exec:
-            command:
-            - /bin/bash
-            - -c
-            - /ready-probe.sh
-          initialDelaySeconds: 15
-          timeoutSeconds: 5
-        # These volume mounts are persistent. They are like inline claims,
-        # but not exactly because the names need to match exactly one of
-        # the stateful pod volumes.
-        volumeMounts:
-        - name: cassandra-data
-          mountPath: /cassandra_data
-  volumeClaimTemplates:
-  - metadata:
-      name: cassandra-data
-      annotations:
-        volume.beta.kubernetes.io/storage-class: openebs-cstor-disk
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 5G
-```
+  NAME                TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                                        AGE
+  service/cassandra-openebs-svc   ClusterIP   None         <none>        7000/TCP,7001/TCP,7199/TCP,9042/TCP,9160/TCP   6m35s
+  
+  NAME                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS     AGE
+  var-lib-cassandra-cassandra-openebs-node-0   Bound    pvc-213f2cfb-231f-4f14-be93-69c3d1c6d5d7   20Gi       RWO            openebs-device   20m
+  var-lib-cassandra-cassandra-openebs-node-1   Bound    pvc-059bf24b-3546-43f3-aa01-3a6bea640ffd   20Gi       RWO            openebs-device   19m
+  var-lib-cassandra-cassandra-openebs-node-2   Bound    pvc-82367756-7a19-4f7f-9e35-65e7696f3b86   20Gi       RWO            openebs-device   18m
+  ```
+- Login to one of the Cassandra pod to verify the Cassandra cluster health status using the following command.
+  ```
+  $ kubectl exec -it cassandra-openebs-node-0 bash -n cassandra
+  
+  cassandra@cassandra-openebs-node-0:/$ nodetool status
+  Datacenter: datacenter1
+  =======================
+  Status=Up/Down   |/ State=Normal/Leaving/Joining/Moving      --  Address        Load       Tokens       Owns (effective)  Host ID                               Rack
+  UN  192.168.30.24  94.21 KiB  256          63.0%             73c54856-f045-48db-b0db-e6a751d005f8  rack1
+  UN  192.168.93.31  75.12 KiB  256          65.3%             d48c61b7-551b-4805-b8cc-b915d039f298  rack1
+  UN  192.168.56.80  75 KiB     256          71.7%             91fc4107-e447-4605-8cbf-3916f9fd8abf  rack1
+  ```
 
+- Create a Test Keyspace with Tables. Login to one of the Cassandra pod and run the following commands from a cassandra pod.
+  ```
+  cassandra@cassandra-openebs-node-0:/$ cqlsh <svc-name>.<namespace>.svc.cluster.local
+  ```
+  Example command:
+  ```
+  cassandra@cassandra-openebs-node-0:/$ cqlsh cassandra-openebs-svc.cassandra.svc.cluster.local
+  
+  Connected to cassandra-openebs at cassandra-openebs-svc.cassandra.svc.cluster.local:9042.
+  [cqlsh 5.0.1 | Cassandra 3.11.6 | CQL spec 3.4.4 | Native protocol v4]
+  Use HELP for help.
+  cqlsh>
+  ```
 
+- Creating a Keyspace. Now, let’s create a Keyspace and add a table with some entries into it.
+  ```
+  cqlsh> create keyspace dev
+  ... with replication = {'class':'SimpleStrategy','replication_factor':1};
+  
+- Creating Data Objects
+  ```
+  cqlsh> use dev;
+  cqlsh:dev> create table emp (empid int primary key,
+  ... emp_first varchar, emp_last varchar, emp_dept varchar);
+  
+- Inserting and Querying Data
+  ```
+  $ cqlsh:dev> insert into emp (empid, emp_first, emp_last, emp_dept)
+  ... values (1,'fred','smith','eng');
+
+  $ cqlsh:dev> select * from emp;
+  empid | emp_dept | emp_first | emp_last
+  -------+----------+-----------+----------
+      1 |      eng |      fred |    smith
+  (1 rows)
+
+- Updating a data
+  ```
+  $ cqlsh:dev> update emp set emp_dept = 'fin' where empid = 1;
+  $ cqlsh:dev> select * from emp;
+  empid | emp_dept | emp_first | emp_last
+  -------+----------+-----------+----------
+      1 |      fin |      fred |    smith
+  (1 rows)
+  cqlsh:dev> exit
+  ```
+      
+### Testing Cassandra Performance on OpenEBS
+   
+- Login to one of the cassandra pod and run the following sample loadgen command to write and read some entry to and from the database.
+  ```
+  $ kubectl exec -it cassandra-openebs-node-0 bash -n cassandra
+  ```
+- Get the database health status
+  ```
+  $ nodetool status
+  Datacenter: datacenter1
+  =======================
+  Status=Up/Down
+  |/ State=Normal/Leaving/Joining/Moving   --   Address        Load       Tokens       Owns (effective)  Host ID                               Rack
+  UN  192.168.52.94  135.39 MiB  256          32.6%             68206664-b1e7-4e73-9677-14119536e42d  rack1
+  UN  192.168.7.79   189.98 MiB  256          36.3%             5f6176f5-c47f-4d12-bd16-c9427baf68a0  rack1
+  UN  192.168.70.87  127.46 MiB  256          31.2%             da31ba66-42dd-4c85-a212-a0cb828bbefb  rack1
+  ``` 
+- Go to the directory where the binary is located.
+  ```
+  cassandra@cassandra-openebs-node-0:/$ cd /opt/cassandra/tools/bin
+  ```
+- Run Write load 
+  ```
+  cassandra@cassandra-openebs-node-0:/opt/cassandra/tools/bin$ ./cassandra-stress write n=1000000 -rate threads=50 -node 192.168.52.94
+  ```
+- Run Read Load
+  ```
+  cassandra@cassandra-openebs-node-0:/opt/cassandra/tools/bin$ ./cassandra-stress read n=200000 -rate threads=50 -node 192.168.52.94
+  ```
 
 <br>
 
 ## See Also:
 
-<br>
-
 ### [OpenEBS architecture](/docs/next/architecture.html)
 
 ### [OpenEBS use cases](/docs/next/usecases.html)
 
-### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
+### [Local PV concepts](/docs/next/localpv.html)
+
+### [Understanding NDM](/docs/next/ugndm.html)
 
 
-
-<br>
 
 <hr>
 <br>
-
