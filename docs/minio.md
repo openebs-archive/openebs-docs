@@ -285,7 +285,7 @@ The steps for provisioning MinIO application in standalone mode using Jiva volum
   - Use the default Storage pool `default`. The default storage pool will be created on the OS disk using the sparse disk once OpenEBS is installed. For using default Storage Pool, user can simply use default StroageClass `openebs-jiva-default` in the PVC spec of the application.
        
   
-    <img src="/docs/assets/svg/JIVA-standalone-default-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva default " style="width:400px;"> 
+  <img src="/docs/assets/svg/JIVA-standalone-default-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva default " style="width:400px;"> 
    
          
   - Launch MinIO application using the following command. User can include the default StorageClass name in the following command:
@@ -308,7 +308,7 @@ The steps for provisioning MinIO application in standalone mode using Jiva volum
    - Create/use a StorageClass, which uses Jiva Storage pool created with a mounted disk in the previous step. For example, StorageClass used in this example is `openebs-jiva-sc`. Use this SC name in the application deployment command.
      
          
-     <img src="/docs/assets/svg/JIVA-standalone-storage-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva storage pool " style="width:400px;">
+  <img src="/docs/assets/svg/JIVA-standalone-storage-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva storage pool " style="width:400px;">
      
       
    - Launch MinIO application using the following command. You may change the StorageClass name as per the one created in the previous step.
