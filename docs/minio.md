@@ -301,7 +301,7 @@ The steps for provisioning MinIO application in standalone mode using Jiva volum
     
     This will create a MinIO application on a PV with a replication factor of three (3) Jiva volume and capacity of 10Gi on default Jiva pool created on OS disk.
   
--  Storage Pool using External disk       	
+-  Storage Pool using External disk
   
    - Creating a Jiva pool using a single mounted disk. The mount path should be the same on all the Node where the Jiva volume replica will be provisioned. The steps for creating a Jiva pool are mentioned [here](https://docs.openebs.io/docs/next/jivaguide.html#create-a-pool).
    
