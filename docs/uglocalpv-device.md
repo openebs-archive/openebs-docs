@@ -47,6 +47,14 @@ For a more detailed walkthrough of the setup, follow along the rest of this docu
 - Kubernetes 1.12 or higher is required
 - OpenEBS 1.0 or higher is required.
 
+:::note air-gapped environment
+If you are running your Kubernetes cluster in an air-gapped environment, make sure the following container images are available in your local repository.
+- openebs/localpv-provisioner
+- openebs/linux-utils
+- openebs/node-disk-manager
+- openebs/node-disk-operator
+:::
+
 ## Prerequisites
 
 For provisioning Local PV using the block devices, the Kubernetes nodes should have block devices attached to the nodes. The block devices can optionally be formatted and mounted. 
@@ -68,28 +76,28 @@ You can skip this section if you have already installed OpenEBS.
 1. Prepare to install OpenEBS by providing custom values for configurable parameters.
    - The location of the *OpenEBS Dynamic Local PV provisioner* container image.
      <div class="co">
-     Default value: quay.io/openebs/provisioner-localpv
+     Default value: openebs/provisioner-localpv
      YAML specification: spec.image on Deployment(localpv-provisioner)
      Helm key: localprovisioner.image
      </div>  
 
    - The location of the *OpenEBS NDM DaemonSet* container image. NDM DaemonSet helps with discovering block devices attached to a node and creating Block Device Resources.
      <div class="co">
-     Default value: quay.io/openebs/node-disk-manager-amd64
+     Default value: openebs/node-disk-manager
      YAML specification: spec.image on DaemonSet(openebs-ndm)
      Helm key: ndm.image
      </div>  
 
    - The location of the *OpenEBS NDM Operator* container image. NDM Operator helps with allocating Block Devices to Block Device Claims raised by *OpenEBS Dynamic Local PV Provisioner*. 
      <div class="co">
-     Default value: quay.io/openebs/node-disk-operator-amd64
+     Default value: openebs/node-disk-operator
      YAML specification: spec.image on Deployment(openebs-ndm-operator)
      Helm key: ndmOperator.image
      </div>  
 
    - The location of the *Provisioner Helper* container image. *OpenEBS Dynamic Local Provisioner* create a *Provisioner Helper* pod to clean up the data from the block device after the PV has been deleted.
      <div class="co">
-     Default value: quay.io/openebs/linux-utils
+     Default value: openebs/linux-utils
      YAML specification: Environment Variable (CLEANUP_JOB_IMAGE) on Deployment(ndm-operator) 
      Helm key: helper.image
      </div>
@@ -116,6 +124,13 @@ You can skip this section if you have already installed OpenEBS.
      ```
      kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
      ```
+
+     :::note 
+     If you would like to use only Local PV (hostpath and device), you can install a lite verison of OpenEBS using the following command.
+
+     kubectl apply -f https://openebs.github.io/charts/openebs-operator-lite.yaml
+     kubectl apply -f https://openebs.github.io/charts/openebs-lite-sc.yaml
+     :::
 
    - Install using helm stable charts
   
