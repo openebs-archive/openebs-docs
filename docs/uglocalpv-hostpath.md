@@ -55,8 +55,8 @@ Setup the directory on the nodes where Local PV Hostpaths will be created. This 
 
 :::note air-gapped environment
 If you are running your Kubernetes cluster in an air-gapped environment, make sure the following container images are available in your local repository.
-- quay.io/openebs/localpv-provisioner
-- quay.io/openebs/linux-utils
+- openebs/localpv-provisioner
+- openebs/linux-utils
 :::
 
 :::note Rancher RKE cluster
@@ -79,14 +79,14 @@ You can skip this section if you have already installed OpenEBS.
 
    - The location of the *OpenEBS Dynamic Local PV provisioner* container image.
      <div class="co">
-     Default value: quay.io/openebs/provisioner-localpv
+     Default value: openebs/provisioner-localpv
      YAML specification: spec.image on Deployment(localpv-provisioner)
      Helm key: localprovisioner.image
      </div>
 
    - The location of the *Provisioner Helper* container image. *OpenEBS Dynamic Local Provisioner* create a *Provisioner Helper* pod to create and delete hostpath directories on the nodes.
      <div class="co">
-     Default value: quay.io/openebs/linux-utils
+     Default value: openebs/linux-utils
      YAML specification: Environment Variable (OPENEBS_IO_HELPER_IMAGE) on Deployment(localpv-provisioner) 
      Helm key: helper.image
      </div>
@@ -106,6 +106,13 @@ You can skip this section if you have already installed OpenEBS.
      ```
      kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
      ```
+
+     :::note 
+     If you would like to use only Local PV (hostpath and device), you can install a lite verison of OpenEBS using the following command.
+
+     kubectl apply -f https://openebs.github.io/charts/openebs-operator-lite.yaml
+     kubectl apply -f https://openebs.github.io/charts/openebs-lite-sc.yaml
+     :::
 
    - Install using helm stable charts
   
