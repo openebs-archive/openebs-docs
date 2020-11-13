@@ -473,7 +473,7 @@ You will need to enable iSCSI services on all of the hosts of your Rancher-based
 
 
 
-**Step 2:** Add `extra_binds` under `services.kubelet` in cluster YAML
+**Step 2:** Add `extra_binds` under `services.kubelet` in cluster YAML  
 After installing the initiator tool on your nodes, edit the YAML for your cluster. Edit the kubelet configuration section to mount the iSCSI binary and configuration, as shown in the sample below.
 
 For an RKE cluster, you can add the `extra_binds` to your cluster.yml file. For a Rancher 2.x cluster, you can edit your cluster's configuration options and add the `extra_binds` there.
