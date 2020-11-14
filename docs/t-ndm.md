@@ -7,7 +7,7 @@ sidebar_label: NDM
 
 <font size="5">General guidelines for troubleshooting</font>
 
-- Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
+- Contact <a href="/v220/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 - Search for similar issues added in this troubleshootiung section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
@@ -56,7 +56,7 @@ User is having a 3 node cluster with 8 disks attached on each node. But `kubectl
 
 **Troubleshooting:**
 
-Check `kubectl get blockdevice -o yaml` of one of the blockdevice and its serial number. Also, ensure that the serial number of other 2 blockdevices are different. NDM detect and recognize the blockdevice based on their WWN, Model, Serial and Vendor. If the blockdevice have all the parameters same then NDM cannot differentiate the blockdevice and will create only 1 BlockdDevice CR for each unique parameter. To troubleshoot the same user has to make sure the blockdevices are having at least anyone unique parameter from WWN, Model, Serial and Vendor. Usually this issue is faced in virtualization environment like vSphere, KVM etc. More details abour NDM daemon set functionalities can be read from [here](/docs/next/ndm.html#ndm-daemonset-functions).
+Check `kubectl get blockdevice -o yaml` of one of the blockdevice and its serial number. Also, ensure that the serial number of other 2 blockdevices are different. NDM detect and recognize the blockdevice based on their WWN, Model, Serial and Vendor. If the blockdevice have all the parameters same then NDM cannot differentiate the blockdevice and will create only 1 BlockdDevice CR for each unique parameter. To troubleshoot the same user has to make sure the blockdevices are having at least anyone unique parameter from WWN, Model, Serial and Vendor. Usually this issue is faced in virtualization environment like vSphere, KVM etc. More details abour NDM daemon set functionalities can be read from [here](/v220/docs/next/ndm.html#ndm-daemonset-functions).
 
 **Resolution:**
 
@@ -139,11 +139,11 @@ wipefs -fa /dev/sdb
 
 ## See Also:
 
-### [FAQs](/docs/next/faq.html)
+### [FAQs](/v220/docs/next/faq.html)
 
-### [Seek support or help](/docs/next/support.html)
+### [Seek support or help](/v220/docs/next/support.html)
 
-### [Latest release notes](/docs/next/releases.html)
+### [Latest release notes](/v220/docs/next/releases.html)
 
 <br>
 <hr>
