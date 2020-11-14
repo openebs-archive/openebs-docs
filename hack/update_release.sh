@@ -17,8 +17,8 @@
 update_doc()
 {
   FILE=$1
-  sed -i 's/(\/docs\//(\/v200\/docs\//' ${FILE}
-  sed -i 's/"\/docs\//"\/v200\/docs\//' ${FILE}
+  sed -i '' -e 's/(\/docs\//(\/v220\/docs\//' ${FILE}
+  sed -i '' -e 's/"\/docs\//"\/v220\/docs\//' ${FILE}
   FILE=""
 }
 
