@@ -8,9 +8,42 @@ sidebar_label: Releases
 
 <br>
 
-## 2.2.0 - Oct 15 2020
+## 2.3.0 - Nov 15 2020
 
 <br><font size="4">Latest Release</font><br/> (Recommended)<br/>
+
+### New capabilities
+
+- ARM64 support (declared beta) for OpenEBS Data Engines - cStor, Jiva, Local PV (hostpath and device), ZFS Local PV.
+  - A significant improvement in this release is the support for multi-arch container images for amd64 and arm64. The multi-arch images are available on the docker hub and will enable the users to run OpenEBS in the Kubernetes cluster that has a mix of arm64 and amd64 nodes.
+  - In addition to ARM64 support, Local PV (hostpath and device) multi-arch container images include support for arm32 and power system.
+  - The arch-specific container images like `<image name>-amd64:<image-tag>`, are also made available from docker hub and quay to support backward compatibility to users running OpenEBS deployments with arch-specific images.
+  - To upgrade your volumes to multi-arch containers, make sure you specify the `to-image` to the multi-arch image available from docker or your own copy of it.
+
+- Enhanced the cStor Velero Plugin to help with automating the restore from an incremental backup. Restoring an incremental backup involves restoring the full backup (also called base backup and subsequent incremental backups till the desired incremental backup. With this release, the user can set a new parameter(`restoreAllIncrementalSnapshots`) in the `VolumeSnapshotLocation` to automate the restore of the required base and incremental backups. For detailed instructions to try this feature, please refer to this [doc](https://github.com/openebs/velero-plugin#creating-a-restore-from-scheduled-remote-backup). 
+
+- OpenEBS Mayastor is seeing tremendous growth in terms of users trying it out and providing feedback. A lot of work in this release has gone into fixing issues, enhancing the e2e tests and control plane, and adding initial support for snapshots. For further details on enhancements and bug fixes in Mayastor, please refer to [Mayastor](https://github.com/openebs/Mayastor/).
+
+### Key Improvements
+
+- Enhanced Node Disk Manager (NDM) to discover dm devices like loopback devices, `luks` encrypted devices, and create Block Device resources.  
+- Enhanced the NDM block device tagging feature to reserve a block device from being assigned to Local PV (device) or cStor data engines. The block device can be reserved by specifying an empty value for the block device tag.
+- Added support to install ZFS Local PV using Kustomize. Also updated the default upgrade strategy for the ZFS CSI driver to run in parallel instead of rolling upgrades.
+- Several enhancements and fixes from the Community towards OpenEBS documentation, build and release scripts from the Hacktoberfest participation. 
+
+### Key Bug Fixes
+
+- Fixed an issue with the upgrade of cStor and Jiva volumes in cases where volumes are provisioned without enabling monitoring side car.
+- Fixed an issue with the upgrade that would always set the image registry as`quay.io/openebs`, when upgrade job doesn't specify the registry location. The upgrade job will now fallback to the registry that is already configured on the existing pods.
+
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.2.0)
+- [Upgrade Steps](/docs/next/upgrade.html)
+
+<br>
+
+## 2.2.0 - Oct 15 2020
 
 ### New capabilities
 
