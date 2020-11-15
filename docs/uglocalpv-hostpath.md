@@ -114,13 +114,14 @@ You can skip this section if you have already installed OpenEBS.
      kubectl apply -f https://openebs.github.io/charts/openebs-lite-sc.yaml
      :::
 
-   - Install using helm stable charts
+   - Install using OpenEBS helm charts
   
      If you would like to change the default values for any of the configurable parameters mentioned in the previous step, specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
   
      ```
+     helm repo add openebs https://openebs.github.io/charts
      helm repo update
-     helm install --namespace openebs --name openebs stable/openebs
+     helm install --namespace openebs --name openebs openebs/openebs
      ```
 
 ## Create StorageClass
