@@ -12,7 +12,6 @@ This page provides an overview of OpenEBS components and features presently in A
 The list of alpha features include:
 - [Mayastor](#mayastor)
 - [Dynamic Local PV - Rawfile](#dynamic-local-pv-rawfile)
-- [Support for ARM64](#support-for-arm64)
 
   :::note
   Upgrade is not supported for features in Alpha version.
