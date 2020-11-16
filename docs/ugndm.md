@@ -118,7 +118,7 @@ filterconfigs:
    namespace: openebs
   data:
    # udev-probe is default or primary probe which should be enabled to run ndm
-   # filterconfigs contails configs of filters - in their form fo include
+   # filterconfigs contains configs of filters - in their form fo include
    # and exclude comma separated strings
    node-disk-manager.config: |
      probeconfigs:
@@ -153,8 +153,8 @@ filterconfigs:
 
 <h3><a class="anchor" aria-hidden="true" id="create-blockdevice-CRs-for-partitioned-disks"></a>Create blockdevice CRs for unsupported disks</h3>
 
-Currently, NDM out of the box manages disks and partitions. If the user need to have blockdevice for other device types like lvm, md array, crypt etc or
-any unsupported device types, the blockdevice resource can be manually created using the following steps:
+Currently, NDM out of the box manages disks, partitions, lvm, crypt and other dm devices. If the user need to have blockdevice for other device types like md array or 
+any other unsupported device types, the blockdevice resource can be manually created using the following steps:
 
 1. Create the sample block device CR YAML using the following spec. Following is the sample block device CR YAML.
 
@@ -191,7 +191,7 @@ any unsupported device types, the blockdevice resource can be manually created u
         - <link1> # like /dev/disk/by-path/virtio-pci-0000:00:03.0-scsi-0:0:2:0
       nodeAttributes:
         nodeName: <node name> # output of `kubectl get nodes` can be used
-      path: <devpath> # like /dev/dm-0
+      path: <devpath> # like /dev/md0
 
    ```
 
@@ -222,7 +222,7 @@ any unsupported device types, the blockdevice resource can be manually created u
 
    **Note:** The blockdevice CR should be created on the same namespace where openebs is installed.
 
-4. Repeat the same steps for each partitioned device and create blockdevice CR for each device.
+4. Repeat the same steps for each unsupported device and create blockdevice CR for the devices.
 
 5. Verify if the blockdevice is created by running the following `kubectl get blockdevice -n openebs` command.
 
