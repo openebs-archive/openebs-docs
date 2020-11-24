@@ -15,8 +15,40 @@ sidebar_label: NDM
 <hr>
 <br>
 
+[Blockdevices are not detected by NDM](#bd-not-detected)
+
 [Unable to claim blockdevices by NDM operator](#unable-to-claim-blockdevices)
 
+
+<h3><a class="anchor" aria-hidden="true" id="bd-not-detected"></a>Blockdevices are not detected by NDM</h3>
+One additional disk is connected to the node, with multiple partitions on the disk. Some of the partitions have a filesystem and is mounted. `kubectl get bd -n openebs` does not show any blockdevices. Ideally the blockdevice resources for the partitions should have been shown.
+
+```
+NAME   FSTYPE MOUNTPOINT   SIZE
+sda                        1.8T
+├─sda1                     500G
+├─sda2                     500G
+├─sda3                     500G
+└─sda4 ext4   /kubernetes  363G
+sdb                       55.9G
+├─sdb1 vfat   /boot/efi    512M
+└─sdb2 ext4   /           55.4G
+```
+
+**Troubleshooting:**
+
+Check the output of `lsblk` on the node and check the mountpoints of the partitions. By default NDM excludes partitions mounted at `/, /boot` and `/etc/hosts` (which is same as the partition at which kubernetes / docker filesystem exists) and the parent disks of those partitions. In the above example `/dev/sdb` is excluded because of root partitions on that disk. `/dev/sda4` contains the docker filesystem, and hence `/dev/sda` is also excluded.
+
+**Resolution:**
+
+The `ndm-config-map` needs to be edited.
+1. Remove `/etc/hosts` entry from the os-disk-exclude-filter
+2. Add the corresponding docker filesystem partition in exclude section of path filter. eg: `/dev/sda4` 
+3. Restart the NDM daemonset pods.
+
+The blockdevices should now be created for the unused partitions.
+
+<br>
 
 <h3><a class="anchor" aria-hidden="true" id="unable-to-claim-blockdevices"></a>Unable to claim blockdevices by NDM operator</h3>
 BlockDeviceClaims may remain in pending state, even if blockdevices are available in Unclaimed and Active state. The main reason for this will be there are no blockdevices that match the criteria specified in the BlockDeviceClaim. Sometimes, even if the criteria matches the blockdevice may be in an Unclaimed state. 
