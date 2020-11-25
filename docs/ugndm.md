@@ -62,6 +62,7 @@ NDM do some filtering on the disks to exclude, for example boot disk. By default
 /dev/dm -lvm.
 /dev/md -multiple device ( software RAID devices).
 /dev/rbd - ceph RBD devices
+/dev/zd - zfs volumes
 ```
 
 The following is the snippet of NDM configuration file from openebs operator YAML which excludes the provided disks/paths.
