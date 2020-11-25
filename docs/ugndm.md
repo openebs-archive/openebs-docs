@@ -19,7 +19,7 @@ This section provides the operations need to performed by the Admin for configur
 
 [Exclude filters](#Exclude-filters)
 
-[Create blockdevice CRs for partitioned disks](#create-blockdevice-CRs-for-partitioned-disks) 
+[Create blockdevice CRs for unsupported disks](#create-blockdevice-CRs-for-partitioned-disks) 
 
 
 
