@@ -44,7 +44,7 @@ To allow OpenEBS to run in privileged mode in `selinux=on` nodes, the cluster sh
 - *Discover* block devices attached to a Kubernetes Node
   - Discover block devices on startup - create and/or update status.
   - Maintain cluster-wide unique id of the disk using the following scheme:
-    - md5 hash of WWN / PartitionUUID / FileSystemUUID.
+    - md5 hash of WWN / PartitionUUID / FileSystemUUID / DeviceMapperUUID.
 - Detect block device addition/removal from a node and update the status of Block device.
 - Add `blockDevice` as Kubernetes custom resource with following properties:
   - spec: The following will be updated if they are available.
