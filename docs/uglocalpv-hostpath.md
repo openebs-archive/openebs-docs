@@ -124,6 +124,13 @@ You can skip this section if you have already installed OpenEBS.
      helm install --namespace openebs --name openebs openebs/openebs
      ```
 
+### (Optional) Custom Node Labelling
+
+You can use custom node affinity labels instead of hostname in the hostpath provisioner. This
+helps in cases where the hostname changes when the node is removed and added back with the disks
+still intact
+
+
 ## Create StorageClass
 
 You can skip this section if you would like to use default OpenEBS Local PV Hostpath StorageClass created by OpenEBS. 
