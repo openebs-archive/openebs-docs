@@ -49,8 +49,8 @@ This is a list of third-party companies and individuals who provide products or 
 
 ## See Also:
 
-### [Troubleshooting](/docs/next/troubleshooting.html)
+### [Troubleshooting](/v230/docs/next/troubleshooting.html)
 
-### [FAQs](/docs/next/faq.html)
+### [FAQs](/v230/docs/next/faq.html)
 
-### [Latest release notes](/docs/next/releases.html)
+### [Latest release notes](/v230/docs/next/releases.html)

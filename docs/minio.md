@@ -5,7 +5,7 @@ sidebar_label: MinIO
 ---
 ------
 
-<img src="/docs/assets/o-minio.png" alt="OpenEBS and MinIO" style="width:400px;">
+<img src="/v230/docs/assets/o-minio.png" alt="OpenEBS and MinIO" style="width:400px;">
 
 <br>
 
@@ -31,7 +31,7 @@ sidebar_label: MinIO
 
 <br>
 
-<img src="/docs/assets/minio-choose-engine.png" alt="OpenEBS and MinIO" style="width:400px;">
+<img src="/v230/docs/assets/minio-choose-engine.png" alt="OpenEBS and MinIO" style="width:400px;">
 
 <br>
 
@@ -109,7 +109,7 @@ Local PV can be provisioned by following of the options below:
   Customizing the basepath can also be done using the steps provided [here](https://docs.openebs.io/docs/next/uglocalpv.html#configure-hostpath). Using the customized basepath, user can mount the device and use this mounted directory into the basepath field in the StorageClass.
 
   
-  <img src="/docs/assets/svg/Local-PV-standalone-default-minio.svg" alt="OpenEBS and MinIO Standalone localpv hostpath" style="width:400px;">
+  <img src="/v230/docs/assets/svg/Local-PV-standalone-default-minio.svg" alt="OpenEBS and MinIO Standalone localpv hostpath" style="width:400px;">
 
 
   After creating the StorageClass with required information, MinIO application can be launched using Local PV hostpath by running below command:
@@ -128,7 +128,7 @@ Local PV can be provisioned by following of the options below:
   In this case, Local PV volume will be provisioned on the node where the application has scheduled and any of the unclaimed and active blockdevices available on the same node. Local PV devices will use the entire blockdevice for the MinIO application. The blockdevice can be mounted or raw device on the node where your application is scheduled and this blockdevice cannot be used by another application. If there are limited blockdevices attached to some of the nodes, then users can use `nodeSelector` in the application YAML to provision application on a particular node where the available blockdevice is present.
 
   
-  <img src="/docs/assets/svg/Local-PV-standalone-device-minio.svg" alt="OpenEBS and MinIO Standalone localpv device" style="width:400px;">
+  <img src="/v230/docs/assets/svg/Local-PV-standalone-device-minio.svg" alt="OpenEBS and MinIO Standalone localpv device" style="width:400px;">
   
   
   MinIO application can be launched using Local PV device by running below command:
@@ -161,7 +161,7 @@ Local PV can be provisioned by following of the options below:
   Customizing the basepath can also be done using the steps provided [here](https://docs.openebs.io/docs/next/uglocalpv.html#configure-hostpath). Using the customized basepath, user can mount the device and use this mounted directory into the basepath field in the StorageClass.
 
   
-  <img src="/docs/assets/svg/Local-PV-Distributed-hostpath-minio.svg" alt="OpenEBS and MinIO Distributed localpv hostpath" style="width:400px;">
+  <img src="/v230/docs/assets/svg/Local-PV-Distributed-hostpath-minio.svg" alt="OpenEBS and MinIO Distributed localpv hostpath" style="width:400px;">
 
   
   MinIO application can be launched using hostpath based Local PV by running below command:
@@ -180,7 +180,7 @@ Local PV can be provisioned by following of the options below:
   In this case, Local PV volume will be provisioned on the node where the application has scheduled and any of the unclaimed and active blockdevices available on the same node. Local PV devices will use the entire blockdevice for MinIO application. The blockdevice can be mounted or raw device on the node where your application is scheduled and this blockdevice cannot be used by another application. If you have limited blockdevices attached to some nodes, then users can use `nodeSelector` in the application YAML to provision application on a particular node where the available blockdevice is present. Since MinIO is in distributed mode, it requires a minimum of four (4) nodes and a single unclaimed external disk should be attached to each of these four nodes.
   
   
-  <img src="/docs/assets/svg/Local-PV-Distributed-device-minio.svg" alt="OpenEBS and MinIO Distributed localpv device" style="width:400px;">
+  <img src="/v230/docs/assets/svg/Local-PV-Distributed-device-minio.svg" alt="OpenEBS and MinIO Distributed localpv device" style="width:400px;">
   
   
   MinIO application can be launched using device-based Local PV by running below command:
@@ -221,7 +221,7 @@ The cStor volume can be provisioned using the following steps;
 - Creating a cStor StorageClass which uses StoragePoolClaim name created in the previous step, `replicaCount` which defines the number of storage volume replicas and required other [storage policies](https://docs.openebs.io/docs/next/ugcstor.html#cstor-storage-policies). StorageClass be created using the steps provided [here](https://docs.openebs.io/docs/next/ugcstor.html#creating-cStor-storage-class). For example, StorageClass used in this example is `openebs-sc`. Use this SC name in the application deployment command. The replica count mentioned in this StorageClass should be minimum three (3).
 
    
-  <img src="/docs/assets/svg/cstor-standalone-minio.svg" alt="OpenEBS and MinIO standalone cStor " style="width:400px;">
+  <img src="/v230/docs/assets/svg/cstor-standalone-minio.svg" alt="OpenEBS and MinIO standalone cStor " style="width:400px;">
   
  
 - Launch MinIO application using the following command. You may change the StorageClass name as per the one created in the previous step.
@@ -247,7 +247,7 @@ The cStor volume can be provisioned using the following steps.
   The StorageClass uses StoragePoolClaim name created in the previous step, replicaCount, which defines the number of storage volume replicas and other required [storage policies](https://docs.openebs.io/docs/next/ugcstor.html#cstor-storage-policies). StorageClass can be created using the steps provided [here](https://docs.openebs.io/docs/next/ugcstor.html#creating-cStor-storage-class). For example, StorageClass used in this example is `openebs-sc-rep1`. Use this SC name in the application deployment command. The replica count mentioned in this StorageClass is one (1).
    
       
-  <img src="/docs/assets/svg/cstor-distributed-minio.svg" alt="OpenEBS and MinIO Distributed cStor " style="width:400px;">
+  <img src="/v230/docs/assets/svg/cstor-distributed-minio.svg" alt="OpenEBS and MinIO Distributed cStor " style="width:400px;">
    
    
 - Launch MinIO application using the following command. You may change the StorageClass name as per the one created in the previous step.
@@ -285,7 +285,7 @@ The steps for provisioning MinIO application in standalone mode using Jiva volum
   - Use the default Storage pool `default`. The default storage pool will be created on the OS disk using the sparse disk once OpenEBS is installed. For using default Storage Pool, user can simply use default StroageClass `openebs-jiva-default` in the PVC spec of the application.
        
   
-  <img src="/docs/assets/svg/JIVA-standalone-default-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva default " style="width:400px;"> 
+  <img src="/v230/docs/assets/svg/JIVA-standalone-default-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva default " style="width:400px;"> 
    
          
   - Launch MinIO application using the following command. User can include the default StorageClass name in the following command:
@@ -308,7 +308,7 @@ The steps for provisioning MinIO application in standalone mode using Jiva volum
    - Create/use a StorageClass, which uses Jiva Storage pool created with a mounted disk in the previous step. For example, StorageClass used in this example is `openebs-jiva-sc`. Use this SC name in the application deployment command.
      
          
-  <img src="/docs/assets/svg/JIVA-standalone-storage-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva storage pool " style="width:400px;">
+  <img src="/v230/docs/assets/svg/JIVA-standalone-storage-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva storage pool " style="width:400px;">
      
       
    - Launch MinIO application using the following command. You may change the StorageClass name as per the one created in the previous step.
@@ -343,22 +343,22 @@ Currently, cStor CSPC only support volume expansion and this work is under activ
 
 **Monitor cStor Pool size**
 
-In case you are using cStor storage engine, in most of the cases the cStor pool may not be dedicated to just MinIO alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool).
+In case you are using cStor storage engine, in most of the cases the cStor pool may not be dedicated to just MinIO alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/v230/docs/next/ugcstor.html#monitor-pool).
 
 <br>
 <hr>
 
 ## See Also:
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v230/docs/next/usecases.html)
 
-### [Understanding NDM](/docs/next/ugndm.html)
+### [Understanding NDM](/v230/docs/next/ugndm.html)
 
-### [cStor concepts](/docs/next/cstor.html)
+### [cStor concepts](/v230/docs/next/cstor.html)
 
-### [Jiva concepts](/docs/next/jivaguide.html)
+### [Jiva concepts](/v230/docs/next/jivaguide.html)
 
-### [Local PV concepts](/docs/next/localpv.html)
+### [Local PV concepts](/v230/docs/next/localpv.html)
 
 
 

@@ -7,7 +7,7 @@ sidebar_label: Volume Provisioning
 
 <font size="5">General guidelines for troubleshooting</font>
 
-- Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
+- Contact <a href="/v230/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 - Search for similar issues added in this troubleshootiung section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
@@ -62,7 +62,7 @@ This can happen for many reasons.
 - Node is rebooted in adhoc manner (or unscheduled reboot) and Kubernetes is waiting for Kubelet to come backup to know that the node is rebooted and the pods on that node need to be rescheduled. Kubernetes can take upto 30 minutes as timeout before deciding the node does not comebackup and pods need to be rescheduled. During this time, the iSCSI initiator at the application pod has timeout and marked the underlying filesystem as ReadOnly
 - cStor target has lost quorum because of underlying node losses and target has marked the lun as ReadOnly
 
-Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kubernetes node reboots. 
+Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/v230/docs/next/k8supgrades.html) is necessary during Kubernetes node reboots. 
 
 <h3><a class="anchor" aria-hidden="true" id="admission-server-ca"></a>Unable to create persistentVolumeClaim due to certificate verification error</h3>
 
@@ -109,7 +109,7 @@ Make sure the following prerequisites are done.
 1. Verify iSCSI initiator is installed on nodes and services are running. 
 2. Added extra_binds under kubelet service in cluster YAML
 
-More details are mentioned [here](/docs/next/prerequisites.html#rancher).
+More details are mentioned [here](/v230/docs/next/prerequisites.html#rancher).
 
 
 
@@ -543,7 +543,7 @@ systemctl daemon-reload
 service kubelet restart
 ```
 
-To know more about provisioning cStor volume on DigitalOcean<a href="/docs/next/prerequisites.html#do"> click here</a>
+To know more about provisioning cStor volume on DigitalOcean<a href="/v230/docs/next/prerequisites.html#do"> click here</a>
 <hr>
 
 
@@ -586,11 +586,11 @@ To avoid this issue, open the port `5656/tcp` on the nodes that run the OpenEBS 
 
 ## See Also:
 
-### [FAQs](/docs/next/faq.html)
+### [FAQs](/v230/docs/next/faq.html)
 
-### [Seek support or help](/docs/next/support.html)
+### [Seek support or help](/v230/docs/next/support.html)
 
-### [Latest release notes](/docs/next/releases.html)
+### [Latest release notes](/v230/docs/next/releases.html)
 
 <br>
 <hr>
