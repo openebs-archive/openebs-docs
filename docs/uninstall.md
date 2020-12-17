@@ -33,7 +33,10 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl get bdc -n <openebs namespace>
   ```
   
-  If present, remove the finalizer entry from the corresponding BDC.   
+  If present, remove the finalizer entry from the corresponding BDC. To remove the finalizer, use the following command
+  ```
+  kubectl patch -n openebs bdc <bdc-name> -p '{"metadata":{"finalizers":null}}' --type=merge
+  ```
 
 - Ensure that no OpenEBS volume or pool pods are in terminating state . You can check the running status of Pods using the following command.
 
@@ -106,11 +109,17 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl get bd -n <openebs namespace>
   ```
   
-  If present, remove the finalizer entry from the corresponding BD and then delete it.
+  If present, remove the finalizer entry from the corresponding BD and then delete it. To remove the finazlier, use the following command
+  ```
+  kubectl patch -n openebs bd <blockdevice-xxx> -p '{"metadata":{"finalizers":null}}' --type=merge
+  ```
   
 
 - After removing a PVC, you may find a directory `/var/openebs/` on the nodes where the replica was created having some of the volume sub-directory to store metadata info related to the volume, for example `shared-pvc-69adec76-665e-46bc-b957-2b2f58338429-target` with no content. This can be removed manually using the `rm -rf` command once you successfully uninstall the OpenEBS cluster.
 
+
+#### NOTE: 
+An uninstall script is available [here](https://github.com/openebs/charts/blob/gh-pages/scripts/uninstall/uninstall.sh) to perform all the above steps.
 
 ## Deletion of Jiva Volumes
 
