@@ -17,7 +17,7 @@ This guide will help you to set up and use OpenEBS Local Persistent Volumes back
 
 *OpenEBS Local PV Device* volumes have the following advantages compared to native Kubernetes Local Peristent Volumes. 
 - Dynamic Volume provisioner as opposed to a Static Provisioner. 
-- Better management of the Block Devices used for creating Local PVs by OpenEBS NDM. NDM provides capabilities like discovering Block Device properties, setting up Device Pools/Filters, metrics collection and ability to detect if the Block Devices have moved across nodes. 
+- Better management of the Block Devices used for creating Local PVs by OpenEBS NDM. NDM provides capabilities like discovering Block Device properties, setting up Device Filters, metrics collection and ability to detect if the Block Devices have moved across nodes. 
 
 OpenEBS Local PV uses volume topology aware pod scheduling enhancements introduced by [Kubernetes Local Volumes](https://kubernetes.io/docs/concepts/storage/volumes/#local)
 
