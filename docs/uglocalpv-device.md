@@ -218,7 +218,7 @@ The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolu
    metadata:
      name: local-device-pvc
    spec:
-     storageClassName: openebs-device
+     storageClassName: local-device
      accessModes:
        - ReadWriteOnce
      resources:
@@ -242,7 +242,7 @@ The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolu
 
    <div class="co">
    NAME               STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS     AGE
-   local-device-pvc   Pending                                      openebs-device   31s
+   local-device-pvc   Pending                                      local-device   31s
    </div>
 
 ### Using Raw Block Volume
@@ -255,7 +255,7 @@ By default, Local PV volume will be provisioned with volumeMode as filesystem. I
    metadata:
      name: local-device-pvc-block
    spec:
-     storageClassName: openebs-device
+     storageClassName: local-device
      volumeMode: Block
      accessModes:
        - ReadWriteOnce
@@ -342,7 +342,7 @@ By default, Local PV volume will be provisioned with volumeMode as filesystem. I
 
    <div class="co">
    NAME               STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS     AGE
-   local-device-pvc   Bound    pvc-79d25095-eb1f-4028-9843-7824cb82f07f   5G         RWO            openebs-device   5m56s
+   local-device-pvc   Bound    pvc-79d25095-eb1f-4028-9843-7824cb82f07f   5G         RWO            local-device   5m56s
    </div>
 
 6. Look at the PersistentVolume details to see where the data is stored. Replace the PVC name with the one that was displayed in the previous step. 
@@ -385,7 +385,7 @@ By default, Local PV volume will be provisioned with volumeMode as filesystem. I
              values:
              - gke-kmova-helm-default-pool-92abeacf-89nd
      persistentVolumeReclaimPolicy: Delete
-     storageClassName: openebs-device
+     storageClassName: local-device
      volumeMode: Filesystem
    status:
      phase: Bound
