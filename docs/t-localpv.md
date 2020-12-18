@@ -21,6 +21,7 @@ sidebar_label: LocalPV
 
 [Stale BDC in pending state after PVC is deleted](#stale-bdc-after-pvc-deletion)
 
+[BDC created by localPV in pending state](#bdc-by-localpv-pending-state)
 
 <h3><a class="anchor" aria-hidden="true" id="pvc-in-pending-state"></a>PVC in Pending state</h3>
 Created a PVC using localpv-device / localpv-hostpath storage class. But the PV is not created and PVC in Pending state.
@@ -74,7 +75,66 @@ kubectl edit bdc <bdc-name> -n openebs
 kubectl delete bdc <bdc-name> -n openebs
 ```
 
+<br>
 
+<h3><a class="anchor" aria-hidden="true" id="bdc-by-localpv-pending-state"></a>BDC created by localPV in pending state</h3>
+The BDC created by localpv provisioner (bdc-pvc-xxxx) remains in pending state and PVC does not get Bound
+
+**Troubleshooting:**
+Describe the BDC to check the events recorded on the resource
+```
+kubectl describe bdc bdc-pvc-xxxx -n openebs
+```
+
+The following are different types of messages shown when the node on which localpv application pod is scheduled, does not have a blockdevice available.
+
+1. No blockdevices found
+```
+Warning  SelectionFailed  14m (x25 over 16m)    blockdeviceclaim-operator  no blockdevices found
+```
+It means that there were no matching blockdevices after listing based on the labels. Check if there is any `block-device-tag` on the storage class and corresponding tags are available on the blockdevices also
+
+2. No devices with matching criteria
+```
+Warning  SelectionFailed  6m25s (x18 over 11m)  blockdeviceclaim-operator  no devices found matching the criteria
+```
+It means that the there are no devices for claiming after filtering based on filesystem type and node name. Make sure the blockdevices on the node
+have the correct filesystem as mentioned in the storage class (default is `ext4`)
+
+3. No devices with matching resource requirements
+```
+Warning  SelectionFailed  85s (x74 over 11m)    blockdeviceclaim-operator  could not find a device with matching resource requirements
+```
+It means that there are no devices available on the node with a matching capacity requirement.
+
+**Resolution**
+
+To schedule the application pod to a node, which has the blockdevices available, a node selector can be used on the application pod. Here the node with hostname `svc1` has blockdevices available, so a node selector is used to schedule the pod to that node.
+
+Example:
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+spec:
+  volumes:
+  - name: local-storage
+    persistentVolumeClaim:
+      claimName: pvc1
+  containers:
+  - name: hello-container
+    image: busybox
+    command:
+       - sh
+       - -c
+       - 'while true; do echo "`date` [`hostname`] Hello from OpenEBS Local PV." >> /mnt/store/greet.txt; sleep $(($RANDOM % 5 + 300)); done'
+    volumeMounts:
+    - mountPath: /mnt/store
+      name: local-storage
+  nodeSelector:
+    kubernetes.io/hostname: svc1
+```
 
 <br>
 
