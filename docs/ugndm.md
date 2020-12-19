@@ -1,6 +1,6 @@
 ---
 id: ugndm
-title: Node Device Manager User Guide
+title: Node Disk Manager User Guide
 sidebar_label: NDM
 ---
 ------

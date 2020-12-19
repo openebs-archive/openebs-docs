@@ -110,7 +110,7 @@ For those applications that do not need storage level replication, LocalPV may b
 
 
 
-## Node Device Manager<a name="NDM"></a>
+## Node Disk Manager<a name="NDM"></a>
 
 ------
 
