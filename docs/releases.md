@@ -8,9 +8,80 @@ sidebar_label: Releases
 
 <br>
 
-## 2.3.0 - Nov 15 2020
+## 2.4.0 - Dec 15 2020
 
 <br><font size="4">Latest Release</font><br/> (Recommended)<br/>
+
+### New capabilities
+- ZFS Local PV has now been graduated to stable with all the supported features and upgrade tests automated via e2e testing. ZFS Local PV is best suited for distributed workloads that require resilient local volumes that can sustain local disk failures. You can read more about using the ZFS Local volumes at https://github.com/openebs/zfs-localpv and check out how ZFS Local PVs are used in production at [Optoro](https://github.com/openebs/openebs/blob/master/adopters/optoro/README.md).
+
+- OpenEBS is introducing a new NFS dynamic provisioner to allow the creation and deletion of NFS volumes using Kernel NFS backed by block storage. This provisioner is being actively developed and released as alpha. This new provisioner allows users to provision OpenEBS RWX volumes where each volume gets its own NFS server instance. In the previous releases, OpenEBS RWX volumes were supported via the [Kubernetes NFS Ganesha and External Provisioner](https://docs.openebs.io/docs/next/rwm.html) - where multiple RWX volumes share the same NFS Ganesha Server. You can read more about the new OpenEBS Dynamic Provisioner at https://github.com/openebs/dynamic-nfs-provisioner.
+
+
+### Key Improvements
+
+- Added support for specifying a custom node affinity label for OpenEBS Local Hostpath volumes. By default, OpenEBS Local Hostpath volumes use `kubenetes.io/hostname` for setting the PV Node Affinity. Users can now specify a custom label to use for PV Node Affinity. Custom node affinity can be specified in the Local PV storage class as follows: 
+  ```
+  kind: StorageClass
+  metadata:
+    name: openebs-hostpath
+    annotations:
+      openebs.io/cas-type: local
+      cas.openebs.io/config: |
+        - name: StorageType
+          value: "hostpath"
+        - name: NodeAffinityLabel
+          value: "openebs.io/custom-node-id"
+  provisioner: openebs.io/local
+  volumeBindingMode: WaitForFirstConsumer
+  reclaimPolicy: Delete
+  ```
+  This will help with use cases like:
+  - Deployments where `kubenetes.io/hostname` is not unique across the cluster (Ref: https://github.com/openebs/openebs/issues/2875)
+  - Deployments, where an existing Kubernetes node in the cluster running Local volumes is replaced with a new node, and storage attached to the old node, is moved to a new node. Without this feature, the Pods using the older node will remain in the pending state.  
+- Added a configuration option to the Jiva volume provisioner to skip adding replica node affinity. This will help in deployments where replica nodes are frequently replaced with new nodes causing the replica to remain in the pending state. The replica node affinity should be used in cases where replica nodes are not replaced with new nodes or the new node comes back with the same node-affinity label. (Ref: https://github.com/openebs/openebs/issues/3226). The node affinity for jiva volumes can be skipped by specifying the following ENV variable in the OpenEBS Provisioner Deployment. 
+   ```
+        - name: OPENEBS_IO_JIVA_PATCH_NODE_AFFINITY
+          value: "disabled"
+   ```
+- Enhanced OpenEBS Velero plugin (cStor) to automatically set the target IP once the cStor volumes is restored from a backup.  (Ref: https://github.com/openebs/velero-plugin/pull/131). This feature can be enabled by updating the VolumeSnapshotLocal using `configuration option autoSetTargetIP` as follows:
+  ```
+  apiVersion: velero.io/v1
+  kind: VolumeSnapshotLocation
+  metadata:
+    ...
+  spec:
+    config:
+      ...
+      ...
+      autoSetTargetIP: "true"
+  ```
+  (Huge thanks to @zlymeda for working on this feature which involved co-ordinating this fix across multiple repositories).
+- Enhanced the OpenEBS Velero plugin used to automatically create the target namespace during restore, if the target namespace doesn't exist. (Ref: https://github.com/openebs/velero-plugin/issues/137).
+- Enhanced the OpenEBS helm chart to support Image pull secrets. https://github.com/openebs/charts/pull/174
+- Enhance OpenEBS helm chart to allow specifying resource limits on OpenEBS control plane pods. https://github.com/openebs/charts/issues/151
+- Enhanced the NDM filters to support discovering LVM devices both with `/dev/dm-X` and `/dev/mapper/x` patterns. (Ref: https://github.com/openebs/openebs/issues/3310).
+
+### Key Bug Fixes
+
+- Fixed an issue that was causing Jiva Target to crash due to fetching stats while there was an ongoing IO. (Ref: https://github.com/openebs/jiva/pull/334). 
+- Fixed an issue where Jiva volumes failed to start if PodSecurityPolicies were setup. (Ref: https://github.com/openebs/openebs/issues/3305). 
+- Fixed an issue where helm chart `--dry-run` would fail due to admission webhook checks. (Ref: https://github.com/openebs/maya/issues/1771). 
+- Fixed an issue where NDM would fail to discover block devices on encountering an issue with block device, even if there were other good devices on the node. (Ref: https://github.com/openebs/openebs/issues/3051).
+- Fixed an issue where NDM failed to detect OS disk on `cos` nodes, where the root partition entry was set as `root=/dev/dm-0`. (Ref: https://github.com/openebs/node-disk-manager/pull/516). 
+
+### Backward Incompatibilities
+
+- Velero has updated the configuration for specifying a different node selector during restore. The configuration changes from `velero.io/change-pvc-node` to `velero.io/change-pvc-node-selector`. ( Ref: https://github.com/openebs/velero-plugin/pull/139)
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.4.0)
+- [Upgrade Steps](/docs/next/upgrade.html)
+
+
+<br>
+
+## 2.3.0 - Nov 15 2020
 
 ### New capabilities
 
@@ -38,7 +109,7 @@ sidebar_label: Releases
 
 
 **Additional details:**
-- [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.2.0)
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.3.0)
 - [Upgrade Steps](/docs/next/upgrade.html)
 
 <br>
