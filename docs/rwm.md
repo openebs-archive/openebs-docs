@@ -1,11 +1,19 @@
 ---
 id: rwm
-title: Provisioning Read-Write-Many (RWM) PVCs
-sidebar_label: Read-Write-Many (RWM)
+title: Provisioning Read-Write-Many (RWX) PVCs
+sidebar_label: Read-Write-Many (RWX)
 ---
 ------
 
-NFS server provisioner stable helm chart is widely used for deploying NFS servers on Kubernetes cluster. This server provides PVCs in RWM mode so that multiple web applications can access the data in a shared fashion. OpenEBS cStor volumes are used as persistent backend storage for these nfs servers to provide a scalable and manageable RWM shared storage solution. 
+NFS server provisioner stable helm chart is widely used for deploying NFS servers on Kubernetes cluster. This server provides PVCs in RWX mode so that multiple web applications can access the data in a shared fashion. OpenEBS cStor volumes are used as persistent backend storage for these nfs servers to provide a scalable and manageable RWX shared storage solution. 
+
+:::note OpenEBS Dynamic NFS Provisioner
+OpenEBS includes an alpha version of OpenEBS Dynamic NFS provisioner that allows users to create an NFS PV that sets up an new Kernel NFS instance for each PV on top of users choice of backend storage. 
+
+This project is currently under active development. For getting started and getting involved in developing this project, check out https://github.com/openebs/dynamic-nfs-provisioner.
+
+The rest of this document contains instructions about the NFS server provisioner maintained by the Kubernetes SIGs community.
+:::
 
 
 
@@ -74,7 +82,7 @@ An example helm install command is
 helm install stable/nfs-server-provisioner --namespace=nfs-wp-provisioner --name=openebs-nfs-wordpress --set=persistence.enabled=true,persistence.storageClass=openebs-cstor-disk,persistence.size=5Gi,storageClass.name=wordpress-nfs-sc1,storageClass.provisionerName=openebs.io/nfs
 ```
 
-**Note:**  It is recommended that the OpenEBS storage class specifies 10% more space than what is required by the RWM PVC. For example, if RWM PVC requires 100G, then provision cStor volume with 110G.
+**Note:**  It is recommended that the OpenEBS storage class specifies 10% more space than what is required by the RWX PVC. For example, if RWX PVC requires 100G, then provision cStor volume with 110G.
 
 <br>
 
