@@ -14,9 +14,9 @@ This tutorial provides detailed instructions to run a Percona XtraDB Cluster (PX
 
 The Percona XtraDB Cluster (PXC) is a fully open-source high-availability solution for MySQL. It integrates Percona Server for MySQL and Percona XtraBackup with the Galera library to enable synchronous multi-master replication. A cluster consists of nodes, where each node contains the same set of data synchronized across nodes. The recommended configuration is to have at least three nodes. Each node is a regular Percona Server for MySQL instances. 
 
-Percona XtraDB Cluster can be provisioned with OpenEBS volumes using OpenEBS storage engines OpenEBS Local PV.
+Percona XtraDB Cluster can be provisioned with OpenEBS volumes using OpenEBS storage engine- OpenEBS Local PV.
 
-Depending on the performance and high availability requirements of Percona, you can select to run Percona with the following deployment options:
+Depending on the performance and high availability requirements of Percona, you can select any of the storage engine to run Percona with the following deployment options:
 
 For optimal performance, deploy Percona PXC with OpenEBS Local PV. If you would like to use storage layer capabilities like high availability, snapshots, incremental backups and restore and so forth, you can select OpenEBS cStor. 
 
@@ -26,7 +26,7 @@ For optimal performance, deploy Percona PXC with OpenEBS Local PV. If you would 
 
 <br>
 
-<img src="/docs/assets/svg/percona-deployment.svg" alt="OpenEBS and Percona" style="width:100%;">
+<img src="/docs/assets/svg/percona-deployment-new.svg" alt="OpenEBS and Percona" style="width:100%;">
 
 As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration works fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
 
@@ -62,6 +62,8 @@ In this tutorial, OpenEBS Local PV device has been used as the storage engine fo
   
 - `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a Cassandra node. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](https://docs.openebs.io/docs/next/ugndm.html). 
 
+The Storage Class `openebs-device` has been chosen to deploy PXC in the Kubernetes cluster.
+
 ### Install the Percona XtraDB Cluster operator
 ```
 $ git clone -b v1.6.0 https://github.com/percona/percona-xtradb-cluster-operator
@@ -81,7 +83,6 @@ In this document, we have made changes in the storage section for PXC and the mo
 
 Changes done in the Storage section for PXC: 
 
-
 Update Storage Class name and required storage parameters in deploy/cr.yaml. In this example, we have updated 
 ```
 spec.pxc.volumeSpec.persistentVolumeClaim.storageClassName as “openebs-device” and 
@@ -97,6 +98,8 @@ Sample snippet:
           requests:
             storage: 100Gi
 ```
+**Note:** Ensure you have 100Gi is attached with each Node. Else, provide the storage capacity as per the capacity of the available disk. 
+
 Changes done in the Monitoring section for PMM:
 
 Enable monitoring service and server user name. In this example, we have updated 
@@ -115,9 +118,9 @@ The following is the sample snippet of PVC spec of Percona XtraDB where the Stor
 
 ### Install the Percona XtraDB Cluster
 
-There is a dependency if you are enabling a monitoring service(PMM) for your PXC. In this case, you must install the PMM server  using the following command before installing PXC. We have used Percona blog to enable the monitoring service.
+There is a dependency if you are enabling a monitoring service(PMM) for your PXC. In this case, you must install the PMM server using the following command before installing PXC. We have used Percona [blog](https://www.percona.com/blog/2020/07/23/using-percona-kubernetes-operators-with-percona-monitoring-and-management/) to enable the monitoring service.
 
-Use helm to install PMM Server
+#### Use Helm to install PMM Server
 
 Using helm, add the Percona chart repository and update the information for the available charts as follows:
 ```
@@ -125,7 +128,7 @@ $ helm repo add percona https://percona-charts.storage.googleapis.com
 $ helm repo update
 $ helm install monitoring percona/pmm-server --set platform=kubernetes --version 2.7.0 --set "credentials.password=test123" 
 ```
-**Note:** In this document, we have used “test123” as the PMM server credential password and base64 encoded form is “dGVzdDEyMw==”. This encoded value will be added in one of the secrets while installing the PXC cluster and when accessing the performance benchmark task.
+**Note:** In this document, we have used “test123” as the PMM server credential password and the base64 encoded form of this password is “dGVzdDEyMw==”. This encoded value will be added in one of the secrets while installing the PXC cluster and also while running the performance benchmark task.
 
 Now, verify PMM server pod is installed and running.
 ```
@@ -133,11 +136,11 @@ $ kubectl get pod
 NAME                                               READY   STATUS    RESTARTS   AGE
 monitoring-0                                       1/1     Running   0          70m
 ```
-In the previous section, we have made the required changes on the CR YAML spec. Let’s install the PXC cluster using the following command.
+In the previous section, we have made the required changes on the CR YAML spec. Let’s install the PXC cluster using the following command. Ensure your current directory is the cloned Percona directory.
 ```
 $ kubectl apply -f deploy/cr.yaml
 ```
-After applying the above command, you may see that cluster1-pxc-0 pod started in CreateContainerConfigError state. 
+After applying the above command, you may see that cluster1-pxc-0 pod started in `CreateContainerConfigError` state. 
 ```
 $  kubectl get pod
 NAME                                               READY   STATUS                       RESTARTS   AGE
@@ -159,7 +162,7 @@ my-cluster-ssl-internal                       kubernetes.io/tls                 
 percona-xtradb-cluster-operator-token-v82b5   kubernetes.io/service-account-token   3      3h50m
 sh.helm.release.v1.monitoring.v1              helm.sh/release.v1                    1      107m
 ```
-Let’s edit the secret internal-cluster1 using the following command and add pmmserver value as per the given credential password during PMM server installation time. In this example, we have added  pmmserver: dGVzdDEyMw==  in the secret internal-cluster1. 
+Let’s edit the secret `internal-cluster1` using the following command and add `pmmserver` value as per the given credential password during PMM server installation time. In this example, we have added  `pmmserver: dGVzdDEyMw==`  in the secret `internal-cluster1`. 
 
 ```
 $ kubectl edit secret internal-cluster1
@@ -177,7 +180,6 @@ data:
   xtrabackup: MmVGSGsyWTlJdk44ZUlmQXlnYQ==
 kind: Secret
 ```
-
 
 Now, verify that all required components are installed and running successfully.
 ```
@@ -235,7 +237,7 @@ data:
 kind: Secret
 ```
 
-Now, get the encoded information of the data named as root. It is given as “WnV2cFNiRGU4UWhpWjNmd1Y=”. The decoded value can be found using the following method.
+Now, get the encoded information of the data named as `root`. It is given as “WnV2cFNiRGU4UWhpWjNmd1Y=”. The decoded value can be found using the following method.
 
 ```
 $ echo 'WnV2cFNiRGU4UWhpWjNmd1Y=' | base64 -d
