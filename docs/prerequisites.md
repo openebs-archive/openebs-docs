@@ -487,6 +487,7 @@ services:
     - "/var/lib/iscsi:/var/lib/iscsi"
     - "/lib/modules"
     - "/var/openebs/local:/var/openebs/local"
+    - "/usr/lib64/libcrypto.so.10:/usr/lib/libcrypto.so.10"
 ```
 
 In the above snippet, default hostpath for Local PV (/var/openebs/local), which will be created on the worker node using `openebs-hostpath` StorageClass, is added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `openebs-hostpath` volume.
@@ -516,6 +517,7 @@ services:
   kubelet:
     extra_binds:
     - "/var/openebs/local:/var/openebs/local"
+    - "/usr/lib64/libcrypto.so.10:/usr/lib/libcrypto.so.10"
 ```
 
 In the above snippet, default hostpath for Local PV (/var/openebs/local), which will be created on the worker node using `openebs-hostpath` StorageClass, is added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `openebs-hostpath` volume.
