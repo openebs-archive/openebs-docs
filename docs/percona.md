@@ -8,16 +8,11 @@ sidebar_label: Percona
 <img src="/docs/assets/o-percona.png" alt="OpenEBS and Percona" style="width:400px;">
 
 
-This tutorial provides detailed instructions to run a Percona XtraDB Cluster (PXC)  with OpenEBS storage and perform some simple database operations to verify the successful deployment and it's performance benchmark.
-
 ## Introduction
 
 The Percona XtraDB Cluster (PXC) is a fully open-source high-availability solution for MySQL. It integrates Percona Server for MySQL and Percona XtraBackup with the Galera library to enable synchronous multi-master replication. A cluster consists of nodes, where each node contains the same set of data synchronized across nodes. The recommended configuration is to have at least three nodes. Each node is a regular Percona Server for MySQL instances. 
 
-Percona XtraDB Cluster can be provisioned with OpenEBS volumes using OpenEBS storage engine- OpenEBS Local PV.
-
-Depending on the performance and high availability requirements of Percona, you can select any of the storage engine to run Percona with the following deployment options:
-
+Percona XtraDB Cluster can be provisioned with OpenEBS volumes using OpenEBS storage engine- OpenEBS Local PV. Depending on the performance and high availability requirements of Percona, you can select any of the storage engine to run Percona with the following deployment options:
 For optimal performance, deploy Percona PXC with OpenEBS Local PV. If you would like to use storage layer capabilities like high availability, snapshots, incremental backups and restore and so forth, you can select OpenEBS cStor. 
 
 <br>
@@ -28,7 +23,7 @@ For optimal performance, deploy Percona PXC with OpenEBS Local PV. If you would 
 
 <img src="/docs/assets/svg/percona-deployment-new.svg" alt="OpenEBS and Percona" style="width:100%;">
 
-As shown above, OpenEBS volumes need to be configured with three replicas for high availability. This configuration works fine when the nodes (hence the cStor pool) is deployed across Kubernetes zones.
+This tutorial provides detailed instructions to run a Percona XtraDB Cluster(PXC) with OpenEBS Local PV and perform some simple database operations to verify the successful deployment and it's performance benchmark.
 
 <br>
 
@@ -42,7 +37,6 @@ As shown above, OpenEBS volumes need to be configured with three replicas for hi
 6. Install the Percona XtraDB Cluster
 7. Access Percona MySQL database
 8. Run performance benchmark
-
 
 <br>
 
@@ -58,9 +52,9 @@ A storage engine is the data plane component of the IO path of a Persistent Volu
 
 In this tutorial, OpenEBS Local PV device has been used as the storage engine for deploying Percona PXC. There are 2 ways to use OpenEBS Local PV.
 
-- `openebs-hostpath` - Using this option, it will create Kubernetes Persistent Volumes that will store the data into OS host path directory at: /var/openebs/<cassandra-pv>/. Select this option, if you don’t have any additional block devices attached to Kubernetes nodes. You would like to customize the directory where data will be saved, create a new OpenEBS Local PV storage class using these [instructions](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass). 
+- `openebs-hostpath` - Using this option, it will create Kubernetes Persistent Volumes that will store the data into OS host path directory at: /var/openebs/<percona-pv>/. Select this option, if you don’t have any additional block devices attached to Kubernetes nodes. You would like to customize the directory where data will be saved, create a new OpenEBS Local PV storage class using these [instructions](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass). 
   
-- `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a Cassandra node. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](https://docs.openebs.io/docs/next/ugndm.html). 
+- `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a Percona node. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](https://docs.openebs.io/docs/next/ugndm.html). 
 
 The Storage Class `openebs-device` has been chosen to deploy PXC in the Kubernetes cluster.
 
@@ -77,11 +71,11 @@ NAME                                               READY   STATUS    RESTARTS   
 percona-xtradb-cluster-operator-749b86b678-8f4q5   1/1     Running   0          23s
 ```
 
-Update Storage and Monitoring specification
+#### Update Storage and Monitoring specification
 
 In this document, we have made changes in the storage section for PXC and the monitoring section PMM.
 
-Changes done in the Storage section for PXC: 
+##### Changes done in the Storage section for PXC: 
 
 Update Storage Class name and required storage parameters in deploy/cr.yaml. In this example, we have updated 
 ```
@@ -100,7 +94,7 @@ Sample snippet:
 ```
 **Note:** Ensure you have 100Gi is attached with each Node. Else, provide the storage capacity as per the capacity of the available disk. 
 
-Changes done in the Monitoring section for PMM:
+###### Changes done in the Monitoring section for PMM:
 
 Enable monitoring service and server user name. In this example, we have updated 
 ```
@@ -377,9 +371,6 @@ root@sysbench-client:/sysbench# sysbench oltp_read_write --tables=10 --table_siz
 
 ### [OpenEBS Local PV Device User Guide](/docs/next/uglocalpv-device.html)
 
-
-
-<br>
 
 <hr>
 
