@@ -488,6 +488,7 @@ services:
     - "/lib/modules"
     - "/var/openebs/local:/var/openebs/local"
     - "/usr/lib64/libcrypto.so.10:/usr/lib/libcrypto.so.10"
+    - "/usr/lib64/libopeniscsiusr.so.0.2.0:/usr/lib/libopeniscsiusr.so.0.2.0"
 ```
 
 In the above snippet, default hostpath for Local PV (/var/openebs/local), which will be created on the worker node using `openebs-hostpath` StorageClass, is added under `extra_binds`. This configuration will help to create default hostpath directory on worker node for provisioning `openebs-hostpath` volume.
