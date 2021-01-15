@@ -502,7 +502,7 @@ If you encounter issues or have a question, file an [Github issue](https://githu
 
 ## See Also:
 
-### [Understand OpenEBS Local PVs ](/docs/next/localpv.html)
+### [Understand OpenEBS Local PVs ](/v240/docs/next/localpv.html)
 
 
 <br>
