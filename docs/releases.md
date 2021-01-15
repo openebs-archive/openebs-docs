@@ -8,9 +8,67 @@ sidebar_label: Releases
 
 <br>
 
-## 2.4.0 - Dec 15 2020
+## 2.5.0 - Jan 15 2021
 
 <br><font size="4">Latest Release</font><br/> (Recommended)<br/>
+
+### New capabilities
+
+- OpenEBS has support for multiple storage engines, and the feedback from users has shown that users tend to only use a few of these engines on any given cluster depending on the workload requirements. As a way to provide more flexibility for users, we are introducing separate helm charts per engine. With OpenEBS 2.5 the following helm charts are supported. 
+  * [openebs](https://openebs.github.io/charts/) - This is the most widely deployed that has support for Jiva, cStor, and Local PV hostpath and device volumes. 
+  * [zfs-localpv](https://openebs.github.io/zfs-localpv/) - Helm chart for ZFS Local PV CSI driver.
+  * [cstor-operators](https://openebs.github.io/cstor-operators/) - Helm chart for cStor CSPC Pools and CSI driver.
+  * [dynamic-localpv-provisioner](https://openebs.github.io/dynamic-localpv-provisioner/) - Helm chart for only installing Local PV hostpath and device provisioners. 
+  
+  (Special shout out to @sonasingh46, @shubham14bajpai, @prateekpandey14, @xUnholy, @akhilerm for continued efforts in helping to build the above helm charts.)
+ 
+- OpenEBS is introducing a new CSI driver for dynamic provisioning to Kubernetes Local Volumes backed by LVM. This driver is released as alpha and currently supports the following features. 
+   * Create and Delete Persistent Volumes 
+   * Resize Persistent Volume
+   
+  For instructions on how to set up and use the LVM CSI driver, please see. https://github.com/openebs/lvm-localpv 
+
+
+### Key Improvements
+
+- Enhanced the ZFS Local PV scheduler to support spreading the volumes across the nodes based on the capacity of the volumes that are already provisioned. After upgrading to this release, capacity-based spreading will be used by default. In the previous releases, the volumes were spread based on the number of volumes provisioned per node. https://github.com/openebs/zfs-localpv/pull/266.
+
+- Added support to configure image pull secrets for the pods launched by OpenEBS Local PV Provisioner and cStor (CSPC) operators. The image pull secrets (comma separated strings) can be passed as an environment variable (OPENEBS_IO_IMAGE_PULL_SECRETS) to the deployments that launch these additional pods.  The following deployments need to be updated. 
+  * For Local PVs, the deployments `openebs-localpv-provisioner` and `openebs-ndm-operator`
+  * For cStor CSI based PVs, the deployments `cspc-operator` and `cvc-operator`
+  (Special thanks to @allenhaozi for helping with this fix. https://github.com/openebs/dynamic-localpv-provisioner/pull/22)
+
+- Added support to allow users to specify custom node labels for allowedTopologies under the cStor CSI StorageClass. https://github.com/openebs/cstor-csi/pull/135
+
+### Key Bug Fixes
+- Fixed an issue that could cause Jiva replica to fail to initialize if there was an abrupt shutdown of the node where the replica pod is scheduled during the Jiva replica initialization. https://github.com/openebs/jiva/pull/337.
+- Fixed an issue that was causing Restore (with automatic Target IP configuration enabled) to fail if cStor volumes are created with Target Affinity with application pod. https://github.com/openebs/velero-plugin/issues/141.
+- Fixed an issue where Jiva and cStor volumes will remain in `pending` state on Kubernetes 1.20 and above clusters. K8s 1.20 has deprecated `SelfLink` option which causes this failure with older Jiva and cStor Provisioners. https://github.com/openebs/openebs/issues/3314
+- Fixed an issue with cStor CSI Volumes that caused the Pods using cStor CSI Volumes on unmanaged Kubernetes clusters to remain in the pending state due to multi-attach error. This was caused due to cStor being dependent on the CSI VolumeAttachment object to determine where to attach the volume. In the case of unmanaged Kubernetes clusters, the VolumeAttachment object was not cleared by Kubernetes from the failed node and hence the cStor would assume that volume was still attached to the old node. 
+
+### Backward Incompatibilities
+
+- Kubernetes 1.17 or higher release is recommended as this release contains the following updates that will not be compatible with older Kubernetes releases. 
+  * The CRD version has been upgraded to `v1`. (Thanks to the efforts from @RealHarshThakur, @prateekpandey14, @akhilerm)
+  * The CSI components have been upgraded to: 
+     * quay.io/k8scsi/csi-node-driver-registrar:v2.1.0
+     * quay.io/k8scsi/csi-provisioner:v2.1.0
+     * quay.io/k8scsi/snapshot-controller:v4.0.0
+     * quay.io/k8scsi/csi-snapshotter:v4.0.0
+     * quay.io/k8scsi/csi-resizer:v1.1.0
+     * quay.io/k8scsi/csi-attacher:v3.1.0
+     * k8s.gcr.io/sig-storage/csi-snapshotter:v3.0.3 (for cStor CSI volumes)
+     * k8s.gcr.io/sig-storage/snapshot-controller:v3.0.3 (for cStor CSI volumes)
+
+- If you are upgrading from an older version of cStor Operators to this version, you will need to manually delete the cstor CSI driver object prior to upgrade. `kubectl delete csidriver cstor.csi.openebs.io`. For complete details on how to upgrade your cStor Operators, see https://github.com/openebs/upgrade/blob/master/docs/upgrade.md#cspc-pools.
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.5.0)
+- [Upgrade Steps](/docs/next/upgrade.html)
+
+<br>
+
+## 2.4.0 - Dec 15 2020
 
 ### New capabilities
 - ZFS Local PV has now been graduated to stable with all the supported features and upgrade tests automated via e2e testing. ZFS Local PV is best suited for distributed workloads that require resilient local volumes that can sustain local disk failures. You can read more about using the ZFS Local volumes at https://github.com/openebs/zfs-localpv and check out how ZFS Local PVs are used in production at [Optoro](https://github.com/openebs/openebs/blob/master/adopters/optoro/README.md).
