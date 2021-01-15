@@ -13,7 +13,8 @@ sidebar_label: Percona
 The Percona XtraDB Cluster (PXC) is a fully open-source high-availability solution for MySQL. It integrates Percona Server for MySQL and Percona XtraBackup with the Galera library to enable synchronous multi-master replication. A cluster consists of nodes, where each node contains the same set of data synchronized across nodes. The recommended configuration is to have at least three nodes. Each node is a regular Percona Server for MySQL instances. 
 
 Percona XtraDB Cluster can be provisioned with OpenEBS volumes using OpenEBS storage engine- OpenEBS Local PV. Depending on the performance and high availability requirements of Percona, you can select any of the storage engine to run Percona with the following deployment options:
-For optimal performance, deploy Percona PXC with OpenEBS Local PV. If you would like to use storage layer capabilities like high availability, snapshots, incremental backups and restore and so forth, you can select OpenEBS cStor. 
+- For optimal performance, deploy Percona PXC with OpenEBS Local PV. 
+- If you would like to use storage layer capabilities like high availability, snapshots, incremental backups and restore and so forth, you can select OpenEBS cStor. 
 
 <br>
 
@@ -46,7 +47,7 @@ If OpenEBS is not installed in your K8s cluster, this can be done from [here](ht
 
 ### Select OpenEBS storage engine
 
-A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and chooses the right engine that suits your type of application requirements and storage available on your Kubernetes nodes. More information can be read from [here](https://docs.openebs.io/docs/next/overview.html#openebs-storage-engines).
+A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines. Choose the right engine that suits your type of application requirements and storage available on your Kubernetes nodes. More information can be read from [here](https://docs.openebs.io/docs/next/overview.html#openebs-storage-engines).
 
 ### Configure OpenEBS Local PV StorageClass
 
@@ -77,7 +78,7 @@ In this document, we have made changes in the storage section for PXC and the mo
 
 ##### Changes done in the Storage section for PXC: 
 
-Update Storage Class name and required storage parameters in deploy/cr.yaml. In this example, we have updated 
+Update Storage Class name and required storage parameters in deploy/cr.yaml. In this example, we have updated the following parameters: 
 ```
 spec.pxc.volumeSpec.persistentVolumeClaim.storageClassName as “openebs-device” and 
 spec.pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage as “100Gi”
@@ -96,12 +97,12 @@ Sample snippet:
 
 ###### Changes done in the Monitoring section for PMM:
 
-Enable monitoring service and server user name. In this example, we have updated 
+Enable monitoring service and server user name. In this example, we have updated the following parameters:
 ```
 spec.pmm.enabled as “true”
 spec.pmm.serverUser as “admin”  
 ```
-The following is the sample snippet of PVC spec of Percona XtraDB where the Storage Class name and storage capacity has been changed.
+The following is the sample snippet of PMM spec of Percona XtraDB where we enabled monitoring feature and updated the PMM server username.
 ```
   pmm:
     enabled: true
@@ -341,23 +342,23 @@ Run the following tests from the SysBench pod.
 
 Ensure the same database has already been created before running the tests. In this example, we have created a database called “sbtest” in the previous section and used it in the performance benchmark tests. Please remember to use the corresponding MySQL password throughout the performance benchmark tests. 
 ```
-root@sysbench-client:/sysbench# sysbench oltp_write_only --tables=10 --table_size=1000000 --threads=56 --mysql-port=3306 --mysql-db=sbtest --mysql-host=cluster1-pxc --mysql-user=root --mysql-password=ZuvpSbDe8QhiZ3fwV prepare
+root@sysbench-client:/sysbench# sysbench oltp_read_only --tables=10 --table_size=1000000 --mysql-port=3306 --mysql-db=sbtest --mysql-host=cluster1-pxc --mysql-user=root --mysql-password=ZuvpSbDe8QhiZ3fwV prepare
 ```
 
 #### Perform Read-only test
 ```
-root@sysbench-client:/sysbench# sysbench oltp_read_only --tables=10 --table_size=1000000 --threads=56 --mysql-port=3306 --mysql-db=sbtest  --mysql-host=cluster1-pxc --mysql-user=root --mysql-password=ZuvpSbDe8QhiZ3fwV run
+root@sysbench-client:/sysbench# sysbench oltp_read_only --tables=10 --table_size=1000000 --threads=8 --mysql-port=3306 --mysql-db=sbtest  --mysql-host=cluster1-pxc --mysql-user=root --mysql-password=ZuvpSbDe8QhiZ3fwV --report-interval=1 --time=300 run
 ```
 
 #### Perform Write-only test
 ```
-root@sysbench-client:/sysbench# sysbench oltp_write_only --tables=10 --table_size=1000000 --threads=56 --mysql-port=3306 --mysql-db=sbtest --mysql-host=cluster1-pxc --mysql-user=root --mysql-password=ZuvpSbDe8QhiZ3fwV run
+root@sysbench-client:/sysbench# sysbench oltp_write_only --tables=10 --table_size=1000000 --threads=8 --mysql-port=3306 --mysql-db=sbtest --mysql-host=cluster1-pxc --mysql-user=root --mysql-password=ZuvpSbDe8QhiZ3fwV --time=60 --report-interval=1 run
 ```
 
 #### Perform Read-Write test
 
 ```
-root@sysbench-client:/sysbench# sysbench oltp_read_write --tables=10 --table_size=1000000 --threads=56 --mysql-port=3306 --mysql-db=sbtest --mysql-host=cluster1-pxc --mysql-user=root --mysql-password=ZuvpSbDe8QhiZ3fwV run
+root@sysbench-client:/sysbench# sysbench oltp_read_write --tables=10 --table_size=1000000 --threads=8 --mysql-port=3306 --mysql-db=sbtest --mysql-host=cluster1-pxc --mysql-user=root --mysql-password=ZuvpSbDe8QhiZ3fwV --time=300 --report-interval=1 run
 ```
 
 
