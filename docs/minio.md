@@ -11,341 +11,305 @@ sidebar_label: MinIO
 
 ## Introduction
 
+[MinIO](https://github.com/minio/minio) is a high performance distributed object storage server, designed for large-scale private cloud infrastructure. MinIO is designed in a cloud-native manner to scale sustainably in multi-tenant environments. Orchestration platforms like Kubernetes provide a perfect cloud-native environment to deploy and scale MinIO. 
 
-[MinIO](https://github.com/minio/minio) is a high performance distributed object storage server, designed for large-scale private cloud infrastructure. MinIO is designed in a cloud-native manner to scale sustainably in multi-tenant environments. Orchestration platforms like Kubernetes provide a perfect cloud-native environment to deploy and scale MinIO. MinIO can be provisioned with OpenEBS volumes using various OpenEBS storage engines such as [Local PV](https://docs.openebs.io/docs/next/localpv.html), [cStor](https://docs.openebs.io/docs/next/cstor.html), or [Jiva](https://docs.openebs.io/docs/next/jiva.html) based on the application requirement.
+MinIO can be provisioned with OpenEBS volumes using various OpenEBS storage engines such as [Local PV](https://docs.openebs.io/docs/next/localpv.html), [cStor](https://docs.openebs.io/docs/next/cstor.html), or [Jiva](https://docs.openebs.io/docs/next/jiva.html) based on the application requirement. The MinIO operator offers a seamless way to create and update highly available distributed MinIO clusters. MinIO Operator brings native support for MinIO, Graphical Console for Admin and Users, and encryption to Kubernetes. It also offers MinIO tenant creation, management, upgrade, zone addition, and more.
 
+Depending on the performance and high availability requirements of MinIO, you can select any of the storage engine to run MinIO with the following deployment options:
+- For optimal performance, deploy MinIO with OpenEBS Local PV. 
+- If you would like to use storage layer capabilities like high availability, snapshots, incremental backups and restore and so forth, you can select OpenEBS cStor.
 
-
-**Advantages of using OpenEBS underneath MinIO Object Storage:**
-
-- PVCs to MinIO are dynamically provisioned from a dedicated or shared storage pool. Therefore, the requirement of dedicated disks on bare-metalserver or on a cloud environment to launch an object storage solution can be avoided.
-- Adding more storage to the Kubernetes cluster with OpenEBS is seamless and done along with adding a Kubernetes node. The auto-scaling of MinIO instances on-premises is as easy as cloud platforms.
-- Storage within a node or pool instance can also be scaled up on demand. 
-- Complete management of disks under MinIO is managed by OpenEBS, leading to production-grade deployment of object storage.
-
-<br>
-
+In this document, it is mentioned about the installation of MinIO operator using OpenEBS Local PV. 
 
 
 ## Deployment model
 
-<br>
+<img src="/docs/assets/svg/Local-PV-Distributed-device-minio.svg" alt="OpenEBS and MinIO Distributed localpv device" style="width:400px;">
 
-<img src="/docs/assets/minio-choose-engine.png" alt="OpenEBS and MinIO" style="width:400px;">
-
-<br>
-
-
+In this tutorial, Local PV volume will be provisioned on the node where the application has scheduled and one of the unclaimed and active blockdevice available on the same node will be used to provision the MinIO Object storage. This blockdevice cannot be used by another application. If there are limited blockdevices attached to some of the nodes, then users can use `nodeSelector` in the application YAML to provision application on a particular node where the available blockdevice is present. 
 
 ## Configuration workflow
 
+1. Install OpenEBS
+2. Select OpenEBS storage engine
+3. Configure OpenEBS Local PV StorageClass
+4. Install the MinIO plugin
+5. Install the MinIO operator deployment
+6. Install the MinIO cluster.
+7. Access MinIO console
 
-1. Identify the installation method for MinIO
-2. Install OpenEBS
-3. Select OpenEBS storage engine 
-4. Create a new StorageClass or use default StorageClass based on the storage engine
-5. Launch MinIO application by using the corresponding StorageClass
+### Install OpenEBS
+
+If OpenEBS is not installed in your K8s cluster, this can be done from [here](https://docs.openebs.io/docs/next/overview.html). If OpenEBS is already installed, go to the next step.
+
+### Select OpenEBS storage engine
+
+A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and chooses the right engine that suits your type of application requirements and storage available on your Kubernetes nodes. More information can be read from [here](https://docs.openebs.io/docs/next/overview.html#openebs-storage-engines).
+
+In this document, it is mentioned about the installation of MinIO operator using OpenEBS Local PV device. 
+
+### Configure OpenEBS Local PV StorageClass
+
+There are 2 ways to use OpenEBS Local PV.
+
+- `openebs-hostpath` - Using this option, it will create Kubernetes Persistent Volumes that will store the data into OS host path directory at: /var/openebs/<cassandra-pv>/. Select this option, if you don’t have any additional block devices attached to Kubernetes nodes. You would like to customize the directory where data will be saved, create a new OpenEBS Local PV storage class using these [instructions](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass). 
   
-<h3><a class="anchor" aria-hidden="true" id="install-openebs"></a>Identify the installation method for MinIO</h3>
+- `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a MinIO node. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](https://docs.openebs.io/docs/next/ugndm.html). 
 
-MinIO can be installed by following the below two options:
+MinIO can provide the replication of data by itself in distributed mode. This method installs MinIO application, which is a StatefulSet kind. It requires a minimum of four (4) nodes to setup MinIO in distributed mode. A distributed MinIO setup with 'n' number of disks/storage has your data safe as long as n/2 or more disks/storage are online. Users should maintain a minimum (n/2 + 1) disks/storage to create new objects. So based on the requirement, the user can choose the appropriate OpenEBS storage engine to run MinIO in distributed mode. For more information on MinIO installation, see MinIO [documentation](https://docs.min.io/docs/deploy-minio-on-kubernetes.html).
 
-- Standalone mode
+The Storage Class `openebs-device` has been chosen to deploy MinIO in the Kubernetes cluster.
 
-  This method installs one single application, which is a Deployment kind. In standalone mode, MinIO will not maintain the data replication at the application level. Therefore if a user needs replication at the storage level, then the user needs to identify the OpenEBS storage engine, which supports storage level replication. 
+### Install the MinIO plugin
 
-- Distributed mode
+The MinIO operator offers MinIO Tenant (MinIO cluster) creation, management of cluster, upgrade, zone addition, and more. Install the MinIO operator plugin using the following command. 
+```
+$ kubectl krew install minio
+```
+**Note:** Install `kubectl minio` plugin using krew. Installation of krew can be done from [here](https://krew.sigs.k8s.io/docs/user-guide/setup/install/).
 
-  MinIO can provide the replication of data by itself in distributed mode. This method installs MinIO application, which is a StatefulSet kind. It requires a minimum of four (4) nodes to setup MinIO in distributed mode. A distributed MinIO setup with 'n' number of disks/storage has your data safe as long as n/2 or more disks/storage are online. Users should maintain a minimum (n/2 + 1) disks/storage to create new objects. So based on the requirement, the user can choose the appropriate OpenEBS storage engine to run MinIO in distributed mode.
+### Install the MinIO operator deployment
 
-For more information on installation, see MinIO [documentation](https://docs.min.io/docs/deploy-minio-on-kubernetes.html).
+Let’s get started by initializing the MinIO Operator deployment. This is a one time process.
+```
+$  kubectl minio init
 
+CustomResourceDefinition tenants.minio.min.io: created
+ClusterRole minio-operator-role: created
+ServiceAccount minio-operator: created
+ClusterRoleBinding minio-operator-binding: created
+MinIO Operator Deployment minio-operator: created
+``` 
+Verify the MinIO operator is successfully installed.
+```
+$ kubectl get pod
 
-<h3><a class="anchor" aria-hidden="true" id="install-openebs"></a>Install OpenEBS</h3>
+NAME                              READY   STATUS    RESTARTS   AGE
+minio-operator-59b8965ff5-tzx8n   1/1     Running   0          18s
+```
 
-If OpenEBS is not installed in your Kubernetes cluster, this can be done following the installation instructions [here](https://docs.openebs.io/docs/next/installation.html). If OpenEBS is already installed, skip to the next step.
+### Install the MinIO cluster
 
-<h3><a class="anchor" aria-hidden="true" id="install-openebs"></a>Select OpenEBS storage engine </h3>
+A tenant is a MinIO cluster created and managed by the operator. Before creating a tenant, please ensure you have requisite nodes and drives in place.
+In this guide, we are using 4 Nodes with one 100Gi block device attached per each node. Using the MinIO operator, the following command will generate a YAML file as per the given requirement, and the file can be modified as per your specific requirements. 
+```
+$ kubectl minio tenant create --name tenant1 --servers 4 --volumes 4 --capacity 400Gi -o > tenant.yaml
+```
+The above will create a YAML spec with 4 MinIO nodes with 100Gi volume. In this YAML file, we need to add the `openebs-device` storage class to create the 100Gi persistent volume using the device attached to each node.
 
-Choosing a storage engine depends entirely on the application workload as well as it's current and future growth in capacity and/or performance. Additional details of the storage engines can be found [here](https://docs.openebs.io/docs/next/casengines.html#when-to-choose-which-cas-engine). You can refer to one of the storage engine sections below based on your selection.
+**Note:** Ensure that the image version used for the MinIO console is 0.4.6 or higher. Otherwise, pods will be in `crashloopbackoff` state.
 
-- [Local PV](https://docs.openebs.io/docs/next/localpv.html)
-- [cStor](https://docs.openebs.io/docs/next/cstor.html)
-- [Jiva](https://docs.openebs.io/docs/next/jiva.html)
+Add the following two changes to the tenant file created using the above command.
 
-The following is a quick summary of considerations for choosing a storage engine for MinIO:
-
-- If the use-case requires higher performance and does not require replication at the storage level, then OpenEBS **Local PV** is the recommended storage engine. If Local PV device-based StorageClass is used, then only one MinIO application on the Node can be consumed. If it is Local PV hostpath-based StorageClass, then other than MinIO, other applications can be provisioned on the same hostpath location.
-
-- If the use-case requires storage level replication, Day 2 Operations such that snapshot & clone, volume & storage pool capacity expansion, scaling up / scaling down of volume replicas, then **cStor** is the recommended storage engine. If MinIO is running in distributed mode and requires medium performance but requires Day 2 operations, then cStor with Single replica of volume can be used.
-
-- If the use-case is a small workload running on the cluster, has a small capacity requirement, and the application is not taking replication by itself, then **Jiva** is recommended.
-
-
-<h3><a class="anchor" aria-hidden="true" id="install-openebs"></a>Create a new StorageClass or use the default StorageClass</h3>
-
-Based on the OpenEBS storage engine selection, the user has to create a Storage Class with required storage policies on it, or they can use the default StorageClass created as part of OpenEBS installation. For example, if the selected OpenEBS storage engine is cStor and MinIO deploying in distributed mode, the user can create a cStor storage pool on each of the four (4) nodes and then use the corresponding `StoragePoolClaim` name in the StorageClass with `replicaCount` as `1`. 
-
-The steps for the creation of StorageClass can be found below:
-
-- [cStor](https://docs.openebs.io/docs/next/ugcstor.html#creating-cStor-storage-class)
-- [Local PV hostpath](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html), [Local PV device](https://docs.openebs.io/docs/next/uglocalpv-device.html), [Local PV with Customized hostpath](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass)
-- [Jiva](https://docs.openebs.io/docs/next/jivaguide.html#create-a-sc)
-
-
-<h3><a class="anchor" aria-hidden="true" id="install-openebs"></a>Launch MinIO application by using the corresponding StorageClass</h3>
-
-<h4><a class="anchor" aria-hidden="true" id="minio-localpv"></a>MinIO on Local PV</h4>
-
-MinIO can be provisioned on OpenEBS Local PV either on hostpath or on block Device. Local PV can be used if low-latency is a must requirement, and if the application can handle the replication by itself in `distributed mode` and/or application does not require replication at all in `standalone mode`.
-
-**In Standalone mode:**
-
-Local PV can be provisioned by following of the options below:
-
-- Hostpath-based
-
-  In this case, Local PV volume will be provisioned on the hostpath created on the node where the application has been scheduled. A persistent volume (PV) will be created with a specified size on `/var/openebs/local` directory on the same node when it uses default StorageClass  `openebs-hostpath`. 
-  Customizing the basepath can also be done using the steps provided [here](https://docs.openebs.io/docs/next/uglocalpv.html#configure-hostpath). Using the customized basepath, user can mount the device and use this mounted directory into the basepath field in the StorageClass.
-
-  
-  <img src="/docs/assets/svg/Local-PV-standalone-default-minio.svg" alt="OpenEBS and MinIO Standalone localpv hostpath" style="width:400px;">
-
-
-  After creating the StorageClass with required information, MinIO application can be launched using Local PV hostpath by running below command:
+- Add the following  to spec.zones.volumeClaimTemplate.spec under Tenant kind.
   ```
-  helm install --name=minio-test --set accessKey=minio,secretKey=minio123,persistence.storageClass=openebs-hostpath,service.type=NodePort,persistence.enabled=true stable/minio
+  storageClassName: openebs-device
   ```
-  Or
+  An example snippet of the modified tenant YAML file.
   ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/minio/minio-standalone-localpv-hostpath-default.yaml
+  serviceName: tenant1-internal-service
+  zones:
+  - resources: {}
+    servers: 4
+    volumeClaimTemplate:
+      apiVersion: v1
+      kind: persistentvolumeclaims
+      metadata:
+        creationTimestamp: null
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        storageClassName: openebs-device
+        resources:
+          requests:
+            storage: 100Gi
+      status: {}
+    volumesPerServer: 1
   ```
-
-  This will create a MinIO application running with one replica of a PV with 10Gi on default Local PV hostpath `/var/openebs/local/` directory on the node where the application pod has scheduled, if basepath is not customized.
-
-- Device-based 
-
-  In this case, Local PV volume will be provisioned on the node where the application has scheduled and any of the unclaimed and active blockdevices available on the same node. Local PV devices will use the entire blockdevice for the MinIO application. The blockdevice can be mounted or raw device on the node where your application is scheduled and this blockdevice cannot be used by another application. If there are limited blockdevices attached to some of the nodes, then users can use `nodeSelector` in the application YAML to provision application on a particular node where the available blockdevice is present.
-
-  
-  <img src="/docs/assets/svg/Local-PV-standalone-device-minio.svg" alt="OpenEBS and MinIO Standalone localpv device" style="width:400px;">
-  
-  
-  MinIO application can be launched using Local PV device by running below command:
+- Also, set `requestAutoCert: false` so that MinIO will run in http mode. In this document, we have used http communication for accessing MinIO. The following is a sample snippet of the modified section.
   ```
-  helm install --name=minio-test --set accessKey=minio,secretKey=minio123,persistence.storageClass=openebs-device,service.type=NodePort,persistence.enabled=true stable/minio
+   mountPath: /export
+  requestAutoCert: false
+  serviceName: tenant1-internal-service
   ```
-  Or
-  ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/minio/minio-standalone-localpv-device.yaml
-  ```
-  This will create a single MinIO application on a single disk that is attached to the same node where the application is scheduled.
+Apply the modified tenant YAML spec. The following command will install MinIO tenants under the default namespace.
+```
+$ kubectl apply -f tenant.yaml
 
-<font size="5">Accessing MinIO</font>
+tenant.minio.min.io/tenant1 created
+secret/tenant1-creds-secret created
+secret/tenant1-console-secret created
+```
+Verify the MinIO cluster creation is successfully running under the default namespace.
+```
+$ kubectl get pod
 
-In a web browser, MinIO application can be accessed using the following address:
+NAME                               READY   STATUS    RESTARTS   AGE
+minio-operator-59b8965ff5-tzx8n    1/1     Running   0          6m46s
+tenant1-console-6589f7574d-6kgnp   1/1     Running   0          19s
+tenant1-console-6589f7574d-wt47v   1/1     Running   0          19s
+tenant1-zone-0-0                   1/1     Running   0          51s
+tenant1-zone-0-1                   1/1     Running   0          51s
+tenant1-zone-0-2                   1/1     Running   0          51s
+tenant1-zone-0-3                   1/1     Running   0          50s
+```
 
-https://<Node_external_ip>:<Node_port>
+Verify the MinIO persistent volume details.
+```
+$ kubectl get pvc
 
-**Note:**
-- Node external IP address can be obtained by running `kubectl get node -o wide`
-- Node port can be obtained by running `kubectl get svc -l app=minio`
+NAME                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS     AGE
+0-tenant1-zone-0-0   Bound    pvc-eff2ebdc-1658-4525-b7e2-5d57b39f144b   100Gi      RWO            openebs-device   53s
+0-tenant1-zone-0-1   Bound    pvc-1a5881ae-c65a-4ebe-9233-615c6fb7f364   100Gi      RWO            openebs-device   53s
+0-tenant1-zone-0-2   Bound    pvc-bd8d3521-fea9-4a48-8f66-26c6d2808997   100Gi      RWO            openebs-device   53s
+0-tenant1-zone-0-3   Bound    pvc-55d6aa94-37ed-4f14-bafb-dcee1d7af9f5   100Gi      RWO            openebs-device   52s
 
-**In Distributed mode:**
+$ kubectl get pv
 
-Local PV can be provisioned by following of the options below:
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                        STORAGECLASS     REASON   AGE
+pvc-1a5881ae-c65a-4ebe-9233-615c6fb7f364   100Gi      RWO            Delete           Bound    default/0-tenant1-zone-0-1   openebs-device            49s
+pvc-55d6aa94-37ed-4f14-bafb-dcee1d7af9f5   100Gi      RWO            Delete           Bound    default/0-tenant1-zone-0-3   openebs-device            49s
+pvc-bd8d3521-fea9-4a48-8f66-26c6d2808997   100Gi      RWO            Delete           Bound    default/0-tenant1-zone-0-2   openebs-device            53s
+pvc-eff2ebdc-1658-4525-b7e2-5d57b39f144b   100Gi      RWO            Delete           Bound    default/0-tenant1-zone-0-0   openebs-device            54s
+```
 
-- Hostpath-based
+Verify MinIO service status.
+```
+$ kubectl get svc
 
-  In this case, Local PV volume will be provisioned on the hostpath on the node, where the application is getting scheduled. A PV will be created with a specified size inside `/var/openebs/local` directory on all four (4) nodes when it uses default Storage Class  `openebs-hostpath`. 
-  Customizing the basepath can also be done using the steps provided [here](https://docs.openebs.io/docs/next/uglocalpv.html#configure-hostpath). Using the customized basepath, user can mount the device and use this mounted directory into the basepath field in the StorageClass.
+NAME              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
+kubernetes        ClusterIP   10.100.0.1      <none>        443/TCP             62m
+minio             ClusterIP   10.100.59.34    <none>        80/TCP              57s
+tenant1-console   ClusterIP   10.100.50.135   <none>        9090/TCP,9443/TCP   25s
+tenant1-hl        ClusterIP   None            <none>        9000/TCP            57s
+```
 
-  
-  <img src="/docs/assets/svg/Local-PV-Distributed-hostpath-minio.svg" alt="OpenEBS and MinIO Distributed localpv hostpath" style="width:400px;">
+Now, MinIO has been installed successfully on your cluster.
 
-  
-  MinIO application can be launched using hostpath based Local PV by running below command:
+**Note:** If the user needs to access MinIO outside the network, the service type can be changed or a new service should be added to use `LoadBalancer` or create `Ingress` resources for production deployment.
+For ease of simplicity in testing the deployment, we are going to use `NodePort`. Please be advised to consider using LoadBalancer or Ingress, instead of NodePort, for  production deployment. 
 
-  ```
-  helm install --name=minio-test --set mode=distributed,accessKey=minio,secretKey=minio123,persistence.storageClass=openebs-hostpath,service.type=NodePort,persistence.enabled=true stable/minio
-  ```
-  Or
-  ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/minio/minio-distributed-localpv-hostpath-default.yaml
-  ```
-  This will create a MinIO application with replica count four (4) running with a single replica of PV with 10Gi for all the four application instances on default Local PV hostpath `/var/openebs/local/` directory on the nodes where the application has been scheduled, if basepath is not customized.
+The `minio` service will allow the user to access the console, and `tenant1-console` will allow access to the Admin console. In this guide, we have changed the service type of the services mentioned above, and the following is the output after the modification.
 
-- Device-based 
+```
+$ kubectl get svc
 
-  In this case, Local PV volume will be provisioned on the node where the application has scheduled and any of the unclaimed and active blockdevices available on the same node. Local PV devices will use the entire blockdevice for MinIO application. The blockdevice can be mounted or raw device on the node where your application is scheduled and this blockdevice cannot be used by another application. If you have limited blockdevices attached to some nodes, then users can use `nodeSelector` in the application YAML to provision application on a particular node where the available blockdevice is present. Since MinIO is in distributed mode, it requires a minimum of four (4) nodes and a single unclaimed external disk should be attached to each of these four nodes.
-  
-  
-  <img src="/docs/assets/svg/Local-PV-Distributed-device-minio.svg" alt="OpenEBS and MinIO Distributed localpv device" style="width:400px;">
-  
-  
-  MinIO application can be launched using device-based Local PV by running below command:
-  
-   ```
-  helm install --name=minio-test --set mode=distributed,accessKey=myaccesskey,secretKey=mysecretkey,persistence.storageClass=openebs-device,service.type=NodePort,persistence.enabled=true stable/minio
-   ```
-  Or
-  ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/minio/minio-distributed-localpv-device-default.yaml
-  ```
-  This will create a MinIO application running with one replica on each of the four (4) nodes. This means one PVC with 10Gi will be created on each of suitable blockdevice on these 4 nodes. 
+NAME              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                         AGE
+kubernetes        ClusterIP   10.100.0.1      <none>        443/TCP                         64m
+minio             NodePort    10.100.59.34    <none>        80:32095/TCP                    3m10s
+tenant1-console   NodePort    10.100.50.135   <none>        9090:30383/TCP,9443:30194/TCP   2m38s
+tenant1-hl        ClusterIP   None            <none>        9000/TCP                        3m10s
+```
 
-<font size="5">Accessing MinIO</font>
+### Access MinIO console
 
-In a web browser, MinIO application can be accessed using the following address:
+There are 2 different console for User and Admin.
 
-https://<Node_external_ip>:<Node_port>
+#### Access MinIO Admin console
 
-**Note:**
-- Node external IP address can be obtained by running `kubectl get node -o wide`
-- Node port can be obtained by running `kubectl get svc -l app=minio`
+An Admin can access MinIO and do the configuration changes such as creating an account, group, bucket, and its configuration, the setting of user-level permission, file-level permission, etc.
 
+For Admin access, use  `<Node_External_Ip>:<NodePort_of_tenant1-console_service>` in your web browser.
 
-<h4><a class="anchor" aria-hidden="true" id="minio-cstor"></a>MinIO on cStor</h4>
+Get the details of Node.
+```
+$ kubectl get node -o wide
 
-cStor can be used if MinIO deployment cannot provide the replication of data by itself or it requires storage replication, moderate performance and Day 2 operations support such as volume/pool capacity expansion, disk replacement, snapshot, clones, scaling up and scaling down of volume replicas. cStor support the creation of a storage pool using multiple disks on the nodes which can be used to provision multiple volumes and on-demand pool capacity expansion can be achieved by adding more disks to the pool or expanding the size of the cloud disks. cStor also provides additional features such as thin provisioning, storage level snapshot and clone capability. 
+NAME                                            STATUS   ROLES    AGE   VERSION    INTERNAL-IP      EXTERNAL-IP      OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME
+ip-192-168-2-55.ap-south-1.compute.internal     Ready    <none>   51m   v1.17.11   192.168.2.55     65.0.121.83      Ubuntu 18.04.5 LTS   5.4.0-1028-aws   docker://17.3.2
+ip-192-168-56-236.ap-south-1.compute.internal   Ready    <none>   57m   v1.17.11   192.168.56.236   15.206.189.106   Ubuntu 18.04.5 LTS   5.4.0-1028-aws   docker://17.3.2
+ip-192-168-69-83.ap-south-1.compute.internal    Ready    <none>   57m   v1.17.11   192.168.69.83    3.6.91.169       Ubuntu 18.04.5 LTS   5.4.0-1028-aws   docker://17.3.2
+ip-192-168-8-117.ap-south-1.compute.internal    Ready    <none>   57m   v1.17.11   192.168.8.117    13.235.210.41    Ubuntu 18.04.5 LTS   5.4.0-1028-aws   docker://17.3.2
+```
 
-The steps for provisioning MinIO application in both method using cStor volume can be done by follows:
+Now, access the MinIO service over the browser using the following way.
+```
+http://3.6.91.169:30383
+```
+**Note:** Ensure Inbound Rules under VPC-> Security Groups are correctly configured to allow the traffic.
 
-**In Standalone mode:**
+You should enter the Access key and Secret key to login into the admin console. These credentials can be obtained from the secret.
+```
+$ kubectl get secret tenant1-console-secret -oyaml
+```
+The following is a sample snippet of the output of the above command. It will show the Access key and Secret key in encoded form. The decoded value should be given in the web browser to login to the user console.
+```
+apiVersion: v1
+data:
+  CONSOLE_ACCESS_KEY: MmRkYzA2NGItYTMwZS00ZDg5LTgwODItNWMwYzFkYTRlOGNh
+  CONSOLE_HMAC_JWT_SECRET: ODkwYWFlYmEtMTAxYy00YTJmLTg0NDMtYmI1ZjAyMjcyNWFk
+  CONSOLE_PBKDF_PASSPHRASE: MDZhN2UzMmUtOWIxZi00MjI2LTk2MmItOTk4OTRmMGYwYjk2
+  CONSOLE_PBKDF_SALT: OTg0OTM1YjAtNzgyMS00NWI3LWFmM2ItYzczNDZlNmUzYWNm
+  CONSOLE_SECRET_KEY: MGQyY2NlZjktOWM0NC00N2JjLWFkMTYtM2RlNGExMjcwMzY1
+kind: Secret
+metadata:
+  annotations:
+```
+Decoding of the above credentials can be retrieved by following way.
 
-The cStor volume can be provisioned using the following steps;
+Access key
+```
+$ echo 'MmRkYzA2NGItYTMwZS00ZDg5LTgwODItNWMwYzFkYTRlOGNh' | base64 -d
+2ddc064b-a30e-4d89-8082-5c0c1da4e8ca
+```
 
-- Creating cStor pools.
-  This will create a StoragePoolClaim which will define multiple storage pools. cStor StoragePoolClaim can be created using the steps provided [here](https://docs.openebs.io/docs/next/ugcstor.html#creating-cStor-storage-pools). For example, the SPC name used in this example is `cstor-disk-pool`. This has to be mentioned in the StorageClass which is going to be created in the next step. It is required a minimum of 3 nodes with disks attached to it for maintaining the quorum and the storage level replication.
-  
-- Creating a cStor StorageClass which uses StoragePoolClaim name created in the previous step, `replicaCount` which defines the number of storage volume replicas and required other [storage policies](https://docs.openebs.io/docs/next/ugcstor.html#cstor-storage-policies). StorageClass be created using the steps provided [here](https://docs.openebs.io/docs/next/ugcstor.html#creating-cStor-storage-class). For example, StorageClass used in this example is `openebs-sc`. Use this SC name in the application deployment command. The replica count mentioned in this StorageClass should be minimum three (3).
+Secret key
+```
+$ echo 'MGQyY2NlZjktOWM0NC00N2JjLWFkMTYtM2RlNGExMjcwMzY1' | base64 -d
+0d2ccef9-9c44-47bc-ad16-3de4a1270365
+```
 
-   
-  <img src="/docs/assets/svg/cstor-standalone-minio.svg" alt="OpenEBS and MinIO standalone cStor " style="width:400px;">
-  
- 
-- Launch MinIO application using the following command. You may change the StorageClass name as per the one created in the previous step.
+#### Access MinIO User console
 
-  ```
-  helm install --name=minio-test --set accessKey=myaccesskey,secretKey=mysecretkey,persistence.storageClass=openebs-sc,service.type=NodePort,persistence.enabled=true  stable/minio
-  ```
-  Or
-  ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/minio/minio-standalone-cstor.yaml
-  ```
+The MinIO StatefulSet application is created using NodePort as the service type. To access MinIO over a web browser, use `<Node_External_Ip>:<NodePort_of_minio_service>` this way. 
 
-This will create a MinIO application on cStor volume with 3 replicas and capacity of 10Gi on cStor pool.
+Get the details of Node.
+```
+$ kubectl get node -o wide
 
-**In Distributed mode:**
+NAME                                            STATUS   ROLES    AGE   VERSION    INTERNAL-IP      EXTERNAL-IP      OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME
+ip-192-168-2-55.ap-south-1.compute.internal     Ready    <none>   51m   v1.17.11   192.168.2.55     65.0.121.83      Ubuntu 18.04.5 LTS   5.4.0-1028-aws   docker://17.3.2
+ip-192-168-56-236.ap-south-1.compute.internal   Ready    <none>   57m   v1.17.11   192.168.56.236   15.206.189.106   Ubuntu 18.04.5 LTS   5.4.0-1028-aws   docker://17.3.2
+ip-192-168-69-83.ap-south-1.compute.internal    Ready    <none>   57m   v1.17.11   192.168.69.83    3.6.91.169       Ubuntu 18.04.5 LTS   5.4.0-1028-aws   docker://17.3.2
+ip-192-168-8-117.ap-south-1.compute.internal    Ready    <none>   57m   v1.17.11   192.168.8.117    13.235.210.41    Ubuntu 18.04.5 LTS   5.4.0-1028-aws   docker://17.3.2
+```
 
-The cStor volume can be provisioned using the following steps.
+Now, access the MinIO service over the browser using the following way.
+```
+http://3.6.91.169:32095
+```
 
-- Creating cStor pools. 
-  This will create a StoragePoolClaim, which will define multiple storage pools. cStor StoragePoolClaim can be created using the steps provided [here](https://docs.openebs.io/docs/next/ugcstor.html#creating-cStor-storage-pools). For example, the SPC name used in this example is `cstor-disk-pool`. This has to be mentioned in the Storage Class, which is going to be created in the next step. MinIO in distributed mode can be able to perform replication by itself, so only one replica at storage level is enough. MinIO on cStor will give a medium performance and can be able to do resize of volume and snapshot and clone capability.
-  
-- Creating a cStor StorageClass 
-  The StorageClass uses StoragePoolClaim name created in the previous step, replicaCount, which defines the number of storage volume replicas and other required [storage policies](https://docs.openebs.io/docs/next/ugcstor.html#cstor-storage-policies). StorageClass can be created using the steps provided [here](https://docs.openebs.io/docs/next/ugcstor.html#creating-cStor-storage-class). For example, StorageClass used in this example is `openebs-sc-rep1`. Use this SC name in the application deployment command. The replica count mentioned in this StorageClass is one (1).
-   
-      
-  <img src="/docs/assets/svg/cstor-distributed-minio.svg" alt="OpenEBS and MinIO Distributed cStor " style="width:400px;">
-   
-   
-- Launch MinIO application using the following command. You may change the StorageClass name as per the one created in the previous step.
-  
-  ```
-  helm install --name=minio-test --set mode=distributed,accessKey=myaccesskey,secretKey=mysecretkey,persistence.storageClass=openebs-sc-rep1,service.type=NodePort,persistence.enabled=true  stable/minio
-  ```
-  Or
-  ```
-  kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/minio/minio-distributed-cstor.yaml
-  ```
-  This will create a MinIO application with four (4) application replicas with single replica of cStor volume and capacity of 10Gi on cStor pool.
+You should enter the `Access key` and `Secret key` to login into the user console. These credentials can be obtained from the secret.
+```
+$ kubectl get secret tenant1-creds-secret -oyaml
+```
+The following is a sample snippet of the output of the above command. It will show the Access key and Secret key in encoded form. The decoded value should be given in the web browser to login to the user console.
+```
+apiVersion: v1
+data:
+  accesskey: N2MyMTI0MWItZDczOS00NDEwLWE0OWQtOTkyODkwNDNiNDQ1
+  secretkey: M2ZiNGFlZGQtYTU1Yy00YjM4LWJkNTQtODEyNmViOTg5ZmZk
+kind: Secret
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"accesskey":"N2MyMTI0MWItZDczOS00NDEwLWE0OWQtOTkyODkwNDNiNDQ1","secretkey":"M2ZiNGFlZGQtYTU1Yy00YjM4LWJkNTQtODEyNmViOTg5ZmZk"},"kind":"Secret","metadata":{"annotations":{},"creationTimestamp":null,"name":"tenant1-creds-secret","namespace":"default"}}
+```
+Decoding of the above credentials can be retrieved by following way.
 
-<font size="5">Accessing MinIO</font>
-
-In a web browser, MinIO application can be accessed using the following address:
-
-https://<Node_external_ip>:<Node_port>
-
-**Note:**
-- Node external IP address can be obtained by running `kubectl get node -o wide`
-- Node port can be obtained by running `kubectl get svc -l app=minio`
-
-
-<h4><a class="anchor" aria-hidden="true" id="minio-cstor"></a>MinIO on Jiva</h4>
-
-Jiva can be chosen for smaller capacity workloads in general and if it requires storage level replication but does not need snapshots and clones. Jiva volume can be provisioned using default StorageClass `openebs-jiva-default` which will create PV under `/var/openebs/` or it can be created on an external mounted disk on the worker node. 
-
-**In Standalone mode:**
-
-The steps for provisioning MinIO application in standalone mode using Jiva volume can be done by following steps. Users can use either the default storage pool or with a storage pool created using an external mounted disk.
-
-- Default Storage Pool
-  
-  - Use the default Storage pool `default`. The default storage pool will be created on the OS disk using the sparse disk once OpenEBS is installed. For using default Storage Pool, user can simply use default StroageClass `openebs-jiva-default` in the PVC spec of the application.
-       
-  
-  <img src="/docs/assets/svg/JIVA-standalone-default-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva default " style="width:400px;"> 
-   
-         
-  - Launch MinIO application using the following command. User can include the default StorageClass name in the following command:
-    ```
-    helm install --name=minio-test --set accessKey=myaccesskey,secretKey=mysecretkey,persistence.storageClass=openebs-jiva-default,service.type=NodePort,persistence.enabled=true  stable/minio
-    ```
-    
-    or
-    
-    ```
-    kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/minio/minio-standalone-jiva-default.yaml
-    ```
-    
-    This will create a MinIO application on a PV with a replication factor of three (3) Jiva volume and capacity of 10Gi on default Jiva pool created on OS disk.
-  
--  Storage Pool using External disk
-  
-   - Creating a Jiva pool using a single mounted disk. The mount path should be the same on all the Node where the Jiva volume replica will be provisioned. The steps for creating a Jiva pool are mentioned [here](https://docs.openebs.io/docs/next/jivaguide.html#create-a-pool).
-   
-   - Create/use a StorageClass, which uses Jiva Storage pool created with a mounted disk in the previous step. For example, StorageClass used in this example is `openebs-jiva-sc`. Use this SC name in the application deployment command.
-     
-         
-  <img src="/docs/assets/svg/JIVA-standalone-storage-pool-minio.svg" alt="OpenEBS and MinIO standalone jiva storage pool " style="width:400px;">
-     
-      
-   - Launch MinIO application using the following command. You may change the StorageClass name as per the one created in the previous step.
-     ```
-     helm install --name=minio-test --set accessKey=myaccesskey,secretKey=mysecretkey,persistence.storageClass=openebs-jiva-sc,service.type=NodePort,persistence.enabled=true  stable/minio
-     ```
-     Or
-     ```
-     kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/demo/minio/minio-standalone-jiva-storagepool.yaml
-     ```
-     
-     This will create a MinIO application on a PV with a replication factor of 3 Jiva volume and capacity of 10Gi on a Jiva pool created on external disks.
-
-<font size="5">Accessing MinIO</font>
-
-In a web browser, MinIO application can be accessed using the following address:
-
-https://<Node_external_ip>:<Node_port>
-
-**Note:**
-- Node external IP address can be obtained by running `kubectl get node -o wide`
-- Node port can be obtained by running `kubectl get svc -l app=minio`
+Access key
+```
+$ echo 'N2MyMTI0MWItZDczOS00NDEwLWE0OWQtOTkyODkwNDNiNDQ1' | base64 -d
+7c21241b-d739-4410-a49d-99289043b445
+```
+Secret key
+```
+$ echo 'M2ZiNGFlZGQtYTU1Yy00YjM4LWJkNTQtODEyNmViOTg5ZmZk' | base64 -d
+3fb4aedd-a55c-4b38-bd54-8126eb989ffd
+```
 
 <br>
 
-## Post deployment Operations
-
-
-**Monitor OpenEBS Volume size** 
-
-Currently, cStor CSPC only support volume expansion and this work is under active development (https://github.com/openebs/cstor-csi) and remains Alpha as of September 1 2020. Therefore it is recommended that sufficient size is allocated during the initial configuration on OpenEBS volume. 
-
-**Monitor cStor Pool size**
-
-In case you are using cStor storage engine, in most of the cases the cStor pool may not be dedicated to just MinIO alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool).
-
-<br>
 <hr>
 
 ## See Also:
@@ -354,17 +318,9 @@ In case you are using cStor storage engine, in most of the cases the cStor pool 
 
 ### [Understanding NDM](/docs/next/ugndm.html)
 
-### [cStor concepts](/docs/next/cstor.html)
-
-### [Jiva concepts](/docs/next/jivaguide.html)
-
 ### [Local PV concepts](/docs/next/localpv.html)
 
-
-
-
-
-
+### [Local PV User guide](/docs/next/uglocalpv-device.html)
 
 <hr>
 
