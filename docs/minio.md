@@ -13,13 +13,13 @@ sidebar_label: MinIO
 
 [MinIO](https://github.com/minio/minio) is a high performance distributed object storage server, designed for large-scale private cloud infrastructure. MinIO is designed in a cloud-native manner to scale sustainably in multi-tenant environments. Orchestration platforms like Kubernetes provide a perfect cloud-native environment to deploy and scale MinIO. 
 
-MinIO can be provisioned with OpenEBS volumes using various OpenEBS storage engines such as [Local PV](https://docs.openebs.io/docs/next/localpv.html), [cStor](https://docs.openebs.io/docs/next/cstor.html), or [Jiva](https://docs.openebs.io/docs/next/jiva.html) based on the application requirement. The MinIO operator offers a seamless way to create and update highly available distributed MinIO clusters. MinIO Operator brings native support for MinIO, Graphical Console for Admin and Users, and encryption to Kubernetes. It also offers MinIO tenant creation, management, upgrade, zone addition, and more.
+MinIO can be provisioned with OpenEBS volumes using various OpenEBS storage engines such as [Local PV](https://docs.openebs.io/docs/next/localpv.html), [cStor](https://docs.openebs.io/docs/next/cstor.html), or [Jiva](https://docs.openebs.io/docs/next/jiva.html) based on the application requirement. The MinIO operator offers a seamless way to create and update highly available distributed MinIO clusters. MinIO operator brings native support for MinIO, Graphical Console for Admin and Users, and encryption to Kubernetes. It also offers MinIO tenant creation, management, upgrade, zone addition, and more.
 
 Depending on the performance and high availability requirements of MinIO, you can select any of the storage engine to run MinIO with the following deployment options:
 - For optimal performance, deploy MinIO with OpenEBS Local PV. 
 - If you would like to use storage layer capabilities like high availability, snapshots, incremental backups and restore and so forth, you can select OpenEBS cStor.
 
-In this document, it is mentioned about the installation of MinIO operator using OpenEBS Local PV. 
+This document provides the instructions to setup MinIO operator using OpenEBS Local PV.
 
 
 ## Deployment model
@@ -30,13 +30,13 @@ In this tutorial, Local PV volume will be provisioned on the node where the appl
 
 ## Configuration workflow
 
-1. Install OpenEBS
-2. Select OpenEBS storage engine
-3. Configure OpenEBS Local PV StorageClass
-4. Install the MinIO plugin
-5. Install the MinIO operator deployment
-6. Install the MinIO cluster.
-7. Access MinIO console
+1. [Install OpenEBS](/docs/next/minio.html#install-openebs)
+2. [Select OpenEBS storage engine](/docs/next/minio.html#select-openebs-storage-engine)
+3. [Configure OpenEBS Local PV StorageClass](/docs/next/minio.html#configure-openebs-local-pv-storageclass)
+4. [Install the MinIO plugin](/docs/next/minio.html#install-the-minio-plugin)
+5. [Install the MinIO operator deployment](/docs/next/minio.html#install-the-minio-operator-deployment)
+6. [Install the MinIO cluster](/docs/next/minio.html#install-the-minio-cluster)
+7. [Access MinIO console](/docs/next/minio.html#access-minio-console)
 
 ### Install OpenEBS
 
@@ -70,7 +70,7 @@ $ kubectl krew install minio
 
 ### Install the MinIO operator deployment
 
-Let’s get started by initializing the MinIO Operator deployment. This is a one time process.
+Let’s get started by initializing the MinIO operator deployment. This is a one time process.
 ```
 $  kubectl minio init
 
