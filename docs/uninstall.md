@@ -56,7 +56,18 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   ```
   kubectl get sc
   ```
-
+  
+- Ensure that there are no stale BlockDevices present in the cluster. You can verify the status using the following command. 
+  
+  ```
+  kubectl get bd -n <openebs namespace>
+  ```
+  
+  If present, remove the finalizer entry from the corresponding BD and then delete it. To remove the finazlier, use the following command
+  ```
+  kubectl patch -n openebs bd <blockdevice-xxx> -p '{"metadata":{"finalizers":null}}' --type=merge
+  ```
+  
 - Delete the OpenEBS namespace using helm either via `helm delete <chart name> --purge` (if helm version is v2) or `helm uninstall <chart name> -n <namespace>` (if helm version is v3). It can also be deleted using kubectl as  `kubectl delete ns openebs` or you can delete the corresponding `openebs-operator` YAML using `kubectl delete -f <openebs-operator.yaml>`. You can check the status of OpenEBS namespace using the following command.
 
   ```
@@ -101,19 +112,6 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl delete crd volumesnapshotcontents.snapshot.storage.k8s.io
   kubectl delete crd volumesnapshots.snapshot.storage.k8s.io
   ```
-
-
-- Ensure that there are no stale BlockDevices present in the cluster. You can verify the status using the following command. 
-  
-  ```
-  kubectl get bd -n <openebs namespace>
-  ```
-  
-  If present, remove the finalizer entry from the corresponding BD and then delete it. To remove the finazlier, use the following command
-  ```
-  kubectl patch -n openebs bd <blockdevice-xxx> -p '{"metadata":{"finalizers":null}}' --type=merge
-  ```
-  
 
 - After removing a PVC, you may find a directory `/var/openebs/` on the nodes where the replica was created having some of the volume sub-directory to store metadata info related to the volume, for example `shared-pvc-69adec76-665e-46bc-b957-2b2f58338429-target` with no content. This can be removed manually using the `rm -rf` command once you successfully uninstall the OpenEBS cluster.
 
