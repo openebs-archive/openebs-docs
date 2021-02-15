@@ -5,7 +5,7 @@ sidebar_label: Percona
 ---
 ------
 
-<img src="/docs/assets/o-percona.png" alt="OpenEBS and Percona" style="width:400px;">
+<img src="/v250/docs/assets/o-percona.png" alt="OpenEBS and Percona" style="width:400px;">
 
 
 ## Introduction
@@ -22,7 +22,7 @@ Percona XtraDB Cluster can be provisioned with OpenEBS volumes using OpenEBS sto
 
 <br>
 
-<img src="/docs/assets/svg/percona-deployment-new.svg" alt="OpenEBS and Percona" style="width:100%;">
+<img src="/v250/docs/assets/svg/percona-deployment-new.svg" alt="OpenEBS and Percona" style="width:100%;">
 
 This tutorial provides detailed instructions to run a Percona XtraDB Cluster(PXC) with OpenEBS Local PV and perform some simple database operations to verify the successful deployment and it's performance benchmark.
 
@@ -366,11 +366,11 @@ root@sysbench-client:/sysbench# sysbench oltp_read_write --tables=10 --table_siz
 
 <br>
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v250/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v250/docs/next/usecases.html)
 
-### [OpenEBS Local PV Device User Guide](/docs/next/uglocalpv-device.html)
+### [OpenEBS Local PV Device User Guide](/v250/docs/next/uglocalpv-device.html)
 
 
 <hr>

@@ -10,8 +10,6 @@ sidebar_label: Releases
 
 ## 2.5.0 - Jan 15 2021
 
-<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
-
 ### New capabilities
 
 - OpenEBS has support for multiple storage engines, and the feedback from users has shown that users tend to only use a few of these engines on any given cluster depending on the workload requirements. As a way to provide more flexibility for users, we are introducing separate helm charts per engine. With OpenEBS 2.5 the following helm charts are supported. 
@@ -64,7 +62,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.5.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v250/docs/next/upgrade.html)
 
 <br>
 
@@ -136,7 +134,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.4.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v250/docs/next/upgrade.html)
 
 
 <br>
@@ -195,7 +193,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.5.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v250/docs/next/upgrade.html)
 
 <br>
 
@@ -265,7 +263,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.4.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v250/docs/next/upgrade.html)
 
 
 <br>
@@ -299,7 +297,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.3.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v250/docs/next/upgrade.html)
 
 <br>
 
@@ -335,7 +333,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.2.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v250/docs/next/upgrade.html)
 
 <br>
 
@@ -363,7 +361,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.1.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v250/docs/next/upgrade.html)
 
 ## 2.0.0 - Aug 15 2020
 
@@ -389,7 +387,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.0.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v250/docs/next/upgrade.html)
 
 ## 1.12.0 - Jul 15 2020
 
@@ -417,7 +415,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.12.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v250/docs/next/upgrade.html)
 
 
 ## 1.11.0 - Jun 15 2020
@@ -447,7 +445,7 @@ sidebar_label: Releases
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.11.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v250/docs/next/upgrade.html)
 
 ## 1.10.0 - May 15 2020
 
@@ -719,13 +717,13 @@ sidebar_label: Releases
 
 ## See Also:
 
-### [OpenEBS Upgrade](/docs/next/upgrade.html)
+### [OpenEBS Upgrade](/v250/docs/next/upgrade.html)
 
-### [OpenEBS 0.x Releases](/docs/next/releases-0x.html)
+### [OpenEBS 0.x Releases](/v250/docs/next/releases-0x.html)
 
-### [OpenEBS FAQ](/docs/next/faq.html)
+### [OpenEBS FAQ](/v250/docs/next/faq.html)
 
-### [Container Attached Storage or CAS](/docs/next/cas.html)
+### [Container Attached Storage or CAS](/v250/docs/next/cas.html)
 
 <br><hr>
 

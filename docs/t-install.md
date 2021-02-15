@@ -7,7 +7,7 @@ sidebar_label: Install
 
 <font size="5">General guidelines for troubleshooting</font>
 
-- Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
+- Contact <a href="/v250/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 - Search for similar issues added in this troubleshootiung section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
@@ -67,7 +67,7 @@ MountVolume.WaitForAttach failed for volume “pvc-ea5b871b-32d3-11e9-9bf5-0a8e9
 
 **Troubleshooting**
 
-This logs points that iscsid.service may not be enabled and running on your Nodes. You need to check if the service `iscsid.service` is running. If it is not running, you have to `enable` and `start` the service. You can refer [prerequisites](/docs/next/prerequisites.html) section and choose your platform to get the steps for enabling it.
+This logs points that iscsid.service may not be enabled and running on your Nodes. You need to check if the service `iscsid.service` is running. If it is not running, you have to `enable` and `start` the service. You can refer [prerequisites](/v250/docs/next/prerequisites.html) section and choose your platform to get the steps for enabling it.
 
 
 
@@ -118,7 +118,7 @@ Error: release openebsfailed: clusterroles.rbac.authorization.k8s.io "openebs" i
 
 **Troubleshooting**
 
-You must enable RBAC on Azure before OpenEBS installation. For more details, see [Prerequisites](/docs/next/prerequisites.html).
+You must enable RBAC on Azure before OpenEBS installation. For more details, see [Prerequisites](/v250/docs/next/prerequisites.html).
 
 
 
@@ -148,11 +148,11 @@ A multipath.conf file without either find_multipaths or a manual blacklist claim
 
 ## See Also:
 
-### [FAQs](/docs/next/faq.html)
+### [FAQs](/v250/docs/next/faq.html)
 
-### [Seek support or help](/docs/next/support.html)
+### [Seek support or help](/v250/docs/next/support.html)
 
-### [Latest release notes](/docs/next/releases.html)
+### [Latest release notes](/v250/docs/next/releases.html)
 
 <br>
 <hr>
