@@ -14,12 +14,7 @@
       "1.8.0": ["v1.8.0", "https://docs.openebs.io/v180/"],
       "1.7.0": ["v1.7.0", "https://docs.openebs.io/v170/"],
       "1.6.0": ["v1.6.0", "https://docs.openebs.io/v160/"],
-      "1.5.0": ["v1.5.0", "https://docs.openebs.io/v150/"],
-      "1.4.0": ["v1.4.0", "https://docs.openebs.io/v140/"],
-      "1.3.0": ["v1.3.0", "https://docs.openebs.io/v130/"],
-      "1.2.0": ["v1.2.0", "https://docs.openebs.io/v120/"],
-      "1.1.0": ["v1.1.0", "https://docs.openebs.io/v110/"],
-      "1.0.0": ["v1.0.0", "https://docs.openebs.io/v100/"]
+      "1.5.0": ["v1.5.0", "https://docs.openebs.io/v150/"]
   }
 }
 

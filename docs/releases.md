@@ -6,11 +6,81 @@ sidebar_label: Releases
 
 ------
 
+## 2.6.0 - Feb 15 2021
+
+<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
+
+OpenEBS v2.6 contains some key enhancements and several fixes for the issues reported by the user community across all 9 types of OpenEBS volumes.
+
+- 3 replicated types - [Mayastor](https://mayastor.gitbook.io/introduction/), [cStor](https://github.com/openebs/cstor-operators) and [Jiva](https://docs.openebs.io/docs/next/jivaguide.html). 
+- 5 types of Local PV backed by [host path](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html), [device](https://docs.openebs.io/docs/next/uglocalpv-device.html), [ZFS](https://github.com/openebs/zfs-localpv), [LVM](https://github.com/openebs/lvm-localpv) and [Rawfile](https://github.com/openebs/rawfile-localpv), and 
+- [RWX volumes using NFS](https://github.com/openebs/dynamic-nfs-provisioner). 
+
+Here are some of the key highlights in this release.
+
+### New capabilities
+
+- OpenEBS is introducing a new CSI driver for dynamic provisioning of Jiva volumes. This driver is released as alpha and currently supports the following additional features compared to the non-CSI jiva volumes. 
+   * Jiva Replicas are backed by OpenEBS host path volumes
+   * Auto-remount of volumes that are marked read-only by iSCSI client due to intermittent network issues
+   * Handle the case of multi-attach error sometimes seen on on-premise clusters
+   * A custom resource for Jiva volumes to help with easy access to the volume status
+   
+  For instructions on how to set up and use the Jiva CSI driver, please see. https://github.com/openebs/jiva-operator.
+
+### Key Improvements
+
+- Several bug fixes to the Mayastor volumes along with improvements to the API documentation. See [Mayastor release notes](https://github.com/openebs/Mayastor/releases/tag/v0.7.1). 
+- Enhanced the [NFS Dynamic Provisioner](https://github.com/openebs/dynamic-nfs-provisioner) to support using Cluster IP for dynamically provisioned NFS server. It was observed that on some of the Kubernetes clusters the kubelet or the node trying to mount the NFS volume was unable to resolve the cluster local service. 
+- [ZFS Local PV](https://github.com/openebs/zfs-localpv) added support for resizing of the raw block volumes. 
+- [LVM Local PV](https://github.com/openebs/lvm-localpv) is enhanced with additional features and some key bug fixes like:
+  * Raw block volume support
+  * Snapshot support
+  * Ability to schedule based on the capacity of the volumes provisioned
+  * Ensure that LVM volume create and deletion functions are idempotent
+- NDM partition discovery was updated to fetch the device details from it parent block device.
+
+
+### Key Bug Fixes
+- Fixed an issue with cStor helm chart w.r.t to CVC operator service that was causing velero restores to fail. (https://github.com/openebs/cstor-operators/pull/239)
+- Fixed an issue with cStor CSPC validation causing failures in creating pools with ZFS supported compression algorithms. (https://github.com/openebs/cstor-operators/issues/237)
+- Fixed an issue with the cStor validation webhook not getting deleted in K8s 1.20+ when the OpenEBS namespace is deleted. https://github.com/openebs/openebs/issues/3338)
+- Fixed an issue with Jiva replicas attempting duplicate registration if the Pod IP of the replica changes. (https://github.com/openebs/openebs/issues/3323)
+- Fixed an issue where Jiva cleanup jobs can't be executed when cluster PSP is restrictive. (https://github.com/openebs/openebs/issues/3331)
+- Fixed an issue where cStor pool migration from SPC to CSPC could result in pool failure when migration takes time and the user tries to restart the SPC pool. (https://github.com/openebs/upgrade/issues/82)
+- Fixed an issue with NDM partition discovery causing errors when partitions were present on top of filtered devices like OS disk. (https://github.com/openebs/openebs/issues/3321)
+ 
+
+### Backward Incompatibilities
+
+- Kubernetes 1.17 or higher release is recommended as this release contains the following updates that will not be compatible with older Kubernetes releases. 
+  * The CRD version has been upgraded to `v1`. (Thanks to the efforts from @RealHarshThakur, @prateekpandey14, @akhilerm)
+  * The CSI components have been upgraded to: 
+      * k8s.gcr.io/sig-storage/csi-attacher:v3.1.0
+      * k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.1.0
+      * k8s.gcr.io/sig-storage/csi-provisioner:v2.1.0
+      * k8s.gcr.io/sig-storage/csi-resizer:v1.1.0
+      * k8s.gcr.io/sig-storage/csi-snapshotter:v4.0.0
+      * k8s.gcr.io/sig-storage/snapshot-controller:v4.0.0
+      * k8s.gcr.io/sig-storage/csi-snapshotter:v3.0.3 (for cStor CSI volumes)
+      * k8s.gcr.io/sig-storage/snapshot-controller:v3.0.3 (for cStor CSI volumes)
+
+- If you are upgrading from an older version of cStor Operators to this version, you will need to manually delete the cStor CSI driver object prior to upgrading. `kubectl delete csidriver cstor.csi.openebs.io`. For complete details on how to upgrade your cStor Operators, see https://github.com/openebs/upgrade/blob/master/docs/upgrade.md#cspc-pools.
+
+- The CRD API version has been updated for the cStor custom resources to v1. If you are upgrading via the helm chart, you might have to make sure the new CRDs are updated. https://github.com/openebs/cstor-operators/tree/master/deploy/helm/charts/crds
+
+- The e2e pipelines include upgrade testing only from 1.5 and higher releases to 2.6. If you are running on release older than 1.5, OpenEBS recommends you upgrade to the latest version as soon as possible. 
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.6.0)
+- [Upgrade Steps](/docs/next/upgrade.html)
+
+
+
 <br>
 
 ## 2.5.0 - Jan 15 2021
 
-<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
 
 ### New capabilities
 
