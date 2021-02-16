@@ -37,8 +37,8 @@ Here are some of the key highlights in this release.
   * Raw block volume support
   * Snapshot support
   * Ability to schedule based on the capacity of the volumes provisioned
-  * Ensure that LVM volume create and deletion functions are idempotent
-- NDM partition discovery was updated to fetch the device details from it parent block device.
+  * Ensure that LVM volume creation and deletion functions are idempotent
+- NDM partition discovery was updated to fetch the device details from it's parent block device.
 
 
 ### Key Bug Fixes
@@ -54,7 +54,6 @@ Here are some of the key highlights in this release.
 ### Backward Incompatibilities
 
 - Kubernetes 1.17 or higher release is recommended as this release contains the following updates that will not be compatible with older Kubernetes releases. 
-  * The CRD version has been upgraded to `v1`. (Thanks to the efforts from @RealHarshThakur, @prateekpandey14, @akhilerm)
   * The CSI components have been upgraded to: 
       * k8s.gcr.io/sig-storage/csi-attacher:v3.1.0
       * k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.1.0
@@ -65,9 +64,9 @@ Here are some of the key highlights in this release.
       * k8s.gcr.io/sig-storage/csi-snapshotter:v3.0.3 (for cStor CSI volumes)
       * k8s.gcr.io/sig-storage/snapshot-controller:v3.0.3 (for cStor CSI volumes)
 
-- If you are upgrading from an older version of cStor Operators to this version, you will need to manually delete the cStor CSI driver object prior to upgrading. `kubectl delete csidriver cstor.csi.openebs.io`. For complete details on how to upgrade your cStor Operators, see https://github.com/openebs/upgrade/blob/master/docs/upgrade.md#cspc-pools.
+- If you are upgrading from an older version of cStor operators to this version, you will need to manually delete the cStor CSI driver object prior to upgrading. `kubectl delete csidriver cstor.csi.openebs.io`. For complete details on how to upgrade your cStor operators, see https://github.com/openebs/upgrade/blob/master/docs/upgrade.md#cspc-pools.
 
-- The CRD API version has been updated for the cStor custom resources to v1. If you are upgrading via the helm chart, you might have to make sure the new CRDs are updated. https://github.com/openebs/cstor-operators/tree/master/deploy/helm/charts/crds
+- The CRD API version has been updated for the cStor custom resources to v1. If you are upgrading via the helm chart, you might have to make sure that the new CRDs are updated. https://github.com/openebs/cstor-operators/tree/master/deploy/helm/charts/crds
 
 - The e2e pipelines include upgrade testing only from 1.5 and higher releases to 2.6. If you are running on release older than 1.5, OpenEBS recommends you upgrade to the latest version as soon as possible. 
 
@@ -130,7 +129,7 @@ Here are some of the key highlights in this release.
      * k8s.gcr.io/sig-storage/csi-snapshotter:v3.0.3 (for cStor CSI volumes)
      * k8s.gcr.io/sig-storage/snapshot-controller:v3.0.3 (for cStor CSI volumes)
 
-- If you are upgrading from an older version of cStor Operators to this version, you will need to manually delete the cstor CSI driver object prior to upgrade. `kubectl delete csidriver cstor.csi.openebs.io`. For complete details on how to upgrade your cStor Operators, see https://github.com/openebs/upgrade/blob/master/docs/upgrade.md#cspc-pools.
+- If you are upgrading from an older version of cStor operators to this version, you will need to manually delete the cstor CSI driver object prior to upgrade. `kubectl delete csidriver cstor.csi.openebs.io`. For complete details on how to upgrade your cStor operators, see https://github.com/openebs/upgrade/blob/master/docs/upgrade.md#cspc-pools.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.5.0)
