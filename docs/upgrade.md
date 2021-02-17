@@ -6,7 +6,7 @@ sidebar_label: Upgrade
 ------
 
 
-Latest stable version of OpenEBS is 2.5.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/v2.5.0).  Upgrade to the latest OpenEBS 2.5.0 version is supported only from 1.0.0 and later. The steps for upgrading from these versions can be found [here](https://github.com/openebs/openebs/blob/master/k8s/upgrades/README.md).
+Latest stable version of OpenEBS is 2.6.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/v2.6.0).  Upgrade to the latest OpenEBS 2.6.0 version is supported only from 1.0.0 and later. The steps for upgrading from these versions can be found [here](https://github.com/openebs/openebs/blob/master/k8s/upgrades/README.md).
 
 
 Note: If you are upgrading Jiva volumes that are running in version 1.6 and 1.7, you must use these [pre-upgrade steps](https://github.com/openebs/charts/tree/gh-pages/scripts/jiva-tools) to check if your jiva volumes are impacted by [#2956](https://github.com/openebs/openebs/issues/2956). If they are, please reach out to [OpenEBS Community](/docs/next/support.html) for helping you with the upgrade.
