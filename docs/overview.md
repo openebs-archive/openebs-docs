@@ -72,7 +72,7 @@ Installing OpenEBS in your cluster is as simple as a few `kubectl` or `helm` com
 ### Replicated Volumes
 
 - [cStor](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
-- [Jiva](/docs/next/installation.html)
+- [Jiva](/docs/next/jivaguide.html)
 - [Mayastor](https://mayastor.gitbook.io/introduction/)
 
 
