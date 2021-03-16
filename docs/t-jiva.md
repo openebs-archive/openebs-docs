@@ -7,7 +7,7 @@ sidebar_label: Jiva
 
 <font size="5">General guidelines for troubleshooting</font>
 
-- Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
+- Contact <a href="/v260/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 - Search for similar issues added in this troubleshootiung section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
@@ -86,11 +86,11 @@ Perform following steps to restore the missing metadata file of internal snapsho
 
 ## See Also:
 
-### [FAQs](/docs/next/faq.html)
+### [FAQs](/v260/docs/next/faq.html)
 
-### [Seek support or help](/docs/next/support.html)
+### [Seek support or help](/v260/docs/next/support.html)
 
-### [Latest release notes](/docs/next/releases.html)
+### [Latest release notes](/v260/docs/next/releases.html)
 
 <br>
 <hr>

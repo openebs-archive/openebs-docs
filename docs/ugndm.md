@@ -7,7 +7,7 @@ sidebar_label: NDM
 
 <br>
 
-<img src="/docs/assets/svg/2-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
+<img src="/v260/docs/assets/svg/2-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
 
 <br>
 
@@ -234,6 +234,6 @@ any other unsupported device types, the blockdevice resource can be manually cre
 ## See Also:
 
 
-### [Understanding Node Disk Manager](/docs/next/ndm.html)
+### [Understanding Node Disk Manager](/v260/docs/next/ndm.html)
 
 

@@ -134,9 +134,9 @@ In addition, the job is set with a TTL to get cleaned up, if the Kubernetes vers
 
 ## See Also:
 
-### [FAQ](/docs/next/faq.html)
+### [FAQ](/v260/docs/next/faq.html)
 
-### [Troubleshooting](/docs/next/troubleshooting.html)
+### [Troubleshooting](/v260/docs/next/troubleshooting.html)
 
 <br>
 

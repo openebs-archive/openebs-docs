@@ -8,8 +8,6 @@ sidebar_label: Releases
 
 ## 2.6.0 - Feb 15 2021
 
-<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
-
 OpenEBS v2.6 contains some key enhancements and several fixes for the issues reported by the user community across all 9 types of OpenEBS volumes.
 
 - 3 replicated types - [Mayastor](https://mayastor.gitbook.io/introduction/), [cStor](https://github.com/openebs/cstor-operators) and [Jiva](https://docs.openebs.io/docs/next/jivaguide.html). 
@@ -72,7 +70,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.6.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v260/docs/next/upgrade.html)
 
 
 
@@ -133,7 +131,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.5.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v260/docs/next/upgrade.html)
 
 <br>
 
@@ -205,7 +203,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.4.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v260/docs/next/upgrade.html)
 
 
 <br>
@@ -264,7 +262,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.5.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v260/docs/next/upgrade.html)
 
 <br>
 
@@ -334,7 +332,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.4.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v260/docs/next/upgrade.html)
 
 
 <br>
@@ -368,7 +366,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.3.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v260/docs/next/upgrade.html)
 
 <br>
 
@@ -404,7 +402,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.2.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v260/docs/next/upgrade.html)
 
 <br>
 
@@ -432,7 +430,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.1.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v260/docs/next/upgrade.html)
 
 ## 2.0.0 - Aug 15 2020
 
@@ -458,7 +456,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.0.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v260/docs/next/upgrade.html)
 
 ## 1.12.0 - Jul 15 2020
 
@@ -486,7 +484,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.12.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v260/docs/next/upgrade.html)
 
 
 ## 1.11.0 - Jun 15 2020
@@ -516,7 +514,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.11.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v260/docs/next/upgrade.html)
 
 ## 1.10.0 - May 15 2020
 
@@ -671,13 +669,13 @@ Here are some of the key highlights in this release.
 
 ## See Also:
 
-### [OpenEBS Upgrade](/docs/next/upgrade.html)
+### [OpenEBS Upgrade](/v260/docs/next/upgrade.html)
 
-### [OpenEBS 0.x Releases](/docs/next/releases-0x.html)
+### [OpenEBS 0.x Releases](/v260/docs/next/releases-0x.html)
 
-### [OpenEBS FAQ](/docs/next/faq.html)
+### [OpenEBS FAQ](/v260/docs/next/faq.html)
 
-### [Container Attached Storage or CAS](/docs/next/cas.html)
+### [Container Attached Storage or CAS](/v260/docs/next/cas.html)
 
 <br><hr>
 
