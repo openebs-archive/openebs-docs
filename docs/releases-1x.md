@@ -8,6 +8,27 @@ sidebar_label: Releases 1.x
 
 <br>
 
+## 1.5.0 - Dec 15 2019
+
+**Change summary:**
+- Support BlockVolumeMode for OpenEBS Local PV backed by devices
+- Support ZFS as a filesystem type for OpenEBS ZFS Local PV.
+- Support for Block Device Replacement via the cStor YAML file (using new schema)
+- Support resizing and remounting of Volumes when using cStor CSI Driver
+- Support for generating of ARM builds for cStor Data Engine.
+- Introduce block device hierarchy to NDM. 4 fields `Parent` ,`Partitions`, `Holders` and `Slaves` are used in defining the hierarchy tree of a device. Also, all the dependent devices of the discovered block device will be logged during the initial udev scan to get the disk level hierarchy of each node in the cluster. 
+- Add support for applications to provision a "zfs" filesystem directly in the ZFS POOL storage which will get the optimal performance. 
+- Enhanced the cStor pools to handle auto scale down scenarios to avoid shutting down the node where cStor pool is running. This is achieved by adding cluster-autoscaler.kubernetes.io/safe-to-evict": "false"  to the annotation of each cStor pool pod.
+- Fixes an issue with liveness probe on `cstor-pool` container by adding a timeout setting for command execution. Setting the timeout value as 120 sec will kill the process if command exceeds more than 120 seconds.
+- Fixes an issue in cStor CSI volume unit size conversion while transitioning from PVC to CVC storage capacity the way kubernetes handles, by converting to Gi.
+- Fixes a bug where OpenEBS Local PV with hostpaths in OpenShift 4.1 environments was failing.
+- Fixes a vulnerability issue with default helper pod image by using the latest tag for helper pods so new version of OpenEBS will automatically get updated with new images. |
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/1.5.0)
+- [Upgrade Steps](/v150/docs/next/upgrade.html)
+
+
 ## 1.4.0 - Nov 15 2019
 
 **Change summary:**
