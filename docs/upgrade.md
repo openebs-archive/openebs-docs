@@ -8,6 +8,7 @@ sidebar_label: Upgrade
 
 Latest stable version of OpenEBS is 2.7.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/v2.7.0).  
 
+
 Upgrade to the latest OpenEBS 2.7.0 version is supported only from 1.0.0 and later. The steps for upgrading from can be found [here](https://github.com/openebs/openebs/blob/master/k8s/upgrades/README.md).
 
 

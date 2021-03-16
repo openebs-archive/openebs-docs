@@ -66,7 +66,10 @@ Here are some of the key highlights in this release.
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.6.0)
 - [Upgrade Steps](/docs/next/upgrade.html)
 
+
 ## 2.6.0 - Feb 15 2021
+
+<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
 
 OpenEBS v2.6 contains some key enhancements and several fixes for the issues reported by the user community across all 9 types of OpenEBS volumes.
 
@@ -701,6 +704,7 @@ Here are some of the key highlights in this release.
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/1.6.0)
 - [Upgrade Steps](/v160/docs/next/upgrade.html)
+
 
 
 
