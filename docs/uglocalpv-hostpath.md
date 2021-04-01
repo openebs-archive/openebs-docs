@@ -124,12 +124,6 @@ You can skip this section if you have already installed OpenEBS.
      helm install --namespace openebs --name openebs openebs/openebs
      ```
 
-### (Optional) Custom Node Labelling
-
-You can use custom node affinity labels instead of hostname in the hostpath provisioner. This
-helps in cases where the hostname changes when the node is removed and added back with the disks
-still intact. 
-For eg: If the custom node label is `openebs.io/custom-node-unique-id`, it can be added to the storage class config.
 
 
 ## Create StorageClass
@@ -152,12 +146,26 @@ The default Storage Class is called `openebs-hostpath` and its `BasePath` is con
            value: hostpath
          - name: BasePath
            value: /var/local-hostpath
-         - name: NodeAffinityLabel
-           value: "openebs.io/custom-node-unique-id"
    provisioner: openebs.io/local
    reclaimPolicy: Delete
    volumeBindingMode: WaitForFirstConsumer
    ```
+#### (Optional) Custom Node Labelling
+
+You can use custom node affinity labels instead of hostname in the hostpath provisioner. This
+helps in cases where the hostname changes when the node is removed and added back with the disks
+still intact. 
+For eg: If the custom node label is `openebs.io/custom-node-unique-id`, it can be added to the storage class config under <code>metadata.annotations</code>.
+
+```
+   metadata:
+     name: local-hostpath
+     annotations:
+       openebs.io/cas-type: local
+       cas.openebs.io/config: |
+         - name: NodeAffinityLabel
+           value: "openebs.io/custom-node-unique-id"
+```
 
    :::note 
    The `volumeBindingMode` MUST ALWAYS be set to `WaitForFirstConsumer`. `volumeBindingMode: WaitForFirstConsumer` instructs Kubernetes to initiate the creation of PV only after Pod using PVC is scheduled to the node.
