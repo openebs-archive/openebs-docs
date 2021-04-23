@@ -8,8 +8,6 @@ sidebar_label: Releases
 
 ## 2.7.0 - Mar 16 2021
 
-<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
-
 OpenEBS v2.7 is a maintenance release geared towards preparing for better structuring of the code and improving on the E2e frameworks. This release also includes some key user-requested bug fixes and enhancements. 
 
 The latest release versions of each of the engine are as follows:
@@ -64,7 +62,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.6.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v270/docs/next/upgrade.html)
 
 
 ## 2.6.0 - Feb 15 2021
@@ -133,7 +131,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.6.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v270/docs/next/upgrade.html)
 
 
 
@@ -194,7 +192,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.5.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v270/docs/next/upgrade.html)
 
 <br>
 
@@ -266,7 +264,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.4.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v270/docs/next/upgrade.html)
 
 
 <br>
@@ -325,7 +323,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.5.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v270/docs/next/upgrade.html)
 
 <br>
 
@@ -395,7 +393,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.4.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v270/docs/next/upgrade.html)
 
 
 <br>
@@ -429,7 +427,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.3.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v270/docs/next/upgrade.html)
 
 <br>
 
@@ -465,7 +463,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.2.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v270/docs/next/upgrade.html)
 
 <br>
 
@@ -493,7 +491,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.1.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v270/docs/next/upgrade.html)
 
 ## 2.0.0 - Aug 15 2020
 
@@ -519,7 +517,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.0.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v270/docs/next/upgrade.html)
 
 ## 1.12.0 - Jul 15 2020
 
@@ -547,7 +545,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.12.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v270/docs/next/upgrade.html)
 
 
 ## 1.11.0 - Jun 15 2020
@@ -577,7 +575,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.11.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v270/docs/next/upgrade.html)
 
 ## 1.10.0 - May 15 2020
 
@@ -712,15 +710,15 @@ Here are some of the key highlights in this release.
 
 ## See Also:
 
-### [OpenEBS Upgrade](/docs/next/upgrade.html)
+### [OpenEBS Upgrade](/v270/docs/next/upgrade.html)
 
-### [Deprecated OpenEBS 1.x Releases](/docs/next/releases-0x.html)
+### [Deprecated OpenEBS 1.x Releases](/v270/docs/next/releases-0x.html)
 
-### [Deprecated OpenEBS 0.x Releases](/docs/next/releases-0x.html)
+### [Deprecated OpenEBS 0.x Releases](/v270/docs/next/releases-0x.html)
 
-### [OpenEBS FAQ](/docs/next/faq.html)
+### [OpenEBS FAQ](/v270/docs/next/faq.html)
 
-### [Container Attached Storage or CAS](/docs/next/cas.html)
+### [Container Attached Storage or CAS](/v270/docs/next/cas.html)
 
 <br><hr>
 

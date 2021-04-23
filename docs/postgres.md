@@ -5,7 +5,7 @@ sidebar_label: PostgreSQL
 ---
 ------
 
-<img src="/docs/assets/o-postgres.png" alt="OpenEBS and PostgreSQL" style="width:400px;">	
+<img src="/v270/docs/assets/o-postgres.png" alt="OpenEBS and PostgreSQL" style="width:400px;">	
 
 <br>
 
@@ -39,7 +39,7 @@ OpenEBS is deployed under PostgreSQL for a variety of reasons discussed below.  
 
 <br>
 
-<img src="/docs/assets/svg/postgresql-deployment.svg" alt="OpenEBS and PostgreSQL" style="width:100%;">
+<img src="/v270/docs/assets/svg/postgresql-deployment.svg" alt="OpenEBS and PostgreSQL" style="width:100%;">
 
 As shown above, OpenEBS volumes need to be configured with single replica. This configuration works fine when the nodes (hence the OpenEBS cStor pool) is deployed across Kubernetes zones.
 
@@ -55,11 +55,11 @@ As shown above, OpenEBS volumes need to be configured with single replica. This 
 
 1. **Install OpenEBS**
 
-   If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
+   If OpenEBS is not installed in your K8s cluster, this can done from [here](/v270/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
 2. **Configure cStor Pool**
 
-   If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). As PostgreSQL is a StatefulSet application, it requires single storage replication factor. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
+   If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/v270/docs/next/ugcstor.html#creating-cStor-storage-pools). As PostgreSQL is a StatefulSet application, it requires single storage replication factor. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step. Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below.
 
 4. **Create Storage Class**
 
@@ -113,7 +113,7 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-In some cases the cStor pool may not be dedicated to only the PostgreSQL database. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool). 
+In some cases the cStor pool may not be dedicated to only the PostgreSQL database. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/v270/docs/next/ugcstor.html#monitor-pool). 
 
 
 
@@ -190,11 +190,11 @@ reclaimPolicy: Delete
 
 <br>
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v270/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v270/docs/next/usecases.html)
 
-### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
+### [cStor pools overview](/v270/docs/next/cstor.html#cstor-pools)
 
 
 

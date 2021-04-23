@@ -172,7 +172,7 @@ If you have a Kubernetes environment, you can deploy OpenEBS using the following
 
 `kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml`
 
-You can then begin running a workload against OpenEBS. There is a large and growing number of workload that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. If you need additional help, get in touch with <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a>.
+You can then begin running a workload against OpenEBS. There is a large and growing number of workload that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. If you need additional help, get in touch with <a href="/v270/docs/next/support.html" target="_blank">OpenEBS Community</a>.
  
 
 <a href="#top">Go to top</a>
@@ -502,7 +502,7 @@ OpenEBS have three storage Engines, Jiva, cStor and LocalPV which can be used to
 
 Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted). 
 
-For LocalPV based on device, details of disk mount status can be obtained [here](/docs/next/ndm.html).
+For LocalPV based on device, details of disk mount status can be obtained [here](/v270/docs/next/ndm.html).
 
 cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes which does not have any filesystem and it should be unmounted on the Node. It is recommended to wipe out the disk if it was previously used. 
 
@@ -564,12 +564,12 @@ As of 0.8.0, the user is allowed to create PVCs that cross the available capacit
 <h3><a class="anchor" aria-hidden="true" id="what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method"></a>What is the difference between cStor Pool creation using manual method and auto method?</h3>
 
 
-By using manual method, you must give the selected disk name which is listed by NDM. This details has to be entered in the StoragePoolClaim YAML under `diskList`. See [storage pool](/docs/next/ugcstor.html#creating-cStor-storage-pools) for more info. 
+By using manual method, you must give the selected disk name which is listed by NDM. This details has to be entered in the StoragePoolClaim YAML under `diskList`. See [storage pool](/v270/docs/next/ugcstor.html#creating-cStor-storage-pools) for more info. 
 It is also possible to change `maxPools` count and `poolType` in the StoragePoolClaim YAML. 
 Consider you have 4 nodes with 2 disks each. You can select `maxPools` count as 3, then cStor pools will be created in any 3 nodes out of 4. The remaining disks belonging to 4th Node can be used for horizontal scale up in future.
 Advantage is that there is no restriction in the number of disks for the creation of cStor storage pool using `striped` or `mirrored` Type.
 
-By auto method, its not need to provide the disk details in the StoragePoolClaim YAML. You have to specify `maxPools` count to limit the storage pool creation in OpenEBS cluster and `poolType` for the type of storage pool such as Mirrored or Striped.  See [storage pool](/docs/next/ugcstor.html#creating-cStor-storage-pools) for more info.
+By auto method, its not need to provide the disk details in the StoragePoolClaim YAML. You have to specify `maxPools` count to limit the storage pool creation in OpenEBS cluster and `poolType` for the type of storage pool such as Mirrored or Striped.  See [storage pool](/v270/docs/next/ugcstor.html#creating-cStor-storage-pools) for more info.
 
 But the following are the limitations with this approach.
 
@@ -596,7 +596,7 @@ If `replicaCount` is 2 in StorageClass, then 2 replicas of an OpenEBS volume wil
 <h3><a class="anchor" aria-hidden="true" id="create-cstor-volume-single-disk-pool"></a>How to create a cStor volume on single cStor disk pool?</h3>
 
 
-You can give the maxPools count as 1 in StoragePoolClaim YAML and `replicaCount` as `1` in StorageClass YAML. In the following sample SPC and SC YAML, cStor pool is created using auto method. After applying this YAML, one cStor pool named cstor-disk will be created only in one Node and `StorageClass` named `openebs-cstor-disk`. Only requirement is that one node has at least one disk attached but unmounted. See [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume) to understand more about disk mount status.
+You can give the maxPools count as 1 in StoragePoolClaim YAML and `replicaCount` as `1` in StorageClass YAML. In the following sample SPC and SC YAML, cStor pool is created using auto method. After applying this YAML, one cStor pool named cstor-disk will be created only in one Node and `StorageClass` named `openebs-cstor-disk`. Only requirement is that one node has at least one disk attached but unmounted. See [here](/v270/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume) to understand more about disk mount status.
 
 ```
 ---
@@ -727,11 +727,11 @@ No. It is recommended to create different BDC name for claiming an unclaimed dis
 
 ## See Also:
 
-### [Creating cStor Pool](/docs/next/ugcstor.html#creating-cStor-storage-pools)
+### [Creating cStor Pool](/v270/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
-### [Provisioning cStor volumes](/docs/next/ugcstor.html#provisioning-a-cStor-volume)
+### [Provisioning cStor volumes](/v270/docs/next/ugcstor.html#provisioning-a-cStor-volume)
 
-### [Uninstall](/docs/next/uninstall.html)
+### [Uninstall](/v270/docs/next/uninstall.html)
 
 <br>
 

@@ -18,7 +18,7 @@ The community e2e pipelines verify upgrade testing only from non-deprecated rele
 :::
 
 :::note
-If you are upgrading Jiva volumes that are running in version 1.6 and 1.7, you must use these [pre-upgrade steps](https://github.com/openebs/charts/tree/gh-pages/scripts/jiva-tools) to check if your jiva volumes are impacted by [#2956](https://github.com/openebs/openebs/issues/2956). If they are, please reach out to [OpenEBS Community](/docs/next/support.html) for helping you with the upgrade.
+If you are upgrading Jiva volumes that are running in version 1.6 and 1.7, you must use these [pre-upgrade steps](https://github.com/openebs/charts/tree/gh-pages/scripts/jiva-tools) to check if your jiva volumes are impacted by [#2956](https://github.com/openebs/openebs/issues/2956). If they are, please reach out to [OpenEBS Community](/v270/docs/next/support.html) for helping you with the upgrade.
 :::
 
 
@@ -36,11 +36,11 @@ To upgrade to the latest version from your current version, you have to follow t
 
 ## See Also:
 
-### [See Release Notes](/docs/next/releases.html)
+### [See Release Notes](/v270/docs/next/releases.html)
 
-### [Join our Community](/docs/next/support.html)
+### [Join our Community](/v270/docs/next/support.html)
 
-### [Checkout Troubleshooting guides](/docs/next/troubleshooting.html)
+### [Checkout Troubleshooting guides](/v270/docs/next/troubleshooting.html)
 
 
 <br>

@@ -19,7 +19,7 @@ The rest of this document contains instructions about the NFS server provisioner
 
 <br><br>
 
-<img src="/docs/assets/svg/rwm-single.svg" alt="OpenEBS and NFS provisioner" style="width:100%;">
+<img src="/v270/docs/assets/svg/rwm-single.svg" alt="OpenEBS and NFS provisioner" style="width:100%;">
 
 <br>	
 
@@ -44,13 +44,13 @@ Below are advantage of using NFS provisioner over OpenEBS cStor volumes
 
 **Select or create a cStor pool**
 
-Select or <a href="/docs/next/ugcstor.html#creating-cStor-storage-pools">create a cStor pool</a> that satisfies the performance, and availability requirements
+Select or <a href="/v270/docs/next/ugcstor.html#creating-cStor-storage-pools">create a cStor pool</a> that satisfies the performance, and availability requirements
 
 <br>
 
 **Select or create a cStor storage Class**
 
-<a href="/docs/next/ugcstor.html#creating-cStor-storage-class">Create a storage class</a> to point to the above selected pool and also select number of replicas and default size of the volume. 
+<a href="/v270/docs/next/ugcstor.html#creating-cStor-storage-class">Create a storage class</a> to point to the above selected pool and also select number of replicas and default size of the volume. 
 
 <br>
 
@@ -104,7 +104,7 @@ When multiple NFS shares are needed, use multiple NFS provisioners. Each NFS ser
 
 
 
-<img src="/docs/assets/svg/rwm-multiple.svg" alt="OpenEBS and NFS provisioner" style="width:100%;">
+<img src="/v270/docs/assets/svg/rwm-multiple.svg" alt="OpenEBS and NFS provisioner" style="width:100%;">
 
 
 
@@ -120,11 +120,11 @@ When multiple NFS shares are needed, use multiple NFS provisioners. Each NFS ser
 
 ## See Also:
 
-### [cStor Overview](/docs/next/cstor.html)
+### [cStor Overview](/v270/docs/next/cstor.html)
 
-### [cStorPools](/docs/next/ugcstor.html#creating-cStor-storage-pools)
+### [cStorPools](/v270/docs/next/ugcstor.html#creating-cStor-storage-pools)
 
-### [Setting up Object Storage](/docs/next/minio.html)
+### [Setting up Object Storage](/v270/docs/next/minio.html)
 
 <br>
 

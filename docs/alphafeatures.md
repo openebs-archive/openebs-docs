@@ -7,7 +7,7 @@ sidebar_label: Alpha Features
 
 
 
-This page provides an overview of OpenEBS components and features presently in Alpha version and under active development. These features are not recommended to be used in production. We suggest you to familiarize and try these features on test clusters and reach out to [OpenEBS Community](/docs/next/support.html) if you have any queries, feedback or need help on these features.
+This page provides an overview of OpenEBS components and features presently in Alpha version and under active development. These features are not recommended to be used in production. We suggest you to familiarize and try these features on test clusters and reach out to [OpenEBS Community](/v270/docs/next/support.html) if you have any queries, feedback or need help on these features.
 
 The list of alpha features include:
 - [Dynamic Local PV - Rawfile](#dynamic-local-pv-rawfile)
