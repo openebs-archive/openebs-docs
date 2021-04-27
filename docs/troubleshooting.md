@@ -13,6 +13,7 @@ sidebar_label: Overview
 	-	<a href="/docs/next/t-ndm.html" target="_blank">Troubleshooting NDM</a>.
 	-	<a href="/docs/next/t-jiva.html" target="_blank">Troubleshooting Jiva</a>.
 	-	<a href="/docs/next/t-cstor.html" target="_blank">Troubleshooting cStor</a>.
+	-	<a href="/docs/next/t-mayastor.html" target="_blank">Troubleshooting Mayastor</a>.
 	-	<a href="/docs/next/t-localpv.html" target="_blank">Troubleshooting LocalPV</a>.
 -	Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 -	Search for similar issues on <a href="https://github.com/openebs/openebs/issues" target="_blank">OpenEBS GitHub repository</a>.
@@ -222,7 +223,9 @@ Set the reboot timer schedule at different time i.e staggered at various interva
 
 ### [Troubleshooting cStor](/docs/next/t-cstor.html)
 
-### [Troubleshooting cStor](/docs/next/t-localpv.html)
+### [Troubleshooting Local PV](/docs/next/t-localpv.html)
+
+### [Troubleshooting Mayastor](/docs/next/t-mayastor.html)
 
 ### [FAQs](/docs/next/faq.html)
 

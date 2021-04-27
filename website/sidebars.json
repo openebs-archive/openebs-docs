@@ -15,6 +15,7 @@
 	"ndm",
 	"cstor",
 	"jiva", 
+	"mayastor-concept",
 	"localpv", 
 	"rwm"
 	],
@@ -24,7 +25,8 @@
 	"installation", 
 	"ugndm", 
 	"ugcstor", 
-	"jivaguide", 
+	"jivaguide",
+	"Mayastor", 
 	"uglocalpv-hostpath", 
 	"uglocalpv-device", 
 	"mayactl", 
@@ -52,7 +54,8 @@
 	"t-ndm",
 	"t-volume-provisioning",
 	"t-jiva",
-	"t-cstor"
+	"t-cstor",
+	"t-mayastor"
 	],
     "Additional Info": [
 	"performance", 
