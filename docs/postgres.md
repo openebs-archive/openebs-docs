@@ -26,23 +26,24 @@ We will use GKE, where we will install Stackgres PostgreSQL with OpenEBS storage
 
 ## Configuration workflow
 
-1. [Install OpenEBS](/docs/next/minio.html#install-openebs)
-2. [Select OpenEBS storage engine](/docs/next/minio.html#select-openebs-storage-engine)
-3. [Configure OpenEBS Local PV StorageClass](/docs/next/minio.html#configure-openebs-local-pv-storageclass)
-4. [Install the MinIO plugin](/docs/next/minio.html#install-the-minio-plugin)
-5. [Install the MinIO operator deployment](/docs/next/minio.html#install-the-minio-operator-deployment)
-6. [Install the MinIO cluster](/docs/next/minio.html#install-the-minio-cluster)
-7. [Access MinIO console](/docs/next/minio.html#access-minio-console)
+1. [Install OpenEBS](/docs/next/postgres.html#install-openebs)
+2. [Select OpenEBS storage engine](/docs/next/postgres.html#select-openebs-storage-engine)
+3. [Configure OpenEBS Local PV StorageClass](/docs/next/postgres.html#configure-openebs-local-pv-storageclass)
+4. [Installing StackGres PostgreSQL Operator](/docs/next/postgres.html#installing-stackgres-postgresql-operator)
+5. [Installing PostgreSQL Database](/docs/next/postgres.html#installing-postgresql-database)
+6. [Accessing PostgreSQL database](/docs/next/postgres.html#accessing-postgresql-database)
+
+
 
 ### Install OpenEBS
 
-If OpenEBS is not installed in your K8s cluster, this can be done from [here](https://docs.openebs.io/docs/next/overview.html). If OpenEBS is already installed, go to the next step.
+If OpenEBS is not installed in your K8s cluster, this can be done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step.
 
 ### Select OpenEBS storage engine
 
-A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and chooses the right engine that suits your type of application requirements and storage available on your Kubernetes nodes. More information can be read from [here](https://docs.openebs.io/docs/next/overview.html#openebs-storage-engines).
+A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and chooses the right engine that suits your type of application requirements and storage available on your Kubernetes nodes. More information can be read from [here](/docs/next/overview.html#types-of-openebs-storage-engines).
 
-In this document, it is mentioned about the installation of StackGres PostgreSQL using OpenEBS Local PV device. 
+In this document, we are deploying StackGres PostgreSQL using OpenEBS Local PV device. 
 
 ### Configure OpenEBS Local PV StorageClass
 
@@ -50,9 +51,11 @@ There are 2 ways to use OpenEBS Local PV.
 
 - `openebs-hostpath` - Using this option, it will create Kubernetes Persistent Volumes that will store the data into OS host path directory at: /var/openebs/<"postgresql-pv-name">/. Select this option, if you don’t have any additional block devices attached to Kubernetes nodes. You would like to customize the directory where data will be saved, create a new OpenEBS Local PV storage class using these [instructions](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass). 
 
-- `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a StackGres PostgreSQL application pod. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](https://docs.openebs.io/docs/next/ugndm.html). 
+- `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a StackGres PostgreSQL application pod. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](/docs/next/uglocalpv-device.html#optional-block-device-tagging). 
 
 The Storage Class `openebs-device` has been chosen to deploy StackGres PostgreSQL in the Kubernetes cluster.
+
+**Note:** Ensure that you have a disk with the required capacity is added to the corresponding nodes. In this example, we have added 100G disks to each node.
 
 ### Installing StackGres PostgreSQL Operator
 
@@ -62,32 +65,30 @@ In this section, we will install the StackGres operator. We will later deploy th
 $ kubectl apply -f https://stackgres.io/downloads/stackgres-k8s/stackgres/1.0.0-alpha1/stackgres-operator-demo.yml
 ```
 
-
-
-Once it’s ready, you will see that the two pods are Running and the create certificate job is Complete. 
+Once it’s ready, you will see that the two pods are  `Running` and the other pods are in `Completed` state. 
 
 ```
 $ kubectl get pod -n stackgres
 
 NAME                                           READY   STATUS      RESTARTS   AGE
-stackgres-operator-7c968b8d85-jk6rt            1/1     Running     0          92s
-stackgres-operator-bootstrap-kxqr8             0/1     Completed   0          119s
-stackgres-operator-conversion-webhooks-crgm2   0/1     Completed   0          2m1s
-stackgres-operator-crd-upgrade-2jjk2           0/1     Completed   0          2m
-stackgres-operator-create-certificate-rm7zr    0/1     Completed   0          119s
-stackgres-operator-upgrade-n4t2d               0/1     Completed   0          118s
-stackgres-operator-wait-q6xbp                  0/1     Completed   0          117s
-stackgres-restapi-67874d859b-xszdg             2/2     Running     0          83s
+stackgres-operator-78d57d4f55-vtlhj            1/1     Running     0          3m29s
+stackgres-operator-bootstrap-9p9zs             0/1     Completed   0          3m58s
+stackgres-operator-conversion-webhooks-jdhxx   0/1     Completed   0          4m
+stackgres-operator-crd-upgrade-5fx7c           0/1     Completed   0          3m59s
+stackgres-operator-create-certificate-r75cn    0/1     Completed   0          3m58s
+stackgres-operator-upgrade-wn79r               0/1     Completed   0          3m57s
+stackgres-operator-wait-mv6ss                  0/1     Completed   0          3m56s
+stackgres-restapi-58c7db8b89-j8xkz             2/2     Running     0          3m22s
 ```
 
-Users can manage the StackGres PostgreSQL database using a web console. This can be done accessing the rest api service. Get the StackGres PostgreSQL service using the following command.
+Users can manage the StackGres PostgreSQL database using a web console. This can be done accessing the Rest API service. Get the StackGres PostgreSQL service using the following command.
 
 ```
 $ kubectl get svc -n stackgres
 
-NAME                 TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)         AGE
-stackgres-operator   ClusterIP      10.0.7.15     <none>          443/TCP         173m
-stackgres-restapi    LoadBalancer   10.0.11.102   35.232.159.62   443:30493/TCP   173m
+NAME                 TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)         AGE
+stackgres-operator   ClusterIP      10.8.10.219   <none>           443/TCP         4m26s
+stackgres-restapi    LoadBalancer   10.8.12.173   35.225.210.254   443:30098/TCP   4m25s
 ```
 
 
@@ -96,7 +97,7 @@ Now, manage the PostgreSQL cluster using the Load Balancer IP on your web browse
 
 In this example following is the web address.
 
-https://35.232.159.62/
+https://35.225.210.254/
 
 Default username is **admin** 
 
@@ -124,14 +125,14 @@ spec:
   postgresVersion: 'latest'
   pods:
     persistentVolume:
-      size: '100Gi'
+      size: '90Gi'
       storageClass: openebs-device
   prometheusAutobind: false
 ```
 
-In the above PostgresSQL cluster configuration file, the Storage Class used is **openebs-device** with a capacity of **100Gi**. So while scheduling Postgres pod, NDM will assign a matched block device which matches as per the requested capacity.
+In the above PostgreSQL cluster configuration file, the Storage Class used is **openebs-device** with a capacity of **90Gi**. So while scheduling Postgres pod, NDM will assign a matched block device which matches as per the requested capacity.
 
-Install StakcGres PostgreSQL application using the following way.
+Install StackGres PostgreSQL application using the following way.
 
 ```
 $ kubectl apply -f stackgres.yaml
@@ -142,12 +143,11 @@ sgcluster.stackgres.io/app1-db-sc created
 Verify the PostgreSQL cluster creation is successfully running under the default namespace.
 
 ```
-$kubectl get pod -l cluster=true
+$ kubectl get pod -l cluster=true
 
 NAME        READY   STATUS    RESTARTS   AGE
-app1-db-0   5/5     Running   0          9m35s
-app1-db-1   5/5     Running   0          8m34s
-
+app1-db-0   5/5     Running   0          2m19s
+app1-db-1   5/5     Running   0          66s
 ```
 
 Verify the PostgreSQL persistent volume details.
@@ -158,45 +158,39 @@ PVC:
 $ kubectl get pvc -l cluster=true
 
 NAME                     STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS     AGE
-app1-db-data-app1-db-0   Bound    pvc-2d5cf956-d237-4a10-a303-0c8fa2ae231b   100Gi      RWO            openebs-device   12m
-app1-db-data-app1-db-1   Bound    pvc-d6e3c174-c1b2-4232-8701-d192d1f89c10   100Gi      RWO            openebs-device   11m
-
+app1-db-data-app1-db-0   Bound    pvc-259d26b7-75f5-4b8f-8571-b7fda80cd2ab   90Gi       RWO            openebs-device   94s
+app1-db-data-app1-db-1   Bound    pvc-5f4d965b-3dfe-477a-a48d-ed3f4ab6743d   90Gi       RWO            openebs-device   21s
 ```
 
 PV:
 
 ```
 $ kubectl get pv
-NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                       STORAGECLASS     REASON   AGE
-pvc-2a7abe3c-a57c-42cc-aa19-6479b3f4eb9d   90Gi       RWO            Delete           Bound    default/minio                               cstorsc-uqijk             158m
-pvc-2d5cf956-d237-4a10-a303-0c8fa2ae231b   100Gi      RWO            Delete           Bound    default/app1-db-data-app1-db-0              openebs-device            12m
-pvc-d6e3c174-c1b2-4232-8701-d192d1f89c10   100Gi      RWO            Delete           Bound    default/app1-db-data-app1-db-1              openebs-device            11m
-pvc-df4141b9-253b-46ee-a51e-2ff11af71a1c   2Gi        RWO            Delete           Bound    maya-system/queue-data-octane-collector-0   standard                  5h35m
+
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                            STORAGECLASS     REASON   AGE
+pvc-259d26b7-75f5-4b8f-8571-b7fda80cd2ab   90Gi       RWO            Delete           Bound    default/app1-db-data-app1-db-0   openebs-device            108s
+pvc-5f4d965b-3dfe-477a-a48d-ed3f4ab6743d   90Gi       RWO            Delete           Bound    default/app1-db-data-app1-db-1   openebs-device            35s
 ```
 
 Verify PostgreSQL service status.
 
 ```
-kubectl get services -l cluster=true
-NAME               TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)             AGE
-app1-db-primary    ClusterIP   10.0.5.67    <none>        5432/TCP,5433/TCP   13m
-app1-db-replicas   ClusterIP   10.0.10.94   <none>        5432/TCP,5433/TCP   13m
+$ kubectl get services -l cluster=true
 
+NAME               TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)             AGE
+app1-db-primary    ClusterIP   10.8.3.57     <none>        5432/TCP,5433/TCP   2m38s
+app1-db-replicas   ClusterIP   10.8.13.224   <none>        5432/TCP,5433/TCP   2m38s
 ```
 
-Verify whether 100G disks are claimed for provisioning PostgreSQL clusters. Since we have mentioned 2 replicas in Postgres Cluster, any two 100G block devices will be claimed.
+Since we have mentioned 2 replicas and capacity with 90G in Postgres cluster spec, any two disks  with capacity more than 90G from the scheduled node will be claimed. In this case, 100G disks are present in all the nodes in the cluster. Verify whether 100G disks are claimed for provisioning PostgreSQL clusters. 
 
 ```
 $ kubectl get bd -n openebs
 
-NAME                                           NODENAME                                            SIZE           CLAIMSTATE   STATUS   AGE
-blockdevice-07708842c18595b910df197691338e33   gke-stackgres-postgres-default-pool-845e7885-8glz   107373116928   Claimed      Active   5h29m
-blockdevice-4fcab278e2b7bd52818f7d38cac3635f   gke-stackgres-postgres-default-pool-845e7885-8c78   402653184000   Claimed      Active   5h35m
-blockdevice-5f01000e0a89744a253bcab496bda5ab   gke-stackgres-postgres-default-pool-845e7885-g70k   402653184000   Claimed      Active   5h35m
-blockdevice-bd2377313987cc2b3445fa8408cd96f5   gke-stackgres-postgres-default-pool-845e7885-8glz   402653184000   Unclaimed    Active   5h35m
-blockdevice-cef1e4f46d3080a99e33c7a0cf0c7cf8   gke-stackgres-postgres-default-pool-845e7885-g70k   107373116928   Claimed      Active   5h10m
-blockdevice-dd69bc638d9a923fa4cba4fad976b7d1   gke-stackgres-postgres-default-pool-845e7885-g70k   2147483648     Unclaimed    Active   5h35m
-blockdevice-dfeaea390acff56321182de872748082   gke-stackgres-postgres-default-pool-845e7885-8c78   107373116928   Claimed      Active   5h29m
+NAME                                           NODENAME                                     SIZE           CLAIMSTATE   STATUS   AGE
+blockdevice-1fcc50ef4b3550ada3f82fe90102daca   gke-ranjith-doc-default-pool-41db3a16-t4d0   107373116928   Claimed      Active   17m
+blockdevice-58c88ac19e09084c6f71178130c20ba8   gke-ranjith-doc-default-pool-41db3a16-rqbt   107373116928   Unclaimed    Active   19m
+blockdevice-8fd1127f57cf19b01e4da75110ae488a   gke-ranjith-doc-default-pool-41db3a16-81tl   107373116928   Claimed      Active   19m
 ```
 
 Verify the master and slave configuration.
@@ -204,15 +198,15 @@ Verify the master and slave configuration.
 ```
 $ kubectl exec -ti "$(kubectl get pod --selector app=StackGresCluster,cluster=true -o name | head -n 1)" -c patroni -- patronictl list
 
-+ Cluster: app1-db (6936142882259259465) ---------+----+-----------+
-|   Member  |       Host       |  Role  |  State  | TL | Lag in MB |
-+-----------+------------------+--------+---------+----+-----------+
-| app1-db-0 | 10.124.1.23:7433 | Leader | running |  1 |           |
-| app1-db-1 | 10.124.0.17:7433 |        | running |  1 |         0 |
-+-----------+------------------+--------+---------+----+-----------+
++ Cluster: app1-db (6956175936947793994) ------+----+-----------+
+|   Member  |      Host     |  Role  |  State  | TL | Lag in MB |
++-----------+---------------+--------+---------+----+-----------+
+| app1-db-0 | 10.4.1.9:7433 | Leader | running |  1 |           |
+| app1-db-1 | 10.4.2.8:7433 |        | running |  1 |         0 |
++-----------+---------------+--------+---------+----+-----------+
 ```
 
-Out of all of the Postgres servers, one will be elected as the master, the rest will remain as read-only replicas.
+Out of all of the PostgreSQL servers, one will be elected as the master, the rest will remain as read-only replicas.
 
 ### Accessing PostgreSQL database
 
@@ -221,9 +215,9 @@ Get the details of PostgreSQL database service.
 ```
 $ kubectl get services -l cluster=true
 
-NAME               TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)             AGE
-app1-db-primary    ClusterIP   10.0.5.67    <none>        5432/TCP,5433/TCP   15m
-app1-db-replicas   ClusterIP   10.0.10.94   <none>        5432/TCP,5433/TCP   15m
+NAME               TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)             AGE
+app1-db-primary    ClusterIP   10.8.3.57     <none>        5432/TCP,5433/TCP   5m47s
+app1-db-replicas   ClusterIP   10.8.13.224   <none>        5432/TCP,5433/TCP   5m47s
 ```
 
 Install *postgresql-client* on your master node or a node from where you have access to the Kubernetes cluster.
@@ -277,14 +271,13 @@ $ CREATE TABLE COMPANY(
    SALARY         REAL,
    JOIN_DATE	  DATE
 );
+CREATE TABLE
 
-# CREATE TABLE
+app=# INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,JOIN_DATE) VALUES (1, 'Paul', 32, 'California', 20000.00,'2001-07-13');
 
-$ INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,JOIN_DATE) VALUES (1, 'Paul', 32, 'California', 20000.00,'2001-07-13');
+app=# INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,JOIN_DATE) VALUES (2, 'Allen', 25, 'Texas', '2007-12-13');
 
-$ INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,JOIN_DATE) VALUES (2, 'Allen', 25, 'Texas', '2007-12-13');
-
-$ INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,JOIN_DATE) VALUES (3, 'Teddy', 23, 'Norway', 20000.00, DEFAULT );
+app=# INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY,JOIN_DATE) VALUES (3, 'Teddy', 23, 'Norway', 20000.00, DEFAULT );
 
 app=# \d
           List of relations
@@ -300,6 +293,8 @@ app=# select * from public.company;
   2 | Allen |  25 | Texas                                              |        | 2007-12-13
   3 | Teddy |  23 | Norway                                             |  20000 |
 (3 rows)
+
+app-# \q
 ```
 
 <br>
@@ -320,3 +315,4 @@ app=# select * from public.company;
 
 <hr>
 <br>
+
