@@ -1,5 +1,5 @@
 ---
-id: mayastor-concept
+id: mayastor
 title: Mayastor
 sidebar_label: Mayastor
 ---

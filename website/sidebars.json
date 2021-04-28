@@ -15,7 +15,7 @@
 	"ndm",
 	"cstor",
 	"jiva", 
-	"mayastor-concept",
+	"mayastor",
 	"localpv", 
 	"rwm"
 	],
@@ -26,7 +26,7 @@
 	"ugndm", 
 	"ugcstor", 
 	"jivaguide",
-	"Mayastor", 
+	"ugmayastor", 
 	"uglocalpv-hostpath", 
 	"uglocalpv-device", 
 	"mayactl", 

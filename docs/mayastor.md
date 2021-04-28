@@ -1,5 +1,5 @@
 ---
-id: Mayastor
+id: ugmayastor
 title: Mayastor 
 sidebar_label: Mayastor
 ---
