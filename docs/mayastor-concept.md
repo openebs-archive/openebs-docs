@@ -7,7 +7,7 @@ sidebar_label: Mayastor
 
 ## What is Mayastor?
 
-**Mayastor** is currently under development as a sub project of the Open Source CNCF project [**OpenEBS**](https://openebs.io/).  OpenEBS is a "Container Attached Storage" or CAS solution which extends Kubernetes with a declarative data plane, providing flexible persistent storage for stateful applications.
+**Mayastor** is currently under development as a sub-project of the Open Source CNCF project [**OpenEBS**](https://openebs.io/).  OpenEBS is a "Container Attached Storage" or CAS solution which extends Kubernetes with a declarative data plane, providing flexible, persistent storage for stateful applications.
 
 Design goals for Mayastor include:
 
