@@ -83,7 +83,7 @@ kubectl -n mayastor logs mayastor-qgpw6 mayastor
 ### mayastor CSI agent's log file
 
 When having a problem with (un)mounting volume on an application node, this log
-file can be useful. Generally all nodes in the cluster run mayastor CSI agent,
+file can be useful. Generally, all nodes in the cluster run mayastor CSI agent,
 so it's good to know which node is having the problem and inspect the log file
 only on that node.
 
