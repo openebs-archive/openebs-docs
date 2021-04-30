@@ -65,7 +65,7 @@ In this section, we will install the StackGres operator. We will later deploy th
 $ kubectl apply -f https://stackgres.io/downloads/stackgres-k8s/stackgres/1.0.0-alpha1/stackgres-operator-demo.yml
 ```
 
-Once it’s ready, you will see that the two pods are  `Running` and the other pods are in `Completed` state. 
+Once it’s ready, you will see that the two pods are  `Running` and the other pods are in `Completed` state. 
 
 ```
 $ kubectl get pod -n stackgres
@@ -307,7 +307,7 @@ app-# \q
 
 ### [Local PV concepts](/docs/next/localpv.html)
 
-### [Local PV User guide](/docs/next/cstor.html#cstor-pools)
+### [Local PV User guide](/docs/next/uglocalpv-device.html)
 
 
 
@@ -315,4 +315,3 @@ app-# \q
 
 <hr>
 <br>
-
