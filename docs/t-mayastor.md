@@ -125,7 +125,7 @@ However, there is a very useful piece of information that even users can
 retrieve and this information alone can often identify the root cause of
 the problem. It is the stack (backtrace). Put differently, the thing that the
 program was doing at the time when it crashed. Here we describe how to get it.
-The steps as shown apply specifically to Ubuntu, other linux distros might employ variations.
+The steps as shown apply specifically to Ubuntu; other Linux distros might employ variations.
 
 We rely on systemd-coredump that saves and manages coredumps on the system,
 `coredumpctl` utility that is part of the same package and finally
