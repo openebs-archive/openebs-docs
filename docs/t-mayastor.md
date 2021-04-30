@@ -137,7 +137,7 @@ To install systemd-coredump and gdb execute:
 sudo apt-get install -y systemd-coredump gdb lz4
 ```
 
-If installed correctly then the global core pattern will be set so that all
+If installed correctly, then the global core pattern will be set so that all
 generated coredumps will be piped to the `systemd-coredump` binary.
 
 
