@@ -157,7 +157,7 @@ To list coredumps execute:
 coredumpctl list
 ```
 
-Sapmle Output:
+Sample Output:
 ```
 TIME                            PID   UID   GID SIG COREFILE  EXE
 Tue 2021-03-09 17:43:46 UTC  206366     0     0   6 present   /bin/mayastor
