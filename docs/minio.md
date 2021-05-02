@@ -146,7 +146,7 @@ $ kubectl get pod
 
 NAME                               READY   STATUS    RESTARTS   AGE
 minio-operator-59b8965ff5-tzx8n    1/1     Running   0          6m46s
-tenant1-console-6589f7574d-6kgnp   1/1     Running   0          19s
+tenant1-console-6589f7574d-6node   1/1     Running   0          19s
 tenant1-console-6589f7574d-wt47v   1/1     Running   0          19s
 tenant1-zone-0-0                   1/1     Running   0          51s
 tenant1-zone-0-1                   1/1     Running   0          51s
@@ -230,7 +230,7 @@ http://3.6.91.169:30383
 
 You should enter the Access key and Secret key to login into the admin console. These credentials can be obtained from the secret.
 ```
-$ kubectl get secret tenant1-console-secret -oyaml
+$ kubectl get secret tenant1-console-secret -o yaml
 ```
 The following is a sample snippet of the output of the above command. It will show the Access key and Secret key in encoded form. The decoded value should be given in the web browser to login to the user console.
 ```
@@ -281,7 +281,7 @@ http://3.6.91.169:32095
 
 You should enter the `Access key` and `Secret key` to login into the user console. These credentials can be obtained from the secret.
 ```
-$ kubectl get secret tenant1-creds-secret -oyaml
+$ kubectl get secret tenant1-creds-secret -o yaml
 ```
 The following is a sample snippet of the output of the above command. It will show the Access key and Secret key in encoded form. The decoded value should be given in the web browser to login to the user console.
 ```

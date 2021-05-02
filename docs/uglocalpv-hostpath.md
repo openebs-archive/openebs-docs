@@ -108,7 +108,7 @@ You can skip this section if you have already installed OpenEBS.
      ```
 
      :::note 
-     If you would like to use only Local PV (hostpath and device), you can install a lite verison of OpenEBS using the following command.
+     If you would like to use only Local PV (hostpath and device), you can install a lite version of OpenEBS using the following command.
 
      kubectl apply -f https://openebs.github.io/charts/openebs-operator-lite.yaml
      kubectl apply -f https://openebs.github.io/charts/openebs-lite-sc.yaml
@@ -204,7 +204,7 @@ Once you have installed OpenEBS, verify that *OpenEBS Local PV provisioner* is r
    openebs-localpv-provisioner-5ff697f967-nb7f4   1/1     Running   0          2m49s
    </div>
 
-2. To verify *OpenEBS Local PV Hostpath* Storageclass is created, execute the following command. 
+2. To verify *OpenEBS Local PV Hostpath* StorageClass is created, execute the following command. 
 
    ```
    kubectl get sc
@@ -257,7 +257,7 @@ The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolu
    local-hostpath-pvc   Pending                                      openebs-hostpath   3m7s
    </div>
 
-## Create Pod to consume OpenEBS Local PV Hospath Storage
+## Create Pod to consume OpenEBS Local PV Hostpath Storage
 
 1. Here is the configuration file for the Pod that uses Local PV. Save the following Pod definition to `local-hostpath-pod.yaml`.
 
@@ -309,13 +309,13 @@ The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolu
    kubectl describe pod hello-local-hostpath-pod
    ```
 
-   The output shows that the Pod is running on `Node: gke-kmova-helm-default-pool-3a63aff5-1tmf` and using the peristent volume provided by `local-hostpath-pvc`.
+   The output shows that the Pod is running on `Node: gke-user-helm-default-pool-3a63aff5-1tmf` and using the persistent volume provided by `local-hostpath-pvc`.
 
    <div class="co">
    Name:         hello-local-hostpath-pod
    Namespace:    default
    Priority:     0
-   Node:         gke-kmova-helm-default-pool-3a63aff5-1tmf/10.128.0.28
+   Node:         gke-user-helm-default-pool-3a63aff5-1tmf/10.128.0.28
    Start Time:   Thu, 16 Apr 2020 17:56:04 +0000  
    ...  
    Volumes:
@@ -376,7 +376,7 @@ The next step is to create a PersistentVolumeClaim. Pods will use PersistentVolu
            - key: kubernetes.io/hostname
              operator: In
              values:
-             - gke-kmova-helm-default-pool-3a63aff5-1tmf
+             - gke-user-helm-default-pool-3a63aff5-1tmf
      persistentVolumeReclaimPolicy: Delete
      storageClassName: openebs-hostpath
      volumeMode: Filesystem
@@ -418,7 +418,7 @@ The following steps assume that you already have Velero with Restic integration 
 
 The following steps will help you to prepare and backup the data from the volume created for the example pod (`hello-local-hostpath-pod`), with the volume mount (`local-storage`). 
 
-1. Prepare the application pod for backup. Velero uses Kubernetes labels to select the pods that need to be backed up. Velero uses annotation on the pods to determine which volumes need to be backed up. For the example pod launched in this guide, you can inform velero to backup by specifing the following label and annotation. 
+1. Prepare the application pod for backup. Velero uses Kubernetes labels to select the pods that need to be backed up. Velero uses annotation on the pods to determine which volumes need to be backed up. For the example pod launched in this guide, you can inform velero to backup by specifying the following label and annotation. 
    
    ```
    kubectl label pod hello-local-hostpath-pod app=test-velero-backup

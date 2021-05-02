@@ -48,7 +48,7 @@ For getting access to `mayactl` command line tool, you have to login or execute 
 
    Following is an example output.
 
-   <div class="co">maya-apiserver-7f5689b96b-tfssh                                   1/1       Running   0          10d</div>
+   <div class="co">maya-apiserver-7f5689b96b-p1p2p                                   1/1       Running   0          10d</div>
 
 2. It is possible that there are multiple instances of maya-apiserver pods for scaling purposes. You can run mayactl in any one of them. Shell into one of the pods using ` kubectl exec` command . You can do as following way.
 
@@ -110,7 +110,7 @@ Usage:
 Available Commands:
   describe    Displays Openebs Volume information
   list        Displays status information about Volume(s)
-  stats       Displays the runtime statisics of Volume
+  stats       Displays the runtime statistics of Volume
 </div>
 
 
@@ -150,7 +150,7 @@ Replica Details :
 -----------------
 NAME                                                                STATUS      POOL NAME                  NODE
 ----                                                                ------      ---------                  -----  
-pvc-dc3cb979-51ec-11e9-803f-42010a800179-cstor-sparse-pool-ejs2     Running     cstor-sparse-pool-ejs2     gke-ranjith-082-default-pool-2cd2b6cb-dphl
+pvc-dc3cb979-51ec-11e9-803f-42010a800179-cstor-sparse-pool-ejs2     Running     cstor-sparse-pool-ejs2     gke-ranjith-082-default-pool-2cd2b6cb-d456
 pvc-dc3cb979-51ec-11e9-803f-42010a800179-cstor-sparse-pool-gf1d     Running     cstor-sparse-pool-gf1d     gke-ranjith-082-default-pool-2cd2b6cb-l4ck
 pvc-dc3cb979-51ec-11e9-803f-42010a800179-cstor-sparse-pool-m8cy     Running     cstor-sparse-pool-m8cy     gke-ranjith-082-default-pool-2cd2b6cb-x571
 </div>

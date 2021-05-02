@@ -225,7 +225,7 @@ mayastor   3         3         3       3            3           kubernetes.io/ar
 
 For each resulting Mayastor pod instance, a Mayastor Node \(MSN\) custom resource definition should be created.  List these definitions and verify that the count meets the expected number and that all nodes are reporting their State as `online`
 
-To obatin the list of MSN, execute:
+To obtain the list of MSN, execute:
 ```
 kubectl -n mayastor get msn
 ```

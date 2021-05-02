@@ -1,0 +1,29 @@
+name: Markdown Linter
+on: [push, pull_request]
+defaults:
+  run:
+    shell: bash
+
+jobs:
+#TODO: Need to push a baseline commit to fix existing issues
+#  linting:
+#    name: "Markdown linting"
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#        name: Check out the code
+#      - name: Lint Code Base
+#        uses: docker://avtodev/markdown-lint:v1
+#        with:
+#          args: "**/*.md"
+  spellchecking:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out the code
+      - uses: actions/setup-node@v1
+        name: Run spell check
+        with:
+          node-version: "12"
+      - run: npm install -g cspell
+      - run: cspell --config ./cSpell.json "**/*.md"

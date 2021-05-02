@@ -330,7 +330,7 @@ sudo docker ps | grep "hyperkube kubelet"
 Following is the example output:
 
 ```
-3aab0f9a48e2    k8s-gcrio.azureedge.net/hyperkube-amd64:v1.8.7   "/hyperkube kubele..."   48 minutes ago      Up 48 minutes                           eager_einstein
+3aab0f9a48e2    k8s-gcrio.azureedge.net/hyperkube-amd64:v1.8.7   "/hyperkube kubelet..."   48 minutes ago      Up 48 minutes                           eager_einstein
 ```
 
 Once kubelet container ID is obtained, you need to get to the shell
