@@ -1,0 +1,18 @@
+ports:
+  - port: 3000
+    visibility: public  
+    onOpen: open-preview
+tasks:
+  - before: cd website
+    init: npm install
+    command: npm start
+github:
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: true
+    pullRequestsFromForks: false
+    addCheck: true
+    addComment: true
+    addBadge: false
+    addLabel: false
