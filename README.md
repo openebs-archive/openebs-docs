@@ -5,11 +5,15 @@
 [![Commit Activity (Year)](https://img.shields.io/github/commit-activity/y/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/commits)
 [![Contributors](https://img.shields.io/github/contributors/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/graphs/contributors)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fopenebs%2Fopenebs-docs.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fopenebs%2Fopenebs-docs?ref=badge_shield)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/openebs/openebs-docs)
 
 openebs-docs is the repository for the official OpenEBS documentation. This is using Docusaurus as a documentation framework. It's easy to use and write documentation using Docusaurus, which uses markdown markup language.
 Additional details on the Docusaurus project can be found [here](https://docusaurus.io/docs/en/installation.html).
 
 ## For Developers
+
+Instead of performing the following steps, you might just want to edit the docs in a fully pre-configured development environment 
+in the browser: [![Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://github.com/openebs/openebs-docs).
 
 ### Install Node.js
 
@@ -67,3 +71,4 @@ The following procedure lists the tasks from the time you select an issue to pub
 The project is licensed under the Apache 2.0 License. See [LICENSE](LICENSE) for the full license text. 
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fopenebs%2Fopenebs-docs.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fopenebs%2Fopenebs-docs?ref=badge_large)
+
