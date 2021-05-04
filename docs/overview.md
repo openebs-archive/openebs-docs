@@ -129,7 +129,7 @@ Installing OpenEBS in your cluster is as simple as a few `kubectl` or `helm` com
   </div>
 <div class="">
 	<a href="/docs/next/gitlab.html" target="_blank">
-		<img src="/docs/assets/a-gitlab.png" alt="OpenEBS Archipdate ntecture" style="float:left;width:100px;">
+		<img src="/docs/assets/a-gitlab.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
   <div class="">

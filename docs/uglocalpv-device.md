@@ -15,7 +15,7 @@ This guide will help you to set up and use OpenEBS Local Persistent Volumes back
 
 *OpenEBS Dynamic Local PV provisioner* can create Kubernetes Local Persistent Volumes using block devices available on the node to persist data, hereafter referred to as *OpenEBS Local PV Device* volumes. 
 
-*OpenEBS Local PV Device* volumes have the following advantages compared to native Kubernetes Local Peristent Volumes. 
+*OpenEBS Local PV Device* volumes have the following advantages compared to native Kubernetes Local Persistent Volumes. 
 - Dynamic Volume provisioner as opposed to a Static Provisioner. 
 - Better management of the Block Devices used for creating Local PVs by OpenEBS NDM. NDM provides capabilities like discovering Block Device properties, setting up Device Filters, metrics collection and ability to detect if the Block Devices have moved across nodes. 
 
@@ -102,14 +102,14 @@ You can skip this section if you have already installed OpenEBS.
      Helm key: helper.image
      </div>
 
-   - Specify the list of block devices for which BlockDevice CRs must be created. A comma seperated values of path regular expressions can be specified. 
+   - Specify the list of block devices for which BlockDevice CRs must be created. A comma separated values of path regular expressions can be specified. 
      <div class="co">
      Default value: all
      YAML specification: data."node-disk-manager.config".filterconfigs.key["path-filter"].include on ConfigMap(openebs-ndm-config)
      Helm key: ndm.filters.includePaths
      </div>
 
-   - Specify the list of block devices for which BlockDevice CRs must not be created. A comma seperated values of path regular expressions can be specified. 
+   - Specify the list of block devices for which BlockDevice CRs must not be created. A comma separated values of path regular expressions can be specified. 
      <div class="co">
      Default value: "loop,fd0,sr0,/dev/ram,/dev/dm-,/dev/md"
      YAML specification: data."node-disk-manager.config".filterconfigs.key["path-filter"].exclude on ConfigMap(openebs-ndm-config)
@@ -126,7 +126,7 @@ You can skip this section if you have already installed OpenEBS.
      ```
 
      :::note 
-     If you would like to use only Local PV (hostpath and device), you can install a lite verison of OpenEBS using the following command.
+     If you would like to use only Local PV (hostpath and device), you can install a lite version of OpenEBS using the following command.
 
      kubectl apply -f https://openebs.github.io/charts/openebs-operator-lite.yaml
      kubectl apply -f https://openebs.github.io/charts/openebs-lite-sc.yaml
@@ -316,13 +316,13 @@ By default, Local PV volume will be provisioned with volumeMode as filesystem. I
    kubectl describe pod hello-local-device-pod
    ```
 
-   The output shows that the Pod is running on `Node: gke-kmova-helm-default-pool-3a63aff5-1tmf` and using the peristent volume provided by `local-describe-pvc`.
+   The output shows that the Pod is running on `Node: gke-user-helm-default-pool-3a63aff5-1tmf` and using the persistent volume provided by `local-describe-pvc`.
 
    <div class="co">
    Name:         hello-local-device-pod
    Namespace:    default
    Priority:     0
-   Node:         gke-kmova-helm-default-pool-92abeacf-89nd/10.128.0.16
+   Node:         gke-user-helm-default-pool-92abeacf-89nd/10.128.0.16
    Start Time:   Thu, 16 Apr 2020 17:56:04 +0000  
    ...  
    Volumes:
@@ -383,7 +383,7 @@ By default, Local PV volume will be provisioned with volumeMode as filesystem. I
            - key: kubernetes.io/hostname
              operator: In
              values:
-             - gke-kmova-helm-default-pool-92abeacf-89nd
+             - gke-user-helm-default-pool-92abeacf-89nd
      persistentVolumeReclaimPolicy: Delete
      storageClassName: local-device
      volumeMode: Filesystem
@@ -414,7 +414,7 @@ A few important characteristics of a *OpenEBS Local PV* can be seen from the abo
    ```
    kubectl get bd -n openebs blockdevice-d1ef1e1b9dccf224e000c6f2e908c5f2 -o yaml
    ```
-   The output shows that the BD is on the node `spec.nodeAttributes.nodeName: gke-kmova-helm-default-pool-92abeacf-89nd`. 
+   The output shows that the BD is on the node `spec.nodeAttributes.nodeName: gke-user-helm-default-pool-92abeacf-89nd`. 
 
    <div class="co">
    apiVersion: openebs.io/v1alpha1
@@ -456,7 +456,7 @@ A few important characteristics of a *OpenEBS Local PV* can be seen from the abo
        fsType: ext4
        mountPoint: /mnt/disks/ssd0
      nodeAttributes:
-       nodeName: gke-kmova-helm-default-pool-92abeacf-89nd
+       nodeName: gke-user-helm-default-pool-92abeacf-89nd
      partitioned: "No"
      path: /dev/sdb
      status:
@@ -500,7 +500,7 @@ The following steps assume that you already have Velero with Restic integration 
 
 The following steps will help you to prepare and backup the data from the volume created for the example pod (`hello-local-device-pod`), with the volume mount (`local-storage`). 
 
-1. Prepare the application pod for backup. Velero uses Kubernetes labels to select the pods that need to be backed up. Velero uses annotation on the pods to determine which volumes need to be backed up. For the example pod launched in this guide, you can inform velero to backup by specifing the following label and annotation. 
+1. Prepare the application pod for backup. Velero uses Kubernetes labels to select the pods that need to be backed up. Velero uses annotation on the pods to determine which volumes need to be backed up. For the example pod launched in this guide, you can inform velero to backup by specifying the following label and annotation. 
    
    ```
    kubectl label pod hello-local-device-pod app=test-velero-backup

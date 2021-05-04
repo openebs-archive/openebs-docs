@@ -45,7 +45,7 @@ sidebar_label: Releases 1.x
 - Enhanced cStor volume replica status with additional 2 phases based on different scenarios. The additional phases are `NewReplicaDegraded ` and `ReconstructingNewReplica `.
 - Enhanced `maya-exporter` by adding pool last sync time metric as `openebs_zpool_last_sync_time ` . This also modifies value of `openebs.io:livenesstimestamp` in cStor pool YAML to set date in epoch timestamp.
 - Enhanced admission webhook server by adding missing labels in config,secret and service and will fatal out when a missing ENV's error and configs happen.
-- Fixes a bug in Jiva where Jiva replica pods are stuck in `crashedloopbackoff` state after a restart.
+- Fixes a bug in Jiva where Jiva replica pods are stuck in `crashloopbackoff` state after a restart.
 - Fixes a bug in cStor target while rebuilding process in a single replica quorum case.
 - Fixes a bug in NDM for device detection in KVM-based virtual machines.. A new disk model `QEMU_HARDDISK` is added to the list of disk models.
 - Fixes a bug in NDM, where the os-disk filter was not able to exclude the blockdevices if the OS  was installed on an NVMe device.
@@ -57,7 +57,7 @@ sidebar_label: Releases 1.x
 ## 1.3.0 - Oct 15 2019
 
 **Change summary:**
-- Add support to scaleup replicas, replica movement across  pools and replica replacement scenarios. This feature is in alpha state. This feature will work for cStor volumes which are created with existing SPC configuration.
+- Add support to scale up replicas, replica movement across  pools and replica replacement scenarios. This feature is in alpha state. This feature will work for cStor volumes which are created with existing SPC configuration.
 - Availability of NDM on different platforms like amd64 and arm64. NDM can now also be compiled in ARM architecture using manual steps.
 - Added support for provisioning CSI based volume using lease leader election API.
 - Support of running OpenEBS in Kubernetes 1.16 version. The k8s v1.16 release will stop serving the deprecated API versions in favour of newer and more stable API versions.
@@ -90,7 +90,7 @@ sidebar_label: Releases 1.x
 - Fixes a bug in NDM where all devices on a node were getting excluded when os-disk-exclude-filter is failed to find the device where OS is installed.
 - Fixes a bug in snapshot controller where snapshot operation is not throwing any error for invalid `cas-type`. This fix will add `cas-type` validation before triggering the snapshot operations. The valid `cas-type` are cStor and Jiva.
 - Fixes the bug where more than required BlockDevicesClaims are created for requested SPC in auto pool method.
-- Fixes an issue in maya-api installer to skip re-apply of default SPC and SC resources if they were installed previously by older version(s) of maya or prior to mayaapi-server restart(s) 
+- Fixes an issue in maya-api installer to skip re-apply of default SPC and SC resources if they were installed previously by older version(s) of maya or prior to maya-api-server restart(s) 
 - Fixes a bug in cStor pool when cStor Storage Pool management creates pool if pool import failed when a disk is not accessible momentarily just at the time of import. cStor storage pool will be in the pending state when this scenario occurs. This PR will fix cStor pool creation by looking on `Status.Phase` as `Init` or `PoolCreationFailed` to create the pool. If `Status.Phase` is any other string, cStor Storage Pool management will try to import the pool. This can cause impact to the current workflow of Ephemeral disks, which works as of now, as NDM can't detect it as different disk and recognizes as the previous disk.
 - Fixes a bug during a cleanup operation performed on BlockDevice and clean up job is not getting canceled when the state of BlockDevice is changed from `Active` to other states. 
 - Fixes a bug in NDM where cleanup jobs remain in pending state in Openshift cluster. The fix will add service account to cleanup jobs, so that clean-up job pods acquire privileged access to perform the action. 

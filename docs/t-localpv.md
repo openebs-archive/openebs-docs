@@ -8,7 +8,7 @@ sidebar_label: LocalPV
 <font size="5">General guidelines for troubleshooting</font>
 
 - Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
-- Search for similar issues added in this troubleshootiung section.
+- Search for similar issues added in this troubleshooting section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
 <br>
@@ -43,7 +43,7 @@ Warning  FailedScheduling  7m24s (x2 over 7m24s)  default-scheduler  persistentv
 
 
 **Troubleshooting:**
-Check if there is a blockdevice present on the node (to which the application pod was scheduled,) which mathces the capacity requirements of the PVC.
+Check if there is a blockdevice present on the node (to which the application pod was scheduled,) which matches the capacity requirements of the PVC.
 
 ```
 kubectl get bd -n openebs -o wide

@@ -19,7 +19,7 @@ Operators or administrators typically choose a storage engine with a specific so
 
 OpenEBS provides three types of storage engines.
 
-1. **Jiva** - Jiva is the first storage engine that was released in 0.1 version of OpenEBS and is the most simple to use. It is built in GoLang and uses LongHorn and gotgt stacks inside. Jiva runs entirely in user space and provides standard block storage capabilities such as synchronous replication. Jiva is suitable for smaller capacity workloads in general and not suitable when extensive snapshotting and cloning features are a major need. Read more details of Jiva [here](/docs/next/jiva.html)
+1. **Jiva** - Jiva is the first storage engine that was released in 0.1 version of OpenEBS and is the most simple to use. It is built in GoLang and uses LongHorn and gotgt stacks inside. Jiva runs entirely in user space and provides standard block storage capabilities such as synchronous replication. Jiva is suitable for smaller capacity workloads in general and not suitable when extensive snapshots and cloning features are a major need. Read more details of Jiva [here](/docs/next/jiva.html)
 
 2. **cStor** - cStor is the most recently released storage engine, which became available from 0.7 version of OpenEBS. cStor is very robust,  provides data consistency and supports enterprise storage features like snapshots and clones very well. It also comes with a robust storage pool feature for comprehensive storage management both in terms of capacity and performance. Together with NDM (Node Disk Manager), cStor provides complete set of persistent storage features for stateful applications on Kubernetes. Read more details of cStor [here](/docs/next/cstor.html)
 
@@ -226,7 +226,7 @@ A short summary is provided below.
 
 ### [Jiva User Guide](/docs/next/jivaguide.html)
 
-### [Local PV Hospath User Guide](/docs/next/uglocalpv-hostpath.html)
+### [Local PV Hostpath User Guide](/docs/next/uglocalpv-hostpath.html)
 
 ### [Local PV Device User Guide](/docs/next/uglocalpv-device.html)
 

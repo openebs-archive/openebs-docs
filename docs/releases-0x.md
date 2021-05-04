@@ -48,7 +48,7 @@ This release has been deprecated. Please upgrade to the latest release. See [upg
 **Change summary:**
 - Enhanced the metrics exported by cStor Pools to include details of the provisioning errors.
 - Fixed an issue causing cStor Volume Replica CRs to be stuck, when the OpenEBS namespace was being deleted.
-- Fixed an issue where a newly added cStor Volume Replica may not be successfully registered with the cStor target, if the cStor tries to connect to Replica before the replica is completely initialised.
+- Fixed an issue where a newly added cStor Volume Replica may not be successfully registered with the cStor target, if the cStor tries to connect to Replica before the replica is completely initialized.
 - Fixed an issue with Jiva Volumes where target can mark the Replica as Timed out on IO, even when the Replica might actually be processing the Sync IO.
 - Fixed an issue with Jiva Volumes that would not allow for Replicas to re-connect with the Target, if the initial Registration failed to successfully process the hand-shake request.
 - Fixed an issue with Jiva Volumes that would cause Target to restart when a send diagnostic command was received from the client

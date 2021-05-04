@@ -8,7 +8,7 @@ sidebar_label: Volume Provisioning
 <font size="5">General guidelines for troubleshooting</font>
 
 - Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
-- Search for similar issues added in this troubleshootiung section.
+- Search for similar issues added in this troubleshooting section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
 <br>
@@ -23,7 +23,7 @@ sidebar_label: Volume Provisioning
 
 [Application pod is stuck in ContainerCreating state after deployment](#application-pod-stuck-after-deployment)
 
-[Creating cStor pool fails on CentOS when there are partitions on the disk](#cstor-pool-failed-centos-partion-disk)
+[Creating cStor pool fails on CentOS when there are partitions on the disk](#cstor-pool-failed-centos-partition-disk)
 
 [Application pod enters CrashLoopBackOff state](#application-crashloopbackoff)
 
@@ -59,7 +59,7 @@ Application sometimes complain about the underlying filesystem has become ReadOn
 This can happen for many reasons. 
 
 - The cStor target pod is evicted because of resource constraints and is not scheduled within time 
-- Node is rebooted in adhoc manner (or unscheduled reboot) and Kubernetes is waiting for Kubelet to come backup to know that the node is rebooted and the pods on that node need to be rescheduled. Kubernetes can take upto 30 minutes as timeout before deciding the node does not comebackup and pods need to be rescheduled. During this time, the iSCSI initiator at the application pod has timeout and marked the underlying filesystem as ReadOnly
+- Node is rebooted in adhoc manner (or unscheduled reboot) and Kubernetes is waiting for Kubelet to respond to know if the node is rebooted and the pods on that node need to be rescheduled. Kubernetes can take up to 30 minutes as timeout before deciding the node is going to stay offline and pods need to be rescheduled. During this time, the iSCSI initiator at the application pod has timeout and marked the underlying filesystem as ReadOnly
 - cStor target has lost quorum because of underlying node losses and target has marked the lun as ReadOnly
 
 Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kubernetes node reboots. 
@@ -95,7 +95,7 @@ The setup environment where the issue occurs is rancher/rke with bare metal host
 
 ```
 NAME                                                             READY     STATUS              RESTARTS   AGE
-nginx-deployment-57849d9f57-gvzkh                                0/1       ContainerCreating   0          2m
+nginx-deployment-57849d9f57-12345                                0/1       ContainerCreating   0          2m
 pvc-adb79406-8e3e-11e8-a06a-001c42c2325f-ctrl-58dcdf997f-n4kd9   2/2       Running             0          8m
 pvc-adb79406-8e3e-11e8-a06a-001c42c2325f-rep-696b599894-gq4z6    1/1       Running             0          8m
 pvc-adb79406-8e3e-11e8-a06a-001c42c2325f-rep-696b599894-hwx52    1/1       Running             0          8m
@@ -148,13 +148,13 @@ More details are mentioned [here](/docs/next/prerequisites.html#rancher).
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="cstor-pool-failed-centos-partion-disk"></a>Creating cStor pool fails on CentOS when there are partitions on the disk.</h3>
+<h3><a class="anchor" aria-hidden="true" id="cstor-pool-failed-centos-partition-disk"></a>Creating cStor pool fails on CentOS when there are partitions on the disk.</h3>
 
 
 Creating cStor pool fails with the following error message:
 
 ```
-E0920 14:51:17.474702       8 pool.go:78] Unable to create pool: /dev/disk/by-id/ata-WDC_WD2500BPVT-00JJ
+E0920 14:51:17.474702       8 pool.go:78] Unable to create pool: /dev/disk/by-id/ata-WDC_WD2500BOOM-00JJ
 ```
 
 sdb and sdc are used for cStor pool creation.
@@ -248,8 +248,7 @@ The procedure to ensure application recovery in the above cases is as follows:
    umount /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.39.241.26:
    3260-iqn.2016-09.com.openebs.jiva:mongo-jiva-mongo-persistent-storage-mongo-0-3481266901-lun-0
    
-   umount /var/lib/kubelet/pods/ae74da97-c852-11e8-a219-42010af000b6/volumes/kuber
-   netes.io~iscsi/mongo-jiva-mongo-persistent-storage-mongo-0-3481266901
+   umount /var/lib/kubelet/pods/ae74da97-c852-11e8-a219-42010af000b6/volumes/kubernetes.io~iscsi/mongo-jiva-mongo-persistent-storage-mongo-0-3481266901
    ```
 
 5. Identify whether the iSCSI session is re-established after failure. This can be verified using `iscsiadm -m session`, with the device mapping established using `iscsiadm -m session -P 3` and `fdisk -l`. **Note:** Sometimes, it is observed that there are stale device nodes (scsi device names) present on the Kubernetes node. Unless the logs confirm that a re-login has occurred after the system issues were resolved, it is recommended to perform the following step after doing a purge/logout of the existing session using `iscsiadm -m node -T <iqn> -u`.
@@ -440,7 +439,7 @@ Events:
   Warning  FailedScheduling        58s (x2 over 59s)  default-scheduler        pod has unbound PersistentVolumeClaims (repeated 4 times)
   Normal   Scheduled               58s                default-scheduler        Successfully assigned redis-master-0 to node0
   Normal   SuccessfulAttachVolume  58s                attachdetach-controller  AttachVolume.Attach succeeded for volume "pvc-a036d681-8fd4-11e8-ad96-de1a202c9007"
-  Normal   SuccessfulMountVolume   55s                kubelet, node0           MountVolume.SetUp succeeded for volume "default-token-ngjhh"
+  Normal   SuccessfulMountVolume   55s                kubelet, node0           MountVolume.SetUp succeeded for volume "default-token-12345"
   Warning  FailedMount             24s (x4 over 43s)  kubelet, node0           MountVolume.WaitForAttach failed for volume "pvc-a036d681-8fd4-11e8-ad96-de1a202c9007" : failed to get any path for iscsi disk, last err seen:
 iscsi: failed to sendtargets to portal 10.233.27.8:3260 output: iscsiadm: cannot make connection to 10.233.27.8: Connection refused
 iscsiadm: cannot make connection to 10.233.27.8: Connection refused
@@ -510,7 +509,7 @@ By default admission webhook service has been configured to 443 port and the err
 <br>
 <h3><a class="anchor" aria-hidden="true" id="unable-to-provision-openebs-volume-on-DigitalOcean"></a>Unable to provision OpenEBS volume on DigitalOcean</h3>
 <br>
-User is unable to provision cStor or jiva volume on DigitalcOcean, encountering error thrown from iSCSI PVs: 
+User is unable to provision cStor or jiva volume on DigitalOcean, encountering error thrown from iSCSI PVs: 
 <br>
 
 ```

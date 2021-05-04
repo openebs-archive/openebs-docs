@@ -8,7 +8,7 @@ sidebar_label: Knowledge Base
 
 <font size="5">Summary</font>
 
-[How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC](#resuse-pv-after-recreating-sts)
+[How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC](#reuse-pv-after-recreating-sts)
 
 [How to scale up Jiva replica?](#how-to-scale-up-jiva-replica)
 
@@ -34,7 +34,7 @@ sidebar_label: Knowledge Base
 
 </br>
 
-<h3><a class="anchor" aria-hidden="true" id="resuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
+<h3><a class="anchor" aria-hidden="true" id="reuse-pv-after-recreating-sts"></a>How do I reuse an existing PV - after re-creating Kubernetes StatefulSet and its PVC</h3>
 
 
 There are some cases where it had to delete the StatefulSet and re-install a new StatefulSet. In the process you may have to delete the PVCs used by the StatefulSet and retain PV policy by ensuring the Retain as the "Reclaim Policy". In this case, following are the procedures for re-using an existing PV in your StatefulSet application.
@@ -358,7 +358,7 @@ oc adm policy add-scc-to-user privileged -z default -n myproject
 
 **Note:** OpenShift automatically creates a project for every namespace, and a `default` ServiceAccount for every project.
 
-Once these permissions have been granted, you can provision persistant volumes using OpenEBS. See [CAS Engines](casengines.md) for more details. 
+Once these permissions have been granted, you can provision persistent volumes using OpenEBS. See [CAS Engines](casengines.md) for more details. 
 
 <a href="#top">Go to top</a>
 
@@ -1368,7 +1368,7 @@ Status of each cStor pool can be found under `STATUS` column. The following are 
 
 **Error:** This means cstor-pool container in cStor pool pod is not in running state.
 
-**DetetionFailed:** There could be an internal error occurred when CSP is deleted.
+**DeletionFailed:** There could be an internal error occurred when CSP is deleted.
 
 **Note:** Status of CSPs are updated only if its corresponding cStor pool pod is Running. If the cStor pool pod of corresponding cStor pool is not running, then the status of cStor pool shown in the above output may be stale.
 
@@ -1412,7 +1412,7 @@ The following are the different type of STATUS information of cStor volumes and 
 For getting the number of replicas connected to the target pod of the cStor volume, use following command:
 
 ```
-kubectl get cstorvolume <volume_name> -n <openebs_installed_namespace> -oyaml.
+kubectl get cstorvolume <volume_name> -n <openebs_installed_namespace> -o yaml.
 ```
 
 Example output:
@@ -1852,7 +1852,7 @@ mount /dev/sdc /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface-default/10.20.
 mount /dev/sdc /var/lib/kubelet/pods/25abb7fa-eb2d-11e9-b8d1-42010a800093/volumes/kubernetes.io~iscsi/pvc-25e8f6f1-eb2d-11e9-b8d1-42010a800093
 ```
 
-**Step 16:** Execute the below command in Kuberenetes master node. Restart the application pod using the following command:
+**Step 16:** Execute the below command in Kubernetes master node. Restart the application pod using the following command:
 
 ```
 kubectl delete pod <application_pod>  

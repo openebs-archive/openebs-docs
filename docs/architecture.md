@@ -98,7 +98,7 @@ The OpenEBS data plane is responsible for the actual volume IO path. A storage e
 
 ### Jiva
 
-Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. Jiva engine is written in GO language and runs in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation for building the storage features such as thin provisioning, snapshotting, rebuilding etc. More details on Jiva architecture are written [here](/docs/next/jiva.html).   
+Jiva storage engine is developed with Rancher's LongHorn and gotgt as the base. Jiva engine is written in GO language and runs in the user space. LongHorn controller synchronously replicates the incoming IO to the LongHorn replicas. The replica considers a Linux sparse file as the foundation for building the storage features such as thin provisioning, snapshots, rebuilding etc. More details on Jiva architecture are written [here](/docs/next/jiva.html).   
 
 ### cStor
 
@@ -134,7 +134,7 @@ Prometheus is installed as a micro service by the OpenEBS operator during the in
 
 ### WeaveScope
 
-WeaveScope is a well-regarded cloud-native visualisation solution in Kubernetes to view metrics, tags and metadata within the context of a process, container, service or host. Node Disk Manager components, volume pods, and other persistent storage structures of Kubernetes have been enabled for WeaveScope integration. With these enhancements, exploration and traversal of these components have become significantly easier.
+WeaveScope is a well-regarded cloud-native visualization solution in Kubernetes to view metrics, tags and metadata within the context of a process, container, service or host. Node Disk Manager components, volume pods, and other persistent storage structures of Kubernetes have been enabled for WeaveScope integration. With these enhancements, exploration and traversal of these components have become significantly easier.
 
 
 

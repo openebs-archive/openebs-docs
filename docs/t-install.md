@@ -8,7 +8,7 @@ sidebar_label: Install
 <font size="5">General guidelines for troubleshooting</font>
 
 - Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
-- Search for similar issues added in this troubleshootiung section.
+- Search for similar issues added in this troubleshooting section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
 <br>
@@ -19,7 +19,7 @@ sidebar_label: Install
 
 [iSCSI client is not setup on Nodes. Application Pod is in ContainerCreating state.](#install-failed-iscsi-not-configured)
 
-[Why does OpenEBS provisioner pod restart continuously?](#openebs-provsioner-restart-continuously)
+[Why does OpenEBS provisioner pod restart continuously?](#openebs-provisioner-restart-continuously)
 
 [OpenEBS installation fails on Azure](#install-failed-azure-no-rbac-set).
 
@@ -71,7 +71,7 @@ This logs points that iscsid.service may not be enabled and running on your Node
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="openebs-provsioner-restart-continuously"></a>Why does OpenEBS provisioner pod restart continuously?</h3>
+<h3><a class="anchor" aria-hidden="true" id="openebs-provisioner-restart-continuously"></a>Why does OpenEBS provisioner pod restart continuously?</h3>
 
 The following output displays the pod status of all namespaces in which the OpenEBS provisioner is restarting continuously.
 
@@ -80,18 +80,18 @@ NAMESPACE     NAME                                         READY     STATUS     
 default       percona                                      0/1       Pending            0          36m       <none>            <none>
 kube-system   calico-etcd-tl4td                            1/1       Running            0          1h        192.168.56.65     master
 kube-system   calico-kube-controllers-84fd4db7cd-jz9wt     1/1       Running            0          1h        192.168.56.65     master
-kube-system   calico-node-5rqdl                            2/2       Running            0          1h        192.168.56.65     master
+kube-system   calico-node-node1                            2/2       Running            0          1h        192.168.56.65     master
 kube-system   calico-node-zt95x                            2/2       Running            0          1h        192.168.56.66     node
-kube-system   coredns-78fcdf6894-2plxb                     1/1       Running            0          1h        192.168.219.65    master
-kube-system   coredns-78fcdf6894-gcjj7                     1/1       Running            0          1h        192.168.219.66    master
+kube-system   coredns-78fcdf6894-2test                     1/1       Running            0          1h        192.168.219.65    master
+kube-system   coredns-78fcdf6894-test7                     1/1       Running            0          1h        192.168.219.66    master
 kube-system   etcd-master                                  1/1       Running            0          1h        192.168.56.65     master
 kube-system   kube-apiserver-master                        1/1       Running            0          1h        192.168.56.65     master
 kube-system   kube-controller-manager-master               1/1       Running            0          1h        192.168.56.65     master
 kube-system   kube-proxy-9t98s                             1/1       Running            0          1h        192.168.56.65     master
 kube-system   kube-proxy-mwk9f                             1/1       Running            0          1h        192.168.56.66     node
 kube-system   kube-scheduler-master                        1/1       Running            0          1h        192.168.56.65     master
-openebs       maya-apiserver-5598cf68ff-tndgm              1/1       Running            0          1h        192.168.167.131   node
-openebs       openebs-provisioner-776846bbff-rqfzr         0/1       CrashLoopBackOff   16         1h        192.168.167.129   node
+openebs       maya-apiserver-5598cf68ff-pod17              1/1       Running            0          1h        192.168.167.131   node
+openebs       openebs-provisioner-776846bbff-pod19         0/1       CrashLoopBackOff   16         1h        192.168.167.129   node
 openebs       openebs-snapshot-operator-5b5f97dd7f-np79k   0/2       CrashLoopBackOff   32         1h        192.168.167.130   node
 ```
 
@@ -113,7 +113,7 @@ On AKS, while installing OpenEBS using Helm,  you may see the following error.
 
 ```
 $ helm install openebs/openebs --name openebs --namespace openebs
-Error: release openebsfailed: clusterroles.rbac.authorization.k8s.io "openebs" isforbidden: attempt to grant extra privileges:[PolicyRule{Resources:["nodes"], APIGroups:["*"],Verbs:["get"]} PolicyRule{Resources:["nodes"],APIGroups:["*"], Verbs:["list"]}PolicyRule{Resources:["nodes"], APIGroups:["*"],Verbs:["watch"]} PolicyRule{Resources:["nodes/proxy"],APIGroups:["*"], Verbs:["get"]}PolicyRule{Resources:["nodes/proxy"], APIGroups:["*"],Verbs:["list"]} PolicyRule{Resources:["nodes/proxy"],APIGroups:["*"], Verbs:["watch"]}PolicyRule{Resources:["namespaces"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["services"],APIGroups:["*"], Verbs:["*"]} PolicyRule{Resources:["pods"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["deployments"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["events"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["endpoints"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["persistentvolumes"],APIGroups:["*"], Verbs:["*"]} PolicyRule{Resources:["persistentvolumeclaims"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["storageclasses"],APIGroups:["storage.k8s.io"], Verbs:["*"]}PolicyRule{Resources:["storagepools"], APIGroups:["*"],Verbs:["get"]} PolicyRule{Resources:["storagepools"], APIGroups:["*"],Verbs:["list"]} PolicyRule{NonResourceURLs:["/metrics"],Verbs:["get"]}] user=&{system:serviceaccount:kube-system:tiller6f3172cc-4a08-11e8-9af5-0a58ac1f1729 [system:serviceaccounts system:serviceaccounts:kube-systemsystem:authenticated] map[]} ownerrules=[]ruleResolutionErrors=[clusterroles.rbac.authorization.k8s.io"cluster-admin" not found]
+Error: release openebs failed: clusterroles.rbac.authorization.k8s.io "openebs" isforbidden: attempt to grant extra privileges:[PolicyRule{Resources:["nodes"], APIGroups:["*"],Verbs:["get"]} PolicyRule{Resources:["nodes"],APIGroups:["*"], Verbs:["list"]}PolicyRule{Resources:["nodes"], APIGroups:["*"],Verbs:["watch"]} PolicyRule{Resources:["nodes/proxy"],APIGroups:["*"], Verbs:["get"]}PolicyRule{Resources:["nodes/proxy"], APIGroups:["*"],Verbs:["list"]} PolicyRule{Resources:["nodes/proxy"],APIGroups:["*"], Verbs:["watch"]}PolicyRule{Resources:["namespaces"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["services"],APIGroups:["*"], Verbs:["*"]} PolicyRule{Resources:["pods"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["deployments"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["events"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["endpoints"], APIGroups:["*"],Verbs:["*"]} PolicyRule{Resources:["persistentvolumes"],APIGroups:["*"], Verbs:["*"]} PolicyRule{Resources:["persistentvolumeclaims"],APIGroups:["*"], Verbs:["*"]}PolicyRule{Resources:["storageclasses"],APIGroups:["storage.k8s.io"], Verbs:["*"]}PolicyRule{Resources:["storagepools"], APIGroups:["*"],Verbs:["get"]} PolicyRule{Resources:["storagepools"], APIGroups:["*"],Verbs:["list"]} PolicyRule{NonResourceURLs:["/metrics"],Verbs:["get"]}] user=&{system:serviceaccount:kube-system:tiller6f3172cc-4a08-11e8-9af5-0a58ac1f1729 [system:serviceaccounts system:serviceaccounts:kube-systemsystem:authenticated] map[]} ownerrules=[]ruleResolutionErrors=[clusterroles.rbac.authorization.k8s.io"cluster-admin" not found]
 ```
 
 **Troubleshooting**

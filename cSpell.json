@@ -1,0 +1,45 @@
+{
+    "version": "0.2",
+    "language": "en-US",
+    "flagWords": [
+        "hte"
+    ],
+    "ignorePaths": [
+        "*.lock",
+        "*.json",
+        "*.toml",
+        "*.conf",
+        "*.py",
+        "*.txt",
+        "*.sh",
+        "website",
+        "hack",
+        "Dockerfile"
+    ],
+    "ignoreWords": [],
+    "dictionaryDefinitions": [
+        {
+            "name": "cspell-words",
+            "path": "./hack/cspell-words.txt"
+        },
+        {
+            "name": "cspell-contributors",
+            "path": "./hack/cspell-contributors.txt"
+        },
+        {
+            "name": "cspell-ignore",
+            "path": "./hack/cspell-ignore.txt"
+        }
+    ],
+    "dictionaries": [
+        "cspell-words",
+        "cspell-contributors",
+        "cspell-ignore"
+    ],
+    "languageSettings": [
+        {
+            "languageId": "*",
+            "dictionaries": []
+        }
+    ]
+}

@@ -24,7 +24,7 @@ sidebar_label: FAQs
 
 [What is the default OpenEBS Reclaim policy?](#default-reclaim-policy)
 
-[Why NDM daemon set required privileged mode?](#why-ndm-priviledged)
+[Why NDM daemon set required privileged mode?](#why-ndm-privileged)
 
 [Is OpenShift supported?](#openebs-in-openshift)
 
@@ -36,7 +36,7 @@ sidebar_label: FAQs
 
 [How backup and restore is working with OpenEBS volumes?](#backup-restore-openebs-volumes)
 
-[Why customized parameters set on default OpenEBS StorageClasses are not getting persisted?](#customized-values-not-peristed-after-reboot)
+[Why customized parameters set on default OpenEBS StorageClasses are not getting persisted?](#customized-values-not-persisted-after-reboot)
 
 [Why NDM listens on host network?](#why-ndm-listens-on-host-network)
 
@@ -76,7 +76,7 @@ sidebar_label: FAQs
 
 [How OpenEBS detects disks for creating cStor Pool?](#how-openebs-detects-disks-for-creating-cstor-pool)
 
-[Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?](#provision-pvc-higher-than-physical-sapce)
+[Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?](#provision-pvc-higher-than-physical-space)
 
 [What is the difference between cStor Pool creation using manual method and auto method?](#what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method)
 
@@ -135,7 +135,7 @@ To determine exactly where your data is physically stored, you can run the follo
   The output displays the following pods.
 
   ```
-  IO Controller: pvc-ee171da3-07d5-11e8-a5be-42010a8001be-ctrl-6798475d8c-7dcqd
+  IO Controller: pvc-ee171da3-07d5-11e8-a5be-42010a8001be-ctrl-6798475d8c-7node
   Replica 1: pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-hls6s     
   Replica 2: pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-tr28f  
   ```
@@ -191,7 +191,7 @@ For jiva, from 0.8.0 version, the data is deleted via scrub jobs. The completed 
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="why-ndm-priviledged"></a>Why NDM Daemon set required privileged mode?</h3>
+<h3><a class="anchor" aria-hidden="true" id="why-ndm-privileged"></a>Why NDM Daemon set required privileged mode?</h3>
 
 
 Currently, NDM Daemon set runs in the privileged mode. NDM requires privileged mode because it requires access to `/dev` and `/sys` directories for monitoring the devices attached and also to fetch the details of the attached device using various probes. 
@@ -314,7 +314,7 @@ OpenEBS cStor volume is working based on cStor/ZFS snapshot using Velero. For Op
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="customized-values-not-peristed-after-reboot"></a>Why customized parameters set on default OpenEBS StorageClasses are not getting persisted?</h3>
+<h3><a class="anchor" aria-hidden="true" id="customized-values-not-persisted-after-reboot"></a>Why customized parameters set on default OpenEBS StorageClasses are not getting persisted?</h3>
 
 
 The customized parameters set on default OpenEBS StorageClasses will not persist after restarting `maya-apiserver` pod or restarting the node where `maya-apiserver` pod is running. StorageClasses created by maya-apiserver are owned by it and it tries to overwrite them upon its creation.
@@ -552,7 +552,7 @@ It is also possible to customize by adding more disk types associated with your 
 
 
 
-<h3><a class="anchor" aria-hidden="true" id="provision-pvc-higher-than-physical-sapce"></a> Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?</h3>
+<h3><a class="anchor" aria-hidden="true" id="provision-pvc-higher-than-physical-space"></a> Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?</h3>
 
 
 As of 0.8.0, the user is allowed to create PVCs that cross the available capacity of the pools in the Nodes. In the future release, it will validate with an option `overProvisioning=false`, the PVC request should be denied if there is not enough available capacity to provision the volume.

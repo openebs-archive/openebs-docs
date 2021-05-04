@@ -89,7 +89,7 @@ Installed helm version can be obtained by using the following command:
 ```
 helm version
 ```
-Example ouptut:
+Example output:
 
 <div class="co">
 Client: &version.Version{SemVer:"v2.16.8", GitCommit:"145206680c1d5c28e3fcf30d6f596f0ba84fcb47", GitTreeState:"clean"}
@@ -112,13 +112,13 @@ See [helm docs](https://helm.sh/docs/intro/install/#from-script) for setting up 
 ```
 helm version
 ```
-Example ouptut:
+Example output:
 
 <div class="co">
 version.BuildInfo{Version:"v3.0.2", GitCommit:"19e47ee3283ae98139d98460de796c1be1e3975f", GitTreeState:"clean", GoVersion:"go1.13.5"}
 </div>
 
-OpenEBS instalaltion with helm v3 can be done by 2 ways:
+OpenEBS installation with helm v3 can be done by 2 ways:
 
 **Option 1:** Helm v3 takes the current namespace from the local kube config and use that namespace the next time the user executes helm commands. If it is not present, the default namespace is used. Assign the `openebs` namespace to the current context and run the following commands to install openebs in `openebs` namespace. 
 
@@ -162,7 +162,7 @@ To view the chart
 ```
 helm ls -n openebs
 ```
-The above commans will install OpenEBS in `openebs` namespace and chart name as `openebs` 
+The above commands will install OpenEBS in `openebs` namespace and chart name as `openebs` 
 
 
 **Note:** 
@@ -676,7 +676,7 @@ metadata:
   namespace: openebs
 data:
   # udev-probe is default or primary probe which should be enabled to run ndm
-  # filterconfigs contails configs of filters - in their form fo include
+  # filterconfigs contains configs of filters - in their form fo include
   # and exclude comma separated strings
   node-disk-manager.config: |
     probeconfigs:

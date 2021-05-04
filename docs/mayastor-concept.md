@@ -86,7 +86,7 @@ The scheduling of Mayastor pods is determined declaratively by using a DaemonSet
 
 #### Mayastor-CSI
 
-The mayastor-csi pods within a cluster implement the node plugin component of Mayastor's CSI driver.  As such, their function is to orchestrate the mounting of Maystor provisioned volumes on worker nodes on which application pods consuming those volumes are scheduled.  By default a mayastor-csi pod is scheduled on every node in the target cluster, as determined by a DaemonSet resource of the same name.  These pods each encapsulate two containers, `mayastor-csi` and `csi-driver-registrar`
+The mayastor-csi pods within a cluster implement the node plugin component of Mayastor's CSI driver.  As such, their function is to orchestrate the mounting of Mayastor provisioned volumes on worker nodes on which application pods consuming those volumes are scheduled.  By default a mayastor-csi pod is scheduled on every node in the target cluster, as determined by a DaemonSet resource of the same name.  These pods each encapsulate two containers, `mayastor-csi` and `csi-driver-registrar`
 
  It is not necessary for the node plugin to run on every worker node within a cluster and this behaviour can be modified if so desired through the application of appropriate node labeling and the addition of a corresponding  `nodeSelector` entry within the pod spec of the mayastor-csi DaemonSet.  It should be noted that if a node does not host a plugin pod, then it will not be possible to schedule pod on it which is configured to mount Mayastor volumes.
 
@@ -117,7 +117,7 @@ Mayastor is currently considered to be beta software.
 
 > "(it) will generally have many more bugs in it than completed software and speed or performance issues, and may still cause crashes or data loss."
 
-The project's maintainers operate a live issue tracking dashboard for defects which they have under active triage and investigation.  It can be accessed [here](https://mayadata.atlassian.net/secure/Dashboard.jspa?selectPageId=10015).  You are strongly encouraged to familiarise yourself with the issues identified there before using Mayastor and when raising issue reports in order to limit to the extent possible redundant issue reporting. 
+The project's maintainers operate a live issue tracking dashboard for defects which they have under active triage and investigation.  It can be accessed [here](https://mayadata.atlassian.net/secure/Dashboard.jspa?selectPageId=10015).  You are strongly encouraged to familiarize yourself with the issues identified there before using Mayastor and when raising issue reports in order to limit to the extent possible redundant issue reporting. 
 
 ### How is Mayastor Tested?
 
@@ -134,7 +134,7 @@ The Mayastor process has been sent the SIGILL signal as the result of attempting
 
 #### Deploying Mayastor on RKE & Fedora CoreOS
 
-In addition to ensuring that the general prerequisites for installation are met, it is necessary to add the following directory mapping to the `services_kublet->extra_binds` section of the ckuster's`cluster.yml file.`
+In addition to ensuring that the general prerequisites for installation are met, it is necessary to add the following directory mapping to the `services_kubelet->extra_binds` section of the cluster's`cluster.yml file.`
 
 ```text
 /opt/rke/var/lib/kubelet/plugins:/var/lib/kubelet/plugins
@@ -163,8 +163,8 @@ Mayastor has no snapshot or cloning capabilities.
 
 ### Volumes are "Highly Durable" but without multipathing are not "Highly Available"
 
-Mayastor Volumes can be configured (or subsequently re-configured) to be composed of 2 or more "children" or "replicas"; causing synchronously mirrored copies of the volumes's data to be maintained on more than one worker node and Disk Pool.  This contributes additional "durability" at the persistence layer, ensuring that viable copyies of a volume's data remain even if a Disk Pool device is lost.
+Mayastor Volumes can be configured (or subsequently re-configured) to be composed of 2 or more "children" or "replicas"; causing synchronously mirrored copies of the volume's data to be maintained on more than one worker node and Disk Pool.  This contributes additional "durability" at the persistence layer, ensuring that viable copies of a volume's data remain even if a Disk Pool device is lost.
 
-However a Mayastor volume is currently accessible to an application only via a single target instance (NVMe-oF, or iSCSI) of a single Mayastor pod.  If that pod terminates (through the loss of the worker node on which it's scheduled, excution failure, pod eviction etc.) then there will be no viable I/O path to any remaining healthy replicas and access to data on the volume cannot be maintained.
+However a Mayastor volume is currently accessible to an application only via a single target instance (NVMe-oF, or iSCSI) of a single Mayastor pod.  If that pod terminates (through the loss of the worker node on which it's scheduled, execution failure, pod eviction etc.) then there will be no viable I/O path to any remaining healthy replicas and access to data on the volume cannot be maintained.
 
 There has been initial discovery work completed in supporting and testing the use of multipath connectivity to Mayastor pods.  The work of developing and supporting production usage of multipath connectivity is currently scheduled to complete after general availability.

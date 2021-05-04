@@ -20,7 +20,7 @@ This guide explains the basic installation for StackGres PostgreSQL on OpenEBS L
 
 ## Deployment model
 
-<img src="/docs/assets/svg/StackGres-Postgres-LocalPV.svg" alt="OpenEBS and StakcGres PostgreSQL localpv device" style="width:100%;">
+<img src="/docs/assets/svg/StackGres-Postgres-LocalPV.svg" alt="OpenEBS and StackGres PostgreSQL localpv device" style="width:100%;">
 
 We will use GKE, where we will install Stackgres PostgreSQL with OpenEBS storage engine. The Local PV volume will be provisioned on a node where Stackgres PostgreSQL pod is getting scheduled and uses one of the matching unclaimed block devices, which will then use the entire block device for storing data. No other application can use this device. If users have limited blockdevices attached to some nodes, they can use `nodeSelector` in the application YAML to provision applications on particular nodes where the available block device is present. The recommended configuration is to have at least three nodes and one unclaimed external disk to be attached per node. 
 
@@ -71,9 +71,9 @@ Once it’s ready, you will see that the two pods are  `Running` and the other p
 $ kubectl get pod -n stackgres
 
 NAME                                           READY   STATUS      RESTARTS   AGE
-stackgres-operator-78d57d4f55-vtlhj            1/1     Running     0          3m29s
+stackgres-operator-78d57d4f55-node1            1/1     Running     0          3m29s
 stackgres-operator-bootstrap-9p9zs             0/1     Completed   0          3m58s
-stackgres-operator-conversion-webhooks-jdhxx   0/1     Completed   0          4m
+stackgres-operator-conversion-webhooks-node2   0/1     Completed   0          4m
 stackgres-operator-crd-upgrade-5fx7c           0/1     Completed   0          3m59s
 stackgres-operator-create-certificate-r75cn    0/1     Completed   0          3m58s
 stackgres-operator-upgrade-wn79r               0/1     Completed   0          3m57s
@@ -188,9 +188,9 @@ Since we have mentioned 2 replicas and capacity with 90G in Postgres cluster spe
 $ kubectl get bd -n openebs
 
 NAME                                           NODENAME                                     SIZE           CLAIMSTATE   STATUS   AGE
-blockdevice-1fcc50ef4b3550ada3f82fe90102daca   gke-ranjith-doc-default-pool-41db3a16-t4d0   107373116928   Claimed      Active   17m
-blockdevice-58c88ac19e09084c6f71178130c20ba8   gke-ranjith-doc-default-pool-41db3a16-rqbt   107373116928   Unclaimed    Active   19m
-blockdevice-8fd1127f57cf19b01e4da75110ae488a   gke-ranjith-doc-default-pool-41db3a16-81tl   107373116928   Claimed      Active   19m
+blockdevice-1fcc50ef4b3550ada3f82fe90102daca   gke-user-doc-default-pool-41db3a16-t4d0   107373116928   Claimed      Active   17m
+blockdevice-58c88ac19e09084c6f71178130c20ba8   gke-user-doc-default-pool-41db3a16-1122   107373116928   Unclaimed    Active   19m
+blockdevice-8fd1127f57cf19b01e4da75110ae488a   gke-user-doc-default-pool-41db3a16-81tl   107373116928   Claimed      Active   19m
 ```
 
 Verify the master and slave configuration.

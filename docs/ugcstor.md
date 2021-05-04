@@ -263,7 +263,7 @@ This will not affect any `PersistentVolumeClaims` or `PersistentVolumes` that we
 
 OpenEBS volume can be backed up and restored along with the application using OpenEBS velero plugin. It helps the user for backing up the OpenEBS volumes to third party storage location and restore the data whenever it is required. The steps for taking backup and restore are as follows.
 
-<h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h4>
+<h4><a class="anchor" aria-hidden="true" id="prerequisites-bkp-restore"></a>Prerequisites</h4>
 
 - Latest tested Velero version is 1.4.0.
 - Create required storage provider configuration to store the backup.
@@ -652,7 +652,7 @@ The application pods should be running as displayed below:
 
 ```
 NAME                       READY   STATUS    RESTARTS   AGE
-busybox-66db7d9b88-kkktl   1/1     Running   0          2m16s
+busybox-66db7d9b88-unique   1/1     Running   0          2m16s
 ```
 </li>
 <li>
@@ -798,9 +798,9 @@ The output will be similar to the following.
 
 <div class="co">
 NAME                                           NODENAME                                    SIZE          CLAIMSTATE   STATUS   AGE
-blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   gke-ranjith-14-default-pool-da9e1336-mbq9   42949672960   Unclaimed    Active   2m39s
-blockdevice-77f834edba45b03318d9de5b79af0734   gke-ranjith-14-default-pool-da9e1336-d9zq   42949672960   Unclaimed    Active   2m47s
-blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-ranjith-14-default-pool-da9e1336-9j2w   42949672960   Unclaimed    Active   2m55s </div>
+blockdevice-1c10eb1bb14c94f02a00373f2fa09b93   gke-user-14-default-pool-da9e1336-mbq9   42949672960   Unclaimed    Active   2m39s
+blockdevice-77f834edba45b03318d9de5b79af0734   gke-user-14-default-pool-da9e1336-d9zq   42949672960   Unclaimed    Active   2m47s
+blockdevice-936911c5c9b0218ed59e64009cc83c8f   gke-user-14-default-pool-da9e1336-9j2w   42949672960   Unclaimed    Active   2m55s </div>
 
 The details of blockdevice can be get using the following command. 
 
@@ -933,9 +933,9 @@ kubectl get pod -n openebs | grep cstor-disk-pool
 Example Output:
 
 ```
-cstor-disk-pool-2gcb-64876b956b-q8fgp          3/3     Running   0          2m30s
-cstor-disk-pool-9q2f-b85ccf6f-6cpdm            3/3     Running   0          2m30s
-cstor-disk-pool-ilz1-5587ff79bf-6djjf          3/3     Running   0          2m31s
+cstor-disk-pool-2gcb-64876b956b-61001          3/3     Running   0          2m30s
+cstor-disk-pool-9q2f-b85ccf6f-61002            3/3     Running   0          2m30s
+cstor-disk-pool-ilz1-5587ff79bf-61003          3/3     Running   0          2m31s
 ```
 
 If all pods are showing are running, then you can use these cStor pools for creating cStor volumes.
@@ -978,7 +978,7 @@ spec:
 
 <h4><a class="anchor" aria-hidden="true" id="PoolResourceRequests-Policy"></a>PoolResourceRequests Policy</h4>
 
-This feature allow you to specify pool resource requests that need to be available before scheduling the containers. If not specified, the default values are used. The following sample configuration will set memory as `2Gi` and ephemeral-stroage request value as `100Mi`. The memory  will be shared for all the volume replicas that reside on a pool. The memory can be `2Gi` to `4Gi` per pool on a given node for better performance. These values can be changed as per the node configuration for better performance. The below configuration also set the `cstor-pool` container with `100Mi` as `ephemeral-storage` requests which will avoid erraneous eviction by K8s. 
+This feature allow you to specify pool resource requests that need to be available before scheduling the containers. If not specified, the default values are used. The following sample configuration will set memory as `2Gi` and ephemeral-storage request value as `100Mi`. The memory  will be shared for all the volume replicas that reside on a pool. The memory can be `2Gi` to `4Gi` per pool on a given node for better performance. These values can be changed as per the node configuration for better performance. The below configuration also set the `cstor-pool` container with `100Mi` as `ephemeral-storage` requests which will avoid erroneous eviction by K8s. 
 
 ```
 apiVersion: openebs.io/v1alpha1
@@ -1000,7 +1000,7 @@ spec:
 
 <h4><a class="anchor" aria-hidden="true" id="Tolerations"></a>Tolerations</h4>
 
-cStor pool pods can be ensure that pods are not scheduled onto inappropriate nodes. This can be acheived using taint and tolerations method. If Nodes are tainted to schedule the pods which are tolerating the taint, then cStor pool pods also can be scheduled using this method.  Tolerations are applied to cStor pool pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
+cStor pool pods can be ensure that pods are not scheduled onto inappropriate nodes. This can be achieved using taint and tolerations method. If Nodes are tainted to schedule the pods which are tolerating the taint, then cStor pool pods also can be scheduled using this method.  Tolerations are applied to cStor pool pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
 
 ```
 apiVersion: openebs.io/v1alpha1
@@ -1052,7 +1052,7 @@ metadata:
 
 <h4><a class="anchor" aria-hidden="true" id="AuxResourceRequests-Policy"></a>AuxResourceRequests Policy</h4>
 
-The below configuration will set the cstor-pool side-cars with memory as `0.5Gi`, cpu as `100m`. This also set the `cstor-pool` side-cars with ephemeral-storage request `50Mi` which will avoid erraneous eviction by K8s. 
+The below configuration will set the cstor-pool side-cars with memory as `0.5Gi`, cpu as `100m`. This also set the `cstor-pool` side-cars with ephemeral-storage request `50Mi` which will avoid erroneous eviction by K8s. 
 
 ```
 apiVersion: openebs.io/v1alpha1
@@ -1324,7 +1324,7 @@ You can specify the *TargetResourceRequests* to specify resource requests that n
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: opeenbs-sc-tgt-request
+  name: openebs-sc-tgt-request
   annotations:
     cas.openebs.io/config: |
       - name: TargetResourceRequests
@@ -1406,7 +1406,7 @@ The configuration for implementing this policy is different for deployment and S
 
 <h5><a class="anchor" aria-hidden="true" id="for-statefulset-applications"></a>For StatefulSet Applications</h5>
 
-In the case of provisioning StatfulSet applications with replication factor greater than "1" and volume replication factor equal to "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application pod resides. This feature can be achieved by using either of the following approaches.
+In the case of provisioning StatefulSet applications with replication factor greater than "1" and volume replication factor equal to "1", for a given OpenEBS volume, target and replica related to that volume should be scheduled on the same node where the application pod resides. This feature can be achieved by using either of the following approaches.
 
 **Approach 1:**
 
@@ -1729,7 +1729,7 @@ cStorPools can be horizontally scaled when needed typically when a new Kubernete
 
 The steps for expanding the pool to new nodes is given below. 
 
-<h4><a class="anchor" aria-hidden="true" id="With-specifiying-blockDeviceList"></a>With specifiying blockDeviceList</h4>
+<h4><a class="anchor" aria-hidden="true" id="With-specifying-blockDeviceList"></a>With specifying blockDeviceList</h4>
 If you are following this approach, you should have created cStor Pool initially using the steps provided [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). For expanding pool onto a new OpenEBS node, you have to edit corresponding pool configuration(SPC) YAML with the required block device names under the `blockDeviceList` .
 
 **Step 1:** Edit the existing pool configuration spec that you originally used and apply it (OR) directly edit the in-use spec file using `kubectl edit spc <SPC Name>`.
@@ -1855,7 +1855,7 @@ This section provide the steps for scaling up the replica of a cStor volume.
    demo-vol1-claim   Bound    pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8   500Gi      RWO            openebs-sc-cstor   3h18m
    </div>
    
-   From the above output, get `VOLUME` name and use in the following command to get the details of corresponding cStor volume. All commands are peformed by considering above PVC.
+   From the above output, get `VOLUME` name and use in the following command to get the details of corresponding cStor volume. All commands are performed by considering above PVC.
 
    Get the details of cStor volume details using the following command:
 
@@ -1886,7 +1886,7 @@ This section provide the steps for scaling up the replica of a cStor volume.
 3. Perform the following command to get complete details of the existing cStor volume replica:
 
    ```
-   kubectl get cvr pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8-cstor-disk-pool-hgt4 -n openebs -oyaml
+   kubectl get cvr pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8-cstor-disk-pool-hgt4 -n openebs -o yaml
    ```
 
    Example snippet of output:
@@ -1896,7 +1896,7 @@ This section provide the steps for scaling up the replica of a cStor volume.
    kind: CStorVolumeReplica
    metadata:
      annotations:
-       cstorpool.openebs.io/hostname: gke-ranjith-scaleup-default-pool-48c9bf17-tb7w
+       cstorpool.openebs.io/hostname: gke-user-cluster-default-pool-48c9bf17-tb7w
        isRestoreVol: "false"
        openebs.io/storage-class-ref: |
          name: openebs-sc-cstor
@@ -1980,7 +1980,7 @@ This section provide the steps for scaling up the replica of a cStor volume.
 6. Perform the following command to get the details of the cStor Pool where new replica will be created:
 
    ```
-   kubectl get csp -n openebs cstor-disk-pool-2phf -oyaml
+   kubectl get csp -n openebs cstor-disk-pool-2phf -o yaml
    ```
 
    Example snippet of output:
@@ -1990,11 +1990,11 @@ This section provide the steps for scaling up the replica of a cStor volume.
    kind: CStorPool
    metadata:
      annotations:
-       openebs.io/csp-lease: '{"holder":"openebs/cstor-disk-pool-2phf-5d68b6b7ff-nbslc","leaderTransition":1}'
+       openebs.io/csp-lease: '{"holder":"openebs/cstor-disk-pool-2phf-5d68b6b7ff-12345","leaderTransition":1}'
      creationTimestamp: "2019-11-09T13:28:17Z"
      generation: 2196
      labels:
-       kubernetes.io/hostname: gke-ranjith-scaleup-default-pool-48c9bf17-tjvs
+       kubernetes.io/hostname: gke-user-cluster-default-pool-48c9bf17-1234
        openebs.io/cas-template-name: cstor-pool-create-default-1.4.0
        openebs.io/cas-type: cstor
        openebs.io/storage-pool-claim: cstor-disk-pool
@@ -2025,7 +2025,7 @@ This section provide the steps for scaling up the replica of a cStor volume.
    kind: CStorVolumeReplica
    metadata:
     annotations:
-      cstorpool.openebs.io/hostname: <Kubernetes_nodename>
+      cstorpool.openebs.io/hostname: <Kubernetes_node_name>
       isRestoreVol: "false"
       openebs.io/storage-class-ref: |
         name: <storage_class_name>
@@ -2054,7 +2054,7 @@ This section provide the steps for scaling up the replica of a cStor volume.
        current: <existing_cStor_volume_version>
    ```
 
-   - **<Kubernetes_nodename>**: Kubernetes node name where cStor pool exists and new CVR will be created on this Node. This can be obtained from step 6.
+   - **<Kubernetes_node_name>**: Kubernetes node name where cStor pool exists and new CVR will be created on this Node. This can be obtained from step 6.
 
    - **<storage_class_name>:** Storageclass name used to create the cStor volume. It is also available in any existing CVR. This can be obtained from step 3.
 
@@ -2068,11 +2068,11 @@ This section provide the steps for scaling up the replica of a cStor volume.
 
    - **<cstor_volume_name>**: Name of cStor volume. This can be get from step 3.
 
-   - **<cstor_volume_name>-<csp_name>**:  This is the newe CVR name which is going to be created. This should be named as a combination of particular cStor volume name and identified cStor pool name. This can be get from step 3 and step 6.
+   - **<cstor_volume_name>-<csp_name>**:  This is the new CVR name which is going to be created. This should be named as a combination of particular cStor volume name and identified cStor pool name. This can be get from step 3 and step 6.
 
    - **<initial_capacity>**:  Capacity of the cStor volume. This can be get from step 3.
 
-   - **<target_service_ip>**:  `Targetip` of corresponding cStor volume. This can be get from step 3.
+   - **<target_service_ip>**:  Target IP of corresponding cStor volume. This can be got from step 3.
 
    - **<md5sum_of_pvc_uid_and_csp_uid>**:  It is the unique value referred to as  `replicaid` in the whole cluster.  This can be generated by running the following command:
 
@@ -2100,7 +2100,7 @@ This section provide the steps for scaling up the replica of a cStor volume.
      kind: CStorVolumeReplica
      metadata:
        annotations:
-         cstorpool.openebs.io/hostname: gke-ranjith-scaleup-default-pool-48c9bf17-tjvs
+         cstorpool.openebs.io/hostname: gke-user-cluster-default-pool-48c9bf17-1234
          isRestoreVol: "false"
          openebs.io/storage-class-ref: |
            name: openebs-sc-cstor
@@ -2186,7 +2186,7 @@ This section provide the steps for scaling up the replica of a cStor volume.
     cstorvolume.openebs.io/pvc-3f86fcdf-02f6-11ea-b0f6-42010a8000f8 edited
     </div>
 
-11. Verify if the rebuilding has started on new replica of the cStor volume. Once rebuilding has completed, it will update its `STATUS` as `Healthy`. Get the latest status of the CVRs using the folloiwng command:
+11. Verify if the rebuilding has started on new replica of the cStor volume. Once rebuilding has completed, it will update its `STATUS` as `Healthy`. Get the latest status of the CVRs using the following command:
 
     ```
     kubectl get cvr -n openebs
@@ -2255,7 +2255,7 @@ This section provide the steps for scaling down the replica of a cStor volume.
 
 - All the other cStor volume replicas(CVR) should be in `Healthy` state except the cStor volume replica that is going to deleted(i.e deleting CVR can be in any state).
 
-- There shouldn't be any ongoing scaleup process. Verify that `replicationFactor` should be equal to the `desiredReplicationFactor` from corresponding cStor volume CR specification. 
+- There shouldn't be any ongoing scale up process. Verify that `replicationFactor` should be equal to the `desiredReplicationFactor` from corresponding cStor volume CR specification. 
 
 **Notes to remember:**
 
@@ -2276,7 +2276,7 @@ This section provide the steps for scaling down the replica of a cStor volume.
    kubectl get pvc
    ```
   
-   From the output of above command, get `VOLUME` name and use in the following command to get the details of corresponding cStor volume. All commands are peformed by considering above PVC. 
+   From the output of above command, get `VOLUME` name and use in the following command to get the details of corresponding cStor volume. All commands are performed by considering above PVC. 
   
    ```
    kubectl get cstorvolume -n openebs -l openebs.io/persistent-volume=pvc-ed6e893a-051d-11ea-a786-42010a8001c9
@@ -2307,7 +2307,7 @@ This section provide the steps for scaling down the replica of a cStor volume.
 2. Identify the cStor volume replica from above output which needs to be removed. Then, perform the following command to get the `replicaid` of the corresponding cStor volume replica. In this example, identified cStor volume replica is `pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw`. 
   
    ```
-   kubectl get cvr pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw -n openebs -oyaml | grep -i replicaid
+   kubectl get cvr pvc-ed6e893a-051d-11ea-a786-42010a8001c9-cstor-disk-pool-c0tw -n openebs -o yaml | grep -i replicaid
    ```
   
    Example snippet:
@@ -2369,15 +2369,15 @@ This section provide the steps for scaling down the replica of a cStor volume.
    Example snippet of output:
    
    <div class="co">
-   Normal   Healthy     18m                pvc-ed6e893a-051d-11ea-a786-42010a8001c9-target-58d76bdbd-95hdh, gke-ranjith-scaledown-default-pool-0dece219-jt3d  Volume is in Healthy state
-   Warning  FailUpdate  92s (x4 over 22m)  pvc-ed6e893a-051d-11ea-a786-42010a8001c9-target-58d76bdbd-95hdh, gke-ranjith-scaledown-default-pool-0dece219-jt3d  Ignoring changes on volume pvc-ed6e893a-051d-11ea-a786-42010a8001c9
-   Normal   Updated     92s                pvc-ed6e893a-051d-11ea-a786-42010a8001c9-target-58d76bdbd-95hdh, gke-ranjith-scaledown-default-pool-0dece219-jt3d  Successfully updated the desiredReplicationFactor to 2
+   Normal   Healthy     18m                pvc-ed6e893a-051d-11ea-a786-42010a8001c9-target-58d76bdbd-95hdh, gke-user-cluster-default-pool-0dece219-jt3d  Volume is in Healthy state
+   Warning  FailUpdate  92s (x4 over 22m)  pvc-ed6e893a-051d-11ea-a786-42010a8001c9-target-58d76bdbd-95hdh, gke-user-cluster-default-pool-0dece219-jt3d  Ignoring changes on volume pvc-ed6e893a-051d-11ea-a786-42010a8001c9
+   Normal   Updated     92s                pvc-ed6e893a-051d-11ea-a786-42010a8001c9-target-58d76bdbd-95hdh, gke-user-cluster-default-pool-0dece219-jt3d  Successfully updated the desiredReplicationFactor to 2
    </div>
   
    Verify the updated details of cStor volume using the following command:
   
    ```
-   kubectl get cstorvolume pvc-ed6e893a-051d-11ea-a786-42010a8001c9 -n openebs -oyaml
+   kubectl get cstorvolume pvc-ed6e893a-051d-11ea-a786-42010a8001c9 -n openebs -o yaml
    ```
   
    Example snippet of output:
