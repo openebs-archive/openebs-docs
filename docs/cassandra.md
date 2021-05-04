@@ -12,7 +12,7 @@ This tutorial provides detailed instructions to run a Kudo operator based Cassan
 
 ## Introduction
 
-Apache Cassandra is a free and open-source distributed NoSQL database management system designed to handle a large amounts of data across nodes, providing high availability with no single point of failure. It uses asynchronous master less replication allowing low latency operations for all clients. 
+Apache Cassandra is a free and open-source distributed NoSQL database management system designed to handle a large amounts of data across nodes, providing high availability with no single point of failure. It uses asynchronous masterless replication allowing low latency operations for all clients. 
 
 OpenEBS is the most popular Open Source Container Attached Solution available for Kubernetes and is favored by many organizations for its simplicity and ease of management and it's highly flexible deployment options to meet the storage needs of any given stateful application.
 

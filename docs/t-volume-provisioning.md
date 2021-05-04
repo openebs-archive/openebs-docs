@@ -59,7 +59,7 @@ Application sometimes complain about the underlying filesystem has become ReadOn
 This can happen for many reasons. 
 
 - The cStor target pod is evicted because of resource constraints and is not scheduled within time 
-- Node is rebooted in adhoc manner (or unscheduled reboot) and Kubernetes is waiting for Kubelet to come backup to know that the node is rebooted and the pods on that node need to be rescheduled. Kubernetes can take up to 30 minutes as timeout before deciding the node does not come back up and pods need to be rescheduled. During this time, the iSCSI initiator at the application pod has timeout and marked the underlying filesystem as ReadOnly
+- Node is rebooted in adhoc manner (or unscheduled reboot) and Kubernetes is waiting for Kubelet to respond to know if the node is rebooted and the pods on that node need to be rescheduled. Kubernetes can take up to 30 minutes as timeout before deciding the node is going to stay offline and pods need to be rescheduled. During this time, the iSCSI initiator at the application pod has timeout and marked the underlying filesystem as ReadOnly
 - cStor target has lost quorum because of underlying node losses and target has marked the lun as ReadOnly
 
 Go through the Kubelet logs and application pod logs to know the reason for marking the ReadOnly and take appropriate action. [Maintaining volume quorum](/docs/next/k8supgrades.html) is necessary during Kubernetes node reboots. 
