@@ -63,7 +63,7 @@ The recommended steps to uninstall the OpenEBS cluster gracefully is as follows.
   kubectl get bd -n <openebs namespace>
   ```
   
-  If present, remove the finalizer entry from the corresponding BD and then delete it. To remove the finazlier, use the following command
+  If present, remove the finalizer entry from the corresponding BD and then delete it. To remove the finalizer, use the following command
   ```
   kubectl patch -n openebs bd <blockdevice-xxx> -p '{"metadata":{"finalizers":null}}' --type=merge
   ```

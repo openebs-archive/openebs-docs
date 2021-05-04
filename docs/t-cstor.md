@@ -8,7 +8,7 @@ sidebar_label: cStor
 <font size="5">General guidelines for troubleshooting</font>
 
 - Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
-- Search for similar issues added in this troubleshootiung section.
+- Search for similar issues added in this troubleshooting section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
 <br>
@@ -77,7 +77,7 @@ From the above highlighted logs, we can confirm `cstor-pool-mgmt` in new pod is 
 
 When a cstor pool pod is deleted there are high chances that two cstor pool pods of same pool can present i.e old pool pod will be in `Terminating` state(which means not all the containers completely terminated) and new pool pod will be in `Running` state(might be few containers are in running state but not all). In this scenario `cstor-pool-mgmt` container in new pool pod is communicating with `cstor-pool` in old pool pod.  This can cause CVR resource to set to `Invalid`.
 
-**Note:** This issue has observed in all OpenEBS versions upto 1.2.
+**Note:** This issue has observed in all OpenEBS versions up to 1.2.
 
 **Resolution:**
 

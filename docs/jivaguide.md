@@ -259,7 +259,7 @@ The application pods should be running as displayed below
 
 ```
 NAME                       READY   STATUS    RESTARTS   AGE
-busybox-66db7d9b88-kkktl   1/1     Running   0          2m16s
+busybox-66db7d9b88-pod01   1/1     Running   0          2m16s
 ``` 
 </li>
 </ol>
@@ -297,7 +297,7 @@ Grafana charts can be built for the above Prometheus metrics.
 
 OpenEBS volume can be backed up and restore along with application using velero plugin. It helps the user for taking backup of OpenEBS volumes to a third party storage location and then restoration of the data whenever it needed. The steps for taking backup and restore are following.
 
-<h4><a class="anchor" aria-hidden="true" id="prerequisties-bkp-restore"></a>Prerequisites</h3>
+<h4><a class="anchor" aria-hidden="true" id="prerequisites-bkp-restore"></a>Prerequisites</h3>
 
 - Mount propagation feature has to be enabled on Kubernetes, otherwise the data written from the pods will not visible in the restic daemonset pod on the same node. It is enabled by default on Kubernetes version 1.12. More details can be get from [here](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/). 
 - Latest tested Velero version is 1.4.0.
@@ -336,11 +336,11 @@ The following is an example output in a 3 Node cluster.
 NAME                    READY   STATUS    RESTARTS   AGE
 restic-8hxx8            1/1     Running   0          9s
 restic-nd9d9            1/1     Running   0          9s
-restic-zfggm            1/1     Running   0          9s
+restic-nd8d8            1/1     Running   0          9s
 velero-db6459bb-n2rff   1/1     Running   0          9s
 ```
 
-<h4><a class="anchor" aria-hidden="true" id="annotate-appliction"></a>Annotate Application Pod</h3>
+<h4><a class="anchor" aria-hidden="true" id="annotate-application"></a>Annotate Application Pod</h3>
 
 Run the following  to annotate each application pod that contains a volume to back up.
 
@@ -475,7 +475,7 @@ The process of creating a Jiva pool include the following steps.
 
 <h4><a class="anchor" aria-hidden="true" id="prepare-disk-mount"></a>Prepare disks and mount them</h4>
 
-If it is a cloud disk provision and mount on the node. If three replicas of Jiva volume are needed, provision three cloud disks and mount them on each node. The mount path needs to be same on all three nodes. The following is the steps for creating a GPD disk on Google cloud and mounthing to the node.
+If it is a cloud disk provision and mount on the node. If three replicas of Jiva volume are needed, provision three cloud disks and mount them on each node. The mount path needs to be same on all three nodes. The following is the steps for creating a GPD disk on Google cloud and mounting to the node.
 
 - Create a GPD
 
@@ -752,7 +752,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 <h4><a class="anchor" aria-hidden="true" id="Targe-NodeSelector-Policy"></a>Target  NodeSelector Policy</h4>
 
-You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: apnode`is the node label.
+You can specify the *TargetNodeSelector* where Target pod has to be scheduled using the *value* for *TargetNodeSelector*. In following example, `node: appnode` is the node label.
 
 ```
 apiVersion: storage.k8s.io/v1

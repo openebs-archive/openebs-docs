@@ -8,7 +8,7 @@ sidebar_label: NDM
 <font size="5">General guidelines for troubleshooting</font>
 
 - Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
-- Search for similar issues added in this troubleshootiung section.
+- Search for similar issues added in this troubleshooting section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
 <br>

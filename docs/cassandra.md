@@ -8,7 +8,7 @@ sidebar_label: Cassandra
 <img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Cassandra" style="width:400px;">
 
 
-This tutorial provides detailed instructions to run a Kudo operator based Cassandra StatefulsSets with OpenEBS storage and perform some simple database operations to verify the successful deployment and it's performance benchmark.
+This tutorial provides detailed instructions to run a Kudo operator based Cassandra StatefulSets with OpenEBS storage and perform some simple database operations to verify the successful deployment and it's performance benchmark.
 
 ## Introduction
 

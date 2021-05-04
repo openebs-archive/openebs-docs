@@ -97,7 +97,7 @@ Feb 06 06:11:38 <hostname> kubelet[1063]: iscsiadm: failed to send SendTargets P
 
 The cause of high memory consumption of kubelet is mainly due to the following.
 
-There are 3 modules are involved - cstor-isgt, kubelet and iscsiInitiator(iscsiadm). kubelet runs iscsiadm command to do discovery on cstor-istgt. If there is any delay in receiving response of discovery opcode (either due to network or delay in processing on target side), iscsiadm retries few times, and, gets into infinite loop dumping error messages as below:
+There are 3 modules are involved - cstor-istgt, kubelet and iscsiInitiator(iscsiadm). kubelet runs iscsiadm command to do discovery on cstor-istgt. If there is any delay in receiving response of discovery opcode (either due to network or delay in processing on target side), iscsiadm retries few times, and, gets into infinite loop dumping error messages as below:
 
     iscsiadm: Connection to Discovery Address 127.0.0.1 failed
     iscsiadm: failed to send SendTargets PDU

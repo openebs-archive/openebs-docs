@@ -11,7 +11,7 @@ sidebar_label: Features and Benefits
 | [Containerized storage for containers](#containerized-storage-for-containers) | [Granular policies per stateful workload](#granular-policies-per-stateful-workload) |
 | [Synchronous replication](#synchronous-replication) | [Avoid Cloud Lock-in](#avoid-cloud-lock-in) |
 | [Snapshots and clones](#snapshots-and-clones) | [Reduced storage TCO up to 50%](#reduced-storage-tco-up-to-50) |
-| [Backup and restore](#backup-and-restore) | [Native HCI on Kubernetes](#natively-hyperconvergenced-on-kubernetes) |
+| [Backup and restore](#backup-and-restore) | [Native HCI on Kubernetes](#natively-hyperconverged-on-kubernetes) |
 | [Prometheus metrics and Grafana dashboard](#prometheus-metrics-for-workload-tuning) | [High availability - No Blast Radius](#high-availability) |
 
 
@@ -59,7 +59,7 @@ Copy-on-write snapshots are another optional and popular feature of OpenEBS. Whe
 
 <img src="/docs/assets/svg/f-backup.svg" alt="Backup and Restore Icon" style="width:200px;">
 
-The backup and restore of OpenEBS volumes works with Kubernetes backup and restore solutions such as Velero (formerly Heptio Ark) via open source OpenEBS Velero-plugins. Data backup to object storage targets such as AWS S3, GCP Object Storage or MinIO are frequently deployed using the OpenEBS incremental snapshot capability. This storage level snapshotting and backup saves a significant amount of bandwidth and storage space as only incremental data is used for backup.
+The backup and restore of OpenEBS volumes works with Kubernetes backup and restore solutions such as Velero (formerly Heptio Ark) via open source OpenEBS Velero-plugins. Data backup to object storage targets such as AWS S3, GCP Object Storage or MinIO are frequently deployed using the OpenEBS incremental snapshot capability. This storage level snapshot and backup saves a significant amount of bandwidth and storage space as only incremental data is used for backup.
 
 <hr>
 
@@ -98,9 +98,9 @@ OpenEBS is cloud native storage for stateful applications on Kubernetes where "c
 
 ### Avoid Cloud Lock-in
 
-<img src="/docs/assets/svg/b-no-lockin.svg" alt="Avoid Cloud Lockin Icon" style="width:200px;">
+<img src="/docs/assets/svg/b-no-lockin.svg" alt="Avoid Cloud Lock-in Icon" style="width:200px;">
 
-Even though Kubernetes provides an increasingly ubiquitous control plane, concerns about data gravity resulting in lock-in and otherwise inhibiting the benefits of Kubernetes remain. With OpenEBS, the data can be written to the OpenEBS layer - if cStor, Jiva or Mayastor are used - and if so OpenEBS acts as a data abstraction layer. Using this data abstraction layer, data can be much more easily moved amongst Kubernetes enviroments, whether they are on premise and attached to traditional storage systems or in the cloud and attached to local storage or managed storage services.
+Even though Kubernetes provides an increasingly ubiquitous control plane, concerns about data gravity resulting in lock-in and otherwise inhibiting the benefits of Kubernetes remain. With OpenEBS, the data can be written to the OpenEBS layer - if cStor, Jiva or Mayastor are used - and if so OpenEBS acts as a data abstraction layer. Using this data abstraction layer, data can be much more easily moved amongst Kubernetes environments, whether they are on premise and attached to traditional storage systems or in the cloud and attached to local storage or managed storage services.
 
 <hr>
 
@@ -131,7 +131,7 @@ On most clouds, block storage is charged based on how much is purchased and not 
 
 <br>
 
-### Natively Hyperconvergenced on Kubernetes
+### Natively Hyperconverged on Kubernetes
 
 <img src="/docs/assets/svg/b-hci.svg" alt="Natively HCI on K8s Icon" style="width:200px;">
 

@@ -41,7 +41,7 @@ Here are some of the key highlights in this release.
 - Fixed an issue with cStor that was causing a crash in arm64 due to invalid uzfs zc_nvlist_dst_size handling. 
 - Fixed an issue where NDM would not automatically de-activate a removed disk when GPTBasedUUID was enabled. 
 - Fixes an issue where Rawfile Local PV volume deletion would not delete the provisioned PV folders.
-- Fixes an issue which caused resize on btrs filesystems on top of Rawfile Local PV was failing. 
+- Fixes an issue which caused resize on btrfs filesystems on top of Rawfile Local PV was failing. 
 - Several fixes to docs were also included in this release. 
  
 
@@ -210,7 +210,7 @@ Here are some of the key highlights in this release.
 
 ### Key Improvements
 
-- Added support for specifying a custom node affinity label for OpenEBS Local Hostpath volumes. By default, OpenEBS Local Hostpath volumes use `kubenetes.io/hostname` for setting the PV Node Affinity. Users can now specify a custom label to use for PV Node Affinity. Custom node affinity can be specified in the Local PV storage class as follows: 
+- Added support for specifying a custom node affinity label for OpenEBS Local Hostpath volumes. By default, OpenEBS Local Hostpath volumes use `kubernetes.io/hostname` for setting the PV Node Affinity. Users can now specify a custom label to use for PV Node Affinity. Custom node affinity can be specified in the Local PV storage class as follows: 
   ```
   kind: StorageClass
   metadata:
@@ -227,7 +227,7 @@ Here are some of the key highlights in this release.
   reclaimPolicy: Delete
   ```
   This will help with use cases like:
-  - Deployments where `kubenetes.io/hostname` is not unique across the cluster (Ref: https://github.com/openebs/openebs/issues/2875)
+  - Deployments where `kubernetes.io/hostname` is not unique across the cluster (Ref: https://github.com/openebs/openebs/issues/2875)
   - Deployments, where an existing Kubernetes node in the cluster running Local volumes is replaced with a new node, and storage attached to the old node, is moved to a new node. Without this feature, the Pods using the older node will remain in the pending state.  
 - Added a configuration option to the Jiva volume provisioner to skip adding replica node affinity. This will help in deployments where replica nodes are frequently replaced with new nodes causing the replica to remain in the pending state. The replica node affinity should be used in cases where replica nodes are not replaced with new nodes or the new node comes back with the same node-affinity label. (Ref: https://github.com/openebs/openebs/issues/3226). The node affinity for jiva volumes can be skipped by specifying the following ENV variable in the OpenEBS Provisioner Deployment. 
    ```
@@ -246,7 +246,7 @@ Here are some of the key highlights in this release.
       ...
       autoSetTargetIP: "true"
   ```
-  (Huge thanks to @zlymeda for working on this feature which involved co-ordinating this fix across multiple repositories).
+  (Huge thanks to @zlymeda for working on this feature which involved coordinating this fix across multiple repositories).
 - Enhanced the OpenEBS Velero plugin used to automatically create the target namespace during restore, if the target namespace doesn't exist. (Ref: https://github.com/openebs/velero-plugin/issues/137).
 - Enhanced the OpenEBS helm chart to support Image pull secrets. https://github.com/openebs/charts/pull/174
 - Enhance OpenEBS helm chart to allow specifying resource limits on OpenEBS control plane pods. https://github.com/openebs/charts/issues/151
@@ -339,7 +339,7 @@ Here are some of the key highlights in this release.
 
 ### Key Improvements
 
-- Added support for specifying a custom node affinity label for OpenEBS Local Hostpath volumes. By default, OpenEBS Local Hostpath volumes use `kubenetes.io/hostname` for setting the PV Node Affinity. Users can now specify a custom label to use for PV Node Affinity. Custom node affinity can be specified in the Local PV storage class as follows: 
+- Added support for specifying a custom node affinity label for OpenEBS Local Hostpath volumes. By default, OpenEBS Local Hostpath volumes use `kubernetes.io/hostname` for setting the PV Node Affinity. Users can now specify a custom label to use for PV Node Affinity. Custom node affinity can be specified in the Local PV storage class as follows: 
   ```
   kind: StorageClass
   metadata:
@@ -356,7 +356,7 @@ Here are some of the key highlights in this release.
   reclaimPolicy: Delete
   ```
   This will help with use cases like:
-  - Deployments where `kubenetes.io/hostname` is not unique across the cluster (Ref: https://github.com/openebs/openebs/issues/2875)
+  - Deployments where `kubernetes.io/hostname` is not unique across the cluster (Ref: https://github.com/openebs/openebs/issues/2875)
   - Deployments, where an existing Kubernetes node in the cluster running Local volumes is replaced with a new node, and storage attached to the old node, is moved to a new node. Without this feature, the Pods using the older node will remain in the pending state.  
 - Added a configuration option to the Jiva volume provisioner to skip adding replica node affinity. This will help in deployments where replica nodes are frequently replaced with new nodes causing the replica to remain in the pending state. The replica node affinity should be used in cases where replica nodes are not replaced with new nodes or the new node comes back with the same node-affinity label. (Ref: https://github.com/openebs/openebs/issues/3226). The node affinity for jiva volumes can be skipped by specifying the following ENV variable in the OpenEBS Provisioner Deployment. 
    ```
@@ -375,7 +375,7 @@ Here are some of the key highlights in this release.
       ...
       autoSetTargetIP: "true"
   ```
-  (Huge thanks to @zlymeda for working on this feature which involved co-ordinating this fix across multiple repositories).
+  (Huge thanks to @zlymeda for working on this feature which involved coordinating this fix across multiple repositories).
 - Enhanced the OpenEBS Velero plugin used to automatically create the target namespace during restore, if the target namespace doesn't exist. (Ref: https://github.com/openebs/velero-plugin/issues/137).
 - Enhanced the OpenEBS helm chart to support Image pull secrets. https://github.com/openebs/charts/pull/174
 - Enhance OpenEBS helm chart to allow specifying resource limits on OpenEBS control plane pods. https://github.com/openebs/charts/issues/151
@@ -582,7 +582,7 @@ Here are some of the key highlights in this release.
 ## 1.10.0 - May 15 2020
 
 **New capabilities**
-- The first release of OpenEBS Mayastor developed using NVMe based architecture, targetted at addressing performance requirements of IO-intensive workloads is ready for alpha testing. For detailed instructions on how to get started with Mayastor please refer to this [Quickstart guide](https://github.com/openebs/Mayastor/blob/master/doc/quick.md). 
+- The first release of OpenEBS Mayastor developed using NVMe based architecture, targeting at addressing performance requirements of IO-intensive workloads is ready for alpha testing. For detailed instructions on how to get started with Mayastor please refer to this [Quickstart guide](https://github.com/openebs/Mayastor/blob/master/doc/quick.md). 
 - Enhancements to OpenEBS ZFS Local PV that includes resolving issues found during scale testing, fully functional CSI driver, and sample Grafana Dashboard for monitoring metrics on ZFS Volumes and Pools. For detailed instructions on how to get started with ZFS Local PV please refer to the [Quick start guide](https://github.com/openebs/zfs-localpv). 
 
 **Key Improvements**
@@ -681,7 +681,7 @@ Here are some of the key highlights in this release.
 - Enhance the logging mechanism for cStor pool pods during pool import time. These changes of logs will help to identify the existence of bad disk on the node.
 - Support for enabling core dump by adding an ENV variable ENABLE_COREDUMP= “1” for cStor pool pod to control whether cores need to be dumped in case of process crashes. By default, dumping cores will be disabled. Make sure this environment variable is not enabled if mountPoint of `SparseDir` has been changed in CAS Templates.
 - Enhance upgrade logs by providing pool and volume status information during the upgrade and also helps in estimating the time taken for deployment pods to come up.
--  Improves Jiva rebuilding process by checkpointing the io numbers. Now only those snapshots will be synced which has less no of io’s.
+-  Improves Jiva rebuilding process by check pointing the io numbers. Now only those snapshots will be synced which has less no of io’s.
 - Fixes an issue with Jiva controller by removing WO replica if new replica with greater revision count get added to controller.
 - Disable core dump in NDM daemon by default. This can be enabled by setting an ENV variable `ENABLE_COREDUMP` to `1`. Core files will be stored inside /var/openebs/ndm/core.
 - Fixes issues in default core dumping location for NDM. System core pattern which is common for all processes on the node will not be modified. NDM will dump the cores in a location under openebs base directory. NDM process will be launched from the openebs directory, so core files will get automatically written to the $PWD, without requiring to change the core pattern.

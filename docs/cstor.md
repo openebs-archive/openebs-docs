@@ -104,7 +104,7 @@ cStor Pool is an important component in the storage management. It is fundamenta
 
 **Add a new pool instance** : A new pool instance may need to be added for many different reasons. The steps for expanding a cStor pool to a new node can be found [here](/docs/next/ugcstor.html#expanding-cStor-pool-to-a-new-node). Few example scenarios where need of cStor pool expansion to new nodes are:
 
-- New node is being added to the Kubernetes cluster and the blockedvices in new node needs to be considered for persistent volume storage.
+- New node is being added to the Kubernetes cluster and the blockdevices in new node needs to be considered for persistent volume storage.
 - An existing pool instance is full in capacity and it cannot be expanded as either local disks or network disks are not available. Hence, a new pool instance may be needed for hosting the new volume replicas.
 - An existing pool instance is fully utilized in performance and it cannot be expanded either because CPU is saturated or more local disks are not available or more network disks or not available. A new pool instance may be added and move some of the existing volumes to the new pool instance to free up some disk IOs on this instance. 
 
@@ -304,7 +304,7 @@ Following are most commonly observed areas of troubleshooting
 
    The cause of high memory consumption of Kubelet is seen on Fedora 29  mainly due to the following.
 
-   There are 3 modules are involved - `cstor-isgt`, `kubelet` and `iscsiInitiator(iscsiadm)`.
+   There are 3 modules are involved - `cstor-istgt`, `kubelet` and `iscsiInitiator(iscsiadm)`.
    kubelet runs iscsiadm command to do discovery on cstor-istgt. If there is any delay in receiving response of discovery opcode (either due to network or delay in processing on target side), iscsiadm retries few times and gets into infinite loop dumping error messages as below:
 
        iscsiadm: Connection to Discovery Address 127.0.0.1 failed
@@ -339,7 +339,7 @@ This issue is fixed in 0.8.1 version.
 | <font size="5">cStor volume features</font>                  |                   |
 | Expanding the size of a cStor volume using CSI provisioner (Alpha)       | 1.2.0         |
 | CSI driver support(Alpha)                                  | 1.1.0          |
-| Snapshot and Clone of cStor volume provisoned via CSI provisioner(Alpha) | 1.4.0         |
+| Snapshot and Clone of cStor volume provisioned via CSI provisioner(Alpha) | 1.4.0         |
 | Scaling up of cStor Volume Replica            | 1.3.0           |
 | Scaling down of cStor Volume Replica          | 1.4.0           |
 
