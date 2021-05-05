@@ -18,11 +18,11 @@ In this document, we will explain how you can easily set up a monitoring environ
 
 
 
-<img src="/docs/assets/svg/StackGres-Postgres-LocalPV.svg" alt="OpenEBS and StackGres PostgreSQL localpv device" style="width:100%;">
+<img src="/docs/assets/svg/localpv-device-prometheus-deployment.svg" alt="OpenEBS and Prometheus localpv device" style="width:100%;">
 
 
 
-We will add additional two Disks to each node. Disks will be consumed by Prometheus and Alert manager instances using OpenEBS local PV device storage engine. In this example, we have used GKE and added the disks using the GKE CLI console. The recommended configuration is to have at least three nodes and two unclaimed external disks to be attached per node. 
+We will add 100G of two disks to each node. Disks will be consumed by Prometheus and Alert manager instances using OpenEBS local PV device storage engine. The recommended configuration is to have at least three nodes and two unclaimed external disks to be attached per node. 
 
 
 
@@ -58,9 +58,9 @@ In this document, we are deploying Prometheus Operator using OpenEBS Local PV de
 
 There are 2 ways to use OpenEBS Local PV.
 
-- `openebs-hostpath` - Using this option, it will create Kubernetes Persistent Volumes that will store the data into OS host path directory at: /var/openebs/<"prometheus-pv-name">/. Select this option, if you don’t have any additional block devices attached to Kubernetes nodes. You would like to customize the directory where data will be saved, create a new OpenEBS Local PV storage class using these [instructions](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass). 
+- `openebs-hostpath` - Using this option, it will create Kubernetes Persistent Volumes that will store the data into OS host path directory at: /var/openebs/<"prometheus-pv-name">/. Select this option, if you don’t have any additional block devices attached to Kubernetes nodes. If you would like to customize the directory where data will be saved, create a new OpenEBS Local PV storage class using these [instructions](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass). 
 
-- `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a Prometheus application pod. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](/docs/next/uglocalpv-device.html#optional-block-device-tagging). 
+- `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a Prometheus application pod and other device for Alert manager. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](/docs/next/uglocalpv-device.html#optional-block-device-tagging). 
 
 The Storage Class `openebs-device` has been chosen to deploy Prometheus Operator in the Kubernetes cluster.
 
@@ -80,6 +80,14 @@ In this section, we will install the Prometheus operator. We will later deploy t
 
 Label the nodes with custom label so that Prometheus application will be deployed only on the matched Nodes. Label each node with `node=prometheus`. We have used this label in the Node Affinity for Prometheus and Alert Manager instances. This will ensure to schedule the Prometheus and Alert Manager pods to deploy only on the labelled nodes.
 
+In this example, we used the following command to label our nodes.
+
+```
+kubectl label nodes ip-192-168-30-203.ap-south-1.compute.internal node=prometheus
+kubectl label nodes ip-192-168-55-47.ap-south-1.compute.internal node=prometheus
+kubectl label nodes ip-192-168-68-28.ap-south-1.compute.internal node=prometheus
+```
+
 #### Fetch and update Prometheus Helm repository
 
 ```
@@ -95,7 +103,7 @@ Perform the following changes:
 - Update `prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues` as `false`
 - Update `prometheus.prometheusSpec.replicas` as `3`
 - Update `prometheus.prometheusSpec.podAntiAffinity` as `hard`
-- Uncomment the following spec in the values.yaml for enabling Node Affinity for Prometheus `prometheus.prometheusSpec.affinity` using a custom node label configured in the previous section. Since we used `node=prometheus` for labeling the nodes, mention the same in the Node affinity section for Prometheus deployment.
+- Uncomment the following spec in the `values.yaml` for enabling Node Affinity for Prometheus `prometheus.prometheusSpec.affinity` using a custom node label configured in the previous section. Since we used `node=prometheus` for labeling the nodes, mention the same in the Node affinity section for Prometheus deployment.
    ```
    affinity:
       nodeAffinity:
@@ -149,24 +157,26 @@ $ helm install prometheus prometheus-community/kube-prometheus-stack --namespace
 ```
 **Note:** Check compatibility for your Kubernetes version and Prometheus stack from [here](https://github.com/prometheus-operator/kube-prometheus/tree/release-0.7#compatibility).
 
+
+
 Verify Prometheus related pods are installed under **monitoring** namespace
 
 ```
 $ kubectl get pod -n monitoring
 
 NAME                                             READY   STATUS    RESTARTS   AGE
-alertmanager-new-alertmanager-0                  2/2     Running   0          32s
-alertmanager-new-alertmanager-1                  2/2     Running   0          32s
-alertmanager-new-alertmanager-2                  2/2     Running   0          32s
-new-operator-5b99859d46-z2z4n                    1/1     Running   0          36s
-prometheus-grafana-56b794d558-cjtg4              2/2     Running   0          36s
-prometheus-kube-state-metrics-6bfcd6f648-jj8r8   1/1     Running   0          36s
-prometheus-new-prometheus-0                      2/2     Running   1          32s
-prometheus-new-prometheus-1                      2/2     Running   1          31s
-prometheus-new-prometheus-2                      2/2     Running   1          31s
-prometheus-prometheus-node-exporter-d7qwn        1/1     Running   0          36s
-prometheus-prometheus-node-exporter-g7d4z        1/1     Running   0          36s
-prometheus-prometheus-node-exporter-hms7z        1/1     Running   0          36s
+alertmanager-new-alertmanager-0                  2/2     Running   0          67m
+alertmanager-new-alertmanager-1                  2/2     Running   0          67m
+alertmanager-new-alertmanager-2                  2/2     Running   0          67m
+new-operator-965786d6b-tln89                     1/1     Running   0          67m
+prometheus-grafana-6549f869b5-82hdc              2/2     Running   0          67m
+prometheus-kube-state-metrics-685b975bb7-wr28n   1/1     Running   0          67m
+prometheus-new-prometheus-0                      2/2     Running   1          67m
+prometheus-new-prometheus-1                      2/2     Running   1          67m
+prometheus-new-prometheus-2                      2/2     Running   1          67m
+prometheus-prometheus-node-exporter-246kl        1/1     Running   0          67m
+prometheus-prometheus-node-exporter-6pqcj        1/1     Running   0          67m
+prometheus-prometheus-node-exporter-gdzhc        1/1     Running   0          67m
 ```
 
 Verify Prometheus related PVCs are created under **monitoring** namespace
@@ -175,26 +185,26 @@ Verify Prometheus related PVCs are created under **monitoring** namespace
 $ kubectl get pvc -n monitoring
 
 NAME                                                               STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS     AGE
-alertmanager-new-alertmanager-db-alertmanager-new-alertmanager-0   Bound    pvc-972862f3-58cf-447e-a18a-a4a1ea51c5c4   50Gi       RWO            openebs-device   55s
-alertmanager-new-alertmanager-db-alertmanager-new-alertmanager-1   Bound    pvc-68dfbbc2-cdcf-418f-8c30-06435b1a007e   50Gi       RWO            openebs-device   55s
-alertmanager-new-alertmanager-db-alertmanager-new-alertmanager-2   Bound    pvc-35425cbe-fbd3-4c3d-81d3-e32ea46c4ee1   50Gi       RWO            openebs-device   55s
-prometheus-new-prometheus-db-prometheus-new-prometheus-0           Bound    pvc-d54d6f08-3f38-4b81-8b0e-a42ff54bdba6   50Gi       RWO            openebs-device   55s
-prometheus-new-prometheus-db-prometheus-new-prometheus-1           Bound    pvc-4388efc8-ab4c-4860-8059-a45de7737ddc   50Gi       RWO            openebs-device   54s
-prometheus-new-prometheus-db-prometheus-new-prometheus-2           Bound    pvc-a5de2c52-3ddb-4233-99ea-143913f5623b   50Gi       RWO            openebs-device   54s
-
+alertmanager-new-alertmanager-db-alertmanager-new-alertmanager-0   Bound    pvc-ad916e53-778e-448f-95dd-07136569e064   90Gi       RWO            openebs-device   67m
+alertmanager-new-alertmanager-db-alertmanager-new-alertmanager-1   Bound    pvc-095772d7-c5f8-43f0-b0b0-f546d75bf3a2   90Gi       RWO            openebs-device   67m
+alertmanager-new-alertmanager-db-alertmanager-new-alertmanager-2   Bound    pvc-e36e26eb-2d45-4f01-8aab-7e90f51d5252   90Gi       RWO            openebs-device   67m
+prometheus-new-prometheus-db-prometheus-new-prometheus-0           Bound    pvc-471edd10-6037-4a30-9451-5417e6caf5bd   90Gi       RWO            openebs-device   67m
+prometheus-new-prometheus-db-prometheus-new-prometheus-1           Bound    pvc-c1ef4a1f-d3c0-404b-ad78-c6f5eb94bfab   90Gi       RWO            openebs-device   67m
+prometheus-new-prometheus-db-prometheus-new-prometheus-2           Bound    pvc-36a78cfe-b86b-4e7d-b1a1-3bd70067fc47   90Gi       RWO            openebs-device   67m
 ```
 Verify Prometheus related services created under **monitoring** namespace
 ```
 $ kubectl get svc -n monitoring
-NAME                                  TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                      AGE
-alertmanager-operated                 ClusterIP   None          <none>        9093/TCP,9094/TCP,9094/UDP   60s
-new-alertmanager                      ClusterIP   10.72.13.15   <none>        9093/TCP                     64s
-new-operator                          ClusterIP   10.72.6.212   <none>        8080/TCP                     64s
-new-prometheus                        ClusterIP   10.72.2.31    <none>        9090/TCP                     64s
-prometheus-grafana                    ClusterIP   10.72.9.223   <none>        80/TCP                       64s
-prometheus-kube-state-metrics         ClusterIP   10.72.7.242   <none>        8080/TCP                     64s
-prometheus-operated                   ClusterIP   None          <none>        9090/TCP                     59s
-prometheus-prometheus-node-exporter   ClusterIP   10.72.4.132   <none>        9100/TCP                     64s
+
+NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+alertmanager-operated                 ClusterIP   None             <none>        9093/TCP,9094/TCP,9094/UDP   67m
+new-alertmanager                      ClusterIP   10.100.190.160   <none>        9093/TCP                     68m
+new-operator                          ClusterIP   10.100.22.183    <none>        8080/TCP                     68m
+new-prometheus                        ClusterIP   10.100.31.79     <none>        9090/TCP                     68m
+prometheus-grafana                    ClusterIP   10.100.149.205   <none>        80/TCP                       68m
+prometheus-kube-state-metrics         ClusterIP   10.100.21.186    <none>        8080/TCP                     68m
+prometheus-operated                   ClusterIP   None             <none>        9090/TCP                     67m
+prometheus-prometheus-node-exporter   ClusterIP   10.100.69.43     <none>        9100/TCP                     68m
 ```
 
 
@@ -206,7 +216,7 @@ For ease of simplicity in testing the deployment, we are going to use NodePort f
 Change Prometheus service to **NodePort** from **ClusterIP**:
 
 ```
-$ kubectl patch svc prometheus-kube-prometheus-prometheus -n monitoring -p '{"spec": {"type": "NodePort"}}'
+$ kubectl patch svc new-prometheus -n monitoring -p '{"spec": {"type": "NodePort"}}'
 ```
 
 
@@ -226,15 +236,15 @@ Sample output after changing above 2 changes in services:
 ```
 $ kubectl get svc -n monitoring
 
-NAME                                  TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                      AGE
-alertmanager-operated                 ClusterIP   None          <none>        9093/TCP,9094/TCP,9094/UDP   2m57s
-new-alertmanager                      ClusterIP   10.72.13.15   <none>        9093/TCP                     3m1s
-new-operator                          ClusterIP   10.72.6.212   <none>        8080/TCP                     3m1s
-new-prometheus                        NodePort    10.72.2.31    <none>        9090:30968/TCP               3m1s
-prometheus-grafana                    NodePort    10.72.9.223   <none>        80:30941/TCP                 3m1s
-prometheus-kube-state-metrics         ClusterIP   10.72.7.242   <none>        8080/TCP                     3m1s
-prometheus-operated                   ClusterIP   None          <none>        9090/TCP                     2m56s
-prometheus-prometheus-node-exporter   ClusterIP   10.72.4.132   <none>        9100/TCP                     3m1s
+NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+alertmanager-operated                 ClusterIP   None             <none>        9093/TCP,9094/TCP,9094/UDP   69m
+new-alertmanager                      ClusterIP   10.100.190.160   <none>        9093/TCP                     69m
+new-operator                          ClusterIP   10.100.22.183    <none>        8080/TCP                     69m
+new-prometheus                        NodePort    10.100.31.79     <none>        9090:31669/TCP               69m
+prometheus-grafana                    NodePort    10.100.149.205   <none>        80:30253/TCP                 69m
+prometheus-kube-state-metrics         ClusterIP   10.100.21.186    <none>        8080/TCP                     69m
+prometheus-operated                   ClusterIP   None             <none>        9090/TCP                     69m
+prometheus-prometheus-node-exporter   ClusterIP   10.100.69.43     <none>        9100/TCP                     69m
 ```
 
 
@@ -246,10 +256,9 @@ Get the node details using the following command:
 ```
 $ kubectl get node -o wide
 
-NAME                                            STATUS   ROLES    AGE     VERSION   INTERNAL-IP      EXTERNAL-IP     OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME
-ip-192-168-24-141.ap-south-1.compute.internal   Ready    <none>   3h15m   v1.19.5   192.168.24.141   13.126.111.68   Ubuntu 20.04.2 LTS   5.4.0-1037-aws   docker://19.3.8
-ip-192-168-49-124.ap-south-1.compute.internal   Ready    <none>   3h15m   v1.19.5   192.168.49.124   65.0.135.6      Ubuntu 20.04.2 LTS   5.4.0-1037-aws   docker://19.3.8
-ip-192-168-73-129.ap-south-1.compute.internal   Ready    <none>   3h15m   v1.19.5   192.168.73.129   15.207.101.58   Ubuntu 20.04.2 LTS   5.4.0-1037-aws   docker://19.3.8
+ip-192-168-30-203.ap-south-1.compute.internal   Ready    <none>   5h13m   v1.19.5   192.168.30.203   52.66.223.37    Ubuntu 20.04.2 LTS   5.4.0-1037-aws   docker://19.3.8
+ip-192-168-55-47.ap-south-1.compute.internal    Ready    <none>   5h13m   v1.19.5   192.168.55.47    35.154.152.99   Ubuntu 20.04.2 LTS   5.4.0-1037-aws   docker://19.3.8
+ip-192-168-68-28.ap-south-1.compute.internal    Ready    <none>   5h13m   v1.19.5   192.168.68.28    65.0.131.40     Ubuntu 20.04.2 LTS   5.4.0-1037-aws   docker://19.3.8
 ```
 
 
@@ -259,7 +268,7 @@ Verify Prometheus service is accessing over web browser using http://<any_node_e
 
 Example:
 
-http://35.224.115.201:30968
+http://52.66.223.37:31669
 
 **Note**: It may be required to allow the Node Port number/traffic in the Firewall/Security Groups to access the above Grafana and Prometheus URL on the web browser.
 
@@ -272,7 +281,7 @@ http://<any_node_external-ip>:<Grafana_SVC_NodePort>
 
 Example:
 
-http://35.224.115.201:30941
+http://52.66.223.37:30253
 
 
 
@@ -296,12 +305,10 @@ $ (kubectl get secret \
 
 The above credentials need to be provided when you need to access the Grafana console. Login to your Grafana console using the above credentials.
 
-
-
 Users can upload a Grafana dashboard for Prometheus in 3 ways. 
 
 - First method is by proving the Grafana id of the corresponding dashboard and then load it.
-  Just find the Grafana dashboard id of the Prometheus and then just mention this id and then load it. The Grafana dashboard id of Prometheus is 3681.
+  Just find the Grafana dashboard id of the Prometheus and then just mention this id and then load it. The Grafana dashboard id of Prometheus is **3681**.
   
 - Another approach is download the following Grafana dashboard JSON file for Prometheus and then paste it in the console and then load it. 
 
