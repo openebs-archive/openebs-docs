@@ -97,12 +97,22 @@ $ helm repo update
 
 #### Configure Prometheus Helm `values.yaml`
 
+Download `values.yaml` which will modify before installing Prometheus using Helm.
+
+```none
+wget https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/values.yaml
+```
+
 Perform the following changes:
 
 - Update `fullnameOverride: "new" `
+
 - Update `prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues` as `false`
+
 - Update `prometheus.prometheusSpec.replicas` as `3`
+
 - Update `prometheus.prometheusSpec.podAntiAffinity` as `hard`
+
 - Uncomment the following spec in the `values.yaml` for enabling Node Affinity for Prometheus `prometheus.prometheusSpec.affinity` using a custom node label configured in the previous section. Since we used `node=prometheus` for labeling the nodes, mention the same in the Node affinity section for Prometheus deployment.
    ```
    affinity:
@@ -115,9 +125,29 @@ Perform the following changes:
               values:
               - prometheus
    ```
+   
+- Uncomment the following spec in the `values.yaml` for `prometheus.prometheusSpec.storageSpec` and change the StorageClass name of Prometheus with the required StorageClass and required volume capacity. In this case, Storage Class used as `openebs-device` and provided the volume capacity as `90Gi`. Ensure to provide the capacity 
+   less than equal to the maximum capacity of the blockdevice, which is going to use it.
+
+   ```
+   storageSpec:
+     volumeClaimTemplate:
+       spec:
+         storageClassName: openebs-device
+         accessModes: ["ReadWriteOnce"]
+         resources:
+           requests:
+             storage: 90Gi
+   ```
+
 - (Optional in case of GKE) Update `prometheusOperator.admissionWebhooks.enabled` as `false`. More details can be found [here](https://github.com/mayadata-io/website-mayadata/pull/994).
+
+- Update `prometheusOperator.tls.enabled` as `false`
+
 - Update `alertmanager.alertmanagerSpec.replicas` as `3`
+
 - Update `alertmanager.alertmanagerSpec.podAntiAffinity` as `hard`
+
 - Uncomment the following spec in the `values.yaml` for enabling Node Affinity for Alert Manager `alertmanager.alertmanagerSpec.affinity` using a custom node label configured in the previous section. Since we used `node=prometheus` for labeling the nodes, mention the same in the Node affinity section for Alert manager.
    ```
    affinity: 
@@ -130,20 +160,21 @@ Perform the following changes:
               values:
               - prometheus
    ```
-- Uncomment the following spec in the `values.yaml` for `prometheus.prometheusSpec.storageSpec` and change the StorageClass name of Prometheus with the required StorageClass and required volume capacity. In this case, Storage Class used as `openebs-device` and provided the volume capacity as `90Gi`. Ensure to provide the capacity 
-  less than equal to the maximum capacity of the blockdevice, which is going to use it.
-  ```
-  storageSpec:
-    volumeClaimTemplate:
-      spec:
-        storageClassName: openebs-device
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 100Gi
+
+- Uncomment the following spec in the `values.yaml` for `alertmanager.alertmanagerSpec.storage` and change the StorageClass name of Alert manager with the required StorageClass name and required volume capacity. In this case, StorageClass used as `openebs-device` and provided the volume capacity as `90Gi`.
+
+  ```none
+   storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: openebs-device
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 90Gi
   ```
 
-#### Create namespace for installing application
+#### Create namespace for installing Prometheus operator
 
 ```
 $ kubectl create ns monitoring
