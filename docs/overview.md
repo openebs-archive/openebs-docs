@@ -64,8 +64,8 @@ Installing OpenEBS in your cluster is as simple as a few `kubectl` or `helm` com
 
 ### Local Volumes
 
-- [Local PV hostpath](/docs/next/uglocalpv-hostpath.html)
-- [Local PV device](/docs/next/uglocalpv-device.html)
+- [Local PV hostpath](https://github.com/openebs/dynamic-localpv-provisioner/blob/develop/docs/quickstart.md)
+- [Local PV device](https://github.com/openebs/dynamic-localpv-provisioner/blob/develop/docs/quickstart.md)
 - [ZFS Local PV](https://github.com/openebs/zfs-localpv)
 - [Rawfile Local PV (alpha)](https://github.com/openebs/rawfile-localpv)
 
