@@ -142,7 +142,7 @@ Perform the following changes:
 
 - (Optional in case of GKE) Update `prometheusOperator.admissionWebhooks.enabled` as `false`. More details can be found [here](https://github.com/mayadata-io/website-mayadata/pull/994).
 
-- Update `prometheusOperator.tls.enabled` as `false`
+- Update `prometheusOperator.tls.enabled` as `false`
 
 - Update `alertmanager.alertmanagerSpec.replicas` as `3`
 
@@ -306,7 +306,7 @@ http://52.66.223.37:31669
 
 
 
-Launch Grafana using Node External IP of with corresponding nodeport of **prometheus-grafana** service
+Launch Grafana using Node External IP of with corresponding NodePort of **prometheus-grafana** service
 
 http://<any_node_external-ip>:<Grafana_SVC_NodePort>
 
