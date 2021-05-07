@@ -357,7 +357,7 @@ Take the backup using the below command. Here, you need to get the label of the 
 velero backup create <backup-name> -l app=<app-label-selector> --snapshot-volumes --volume-snapshot-locations=<SNAPSHOT_LOCATION>
 ```
 
-**Note**: `SNAPSHOT_LOCATION` should be the same as you configured in the  `06-volumesnapshotlocation.yaml`. You can use `--selector` as a flag in backup command  to filter specific resources or use a combo of `--include-namespaces` and `--exclude-resources` to exclude specific resources in the specified namespace. More details can be read from [here](https://heptio.github.io/velero/v0.12.0/api-types/backup.html).
+**Note**: `SNAPSHOT_LOCATION` should be the same as you configured in the  `06-volumesnapshotlocation.yaml`. You can use `--selector` as a flag in backup command  to filter specific resources or use a combo of `--include-namespaces` and `--exclude-resources` to exclude specific resources in the specified namespace. More details can be read from [here](https://velero.io/docs/v1.6/resource-filtering).
 
 Example: 
 
@@ -669,7 +669,7 @@ kubectl edit deployment/velero -n velero
 ...
    containers:
      - name: velero
-       image: gcr.io/heptio-images/velero:latest
+       image: velero/velero:main
        command:
          - /velero
        args:
