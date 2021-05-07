@@ -544,6 +544,139 @@ Note: the deletion of backup will not delete the snapshots created as part of ba
 The deletion of Velero backup schedule doesn't destroy the backup created during the schedule. User need to delete a scheduled backup manually. Use the above steps to delete the scheduled backups.
 
 
+<h4><a class="anchor" aria-hidden="true" id="troubleshooting-bkp-restore"></a>Troubleshooting guide for Backup and Restore</h4>
+1. Backup having status as ``FailedValidation``.
+
+```
+~: velero backup get test
+NAME      STATUS             CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
+test      FailedValidation   0001-01-01 00:00:00 +0000 UTC   29d       default            <none>
+```
+
+If you don’t provide `--storage-location` during backup then velero will use `default` backupstoragelocation. You can either create a new backupstoragelocation named `default` or specify default backupstoragelocation in velero server command line using `--default-backup-storage-location`.
+
+```
+...
+    spec:
+      containers:
+        - name: velero
+          command:
+            - /velero
+          args:
+            - server
+          - --default-backup-storage-location=<location1>
+```
+
+2. Failed to take backup
+
+This error happens when cStor volume doesn’t have sufficient healthy replicas to create a snapshot.
+
+To check the replica status:
+```
+~$ kubectl get cstorvolume -n openebs
+NAME                                       STATUS    AGE
+pvc-2559f80b-35a0-11e9-92c5-42010a80006f   Healthy   2h
+```
+
+3. Backup PartiallyFailed
+
+If all the CVRs are healthy and snapshot creation successful then check for the following logs in `velero backup logs <BACKUP_NAME>
+
+```
+time="2020-03-19T10:47:18Z" level=warning msg="Failed to close file interface : blob (code=Unknown): MultipartUpload: upload multipart failed\n\tupload id: b18cebe2-1f10-4688-93af-9ce3eee24ba8\ncaused by: TotalPartsExceeded: exceeded total allowed configured MaxUploadParts (10000). Adjust PartSize to fit in this limit" backup=velero/daily-k8stest-backup-openebs-120d-20200319084428 cmd=/plugins/velero-blockstore-cstor logSource="/home/travis/gopath/src/github.com/openebs/velero-plugin/pkg/clouduploader/conn.go:242" pluginName=velero-blockstore-cstor
+```
+
+Above is a known issue with velero-plugin having version <= 1.8.0-velero_1.0.0.
+
+4. Debugging Restore
+
+When Velero finishes a Restore, its status changes to `Completed` regardless of whether or not there are issues during the process. The number of warnings and errors are indicated in the output columns from velero restore get:
+```
+~$ velero restore get
+NAME                BACKUP    STATUS      WARNINGS   ERRORS    CREATED                         SELECTOR
+s2-20190221142323   s2        Completed   2          1         2019-02-21 14:23:24 +0530 IST   <none>
+```
+
+To delve into the warnings and errors in more detail, you can use velero restore describe:
+```
+velero restore describe s2-20190221142323
+```
+
+The output looks like this:
+```
+Name:         s2-20190221142323
+Namespace:    velero
+Labels:       <none>
+Annotations:  <none>
+
+Backup:  s2
+
+Namespaces:
+  Included:  *
+  Excluded:  <none>
+
+Resources:
+  Included:        *
+  Excluded:        nodes, events, events.events.k8s.io, backups.velero.io, restores.velero.io
+  Cluster-scoped:  auto
+
+Namespace mappings:  <none>
+
+Label selector:  <none>
+
+Restore PVs:  true
+
+Phase:  Completed
+
+Validation errors:  <none>
+
+Warnings:
+  Velero:        <none>
+  Cluster:    <none>
+  Namespaces:
+    litmus:  not restored: persistentvolumeclaims "demo-cstor-vol-claim-ps" already exists and is different from backed up version.
+             not restored: cstorbackupdatas.openebs.io "test2" already exists and is different from backed up version.
+
+Errors:
+  Velero:        <none>
+  Cluster:  <none>
+  Namespaces: <none>
+```
+
+Errors appear for incomplete or partial restores.
+Warnings appear for non-blocking issues (e.g. the restore looks "normal" and all resources referenced in the backup exist in some form, although some of them may have been pre-existing).
+
+Both errors and warnings are structured in the same way:
+
+  Velero: A list of system-related issues encountered by the Velero server (e.g. couldn't read directory).
+
+  Cluster: A list of issues related to the restore of cluster-scoped resources.
+
+  Namespaces: A map of namespaces to the list of issues related to the restore of their respective resources.
+
+Some general commands for troubleshooting that may be helpful:
+`velero backup describe <backupName>` - describe the details of a backup
+`velero backup describe <backupName>` --details - describe the details of a backup and snapshot of persistent volumes
+`velero backup logs <backupName>` - fetch the logs for this specific backup. Useful for viewing failures and warnings, including resources that could not be backed up.
+`velero restore describe <restoreName>` - describe the details of a restore
+`velero restore logs <restoreName>` - fetch the logs for this specific restore. Useful for viewing failures and warnings, including resources that could not be restored.
+`kubectl logs deployment/velero -n velero` - fetch the logs of the velero server pod. This provides the output of the Velero server processes.
+
+You can increase the verbosity of velero server logging by editing Velero deployment file to look like this:
+
+```
+kubectl edit deployment/velero -n velero
+...
+   containers:
+     - name: velero
+       image: gcr.io/heptio-images/velero:latest
+       command:
+         - /velero
+       args:
+         - server
+         - --log-level # Add this line
+         - debug       # Add this line
+```
 
 <h3><a class="anchor" aria-hidden="true" id="Upgrading-the-software-version-of-a-cStor-volume"></a>Upgrading the software version of a cStor volume</h3>
 
