@@ -270,6 +270,7 @@ logind
 lowtco
 luks
 luworkers
+lvmetad
 mademistakes
 malloc
 masterless
