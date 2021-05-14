@@ -53,7 +53,7 @@ A storage engine is the data plane component of the IO path of a Persistent Volu
 After OpenEBS installation, choose the OpenEBS storage engine as per your requirement. 
 
 - Choose **cStor**, If you are looking for replicated storage feature and other enterprise graded features such as volume expansion, backup and restore, etc. The steps for Prometheus operator installation using OpenEBS cStor storage engine can be obtained from [here](https://github.com/openebs/cstor-operators/blob/master/docs/workload/prometheus-operator/prometheus.md).
-- Choose **OpenEBS Local PV**, if you are not requiring replicated storage but high performance storage engine. 
+- Choose **OpenEBS Local PV**, if you only want to use Prometheus for generating alerts, you will need low latency storage rather than replicated storage.
 
 In this document, we are deploying Prometheus Operator using OpenEBS Local PV device. 
 
