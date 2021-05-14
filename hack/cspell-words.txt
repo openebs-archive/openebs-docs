@@ -147,6 +147,7 @@ cstor
 cStor
 cStor's
 cstorbackups
+cstorbackupdatas
 cstorbackupcompleted
 cstorcompletedbackups
 cstorpoolclusters
