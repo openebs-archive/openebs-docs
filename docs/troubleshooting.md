@@ -8,14 +8,14 @@ sidebar_label: Overview
 <font size="5">General guidelines for troubleshooting</font>
 
 -	Search for similar issues mentioned in this page as well as the following troubleshooting sections.
-	-	<a href="/docs/next/t-install.html" target="_blank">Troubleshooting Install</a>.
-	-	<a href="/docs/next/t-uninstall.html" target="_blank">Troubleshooting Uninstall</a>.
-	-	<a href="/docs/next/t-ndm.html" target="_blank">Troubleshooting NDM</a>.
-	-	<a href="/docs/next/t-jiva.html" target="_blank">Troubleshooting Jiva</a>.
-	-	<a href="/docs/next/t-cstor.html" target="_blank">Troubleshooting cStor</a>.
-	-	<a href="/docs/next/t-mayastor.html" target="_blank">Troubleshooting Mayastor</a>.
-	-	<a href="/docs/next/t-localpv.html" target="_blank">Troubleshooting LocalPV</a>.
--	Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
+	-	<a href="/v280/docs/next/t-install.html" target="_blank">Troubleshooting Install</a>.
+	-	<a href="/v280/docs/next/t-uninstall.html" target="_blank">Troubleshooting Uninstall</a>.
+	-	<a href="/v280/docs/next/t-ndm.html" target="_blank">Troubleshooting NDM</a>.
+	-	<a href="/v280/docs/next/t-jiva.html" target="_blank">Troubleshooting Jiva</a>.
+	-	<a href="/v280/docs/next/t-cstor.html" target="_blank">Troubleshooting cStor</a>.
+	-	<a href="/v280/docs/next/t-mayastor.html" target="_blank">Troubleshooting Mayastor</a>.
+	-	<a href="/v280/docs/next/t-localpv.html" target="_blank">Troubleshooting LocalPV</a>.
+-	Contact <a href="/v280/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 -	Search for similar issues on <a href="https://github.com/openebs/openebs/issues" target="_blank">OpenEBS GitHub repository</a>.
 -	Search for any reported issues on <a href="https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>.
 
@@ -213,25 +213,25 @@ Set the reboot timer schedule at different time i.e staggered at various interva
 
 ## See Also:
 
-### [Troubleshooting Install](/docs/next/t-install.html)
+### [Troubleshooting Install](/v280/docs/next/t-install.html)
 
-### [Troubleshooting Uninstall](/docs/next/t-uninstall.html) 
+### [Troubleshooting Uninstall](/v280/docs/next/t-uninstall.html) 
 
-### [Troubleshooting NDM](/docs/next/t-ndm.html)
+### [Troubleshooting NDM](/v280/docs/next/t-ndm.html)
 
-### [Troubleshooting Jiva](/docs/next/t-jiva.html)
+### [Troubleshooting Jiva](/v280/docs/next/t-jiva.html)
 
-### [Troubleshooting cStor](/docs/next/t-cstor.html)
+### [Troubleshooting cStor](/v280/docs/next/t-cstor.html)
 
-### [Troubleshooting Local PV](/docs/next/t-localpv.html)
+### [Troubleshooting Local PV](/v280/docs/next/t-localpv.html)
 
-### [Troubleshooting Mayastor](/docs/next/t-mayastor.html)
+### [Troubleshooting Mayastor](/v280/docs/next/t-mayastor.html)
 
-### [FAQs](/docs/next/faq.html)
+### [FAQs](/v280/docs/next/faq.html)
 
-### [Seek support or help](/docs/next/support.html)
+### [Seek support or help](/v280/docs/next/support.html)
 
-### [Latest release notes](/docs/next/releases.html)
+### [Latest release notes](/v280/docs/next/releases.html)
 
 <br>
 <hr>

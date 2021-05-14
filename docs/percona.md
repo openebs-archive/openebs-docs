@@ -5,7 +5,7 @@ sidebar_label: Percona
 ---
 ------
 
-<img src="/docs/assets/o-percona.png" alt="OpenEBS and Percona" style="width:400px;">
+<img src="/v280/docs/assets/o-percona.png" alt="OpenEBS and Percona" style="width:400px;">
 
 
 ## Introduction
@@ -22,7 +22,7 @@ Percona XtraDB Cluster can be provisioned with OpenEBS volumes using OpenEBS sto
 
 <br>
 
-<img src="/docs/assets/svg/percona-deployment-new.svg" alt="OpenEBS and Percona" style="width:100%;">
+<img src="/v280/docs/assets/svg/percona-deployment-new.svg" alt="OpenEBS and Percona" style="width:100%;">
 
 This tutorial provides detailed instructions to run a Percona XtraDB Cluster(PXC) with OpenEBS Local PV and perform some simple database operations to verify the successful deployment and it's performance benchmark.
 
@@ -121,7 +121,7 @@ Using helm, add the Percona chart repository and update the information for the 
 ```
 $ helm repo add percona https://percona-charts.storage.googleapis.com
 $ helm repo update
-$ helm install monitoring percona/pmm-server --set platform=kubernetes --version 2.7.0 --set "credentials.password=test123" 
+$ helm install monitoring percona/pmm-server --set platform=kubernetes --version 2.8.0 --set "credentials.password=test123" 
 ```
 **Note:** In this document, we have used “test123” as the PMM server credential password and the base64 encoded form of this password is “dGVzdDEyMw==”. This encoded value will be added in one of the secrets while installing the PXC cluster and also while running the performance benchmark task.
 
@@ -366,11 +366,11 @@ root@sysbench-client:/sysbench# sysbench oltp_read_write --tables=10 --table_siz
 
 <br>
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v280/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v280/docs/next/usecases.html)
 
-### [OpenEBS Local PV Device User Guide](/docs/next/uglocalpv-device.html)
+### [OpenEBS Local PV Device User Guide](/v280/docs/next/uglocalpv-device.html)
 
 
 <hr>

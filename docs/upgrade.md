@@ -6,10 +6,10 @@ sidebar_label: Upgrade
 ------
 
 
-Latest stable version of OpenEBS is 2.7.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/v2.7.0).  
+Latest stable version of OpenEBS is 2.8.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/v2.8.0).  
 
 
-Upgrade to the latest OpenEBS 2.7.0 version is supported only from 1.0.0 and later. The steps for upgrading from can be found [here](https://github.com/openebs/openebs/blob/master/k8s/upgrades/README.md).
+Upgrade to the latest OpenEBS 2.8.0 version is supported only from 1.0.0 and later. The steps for upgrading from can be found [here](https://github.com/openebs/openebs/blob/master/k8s/upgrades/README.md).
 
 
 
@@ -18,7 +18,7 @@ The community e2e pipelines verify upgrade testing only from non-deprecated rele
 :::
 
 :::note
-If you are upgrading Jiva volumes that are running in version 1.6 and 1.7, you must use these [pre-upgrade steps](https://github.com/openebs/charts/tree/gh-pages/scripts/jiva-tools) to check if your jiva volumes are impacted by [#2956](https://github.com/openebs/openebs/issues/2956). If they are, please reach out to [OpenEBS Community](/docs/next/support.html) for helping you with the upgrade.
+If you are upgrading Jiva volumes that are running in version 1.6 and 1.7, you must use these [pre-upgrade steps](https://github.com/openebs/charts/tree/gh-pages/scripts/jiva-tools) to check if your jiva volumes are impacted by [#2956](https://github.com/openebs/openebs/issues/2956). If they are, please reach out to [OpenEBS Community](/v280/docs/next/support.html) for helping you with the upgrade.
 :::
 
 
@@ -36,11 +36,11 @@ To upgrade to the latest version from your current version, you have to follow t
 
 ## See Also:
 
-### [See Release Notes](/docs/next/releases.html)
+### [See Release Notes](/v280/docs/next/releases.html)
 
-### [Join our Community](/docs/next/support.html)
+### [Join our Community](/v280/docs/next/support.html)
 
-### [Checkout Troubleshooting guides](/docs/next/troubleshooting.html)
+### [Checkout Troubleshooting guides](/v280/docs/next/troubleshooting.html)
 
 
 <br>

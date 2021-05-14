@@ -7,7 +7,7 @@ sidebar_label: Installation
 
 <br>
 
-<img src="/docs/assets/svg/1-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
+<img src="/v280/docs/assets/svg/1-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
 
 <br>
 
@@ -23,7 +23,7 @@ sidebar_label: Installation
   
 - [Verify](#verifying-openebs-installation) installation 
 
-- Installation [troubleshooting](/docs/next/troubleshooting.html#installation) 
+- Installation [troubleshooting](/v280/docs/next/troubleshooting.html#installation) 
 
 - [Post installation](#post-installation-considerations)
 
@@ -35,7 +35,7 @@ sidebar_label: Installation
 
 <br>
 
-iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However, it is recommended that the [iSCSI client is setup](/docs/next/prerequisites.html) and iscsid service is running on worker nodes before proceeding with the OpenEBS installation.
+iSCSI client is a pre-requisite for provisioning cStor and Jiva volumes. However, it is recommended that the [iSCSI client is setup](/v280/docs/next/prerequisites.html) and iscsid service is running on worker nodes before proceeding with the OpenEBS installation.
 
 <br>
 <hr>
@@ -169,7 +169,7 @@ The above commans will install OpenEBS in `openebs` namespace and chart name as 
 
 1. Since Kubernetes 1.12, if any containers does not set its resource requests & limits values, it results into eviction. It is recommended to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be obtained from [here](#example-configuration-pod-resource-requests).
 
-2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
+2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/v280/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
 
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
@@ -244,7 +244,7 @@ kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
 
 1. Since Kubernetes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests). 
 
-2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
+2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/v280/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
 
 
 As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
@@ -535,7 +535,7 @@ For a simple testing of OpenEBS, you can use the below default storage classes
 
 - `openebs-device` for provisioning Local PV on device.
 
-For using real disks, you have to create [cStorPools](/docs/next/ugcstor.html#creating-cStor-storage-pools) or [Jiva pools](/docs/next/jivaguide.html#create-a-pool) or [OpenEBS Local PV](/docs/next/uglocalpv-device.html) based on the requirement and then create corresponding StorageClasses or use default StorageClasses to use them.
+For using real disks, you have to create [cStorPools](/v280/docs/next/ugcstor.html#creating-cStor-storage-pools) or [Jiva pools](/docs/next/jivaguide.html#create-a-pool) or [OpenEBS Local PV](/docs/next/uglocalpv-device.html) based on the requirement and then create corresponding StorageClasses or use default StorageClasses to use them.
 
 
 
@@ -598,7 +598,7 @@ Find `apiServer`, `provisioner`, `snapshotOperator`, `admission-server` and `ndm
 ```
 provisioner:
   image: "openebs/openebs-k8s-provisioner"
-  imageTag: "2.7.0"
+  imageTag: "2.8.0"
   replicas: 1
   nodeSelector: {}
   tolerations: []
@@ -616,7 +616,7 @@ In the `values.yaml`, find`ndm` section to update `excludeVendors:` and `exclude
 ```
 ndm:
   image: "openebs/node-disk-manager"
-  imageTag: "1.3.0"
+  imageTag: "1.4.0"
   sparse:
     path: "/var/openebs/sparse"
     size: "10737418240"
@@ -718,11 +718,11 @@ data:
 
 ## See Also:
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v280/docs/next/architecture.html)
 
-### [Installation troubleshooting](/docs/next/troubleshooting.html)
+### [Installation troubleshooting](/v280/docs/next/troubleshooting.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v280/docs/next/usecases.html)
 
 <br>
 

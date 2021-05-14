@@ -6,7 +6,7 @@ sidebar_label: Redis
 
 ---
 
-<img src="/docs/assets/svg/o-redis.svg" alt="OpenEBS and Redis" style="width:400px;">
+<img src="/v280/docs/assets/svg/o-redis.svg" alt="OpenEBS and Redis" style="width:400px;">
 
 <br>
 
@@ -40,7 +40,7 @@ _Note: Redis can be deployed both as `Deployment` or as `StatefulSet`. When Redi
 
 <br>
 
-<img src="/docs/assets/svg/redis-deployment.svg" alt="OpenEBS and Redis" style="width:100%;">
+<img src="/v280/docs/assets/svg/redis-deployment.svg" alt="OpenEBS and Redis" style="width:100%;">
 
 <br>
 
@@ -54,11 +54,11 @@ _Note: Redis can be deployed both as `Deployment` or as `StatefulSet`. When Redi
 
 1. **Install OpenEBS**
 
-   If OpenEBS is not installed in your K8s cluster, this can done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step.
+   If OpenEBS is not installed in your K8s cluster, this can done from [here](/v280/docs/next/installation.html). If OpenEBS is already installed, go to the next step.
 
 2. **Configure cStor Pool**
 
-   After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/docs/next/ugcstor.html#creating-cStor-storage-pools). Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step.
+   After OpenEBS installation, cStor pool has to be configured. If cStor Pool is not configured in your OpenEBS cluster, this can be done from [here](/v280/docs/next/ugcstor.html#creating-cStor-storage-pools). Sample YAML named **openebs-config.yaml** for configuring cStor Pool is provided in the Configuration details below. During cStor Pool creation, make sure that the maxPools parameter is set to >=3. If cStor pool is already configured, go to the next step.
 
 3. **Create Storage Class**
 
@@ -106,7 +106,7 @@ It is not seamless to increase the cStor volume size (refer to the roadmap item)
 
 **Monitor cStor Pool size**
 
-As in most cases, cStor pool may not be dedicated to just Redis database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/docs/next/ugcstor.html#monitor-pool).
+As in most cases, cStor pool may not be dedicated to just Redis database alone. It is recommended to watch the pool capacity and add more disks to the pool before it hits 80% threshold. See [cStorPool metrics](/v280/docs/next/ugcstor.html#monitor-pool).
 
 <br>
 
@@ -175,11 +175,11 @@ reclaimPolicy: Delete
 
 <br>
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v280/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v280/docs/next/usecases.html)
 
-### [cStor pools overview](/docs/next/cstor.html#cstor-pools)
+### [cStor pools overview](/v280/docs/next/cstor.html#cstor-pools)
 
 <br>
 

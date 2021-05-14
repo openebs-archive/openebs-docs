@@ -7,11 +7,11 @@ sidebar_label: Jiva
 
 <br>
 
-<img src="/docs/assets/svg/6-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
+<img src="/v280/docs/assets/svg/6-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%">
 
 <br>
 
-For details of how Jiva works, see <a href="/docs/next/jiva.html" >Jiva overview page</a>
+For details of how Jiva works, see <a href="/v280/docs/next/jiva.html" >Jiva overview page</a>
 
 
 Jiva is a light weight storage engine that is recommended to use for low capacity workloads. The snapshot and storage management features of the other cStor engine are more advanced and is recommended when snapshots are a need. 
@@ -166,13 +166,13 @@ Here we illustrate the usage of default Jiva storage class. In the following exa
 <ol>
  <li>
    Ensure that the filesystem is mounted as per requirement. 
-To know more about mount status <a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
+To know more about mount status <a href="/v280/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" target="_blank">click here</a>.
  </li>
  <li>
-First, You need to <b>Create a Jiva Pool</b> specifying the filesystem path on each node. To know about the detailed steps <a href="/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a>  
+First, You need to <b>Create a Jiva Pool</b> specifying the filesystem path on each node. To know about the detailed steps <a href="/v280/docs/next/jivaguide.html#create-a-pool" target="_blank">click here.</a>  
 </li>
 <li>
-Using this storage pool, create a storage class by referring<a href="/docs/next/jivaguide.html#create-a-sc" target="_blank"> here.</a>
+Using this storage pool, create a storage class by referring<a href="/v280/docs/next/jivaguide.html#create-a-sc" target="_blank"> here.</a>
  </li>
  <li>
  Once all the above actions have been successfully executed, You can deploy Busybox with Jiva volume as follows:<br>
@@ -309,7 +309,7 @@ OpenEBS volume can be backed up and restore along with application using velero 
 
 Velero is a utility to back up and restore your Kubernetes resource and persistent volumes. 
 
-To take backup and restore of Jiva volume, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Jiva volume which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](/docs/next/minio.html).
+To take backup and restore of Jiva volume, configure Velero with restic and use  `velero backup` command to take the backup of application with OpenEBS Jiva volume which invokes restic internally and copies the data from the given application including the entire data from the associated persistent volumes in that application and backs it up to the configured storage location such as S3 or [Minio](/v280/docs/next/minio.html).
 
 The following are the step by step procedure for taking backup and restore of application with Jiva.
 
@@ -573,11 +573,11 @@ Below table lists the storage policies supported by Jiva. These policies can be 
 | JIVA STORAGE POLICY                                          | MANDATORY | DEFAULT                           | PURPOSE                                                      |
 | ------------------------------------------------------------ | --------- | --------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                 | Defines the number of Jiva volume replicas                   |
-| [Replica Image](#Replica-Image-Policy)                       |           | openebs/m-apiserver:2.7.0 | To use particular Jiva replica image                         |
-| [ControllerImage](#Controller-Image-Policy)                  |           | openebs/jiva:2.7.0         | To use particular Jiva Controller Image                      |
+| [Replica Image](#Replica-Image-Policy)                       |           | openebs/m-apiserver:2.8.0 | To use particular Jiva replica image                         |
+| [ControllerImage](#Controller-Image-Policy)                  |           | openebs/jiva:2.8.0         | To use particular Jiva Controller Image                      |
 | [StoragePool](#Storage-Pool-Policy)                          | Yes       | default                           | A storage pool provides a persistent path for an OpenEBS volume. It can be a directory on host OS or externally mounted disk. |
 | [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | openebs/m-exporter:2.7.0  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | openebs/m-exporter:2.8.0  | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [Volume FSType](#Volume-File-System-Type-Policy)             |           | ext4                              | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [Volume Space Reclaim](#Volume-Space-Reclaim-Policy)         |           | false                             | It will specify whether data need to be retained post PVC deletion. |
 | [TargetNodeSelector](#Targe-NodeSelector-Policy)             |           | Decided by Kubernetes scheduler   | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule Jiva target pod on the nodes that match label. |
@@ -623,7 +623,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ReplicaImage
-        value: openebs/m-apiserver:2.7.0
+        value: openebs/m-apiserver:2.8.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
@@ -640,7 +640,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: ControllerImage
-        value: openebs/jiva:2.7.0
+        value: openebs/jiva:2.8.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
@@ -729,7 +729,7 @@ metadata:
     openebs.io/cas-type: jiva
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:2.7.0
+        value: openebs/m-exporter:2.8.0
 provisioner: openebs.io/provisioner-iscsi
 ```
 
@@ -998,7 +998,7 @@ provisioner: openebs.io/provisioner-iscsi
 
 ## See Also:
 
-### [Understanding Jiva](/docs/next/jiva.html)
+### [Understanding Jiva](/v280/docs/next/jiva.html)
 
 
 

@@ -6,9 +6,67 @@ sidebar_label: Releases
 
 ------
 
-## 2.7.0 - Mar 16 2021
+## 2.8.0 - Apr 16 2021
 
-<br><font size="4">Latest Release</font><br/> (Recommended)<br/>
+OpenEBS v2.8 is the another maintenance release before moving towards 3.0, and includes fixes and enhancements geared towards migrating non CSI volumes to CSI and improvements to E2e. This release also includes some key user-requested bug fixes and enhancements.
+
+### Component versions
+
+The latest release versions of each of the engine are as follows:
+
+- [Mayastor](https://mayastor.gitbook.io/introduction/) 0.8.0
+- [cStor](https://github.com/openebs/cstor-operators) 2.8.0
+- [Jiva](https://docs.openebs.io/docs/next/jivaguide.html) 2.8.0
+- [Local PV hostpath](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html) 2.8.0
+- [Local PV device](https://docs.openebs.io/docs/next/uglocalpv-device.html) 2.8.0
+- [Local PV ZFS](https://github.com/openebs/zfs-localpv) 1.6.0
+- [Local PV LVM](https://github.com/openebs/lvm-localpv) 0.4.0
+- [Local PV Rawfile](https://github.com/openebs/rawfile-localpv) 0.4.4
+- [Dynamic NFS Volume](https://github.com/openebs/dynamic-nfs-provisioner) 0.2.0
+
+### Key Improvements
+
+- Updated the Kubernetes resources like CRDs, RBAC, CSIDriver, and Admission Controller used by OpenEBS project to v1, as the corresponding beta or alpha versioned objects will be deprecated in Kubernetes 1.22. _This change requires that OpenEBS 2.8 release be used with Kubernetes 1.18 or higher._ 
+- Jiva CSI driver is promoted to _beta_. For instructions on how to set up and use the Jiva CSI driver, please see. https://github.com/openebs/jiva-operator. Major updates in this release include: 
+   * [Upgrade](https://github.com/openebs/upgrade/blob/master/docs/upgrade.md#jiva-csi-volumes) support for Jiva volumes provisioned via CSI Driver
+   * [Migration](https://github.com/openebs/upgrade/blob/master/docs/migration.md#migrating-jiva-external-provisioned-volumes-to-jiva-csi-volumes-experimental) of external-provisioner provisioned Jiva volumes to Jiva CSI Driver. 
+   * [E2e tests](https://github.com/openebs/e2e-tests/pull/620) for Jiva CSI volumes
+- Enhanced [ZFS Local PV](https://github.com/openebs/zfs-localpv) to allow users to set up custom finalizers on ZFS volumes. This will provide control to users to plug-in custom volume life-cycle operations. (https://github.com/openebs/zfs-localpv/issues/302)
+- Enhanced [ZFS Local PV](https://github.com/openebs/zfs-localpv) volume creation with ImmediateBinding to attempt to pick a new node for volume, if the selected node couldn't provision the volume. (https://github.com/openebs/zfs-localpv/pull/270)
+- [LVM Local PV](https://github.com/openebs/lvm-localpv) is promoted to beta.  For instructions on how to set up and use the Local PV LVM CSI driver, please see. https://github.com/openebs/lvm-localpv. Major updates in this release include: 
+  * Enhance the capacity reporting feature by updating _lvmetad_ cache, prior to reporting the current status. 
+  * [E2e tests](https://github.com/openebs/lvm-localpv/pull/41) updated with resiliency tests. 
+- [OpenEBS Rawfile Local PV](https://github.com/openebs/rawfile-localpv) is promoted to beta. For instructions on how to set up and use, please see. https://github.com/openebs/rawfile-localpv
+
+### Key Bug Fixes
+- [Local PV - Device] Fixed an issue causing the Local PV provisioner to error out if the user had manually deleted the BDC. (https://github.com/openebs/openebs/issues/3363)
+- [NDM] Fixed an issue causing a crash in NDM after a block device was resized. (https://github.com/openebs/openebs/issues/3362)
+- Several fixes to docs were also included in this release. 
+ 
+### Backward Incompatibilities
+
+- Kubernetes 1.18 or higher release is recommended as this release contains the following updates that will not be compatible with older Kubernetes releases. 
+  * The CSI components have been upgraded to: 
+      * k8s.gcr.io/sig-storage/csi-attacher:v3.1.0
+      * k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.1.0
+      * k8s.gcr.io/sig-storage/csi-provisioner:v2.1.0
+      * k8s.gcr.io/sig-storage/csi-provisioner:v2.1.1 (for Mayastor CSI volumes)
+      * k8s.gcr.io/sig-storage/csi-resizer:v1.1.0
+      * k8s.gcr.io/sig-storage/csi-snapshotter:v4.0.0
+      * k8s.gcr.io/sig-storage/snapshot-controller:v4.0.0
+      * k8s.gcr.io/sig-storage/csi-snapshotter:v3.0.3 (for cStor CSI volumes)
+      * k8s.gcr.io/sig-storage/snapshot-controller:v3.0.3 (for cStor CSI volumes)
+
+- If you are upgrading from a version of cStor operators older than 2.6 to this version, you will need to manually delete the cStor CSI driver object prior to upgrading. `kubectl delete csidriver cstor.csi.openebs.io`. For complete details on how to upgrade your cStor operators, see https://github.com/openebs/upgrade/blob/master/docs/upgrade.md#cspc-pools.
+
+- The CRD API version has been updated for the cStor custom resources to v1. If you are upgrading via the helm chart, you might have to make sure that the new CRDs are updated. https://github.com/openebs/cstor-operators/tree/master/deploy/helm/charts/crds
+
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.8.0)
+- [Upgrade Steps](/v280/docs/next/upgrade.html)
+
+## 2.7.0 - Mar 16 2021
 
 OpenEBS v2.7 is a maintenance release geared towards preparing for better structuring of the code and improving on the E2e frameworks. This release also includes some key user-requested bug fixes and enhancements. 
 
@@ -16,7 +74,7 @@ The latest release versions of each of the engine are as follows:
 - [Mayastor](https://mayastor.gitbook.io/introduction/) 0.8.1
 - [cStor](https://github.com/openebs/cstor-operators) 2.7.0
 - [Jiva](https://docs.openebs.io/docs/next/jivaguide.html) 2.7.0
-- [Local PV host path](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html) 2.7.0
+- [Local PV hostpath](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html) 2.7.0
 - [Local PV device](https://docs.openebs.io/docs/next/uglocalpv-device.html) 2.7.0
 - [Local PV ZFS](https://github.com/openebs/zfs-localpv) 1.5.0
 - [Local PV LVM](https://github.com/openebs/lvm-localpv) 0.3.0
@@ -64,7 +122,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.6.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v280/docs/next/upgrade.html)
 
 
 ## 2.6.0 - Feb 15 2021
@@ -74,7 +132,7 @@ Here are some of the key highlights in this release.
 OpenEBS v2.6 contains some key enhancements and several fixes for the issues reported by the user community across all 9 types of OpenEBS volumes.
 
 - 3 replicated types - [Mayastor](https://mayastor.gitbook.io/introduction/), [cStor](https://github.com/openebs/cstor-operators) and [Jiva](https://docs.openebs.io/docs/next/jivaguide.html). 
-- 5 types of Local PV backed by [host path](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html), [device](https://docs.openebs.io/docs/next/uglocalpv-device.html), [ZFS](https://github.com/openebs/zfs-localpv), [LVM](https://github.com/openebs/lvm-localpv) and [Rawfile](https://github.com/openebs/rawfile-localpv), and 
+- 5 types of Local PV backed by [hostpath](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html), [device](https://docs.openebs.io/docs/next/uglocalpv-device.html), [ZFS](https://github.com/openebs/zfs-localpv), [LVM](https://github.com/openebs/lvm-localpv) and [Rawfile](https://github.com/openebs/rawfile-localpv), and 
 - [RWX volumes using NFS](https://github.com/openebs/dynamic-nfs-provisioner). 
 
 Here are some of the key highlights in this release.
@@ -82,7 +140,7 @@ Here are some of the key highlights in this release.
 ### New capabilities
 
 - OpenEBS is introducing a new CSI driver for dynamic provisioning of Jiva volumes. This driver is released as alpha and currently supports the following additional features compared to the non-CSI jiva volumes. 
-   * Jiva Replicas are backed by OpenEBS host path volumes
+   * Jiva Replicas are backed by OpenEBS hostpath volumes
    * Auto-remount of volumes that are marked read-only by iSCSI client due to intermittent network issues
    * Handle the case of multi-attach error sometimes seen on on-premise clusters
    * A custom resource for Jiva volumes to help with easy access to the volume status
@@ -133,7 +191,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.6.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v280/docs/next/upgrade.html)
 
 
 
@@ -194,7 +252,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.5.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v280/docs/next/upgrade.html)
 
 <br>
 
@@ -266,7 +324,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.4.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v280/docs/next/upgrade.html)
 
 
 <br>
@@ -325,7 +383,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.5.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v280/docs/next/upgrade.html)
 
 <br>
 
@@ -395,7 +453,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.4.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v280/docs/next/upgrade.html)
 
 
 <br>
@@ -429,7 +487,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.3.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v280/docs/next/upgrade.html)
 
 <br>
 
@@ -465,7 +523,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.2.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v280/docs/next/upgrade.html)
 
 <br>
 
@@ -493,7 +551,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.1.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v280/docs/next/upgrade.html)
 
 ## 2.0.0 - Aug 15 2020
 
@@ -519,7 +577,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.0.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v280/docs/next/upgrade.html)
 
 ## 1.12.0 - Jul 15 2020
 
@@ -547,7 +605,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.12.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v280/docs/next/upgrade.html)
 
 
 ## 1.11.0 - Jun 15 2020
@@ -577,7 +635,7 @@ Here are some of the key highlights in this release.
 
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v1.11.0)
-- [Upgrade Steps](/docs/next/upgrade.html)
+- [Upgrade Steps](/v280/docs/next/upgrade.html)
 
 ## 1.10.0 - May 15 2020
 
@@ -712,15 +770,15 @@ Here are some of the key highlights in this release.
 
 ## See Also:
 
-### [OpenEBS Upgrade](/docs/next/upgrade.html)
+### [OpenEBS Upgrade](/v280/docs/next/upgrade.html)
 
-### [Deprecated OpenEBS 1.x Releases](/docs/next/releases-0x.html)
+### [Deprecated OpenEBS 1.x Releases](/v280/docs/next/releases-0x.html)
 
-### [Deprecated OpenEBS 0.x Releases](/docs/next/releases-0x.html)
+### [Deprecated OpenEBS 0.x Releases](/v280/docs/next/releases-0x.html)
 
-### [OpenEBS FAQ](/docs/next/faq.html)
+### [OpenEBS FAQ](/v280/docs/next/faq.html)
 
-### [Container Attached Storage or CAS](/docs/next/cas.html)
+### [Container Attached Storage or CAS](/v280/docs/next/cas.html)
 
 <br><hr>
 
