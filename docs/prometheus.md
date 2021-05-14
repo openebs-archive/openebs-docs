@@ -50,6 +50,11 @@ If OpenEBS is not installed in your K8s cluster, this can be done from [here](/d
 
 A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and chooses the right engine that suits your type of application requirements and storage available on your Kubernetes nodes. More information can be read from [here](/docs/next/overview.html#types-of-openebs-storage-engines).
 
+After OpenEBS installation, choose the OpenEBS storage engine as per your requirement. 
+
+- Choose **cStor**, If you are looking for replicated storage feature and other enterprise graded features such as volume expansion, backup and restore, etc. The steps for Prometheus operator installation using OpenEBS cStor storage engine can be obtained from [here](https://github.com/openebs/cstor-operators/blob/master/docs/workload/prometheus-operator/prometheus.md).
+- Choose **OpenEBS Local PV**, if you are not requiring replicated storage but high performance storage engine. 
+
 In this document, we are deploying Prometheus Operator using OpenEBS Local PV device. 
 
 
@@ -58,7 +63,7 @@ In this document, we are deploying Prometheus Operator using OpenEBS Local PV de
 
 There are 2 ways to use OpenEBS Local PV.
 
-- `openebs-hostpath` - Using this option, it will create Kubernetes Persistent Volumes that will store the data into OS host path directory at: /var/openebs/<"prometheus-pv-name">/. Select this option, if you don’t have any additional block devices attached to Kubernetes nodes. If you would like to customize the directory where data will be saved, create a new OpenEBS Local PV storage class using these [instructions](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass). 
+- `openebs-hostpath` - Using this option, it will create Kubernetes Persistent Volumes that will store the data into OS host path directory at: `/var/openebs/<"prometheus-pv-name">/`. Select this option, if you don’t have any additional block devices attached to Kubernetes nodes. If you would like to customize the directory where data will be saved, create a new OpenEBS Local PV storage class using the instructions mentioned [here](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass). 
 
 - `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a Prometheus application pod and other device for Alert manager. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](/docs/next/uglocalpv-device.html#optional-block-device-tagging). 
 
@@ -97,7 +102,7 @@ $ helm repo update
 
 #### Configure Prometheus Helm `values.yaml`
 
-Download `values.yaml` which will modify before installing Prometheus using Helm.
+Download `values.yaml` which we will modify before installing Prometheus using Helm.
 
 ```none
 wget https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/values.yaml
@@ -140,7 +145,7 @@ Perform the following changes:
              storage: 90Gi
    ```
 
-- (Optional in case of GKE) Update `prometheusOperator.admissionWebhooks.enabled` as `false`. More details can be found [here](https://github.com/mayadata-io/website-mayadata/pull/994).
+- (Optional in case of GKE) Update `prometheusOperator.admissionWebhooks.enabled` as `false`.
 
 - Update `prometheusOperator.tls.enabled` as `false`
 
@@ -260,9 +265,7 @@ $ kubectl patch svc prometheus-grafana -n monitoring -p '{"spec": {"type": "Node
 
 **Note:** If the user needs to access Prometheus and Grafana outside the network, the service type can be changed or a new service should be added to use LoadBalancer or create Ingress resources for production deployment.
 
-
-
-Sample output after changing above 2 changes in services:
+Sample output after making the above 2 changes in services:
 
 ```
 $ kubectl get svc -n monitoring
@@ -295,7 +298,7 @@ ip-192-168-68-28.ap-south-1.compute.internal    Ready    <none>   5h13m   v1.19.
 
 
 
-Verify Prometheus service is accessing over web browser using http://<any_node_external-ip:<NodePort>
+Verify Prometheus service is accessible over web browser using http://<any_node_external-ip:<NodePort>
 
 Example:
 
@@ -306,7 +309,7 @@ http://52.66.223.37:31669
 
 
 
-Launch Grafana using Node External IP of with corresponding NodePort of **prometheus-grafana** service
+Launch Grafana using Node's External IP and with corresponding NodePort of **prometheus-grafana** service
 
 http://<any_node_external-ip>:<Grafana_SVC_NodePort>
 
@@ -324,7 +327,7 @@ Grafana Credentials:
 
 
 
-Password can be get using the command
+Password can be obtained using the command
 
 ```
 $ (kubectl get secret \
