@@ -55,7 +55,7 @@ Installing OpenEBS in your cluster is as simple as running a few `kubectl` or `h
 - [cStor](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
 - [Jiva](https://github.com/openebs/jiva-operator)
 
-### Selecting the right storage engine
+## Selecting the right storage engine
 
 See the following table for recommendation on which engine is right for your application depending on the application requirements and storage available on your Kubernetes nodes. 
 

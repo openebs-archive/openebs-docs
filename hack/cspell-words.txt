@@ -329,6 +329,7 @@ oltp
 onfinally
 openapi
 openebs
+openebsctl
 openshift
 operatorhub
 optin
