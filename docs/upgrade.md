@@ -18,6 +18,10 @@ The community e2e pipelines verify upgrade testing only from non-deprecated rele
 :::
 
 :::note
+OpenEBS has deprecated arch specific container images in favor of multi-arch container images. After 2.6, the arch specific images are not pushed to Docker or Quay repositories. For example, images like `cstor-pool-arm64:2.8.0` should be replaced with corresponding multi-arch image `cstor-pool:2.8.0`. For further queries or support, please reach out to [OpenEBS Community](/docs/next/support.html) for helping you with the upgrade.
+:::
+
+:::note
 If you are upgrading Jiva volumes that are running in version 1.6 and 1.7, you must use these [pre-upgrade steps](https://github.com/openebs/charts/tree/gh-pages/scripts/jiva-tools) to check if your jiva volumes are impacted by [#2956](https://github.com/openebs/openebs/issues/2956). If they are, please reach out to [OpenEBS Community](/docs/next/support.html) for helping you with the upgrade.
 :::
 
