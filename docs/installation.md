@@ -420,7 +420,7 @@ As a next step [verify](#verifying-openebs-installation) your installation and d
 
 **Verify pods:**
 
-List the pods in `<openebs>` name space 
+List the pods in `<openebs>` namespace 
 
 ```
 kubectl get pods -n openebs
@@ -445,8 +445,6 @@ openebs-snapshot-operator-5bdcdc9b77-v7n4w     2/2     Running   0          97s
 
 The control plane pods `openebs-provisioner`, `maya-apiserver` and `openebs-snapshot-operator` should be running. If you have configured nodeSelectors , check if they are scheduled on the appropriate nodes by listing the pods through `kubectl get pods -n openebs -o wide`
 
-> The resiliency of the control plane can be verified via `litmus` using <a href="https://docs.litmuschaos.io/docs/next/openebs-control-plane-chaos/"> openebs-control-plane-chaos </a> experiment.
-  
 
 **Verify StorageClasses:**
 
@@ -593,19 +591,16 @@ First, label the required nodes with an appropriate label. In the following comm
 kubectl label nodes <node-name> node=openebs
 ```
 
-Find `apiServer`, `provisioner`, `snapshotOperator`, `admission-server` and `ndm` sections in `values.yaml`and update `nodeSelector` key. Example of the updated provisioner section in the following snippet where `node:openebs` is the `nodeSelector` label.
+Find `apiServer`, `provisioner`, `snapshotOperator`, `admission-server` and `ndm` sections in `values.yaml` and update `nodeSelector` key. Example of the updated `nodeSelector` section for `provisioner` with value of `node:openebs` would be as follows:
 
 ```
 provisioner:
-  image: "openebs/openebs-k8s-provisioner"
-  imageTag: "2.7.0"
-  replicas: 1
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
-  healthCheck:
-    initialDelaySeconds: 30
-    periodSeconds: 60
+  ...
+  ...
+  nodeSelector: 
+    node: openebs
+  ...
+  ...
 ```
 
 
@@ -615,22 +610,14 @@ In the `values.yaml`, find`ndm` section to update `excludeVendors:` and `exclude
 
 ```
 ndm:
-  image: "openebs/node-disk-manager"
-  imageTag: "1.3.0"
-  sparse:
-    path: "/var/openebs/sparse"
-    size: "10737418240"
-    count: "1"
+  ...
+  ...
   filters:
     excludeVendors: "CLOUDBYT,OpenEBS"
     includePaths: ""
     excludePaths: "loop,fd0,sr0,/dev/ram,/dev/dm-,/dev/md"
-  probes:
-    enableSeachest: false
-  nodeSelector: {}
-  healthCheck:
-    initialDelaySeconds: 30
-    periodSeconds: 60
+  ...
+  ...
 ```
 
 
