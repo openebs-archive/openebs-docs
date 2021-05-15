@@ -21,17 +21,25 @@ An added advantage of being a completely Kubernetes native solution is that admi
 
 Check out what users of OpenEBS have to say about their experience in <a href="https://github.com/openebs/openebs/blob/master/ADOPTERS.md" target="_blank">OpenEBS Adoption stories</a>.
 
-## Types of OpenEBS Storage Engines
+OpenEBS is a collection of Storage Engines, allowing you to pick the right storage solution for your Stateful workloads and the type of Kubernetes platform.  At a high-level, OpenEBS supports two broad categories of volumes - [Local Volumes](#local-volumes) and [Replicated Volumes](#replicated-volumes). 
 
-OpenEBS is a collection Storage Engines, allowing you to pick the right storage solution for your Stateful workloads and the type of Kubernetes platform.  At a high-level, OpenEBS supports two broad categories of volumes - Local and Replicated. 
-
-### Local Volumes 
+## Local Volumes 
 
 Local Volumes are accessible only from a single node in the cluster. Pods using Local Volume have to be scheduled on the node where volume is provisioned. Local Volumes are typically preferred for distributed workloads like Cassandra, MongoDB, Elastic, etc that are distributed in nature and have high availability built into them. 
 
-Depending on the type of storage attached to your Kubernetes worker nodes, you can select from different flavors of Dynamic Local PV - Hostpath, Device, ZFS or Rawfile.
+Depending on the type of storage attached to your Kubernetes worker nodes, you can select from different flavors of Dynamic Local PV - Hostpath, Device, LVM, ZFS or Rawfile.
 
-### Replicated Volumes (aka Highly Available Volumes)
+### Local Volume Quickstart Guides
+
+Installing OpenEBS in your cluster is as simple as running a few `kubectl` or `helm` commands. Here are the list of our Quickstart guides with detailed instructions for each storage engine.
+
+- [Local PV hostpath](/docs/next/uglocalpv-hostpath.html)
+- [Local PV device](/docs/next/uglocalpv-device.html)
+- [ZFS Local PV](https://github.com/openebs/zfs-localpv)
+- [LVM Local PV](https://github.com/openebs/lvm-localpv)
+- [Rawfile Local PV](https://github.com/openebs/rawfile-localpv)
+
+## Replicated Volumes
 
 Replicated Volumes as the name suggests, are those that have their data synchronously replicated to multiple nodes. Volumes can sustain node failures.  The replication also can be setup across availability zones helping applications move across availability zones. 
 
@@ -39,42 +47,31 @@ Replicated Volumes also are capable of enterprise storage features like snapshot
 
 Depending on the type of storage attached to your Kubernetes worker nodes and application performance requirements, you can select from Jiva, cStor or Mayastor. 
 
+### Replicated Volume Quickstart Guides
+
+Installing OpenEBS in your cluster is as simple as running a few `kubectl` or `helm` commands. Here are the list of our Quickstart guides with detailed instructions for each storage engine.
+
+- [Mayastor](/docs/next/ugmayastor.html)
+- [cStor](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
+- [Jiva](https://github.com/openebs/jiva-operator)
+
 ### Selecting the right storage engine
 
 See the following table for recommendation on which engine is right for your application depending on the application requirements and storage available on your Kubernetes nodes. 
 
 | Application requirements   | Storage Type | OpenEBS Volumes
 |--- |--- |--- 
-| Low Latency, High Availability, Synchronous replication, Snapshots, Clones, Thin provisioning | SSDs/Cloud Volumes | <a href="https://mayastor.gitbook.io/introduction/" target="_blank">OpenEBS Mayastor</a>
+| Low Latency, High Availability, Synchronous replication, Snapshots, Clones, Thin provisioning | SSDs/Cloud Volumes | [OpenEBS Mayastor](/docs/next/ugmayastor.html)
 | High Availability, Synchronous replication, Snapshots, Clones, Thin provisioning | Disks/SSDs/Cloud Volumes | <a href="https://github.com/openebs/cstor-operators" target="_blank">OpenEBS cStor</a>
 | High Availability, Synchronous replication, Thin provisioning | hostpath or external mounted storage | [OpenEBS Jiva](/docs/next/jivaguide.html)
-| Low latency, Local PV | hostpath or external mounted storage | [Dynamic Local PV - Hostpath](/docs/next/uglocalpv-hostpath.html)
+| Low latency, Local PV | hostpath or external mounted storage | [Dynamic Local PV - Hostpath](/docs/next/uglocalpv-hostpath.html), <a href="https://github.com/openebs/rawfile-localpv" target="_blank">Dynamic Local PV - Rawfile</a>
 | Low latency, Local PV | Disks/SSDs/Cloud Volumes | [Dynamic Local PV - Device](/docs/next/uglocalpv-device.html)
-| Low latency, Local PV, Snapshots, Clones | Disks/SSDs/Cloud Volumes | <a href="https://github.com/openebs/zfs-localpv" target="_blank">OpenEBS Dynamic Local PV - ZFS </a>
+| Low latency, Local PV, Snapshots, Clones | Disks/SSDs/Cloud Volumes | <a href="https://github.com/openebs/zfs-localpv" target="_blank">OpenEBS Dynamic Local PV - ZFS </a>, <a href="https://github.com/openebs/lvm-localpv" target="_blank">OpenEBS Dynamic Local PV - LVM </a>
 
-OpenEBS is also developing <a href="https://github.com/openebs/rawfile-localpv" target="_blank">Dynamic Local PV - Rawfile</a> storage engines available for alpha testing.
+
+## Community Support via Slack
 
 OpenEBS has a vibrant community that can help you get started. If you have further question and want to learn more about OpenEBS, please join [OpenEBS community on Kubernetes Slack](https://kubernetes.slack.com). If you are already signed up, head to our discussions at [#openebs](https://kubernetes.slack.com/messages/openebs/) channel. 
-
-<br>
-
-## Quickstart
-
-Installing OpenEBS in your cluster is as simple as a few `kubectl` or `helm` commands depending on the storage engine. Here are the list of our Quickstart guides with detailed instructions for each storage engine.
-
-### Local Volumes
-
-- [Local PV hostpath](/docs/next/uglocalpv-hostpath.html)
-- [Local PV device](/docs/next/uglocalpv-device.html)
-- [ZFS Local PV](https://github.com/openebs/zfs-localpv)
-- [Rawfile Local PV (alpha)](https://github.com/openebs/rawfile-localpv)
-
-### Replicated Volumes
-
-- [cStor](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
-- [Jiva](/docs/next/jivaguide.html)
-- [Mayastor](https://mayastor.gitbook.io/introduction/)
-
 
 <br>
 
@@ -201,6 +198,10 @@ Installing OpenEBS in your cluster is as simple as a few `kubectl` or `helm` com
 ### <a href="https://www.cncf.io/blog/2020/09/22/container-attached-storage-is-cloud-native-storage-cas/" target="_blank">CNCF CAS Blog </a>
 
 ### [OpenEBS architecture](/docs/next/architecture.html)
+
+### [OpenEBS Local PV](/docs/next/localpv.html)
+
+### [OpenEBS Mayastor](/docs/next/mayastor.html)
 
 <br><hr><br>
 
