@@ -29,7 +29,7 @@ OpenEBS v2.9 is another maintenance release before moving towards 3.0 primarily 
 ### Backward Incompatibilities
 
 - Kubernetes 1.18 or higher release is recommended as this release uses features of Kubernetes that will not be compatible with older Kubernetes releases. 
-- OpenEBS has deprecated arch-specific container images in favor of multi-arch container images. For example, images like `cstor-pool-arm64:2.8.0` should be replaced with corresponding multi-arch image `cstor-pool:2.8.0`.
+- OpenEBS has deprecated arch-specific container images in favor of multi-arch container images. For example, images like `cstor-pool-arm64:x.y.z` should be replaced with corresponding multi-arch image `cstor-pool:x.y.z`.
 
 ### Component versions
 

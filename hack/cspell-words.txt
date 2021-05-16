@@ -75,6 +75,7 @@ Rawfile
 Restic
 SIGABRT
 SIGILL
+SPDK
 StackGres
 Staticman's
 STORAGECLASS
@@ -392,6 +393,7 @@ sendtargets
 serviceaccount
 serviceaccounts
 sgcluster
+sharded
 shortname
 shrinkwrap
 signoff
