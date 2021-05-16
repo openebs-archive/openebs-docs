@@ -9,35 +9,30 @@ sidebar_label: Overview
 
 ### What is OpenEBS?
 
-**OpenEBS** is the leading open-source example of a category of cloud native storage solutions sometimes called [Container Attached Storage](https://www.cncf.io/blog/2020/09/22/container-attached-storage-is-cloud-native-storage-cas/). 
-
-**OpenEBS** is the most widely deployed and easy to use open-source cloud native storage solution for Kubernetes Stateful workloads. Check out what users of OpenEBS have to say about their experience in <a href="https://github.com/openebs/openebs/blob/master/ADOPTERS.md" target="_blank">OpenEBS Adoption stories</a>.
-
-**OpenEBS** is a collection of Storage Engines, allowing you to pick the right storage solution for your Stateful workloads and the type of Kubernetes platform.  At a high-level, OpenEBS supports two broad categories of volumes - [Local Volumes](#local-volumes) and [Replicated Volumes](#replicated-volumes). 
-
-**OpenEBS** is a Kubernetes native hyperconverged storage solution that manages the local storage available to nodes and provides local or highly available distributed persistent volumes to Stateful workloads. An added advantage of being a completely Kubernetes native solution is that administrators and developers can interact and manage OpenEBS using all the wonderful tooling that is available for Kubernetes like kubectl, Helm, Prometheus, Grafana, Weave Scope, etc.
-
-**OpenEBS** Project is an open source container attached storage solution originally built by [MayaData](https://mayadata.io). OpeneBS was donated to the CNCF and is now a [CNCF sandbox project](https://www.cncf.io/sandbox-projects/).
+- OpenEBS is the leading open-source example of a category of cloud native storage solutions sometimes called [Container Attached Storage](https://www.cncf.io/blog/2020/09/22/container-attached-storage-is-cloud-native-storage-cas/). 
+- OpenEBS is the most widely deployed and easy to use open-source cloud native storage solution for Kubernetes Stateful workloads. Check out what users of OpenEBS have to say about their experience in <a href="https://github.com/openebs/openebs/blob/master/ADOPTERS.md" target="_blank">OpenEBS Adoption stories</a>.
+- OpenEBS is a collection of Storage Engines, allowing you to pick the right storage solution for your Stateful workloads and the type of Kubernetes platform.  At a high-level, OpenEBS supports two broad categories of volumes - [Local Volumes](#local-volumes) and [Replicated Volumes](#replicated-volumes). 
+- OpenEBS is a Kubernetes native hyperconverged storage solution that manages the local storage available to nodes and provides local or highly available distributed persistent volumes to Stateful workloads. An added advantage of being a completely Kubernetes native solution is that administrators and developers can interact and manage OpenEBS using all the wonderful tooling that is available for Kubernetes like kubectl, Helm, Prometheus, Grafana, Weave Scope, etc.
+- <a href="https://github.com/openebs/openebs/" target="_blank">OpenEBS Project</a> is an open source container attached storage solution originally built by [MayaData](https://mayadata.io). OpeneBS was donated to the _Cloud Native Computing Foundation_ and is now a [CNCF sandbox project](https://www.cncf.io/sandbox-projects/).
 
 
 ### What does OpenEBS do?
 
-**OpenEBS** manages the storage available on the Kubernetes nodes and uses that storage to provide Local or Distributed Persistent Volumes to Kubernetes Stateful workloads. 
+OpenEBS manages the storage available on the Kubernetes nodes and uses that storage to provide Local or Distributed Persistent Volumes to Kubernetes Stateful workloads. 
 
 In case of [Local Volumes](#local-volumes): 
   - OpenEBS can create Persistent Volumes using raw block devices or partitions, or using sub-directories on Hostpaths or by using LVM,ZFS,sparse files. 
   - The local volumes are directly mounted into the Stateful Pod, without any added overhead from OpenEBS in the data path.
   - OpenEBS provides additional tooling for Local Volumes for monitoring, backup/restore, disaster recovery, snapshots when backed by ZFS or LVM, and more. 
 
-In case of [Distributed](#replicated-volumes):
+In case of [Distributed (aka Replicated) Volumes](#replicated-volumes):
   - OpenEBS creates a Micro-service for each Distributed Persistent volume using one of its engines - Mayastor, cStor or Jiva. 
   - The Stateful Pod writes the data to the OpenEBS engines that synchronously replicates the data to multiple nodes in the cluster. OpenEBS engine itself is deployed as pod and orchestrated by Kubernetes. When the node running the Stateful pod fails, the pod will be rescheduled to another node in the cluster and OpenEBS provides access to the data using the available data copies on other nodes.
   - The Stateful Pods connect to the OpenEBS Distributed Persistent volume using iSCSI (cStor and Jiva) or NVMeoF (Mayastor).
   - OpenEBS cStor and Jiva focus on ease of use and durability of the storage. They use customized versions of ZFS and Longhorn technology respectively for writing the data onto the storage. OpenEBS Mayastor is the latest engine that has been developed with durability and performance as design goals and efficiently manages the compute (hugepages, cores) and storage (NVMe Drives) for providing fast distributed block storage. 
 
-OpenEBS Distributed Block volumes are called as Replicated Volumes, to avoid confusion with traditional distributed block storages that tend to distribute the data across many nodes in the cluster. Replicated volumes have low blast radius compared to traditional distributed block storages. Replicated volumes are designed for Cloud Native stateful workloads that require large number of volumes with capacity that can typically be served from a single node as apposed to a single large volume with data sharded across multiple nodes in the cluster.  
-  
-  
+_OpenEBS Distributed Block volumes are called as Replicated Volumes, to avoid confusion with traditional distributed block storages that tend to distribute the data across many nodes in the cluster. Replicated volumes have low blast radius compared to traditional distributed block storages. Replicated volumes are designed for Cloud Native stateful workloads that require large number of volumes with capacity that can typically be served from a single node as apposed to a single large volume with data sharded across multiple nodes in the cluster._
+ 
 
 ### What are some key differentiators of OpenEBS?
 
