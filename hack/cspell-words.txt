@@ -111,6 +111,7 @@ azureuser
 backtraces
 backupstoragelocation
 behaviour
+bitnami
 blockdevice
 blockdeviceclaim
 blockdeviceclaims

@@ -10,30 +10,53 @@ sidebar_label: Releases
 
 <br><font size="4">Latest Release</font><br/> (Recommended)<br/>
 
-OpenEBS v2.9 is the another maintenance release before moving towards 3.0, and includes fixes and enhancements geared towards migrating non CSI volumes to CSI and improvements to E2e. This release also includes some key user-requested bug fixes and enhancements.
+OpenEBS v2.9 is another maintenance release before moving towards 3.0 primarily focusing on enhancing the E2e tests and build/release workflows. This release includes fixes for user-reported critical bugs as well as fixes and enhancements to improve the E2e test coverage. There has been some significant progress made on the alpha features as well. 
 
-### Component versions
-
-The latest release versions of each of the engine are as follows:
-
-- [Mayastor](https://mayastor.gitbook.io/introduction/) 0.8.0
-- [cStor](https://github.com/openebs/cstor-operators) 2.8.0
-- [Jiva](https://docs.openebs.io/docs/next/jivaguide.html) 2.8.0
-- [Local PV hostpath](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html) 2.8.0
-- [Local PV device](https://docs.openebs.io/docs/next/uglocalpv-device.html) 2.8.0
-- [Local PV ZFS](https://github.com/openebs/zfs-localpv) 1.6.0
-- [Local PV LVM](https://github.com/openebs/lvm-localpv) 0.4.0
-- [Local PV Rawfile](https://github.com/openebs/rawfile-localpv) 0.4.4
-- [Dynamic NFS Volume](https://github.com/openebs/dynamic-nfs-provisioner) 0.2.0
 
 ### Key Improvements
 
+- Enhanced [ZFS Local PV](https://github.com/openebs/zfs-localpv) to use a custom node label called `openebs.io/nodeid` to set the node affinity for the provisioned volume. By default, the value will be the same as `kubernetes.io/hostname`.  Using a custom label like this will help in quickly migrating the volumes to a new node in cases where a node fails and the user needs to move the underlying disks to a new node in the cluster. After moving the disks, the user can set the `openebs.io/nodeid` with the value used in the previous node. (https://github.com/openebs/zfs-localpv/issues/304). You can read more about this feature [here](https://github.com/openebs/zfs-localpv/blob/master/docs/faq.md#8-how-to-migrate-pvs-to-the-new-node-in-case-old-node-is-not-accessible).
+- Enhanced [cStor Velero plugin](https://github.com/openebs/velero-plugin/pull/154) to allow users to specify a custom timeout for completing snapshot operations. The time out can be configured via the `restApiTimeout ` field in VolumeSnapshotLocal. See [example](https://github.com/openebs/velero-plugin/blob/master/example/06-volumesnapshotlocation.yaml). (https://github.com/openebs/velero-plugin/issues/148)
+- Added helm chart for [LVM Local PV](https://github.com/openebs/lvm-localpv/tree/master/deploy/helm/charts). 
+- Enhanced [LVM Local PV] to allow users to specify a pattern string of volume groups from which LVM Local PV should be provisioned. This feature will help in cases where a node can have multiple volume groups or volume group names across the cluster have to be unique. (https://github.com/openebs/lvm-localpv/pull/28)
+
 ### Key Bug Fixes
+- [cStor] Fixed an issue where helm chart pre-delete webhook was using a deprecated `hyperkube` image. Moved to `kubectl` images from [bitnami](https://hub.docker.com/r/bitnami/kubectl). (https://github.com/openebs/openebs/issues/3383)
+- [cStor] Fixed an issue where some of the cStor operators were using deprecated `ubuntu 16.04` as the base image. Moved to `ubuntu 18.04`.(https://github.com/openebs/openebs/issues/3386)
+- Several fixes to docs were also included in this release. 
+- OpenEBS participated in the CNCF BugBash program in KubeCon EU 2021 and has received more than [90 PRs, out of which 50+](https://github.com/search?o=asc&q=is%3Aopen+is%3Apr+label%3Aevent%2Fkubecon-eu21-bugbash+org%3Aopenebs&s=created&state=closed&type=Issues) were accepted. 
 
 ### Backward Incompatibilities
 
+- Kubernetes 1.18 or higher release is recommended as this release uses features of Kubernetes that will not be compatible with older Kubernetes releases. 
+- OpenEBS has deprecated arch-specific container images in favor of multi-arch container images. For example, images like `cstor-pool-arm64:2.8.0` should be replaced with corresponding multi-arch image `cstor-pool:2.8.0`.
+
+### Component versions
+
+OpenEBS is a collection of data engines and operators to create different types of replicated and local persistent volumes for Kubernetes Stateful workloads. Kubernetes volumes can be provisioned via CSI Drivers or using Out-of-tree Provisioners. The status of the various components as of v2.9.0 are as follows:
+
+- CSI Drivers 
+    - [Mayastor](https://docs.openebs.io/docs/next/ugmayastor.html) 0.8.0 (beta)
+    - [cStor](https://github.com/openebs/cstor-operators) 2.9.0 (beta)
+    - [Jiva](https://github.com/openebs/jiva-operator) 2.9.0 (beta) 
+    - [Local PV ZFS](https://github.com/openebs/zfs-localpv) 1.7.0 (stable)
+    - [Local PV LVM](https://github.com/openebs/lvm-localpv) 0.5.0 (beta)
+    - [Local PV Rawfile](https://github.com/openebs/rawfile-localpv) 0.4.4 (beta)
+    - [Local PV Partitions](https://github.com/openebs/device-localpv) 0.2.0 (alpha)
+- Out-of-tree provisioners 
+  - [Jiva](https://docs.openebs.io/docs/next/jiva.html) 2.9.0 (stable)
+  - [Local PV hostpath](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html) 2.9.0 (stable)
+  - [Local PV device](https://docs.openebs.io/docs/next/uglocalpv-device.html) 2.9.0 (stable)
+  - [cStor](https://docs.openebs.io/docs/next/cstor.html) 2.9.0 (beta)
+  - [Dynamic NFS Volume](https://github.com/openebs/dynamic-nfs-provisioner) 0.3.0 (alpha)
+- Other components
+  - [NDM](https://github.com/openebs/node-disk-manager) 1.4.1 (beta)
+
+
+
 **Additional details:**
 - [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.9.0)
+- [Install Steps](/docs/next/quickstart.html)
 - [Upgrade Steps](/docs/next/upgrade.html)
 
 ## 2.8.0 - Apr 16 2021

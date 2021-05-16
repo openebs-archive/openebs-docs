@@ -21,7 +21,7 @@ sidebar_label: Quickstart
     <ul>
         <li>Based on the storage requirements for your stateful workloads, <a href="/docs/next/casengines.html#when-to-choose-which-cas-engine"> select the OpenEBS Storage engines to be installed</a>.
         </li>
-        <li>Kubernetes 1.18+ is recommended. If you would like to run on earlier versions, check the version compatibility for the selected OpenEBS Storage engine.
+        <li>Kubernetes 1.18 or newer is recommended. If you would like to run on earlier versions, check the version compatibility for the selected OpenEBS Storage engine.
         </li>
         <li>Understand the <a href="/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
         <li>Start <a href="/docs/next/installation.html">installation </a> through OpenEBS operator.</li>
