@@ -10,6 +10,7 @@ Rsvd
 WSREP
 ZHZX
 Zuvp
+clouduploader
 divcol
 divrow
 empid
@@ -22,6 +23,7 @@ jbfm
 jcgwc
 jlgc
 kkpk
+k8stest
 lbtqt
 lcfz
 ljcc
@@ -29,6 +31,7 @@ ltdsf
 mayalab
 mxqcf
 myproject
+nodeid
 nuyzam
 openebspsp
 nhwb

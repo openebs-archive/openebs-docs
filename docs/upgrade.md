@@ -6,15 +6,19 @@ sidebar_label: Upgrade
 ------
 
 
-Latest stable version of OpenEBS is 2.7.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/v2.7.0).  
+Latest stable version of OpenEBS is 2.9.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/v2.9.0).  
 
 
-Upgrade to the latest OpenEBS 2.7.0 version is supported only from 1.0.0 and later. The steps for upgrading from can be found [here](https://github.com/openebs/openebs/blob/master/k8s/upgrades/README.md).
+Upgrade to the latest OpenEBS 2.9.0 version is supported only from 1.0.0 and later. The steps for upgrading from can be found [here](https://github.com/openebs/openebs/blob/master/k8s/upgrades/README.md).
 
 
 
 :::note
-The community e2e pipelines verify upgrade testing only from non-deprecated releases (1.6 and higher) to 2.7. If you are running on release older than 1.6, OpenEBS recommends you upgrade to the latest version as soon as possible. 
+The community e2e pipelines verify upgrade testing only from non-deprecated releases (1.8 and higher) to 2.9. If you are running on release older than 1.8, OpenEBS recommends you upgrade to the latest version as soon as possible. 
+:::
+
+:::note
+OpenEBS has deprecated arch specific container images in favor of multi-arch container images. After 2.6, the arch specific images are not pushed to Docker or Quay repositories. For example, images like `cstor-pool-arm64:2.8.0` should be replaced with corresponding multi-arch image `cstor-pool:2.8.0`. For further queries or support, please reach out to [OpenEBS Community](/docs/next/support.html) for helping you with the upgrade.
 :::
 
 :::note
