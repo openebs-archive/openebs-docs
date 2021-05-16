@@ -75,6 +75,7 @@ Rawfile
 Restic
 SIGABRT
 SIGILL
+SPDK
 StackGres
 Staticman's
 STORAGECLASS
@@ -111,6 +112,7 @@ azureuser
 backtraces
 backupstoragelocation
 behaviour
+bitnami
 blockdevice
 blockdeviceclaim
 blockdeviceclaims
@@ -147,6 +149,7 @@ cstor
 cStor
 cStor's
 cstorbackups
+cstorbackupdatas
 cstorbackupcompleted
 cstorcompletedbackups
 cstorpoolclusters
@@ -269,6 +272,7 @@ logind
 lowtco
 luks
 luworkers
+lvmetad
 mademistakes
 malloc
 masterless
@@ -327,6 +331,7 @@ oltp
 onfinally
 openapi
 openebs
+openebsctl
 openshift
 operatorhub
 optin
@@ -388,6 +393,7 @@ sendtargets
 serviceaccount
 serviceaccounts
 sgcluster
+sharded
 shortname
 shrinkwrap
 signoff

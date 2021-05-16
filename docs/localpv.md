@@ -25,7 +25,7 @@ Examples of good workloads that can benefit from local volumes are:
 OpenEBS helps users to take local volumes into production by providing features that are currently missing in Kubernetes like:
 
 - Dynamic PV Provisioners for local volumes.
-- Local Volumes backed by hostpath on filesystems like Ext3, XFS or ZFS.
+- Local Volumes backed by hostpath on filesystems like Ext3, XFS, LVM or ZFS.
 - Monitoring the health of underlying devices or storage used to create Local Volumes. 
 - Capacity management features like over-provisioning and/or quota enforcement. 
 - Make use of the underlying storage capabilities like snapshot, clone, compression and so forth when local volumes are backed by advanced filesystem like ZFS. 
@@ -38,6 +38,9 @@ OpenEBS provides different types of Local Volumes that can be used to provide lo
 
 - [OpeneBS Local PV using Hostpath](/docs/next/uglocalpv-hostpath.html)
 - [OpeneBS Local PV using Block Devices](/docs/next/uglocalpv-device.html)
+- <a href="https://github.com/openebs/lvm-localpv" target="_blank">OpenEBS Local PV using LVM </a>
+- <a href="https://github.com/openebs/zfs-localpv" target="_blank">OpenEBS Local PV using ZFS </a>
+- <a href="https://github.com/openebs/rawfile-localpv" target="_blank">OpenEBS Local PV using Rawfile (sparse file) </a>
 
 
 ## When to use OpenEBS Local PVs
