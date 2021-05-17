@@ -14,7 +14,7 @@ sidebar_label: cStor
 This user guide section provides the operations needed to be performed by the User and the Admin for configuring cStor related tasks. 
 
    :::note 
-   The recommended approach to provision cStor Pools is to use cStorPoolCluster(CSPC), the detailed steps have been provided in this document. However, OpenEBS also supports provisioning of cStor Pools using StoragePoolClaim (SPC). For detailed instructions, refer to the <a href="https://docs.openebs.io/v260/docs/next/ugcstor.html" target="_blank">cStor User guide(SPC)</a>.<br>
+   The recommended approach to provision cStor Pools is to use CStorPoolCluster(CSPC), the detailed steps have been provided in this document. However, OpenEBS also supports provisioning of cStor Pools using StoragePoolClaim (SPC). For detailed instructions, refer to the <a href="https://docs.openebs.io/v260/docs/next/ugcstor.html" target="_blank">cStor User guide(SPC)</a>.<br>
    :::
 
 ## User operations
@@ -32,7 +32,7 @@ This user guide section provides the operations needed to be performed by the Us
 
 ### <a class="anchor" aria-hidden="true" id="expanding-a-cstor-volume"></a>Expanding a cStor volume
 
-OpenEBS cStor introduces support for expanding an iSCSI PV using the CSI provisioner. Provided cStor is configured to function as a CSI provisioner, you can expand iSCSI PVs that have been created by cStor CSI Driver. This feature is supported with Kubernetes versions 1.16 and above.
+OpenEBS cStor introduces support for expanding an iSCSI PV using the CSI provisioner. Provided cStor is configured to function as a CSI provisioner, you can expand iSCSI PVs that have been created by cStor CSI Driver. This feature is supported with Kubernetes versions 1.18 and above.
 <br>
 For expanding a cStor PV, you must ensure the following items are taken care of:
 <br>
@@ -42,7 +42,7 @@ For expanding a cStor PV, you must ensure the following items are taken care of:
 <li>The PV must be attached to a pod for it to be resized. There are two scenarios when resizing an cStor PV:<br>
  <ul>
     <li>If the PV is attached to a pod, cStor CSI driver expands the volume on the storage backend, re-scans the device and resizes the filesystem.</li>
-    <li>When attempting to resize an unattached PV, cStor CSI driver expands the volume on the storage backend. Once the PVC is bound to a pod, the driver re-scans the device and resizes the filesystem. Kubernetes then updates the PVC size after the expansion operation has successfully completed.</li>
+    <li>When attempting to resize an unattached PV, cStor CSI driver expands the volume only on the storage backend. Once the PVC is bound to a pod, the driver re-scans the device and resizes the filesystem. Kubernetes will update the PVC size only after the successful completion of the expansion operation.</li>
  </ul>
 </ul>
 <br>
@@ -101,7 +101,7 @@ To resize the PV that has been created from 5Gi to 10Gi, edit the PVC definition
 <br>
 <ul>
  <li>Volume expansion</li>
- <li>FileSystem expansion</li>
+ <li>Filesystem expansion</li>
 </ul>
 
 ```
@@ -119,7 +119,7 @@ metadata:
   creationTimestamp: "2020-06-24T12:22:24Z"
   finalizers:
   - kubernetes.io/pvc-protection
-    name: claim-csi-123
+   name: cstor-pvc
   namespace: default
   resourceVersion: "766"
   selfLink: /api/v1/namespaces/default/persistentvolumeclaims/claim-csi-123
@@ -196,7 +196,7 @@ Allow users to set available performance tunings in cStor Pools based on their w
 
 **Set priority class:** Sets the priority levels as required.
 
-**Compression:** This helps in setting the compression for cStor pools.
+**Compression:** This helps in configuring the compression property of cStor pools defaults to lz4 compression algorithm.
 
 **ReadOnly threshold:** Helps in specifying read only thresholds for cStor pools.
 <br>
@@ -438,7 +438,7 @@ spec:
 <font size="4">**Example configuration for Compression:**</font>
 Compression values can be set at pool level only. There is no override mechanism like it was there in case of tolerations, resources, auxResources and priorityClass. Compression value must be one of on,off,lzjb,gzip,gzip-[1-9],zle and lz4.
 
-**Note:** lz4 is the default compression algorithm that is used if the compression field is left unspecified on the cspc. Below is the sample yaml which has compression specified.
+**Note:** lz4 is the default compression algorithm that is used if the compression field is left unspecified on the CSPC. Below is the sample yaml which has compression specified.
 
 ```
 
@@ -462,7 +462,7 @@ spec:
         compression: lz
 ```
 <font size="4">**Example configuration for Read Only Threshold:**</font>
-RO threshold can be set in a similar manner like compression. ROThresholdLimit is the threshold(percentage base) limit for pool read only mode. If ROThresholdLimit(%) amount of pool storage is consumed then the pool will be set to readonly. If ROThresholdLimit is set to 100 then entire pool storage will be used. By default it will be set to 85% i.e when unspecified on the CSPC.ROThresholdLimit value will be 0 < ROThresholdLimit <= 100. Following CSPC yaml has the ReadOnly Threshold percentage specified.
+RO threshold can be set in a similar manner like compression. ROThresholdLimit is the threshold(percentage base) limit for pool read only mode. If storage consumption is greater than ROThresholdLimit(%) then the pool will be marked as readonly. If ROThresholdLimit is set to 100 then entire pool storage will be used. By default, it will be set to 85% i.e when unspecified on the CSPC.ROThresholdLimit value will be 0 < ROThresholdLimit <= 100. Following CSPC yaml has the ReadOnly Threshold percentage specified.
 
 ```
 apiVersion: cstor.openebs.io/v1
