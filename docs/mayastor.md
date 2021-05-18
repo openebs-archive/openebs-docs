@@ -283,7 +283,7 @@ spec:
 EOF
 ```
 
-Example \(NVMe-oF Fabric device\)":
+Example \(NVMe-oF Fabric device\):
 ```
 cat <<EOF | kubectl create -f -
 apiVersion: "openebs.io/v1alpha1"
@@ -293,7 +293,7 @@ metadata:
   namespace: mayastor
 spec:
   node: workernode-2-hostname
-  disks: ["nvme://nqn.2014-08.com.vendor:nvme:nvm-subsystem-sn-d78432"]
+  disks: ["/dev/nvme0n1"]
 EOF
 ```
 
