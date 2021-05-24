@@ -750,9 +750,9 @@ Compression values can be set at <b>pool level only</b>. There is no override me
 - gzip 
 - gzip-[1-9]
 - zle
-- lz
+- lz4
 
-**Note:** lz is the default compression algorithm that is used if the compression field is left unspecified on the cspc. Below is the sample yaml which has compression specified.
+**Note:** lz4 is the default compression algorithm that is used if the compression field is left unspecified on the cspc. Below is the sample yaml which has compression specified.
 
 ```
 
@@ -773,7 +773,7 @@ spec:
 
       poolConfig:
         dataRaidGroupType: mirror
-        compression: lz
+        compression: lz4
 ```
 <font size="4">**Example configuration for Read Only Threshold:**</font>
 
