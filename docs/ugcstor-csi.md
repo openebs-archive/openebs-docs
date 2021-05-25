@@ -81,7 +81,7 @@ kubectl create -f snapshot.yaml
 ```
 To list the snapshots, execute:
 ```
-kubectl get volumesnapshots
+kubectl get volumesnapshots -n default
 ```
 Sample Output:
 ```
@@ -91,7 +91,7 @@ cstor-pvc-snap              10s
 A VolumeSnapshot is analogous to a PVC and is associated with a <code>VolumeSnapshotContent</code> object that represents the actual snapshot. To identify the VolumeSnapshotContent object for the VolumeSnapshot execute:
 
 ```
-kubectl describe volumesnapshots cstor-pvc-snap
+kubectl describe volumesnapshots cstor-pvc-snap -n default
 ```
 Sample Output:
 ```
@@ -272,7 +272,7 @@ kubectl get cspc -n openebs
 Sample Output:
 ```
 NAME                   HEALTHYINSTANCES   PROVISIONEDINSTANCES   DESIREDINSTANCES     AGE
-cstor-disk-pool        1                  1                      1                    2m2s
+cstor-disk-pool        3                  3                      3                    2m2s
 ```
 Check if the pool instances report their status as <b>ONLINE</b> using the below command:
 
@@ -296,7 +296,7 @@ StorageClass definition is an important task in the planning and execution of Op
   
   #### Steps to create a cStor StorageClass:
    1. Decide the CStorPoolCluster for which you want to create a Storage Class.
-   2. Decide the replicaCount based on your requirement/workloads. OpenEBS doesn't restrict the replica count to set, but a <b>maximum of 5</b> replicas are allowed. It depends how users configure it, but for the availability of volumes <b>at least (n/2 + 1) replicas</b> should be up and connected to the target, where n is the replicaCount. The Replica Count should be greater than or equal to the number of cStor Pool Instances(CSPIs). The following are some example cases:
+   2. Decide the replicaCount based on your requirement/workloads. OpenEBS doesn't restrict the replica count to set, but a <b>maximum of 5</b> replicas are allowed. It depends how users configure it, but for the availability of volumes <b>at least (n/2 + 1) replicas</b> should be up and connected to the target, where n is the replicaCount. The Replica Count should be always less  than or equal to the number of cStor Pool Instances(CSPIs). The following are some example cases:
     <ul> 
     <li>If a user configured replica count as 2, then always 2 replicas should be available to perform operations on volume.</li>
     <li>If a user configured replica count as 3 it should require at least 2 replicas should be available for volume to be operational.</li>
@@ -314,7 +314,7 @@ StorageClass definition is an important task in the planning and execution of Op
       parameters:
         cas-type: cstor
         # cstorPoolCluster should have the name of the CSPC
-        cstorPoolCluster: cstor-storage
+        cstorPoolCluster: cstor-disk-pool
         # replicaCount should be <= no. of CSPI
         replicaCount: "3"
       ``` 
