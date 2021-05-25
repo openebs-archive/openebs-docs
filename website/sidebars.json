@@ -24,7 +24,7 @@
 	"prerequisites", 
 	"installation", 
 	"ugndm", 
-	"ugcstor", 
+        "ugcstor-csi",	
 	"jivaguide",
 	"ugmayastor", 
 	"uglocalpv-hostpath", 
