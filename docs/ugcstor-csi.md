@@ -539,7 +539,7 @@ spec:
         kubernetes.io/hostname: worker-node-1
 
       dataRaidGroups:
-      - cspiBlockDevices:
+      - blockDevices:
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f36
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f37
 
@@ -563,7 +563,6 @@ spec:
     limits:
       memory: "128Mi"
       cpu: "500m"
-
   auxResources:
     requests:
       memory: "50Mi"
@@ -571,38 +570,32 @@ spec:
     limits:
       memory: "100Mi"
       cpu: "400m"
-
+  
   pools:
     - nodeSelector:
         kubernetes.io/hostname: worker-node-1
-
       dataRaidGroups:
-      - cspiBlockDevices:
-          - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f36
-          - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f37
-
+        - blockDevices:
+            - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f36
+            - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f37
       poolConfig:
         dataRaidGroupType: mirror
-
+    
     - nodeSelector:
         kubernetes.io/hostname: worker-node-2
-
       dataRaidGroups:
-      - cspiBlockDevices:
-          - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f39
-          - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f40
-
+        - blockDevices:
+            - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f39
+            - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f40
       poolConfig:
         dataRaidGroupType: mirror
-
+    
     - nodeSelector:
         kubernetes.io/hostname: worker-node-3
-
       dataRaidGroups:
-      - cspiBlockDevices:
-          - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f42
-          - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f43
-
+        - blockDevices:
+            - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f42
+            - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f43
       poolConfig:
         dataRaidGroupType: mirror
         resources:
@@ -612,7 +605,6 @@ spec:
           limits:
             memory: 130Mi
             cpu: 600m
-
         auxResources:
           requests:
             memory: 60Mi
@@ -646,7 +638,7 @@ spec:
         kubernetes.io/hostname: worker-node-1
 
       dataRaidGroups:
-      - cspiBlockDevices:
+      - blockDevices:
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f36
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f37
 
@@ -657,7 +649,7 @@ spec:
         kubernetes.io/hostname: worker-node-2
 
       dataRaidGroups:
-      - cspiBlockDevices:
+      - blockDevices:
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f39
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f40
 
@@ -668,7 +660,7 @@ spec:
         kubernetes.io/hostname: worker-node-3
 
       dataRaidGroups:
-      - cspiBlockDevices:
+      - blockDevices:
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f42
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f43
 
@@ -711,7 +703,7 @@ spec:
         kubernetes.io/hostname: worker-node-1
 
       dataRaidGroups:
-      - cspiBlockDevices:
+      - blockDevices:
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f36
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f37
 
@@ -722,7 +714,7 @@ spec:
         kubernetes.io/hostname: worker-node-2
 
       dataRaidGroups:
-      - cspiBlockDevices:
+      - blockDevices:
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f39
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f40
 
@@ -733,7 +725,7 @@ spec:
         kubernetes.io/hostname: worker-node-3
 
       dataRaidGroups:
-      - cspiBlockDevices:
+      - blockDevices:
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f42
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f43
 
@@ -767,7 +759,7 @@ spec:
         kubernetes.io/hostname: worker-node-1
 
       dataRaidGroups:
-      - cspiBlockDevices:
+      - blockDevices:
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f36
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f37
 
@@ -791,7 +783,7 @@ spec:
         kubernetes.io/hostname: worker-node-1
 
       dataRaidGroups:
-      - cspiBlockDevices:
+      - blockDevices:
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f36
           - blockDeviceName: blockdevice-ada8ef910929513c1ad650c08fbe3f37
 
