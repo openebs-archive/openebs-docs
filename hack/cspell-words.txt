@@ -509,3 +509,10 @@ utilises
 PROVISIONEDREPLICAS
 HEALTHYREPLICAS
 utilised
+chjg
+wvhmr
+validatingwebhookconfiguration
+validatingwebhookconfiguration
+validatingwebhookconfiguration
+validatingwebhookconfiguration
+admissionregistration

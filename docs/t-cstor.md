@@ -19,6 +19,10 @@ sidebar_label: cStor
 
 [cStor volume become read only state](#cstor-volume-read-only)
 
+[cStor pools, volumes are offline and pool manager pods are stuck in pending state](#pools-volume-offline)
+
+[Pool Operation Hung Due to Bad Disk](#pool-operation-hung)
+
 <br>
 <hr>
 <br>
@@ -102,6 +106,165 @@ kubectl get cstorvolume -n <openebs_installed_namespace> -l openebs.io/persisten
 If cStor volume exists in `Healthy` or `Degraded` state then restarting of the application pod alone will bring back cStor volume to `RW` mode. If cStor volume exists in `Offline`, reach out to <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for assistance. 
 
 <hr>
+<h3><a class="anchor" aria-hidden="true" id="pools-volume-offline"></a>cStor pools, volumes are offline and pool manager pods are stuck in pending state</h3>
+The cStor pools and volumes are offline, the pool manager pods are stuck in a <code>pending</code> state, as shown below:
+
+``` 
+$ kubectl get po -n openebs -l app=cstor-pool
+```
+Sample Output:
+```
+NAME                               READY   STATUS    RESTARTS   AGE
+cstor-cspc-chjg-85f65ff79d-pq9d2   0/3     Pending   0          16m
+cstor-cspc-h99x-57888d4b5-kh42k    0/3     Pending   0          15m
+cstor-cspc-xs4b-85dbbbb59b-wvhmr   0/3     Pending   0          18m
+```
+One such scenario that can lead to such a situation is, when the nodes have been scaled down and then scaled up. This results in nodes coming up with a different hostName and node name, i.e, the nodes that have come up are new nodes and not the same as previous nodes that existed earlier. Due to this, the disks that were attached to the older nodes now get attached to the newer nodes.
+
+
+<b>Troubleshooting</b><br>
+To bring cStor pool back to online state carry out the below mentioned steps,
+
+1. **Update validatingwebhookconfiguration resource's failurePolicy**: <br>
+      Update the <code>validatingwebhookconfiguration</code> resource's failure policy to <code>Ignore</code>. It would be previously set to <code>Fail</code>. This informs the kube-APIServer to ignore the error in case cStor admission server is not reachable.
+      To edit, execute:
+      ```
+      $ kubectl edit validatingwebhookconfiguration openebs-cstor-validation-webhook
+      ```
+      Sample Output with updated <code>failurePolicy</code>
+      ```
+       kind: ValidatingWebhookConfiguration
+       metadata:
+         name: openebs-cstor-validation-webhook
+         ...
+         ...
+       webhooks:
+       - admissionReviewVersions:
+         - v1beta1
+       failurePolicy: Fail
+         name: admission-webhook.cstor.openebs.io
+       ...
+       ...
+
+      ```
+
+2. **Scale down the admission**:<br>
+     
+     The openEBS admission server needs to be scaled down as this would skip the validations performed by cStor admission server when CSPC spec is updated with new node details.
+     ```
+     $ kubectl scale deploy openebs-cstor-admission-server -n openebs --replicas=0
+     ```
+     Sample Output:
+     ```
+     deployment.extensions/openebs-cstor-admission-server scaled
+     ```
+
+3. **Update the CSPC spec nodeSelector**:<br>
+      The <code>CStorPoolCluster</code> needs to be updated with the new <code>nodeSelector</code> values. The updated CSPC now points to the new nodes instead of the old nodeSelectors.
+
+      Update <code>kubernetes.io/hostname</code> with the new values.
+
+      Sample Output:
+```
+apiVersion: cstor.openebs.io/v1
+kind: CStorPoolCluster
+metadata:
+  name: cstor-cspc
+  namespace: openebs
+spec:
+  pools:
+    - nodeSelector:
+        kubernetes.io/hostname: "ip-192-168-25-235"
+      dataRaidGroups:
+      - blockDevices:
+          - blockDeviceName: "blockdevice-798dbaf214f355ada15d097d87da248c"
+      poolConfig:
+        dataRaidGroupType: "stripe"
+    - nodeSelector:
+        kubernetes.io/hostname: "ip-192-168-33-15"
+      dataRaidGroups:
+      - blockDevices:
+          - blockDeviceName: "blockdevice-4505d9d5f045b05995a5654b5493f8e0"
+      poolConfig:
+        dataRaidGroupType: "stripe"
+    - nodeSelector:
+        kubernetes.io/hostname: "ip-192-168-75-156"
+      dataRaidGroups:
+      - blockDevices:
+          - blockDeviceName: "blockdevice-c783e51a80bc51065402e5473c52d185"
+      poolConfig:
+        dataRaidGroupType: "stripe"
+```
+To apply the above configuration, execute:
+
+```
+$ kubectl apply -f cspc.yaml
+``` 
+5. **Update nodeSelectors, labels and NodeName**:
+    
+    Next, the CSPI needs to be updated with the correct node details. 
+     Get the node details on which the previous blockdevice was attached and after fetching node details update hostName, nodeSelector values and <code>kubernetes.io/hostname</code> values in labels of CSPI with new details.
+     To update, execute:
+     ```
+    kubectl edit cspi <cspi_name> -n openebs
+     ```
+    
+    **NOTE**: The same process needs to be repeated for all other CSPIs which are in pending state and belongs to the updated CSPC.
+
+6. **Verification**:<br>
+      On successful implementation of the above steps, the updated CSPI generates an event,  <b>pool is successfully imported</b> which verifies the above steps have been completed successfully. 
+
+      ```
+      kubectl describe cspi cstor-cspc-xs4b -n openebs
+      ```
+      Sample Output:
+      ```
+      ...
+      ...
+      Events:
+        Type    Reason         Age    From               Message
+        ----    ------         ----   ----               -------
+        Normal  Pool Imported  2m48s  CStorPoolInstance  Pool Import successful: cstor-07c4bfd1-aa1a-4346-8c38-f81d33070ab7
+      ```
+7. **Scale-up the cStor admission server and update validatingwebhookconfiguration**:<br>
+      This brings back the cStor admission server to running state. As well as admission server is required to validate the modifications made to CSPC API in future.
+      ```
+       $ kubectl scale deploy openebs-cstor-admission-server -n openebs --replicas=1
+      ```
+
+    Sample Output:
+
+      ```
+       deployment.extensions/openebs-cstor-admission-server scaled
+      ```
+
+    Now, update the <code>failurePolicy</code> back to <code>Fail</code> under validatingwebhookconfiguration. To edit, execute:
+
+    ```
+    $ kubectl edit validatingwebhookconfiguration openebs-cstor-validation-webhook
+    ```
+    Sample Output:
+    ```
+     validatingwebhookconfiguration.admissionregistration.k8s.io/openebs-cstor-validation-webhook edited
+    ```
+<hr>
+
+<h3><a class="anchor" aria-hidden="true" id="pool-operation-hung"></a>Pool Operation hung due to Bad Disk</h3>
+
+
+cStor scans all the devices on the node while it tries to import the pool in case there is a pool manager pod restart. Pool(s) are always imported before creation. 
+On pool creation all of the devices are scanned and as there are no existing pool(s), a new pool is created. Now, when the pool is created the participating devices are cached for faster import of the pool (in case of pool manager pod restart). If the import utilises cache then this issue won't be hit but there is a chance of import without cache (when the pool is being created for the first time)
+
+In such cases where pool import happens without cache file and if any of the devices(even the devices that are not part of the cStor pool) is bad and is not responding the command issued by cStor keeps on waiting and is stuck. As a result of this, pool manager pod is not able to issue any more command in order to reconcile the state of cStor pools or even perform the IO for the volumes that are placed on that particular pool.
+
+**Troubleshooting**<br>
+ This might be encountered because of one of the following situations:
+
+1. The device that has gone bad is actually a part of the cStor pool on the node. In such cases, Block device replacement needs to be done, the detailed steps to it can be found <a href="/docs/next/ugcstor-csi.html#a-class-anchor-aria-hidden-true-id-performance-tunings-in-cstor-pools-a-performance-tunings-in-cstor-pools" target="_blank">here</a>.
+
+**Note**: Block device replacement is not supported for stripe raid configuration. Please visit this link for some use cases and solutions.
+
+2. The device that has gone bad is not part of the cStor pool on the node. In this case, removing the bad disk from the node and restarting the pool manager pod with fix the problem.
 <br>
 <br>
 
