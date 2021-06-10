@@ -23,6 +23,8 @@ sidebar_label: cStor
 
 [Pool Operation Hung Due to Bad Disk](#pool-operation-hung)
 
+[Volume Migration when the underlying cStor pool is lost](#volume-migration-pool-lost)
+
 <br>
 <hr>
 <br>
@@ -267,7 +269,216 @@ In such cases where pool import happens without cache file and if any of the dev
 2. The device that has gone bad is not part of the cStor pool on the node. In this case, removing the bad disk from the node and restarting the pool manager pod with fix the problem.
 <br>
 <br>
+<hr>
+<h3><a class="anchor" aria-hidden="true" id="volume-migration-pool-lost"></a>Volume Migration when the underlying cStor pool is lost</h3>
 
+<h4>Scenarios that can result in losing of cStor pool(s):</h4>
+
+  - If the node is lost.
+  - If one or more disks participating in the cStor pool are lost. This occurs when the pool configuration is set to stripe.
+  - If all the disks participating in any raid group are lost. This occurs when the pool configuration is set to mirror.
+  - If the cStor pool configuration is raidz and more than 1 disk in any raid group is lost.
+  - If the cStor pool configuration is raidz2 and more than 2 disks in any raid group are lost.
+  
+  This situation is often encountered in Kubernetes clusters that have autoscale feature enabled and nodes scale down and scale-up.
+
+ If the volume replica that resided on the lost pool was configured in high availability mode then the volume replica can be migrated to a new cStor pool.
+
+ **NOTE**:The CStorVolume associated to the volume replicas have to be migrated should be in Healthy state. 
+<br><br>
+  <b>STEP 1:</b><br>
+  **Remove the cStorVolumeReplicas from the lost pool**:
+
+  To remove the pool the <code>CStorVolumeConfig</code> needs to updated. The <code>poolName</code> for the corresponding pool needs to be removed from <code>replicaPoolInfo</code>. This ensures that the admission server accepts the scale down request.
+
+ **NOTE**: Ensure that the cstorvolume and target pods are in running state.
+
+A sample CVC resource(corresponding to the volume) that has 3 pools.
+```
+...
+...
+  policy:
+   provision:
+    replicaAffinity: false
+     replica: {}
+     replicaPoolInfo:
+     - poolName: cstor-cspc-4tr5 // This pool needs to be removed
+     - poolName: cstor-cspc-xnxx
+     - poolName: cstor-cspc-zdvk
+...
+...
+
+```
+Now edit the CVC and remove the desired poolName.
+
+```
+$ kubectl edit cvc pvc-81746e7a-a29d-423b-a048-76edab0b0826 -n openebs
+```
+
+```
+...
+...
+  policy:
+   provision:
+    replicaAffinity: false
+     replica: {}
+     replicaPoolInfo:
+     - poolName: cstor-cspc-xnxx
+     - poolName: cstor-cspc-zdvk
+...
+...
+```
+From the above spec, <code>cstor-cspc-4tr5</code> CSPI entry is removed. This needs to be repeated for all the volumes which have cStor volume replicas on the lost pool. To get the list of volume replicas in lost pool, execute:
+
+```
+$ kubectl get cvr -n openebs -l cstorpoolinstance.openebs.io/name=<CSPI_name>
+```
+
+```
+NAME                                                       USED   ALLOCATED   STATUS    AGE
+pvc-81746e7a-a29d-423b-a048-76edab0b0826-cstor-cspc-bf9h   6K     6K          Healthy   4m7s
+```
+
+<b>STEP 2:</b><br>
+
+**Remove the finalizer from cStor volume replicas**
+
+The CVRs need to be deleted from the etcd, this requires the <code>finalizer</code> under <code>cstorvolumereplica.openebs.io/finalizer</code> to be removed from the CVRs which were present on the lost cStor pool.
+
+Usually, the finalizer is removed by pool-manager pod but as in this case the pod is not in running state hence manual intervention is required.
+
+To get the list of CVRs, execute:
+```
+$ kubectl get cvr -n openebs
+```
+Sample Output:
+```
+NAME                                                       USED   ALLOCATED   STATUS    AGE
+pvc-81746e7a-a29d-423b-a048-76edab0b0826-cstor-cspc-xnxx   6K     6K          Healthy   52m
+pvc-81746e7a-a29d-423b-a048-76edab0b0826-cstor-cspc-zdvk   6K     6K          Healthy   52m
+```
+
+After this step, CStorVolume will scale down. To verify, execute:
+
+```
+$ kubectl describe cvc <pv_name> -n openebs
+```
+Sample Output:
+```
+Events:
+Type     Reason                 Age    From                         Message
+----     ------                 ----   ----                         -------
+Normal   ScalingVolumeReplicas  6m10s  cstorvolumeclaim-controller  successfully scaled volume replicas to 2
+```
+
+**STEP 3:**<br>
+**Remove the pool spec from CSPC belongs to lost node**
+
+Next, the corresponding CSPC needs to be edited and the pool spec that belongs to the nodes, which no longer exists, needs to be removed. To edit the cspc, execute:
+
+```
+kubectl edit cspc <cspc_name> -n openebs
+```
+This updates the number of desired instances. 
+
+To verify, execute:
+
+```
+$ kubectl get cspc -n openebs
+```
+Sample Output:
+```
+NAME         HEALTHYINSTANCES   PROVISIONEDINSTANCES   DESIREDINSTANCES   AGE
+cstor-cspc   2                  3                      2                  56m
+```
+
+Since CSPI has pool protection finalizer i.e <code>openebs.io/pool-protection</code> the CSPC operator was unable to delete the CSPI. Due to this reason the count for provisioned instances still remains 3. 
+
+To fix this <code>openebs.io/pool-protection</code> finalizer must be removed from the CSPI that was present on the lost node.
+
+To edit, execute:
+```
+kubectl edit cspi  <cspi_name>
+```
+After the finalizer is removed the CSPI count goes to the desired number.
+
+```
+$ kubectl get cspc -n openebs
+NAME         HEALTHYINSTANCES   PROVISIONEDINSTANCES   DESIREDINSTANCES   AGE
+cstor-cspc   2                  2                      2                  68m
+```
+
+**STEP 4:**<br>
+**Scale the cStorVolumeReplicas back to the original number**
+
+
+Scale the CStorVolumeReplicas back to the desired number on new or existing cStor pool where a volume replica of the same volume doesn't exist. 
+
+NOTE: A CStorVolume is a collection of 1 or more volume replicas and no two replicas of a CStorVolume should reside on the same CStorPoolInstance. CStorVolume is a custom resource and a logical aggregated representation of all the underlying cStor volume replicas for this particular volume.
+
+To get the list of cspi execute:
+```
+$ kubectl get cspi -n openebs
+```
+Sample Output:
+```
+NAME             HOSTNAME           ALLOCATED  FREE   CAPACITY  READONLY  PROVISIONEDREPLICAS  HEALTHYREPLICAS  TYPE    STATUS  AGE
+cstor-cspc-bf9h  ip-192-168-49-174  230k       9630M  9630230k  false     0                    0                stripe  ONLINE  66s
+```
+
+Next, add the newly created CStorPoolInstance under CVC.Spec
+In this example we are adding, <code>cstor-cspc-bf9h </code>
+
+To edit, execute:
+```
+$ kubectl edit cvc pvc-81746e7a-a29d-423b-a048-76edab0b0826 -n openebs
+```
+Sample YAML:
+```
+...
+...
+spec:
+ policy:
+  provision:
+   replicaAffinity: false
+  replica: {}
+  replicaPoolInfo:
+  - poolName: cstor-cspc-bf9h
+  - poolName: cstor-cspc-xnxx
+  - poolName: cstor-cspc-zdvk
+...
+...
+
+```
+
+The same needs to be repeated for all the scaled down cStor volumes.
+Next, verify the status of the new CStorVolumeReplica(CVR) that are provisioned.
+
+To get the list of CVR, execute:
+```
+$ kubectl get cvr -n openebs
+```
+Sample Output:
+```
+NAME                                                       USED   ALLOCATED   STATUS    AGE
+pvc-81746e7a-a29d-423b-a048-76edab0b0826-cstor-cspc-bf9h   6K     6K          Healthy   11m
+pvc-81746e7a-a29d-423b-a048-76edab0b0826-cstor-cspc-xnxx   6K     6K          Healthy   96m
+pvc-81746e7a-a29d-423b-a048-76edab0b0826-cstor-cspc-zdvk   6K     6K          Healthy   96m
+
+```
+To get the list of cspi, execute:
+
+```
+$ kubectl get cspi -n openebs
+```
+Sample Output:
+```
+NAME              HOSTNAME            ALLOCATED  FREE   CAPACITY  READONLY  PROVISIONEDREPLICAS  HEALTHYREPLICAS  TYPE    STATUS  AGE
+cstor-cspc-bf9h  ip-192-168-49-174    230k       9630M  9630230k  false     1                    1                stripe  ONLINE  66s
+cstor-cspc-xnxx   ip-192-168-79-76    101k       9630M  9630101k  false     1                    1                stripe  ONLINE  4m25s
+cstor-cspc-zdvk   ip-192-168-29-217   98k        9630M  9630098k  false     1                    1                stripe  ONLINE  4m25s
+
+```
 ## See Also:
 
 ### [FAQs](/docs/next/faq.html)
