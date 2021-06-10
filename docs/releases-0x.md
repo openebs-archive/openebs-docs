@@ -1,7 +1,7 @@
 ---
 id: releases-0x
 title: OpenEBS 0.x Deprecated Releases
-sidebar_label: Releases 0.x
+sidebar_label: Summary of changes for releases 0.x
 ---
 
 ------

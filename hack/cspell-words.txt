@@ -516,3 +516,4 @@ validatingwebhookconfiguration
 validatingwebhookconfiguration
 validatingwebhookconfiguration
 admissionregistration
+Storguide
