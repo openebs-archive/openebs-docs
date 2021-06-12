@@ -20,6 +20,8 @@ sidebar_label: FAQs
 
 [What changes are needed for Kubernetes or other subsystems to leverage OpenEBS?](#changes-on-k8s-for-openebs)
 
+[Prerequisites to run CStor-CSI in rancher based clusters](#prerequisites-for-rancher)
+
 [How do you get started and what is the typical trial deployment?](#get-started)
 
 [What is the default OpenEBS Reclaim policy?](#default-reclaim-policy)
@@ -153,7 +155,48 @@ To determine exactly where your data is physically stored, you can run the follo
 
 <a href="#top">Go to top</a>
 
+<h3><a class="anchor" aria-hidden="true" id="prerequisites-for-rancher"></a>What are the prerequisites to run CStor-CSI in rancher based clusters</h3>
 
+For RancherOS,<br>
+If the operating system used is RancherOS, the iSCSI service needs to be enabled. Once it is enabled it must be started on each of the worker nodes.
+To run iSCSI services, execute the following commands on each of the cluster hosts or nodes.
+```
+sudo ros s enable open-iscsi
+sudo ros s up open-iscsi
+```
+Next, run the below mentioned commands on all the nodes. This ensures that these directories are persistent, by default they are ephemeral.
+```
+ros config set rancher.services.user-volumes.volumes  [/home:/home,/opt:/opt,/var/lib/kubelet:/var/lib/kubelet,/etc/kubernetes:/etc/kubernetes,/var/openebs]
+system-docker rm all-volumes
+reboot
+```
+<br>
+ For Ubuntu or RHEL,
+
+ If the operating system is Ubuntu or RHEL the following needs to be done,
+  - Verify if iSCSI initiator is installed and its services are running.
+  
+  The following list of commands can be used to install and verify iSCSI services on the nodes 
+
+| OPERATING SYSTEM | ISCSI PACKAGE         | COMMANDS                                                 |
+| ---------------- | --------------------- | -------------------------------------------------------- |
+| RHEL/CentOS      | iscsi-initiator-utils | <ul><li>sudo yum install iscsi-initiator-utils -y</li><li>sudo systemctl enable --now iscsid</li><li>modprobe iscsi_tcp</li><li>echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf</li></ul> |
+| Ubuntu/ Debian   | open-iscsi            |  <ul><li>sudo apt install open-iscsi</li><li>sudo systemctl enable --now iscsid</li><li>modprobe iscsi_tcp</li><li>echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf</li></ui>|
+
+
+  - Add the extra_binds under Kubelet service in cluster YAML file to mount the iSCSI binary and configuration inside the kubelet.
+    After installing the iSCSI initiator on your nodes, bind them into the kubelet container by editing rancher cluster.yaml, as shown in the sample below.
+    ```
+    services:
+    kubelet: 
+      extra_binds: 
+        - "/etc/iscsi:/etc/iscsi"
+        - "/sbin/iscsiadm:/sbin/iscsiadm"
+        - "/var/lib/iscsi:/var/lib/iscsi"
+        - "/lib/modules"
+    ```
+
+<a href="#top">Go to top</a>
 
 <h3><a class="anchor" aria-hidden="true" id="changes-on-k8s-for-openebs"></a>What changes are needed for Kubernetes or other subsystems to leverage OpenEBS?</h3>
 

@@ -63,9 +63,10 @@
 	"k8supgrades", 
 	"kb" 
 	],
-    "Deprecated Releases": [
+    "Deprecated": [
 	"releases-1x",
-	"releases-0x" 
+	"releases-0x",
+	"d-cStorguide"
 	]
   }
 }
