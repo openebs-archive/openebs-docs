@@ -24,7 +24,7 @@
 	"prerequisites", 
 	"installation", 
 	"ugndm", 
-	"ugcstor", 
+        "ugcstor-csi",	
 	"jivaguide",
 	"ugmayastor", 
 	"uglocalpv-hostpath", 
@@ -63,9 +63,10 @@
 	"k8supgrades", 
 	"kb" 
 	],
-    "Deprecated Releases": [
+    "Deprecated": [
 	"releases-1x",
-	"releases-0x" 
+	"releases-0x",
+	"d-cStorguide"
 	]
   }
 }
