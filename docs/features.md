@@ -6,8 +6,6 @@ sidebar_label: Features
 
 ------
 
-## OpenEBS Features
-
 <br>
 - [Containerized storage for containers](#containerized-storage-for-containers)
 - [Synchronous replication](#synchronous-replication)

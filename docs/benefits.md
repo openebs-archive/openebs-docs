@@ -6,8 +6,6 @@ sidebar_label: Benefits
 
 ------
 
-## OpenEBS Benefits
-
 <br>
 - [Open Source Cloud Native storage for Kubernetes](#open-source-cloud-native-storage-for-kubernetes)
 - [Granular policies per stateful workload](#granular-policies-per-stateful-workload) |
