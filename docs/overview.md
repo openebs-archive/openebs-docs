@@ -5,7 +5,7 @@ sidebar_label: Overview
 ---
 ------
 
-## Introduction 
+## Overview
 
 OpenEBS helps Developers and Platform SREs easily deploy Stateful Workloads in Kubernetes, using Container Attached Storage Engines (aka Data Engines) that are easy to use and can be tailored to run on any kubernetes platform and storage devices of your choice. OpenEBS Data Engines can be used to provide local or distributed block storage, durable and/or fast storage.
 
