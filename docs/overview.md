@@ -104,93 +104,19 @@ OpenEBS has a vibrant community that can help you get started. If you have furth
 
 <br>
 
-## Run stateful applications on OpenEBS
-
-<br>
-<div class="row stateful-applications_row">
-    <div class="">
-	<a href="/docs/next/prometheus.html" target="_blank">
-		<img src="/docs/assets/a-prometheus.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
-	</a>
-  </div>
-<div class="">
-	<a href="/docs/next/gitlab.html" target="_blank">
-		<img src="/docs/assets/a-gitlab.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
-	</a>
-  </div>
-  <div class="">
-	<a href="/docs/next/cassandra.html" target="_blank">
-		<img src="/docs/assets/a-cassandra.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
-	</a>
-  </div>
-</div>
-<br>
-<div class="row stateful-applications_row">
-<div class="">
-	<a href="/docs/next/minio.html" target="_blank">
-		<img src="/docs/assets/a-minio.png" alt="OpenEBS Minio" style="float:left;width:100px;">
-	</a>
-  </div>
-<div class="">
-	<a href="/docs/next/redis.html" target="_blank">
-		<img src="/docs/assets/a-redis.png" alt="OpenEBS Redis" style="float:left;width:100px;">
-	</a>
-  </div>  
-  <div class="">
-	<a href="/docs/next/rwm.html" target="_blank">
-		<img src="/docs/assets/a-nfs.png" alt="OpenEBS NFS" style="float:left;width:100px;">
-	</a>
-  </div>
-</div>
-<br>
-<div class="row stateful-applications_row">
-<div class="">
-	<a href="/docs/next/elasticsearch.html" target="_blank">
-		<img src="/docs/assets/a-elastic.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
-	</a>
-  </div>
-<div class="">
-	<a href="/docs/next/mysql.html" target="_blank">
-		<img src="/docs/assets/a-mysql.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
-	</a>
-  </div>  
-  <div class="">
-	<a href="/docs/next/postgres.html" target="_blank">
-		<img src="/docs/assets/a-postgres.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
-	</a>
-  </div>
-</div>
-<br>
-<div class="row stateful-applications_row">
-  <div class="">
-	<a href="/docs/next/percona.html" target="_blank">
-		<img src="/docs/assets/a-percona.png" alt="OpenEBS for Percona" style="float:left;width:100px;">
-	</a>
-  </div>
-  <div class="">
-	<a href="/docs/next/nuodb.html" target="_blank">
-		<img src="/docs/assets/a-nuodb.png" alt="OpenEBS for NuoDB" style="float:left;width:100px;">
-	</a>
-  </div>
- <div class="">
-	<a href="/docs/next/mongo.html" target="_blank">
-		<img src="/docs/assets/svg/a-mongo.svg" alt="OpenEBS for MongoDB" style="float:left;width:100px;">
-	</a>
-  </div>
-</div>
-<br><br>
-
 ## See Also:
+
+### [Use cases and Examples](/docs/next/usecases.html)
 
 ### [Container Attached Storage (CAS)](/docs/next/cas.html)
 
-### <a href="https://www.cncf.io/blog/2020/09/22/container-attached-storage-is-cloud-native-storage-cas/" target="_blank">CNCF CAS Blog </a>
-
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/docs/next/architecture.html)
 
 ### [OpenEBS Local PV](/docs/next/localpv.html)
 
 ### [OpenEBS Mayastor](/docs/next/mayastor.html)
 
-<br><hr><br>
+<br>
+<br>
+<hr>
 
