@@ -8,6 +8,15 @@ sidebar_label: Use cases
 OpenEBS is used as a solution for the persistent storage needs for many stateful applications on Kubernetes. 
 
 Following are a few examples.
+- [Self Managed Database Service like RDS](#self-managed-database-service-like-rds) 
+- [Open source durable storage for Observability stack](#open-source-durable-storage-for-observability-stack)
+- [Running CI/CD on Kubernetes](#running-ci-cd-on-kubernetes)
+- [Self managed Object storage service](#self-managed-object-storage-service)
+- [Building scalable websites and ML pipelines](#building-scalable-websites-and-ml-pipelines)
+
+:::tip
+For information on how OpenEBS is used in production,  visit the [use cases](/docs/next/usecases.html) section or see examples of users and their stories on the OpenEBS Adopters section [here](https://github.com/openebs/openebs/blob/master/ADOPTERS.md) where you can also share your experience.
+:::
 
 ### Self Managed Database Service like RDS 
 
@@ -94,7 +103,7 @@ Examples:
 </div>
 <br>
 
-### Self managed Object storage systems like Minio
+### Self managed Object storage service
 
 Use OpenEBS and Minio on Kubernetes to build cross AZ cloud native object storage solution. Kubernetes PVCs are used by Minio to seamlessly scale Minio nodes. OpenEBS provides easily scalable and manageable storage pools. Scalability of Minio is directly complimented by OpenEBS's feature of cloud-native scalable architecture.
 
