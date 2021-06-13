@@ -3,10 +3,11 @@
     "Introduction": [
 	"overview",
 	"features", 
-	"alphafeatures",
+	"benefits", 
 	"usecases", 
 	"releases", 
 	"support"
+	"commercial"
 	],
     "Concepts": [
 	"cas", 
@@ -58,6 +59,7 @@
 	"t-mayastor"
 	],
     "Additional Info": [
+	"alphafeatures",
 	"performance", 
 	"faq",
 	"k8supgrades", 

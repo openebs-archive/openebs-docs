@@ -1,7 +1,7 @@
 ---
 id: support
-title: Getting help and support
-sidebar_label: Support
+title: OpenEBS Community
+sidebar_label: Community Support
 ---
 ------
 
@@ -34,20 +34,13 @@ Join our OpenEBS CNCF Mailing lists
 
 Join our weekly or monthly [community meetings](https://github.com/openebs/openebs/tree/master/community#community-meetings).
 
-## Commercial Support
-
-This is a list of third-party companies and individuals who provide products or services related to OpenEBS. OpenEBS is an independent open source project which does not endorse any company. The list is provided in alphabetical order.
-
-- [Clouds Sky GmbH](https://cloudssky.com/en/)
-- [CodeWave](https://codewave.eu/)
-- [Gridworkz Cloud Services](https://www.gridworkz.com/)
-- [MayaData](https://mayadata.io/)
-
 <br>
 <hr>
 <br>
 
 ## See Also:
+
+### [Commercial Support](/docs/next/commercial.html)
 
 ### [Troubleshooting](/docs/next/troubleshooting.html)
 

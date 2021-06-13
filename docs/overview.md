@@ -23,6 +23,15 @@ OpenEBS helps Developers and Platform SREs easily deploy Stateful Workloads in K
 - <a href="https://github.com/openebs/openebs/" target="_blank">OpenEBS Project</a> is an open source container attached storage solution originally built by [MayaData](https://mayadata.io). OpeneBS was donated to the _Cloud Native Computing Foundation_ and is now a [CNCF sandbox project](https://www.cncf.io/sandbox-projects/).
 
 
+### Why do users prefer OpenEBS?
+
+The <a href="https://github.com/openebs/openebs/blob/master/ADOPTERS.md" target="_blank">OpenEBS Adoption stories</a>, mention the top reasons driving users towards OpenEBS as:
+- OpenEBS can be used across all Kubernetes distributions - On-premise and Cloud.
+- OpenEBS with Kubernetes increases Developer and Platform SRE Productivity.
+- OpenEBS is Easy to use compared to other solutions.
+- OpenEBS has Excellent Community Support.
+- OpenEBS is completely Open Source and Free.
+
 ### What does OpenEBS do?
 
 OpenEBS manages the storage available on the Kubernetes nodes and uses that storage to provide Local or Distributed Persistent Volumes to Kubernetes Stateful workloads. 
@@ -42,22 +51,6 @@ In case of [Distributed (aka Replicated) Volumes](#replicated-volumes):
   OpenEBS Distributed Block volumes are called as Replicated Volumes, to avoid confusion with traditional distributed block storages that tend to distribute the data across many nodes in the cluster. Replicated volumes have low blast radius compared to traditional distributed block storages. Replicated volumes are designed for Cloud Native stateful workloads that require large number of volumes with capacity that can typically be served from a single node as apposed to a single large volume with data sharded across multiple nodes in the cluster.
   :::
  
-
-### What are some key differentiators of OpenEBS?
-
-Some key aspects that make OpenEBS different compared to other traditional storage solutions:
-- Built using the _micro-services architecture_ like the applications it serves. OpenEBS is itself deployed as a set of containers on Kubernetes worker nodes. Uses Kubernetes itself to orchestrate and manage OpenEBS components.
-- Built completely in userspace making it highly portable to run across _any OS/platform_.
-- Completely intent-driven, inheriting the same principles that drive the _ease of use_ with Kubernetes.
-- OpenEBS supports a range of storage engines so that developers can deploy the storage technology appropriate to their application design objectives. Distributed applications like Cassandra can use the _LocalPV_ engine for lowest latency writes. Monolithic applications like MySQL and PostgreSQL can use _Mayastor built using NVMe and SPDK_ or _cStor based on ZFS_ for resilience. Streaming applications like Kafka can use the NVMe engine [Mayastor](https://github.com/openebs/Mayastor) for best performance in edge environments. 
-
-Also looking at the <a href="https://github.com/openebs/openebs/blob/master/ADOPTERS.md" target="_blank">OpenEBS Adoption stories</a>, the top reasons driving users towards OpenEBS are:
-- Being Portable across all Kubernetes distributions - On-premise and Cloud.
-- Increased Developer and Platform SRE Productivity.
-- Easy to use compared to other solutions.
-- Excellent Community Support.
-- Open Source and Free.
-
 
 ## Local Volumes 
 
