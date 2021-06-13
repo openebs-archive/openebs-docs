@@ -25,6 +25,8 @@ GOROOT
 Galera
 Gemfile
 Gitaly
+Gerrit
+Sonarqube
 Glusterfs
 Grafana
 Gridworkz
