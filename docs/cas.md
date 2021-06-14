@@ -9,7 +9,7 @@ sidebar_label: Container Attached Storage
 
 ## What is CAS?
 
-<img src="/docs/assets/svg/cas.svg" alt="Container Attached Storage" align="left">
+<img src="/docs/assets/cas.svg" alt="Container Attached Storage" align="left">
 
 Container Attached Storage(CAS) is software that includes microservice based storage controllers that are orchestrated by Kubernetes.  These storage controllers can run anywhere that Kubernetes can run which means any cloud or even bare metal servers or on top of a traditional shared storage system. Critically, the data itself is also accessed via containers as opposed to being stored in an off platform shared scale out storage system.
 
