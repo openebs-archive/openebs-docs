@@ -9,9 +9,10 @@ sidebar_label: Container Attached Storage
 
 ## What is CAS?
 
-<img src="/docs/assets/cas.svg" alt="Container Attached Storage" align="left">
 
 Container Attached Storage(CAS) is software that includes microservice based storage controllers that are orchestrated by Kubernetes.  These storage controllers can run anywhere that Kubernetes can run which means any cloud or even bare metal servers or on top of a traditional shared storage system. Critically, the data itself is also accessed via containers as opposed to being stored in an off platform shared scale out storage system.
+
+<img src="/docs/assets/cas.svg" alt="Container Attached Storage" width="600px">
 
 CAS is a pattern very much in line with the trend towards disaggregated data and the rise of small, autonomous teams running small, loosely coupled workloads.  In other words, my team might need Postgres for our microservice, and yours might depend on Redis and MongoDB. Some of our use cases might require performance, some might be gone in 20 minutes, others are write intensive, others read intensive, and so on. In a large organization, the tech that teams depend on will vary more and more as the size of the org grows and as organizations increasingly trust teams to select their own tools.
 
@@ -39,7 +40,7 @@ Avoiding cloud vendor lock-in is the common goal for most users and enterprises.
 
 CAS containerizes the storage software and uses Kubernetes Custom Resource Definitions (CRDs) to represent the low-level storage resources, such as disks and storage pools. This model enables storage to be integrated into other cloud-native tools seamlessly. The storage resources can be provisioned, monitored, managed using cloud-native tools such as Prometheus, Grafana, Fluentd, Weavescope, Jaeger, and others.
 
-## Lower blast radius
+### Lower blast radius
 
 CAS architecture does not follow a typical distributed storage architecture with blast radius limitations. With synchronous replication from storage controller onto the storage replicas, the storage becomes highly available. The metadata of volume replicas are not shared among the nodes and is independently managed on every local node. If a node fails, the storage controller, which is a stateless container in this case, is spun on a node where second or third replica is running and data continues to be available. Hence, with CAS there is no blast radius effect that is typically seen in distributed storage systems such as Ceph, Glusterfs, and so on in the event of node failures. 
 
@@ -48,12 +49,15 @@ Similar to hyperconverged systems, storage and performance of a volume in CAS is
 
 ## See Also:
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/docs/next/architecture.html)
 
-### [Container Attached Storage is Cloud Native Storage (CAS)](https://www.cncf.io/blog/2020/09/22/container-attached-storage-is-cloud-native-storage-cas/)
+### [Blog: Container Attached Storage is Cloud Native Storage (CAS)](https://www.cncf.io/blog/2020/09/22/container-attached-storage-is-cloud-native-storage-cas/)
 
+### [Blog: Container Attached Storage](https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/)
 
+### [Webinar: Need for Container Attached Storage](https://www.cncf.io/webinars/kubernetes-for-storage-an-overview/)
 
+### [Connect with Community](/docs/next/support.html)
 <br>
 
 

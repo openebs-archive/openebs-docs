@@ -6,25 +6,17 @@ sidebar_label: OpenEBS Architecture
 
 ------
 
-OpenEBS follows the container attached storage or CAS model.  As a part of this approach, each volume has a dedicated controller POD and a set of replica PODs. The advantages of the CAS architecture are discussed on the CNCF blog [here](https://www.cncf.io/blog/2018/04/19/container-attached-storage-a-primer/). OpenEBS is simple to operate and to use largely because it looks and feels like other cloud-native and Kubernetes friendly projects.  
+OpenEBS is the leading Open Source implementation of the [Container Attached Storage(CAS)](/docs/next/cas.html) pattern. As a part of this approach, OpenEBS uses containers to dynamically provision volumes and provide data services like high availability. OpenEBS relies on and extends Kubernetes itself to orchestrate its volume services. 
+
 
 <br>
-
-<img src="/docs/assets/svg/openebs-arch.svg" alt="drawing" width="80%"/>
-
+<img src="/docs/assets/openebs-hld.svg" alt="drawing" width="80%"/>
 <br>
 
-OpenEBS has many components, which can be grouped into the following categories.
+OpenEBS has many components, which can be grouped into the following two broad categories.
 
-- [Control plane components](#ControlPlane) - Provisioner, API Server, volume exports, and volume sidecars
-- [Data plane components](#DataPlane) - Jiva and cStor
-- [Node disk manager](#NDM) - Discover, monitor, and manage the media attached to the Kubernetes node
-- [Integrations with cloud-native tools](#CNTools)  - Integrations are done with Prometheus, Grafana, Fluentd, and Jaeger.
-
-
-<a name="ControlPlane"></a>
-
-------
+- [OpenEBS Control Plane](#control-plane)
+- [OpenEBS Data Engines](#data-engines)
 
 
 ## Control Plane
@@ -88,11 +80,36 @@ Sidecars are also used for passing controller configuration parameters and volum
 
 ![volume management sidecars for cStor](/docs/assets/vol-mgmt-sidecars.png)
 
-<a name="DataPlane"></a>
+### Node Disk Manager<a name="NDM"></a>
 
 ------
 
-## Data Plane 
+Node Disk Manager (NDM) fills a gap in the chain of tools required for managing persistent storage for stateful applications using Kubernetes. DevOps architects in the container era must serve the infrastructure needs of applications and of application developers in an automated way that delivers resilience and consistency across environments. These requirements mean that the storage stack must itself be extremely flexible so that Kubernetes and other software in the cloud-native ecosystem can easily use this stack. The NDM plays a foundational role in the storage stack for Kubernetes by unifying disparate disks and by providing the capability to pool them in part by identifying them as a Kubernetes object.  Also, NDM discovers, provisions, monitors, and manages the underlying disks in such a way that Kubernetes PV provisioners such as  OpenEBS and other storage systems and Prometheus can manage the disk subsystems. 
+
+<br>
+
+<img src="/docs/assets/svg/ndm.svg" alt="NDM architecture" style="width:70%">
+
+<br>
+
+### Integrations with Cloud-Native Tools <a name="CNTools"></a>
+
+------
+
+#### Prometheus and Grafana 
+
+Prometheus is installed as a micro service by the OpenEBS operator during the initial setup. Prometheus monitoring for a given volume is controlled by a volume policy. With granular volume, disk-pool, and disk statistics, the Prometheus and Grafana tool combination help the OpenEBS user community to monitor their use of persistent data. 
+
+
+
+#### WeaveScope
+
+WeaveScope is a well-regarded cloud-native visualization solution in Kubernetes to view metrics, tags and metadata within the context of a process, container, service or host. Node Disk Manager components, volume pods, and other persistent storage structures of Kubernetes have been enabled for WeaveScope integration. With these enhancements, exploration and traversal of these components have become significantly easier.
+
+
+
+<br>
+## Data Engines 
 
 The OpenEBS data plane is responsible for the actual volume IO path. A storage engine implements the actual IO path in the data plane. Currently, OpenEBS provides two storage engines that can be plugged in easily. These are called Jiva and cStor. Both these storage engines run completely in Linux user space and are based on micro services architecture. 
 
@@ -110,35 +127,6 @@ For those applications that do not need storage level replication, LocalPV may b
 
 
 
-## Node Disk Manager<a name="NDM"></a>
-
-------
-
-Node Disk Manager (NDM) fills a gap in the chain of tools required for managing persistent storage for stateful applications using Kubernetes. DevOps architects in the container era must serve the infrastructure needs of applications and of application developers in an automated way that delivers resilience and consistency across environments. These requirements mean that the storage stack must itself be extremely flexible so that Kubernetes and other software in the cloud-native ecosystem can easily use this stack. The NDM plays a foundational role in the storage stack for Kubernetes by unifying disparate disks and by providing the capability to pool them in part by identifying them as a Kubernetes object.  Also, NDM discovers, provisions, monitors, and manages the underlying disks in such a way that Kubernetes PV provisioners such as  OpenEBS and other storage systems and Prometheus can manage the disk subsystems. 
-
-<br>
-
-<img src="/docs/assets/svg/ndm.svg" alt="NDM architecture" style="width:70%">
-
-<br>
-
-## Integrations with Cloud-Native Tools <a name="CNTools"></a>
-
-------
-
-### Prometheus and Grafana 
-
-Prometheus is installed as a micro service by the OpenEBS operator during the initial setup. Prometheus monitoring for a given volume is controlled by a volume policy. With granular volume, disk-pool, and disk statistics, the Prometheus and Grafana tool combination help the OpenEBS user community to monitor their use of persistent data. 
-
-
-
-### WeaveScope
-
-WeaveScope is a well-regarded cloud-native visualization solution in Kubernetes to view metrics, tags and metadata within the context of a process, container, service or host. Node Disk Manager components, volume pods, and other persistent storage structures of Kubernetes have been enabled for WeaveScope integration. With these enhancements, exploration and traversal of these components have become significantly easier.
-
-
-
-<br>
 
 ## See Also:
 
