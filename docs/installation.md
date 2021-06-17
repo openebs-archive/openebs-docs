@@ -75,16 +75,7 @@ kubectl config use-context admin-ctx
 
 ## Installation through helm
 
-Verify helm is installed and helm repo is updated.
-
-
-**For Helm v2**  
-
-Run `helm init` for installing tiller pod under `kube-system` namespace.
-
-See [instructions](#setup-rbac-for-tiller-before-installing-openebs-chart) below for setting up RBAC for tiller.
-
-Installed helm version can be obtained by using the following command:
+Verify helm is installed and helm repo is updated. See [helm docs](https://helm.sh/docs/intro/install/#from-script) for setting up helm v3. Installed helm version can be obtained by using the following command:
 
 ```
 helm version
@@ -92,77 +83,25 @@ helm version
 Example output:
 
 <div class="co">
-Client: &version.Version{SemVer:"v2.16.8", GitCommit:"145206680c1d5c28e3fcf30d6f596f0ba84fcb47", GitTreeState:"clean"}
-Server: &version.Version{SemVer:"v2.16.8", GitCommit:"145206680c1d5c28e3fcf30d6f596f0ba84fcb47", GitTreeState:"clean"}
+version.BuildInfo{Version:"v3.6.0", GitCommit:"7f2df6467771a75f5646b7f12afb408590ed1755", GitTreeState:"clean", GoVersi on:"go1.16.3"}
 </div>
 
-
-In the **default installation mode**, use the following command to install the latest version of OpenEBS in `openebs` namespace.
-
+Setup helm repository
 ```
 helm repo add openebs https://openebs.github.io/charts
 helm repo update
-helm install --namespace openebs --name openebs openebs/openebs
 ```
 
-**For Helm v3** 
-
-See [helm docs](https://helm.sh/docs/intro/install/#from-script) for setting up helm v3. Installed helm version can be obtained by using the following command:
-
+Install OpenEBS helm chart with default values
 ```
-helm version
-```
-Example output:
-
-<div class="co">
-version.BuildInfo{Version:"v3.0.2", GitCommit:"19e47ee3283ae98139d98460de796c1be1e3975f", GitTreeState:"clean", GoVersion:"go1.13.5"}
-</div>
-
-OpenEBS installation with helm v3 can be done by 2 ways:
-
-**Option 1:** Helm v3 takes the current namespace from the local kube config and use that namespace the next time the user executes helm commands. If it is not present, the default namespace is used. Assign the `openebs` namespace to the current context and run the following commands to install openebs in `openebs` namespace. 
-
-To view current context, run the following:
-```
-kubectl config current-context
-```
-Assign `openebs` namespace to the current context:
-```
-kubectl config set-context <current_context_name> --namespace=openebs
-```
-Create OpenEBS namespace
-```
-kubectl create ns openebs
-```
-Install openebs with chart name as `openebs`:
-```
-helm repo add openebs https://openebs.github.io/charts
-helm repo update
-helm install openebs openebs/openebs
-```
-To view the chart
-```
-helm ls
+helm install openebs --namespace openebs openebs/openebs --create-namespace
 ```
 The above commands will install OpenEBS in `openebs` namespace and chart name as `openebs` 
 
-**Option 2:** By mentioning namespace in helm command
-
-Create OpenEBS namespace
-```
-kubectl create ns openebs
-```
-Install openebs with chart name as `openebs`:
-```
-helm repo add openebs https://openebs.github.io/charts
-helm repo update
-helm install --namespace openebs openebs openebs/openebs
-```
 To view the chart
 ```
 helm ls -n openebs
 ```
-The above commands will install OpenEBS in `openebs` namespace and chart name as `openebs` 
 
 
 **Note:** 
@@ -240,16 +179,16 @@ In the **default installation mode**, use the following command to install OpenE
 kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
 ```
 
+
+As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
+
+<br>
+
 **Note:** 
 
 1. Since Kubernetes 1.12,  if any pod containers does not set its resource requests & limits values, it results into eviction. It is recommend to set these values appropriately to OpenEBS pod spec in the operator YAML before installing OpenEBS. The example configuration can be get from [here](#example-configuration-pod-resource-requests). 
 
 2. Check the blockdevice mount status on Nodes before installing OpenEBS operator. More details can be obtained [here](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume). 
-
-
-As a next step [verify](#verifying-openebs-installation) your installation and do the [post installation](#post-installation-considerations) steps.
-
-<br>
 
 In the **custom installation mode**, you can achieve the following advanced configurations.
 
@@ -542,46 +481,24 @@ For using real disks, you have to create [cStorPools](/docs/next/ugcstor.html#cr
 <hr>
 <br>
 
-## Example configuration- Pod resource requests
+## Customizing Install
 
+Depending on your mode of install `helm` or `kubectl`, you can customize your install by providing a custom helm `values.yaml` or by maintaining your own `openebs-operator.yaml`.
 
+You can download the default helm `values.yaml` from [here](https://raw.githubusercontent.com/openebs/charts/master/charts/openebs/values.yaml).
+You can download the default openebs-operator.yaml from [here](https://openebs.github.io/charts/openebs-operator.yaml).
 
-All openebs components should have ephemeral storage requests set against each of its pod containers and side cars. Ephemeral storage requests can be used only from Kubernetes 1.13 or in earlier versions if the feature-gate flag is enabled. This value should be added for all the openebs control plane components in the openebs operator YAML file before applying it. This setting is used to specify ephemeral-storage to avoid erroneous eviction by K8s.
+### Reserve space for ephemeral storage 
 
-The following is one the example configurations for `AuxResourceRequests` which allow you to set requests on side cars of the container.
+Starting with Kubernetes 1.13, there is a possibility that Kubernetes could erroneously evict pods that have not specified ephemeral storage requests under disk stress conditions. It is recommended that resource requests be enabled to all your openebs control plane components.
 
-<h3><a class="anchor" aria-hidden="true" id="AuxResourceRequests"></a>AuxResourceRequests</h3>
+You can update the resource requests for OpenEBS control plane components by providing a custom `values.yaml` or by editing the `openebs-operator.yaml` file depending on your choice of install.
 
-This setting is useful in cases where user has to specify minimum ephemeral-storage requests to avoid erroneous eviction by K8s. The below spec will set the side-cars with `50Mi` ephemeral-storage requests.
-
-```
- - name:  AuxResourceRequests
-   value: |-
-       ephemeral-storage: "50Mi"
-```
 
 <br>
-
 <hr>
 
-## Example configurations - helm
-
-
-
-<h3><a class="anchor" aria-hidden="true" id="setup-rbac-for-tiller-before-installing-openebs-chart"></a>Setup RBAC for Tiller before Installing OpenEBS Chart</h3>
-```
-kubectl -n kube-system create sa tiller
-kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
-kubectl -n kube-system patch deploy/tiller-deploy -p '{"spec": {"template": {"spec": {"serviceAccountName": "tiller"}}}}'
-kubectl -n kube-system patch deployment tiller-deploy -p '{"spec": {"template": {"spec": {"automountServiceAccountToken": true}}}}'
-```
-
-Ensure that helm repo in your master node is updated to get the latest OpenEBS repository using the following command
-
-```
-helm repo update
-```
-
+### Example configurations - helm
 
 
 <h3><a class="anchor" aria-hidden="true" id="example-nodeselector-helm"></a>For nodeSelectors in values.yaml (helm)</h3>
@@ -629,7 +546,7 @@ Download the values.yaml from [here](https://github.com/openebs/charts/blob/mast
 <br>
 
 
-## Example configurations - kubectl
+### Example configurations - kubectl
 
 
 
@@ -694,13 +611,9 @@ data:
 ---
 ```
 
-
-
 <br>
-
 <hr>
 <br>
-
 <br>
 
 ## See Also:
