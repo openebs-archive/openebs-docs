@@ -14,6 +14,8 @@
     "CAS Engines": "CAS Engines",
     "cassandra": "OpenEBS for Cassandra",
     "Cassandra": "Cassandra",
+    "cockroachdb": "OpenEBS for CockroachDB",
+    "CockroachDB": "CockroachDB",
     "cstor": "cStor Overview",
     "cStor": "cStor",
     "elasticsearch": "OpenEBS for Elasticsearch",
