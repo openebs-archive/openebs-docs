@@ -84,20 +84,6 @@ Installing OpenEBS in your cluster is as simple as running a few `kubectl` or `h
 - [cStor](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
 - [Jiva](https://github.com/openebs/jiva-operator)
 
-## Selecting the right storage engine
-
-See the following table for recommendation on which engine is right for your application depending on the application requirements and storage available on your Kubernetes nodes. 
-
-| Application requirements   | Storage Type | OpenEBS Volumes
-|--- |--- |--- 
-| Low Latency, High Availability, Synchronous replication, Snapshots, Clones, Thin provisioning | SSDs/Cloud Volumes | [OpenEBS Mayastor](/docs/next/ugmayastor.html)
-| High Availability, Synchronous replication, Snapshots, Clones, Thin provisioning | Disks/SSDs/Cloud Volumes | <a href="https://github.com/openebs/cstor-operators" target="_blank">OpenEBS cStor</a>
-| High Availability, Synchronous replication, Thin provisioning | hostpath or external mounted storage | [OpenEBS Jiva](/docs/next/jivaguide.html)
-| Low latency, Local PV | hostpath or external mounted storage | [Dynamic Local PV - Hostpath](/docs/next/uglocalpv-hostpath.html), <a href="https://github.com/openebs/rawfile-localpv" target="_blank">Dynamic Local PV - Rawfile</a>
-| Low latency, Local PV | Disks/SSDs/Cloud Volumes | [Dynamic Local PV - Device](/docs/next/uglocalpv-device.html)
-| Low latency, Local PV, Snapshots, Clones | Disks/SSDs/Cloud Volumes | <a href="https://github.com/openebs/zfs-localpv" target="_blank">OpenEBS Dynamic Local PV - ZFS </a>, <a href="https://github.com/openebs/lvm-localpv" target="_blank">OpenEBS Dynamic Local PV - LVM </a>
-
-
 ## Community Support via Slack
 
 OpenEBS has a vibrant community that can help you get started. If you have further question and want to learn more about OpenEBS, please join [OpenEBS community on Kubernetes Slack](https://kubernetes.slack.com). If you are already signed up, head to our discussions at [#openebs](https://kubernetes.slack.com/messages/openebs/) channel. 
@@ -105,6 +91,8 @@ OpenEBS has a vibrant community that can help you get started. If you have furth
 <br>
 
 ## See Also:
+
+### [Quickstart](/docs/next/quickstart.html)
 
 ### [Use cases and Examples](/docs/next/usecases.html)
 

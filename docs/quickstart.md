@@ -26,22 +26,28 @@ kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
 
 ## Install Overview
 
-<div class="emphasize">
-    <ul>
-        <li>Based on the storage requirements for your stateful workloads, [select the OpenEBS Storage engines to be installed](#select-the-openebs-storage-engines).
-        </li>
-        <li>Kubernetes 1.18 or newer is recommended. If you would like to run on earlier versions, check the version compatibility for the selected OpenEBS Storage engine.
-        </li>
-        <li>Understand the <a href="/docs/next/prerequisites.html">pre-requisites</a> for your Kubernetes platform</li>
-        <li>Install <a href="/docs/next/installation.html">OpenEBS</a> through `helm` or `kubectl`.</li>
-        <li>Configure your storage engine and setup the required storage classes.</li>
-        <li>Deploy your stateful workloads using the OpenEBS Storage Classes.</li>
-    </ul>
-</div>
+- Based on the storage requirements for your stateful workloads, [select the OpenEBS Storage engines to be installed](#select-the-openebs-storage-engines).
+- Kubernetes 1.18 or newer is recommended. If you would like to run on earlier versions, check the version compatibility for the selected OpenEBS Storage engine.
+- Understand the [pre-requisites](/docs/next/prerequisites.html) for your Kubernetes platform
+- [Install](/docs/next/installation.html) OpenEBS through `helm` or `kubectl`.
+- Configure your storage engine and setup the required storage classes.
+- Deploy your stateful workloads using the OpenEBS Storage Classes.
 
-<br>
 
 ## Select the OpenEBS Storage engines
+
+OpenEBS uses container attached storage pattern, which implies that you can decided the right storage engines for your workload, similar to how you make a choice between the various CNI plugins that are available out there.
+
+See the following table for recommendation on which engine is right for your application depending on the application requirements and storage available on your Kubernetes nodes. 
+
+| Application requirements   | Storage Type | OpenEBS Volumes
+|--- |--- |--- 
+| Low Latency, High Availability, Synchronous replication, Snapshots, Clones, Thin provisioning | SSDs/Cloud Volumes | [Mayastor](/docs/next/ugmayastor.html)
+| High Availability, Synchronous replication, Snapshots, Clones, Thin provisioning | Disks/SSDs/Cloud Volumes | <a href="https://github.com/openebs/cstor-operators" target="_blank">cStor</a>
+| High Availability, Synchronous replication, Thin provisioning | hostpath or external mounted storage | [Jiva](/docs/next/jivaguide.html)
+| Low latency, Local PV | hostpath or external mounted storage | [Local PV - Hostpath](/docs/next/uglocalpv-hostpath.html), <a href="https://github.com/openebs/rawfile-localpv" target="_blank">Local PV - Rawfile</a>
+| Low latency, Local PV | Disks/SSDs/Cloud Volumes | [Local PV - Device](/docs/next/uglocalpv-device.html)
+| Low latency, Local PV, Snapshots, Clones | Disks/SSDs/Cloud Volumes | <a href="https://github.com/openebs/zfs-localpv" target="_blank">Local PV - ZFS </a>, <a href="https://github.com/openebs/lvm-localpv" target="_blank">Local PV - LVM </a>
 
 
 ## Next Steps
