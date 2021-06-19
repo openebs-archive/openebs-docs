@@ -69,6 +69,7 @@ Nutanix
 OnGres
 OpenEBS
 Percona
+POSIX
 Postgres
 Preformat
 PYTHONPATH
