@@ -1,38 +1,39 @@
 ---
 id: casengines
-title: OpenEBS Data Engines 
+title: OpenEBS Data Engines Overview
 sidebar_label: Data Engines
 ---
 
 ------
 
+<br/>
 
-## Overview of a Data Engine
-
-A data engine is the core component that acts as an end-point for serving the IO to the applications. In CAS architecture, users can choose different data engines based on the capabilities provided by the date engine and the needs of the application. 
+A data engine is the core component that acts as an end-point for serving the IO to the applications. In CAS architecture, users can choose different data engines based on the capabilities provided by the data engine and the needs of the application. 
 
 Platform SRE or administrators typically select one or more data engines to be used in their Kubernetes cluster  that are optimized for certain feature set like durability, high availability and/or for performance. Platform SRE can further create storage classes that can customize the data engines to specify what underlying storage to use, the level of resiliency required, and so forth.
 
 
 
 
-## Types of Storage Engines
+## Types of Data Engines
 
-OpenEBS provides two types of storage engines.
+OpenEBS data engines can be classified into two categories.
 
-- **Local Engines** - OpenEBS Local Engines can create persistent volumes or PVs out of local disks or hostpaths or using the volume managers like LVM or ZFS on the Kubernetes worker nodes. Local Engines are well suited for cloud native applications that do not require advanced storage features like replication or snapshots or clones as they themselves provide these features. Such applications require access to a managed disks as persistent volumes. Read more details of OpenEBS Local PV [here](/docs/next/localpv.html)
+## Local Engines
 
-  Depending on the type of storage attached to your Kubernetes worker nodes, you can select from different flavors of Dynamic [Local PV](/docs/next/localpv.html) - Hostpath, Device, LVM, ZFS or Rawfile.
+OpenEBS Local Engines can create persistent volumes or PVs out of local disks or hostpaths or using the volume managers like LVM or ZFS on the Kubernetes worker nodes. Local Engines are well suited for cloud native applications that do not require advanced storage features like replication or snapshots or clones as they themselves provide these features. Such applications require access to a managed disks as persistent volumes. Read more details of OpenEBS Local PV [here](/docs/next/localpv.html)
 
-  _Note: Local Volumes are only available from the the node on which the persistent volume is created. If that node fails, the application pod will not be re-scheduled to another node._
+Depending on the type of storage attached to your Kubernetes worker nodes, you can select from different flavors of Dynamic [Local PV](/docs/next/localpv.html) - Hostpath, Device, LVM, ZFS or Rawfile.
 
-- **Replicated Engines** - Replicated Volumes as the name suggests, are those that can synchronously replicate the data to multiple nodes. These engines provide protection against node failures, by allowing the volume to be accessible from one of the other nodes where the data was replicated to. The replication can also be setup across availability zones helping applications move across availability zones.  Replicated Volumes also are capable of enterprise storage features like snapshots, clone, volume expansion and so forth. 
+_Note: Local Volumes are only available from the the node on which the persistent volume is created. If that node fails, the application pod will not be re-scheduled to another node._
 
-  Depending on the type of storage attached to your Kubernetes worker nodes and application performance requirements, you can select from [Jiva](/docs/next/jiva.html), [cStor](/docs/next/cstor.html) or [Mayastor](/docs/next/mayastor.html). 
+## Replicated Engines
+
+Replicated Volumes as the name suggests, are those that can synchronously replicate the data to multiple nodes. These engines provide protection against node failures, by allowing the volume to be accessible from one of the other nodes where the data was replicated to. The replication can also be setup across availability zones helping applications move across availability zones.  Replicated Volumes also are capable of enterprise storage features like snapshots, clone, volume expansion and so forth. 
+
+Depending on the type of storage attached to your Kubernetes worker nodes and application performance requirements, you can select from [Jiva](/docs/next/jiva.html), [cStor](/docs/next/cstor.html) or [Mayastor](/docs/next/mayastor.html). 
 
 <br> <br>
-
-
 
 ## Choosing a storage engine
 
