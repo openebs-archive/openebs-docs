@@ -83,7 +83,7 @@ helm version
 Example output:
 
 <div class="co">
-version.BuildInfo{Version:"v3.6.0", GitCommit:"7f2df6467771a75f5646b7f12afb408590ed1755", GitTreeState:"clean", GoVersi on:"go1.16.3"}
+version.BuildInfo{Version:"v3.6.0", GitCommit:"7f2df6467771a75f5646b7f12afb408590ed1755", GitTreeState:"clean", GoVersion:"go1.16.3"}
 </div>
 
 Setup helm repository
