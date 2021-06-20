@@ -34,7 +34,7 @@ The <a href="https://github.com/openebs/openebs/blob/master/ADOPTERS.md" target=
 
 ### What does OpenEBS do?
 
-OpenEBS manages the storage available on the Kubernetes nodes and uses that storage to provide Local or Distributed Persistent Volumes to Kubernetes Stateful workloads. 
+OpenEBS manages the storage available on each of the Kubernetes nodes and uses that storage to provide Local or Distributed Persistent Volumes to Stateful workloads. 
 
 In case of [Local Volumes](#local-volumes): 
   - OpenEBS can create Persistent Volumes using raw block devices or partitions, or using sub-directories on Hostpaths or by using LVM,ZFS,sparse files. 
@@ -58,7 +58,7 @@ Local Volumes are accessible only from a single node in the cluster. Pods using 
 
 Depending on the type of storage attached to your Kubernetes worker nodes, you can select from different flavors of Dynamic Local PV - Hostpath, Device, LVM, ZFS or Rawfile.
 
-### Local Volume Quickstart Guides
+### Quickstart Guides
 
 Installing OpenEBS in your cluster is as simple as running a few `kubectl` or `helm` commands. Here are the list of our Quickstart guides with detailed instructions for each storage engine.
 
@@ -76,7 +76,7 @@ Replicated Volumes also are capable of enterprise storage features like snapshot
 
 Depending on the type of storage attached to your Kubernetes worker nodes and application performance requirements, you can select from Jiva, cStor or Mayastor. 
 
-### Replicated Volume Quickstart Guides
+### Quickstart Guides
 
 Installing OpenEBS in your cluster is as simple as running a few `kubectl` or `helm` commands. Here are the list of our Quickstart guides with detailed instructions for each storage engine.
 

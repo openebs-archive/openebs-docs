@@ -28,9 +28,7 @@ The data engines are responsible for:
 - Provide volume services like - synchronous replication, compression, encryption, maintain snapshots, access to the incremental or full snapshots of data and so forth
 - Provide strong consistency while persisting the data to the underlying storage devices
 
-As the applications have decomposed themselves into micro-services that are hyper focused on a set of capabilities, their requirements from the underlying storages (aka volumes) also changed. For example there are applications that only need fast local storage vs fast local storage with resiliency against node failures vs other storage features.
-
-OpenEBS follows an micro-services model to implement the data engine where the functionality is further decomposed into different layers, allowing for flexibility to interchange the layers and make data engines future ready for changes coming in the application and data center technologies. 
+OpenEBS follow micro-services model to implement the data engine where the functionality is further decomposed into different layers, allowing for flexibility to interchange the layers and make data engines future ready for changes coming in the application and data center technologies. 
 
 The OpenEBS Data Engines comprise of the following layers:
 
@@ -108,9 +106,7 @@ The control plane in the context of OpenEBS refers to a set of tools or componen
 
 The control plane is where users specify policies, gather metrics and configure the Data Engines as a whole.
 
-OpenEBS Control Plane comprises of a set of micro-services that are themselves managed by Kubernetes, making OpenEBS truly Kubernetes native. The configuration managed by the OpenEBS Control Plane is saved as Kubernetes custom resources. 
-
-OpenEBS or the CAS Storage Control Plane - follows the reconcilation pattern introduced by Kubernetes, paving the way for a Declarative Storage Control Plane. OpenEBS control plane seamless integrates into the overall tooling that users have around Kubernetes. 
+OpenEBS or the CAS Storage Control Plane - follows the reconcilation pattern introduced by Kubernetes, paving the way for a Declarative Storage Control Plane. OpenEBS control plane seamlessly integrates into the overall tooling that users have around Kubernetes. OpenEBS Control Plane comprises of a set of micro-services that are themselves managed by Kubernetes, making OpenEBS truly Kubernetes native. The configuration managed by the OpenEBS Control Plane is saved as Kubernetes custom resources. 
 
 The functionality of the control plane can be decomposed into the various stages as follows:
 
