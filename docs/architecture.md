@@ -75,13 +75,6 @@ OpenEBS Volume Replicas typically go through the following states:
 - Rebuilding, when the node or storage failure has been rectified and replica is receiving its data from other healthy replicas
 - Terminating, when volume has been deleted and replica is being deleted and space being reclaimed
 
-:::note
-An important aspect of the OpenEBS Data Layer is that each volume replica is a full copy of the data. This leads to the following capacity constraints that need to be kept in mind when using OpenEBS replicated volumes.
-- Volumes can only be provisioned with capacity that can be accommodated in a single node by a single storage device or a pool of devices. Volume replica data will not be stripped or sharded across different nodes.
-- Depending on the number of replicas configured, OpenEBS will use as many Volume Replicas. Example: A 10GB volume with 3 replicas will result in using 10GB on 3 different nodes where replicas are provisioned.
-- Volume Replicas are thin provisioned, so the used capacity will increase only when the applications really write data into Volumes.
-- When Volume Snapshots is taken, the snapshot is taken on all its healthy volume replicas
-:::
 
 ### Storage Layer 
 

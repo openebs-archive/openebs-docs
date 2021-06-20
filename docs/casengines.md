@@ -6,7 +6,9 @@ sidebar_label: Data Engines
 
 ------
 
+
 <br/>
+<img src="/docs/assets/app-engine-node-capabilities.svg" alt="drawing" width="50%" align="right"/>
 
 OpenEBS Data Engine is the core component that acts as an end-point for serving the IO to the applications. 
 
@@ -18,20 +20,25 @@ Platform SRE or administrators typically select one or more data engines to be u
 - Node Resources or Capabilities (RAM, CPU, Network and Storage) available to Kubernetes nodes
 - Application Capabilities. Example is the application distributed and can sustain node failures vs does the application require the underlying storage to provide that node failure resiliency. 
 
-
-<br>
-<img src="/docs/assets/app-engine-node-capabilities.svg" alt="drawing" width="50%" align="right"/>
-<br>
+<br/>
 
 OpenEBS data engines can be classified into two categories.
 
 ## Local Engines
 
-OpenEBS Local Engines can create persistent volumes or PVs out of local disks or hostpaths or using the volume managers like LVM or ZFS on the Kubernetes worker nodes. Local Engines are well suited for cloud native applications that do not require advanced storage features like replication or snapshots or clones as they themselves provide these features. Such applications require access to a managed disks as persistent volumes. Read more details of OpenEBS Local PV [here](/docs/next/localpv.html)
+OpenEBS Local Engines can create persistent volumes or PVs out of local disks or hostpaths or using the volume managers like LVM or ZFS on the Kubernetes worker nodes. Local Engines are well suited for cloud native applications that have the availability, scalability features built into them. Local Engines are also well suited for stateful workloads that are short lived like Machine Learning jobs or Edge cases where there is a single node Kubernetes cluster. 
 
-Depending on the type of storage attached to your Kubernetes worker nodes, you can select from different flavors of Dynamic [Local PV](/docs/next/localpv.html) - Hostpath, Device, LVM, ZFS or Rawfile.
+Depending on the type of storage attached to the Kubernetes worker nodes and your preference of local filesystem, you can select from different flavors of Dynamic [Local PV](/docs/next/localpv.html) - Hostpath, Device, LVM, ZFS or Rawfile.
+- [Local PV hostpath](/docs/next/uglocalpv-hostpath.html)
+- [Local PV device](/docs/next/uglocalpv-device.html)
+- [ZFS Local PV](https://github.com/openebs/zfs-localpv)
+- [LVM Local PV](https://github.com/openebs/lvm-localpv)
+- [Rawfile Local PV](https://github.com/openebs/rawfile-localpv)
 
-_Note: Local Volumes are only available from the the node on which the persistent volume is created. If that node fails, the application pod will not be re-scheduled to another node._
+:::tip NOTE
+Local Volumes are only available from the the node on which the persistent volume is created. If that node fails, the application pod will not be re-scheduled to another node._
+:::
+
 
 ## Replicated Engines
 
@@ -39,31 +46,17 @@ Replicated Volumes as the name suggests, are those that can synchronously replic
 
 Depending on the type of storage attached to your Kubernetes worker nodes and application performance requirements, you can select from [Jiva](/docs/next/jiva.html), [cStor](/docs/next/cstor.html) or [Mayastor](/docs/next/mayastor.html). 
 
-<br>
-<br>
-
-## Choosing a storage engine
-
-Application workloads request for Persistent Volume(PV) using a Persistent Volume Claim(PVC) and by specifying the Storage Class. The Platform teams typically will
--  Install OpenEBS
--  Configure the data engines and create Storage Classes (or use the default storage classes) and
--  Publish the list of Storage Classes available in the cluster to the application teams. 
-
-The application developer will create the PVC with one of the available StorageClass. 
-
-The OpenEBS Operators and Provisioners will dynamically create the volumes with the required data engines based on the parameters passed in the StorageClass and PVC. 
-
-You can read more about how to create the StorageClass for OpenEBS data engines here:
-
-- [Local PV hostpath](/docs/next/uglocalpv-hostpath.html)
-- [Local PV device](/docs/next/uglocalpv-device.html)
-- [ZFS Local PV](https://github.com/openebs/zfs-localpv)
-- [LVM Local PV](https://github.com/openebs/lvm-localpv)
-- [Rawfile Local PV](https://github.com/openebs/rawfile-localpv)
 - [Mayastor](/docs/next/ugmayastor.html)
 - [cStor](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
 - [Jiva](https://github.com/openebs/jiva-operator)
 
+:::note
+An important aspect of the OpenEBS Data Layer is that each volume replica is a full copy of the data. This leads to the following capacity constraints that need to be kept in mind when using OpenEBS replicated volumes.
+- Volumes can only be provisioned with capacity that can be accommodated in a single node by a single storage device or a pool of devices. Volume replica data will not be stripped or sharded across different nodes.
+- Depending on the number of replicas configured, OpenEBS will use as many Volume Replicas. Example: A 10GB volume with 3 replicas will result in using 10GB on 3 different nodes where replicas are provisioned.
+- Volume Replicas are thin provisioned, so the used capacity will increase only when the applications really write data into Volumes.
+- When Volume Snapshots is taken, the snapshot is taken on all its healthy volume replicas
+:::
 
 <br>
 
@@ -71,7 +64,7 @@ You can read more about how to create the StorageClass for OpenEBS data engines 
 
 All OpenEBS Data Engines support:
 - Dynamic Provisioning of Persistent Volumes
-- Provide Strong Data Consistency 
+- Strong Data Consistency 
 
 Below table identifies few differences among the CAS engines. 
 
