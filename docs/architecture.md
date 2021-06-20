@@ -108,18 +108,56 @@ The control plane in the context of OpenEBS refers to a set of tools or componen
 
 The control plane is where users specify policies, gather metrics and configure the Data Engines as a whole.
 
-OpenEBS Control Plane comprises of a set of micro-services that are deployed either as Kubernetes Deployments or DaemonSets. The configuration managed by the OpenEBS Control Plane is saved as Kubernetes custom resources. 
+OpenEBS Control Plane comprises of a set of micro-services that are themselves managed by Kubernetes, making OpenEBS truly Kubernetes native. The configuration managed by the OpenEBS Control Plane is saved as Kubernetes custom resources. 
+
+OpenEBS or the CAS Storage Control Plane - follows the reconcilation pattern introduced by Kubernetes, paving the way for a Declarative Storage Control Plane. OpenEBS control plane seamless integrates into the overall tooling that users have around Kubernetes. 
+
+The functionality of the control plane can be decomposed into the various stages as follows:
+
+<br>
+<img src="/docs/assets/control-plane-overview.svg" alt="drawing" width="80%"/>
+<br>
+
+### Cluster Initialization
+
+The Platform or Infrastructure teams will decide on the composition of the Kubernetes worker nodes like - RAM, CPU, Network and the storage devices attached to the worker nodes. The Platform SREs will have the flexibility to create a pool of nodes with specialized storage devices or use a common template for all the storage nodes. 
 
 
+### Storage Classes
 
-Both these storage engines run completely in Linux user space and are based on micro services architecture. 
+The Platform of the Cluster Administrators teams responsible for the Kubernetes cluster level resources and managing the add-ons available will install and configure the OpenEBS as any other kubernetes application. OpenEBS can be installed via GitOps, Helm chart or any other preferred way by the Administrators. 
 
-A data engine implements the actual IO path in the data plane. Currently, OpenEBS provides two storage engines that can be plugged in easily. These are called Jiva and cStor. 
+The required data engines can be configured using standard Kubernetes API, using the Custom Resources that allow the administrators to specify the list and type of devices to be used for saving the persistent volume data and the volume services (replicated vs local) to be provided.
+
+The clusters administrators can either use the default Storage Classes provided by OpenEBS or customize and create their own Storage Classes. 
+
+### Persistent Volume Claims
+
+The application developers will launch their application (stateful workloads) that will in turn create Persistent Volume Claims for requesting the Storage or Volumes for their pods. The Platform teams can provide templates for the applications with associated PVCs or application developers can select from the list of storage classes available for them. 
 
 
+### Persistent Volumes
+
+The Kubernetes CSI (provisioning layer) will intercept the requests for the Persistent Volumes and forward the requests to the OpenEBS Control Plane components to service the requests. The information provided in the Storage Class associated with the PVCs will determine the right OpenEBS control component to receive the request. 
+
+OpenEBS control plane will then process the request and create the Persistent Volumes using one of its local or replicated engines. The data engine services like target and replica are deployed as Kubernetes applications as well. The containers provide storage for the containers. 
+
+OpenEBS control plane after creating the volume, will include the details of the volume into Persistent Volume spec. The CSI and volume drivers will attach and mount the volumes to the nodes where Pod is running.
+
+### Operations
+
+Once the workloads are up and running, the platform or the operations team can observe the system using the cloud native tools like Prometheus, Grafana and so forth. The operational tasks are a shared responsibility across the teams: 
+* Application teams can watch out for the capacity and performance and tune the PVCs accordingly. 
+* Platform or Cluster teams can check for the utilization and performance of the storage per node and decide on expansion and spreading out of the data engines 
+* Infrastructure team will be responsible for planning the expansion or optimizations based on the utilization of the resources.
+ 
 ## See Also:
 
-### [Understanding NDM](/docs/next/ndm.html)
+### [Understanding Data Engines](/docs/next/casengines.html)
+### [Understanding Mayastor](/docs/next/mayastor-concept.html)
+### [Understanding Local PV](/docs/next/localpv.html)
+### [Understanding cStor](/docs/next/cstor.html)
+### [Understanding Jiva](/docs/next/jiva.html)
 
 
 <br>
