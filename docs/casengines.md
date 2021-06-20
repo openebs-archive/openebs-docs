@@ -8,14 +8,20 @@ sidebar_label: Data Engines
 
 <br/>
 
-A data engine is the core component that acts as an end-point for serving the IO to the applications. In CAS architecture, users can choose different data engines based on the capabilities provided by the data engine and the needs of the application. 
+OpenEBS Data Engine is the core component that acts as an end-point for serving the IO to the applications. 
 
-Platform SRE or administrators typically select one or more data engines to be used in their Kubernetes cluster  that are optimized for certain feature set like durability, high availability and/or for performance. Platform SRE can further create storage classes that can customize the data engines to specify what underlying storage to use, the level of resiliency required, and so forth.
+Applications and their capabilities have changed drastically as they have adopted the cloud native and micro-services patterns. This change has led to a shift in the needs of what applications need from the storage layer. For instance, `etcd` is itself an Stateful workload that runs within Kubernetes and all it needs is a fast local storage. The availability and durability aspects are built into the `etcd` implementation itself. 
+
+OpenEBS provides a set of Data Engines, where each of the engines is built and optimized for different needs of the application and the capabilities available on the Kubernetes nodes.
+
+Platform SRE or administrators typically select one or more data engines to be used in their Kubernetes cluster. The selection of the data engines depend on the following two aspects:
+- Node Resources or Capabilities (RAM, CPU, Network and Storage) available to Kubernetes nodes
+- Application Capabilities. Example is the application distributed and can sustain node failures vs does the application require the underlying storage to provide that node failure resiliency. 
 
 
-
-
-## Types of Data Engines
+<br>
+<img src="/docs/assets/app-engine-node-capabilities.svg" alt="drawing" width="50%" align="right"/>
+<br>
 
 OpenEBS data engines can be classified into two categories.
 
@@ -33,7 +39,8 @@ Replicated Volumes as the name suggests, are those that can synchronously replic
 
 Depending on the type of storage attached to your Kubernetes worker nodes and application performance requirements, you can select from [Jiva](/docs/next/jiva.html), [cStor](/docs/next/cstor.html) or [Mayastor](/docs/next/mayastor.html). 
 
-<br> <br>
+<br>
+<br>
 
 ## Choosing a storage engine
 
