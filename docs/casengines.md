@@ -203,7 +203,7 @@ A short summary is provided below.
 
 ## See Also:
 
-### [Mayastor User Guide](/docs/next/mayastor.html)
+### [Mayastor User Guide](/docs/next/mayastor-concept.html)
 
 ### [cStor User Guide](/docs/next/ugcstor.html)
 
