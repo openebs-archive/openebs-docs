@@ -15,7 +15,7 @@ Following are a few examples.
 - [Building scalable websites and ML pipelines](#building-scalable-websites-and-ml-pipelines)
 
 :::tip
-For information on how OpenEBS is used in production,  visit the [use cases](/docs/next/usecases.html) section or see examples of users and their stories on the OpenEBS Adopters section [here](https://github.com/openebs/openebs/blob/master/ADOPTERS.md) where you can also share your experience.
+For information on how OpenEBS is used in production, see examples of users and their stories on the OpenEBS Adopters section [here](https://github.com/openebs/openebs/blob/master/ADOPTERS.md) where you can also share your experience.
 :::
 
 ### Self Managed Database Service like RDS 
