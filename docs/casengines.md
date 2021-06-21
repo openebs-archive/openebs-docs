@@ -63,8 +63,8 @@ Depending on the Stateful workload capabilities, the recommended engines are:
 | Needs need incremental snapshots and backups         | No      |   Yes    | Yes**      | No       |
 
 Notes:
-- __*__ Some flavors of Local PV support RAID/Mirroing to protect against disk failures
-- --**__ Support for incremental snapshots/backups is not yet implemented in Mayastor 
+- <sup>*</sup> Some flavors of Local PV support RAID/Mirroring to protect against disk failures
+- <sup>**</sup> Support for incremental snapshots/backups is not yet implemented in Mayastor 
 
 
 ## Data Engine Capabilities
@@ -95,11 +95,11 @@ Below table identifies few differences among the different OpenEBS CAS engines.
 
 
 Notes:
-- _*_ In case of Jiva data engine, the data is saved in sparse files within a mounted hostpath. This impacts the following:
+- <sup>*</sup> In case of Jiva data engine, the data is saved in sparse files within a mounted hostpath. This impacts the following:
   - Disk level pooling or RAID has to be taken care by the Administrator by using LVM or md-raid and then mount the resulting volume for use by Jiva engine. 
   - As the capacity of the volume increases - the rebuild times of the volumes will increase. This can result in volumes becoming inaccessible if more than one node in the cluster fails at the same time. 
 
-- _**_ In case of Local PV - there are multiple flavors which determine the availability of the features. For example: 
+- <sup>**</sup> In case of Local PV - there are multiple flavors which determine the availability of the features. For example: 
   - Disk Pool or Resiliency is only available for LVM and ZFS based Local PVs. 
   - Snapshot feature is only available for LVM and ZFS based Local PVs. 
   - Clone feature is only available for ZFS based Local PVs. 
