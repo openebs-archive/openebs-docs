@@ -29,17 +29,19 @@ Node Resources or Capabilities refer to the CPU, RAM, Network and Storage availa
 - What type of storage devices are attached to node - HDDs or SSDs, how are they connected and how many?
 - How much RAM or CPU can be allocated to providing the storage services?
 
+Depending on the node or cluster capabilities, the recommended engines are:
 
-| Node Capabilities                            <td colspan=4> Recommended                   
-|                                              | Jiva    |  cStor   |  Mayastor  | LocalPV  | 
-| -------------------------------------------- | :---:   | :------: | :--------: | :------: |
-| Single node cluster                          | No      |   No     | No         | Yes      |
-| NVMe (high performant) Storage Devices       | No      |   No     | Yes        | Yes      |
-| Multi node cluster                           | Yes     |   Yes    | Yes        | Yes      |
-| Persistent Storage Devices                   | Yes     |   Yes    | Yes        | Yes      |
-| SAS/SATA Storage Devices or HDD              | Yes     |   Yes    | Yes        | Yes      |
-| Ephemeral Nodes                              | Yes     |   Yes    | Yes        | No       |
-| Ephemeral Storage Devices                    | Yes     |   Yes    | Yes        | No       |
+| Node Capabilities                             | Jiva    |  cStor   |  Mayastor  | LocalPV  | 
+| ----------------------------------------------| :---:   | :------: | :--------: | :------: |
+| Single node cluster                           | No      |   No     | No         | Yes      |
+| NVMe (high performant) Storage Devices        | No      |   No     | Yes        | Yes      |
+| Large/medium node instances(>4 CPU, >8GB  RAM)| No      |   No     | Yes        | Yes      |
+| Multi node cluster                            | Yes     |   Yes    | Yes        | Yes      |
+| Persistent Storage Devices (Cloud/SAN/DAS)    | Yes     |   Yes    | Yes        | Yes      |
+| SAS/SATA Storage Devices or HDD               | Yes     |   Yes    | Yes        | Yes      |
+| Small node instances (<4 CPU, <8GB RAM)       | Yes     |   Yes    | Yes        | Yes      |
+| Ephemeral Nodes                               | Yes     |   Yes    | Yes        | No       |
+| Ephemeral Storage Devices                     | Yes     |   Yes    | Yes        | No       |
 
 ## Stateful Workload Capabilities
 
@@ -77,8 +79,8 @@ Depending on the type of storage attached to the Kubernetes worker nodes and you
 - [LVM Local PV](https://github.com/openebs/lvm-localpv)
 - [Rawfile Local PV](https://github.com/openebs/rawfile-localpv)
 
-:::tip NOTE
-Local Volumes are only available from the the node on which the persistent volume is created. If that node fails, the application pod will not be re-scheduled to another node._
+:::note
+Local Volumes are only available from the the node on which the persistent volume is created. If that node fails, the application pod will not be re-scheduled to another node.
 :::
 
 
