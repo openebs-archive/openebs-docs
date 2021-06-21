@@ -26,6 +26,7 @@ Galera
 Gemfile
 Gitaly
 Gerrit
+SATA
 Sonarqube
 Glusterfs
 Grafana
@@ -175,6 +176,7 @@ darkblue
 datadir
 dcopy
 deploymentconfig
+deprovisioned
 devlinks
 devname
 devpath
@@ -490,6 +492,7 @@ NodePort
 Gitpod
 apac
 priorityclass
+performant
 utlra
 lzjb
 snapshotclass

@@ -8,17 +8,59 @@ sidebar_label: Data Engines
 
 
 <br/>
+OpenEBS Data Engine is the core component that acts as an end-point for serving the IO to the applications. 
+<br/>
 <img src="/docs/assets/app-engine-node-capabilities.svg" alt="drawing" width="50%" align="right"/>
 
-OpenEBS Data Engine is the core component that acts as an end-point for serving the IO to the applications. 
-
-Applications and their capabilities have changed drastically as they have adopted the cloud native and micro-services patterns. This change has led to a shift in the needs of what applications need from the storage layer. For instance, `etcd` is itself an Stateful workload that runs within Kubernetes and all it needs is a fast local storage. The availability and durability aspects are built into the `etcd` implementation itself. 
+Stateful Applications and their capabilities have changed drastically as they have adopted the cloud native and micro-services patterns. This change has led to a shift in the needs of what applications need from the storage layer. For instance, `etcd` is itself an Stateful workload that runs within Kubernetes and all it needs is a fast local storage. The availability and durability aspects are built into the `etcd` implementation itself. 
 
 OpenEBS provides a set of Data Engines, where each of the engines is built and optimized for different needs of the application and the capabilities available on the Kubernetes nodes.
 
-Platform SRE or administrators typically select one or more data engines to be used in their Kubernetes cluster. The selection of the data engines depend on the following two aspects:
-- Node Resources or Capabilities (RAM, CPU, Network and Storage) available to Kubernetes nodes
-- Application Capabilities. Example is the application distributed and can sustain node failures vs does the application require the underlying storage to provide that node failure resiliency. 
+Platform SRE or administrators typically select one or more [data engines](#data-engine-capabilities) to be used in their Kubernetes cluster. The selection of the data engines depend on the following two aspects:
+- [Node Resources or Capabilities](#node-capabilities)
+- [Stateful Application Capabilities](#stateful-workload-capabilities)
+
+<br/>
+
+## Node Capabilities
+
+Node Resources or Capabilities refer to the CPU, RAM, Network and Storage available to Kubernetes nodes. To run a stateful workloads and what data engines to be used depend on a few aspects like:
+- Are the nodes ephemeral? During upgrades is the same node made available or a new node provisioned in its place? Do the nodes have ephemeral storage (Virtual Disks) or storage devices (Disks, Cloud/SAN Volumes)?
+- What type of storage devices are attached to node - HDDs or SSDs, how are they connected and how many?
+- How much RAM or CPU can be allocated to providing the storage services?
+
+
+| Node Capabilities                            <td colspan=4> Recommended                   
+|                                              | Jiva    |  cStor   |  Mayastor  | LocalPV  | 
+| -------------------------------------------- | :---:   | :------: | :--------: | :------: |
+| Single node cluster                          | No      |   No     | No         | Yes      |
+| NVMe (high performant) Storage Devices       | No      |   No     | Yes        | Yes      |
+| Multi node cluster                           | Yes     |   Yes    | Yes        | Yes      |
+| Persistent Storage Devices                   | Yes     |   Yes    | Yes        | Yes      |
+| SAS/SATA Storage Devices or HDD              | Yes     |   Yes    | Yes        | Yes      |
+| Ephemeral Nodes                              | Yes     |   Yes    | Yes        | No       |
+| Ephemeral Storage Devices                    | Yes     |   Yes    | Yes        | No       |
+
+## Stateful Workload Capabilities
+
+State is an integral part of any application often times, used without realizing that it actually exists. Examples of Stateful Applications include SQL/NoSQL Database, Object and Key/Value stores, Message Bus, Storage systems optimized to store Logs and Metrics, Code/Container/Configuration Repositories, and many more. Each stateful applications comes with a certain capabilities and depends on the storage for complimentary capabilities. For example:
+- Stateful workloads like MongoDB have availability features like protecting against node failures built into them. Such systems will expect the Data engines to provide capacity and performance required with the data consistency/durability at the block level.
+- Stateful workloads like Cassandra can benefit from the availability features from the data engines as it might help speed up the rebuild times required to rebuild a failed cassandra node. However this comes at the cost of using extra storage by the data engines. 
+- With serverless and cloud native becoming mainstream a key shift has been in terms of the capacity required and the duration for which that capacity may be required. These are applications that are launched as part of the DevSecOps pipelines where a PostgreSQL or other types of systems may be launched to run for a few minutes, hours or days and then the resulting information is saved in another storage system and this instance is itself deprovisioned. 
+
+## Data Engine Capabilities
+
+Data Engines are what maintain the actual state generated by the Stateful applications are concerned about providing enough storage capacity to store the state and ensure that state remains intact over its lifetime. For instance state can be generated once, accessed over a period of next few minutes or days or modified or just left to be retrieved after many months or years. The capabilities provided by the data engines can be classified as follows:
+
+- Availability
+- Capacity
+- Durability
+- Performance
+- Protection 
+- Security
+- Scalability
+
+
 
 <br/>
 
@@ -70,10 +112,6 @@ Below table identifies few differences among the CAS engines.
 
 | Feature                                      | Jiva    |  cStor   |  Mayastor  | LocalPV  | 
 | -------------------------------------------- | :---:   | :------: | :--------: | :------: |
-| Nodes without storage devices (hostpath only)|  Yes    |   No     | No         | Yes      |
-| Nodes with additional storage devices        |  Yes    |   Yes    | Yes        | Yes      |
-| Nodes with NVMe Devices                      |  No     |   No     | Yes        | Yes      |
-| Nodes with NVMeoF                            |  No     |   No     | Yes        | NA       |
 | Disk pool or aggregate support               |  Yes*   |   Yes    | Planned    | Yes**    |
 | Disk resiliency (RAID support )              |  Yes*   |   Yes    | Planned    | Yes**    |
 | Near disk performance                        |  No     |   No     | Yes        | Yes      |
