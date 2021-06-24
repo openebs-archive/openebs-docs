@@ -27,7 +27,7 @@ This user guide section provides the operations needed to be performed by the Us
 
 [Deploying a sample application](#deploying-a-sample-application)
 
-[Scaling up cStor pools](#scaling-up-cstor-pools)
+[Scaling up cStor pools](#scaling-cstor-pools)
 
 [Snapshot and Clone of a cStor Volume](#snapshot-and-clone-of-a-cstor-volume)
  
