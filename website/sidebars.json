@@ -11,6 +11,7 @@
 	],
     "Concepts": [
 	"cas", 
+	"k8s-storage", 
 	"architecture", 
 	"casengines",
 	"ndm",

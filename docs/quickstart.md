@@ -1,12 +1,13 @@
 ---
 id: quickstart
-title: Quickstart Guide to OpenEBS
+title: OpenEBS Quickstart Guide
 sidebar_label: Quickstart
 ---
 ------
 
 <br>
-This guide will help you to install and setup OpenEBS to dynamically provision and manage Kubernetes persistent volumes for your Stateful Workloads. Depending on the needs of your Stateful workload and the type of storage at your disposable, you can select from a range of Local and Replicated Persistent Volumes.
+This guide will help you to setup OpenEBS and use OpenEBS Volumes to run your Kubernetes Stateful Workloads. If you are new to running Stateful workloads in Kubernetes, you will need to familiarize yourself with [Kubernetes Storage Concepts](/docs/next/k8s-storage.html). 
+
 
 In most cases, the following steps is all you need to install OpenEBS. You can read through the rest of the document to understand the choices you have and optimize OpenEBS for your Kubernetes cluster. 
  
@@ -75,9 +76,5 @@ OpenEBS has been designed to run on any platform, using available any storage. I
 ### Configure Storage Classes
 
 ### Running Stateful Workloads
-
-
-<hr>
-
 
 
