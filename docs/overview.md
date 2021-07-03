@@ -7,22 +7,18 @@ sidebar_label: Overview
 
 ## What is OpenEBS?
 
-OpenEBS is the leading open-source example of a category of cloud native block storage storage solutions sometimes called [Container Attached Storage](/docs/next/cas.html). 
-
 <img src="/docs/assets/svg/openebs-architecture.svg" alt="OpenEBS High Level Architecture" style="width:60%" align="right">
 
-
-OpenEBS helps Developers and Platform SREs easily deploy Kubernetes Stateful Workloads that require fast and highly reliable storage. OpenEBS turns storage available on the Kubernetes worker nodes into local or distributed persistent volumes. 
+OpenEBS helps Developers and Platform SREs easily deploy Kubernetes Stateful Workloads that require fast and highly reliable [container attached storage](/docs/next/cas.html). OpenEBS turns any storage available on the Kubernetes worker nodes into local or distributed Kubernetes Persistent Volumes. 
 
 OpenEBS [Local](#local-volumes) and [Distributed](#replicated-volumes) volumes are implemented using a collection of OpenEBS Data Engines. OpenEBS Control Plane integrates deeply into Kubernetes and uses Kubernetes to manage the provisioning, scheduling and maintenance of OpenEBS Volumes. 
 
-OpenEBS Data Engines and Control Plane are implemented as micro-services, deployed as containers and orchestrated by Kubernetes itself. OpenEBS data engines are implemented in user space making OpenEBS run on any Kubernetes Platform and use any type of storage available to the Kubernetes worker nodes. An added advantage of being a completely Kubernetes native solution is that administrators and developers can interact and manage OpenEBS using all the wonderful tooling that is available for Kubernetes like kubectl, Helm, Prometheus, Grafana, Weave Scope, etc.
-
-OpenEBS can be used to deliver both hyperconverged and disaggregated storage. 
-
-<a href="https://github.com/openebs/openebs/" target="_blank">OpenEBS Project</a> is an open source container attached storage solution originally built by [MayaData](https://mayadata.io). OpeneBS was donated to the _Cloud Native Computing Foundation_ and is now a [CNCF sandbox project](https://www.cncf.io/sandbox-projects/).
+OpenEBS supports hyperconverged and disaggregated deployments. OpenEBS is the leading choice for NVMe based storage deployments.
 
 <br>
+
+
+OpenEBS was originally built by [MayaData](https://mayadata.io) and donated to the _Cloud Native Computing Foundation_ and is now a [CNCF sandbox project](https://www.cncf.io/sandbox-projects/).
 
 ## Why do users prefer OpenEBS?
 
@@ -36,6 +32,8 @@ The <a href="https://github.com/openebs/openebs/blob/master/ADOPTERS.md" target=
 ## What does OpenEBS do?
 
 OpenEBS manages the storage available on each of the Kubernetes nodes and uses that storage to provide Local or Distributed Persistent Volumes to Stateful workloads. 
+
+OpenEBS Data Engines and Control Plane are implemented as micro-services, deployed as containers and orchestrated by Kubernetes itself. OpenEBS data engines are implemented in user space making OpenEBS run on any Kubernetes Platform and use any type of storage available to the Kubernetes worker nodes. An added advantage of being a completely Kubernetes native solution is that administrators and developers can interact and manage OpenEBS using all the wonderful tooling that is available for Kubernetes like kubectl, Helm, Prometheus, Grafana, etc.
 
 In case of [Local Volumes](#local-volumes): 
   - OpenEBS can create Persistent Volumes using raw block devices or partitions, or using sub-directories on Hostpaths or by using LVM,ZFS,sparse files. 
