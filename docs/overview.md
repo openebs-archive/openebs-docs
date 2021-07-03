@@ -15,7 +15,8 @@ OpenEBS [Local](#local-volumes) and [Distributed](#replicated-volumes) volumes a
 
 OpenEBS supports hyperconverged and disaggregated deployments. OpenEBS is the leading choice for NVMe based storage deployments.
 
-<br>
+<br/>
+<br/>
 
 
 OpenEBS was originally built by [MayaData](https://mayadata.io) and donated to the _Cloud Native Computing Foundation_ and is now a [CNCF sandbox project](https://www.cncf.io/sandbox-projects/).
