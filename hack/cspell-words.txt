@@ -529,3 +529,16 @@ xnxx
 zdvk
 cstorpoolinstance
 cstorvolumeclaim
+cockroachdb
+customresourcedefinition
+crdbclusters
+cockroachlabs
+rolebinding
+crdb
+loadbalancer
+grpc
+pgsql
+
+
+
+
