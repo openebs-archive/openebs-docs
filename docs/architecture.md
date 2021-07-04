@@ -86,9 +86,6 @@ Storage Layer is outside the purview of the OpenEBS Data Engines and are availab
 
 The Data Engines consume the storage as a device or a device pool or a filesystem directory. 
 
-
-
-
 ## Control Plane
 
 The control plane in the context of OpenEBS refers to a set of tools or components deployed in the cluster that are responsible for:
@@ -99,22 +96,85 @@ The control plane in the context of OpenEBS refers to a set of tools or componen
 - Integrating into other tools like Prometheus/Grafana for telemetry and monitoring 
 - Integrating into other tools for debugging, troubleshooting or log management
 
-The control plane is where users specify policies, gather metrics and configure the Data Engines as a whole.
 
-OpenEBS or the CAS Storage Control Plane - follows the reconcilation pattern introduced by Kubernetes, paving the way for a Declarative Storage Control Plane. OpenEBS control plane seamlessly integrates into the overall tooling that users have around Kubernetes. OpenEBS Control Plane comprises of a set of micro-services that are themselves managed by Kubernetes, making OpenEBS truly Kubernetes native. The configuration managed by the OpenEBS Control Plane is saved as Kubernetes custom resources. 
+OpenEBS Control Plane comprises of a set of micro-services that are themselves managed by Kubernetes, making OpenEBS truly Kubernetes native. The configuration managed by the OpenEBS Control Plane is saved as Kubernetes custom resources. The functionality of the control plane can be decomposed into the various stages as follows:
 
-The functionality of the control plane can be decomposed into the various stages as follows:
+### YAML or Helm chart
+
+OpenEBS components can be installed by the administrator using an highly configurable Helm chart or kubectl/YAML. OpenEBS installation is also supported via the Management Kubernetes offerings such as OpenShift, EKS, DO, Rancher as marketplace applications or as add-on or plugins tightly integrated into Kubernetes distributions such as MicroK8s, Kinvolk, Kubesphere. 
+
+As part of the OpenEBS install, the control plane components for the selected data engines will be installed as cluster and/or node components using standard Kubernetes primitives like Deployments, DaemonSets, Statefulsets and such. The OpenEBS installation also takes care of loading the OpenEBS custom resource definitions into the Kubernetes. 
+
+OpenEBS control plane components are all stateless and depend on the Kubernetes etcd server (custom resources) to managing their internal configuration state and reporting the status of the various components.  
+
+### Declarative API 
+
+OpenEBS supports Declarative API for managing all of its operations and the APIs are exposed as Kubernetes custom resources. Kubernetes CRD validators and admission webhooks are used to validate the inputs provided by the users and to validate if the operations are allowed.  
+
+The Declarative API is a natural extension to what Kubernetes administrators and user are accustomed to, where they can define the intent via an YAML and then Kubernetes and associated OpenEBS Operators will reconcile the state with the user's intent. 
+
+The Declarative API can be used to configure the Data Engines and setup volume profiles / policies.  Even upgrades of the data engines are performed using this API. The API can be used to: 
+- Manage the configuration for each of the Data engine
+- Manage the way the storage needs to be managed or storage pools 
+- Manage the volumes and its services - creation, snapshots, clones, backup, restore, deletion
+- Manage upgrades of pools and volumes 
+
+### Data Engine Operators 
+
+All of the Data Engine operations from discovering the underlying storage to creation of pools and volumes is packaged as Kubernetes Operators. Each of the Data Engine either operates on top of a configuration provided during the installation or controlled via the corresponding Kubernetes custom resources. 
+
+The Data engine operators can either be at the cluster scope or operating on a specific node. The cluster scope operators are usually involved in operations where interactions with the Kubernetes components are involved - in orchestrating the scheduling or migration of pools and volumes on various nodes. The node level operators operate on the local operations like creating volumes, replicas, snapshots and such on the storage or pools available on the node. 
+
+Data Engine Operators are often also called as control plane of the Data engines as they facilitate in managing the volumes and the data services offered by the corresponding data engines. Depending on the features provided or needed, some data engines like cstor, jiva and mayastor can have multiple operators, where as Local Volume operations can be embedded directly into the corresponding CSI controller / provisioner.
+
+
+### CSI Driver (Dynamic Volume Provisioner) 
+
+CSI Drivers act as the facilitators for managing the life-cycle of volumes within Kubernetes. The CSI Driver operations are controlled or customized by the parameters specified in `StorageClass`. The CSI drivers comprise of three layers:
+- Kubernetes or Orchestrator functionality - that is native to Kubernetes and bind the application to the volumes 
+- Kubernetes CSI layer - that translates the Kubernetes native calls into CSI calls - passing the information provided by users in a standard way to the CSI Drivers 
+- Storage Drivers - which are CSI complaint and work very closely with the Kubernetes CSI layer to receive the requests and process them. 
+
+The Storage Drivers are responsible for:
+- Exposing the capabilities of the Data engines
+- Either directly interacting with the Data Engine or the Data Engine Operators to perform volume creation and deletion operations
+- Interface with the Data engines to attach/detach the volumes to the nodes where containers consuming the volumes are running
+- Interface with standard linux utilities to format, mount/unmount the volumes to the containers
+
+
+### Plugins
+
+OpenEBS focuses on storage operations and provides plugins for other popular tools for performing the operations that fall outside of the core storage functionality but are very important for running OpenEBS in production. Examples of such operations are:
+- Application Consistent Backup and Recovery (provided via integrations into Velero) 
+- Monitoring and Alerting ( provided via integrations into Prometheus,Grafana, Alert manager) 
+- Enforcing Security Policies ( provided via integrations with PodSecurityPolicies or Kyerno) 
+- Logging ( provide via integration to any standard Logging stack setup by administrators like ELK, Loki, Logstash) 
+- Visualizations  (provided via standard Kubernetes Dashboards or custom Grafana dashboards)
+
+
+### CLI 
+
+All the management functions on OpenEBS can be carried out via `kubectl` as OpenEBS uses Custom Resources for managing all of its configuration and reporting the status of the components. 
+
+In addition, OpenEBS also has released as alpha version `kubectl plugin` to help with providing information about the pools and volumes using a single command that aggregates the information obtained via multiple `kubectl` commands.
+
+
+## Workflow - OpenEBS Lifecycle
+
+OpenEBS control plane seamlessly integrates into the overall workflow tooling that Kubernetes administrators and users have around Kubernetes. 
+
+The OpenEBS workflow fits nicely into the reconcilation pattern introduced by Kubernetes, paving the way for a Declarative Storage Control Plane as shown below: 
 
 <br>
 <img src="/docs/assets/control-plane-overview.svg" alt="drawing" width="80%"/>
 <br>
 
-### Cluster Initialization
+### 1. Cluster Initialization
 
 The Platform or Infrastructure teams will decide on the composition of the Kubernetes worker nodes like - RAM, CPU, Network and the storage devices attached to the worker nodes. The Platform SREs will have the flexibility to create a pool of nodes with specialized storage devices or use a common template for all the storage nodes. 
 
 
-### Storage Classes
+### 2. Install OpenEBS and Setup Storage Classes
 
 The Platform of the Cluster Administrators teams responsible for the Kubernetes cluster level resources and managing the add-ons available will install and configure the OpenEBS as any other kubernetes application. OpenEBS can be installed via GitOps, Helm chart or any other preferred way by the Administrators. 
 
@@ -122,12 +182,12 @@ The required data engines can be configured using standard Kubernetes API, using
 
 The clusters administrators can either use the default Storage Classes provided by OpenEBS or customize and create their own Storage Classes. 
 
-### Persistent Volume Claims
+### 3. Deploy Stateful Workloads
 
 The application developers will launch their application (stateful workloads) that will in turn create Persistent Volume Claims for requesting the Storage or Volumes for their pods. The Platform teams can provide templates for the applications with associated PVCs or application developers can select from the list of storage classes available for them. 
 
 
-### Persistent Volumes
+### 4. Dynamic Persistent Volume Provisioning
 
 The Kubernetes CSI (provisioning layer) will intercept the requests for the Persistent Volumes and forward the requests to the OpenEBS Control Plane components to service the requests. The information provided in the Storage Class associated with the PVCs will determine the right OpenEBS control component to receive the request. 
 
@@ -135,7 +195,7 @@ OpenEBS control plane will then process the request and create the Persistent Vo
 
 OpenEBS control plane after creating the volume, will include the details of the volume into Persistent Volume spec. The CSI and volume drivers will attach and mount the volumes to the nodes where application pod is running.
 
-### Operations
+### 5. Management Operations
 
 Once the workloads are up and running, the platform or the operations team can observe the system using the cloud native tools like Prometheus, Grafana and so forth. The operational tasks are a shared responsibility across the teams: 
 * Application teams can watch out for the capacity and performance and tune the PVCs accordingly. 

@@ -60,3 +60,21 @@ Kubernetes provides several built-in workload resources such as StatefulSets and
 
 For example, you can create a MySQL Deployment YAML that references a PersistentVolumeClaim. The MySQL PersistentVolumeClaim referenced by the Deployment should be created with requested size and StorageClass. Once the OpenEBS control plane provisions a PersistenceVolume for the required StorageClass and requested capacity, the claim is set as satisfied. Kubernetes will then mount the PersistentVolume and launch the MySQL Deployment. 
 
+## Kubernetes Persona
+
+There are primarily two types of users that interact with Kubernetes and OpenEBS. 
+
+### Cluster Administrators 
+
+These users are responsible for managing the life-cycle of the cluster and are often referred to as administrators or platform SREs. Administrators have full access to the cluster resources and can create policies and roles for other users that have access to the cluster.  
+
+Cluster administrators are responsible for installing OpenEBS and configuring the OpenEBS StorageClasses that will be used by other application users. 
+
+### Application Owners 
+
+These users are responsible for managing the life-cycle of the application and are often referred to as users or developers. Typically these users have restricted access to one or more `namespaces` in the Kubernetes clusters. These users can have view access to the object that can use like `StorageClasses` but will not be able to edit or delete them. 
+
+These users usually have full access to application abstractions within their namespace. Some examples of application abstractions are `Deployment`, `StatefulSet`, `ConfigMaps`, `PVC`.
+
+Administrators can further define other roles for users with further granular access or restrictions using the Kubernetes RBAC.
+

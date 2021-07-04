@@ -49,6 +49,9 @@ Jekylling
 Jupyter
 Keyspace
 Konvoy
+Kyerno
+Kinvolk
+Kubesphere
 Kramdown
 Kubera
 Kubernetes
