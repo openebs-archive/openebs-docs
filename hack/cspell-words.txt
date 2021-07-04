@@ -403,6 +403,7 @@ shortname
 shrinkwrap
 signoff
 snapshotter
+snapshoting
 sourcemap
 squigglies
 statefulset
@@ -538,7 +539,5 @@ crdb
 loadbalancer
 grpc
 pgsql
-
-
-
+unmounting
 
