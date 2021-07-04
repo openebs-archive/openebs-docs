@@ -73,6 +73,19 @@ kubectl config use-context admin-ctx
 <hr>
 <br>
 
+## Verify that you have the admin context
+
+Use the `kubectl auth can-i` commands to verify that you have the cluster-admin context.
+
+OpenEBS installs service accounts and custom resource definitions that are only allowed for cluster administrators. You can use the following commands to verify if you have access: 
+
+```
+kubectl auth can-i 'create' 'namespace' -A
+kubectl auth can-i 'create' 'crd' -A
+kubectl auth can-i 'create' 'sa' -A
+kubectl auth can-i 'create' 'clusterrole' -A
+```
+
 ## Installation through helm
 
 Verify helm is installed and helm repo is updated. See [helm docs](https://helm.sh/docs/intro/install/#from-script) for setting up helm v3. Installed helm version can be obtained by using the following command:
