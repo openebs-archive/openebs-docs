@@ -44,11 +44,13 @@ The CSI node driver or the Kubelet will take care of attaching the volume to the
 
 The details required for attaching the volumes (using local, iSCSI or NVMe) and mounting (Ext4, XFS, etc) are available through the Persistent Volume Spec. 
 
-### Volume Service Layer 
+### Volume Services Layer 
 
 This layer is often called as the Volume Target Layer or even Volume Controller layer as it is responsible for providing a Logical Volume. The application reads and writes are performed through the Volume Targets - which controls access to the volumes, synchronous replication of the data to other nodes in the cluster and helps in deciding which of the replica acts as master and facilitate rebuilding of data to old or restarted replicas. 
 
-The implementation used by this layer is what differentiates OpenEBS from other traditional storage controllers. Unlike using a single storage controller for performing the IOs on multiple volumes, OpenEBS multiple volume targets per volume and the location of the replicas to which the volume should be synchronously replicated is fixed. Using these fixed set of replicas, reduces the overhead in managing the metadata across all volumes and also reduces the blast radius in terms of volumes impacted when a node storage the data encounters a failure. 
+The implementation pattern used by data engines to provide high availability is what differentiates OpenEBS from other traditional storage controllers. Unlike using a single storage controller for performing the IOs on multiple volumes, OpenEBS creates one storage controller (called Target/Nexus) per volume, with a specific list of nodes where the volume data will be saved. Each node will have complete data of the volume distributed using synchronous replication. 
+
+Using single controller to implement synchronous replication of data to fixed set of nodes (instead of distribution via multiple metadata controller), reduces the overhead in managing the metadata and also reduces the blast radius related to a node failure and other nodes participating in the rebuild of the failed node. 
 
 The OpenEBS volume services layer exposes the volumes as:
 - Device or Directory paths in case of Local PV, 
@@ -64,7 +66,7 @@ OpenEBS Data engines create a Volume Replica on top of the Storage Layer. Volume
 - Logical Volume - in case the storage layer used is a device pool coming from LVM or ZFS. 
 
 
-In case the applications require only local storage, then the Persistent Volume will be created using one of te above directory, device (or partition) or logical volume. OpenEBS [control plane](#control-plane) will be used to provision one of the above replicas. 
+In case the applications require only local storage, then the Persistent Volume will be created using one of the above directory, device (or partition) or logical volume. OpenEBS [control plane](#control-plane) will be used to provision one of the above replicas. 
 
 OpenEBS can add the layer of high availability on top of the local storage using one of its replicated engines - Jiva, cStor and Mayastor. In this case, OpenEBS uses a light-weight storage defined storage controller software that can receive the read/write operations over a network end-point and then be passed on to the underlying storage layer. OpenEBS then uses this Replica network end-points to maintain a synchronous copy of the volume across nodes. 
 
@@ -131,7 +133,7 @@ The Kubernetes CSI (provisioning layer) will intercept the requests for the Pers
 
 OpenEBS control plane will then process the request and create the Persistent Volumes using one of its local or replicated engines. The data engine services like target and replica are deployed as Kubernetes applications as well. The containers provide storage for the containers. 
 
-OpenEBS control plane after creating the volume, will include the details of the volume into Persistent Volume spec. The CSI and volume drivers will attach and mount the volumes to the nodes where Pod is running.
+OpenEBS control plane after creating the volume, will include the details of the volume into Persistent Volume spec. The CSI and volume drivers will attach and mount the volumes to the nodes where application pod is running.
 
 ### Operations
 
@@ -143,7 +145,7 @@ Once the workloads are up and running, the platform or the operations team can o
 ## See Also:
 
 ### [Understanding Data Engines](/docs/next/casengines.html)
-### [Understanding Mayastor](/docs/next/mayastor-concept.html)
+### [Understanding Mayastor](/docs/next/mayastor.html)
 ### [Understanding Local PV](/docs/next/localpv.html)
 ### [Understanding cStor](/docs/next/cstor.html)
 ### [Understanding Jiva](/docs/next/jiva.html)
