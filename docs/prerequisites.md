@@ -1,13 +1,12 @@
 ---
 id: prerequisites
-title: Prerequisites (iSCSI client)
+title: OpenEBS Install Prerequisites
 sidebar_label: Prerequisites
 ---
 ------
 
 <br>
-
-<a href="/docs/next/installation.html"><img src="/docs/assets/svg/0-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%"></a>
+This guide will help you to verify that your Kubernetes worker nodes have the required prerequisites to install OpenEBS and use OpenEBS Volumes to run your Kubernetes Stateful Workloads. In addition, you will learn about how to customize the installer according to your managed Kubernetes provider.
 
 <br>
 
