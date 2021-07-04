@@ -163,48 +163,6 @@ All the management functions on OpenEBS can be carried out via `kubectl` as Open
 In addition, OpenEBS also has released as alpha version `kubectl plugin` to help with providing information about the pools and volumes using a single command that aggregates the information obtained via multiple `kubectl` commands.
 
 
-## Workflow - OpenEBS Lifecycle
-
-OpenEBS control plane seamlessly integrates into the overall workflow tooling that Kubernetes administrators and users have around Kubernetes. 
-
-The OpenEBS workflow fits nicely into the reconcilation pattern introduced by Kubernetes, paving the way for a Declarative Storage Control Plane as shown below: 
-
-<br>
-<img src="/docs/assets/control-plane-overview.svg" alt="drawing" width="80%"/>
-<br>
-
-### 1. Cluster Initialization
-
-The Platform or Infrastructure teams will decide on the composition of the Kubernetes worker nodes like - RAM, CPU, Network and the storage devices attached to the worker nodes. The Platform SREs will have the flexibility to create a pool of nodes with specialized storage devices or use a common template for all the storage nodes. 
-
-
-### 2. Install OpenEBS and Setup Storage Classes
-
-The Platform of the Cluster Administrators teams responsible for the Kubernetes cluster level resources and managing the add-ons available will install and configure the OpenEBS as any other kubernetes application. OpenEBS can be installed via GitOps, Helm chart or any other preferred way by the Administrators. 
-
-The required data engines can be configured using standard Kubernetes API, using the Custom Resources that allow the administrators to specify the list and type of devices to be used for saving the persistent volume data and the volume services (replicated vs local) to be provided.
-
-The clusters administrators can either use the default Storage Classes provided by OpenEBS or customize and create their own Storage Classes. 
-
-### 3. Deploy Stateful Workloads
-
-The application developers will launch their application (stateful workloads) that will in turn create Persistent Volume Claims for requesting the Storage or Volumes for their pods. The Platform teams can provide templates for the applications with associated PVCs or application developers can select from the list of storage classes available for them. 
-
-
-### 4. Dynamic Persistent Volume Provisioning
-
-The Kubernetes CSI (provisioning layer) will intercept the requests for the Persistent Volumes and forward the requests to the OpenEBS Control Plane components to service the requests. The information provided in the Storage Class associated with the PVCs will determine the right OpenEBS control component to receive the request. 
-
-OpenEBS control plane will then process the request and create the Persistent Volumes using one of its local or replicated engines. The data engine services like target and replica are deployed as Kubernetes applications as well. The containers provide storage for the containers. 
-
-OpenEBS control plane after creating the volume, will include the details of the volume into Persistent Volume spec. The CSI and volume drivers will attach and mount the volumes to the nodes where application pod is running.
-
-### 5. Management Operations
-
-Once the workloads are up and running, the platform or the operations team can observe the system using the cloud native tools like Prometheus, Grafana and so forth. The operational tasks are a shared responsibility across the teams: 
-* Application teams can watch out for the capacity and performance and tune the PVCs accordingly. 
-* Platform or Cluster teams can check for the utilization and performance of the storage per node and decide on expansion and spreading out of the data engines 
-* Infrastructure team will be responsible for planning the expansion or optimizations based on the utilization of the resources.
  
 ## See Also:
 

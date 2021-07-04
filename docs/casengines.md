@@ -93,12 +93,6 @@ All OpenEBS Data Engines support:
 - Dynamic Provisioning of Persistent Volumes
 - Strong Data Consistency 
 
-Notes:
-- <sup>*</sup> In case of Jiva data engine, the data is saved in sparse files within a mounted hostpath. This impacts the following:
-  - Disk level pooling or RAID has to be taken care by the Administrator by using LVM or md-raid and then mount the resulting volume for use by Jiva engine. 
-  - As the capacity of the volume increases - the rebuild times of the volumes will increase. This can result in volumes becoming inaccessible if more than one node in the cluster fails at the same time. 
-
-
 OpenEBS data engines can be classified into two categories.
 
 ### Local Engines
@@ -236,7 +230,7 @@ A short summary is provided below.
 
 ## See Also:
 
-### [Mayastor User Guide](/docs/next/mayastor-concept.html)
+### [Mayastor User Guide](/docs/next/ugmayastor.html)
 
 ### [cStor User Guide](/docs/next/ugcstor-csi.html)
 
