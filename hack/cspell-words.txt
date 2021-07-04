@@ -26,6 +26,7 @@ Galera
 Gemfile
 Gitaly
 Gerrit
+SATA
 Sonarqube
 Glusterfs
 Grafana
@@ -48,6 +49,9 @@ Jekylling
 Jupyter
 Keyspace
 Konvoy
+Kyerno
+Kinvolk
+Kubesphere
 Kramdown
 Kubera
 Kubernetes
@@ -69,6 +73,7 @@ Nutanix
 OnGres
 OpenEBS
 Percona
+POSIX
 Postgres
 Preformat
 PYTHONPATH
@@ -174,6 +179,7 @@ darkblue
 datadir
 dcopy
 deploymentconfig
+deprovisioned
 devlinks
 devname
 devpath
@@ -400,6 +406,7 @@ shortname
 shrinkwrap
 signoff
 snapshotter
+snapshoting
 sourcemap
 squigglies
 statefulset
@@ -489,12 +496,14 @@ NodePort
 Gitpod
 apac
 priorityclass
+performant
 utlra
 lzjb
 snapshotclass
 snapcontent
 wgnq
 rbkmn
+reconcilation
 jmpzv
 gctb
 sfczv
@@ -533,7 +542,5 @@ crdb
 loadbalancer
 grpc
 pgsql
-
-
-
+unmounting
 

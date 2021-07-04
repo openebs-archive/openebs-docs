@@ -1,7 +1,7 @@
 ---
 id: support
 title: OpenEBS Community
-sidebar_label: Community Support
+sidebar_label: Community
 ---
 ------
 

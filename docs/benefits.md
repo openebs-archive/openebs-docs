@@ -8,11 +8,11 @@ sidebar_label: Benefits
 
 <br>
 - [Open Source Cloud Native storage for Kubernetes](#open-source-cloud-native-storage-for-kubernetes)
-- [Granular policies per stateful workload](#granular-policies-per-stateful-workload) |
-- [Avoid Cloud Lock-in](#avoid-cloud-lock-in) |
-- [Reduced storage TCO up to 50%](#reduced-storage-tco-up-to-50) |
-- [Native HCI on Kubernetes](#natively-hyperconverged-on-kubernetes) |
-- [High availability - No Blast Radius](#high-availability) |
+- [Granular policies per stateful workload](#granular-policies-per-stateful-workload)
+- [Avoid Cloud Lock-in](#avoid-cloud-lock-in)
+- [Reduced storage TCO up to 50%](#reduced-storage-tco-up-to-50)
+- [Native HCI on Kubernetes](#natively-hyperconverged-on-kubernetes)
+- [High availability - No Blast Radius](#high-availability)
 <br>
 
 :::tip

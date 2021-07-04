@@ -10,6 +10,7 @@
 	"commercial"
 	],
     "Concepts": [
+	"k8s-storage", 
 	"cas", 
 	"architecture", 
 	"casengines",

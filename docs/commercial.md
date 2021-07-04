@@ -1,7 +1,7 @@
 ---
 id: commercial
 title: OpenEBS Commercial Support
-sidebar_label: Commercial Support
+sidebar_label: Support
 ---
 ------
 

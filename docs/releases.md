@@ -6,9 +6,77 @@ sidebar_label: Releases
 
 ------
 
-## 2.9.0 - May 15 2021
-
+## 2.10.0 - Jun 15 2021
 <br><font size="4">Latest Release</font><br/> (Recommended)<br/>
+
+OpenEBS v2.10 is another maintenance release before moving towards 3.0 primarily focusing on enhancing the E2e tests, build, release workflows, and documentation. This release also includes enhancements to improve the user experience and fixes for bugs reported by users and E2e tools. There has been some significant progress made on the alpha features as well. 
+
+---
+
+**Deprecation Notice**:  Jiva and cStor `out-of-tree external` provisioners will be deprecated by Dec 2021 in favor of the corresponding CSI Drivers. The out of tree provisioners for Jiva and cStor will stop working from Kubernetes 1.22 and forward as the version of the custom resources used by those provisioners will be deprecated. We strongly recommend you plan for migrating your volumes to [cStor CSI](https://github.com/openebs/upgrade/blob/master/docs/migration.md) or [Jiva CSI](https://github.com/openebs/upgrade/blob/master/docs/migration.md#migrating-jiva-external-provisioned-volumes-to-jiva-csi-volumes-experimental) as early as possible.  
+
+If you have any questions or need help with the migration please reach out to us on our [Kubernetes Community slack channel #openebs](#support).
+
+---
+
+### New Capabilities 
+
+- [kubectl plugin for openebs](https://github.com/openebs/openebsctl/blob/develop/README.md) to help manage OpenEBS components. This release includes support for displaying details about:
+  - cStor Pools and volumes, 
+  - Jiva Volumes. 
+- [OpenEBS monitoring add-on](https://github.com/openebs/monitoring) A set of Grafana dashboards and Prometheus alerts for OpenEBS, packaged as helm chart. This release includes support for:
+  - cStor overview dashboard
+  - cStor Pools, Replicas and Volumes Dashboard
+  - Jiva Volume Dashboard
+  - Alerts for Volume crossing capacity threshold
+  
+A very special thanks to @cncf and 2021 LFX Mentees @ParthS007, @rahul799 for contributing to the above features!!
+
+### Key Improvements
+- Enhanced the [OpenEBS Helm Chart](https://github.com/openebs/charts/tree/master/charts/openebs#openebs-helm-chart) to support installing CSI Drivers for cStor, Jiva, ZFS Local PV, and LVM Local PV. The user will need to use custom `values.yaml` to install the specific projects. You can read more about these additional options [here](https://github.com/openebs/charts/tree/master/charts/openebs#below-charts-are-dependent-charts-of-this-chart).
+- Enhanced [ZFS Local PV](https://github.com/openebs/zfs-localpv) to support [CSI StorageCapacity based scheduling](https://kubernetes.io/docs/concepts/storage/storage-capacity/#enabling-storage-capacity-tracking). https://github.com/openebs/zfs-localpv/pull/335
+- Enhanced [Jiva CSI Operator](https://github.com/openebs/jiva-operator) to automatically create a new Jiva replica when a node running a Jiva replica is removed. A new replica will be created only when the volume has a quorum.  https://github.com/openebs/jiva-operator/pull/97
+- Enhanced [LVM Local PV](https://github.com/openebs/lvm-localpv/) to support the online expansion of `btrfs` formatted volume. https://github.com/openebs/lvm-localpv/pull/85
+- Enhanced [Dynamic NFS Provisioner](https://github.com/openebs/dynamic-nfs-provisioner) to allow users to customize the NFS server with additional configuration parameters in the storage class. This release supports configuring NFS Lease and Grace timeouts for release locks from the NFS connection. The docker image location for the NFS Server can also be customized. https://github.com/openebs/dynamic-nfs-provisioner/pull/47 
+
+### Key Bug Fixes
+- [Local PV] Fixed an issue in CSI Controllers of LVM Local PV and Device Local PV that could potentially cause stale Volume custom resources to be created in cases where PVC gets deleted prior to completion of the create volume request. https://github.com/openebs/lib-csi/pull/11
+- [Dynamic NFS] Fixed an issue with Liveness probe in the NFS provisioner. https://github.com/openebs/dynamic-nfs-provisioner/pull/41
+- Several fixes to docs were also included in this release. 
+- OpenEBS participated in the CNCF BugBash program in KubeCon EU 2021 and has received more than [90 PRs](https://github.com/search?o=asc&q=is%3Aopen+is%3Apr+label%3Aevent%2Fkubecon-eu21-bugbash+org%3Aopenebs&s=created&state=closed&type=Issues). This release includes several PRs from the program that were accepted after the 2.9 release. 
+
+### Backward Incompatibilities
+
+- Kubernetes 1.18 or higher release is recommended as this release uses features of Kubernetes that will not be compatible with older Kubernetes releases. 
+- OpenEBS has deprecated arch-specific container images in favor of multi-arch container images. For example, images like `cstor-pool-arm64:x.y.x` should be replaced with corresponding multi-arch image `cstor-pool:x.y.x`.
+
+### Component versions
+
+OpenEBS is a collection of data engines and operators to create different types of replicated and local persistent volumes for Kubernetes Stateful workloads. Kubernetes volumes can be provisioned via CSI Drivers or using Out-of-tree Provisioners. The status of the various components as of v2.10.0 are as follows:
+
+- CSI Drivers 
+    - [Mayastor](https://docs.openebs.io/docs/next/ugmayastor.html) 0.8.0 (beta)
+    - [cStor](https://github.com/openebs/cstor-operators) 2.10.0 (beta)
+    - [Jiva](https://github.com/openebs/jiva-operator) 2.10.0 (beta) 
+    - [Local PV ZFS](https://github.com/openebs/zfs-localpv) 1.8.0 (stable)
+    - [Local PV LVM](https://github.com/openebs/lvm-localpv) 0.6.0 (beta)
+    - [Local PV Rawfile](https://github.com/openebs/rawfile-localpv) 0.4.4 (beta)
+    - [Local PV Partitions](https://github.com/openebs/device-localpv) 0.3.0 (alpha)
+- Out-of-tree provisioners 
+  - [Jiva](https://docs.openebs.io/docs/next/jiva.html) 2.10.0 (stable)
+  - [Local PV hostpath](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html) 2.10.0 (stable)
+  - [Local PV device](https://docs.openebs.io/docs/next/uglocalpv-device.html) 2.10.0 (stable)
+  - [cStor](https://docs.openebs.io/docs/next/cstor.html) 2.10.0 (beta)
+  - [Dynamic NFS Volume](https://github.com/openebs/dynamic-nfs-provisioner) 0.4.0 (alpha)
+- Other components
+  - [NDM](https://github.com/openebs/node-disk-manager) 1.5.0 (beta)
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.10.0)
+- [Install Steps](/docs/next/quickstart.html)
+- [Upgrade Steps](/docs/next/upgrade.html)
+
+## 2.9.0 - May 15 2021
 
 OpenEBS v2.9 is another maintenance release before moving towards 3.0 primarily focusing on enhancing the E2e tests and build/release workflows. This release includes fixes for user-reported critical bugs as well as fixes and enhancements to improve the E2e test coverage. There has been some significant progress made on the alpha features as well. 
 
