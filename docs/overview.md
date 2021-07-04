@@ -36,7 +36,7 @@ The <a href="https://github.com/openebs/openebs/blob/master/ADOPTERS.md" target=
 
 OpenEBS manages the storage available on each of the Kubernetes nodes and uses that storage to provide Local or Distributed Persistent Volumes to Stateful workloads. 
 
-<img src="/docs/assets/svg/data-engines-comparision.svg" alt="OpenEBS Data Engines" style="width:60%" align="right">
+<img src="/docs/assets/data-engines-comparision.svg" alt="OpenEBS Data Engines" style="width:100%">
 
 In case of [Local Volumes](#local-volumes): 
   - OpenEBS can create Persistent Volumes using raw block devices or partitions, or using sub-directories on Hostpaths or by using LVM,ZFS,sparse files. 
