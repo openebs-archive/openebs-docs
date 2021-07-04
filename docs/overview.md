@@ -36,7 +36,7 @@ The <a href="https://github.com/openebs/openebs/blob/master/ADOPTERS.md" target=
 
 OpenEBS manages the storage available on each of the Kubernetes nodes and uses that storage to provide Local or Distributed Persistent Volumes to Stateful workloads. 
 
-OpenEBS Data Engines and Control Plane are implemented as micro-services, deployed as containers and orchestrated by Kubernetes itself. OpenEBS data engines are implemented in user space making OpenEBS run on any Kubernetes Platform and use any type of storage available to the Kubernetes worker nodes. An added advantage of being a completely Kubernetes native solution is that administrators and developers can interact and manage OpenEBS using all the wonderful tooling that is available for Kubernetes like kubectl, Helm, Prometheus, Grafana, etc.
+<img src="/docs/assets/svg/data-engines-comparision.svg" alt="OpenEBS Data Engines" style="width:60%" align="right">
 
 In case of [Local Volumes](#local-volumes): 
   - OpenEBS can create Persistent Volumes using raw block devices or partitions, or using sub-directories on Hostpaths or by using LVM,ZFS,sparse files. 
@@ -53,6 +53,8 @@ In case of [Distributed (aka Replicated) Volumes](#replicated-volumes):
   OpenEBS Distributed Block volumes are called as Replicated Volumes, to avoid confusion with traditional distributed block storages that tend to distribute the data across many nodes in the cluster. Replicated volumes have low blast radius compared to traditional distributed block storages. Replicated volumes are designed for Cloud Native stateful workloads that require large number of volumes with capacity that can typically be served from a single node as apposed to a single large volume with data sharded across multiple nodes in the cluster.
   :::
  
+
+OpenEBS Data Engines and Control Plane are implemented as micro-services, deployed as containers and orchestrated by Kubernetes itself. OpenEBS data engines are implemented in user space making OpenEBS run on any Kubernetes Platform and use any type of storage available to the Kubernetes worker nodes. An added advantage of being a completely Kubernetes native solution is that administrators and developers can interact and manage OpenEBS using all the wonderful tooling that is available for Kubernetes like kubectl, Helm, Prometheus, Grafana, etc.
 
 ## Local Volumes 
 

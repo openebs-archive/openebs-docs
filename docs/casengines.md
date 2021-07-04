@@ -6,70 +6,88 @@ sidebar_label: Data Engines
 
 ------
 
-## Overview 
+OpenEBS Data Engine is the core component that acts as an end-point for serving the IO to the applications. OpenEBS Data engines are akin to Storage controllers or sometimes also know for implementing the software defined storage capabilities. 
 
-<br/>
-OpenEBS Data Engine is the core component that acts as an end-point for serving the IO to the applications. 
-<br/>
-<img src="/docs/assets/app-engine-node-capabilities.svg" alt="drawing" width="50%" align="right"/>
-
-Stateful Applications and their capabilities have changed drastically as they have adopted the cloud native and micro-services patterns. This change has led to a shift in the needs of what applications need from the storage layer. For instance, `etcd` is itself an Stateful workload that runs within Kubernetes and all it needs is a fast local storage. The availability and durability aspects are built into the `etcd` implementation itself. 
-
-OpenEBS provides a set of Data Engines, where each of the engines is built and optimized for different needs of the application and the capabilities available on the Kubernetes nodes.
+OpenEBS provides a set of Data Engines, where each of the engines is built and optimized for running stateful workloads of varying capabilities and running them on Kubernetes nodes with varying range of resources.
 
 Platform SRE or administrators typically select one or more [data engines](#data-engine-capabilities) to be used in their Kubernetes cluster. The selection of the data engines depend on the following two aspects:
 - [Node Resources or Capabilities](#node-capabilities)
 - [Stateful Application Capabilities](#stateful-workload-capabilities)
 
-<br/>
-
 ## Node Capabilities
 
-Node Resources or Capabilities refer to the CPU, RAM, Network and Storage available to Kubernetes nodes. To run a stateful workloads and what data engines to be used depend on a few aspects like:
-- Are the nodes ephemeral? During upgrades is the same node made available or a new node provisioned in its place? Do the nodes have ephemeral storage (Virtual Disks) or storage devices (Disks, Cloud/SAN Volumes)?
-- What type of storage devices are attached to node - HDDs or SSDs, how are they connected and how many?
-- How much RAM or CPU can be allocated to providing the storage services?
+Node Resources or Capabilities refer to the CPU, RAM, Network and Storage available to Kubernetes nodes. 
 
-Depending on the node or cluster capabilities, the recommended engines are:
+Based on the CPU, RAM and Network bandwidth available to the nodes, the nodes can be classified as:
 
-| Node Capabilities                             | Jiva    |  cStor   |  Mayastor  | LocalPV  | 
-| ----------------------------------------------| :---:   | :------: | :--------: | :------: |
-| Single node cluster                           | No      |   No     | No         | Yes      |
-| NVMe (high performant) Storage Devices        | No      |   No     | Yes        | Yes      |
-| Large/medium node instances(>4 CPU, >8GB  RAM)| No      |   No     | Yes        | Yes      |
-| Multi node cluster                            | Yes     |   Yes    | Yes        | Yes      |
-| Persistent Storage Devices (Cloud/SAN/DAS)    | Yes     |   Yes    | Yes        | Yes      |
-| SAS/SATA Storage Devices or HDD               | Yes     |   Yes    | Yes        | Yes      |
-| Small node instances (<4 CPU, <8GB RAM)       | Yes     |   Yes    | Yes        | Yes      |
-| Ephemeral Nodes                               | Yes     |   Yes    | Yes        | No       |
-| Ephemeral Storage Devices                     | Yes     |   Yes    | Yes        | No       |
+* Small Instances that typically have up to 4 cores, 16GB RAM and Gigabit Ethernet
+* Medium Instances that typically have up to 16 cores, 32GB RAM and up to 10G Networks
+* Large Instances  that typically have more than 16 - even 96 cores, up to 256G or more RAM and 10 to 25G Networks
+
+The Storage to the above instance can be made available in the following ways: 
+
+* Ephemeral storage - where storage is lost when node is taken out of the cluster as part of auto-scaling or upgrades. 
+* Cloud Volumes or Network Attached storage - that can be re-attached to new nodes if the older node is removed from cluster. 
+* Direct Attached Storage
+* Categorize based on the performance of the storage like slow (HDD via SAS), medium (SSD via SAS), fast (SSD or Persistent Flash via NVMe) 
+
+Another key aspect that needs to be consider is the nature of the Kubernetes cluster size:
+- Is it for an Edge or Home cluster with single node
+- Hyperconverged nodes - where Stateful workload and its storage can be co-located.
+- Disaggregated - where Stateful workload and its storage will be served from different nodes. 
+
+The following table summarizes the recommendation for small to medium instances, with HDDs, SSDs limited to 2000 IOPS: 
+
+| Node Capabilities           |                  |                         |                   |
+| ----------------------------| :--------------: | :---------------------: | :---------------: |
+| Ephemeral Node or Storage   | Non-ephemeral    |   Non-Ephemeral         | Ephemeral         |
+| Size of cluster             | Single Node      |   Multiple nodes        | Multiple nodes    |
+| Storage Deployment type     | Hyperconverged   |   Hyperconverged        | Disaggregated     |
+| Recommended Data Engines    | Local PV         |   Local PV, cStor, Jiva | cStor, Jiva       |
+
+The following table summarizes the recommendation for small to medium instances with fast SSDs capable of higher IOPS and Throughput, typically connected using NVMe: 
+
+| Node Capabilities           |                  |                         |                   |
+| ----------------------------| :--------------: | :---------------------: | :---------------: |
+| Ephemeral Node or Storage   | Non-ephemeral    |   Non-Ephemeral         | Ephemeral         |
+| Size of cluster             | Single Node      |   Multiple nodes        | Multiple nodes    |
+| Storage Deployment type     | Hyperconverged   |   Hyperconverged        | Disaggregated     |
+| Recommended Data Engines    | Local PV         |   Local PV, Mayastor    | Mayastor          |
+
 
 ## Stateful Workload Capabilities
 
-State is an integral part of any application often times, used without realizing that it actually exists. Examples of Stateful Applications include SQL/NoSQL Database, Object and Key/Value stores, Message Bus, Storage systems optimized to store Logs and Metrics, Code/Container/Configuration Repositories, and many more. Each stateful applications comes with a certain capabilities and depends on the storage for complimentary capabilities. For example:
-- Stateful workloads like MongoDB have availability features like protecting against node failures built into them. Such systems will expect the Data engines to provide capacity and performance required with the data consistency/durability at the block level.
-- Stateful workloads like Cassandra can benefit from the availability features from the data engines as it might help speed up the rebuild times required to rebuild a failed cassandra node. However this comes at the cost of using extra storage by the data engines. 
-- With serverless and cloud native becoming mainstream a key shift has been in terms of the capacity required and the duration for which that capacity may be required. These are applications that are launched as part of the DevSecOps pipelines where a PostgreSQL or other types of systems may be launched to run for a few minutes, hours or days and then the resulting information is saved in another storage system and this instance is itself deprovisioned. 
+Storage is an integral part of any application often times, used without realizing that it actually exists. 
 
-Depending on the Stateful workload capabilities, the recommended engines are:
-| Stateful Workload Capabilities                       | Jiva    |  cStor   |  Mayastor  | LocalPV  | 
-| -----------------------------------------------------| :---:   | :------: | :--------: | :------: |
-| Pod can be pinned to a single node                   | Yes     |   Yes    | Yes        | Yes      |
-| Pod are short lived and can be restarted on same node| Yes     |   Yes    | Yes        | Yes      |
-| Pod when moved can rebuild its data                  | Yes     |   Yes    | Yes        | Yes      |
-| Pod when moved to new node, can't rebuild its data   | Yes     |   Yes    | Yes        | No       |
-| Pod need resiliency against device faults/error      | Yes     |   Yes    | Yes        | No*      |
-| Pod needs to move across nodes in cluster            | Yes     |   Yes    | Yes        | No       |
-| Needs need incremental snapshots and backups         | No      |   Yes    | Yes**      | No       |
+Storage can be further decomposed into two distinct layers:
+- Stateful Workloads or the Data Platform Layer - which comprises of SQL/NoSQL Database, Object and Key/Value stores, Message Bus and so forth.
+- Storage engine or Data Engine layer that provides block storage to to the Stateful workloads to persist the data onto the storage devices. 
 
-Notes:
-- <sup>*</sup> Some flavors of Local PV support RAID/Mirroring to protect against disk failures
-- <sup>**</sup> Support for incremental snapshots/backups is not yet implemented in Mayastor 
+The key features or capabilities provided by the Storage can be classified as: 
+- Availability
+- Consistency
+- Durability
+- Performance
+- Scalability
+- Security
+- Ease of Use
+
+With serverless and cloud native becoming mainstream a key shift has happened in terms of how the Stateful workloads are developed, with many of the workloads natively supporting the key storage features like Availability, Consistency and Durability. For example:
+- **Distributed:** Stateful workloads like MongoDB have availability features like protecting against node failures built into them. Such systems will expect the Data engines to provide capacity and performance required with the data consistency/durability at the block level.
+- **Distributed and Standalone:** Stateful workloads like Cassandra can benefit from the availability features from the data engines as it might help speed up the rebuild times required to rebuild a failed cassandra node. However this comes at the cost of using extra storage by the data engines. 
+- **Standalone:** Stateful workloads like MySQL (standalone) focus more on Consistency and Database features and depending on the underlying data engine for providing Availability, Performance, Durability and other features. 
+
+Each stateful applications comes with a certain capabilities and depends on the [data engines](#data- engine-capabilities) for complimentary capabilities. The following table summarizes the recommendation on data engines based on the capabilities required by Applications: 
+
+| Workload Type               | Distributed      |  Stand-alone            | Distributed and/or Stand-alone |
+| ----------------------------| :--------------: | :---------------------: | :---------------------------:  |
+| Required Capabilities       | Performance      |   Availability          | Performance and Availability   |
+| Recommended Data Engines    | Local PV         |   Jiva,cStor, Mayastor  | Mayastor                       |
 
 
 ## Data Engine Capabilities
 
-Data Engines are what maintain the actual state generated by the Stateful applications and are concerned about providing enough storage capacity to store the state and ensure that state remains intact over its lifetime. For instance state can be generated once, accessed over a period of next few minutes or days or modified or just left to be retrieved after many months or years. The capabilities provided by the data engines can be classified as follows:
+Data Engines are what maintain the actual state generated by the Stateful applications and are concerned about providing enough storage capacity to store the state and ensure that state remains intact over its lifetime. For instance state can be generated once, accessed over a period of next few minutes or days or modified or just left to be retrieved after many months or years. 
 
 All OpenEBS Data Engines support:
 - Dynamic Provisioning of Persistent Volumes
@@ -109,7 +127,7 @@ Notes:
 
 OpenEBS data engines can be classified into two categories.
 
-## Local Engines
+### Local Engines
 
 OpenEBS Local Engines can create persistent volumes or PVs out of local disks or hostpaths or using the volume managers like LVM or ZFS on the Kubernetes worker nodes. Local Engines are well suited for cloud native applications that have the availability, scalability features built into them. Local Engines are also well suited for stateful workloads that are short lived like Machine Learning jobs or Edge cases where there is a single node Kubernetes cluster. 
 
@@ -125,9 +143,9 @@ Local Volumes are only available from the the node on which the persistent volum
 :::
 
 
-## Replicated Engines
+### Replicated Engines
 
-Replicated Volumes as the name suggests, are those that can synchronously replicate the data to multiple nodes. These engines provide protection against node failures, by allowing the volume to be accessible from one of the other nodes where the data was replicated to. The replication can also be setup across availability zones helping applications move across availability zones.  Replicated Volumes also are capable of enterprise storage features like snapshots, clone, volume expansion and so forth. 
+Replicated Volumes as the name suggests, are those that can synchronously replicate the data to multiple nodes. These engines provide protection against node failures, by allowing the volume to be accessible from one of the other nodes where the data was replicated to. The replication can also be setup across availability zones helping applications move across availability zones.  Replicated Volumes are also capable of enterprise storage features like snapshots, clone, volume expansion and so forth. 
 
 Depending on the type of storage attached to your Kubernetes worker nodes and application performance requirements, you can select from [Jiva](/docs/next/jiva.html), [cStor](/docs/next/cstor.html) or [Mayastor](/docs/next/mayastor.html). 
 
@@ -205,7 +223,7 @@ A short summary is provided below.
 
 ### [Mayastor User Guide](/docs/next/mayastor-concept.html)
 
-### [cStor User Guide](/docs/next/ugcstor.html)
+### [cStor User Guide](/docs/next/ugcstor-csi.html)
 
 ### [Jiva User Guide](/docs/next/jivaguide.html)
 
