@@ -93,37 +93,11 @@ All OpenEBS Data Engines support:
 - Dynamic Provisioning of Persistent Volumes
 - Strong Data Consistency 
 
-Below table identifies few differences among the different OpenEBS CAS engines. 
-
-| Feature                                      | Jiva    |  cStor   |  Mayastor  | LocalPV  | 
-| -------------------------------------------- | :---:   | :------: | :--------: | :------: |
-| Near disk performance                        |  No     |   No     | Yes        | Yes      |
-| Full Backup and Restore using Velero         |  Yes    |   Yes    | Yes        | Yes      |
-| Synchronous replication                      |  Yes    |   Yes    | Yes        | No       |
-| Protect against node failures (replace node) |  Yes    |   Yes    | Yes        | No       |
-| Use with ephemeral storage on nodes          |  Yes    |   Yes    | Yes        | No       |
-| Thin Provisioning                            |  Yes    |   Yes    | Yes        | Yes**    |
-| Suitable for high capacity (>50GB) workloads |  No*    |   Yes    | Yes        | Yes**    |
-| On demand capacity expansion                 |  No     |   Yes    | Planned    | Yes**    |
-| Snapshots                                    |  No     |   Yes    | Planned    | Yes**    |
-| Clones                                       |  No     |   Yes    | Planned    | Yes**    |
-| Disk pool or aggregate support               |  No*    |   Yes    | Planned    | Yes**    |
-| Disk resiliency (RAID support )              |  No*    |   Yes    | Planned    | Yes**    |
-| Incremental Backups                          |  No     |   Yes    | Planned    | No**     |
-
-
 Notes:
 - <sup>*</sup> In case of Jiva data engine, the data is saved in sparse files within a mounted hostpath. This impacts the following:
   - Disk level pooling or RAID has to be taken care by the Administrator by using LVM or md-raid and then mount the resulting volume for use by Jiva engine. 
   - As the capacity of the volume increases - the rebuild times of the volumes will increase. This can result in volumes becoming inaccessible if more than one node in the cluster fails at the same time. 
 
-- <sup>**</sup> In case of Local PV - there are multiple flavors which determine the availability of the features. For example: 
-  - Disk Pool or Resiliency is only available for LVM and ZFS based Local PVs. 
-  - Snapshot feature is only available for LVM and ZFS based Local PVs. 
-  - Clone feature is only available for ZFS based Local PVs. 
-  - ZFS based local PV support a plugin based incremental Backups, while the remaining types of Local PV only support Restic based full backup.
-
-<br/>
 
 OpenEBS data engines can be classified into two categories.
 
@@ -141,6 +115,21 @@ Depending on the type of storage attached to the Kubernetes worker nodes and you
 :::note
 Local Volumes are only available from the the node on which the persistent volume is created. If that node fails, the application pod will not be re-scheduled to another node.
 :::
+
+Below table identifies few differences among the different OpenEBS Local engines. 
+
+| Feature                                      | Hostpath  |  Rawfile  |  Device    | ZFS      | LVM      | 
+| -------------------------------------------- | :---:     | :------:  | :--------: | :------: | :------: |
+| Near disk performance                        |  Yes      |   Yes     | Yes        | No       | Yes      |
+| Full Backup and Restore using Velero         |  Yes      |   Yes     | Yes        | Yes      | Yes      |
+| Thin Provisioning                            |  Yes      |   Yes     | No         | Yes      | Yes      |
+| On demand capacity expansion                 |  Yes      |   Yes     | No         | Yes      | Yes      |
+| Disk pool or aggregate support               |  Yes      |   Yes     | No         | Yes      | Yes      |
+| Disk resiliency (RAID support )              |  Yes      |   Yes     | No         | Yes      | Yes      |
+| Snapshots                                    |  No       |   No      | No         | Yes      | Yes      |
+| Incremental Backups                          |  No       |   No      | No         | Yes      | Yes      |
+| Clones                                       |  No       |   No      | No         | Yes      | No       |
+| Works on OS mounted storage                  |  Yes      |   Yes     | No         | No       | No       |
 
 
 ### Replicated Engines
@@ -161,21 +150,41 @@ An important aspect of the OpenEBS Data Layer is that each volume replica is a f
 - When Volume Snapshots is taken, the snapshot is taken on all its healthy volume replicas
 :::
 
+Below table identifies few differences among the different OpenEBS Replicated engines. 
+
+| Feature                                      | Jiva    |  cStor   |  Mayastor  | 
+| -------------------------------------------- | :---:   | :------: | :--------: |
+| Full Backup and Restore using Velero         |  Yes    |   Yes    | Yes        |
+| Synchronous replication                      |  Yes    |   Yes    | Yes        |
+| Protect against node failures (replace node) |  Yes    |   Yes    | Yes        |
+| Use with ephemeral storage on nodes          |  Yes    |   Yes    | Yes        |
+| Thin Provisioning                            |  Yes    |   Yes    | Yes        |
+| Disk pool or aggregate support               |  Yes    |   Yes    | Planned    |
+| Disk resiliency (RAID support )              |  Yes    |   Yes    | Planned    |
+| On demand capacity expansion                 |  No     |   Yes    | Planned    |
+| Snapshots                                    |  No     |   Yes    | Planned    |
+| Clones                                       |  No     |   Yes    | Planned    |
+| Incremental Backups                          |  No     |   Yes    | Planned    |
+| Suitable for high capacity (>50GB) workloads |  No     |   Yes    | Yes        |
+| Near disk performance                        |  No     |   No     | Yes        |
+
+
 <br>
 
-## When to choose which CAS engine?
+## When to choose which OpenEBS engine?
 
 As indicated in the above table, each storage engine has it's own advantage. Choosing an engine depends completely on your platform (resources and type of storage), the application workload as well as it's current and future growth in capacity and/or performance. Below guidelines provide some help in choosing a particular engine.
-
-
 
 ### Ideal conditions for choosing cStor: 
 
 - When you want synchronous replication of data and have multiple disks on the nodes.
-- When you are managing storage for multiple applications from a common pool of local or network disks on each node. Features such as thin provisioning, on demand capacity expansion of the pool and volume and on-demand performance expansion of the pool will help manage the storage layer. cStor is used to build Kubernetes native storage services similar to AWS EBS or Google PD on the Kubernetes clusters running on-premise.
+- When you are managing storage for multiple applications from a common pool of local or network disks on each node. Features such as thin provisioning, on demand capacity expansion of the pool and volume will help manage the storage layer. 
+- When you want to to build Kubernetes native storage services similar to AWS EBS or Google PD on the Kubernetes clusters running on-premise.
 - When you need storage level snapshot and clone capability. 
 - When you need enterprise grade storage protection features like data consistency, resiliency (RAID protection).
+- When you need to provide cross-az available volumes in Cloud or On-premise. 
 
+Do not use cStor when you your underlying storage devices are NVMe SSDs and your applications need high performance. 
 
 
 ### Ideal conditions for choosing Jiva:
@@ -187,25 +196,33 @@ As indicated in the above table, each storage engine has it's own advantage. Cho
   - When you do not have free disks on the node. Jiva can be used on a ` hostdir` and still achieve replication.
   - When you do not need to expand storage dynamically on local disk. Adding more disks to a Jiva pool is not possible, so the size of Jiva pool is fixed if it on a physical disk. However if the underlying disk is a virtual or network or cloud disk then, it is possible to change the Jiva pool size on the fly.
 - Capacity requirements are small. 
-
-
+- When you need to provide cross-az available volumes in Cloud or On-premise. 
 
 ### Ideal conditions for choosing OpenEBS hostpath LocalPV:
 
-- When applications are managing replication themselves and there is no need of replication at storage layer. In most such situations, the applications are deployed as `statefulset`.
+- When applications are managing replication and availability themselves and there is no need of replication at storage layer. In most such situations, the applications are deployed as `statefulset`.
 - When higher performance than Jiva or cStor is desired.
-- hostpath is recommended when dedicated local disks are not available for a given application or dedicated storage is not needed for a given application. If you want to share a local disk across many applications host path LocalPV is the right approach.
-
-
+- hostpath is recommended when dedicated local disks are not available for a given application or dedicated storage is not needed for a given application. If you want to share a local disk across many applications hostpath, Rawfile, ZFS and LVM LocalPV is the right approach.
 
 ### Ideal conditions for choosing OpenEBS device LocalPV:
 
 - When applications are managing replication themselves and there is no need of replication at storage layer. In most such situations, the applications are deployed as `statefulset`
-
 - When higher performance than Jiva or cStor is desired.
-- When higher performance than hostpath LocalPV is desired.
-- When near disk performance is a need. The volume is dedicated to write a single SSD or NVMe interface to get the highest performance.
+- When near disk performance is a need and you need to avoid noisy neighbor effect of shared volumes. The device volume is dedicated to write a single SSD or NVMe interface to get the highest performance.
 
+### Ideal conditions for choosing OpenEBS ZFS or LVM LocalPV:
+
+- When applications are managing replication themselves and there is no need of replication at storage layer. In most such situations, the applications are deployed as `statefulset`
+- When higher performance than Jiva or cStor is desired.
+- When near disk performance is a need along with features like snapshots, volume expansion, pooling of storage from multiple storage devices. 
+
+### Ideal conditions for choosing OpenEBS Mayastor:
+
+- When you need high performance storage using NVMe SSDs and the cluster is capable of NVMeoF. 
+- When you need replication or availability features to protected against node failures.  
+- Mayastor is designed for the next gen compute and storage technology and is under active development. 
+
+As Mayastor is under active development, you can also influence the features that are being built by joining [OpenEBS community on Kubernetes Slack](https://kubernetes.slack.com). If you are already signed up, head to our discussions at [#openebs](https://kubernetes.slack.com/messages/openebs/) channel. 
 
 ### Summary
 
@@ -216,8 +233,6 @@ A short summary is provided below.
 - Jiva is preferred if your application is small, requires storage level replication but does not need snapshots or clones.
 - Mayastor is preferred if your application needs low latency and near disk throughput, requires storage level replication and your nodes have high CPU, RAM and NVMe capabilities. 
 
-
-<br>
 
 ## See Also:
 
@@ -230,7 +245,6 @@ A short summary is provided below.
 ### [Local PV Hostpath User Guide](/docs/next/uglocalpv-hostpath.html)
 
 ### [Local PV Device User Guide](/docs/next/uglocalpv-device.html)
-
 
 
 <br>
