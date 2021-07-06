@@ -36,8 +36,8 @@ OpenEBS helps users to take local volumes into production by providing features 
 
 OpenEBS provides different types of Local Volumes that can be used to provide locally mounted storage to Kubernetes Stateful workloads. Follow these guides to get started with each type of Local Volume. 
 
-- [OpeneBS Local PV using Hostpath](/docs/next/uglocalpv-hostpath.html)
-- [OpeneBS Local PV using Block Devices](/docs/next/uglocalpv-device.html)
+- [OpenEBS Local PV using Hostpath](/docs/next/uglocalpv-hostpath.html)
+- [OpenEBS Local PV using Block Devices](/docs/next/uglocalpv-device.html)
 - <a href="https://github.com/openebs/lvm-localpv" target="_blank">OpenEBS Local PV using LVM </a>
 - <a href="https://github.com/openebs/zfs-localpv" target="_blank">OpenEBS Local PV using ZFS </a>
 - <a href="https://github.com/openebs/rawfile-localpv" target="_blank">OpenEBS Local PV using Rawfile (sparse file) </a>
