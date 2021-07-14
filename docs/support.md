@@ -8,7 +8,7 @@ sidebar_label: Community
 
 ## GitHub
 
-Raise an [GitHub issue](https://github.com/openebs/openebs/issues/new)
+Raise a [GitHub issue](https://github.com/openebs/openebs/issues/new)
 
 ## Slack
 
