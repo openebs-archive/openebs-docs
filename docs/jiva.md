@@ -10,7 +10,7 @@ sidebar_label: Jiva
 
 ### Jiva
 
-Each Jiva Volume comprises of a Controller (or Target) and a set of Replicas. Both Controller and Replica functionalities are provided by the same binary and hence the same [docker image](https://hub.docker.com/r/openebs/jiva/). Jiva simulates a block device which is exposed via an iSCSI target implementation(gotgt - part of the Controller). This block device is discovered and mounted remotely on the host where application pod is running. The Jiva Controller parallelly replicates the incoming IOs to its replicas. The Replica, in turn, writes these IOs to a sparse file.
+Each Jiva Volume comprises of a Controller (or Target) and a set of Replicas. Both Controller and Replica functionalities are provided by the same binary and hence the same [docker image](https://hub.docker.com/r/openebs/jiva/). Jiva simulates a block device which is exposed via an iSCSI target implementation(gotgt - part of the Controller). This block device is discovered and mounted remotely on the host where the application pod is running. The Jiva Controller parallelly replicates the incoming IOs to its replicas. The Replica, in turn, writes these IOs to a sparse file.
 
 ![Jiva storage engine of OpenEBS](/docs/assets/jiva.png)
 
@@ -22,7 +22,7 @@ The following content is modified with some architectural change as compared to 
 
 ------
 
-Jiva replicas are built using Linux sparse files, which support thin provisioning. Jiva does not maintain additional metadata to indicate which blocks are used. The block size is 4K. When a replica gets added at the controller, it creates an auto-generated snapshot(differencing disk). As the number of snapshots grows, the differencing disk chain could get quite long. To improve read performance, Jiva, therefore, maintains a read index table that records which differencing disk holds valid data for each 4K block. In the following figure, the volume has eight blocks. The read index table has eight entries and is filled up lazily as read operation takes place. A write operation writes the data on the latest file(head), deletes(fallocate) the corresponding block from the older snapshots(or differencing disks) and updates the index in the table, which now points to the live data.
+Jiva replicas are built using Linux sparse files, which support thin provisioning. Jiva does not maintain additional metadata to indicate which blocks are used. The block size is 4K. When a replica gets added to the controller, it creates an auto-generated snapshot(differencing disk). As the number of snapshots grows, the differencing disk chain could get quite long. To improve read performance, Jiva, therefore, maintains a read index table that records which differencing disk holds valid data for each 4K block. In the following figure, the volume has eight blocks. The read index table has eight entries and is filled up lazily as read operation takes place. A write operation writes the data on the latest file(head), deletes(fallocate) the corresponding block from the older snapshots(or differencing disks) and updates the index in the table, which now points to the live data.
 
 ![Longhorn read index](/docs/assets/Longhorn-blog-new.png)
 
