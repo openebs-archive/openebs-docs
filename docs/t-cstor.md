@@ -7,7 +7,7 @@ sidebar_label: cStor
 
 <font size="5">General guidelines for troubleshooting</font>
 
-- Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
+- Contact <a href="/v290/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 - Search for similar issues added in this troubleshooting section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
@@ -90,7 +90,7 @@ Application mount point running on cStor volume went into read only state.
 
 **Possible Reason:**
 
- If `cStorVolume` is `Offline` or corresponding target pod is unavailable for more than 120 seconds(iSCSI timeout) then the PV will be mounted as `read-only` filesystem. For understanding different states of cStor volume, more details can be found [here](/docs/next/kb.html#verification-of-cStor-storage-volume).
+ If `cStorVolume` is `Offline` or corresponding target pod is unavailable for more than 120 seconds(iSCSI timeout) then the PV will be mounted as `read-only` filesystem. For understanding different states of cStor volume, more details can be found [here](/v290/docs/next/kb.html#verification-of-cStor-storage-volume).
 
 **Troubleshooting**
 
@@ -99,7 +99,7 @@ Check the status of corresponding cStor volume using the following command:
 kubectl get cstorvolume -n <openebs_installed_namespace> -l openebs.io/persistent-volume=<PV_NAME>
 ```
 
-If cStor volume exists in `Healthy` or `Degraded` state then restarting of the application pod alone will bring back cStor volume to `RW` mode. If cStor volume exists in `Offline`, reach out to <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for assistance. 
+If cStor volume exists in `Healthy` or `Degraded` state then restarting of the application pod alone will bring back cStor volume to `RW` mode. If cStor volume exists in `Offline`, reach out to <a href="/v290/docs/next/support.html" target="_blank">OpenEBS Community</a> for assistance. 
 
 <hr>
 <br>
@@ -107,11 +107,11 @@ If cStor volume exists in `Healthy` or `Degraded` state then restarting of the a
 
 ## See Also:
 
-### [FAQs](/docs/next/faq.html)
+### [FAQs](/v290/docs/next/faq.html)
 
-### [Seek support or help](/docs/next/support.html)
+### [Seek support or help](/v290/docs/next/support.html)
 
-### [Latest release notes](/docs/next/releases.html)
+### [Latest release notes](/v290/docs/next/releases.html)
 
 <br>
 <hr>

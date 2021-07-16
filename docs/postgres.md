@@ -5,7 +5,7 @@ sidebar_label: PostgreSQL
 ---
 ------
 
-<img src="/docs/assets/o-postgres.png" alt="OpenEBS and PostgreSQL" style="width:400px;">	
+<img src="/v290/docs/assets/o-postgres.png" alt="OpenEBS and PostgreSQL" style="width:400px;">	
 
 <br>
 
@@ -20,28 +20,28 @@ This guide explains the basic installation for StackGres PostgreSQL on OpenEBS L
 
 ## Deployment model
 
-<img src="/docs/assets/svg/StackGres-Postgres-LocalPV.svg" alt="OpenEBS and StackGres PostgreSQL localpv device" style="width:100%;">
+<img src="/v290/docs/assets/svg/StackGres-Postgres-LocalPV.svg" alt="OpenEBS and StackGres PostgreSQL localpv device" style="width:100%;">
 
 We will use GKE, where we will install Stackgres PostgreSQL with OpenEBS storage engine. The Local PV volume will be provisioned on a node where Stackgres PostgreSQL pod is getting scheduled and uses one of the matching unclaimed block devices, which will then use the entire block device for storing data. No other application can use this device. If users have limited blockdevices attached to some nodes, they can use `nodeSelector` in the application YAML to provision applications on particular nodes where the available block device is present. The recommended configuration is to have at least three nodes and one unclaimed external disk to be attached per node. 
 
 ## Configuration workflow
 
-1. [Install OpenEBS](/docs/next/postgres.html#install-openebs)
-2. [Select OpenEBS storage engine](/docs/next/postgres.html#select-openebs-storage-engine)
-3. [Configure OpenEBS Local PV StorageClass](/docs/next/postgres.html#configure-openebs-local-pv-storageclass)
-4. [Installing StackGres PostgreSQL Operator](/docs/next/postgres.html#installing-stackgres-postgresql-operator)
-5. [Installing PostgreSQL Database](/docs/next/postgres.html#installing-postgresql-database)
-6. [Accessing PostgreSQL database](/docs/next/postgres.html#accessing-postgresql-database)
+1. [Install OpenEBS](/v290/docs/next/postgres.html#install-openebs)
+2. [Select OpenEBS storage engine](/v290/docs/next/postgres.html#select-openebs-storage-engine)
+3. [Configure OpenEBS Local PV StorageClass](/v290/docs/next/postgres.html#configure-openebs-local-pv-storageclass)
+4. [Installing StackGres PostgreSQL Operator](/v290/docs/next/postgres.html#installing-stackgres-postgresql-operator)
+5. [Installing PostgreSQL Database](/v290/docs/next/postgres.html#installing-postgresql-database)
+6. [Accessing PostgreSQL database](/v290/docs/next/postgres.html#accessing-postgresql-database)
 
 
 
 ### Install OpenEBS
 
-If OpenEBS is not installed in your K8s cluster, this can be done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step.
+If OpenEBS is not installed in your K8s cluster, this can be done from [here](/v290/docs/next/installation.html). If OpenEBS is already installed, go to the next step.
 
 ### Select OpenEBS storage engine
 
-A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and chooses the right engine that suits your type of application requirements and storage available on your Kubernetes nodes. More information can be read from [here](/docs/next/overview.html#types-of-openebs-storage-engines).
+A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and chooses the right engine that suits your type of application requirements and storage available on your Kubernetes nodes. More information can be read from [here](/v290/docs/next/overview.html#types-of-openebs-storage-engines).
 
 In this document, we are deploying StackGres PostgreSQL using OpenEBS Local PV device. 
 
@@ -51,7 +51,7 @@ There are 2 ways to use OpenEBS Local PV.
 
 - `openebs-hostpath` - Using this option, it will create Kubernetes Persistent Volumes that will store the data into OS host path directory at: /var/openebs/<"postgresql-pv-name">/. Select this option, if you don’t have any additional block devices attached to Kubernetes nodes. You would like to customize the directory where data will be saved, create a new OpenEBS Local PV storage class using these [instructions](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass). 
 
-- `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a StackGres PostgreSQL application pod. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](/docs/next/uglocalpv-device.html#optional-block-device-tagging). 
+- `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a StackGres PostgreSQL application pod. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](/v290/docs/next/uglocalpv-device.html#optional-block-device-tagging). 
 
 The Storage Class `openebs-device` has been chosen to deploy StackGres PostgreSQL in the Kubernetes cluster.
 
@@ -301,13 +301,13 @@ app-# \q
 
 ## See Also:
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v290/docs/next/usecases.html)
 
-### [Understanding NDM](/docs/next/ugndm.html)
+### [Understanding NDM](/v290/docs/next/ugndm.html)
 
-### [Local PV concepts](/docs/next/localpv.html)
+### [Local PV concepts](/v290/docs/next/localpv.html)
 
-### [Local PV User guide](/docs/next/uglocalpv-device.html)
+### [Local PV User guide](/v290/docs/next/uglocalpv-device.html)
 
 
 

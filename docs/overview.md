@@ -62,8 +62,8 @@ Depending on the type of storage attached to your Kubernetes worker nodes, you c
 
 Installing OpenEBS in your cluster is as simple as running a few `kubectl` or `helm` commands. Here are the list of our Quickstart guides with detailed instructions for each storage engine.
 
-- [Local PV hostpath](/docs/next/uglocalpv-hostpath.html)
-- [Local PV device](/docs/next/uglocalpv-device.html)
+- [Local PV hostpath](/v290/docs/next/uglocalpv-hostpath.html)
+- [Local PV device](/v290/docs/next/uglocalpv-device.html)
 - [ZFS Local PV](https://github.com/openebs/zfs-localpv)
 - [LVM Local PV](https://github.com/openebs/lvm-localpv)
 - [Rawfile Local PV](https://github.com/openebs/rawfile-localpv)
@@ -80,7 +80,7 @@ Depending on the type of storage attached to your Kubernetes worker nodes and ap
 
 Installing OpenEBS in your cluster is as simple as running a few `kubectl` or `helm` commands. Here are the list of our Quickstart guides with detailed instructions for each storage engine.
 
-- [Mayastor](/docs/next/ugmayastor.html)
+- [Mayastor](/v290/docs/next/ugmayastor.html)
 - [cStor](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
 - [Jiva](https://github.com/openebs/jiva-operator)
 
@@ -90,11 +90,11 @@ See the following table for recommendation on which engine is right for your app
 
 | Application requirements   | Storage Type | OpenEBS Volumes
 |--- |--- |--- 
-| Low Latency, High Availability, Synchronous replication, Snapshots, Clones, Thin provisioning | SSDs/Cloud Volumes | [OpenEBS Mayastor](/docs/next/ugmayastor.html)
+| Low Latency, High Availability, Synchronous replication, Snapshots, Clones, Thin provisioning | SSDs/Cloud Volumes | [OpenEBS Mayastor](/v290/docs/next/ugmayastor.html)
 | High Availability, Synchronous replication, Snapshots, Clones, Thin provisioning | Disks/SSDs/Cloud Volumes | <a href="https://github.com/openebs/cstor-operators" target="_blank">OpenEBS cStor</a>
-| High Availability, Synchronous replication, Thin provisioning | hostpath or external mounted storage | [OpenEBS Jiva](/docs/next/jivaguide.html)
-| Low latency, Local PV | hostpath or external mounted storage | [Dynamic Local PV - Hostpath](/docs/next/uglocalpv-hostpath.html), <a href="https://github.com/openebs/rawfile-localpv" target="_blank">Dynamic Local PV - Rawfile</a>
-| Low latency, Local PV | Disks/SSDs/Cloud Volumes | [Dynamic Local PV - Device](/docs/next/uglocalpv-device.html)
+| High Availability, Synchronous replication, Thin provisioning | hostpath or external mounted storage | [OpenEBS Jiva](/v290/docs/next/jivaguide.html)
+| Low latency, Local PV | hostpath or external mounted storage | [Dynamic Local PV - Hostpath](/v290/docs/next/uglocalpv-hostpath.html), <a href="https://github.com/openebs/rawfile-localpv" target="_blank">Dynamic Local PV - Rawfile</a>
+| Low latency, Local PV | Disks/SSDs/Cloud Volumes | [Dynamic Local PV - Device](/v290/docs/next/uglocalpv-device.html)
 | Low latency, Local PV, Snapshots, Clones | Disks/SSDs/Cloud Volumes | <a href="https://github.com/openebs/zfs-localpv" target="_blank">OpenEBS Dynamic Local PV - ZFS </a>, <a href="https://github.com/openebs/lvm-localpv" target="_blank">OpenEBS Dynamic Local PV - LVM </a>
 
 
@@ -109,72 +109,72 @@ OpenEBS has a vibrant community that can help you get started. If you have furth
 <br>
 <div class="row stateful-applications_row">
     <div class="">
-	<a href="/docs/next/prometheus.html" target="_blank">
-		<img src="/docs/assets/a-prometheus.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+	<a href="/v290/docs/next/prometheus.html" target="_blank">
+		<img src="/v290/docs/assets/a-prometheus.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
 <div class="">
-	<a href="/docs/next/gitlab.html" target="_blank">
-		<img src="/docs/assets/a-gitlab.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+	<a href="/v290/docs/next/gitlab.html" target="_blank">
+		<img src="/v290/docs/assets/a-gitlab.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
   <div class="">
-	<a href="/docs/next/cassandra.html" target="_blank">
-		<img src="/docs/assets/a-cassandra.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+	<a href="/v290/docs/next/cassandra.html" target="_blank">
+		<img src="/v290/docs/assets/a-cassandra.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
 </div>
 <br>
 <div class="row stateful-applications_row">
 <div class="">
-	<a href="/docs/next/minio.html" target="_blank">
-		<img src="/docs/assets/a-minio.png" alt="OpenEBS Minio" style="float:left;width:100px;">
+	<a href="/v290/docs/next/minio.html" target="_blank">
+		<img src="/v290/docs/assets/a-minio.png" alt="OpenEBS Minio" style="float:left;width:100px;">
 	</a>
   </div>
 <div class="">
-	<a href="/docs/next/redis.html" target="_blank">
-		<img src="/docs/assets/a-redis.png" alt="OpenEBS Redis" style="float:left;width:100px;">
+	<a href="/v290/docs/next/redis.html" target="_blank">
+		<img src="/v290/docs/assets/a-redis.png" alt="OpenEBS Redis" style="float:left;width:100px;">
 	</a>
   </div>  
   <div class="">
-	<a href="/docs/next/rwm.html" target="_blank">
-		<img src="/docs/assets/a-nfs.png" alt="OpenEBS NFS" style="float:left;width:100px;">
+	<a href="/v290/docs/next/rwm.html" target="_blank">
+		<img src="/v290/docs/assets/a-nfs.png" alt="OpenEBS NFS" style="float:left;width:100px;">
 	</a>
   </div>
 </div>
 <br>
 <div class="row stateful-applications_row">
 <div class="">
-	<a href="/docs/next/elasticsearch.html" target="_blank">
-		<img src="/docs/assets/a-elastic.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+	<a href="/v290/docs/next/elasticsearch.html" target="_blank">
+		<img src="/v290/docs/assets/a-elastic.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
 <div class="">
-	<a href="/docs/next/mysql.html" target="_blank">
-		<img src="/docs/assets/a-mysql.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+	<a href="/v290/docs/next/mysql.html" target="_blank">
+		<img src="/v290/docs/assets/a-mysql.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>  
   <div class="">
-	<a href="/docs/next/postgres.html" target="_blank">
-		<img src="/docs/assets/a-postgres.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
+	<a href="/v290/docs/next/postgres.html" target="_blank">
+		<img src="/v290/docs/assets/a-postgres.png" alt="OpenEBS Architecture" style="float:left;width:100px;">
 	</a>
   </div>
 </div>
 <br>
 <div class="row stateful-applications_row">
   <div class="">
-	<a href="/docs/next/percona.html" target="_blank">
-		<img src="/docs/assets/a-percona.png" alt="OpenEBS for Percona" style="float:left;width:100px;">
+	<a href="/v290/docs/next/percona.html" target="_blank">
+		<img src="/v290/docs/assets/a-percona.png" alt="OpenEBS for Percona" style="float:left;width:100px;">
 	</a>
   </div>
   <div class="">
-	<a href="/docs/next/nuodb.html" target="_blank">
-		<img src="/docs/assets/a-nuodb.png" alt="OpenEBS for NuoDB" style="float:left;width:100px;">
+	<a href="/v290/docs/next/nuodb.html" target="_blank">
+		<img src="/v290/docs/assets/a-nuodb.png" alt="OpenEBS for NuoDB" style="float:left;width:100px;">
 	</a>
   </div>
  <div class="">
-	<a href="/docs/next/mongo.html" target="_blank">
-		<img src="/docs/assets/svg/a-mongo.svg" alt="OpenEBS for MongoDB" style="float:left;width:100px;">
+	<a href="/v290/docs/next/mongo.html" target="_blank">
+		<img src="/v290/docs/assets/svg/a-mongo.svg" alt="OpenEBS for MongoDB" style="float:left;width:100px;">
 	</a>
   </div>
 </div>
@@ -182,15 +182,15 @@ OpenEBS has a vibrant community that can help you get started. If you have furth
 
 ## See Also:
 
-### [Container Attached Storage (CAS)](/docs/next/cas.html)
+### [Container Attached Storage (CAS)](/v290/docs/next/cas.html)
 
 ### <a href="https://www.cncf.io/blog/2020/09/22/container-attached-storage-is-cloud-native-storage-cas/" target="_blank">CNCF CAS Blog </a>
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v290/docs/next/architecture.html)
 
-### [OpenEBS Local PV](/docs/next/localpv.html)
+### [OpenEBS Local PV](/v290/docs/next/localpv.html)
 
-### [OpenEBS Mayastor](/docs/next/mayastor.html)
+### [OpenEBS Mayastor](/v290/docs/next/mayastor.html)
 
 <br><hr><br>
 

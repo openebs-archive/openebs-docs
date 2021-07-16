@@ -273,9 +273,9 @@ m-apiserver status:  running</div>
 
 ## See Also:
 
-### [FAQ](/docs/next/faq.html)
+### [FAQ](/v290/docs/next/faq.html)
 
-### [Troubleshooting Guide](/docs/next/troubleshooting.html)
+### [Troubleshooting Guide](/v290/docs/next/troubleshooting.html)
 
 ### <br>
 

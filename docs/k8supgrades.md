@@ -26,7 +26,7 @@ It is recommended that before a Kubernetes node is rebooted, make sure all the r
 
 ## See Also:
 
-### [Seeking help](/docs/next/support.html)
+### [Seeking help](/v290/docs/next/support.html)
 
 <br>
 

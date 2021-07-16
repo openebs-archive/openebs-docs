@@ -18,11 +18,11 @@ The community e2e pipelines verify upgrade testing only from non-deprecated rele
 :::
 
 :::note
-OpenEBS has deprecated arch specific container images in favor of multi-arch container images. After 2.6, the arch specific images are not pushed to Docker or Quay repositories. For example, images like `cstor-pool-arm64:2.8.0` should be replaced with corresponding multi-arch image `cstor-pool:2.8.0`. For further queries or support, please reach out to [OpenEBS Community](/docs/next/support.html) for helping you with the upgrade.
+OpenEBS has deprecated arch specific container images in favor of multi-arch container images. After 2.6, the arch specific images are not pushed to Docker or Quay repositories. For example, images like `cstor-pool-arm64:2.8.0` should be replaced with corresponding multi-arch image `cstor-pool:2.8.0`. For further queries or support, please reach out to [OpenEBS Community](/v290/docs/next/support.html) for helping you with the upgrade.
 :::
 
 :::note
-If you are upgrading Jiva volumes that are running in version 1.6 and 1.7, you must use these [pre-upgrade steps](https://github.com/openebs/charts/tree/gh-pages/scripts/jiva-tools) to check if your jiva volumes are impacted by [#2956](https://github.com/openebs/openebs/issues/2956). If they are, please reach out to [OpenEBS Community](/docs/next/support.html) for helping you with the upgrade.
+If you are upgrading Jiva volumes that are running in version 1.6 and 1.7, you must use these [pre-upgrade steps](https://github.com/openebs/charts/tree/gh-pages/scripts/jiva-tools) to check if your jiva volumes are impacted by [#2956](https://github.com/openebs/openebs/issues/2956). If they are, please reach out to [OpenEBS Community](/v290/docs/next/support.html) for helping you with the upgrade.
 :::
 
 
@@ -40,11 +40,11 @@ To upgrade to the latest version from your current version, you have to follow t
 
 ## See Also:
 
-### [See Release Notes](/docs/next/releases.html)
+### [See Release Notes](/v290/docs/next/releases.html)
 
-### [Join our Community](/docs/next/support.html)
+### [Join our Community](/v290/docs/next/support.html)
 
-### [Checkout Troubleshooting guides](/docs/next/troubleshooting.html)
+### [Checkout Troubleshooting guides](/v290/docs/next/troubleshooting.html)
 
 
 <br>
