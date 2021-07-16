@@ -5,7 +5,7 @@ sidebar_label: Prometheus
 ---
 ------
 
-<img src="/docs/assets/o-prometheus.png" alt="OpenEBS and Prometheus" style="width:400px;">
+<img src="/v2100/docs/assets/o-prometheus.png" alt="OpenEBS and Prometheus" style="width:400px;">
 
 ## Introduction
 
@@ -18,7 +18,7 @@ In this document, we will explain how you can easily set up a monitoring environ
 
 
 
-<a href="/docs/assets/svg/localpv-device-prometheus-deployment.svg" target="_blank"><img src="/docs/assets/svg/localpv-device-prometheus-deployment.svg" alt="OpenEBS and Prometheus localpv device" style="width:100%;"></a>
+<a href="/v2100/docs/assets/svg/localpv-device-prometheus-deployment.svg" target="_blank"><img src="/docs/assets/svg/localpv-device-prometheus-deployment.svg" alt="OpenEBS and Prometheus localpv device" style="width:100%;"></a>
 
 
 
@@ -28,27 +28,27 @@ We will add 100G of two disks to each node. Disks will be consumed by Prometheus
 
 ## Configuration workflow
 
-1. [Install OpenEBS](/docs/next/prometheus.html#install-openebs)
+1. [Install OpenEBS](/v2100/docs/next/prometheus.html#install-openebs)
 
-2. [Select OpenEBS storage engine](/docs/next/prometheus.html#select-openebs-storage-engine)
+2. [Select OpenEBS storage engine](/v2100/docs/next/prometheus.html#select-openebs-storage-engine)
 
-3. [Configure OpenEBS Local PV StorageClass](/docs/next/prometheus.html#configure-openebs-local-pv-storageclass)
+3. [Configure OpenEBS Local PV StorageClass](/v2100/docs/next/prometheus.html#configure-openebs-local-pv-storageclass)
 
-4. [Installing Prometheus Operator](/docs/next/prometheus.html#installing-prometheus-operator)
+4. [Installing Prometheus Operator](/v2100/docs/next/prometheus.html#installing-prometheus-operator)
 
-5. [Accessing Prometheus and Grafana](/docs/next/prometheus.html#accessing-prometheus-and-grafana)
+5. [Accessing Prometheus and Grafana](/v2100/docs/next/prometheus.html#accessing-prometheus-and-grafana)
 
    
 
 ### Install OpenEBS
 
-If OpenEBS is not installed in your K8s cluster, this can be done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step.
+If OpenEBS is not installed in your K8s cluster, this can be done from [here](/v2100/docs/next/installation.html). If OpenEBS is already installed, go to the next step.
 
 
 
 ### Select OpenEBS storage engine
 
-A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and chooses the right engine that suits your type of application requirements and storage available on your Kubernetes nodes. More information can be read from [here](/docs/next/overview.html#types-of-openebs-storage-engines).
+A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and chooses the right engine that suits your type of application requirements and storage available on your Kubernetes nodes. More information can be read from [here](/v2100/docs/next/overview.html#types-of-openebs-storage-engines).
 
 After OpenEBS installation, choose the OpenEBS storage engine as per your requirement. 
 
@@ -65,7 +65,7 @@ There are 2 ways to use OpenEBS Local PV.
 
 - `openebs-hostpath` - Using this option, it will create Kubernetes Persistent Volumes that will store the data into OS host path directory at: `/var/openebs/<"prometheus-pv-name">/`. Select this option, if you don’t have any additional block devices attached to Kubernetes nodes. If you would like to customize the directory where data will be saved, create a new OpenEBS Local PV storage class using the instructions mentioned [here](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass). 
 
-- `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a Prometheus application pod and other device for Alert manager. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](/docs/next/uglocalpv-device.html#optional-block-device-tagging). 
+- `openebs-device` - Using this option, it will create Kubernetes Local PVs using the block devices attached to the node. Select this option when you want to dedicate a complete block device on a node to a Prometheus application pod and other device for Alert manager. You can customize which devices will be discovered and managed by OpenEBS using the instructions [here](/v2100/docs/next/uglocalpv-device.html#optional-block-device-tagging). 
 
 The Storage Class `openebs-device` has been chosen to deploy Prometheus Operator in the Kubernetes cluster.
 
@@ -356,13 +356,13 @@ Users can upload a Grafana dashboard for Prometheus in 3 ways.
 
 ## See Also:
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v2100/docs/next/usecases.html)
 
-### [Understanding NDM](/docs/next/ugndm.html)
+### [Understanding NDM](/v2100/docs/next/ugndm.html)
 
-### [Local PV concepts](/docs/next/localpv.html)
+### [Local PV concepts](/v2100/docs/next/localpv.html)
 
-### [Local PV User guide](/docs/next/uglocalpv-device.html)
+### [Local PV User guide](/v2100/docs/next/uglocalpv-device.html)
 
 <br>
 

@@ -6,7 +6,7 @@ sidebar_label: Installation
 ------
 
 <br>
-This guide will help you to customize and install OpenEBS. If this is your first time installing OpenEBS, make sure that your Kubernetes nodes are meet the [required prerequisites](/docs/next/prerequisites.html). 
+This guide will help you to customize and install OpenEBS. If this is your first time installing OpenEBS, make sure that your Kubernetes nodes are meet the [required prerequisites](/v2100/docs/next/prerequisites.html). 
 
 
 
@@ -23,7 +23,7 @@ kubectl auth can-i 'create' 'sa' -A
 kubectl auth can-i 'create' 'clusterrole' -A
 ```
 
-If you do not have admin permissions to your cluster, please check with your Kubernetes cluster administrator to help with installing OpenEBS or if you are the owner of the cluster, check out the <a href="/docs/next/installation.html#set-cluster-admin-user-context" target="_blank"> steps to create a new admin context </a> and use it for installing OpenEBS.
+If you do not have admin permissions to your cluster, please check with your Kubernetes cluster administrator to help with installing OpenEBS or if you are the owner of the cluster, check out the <a href="/v2100/docs/next/installation.html#set-cluster-admin-user-context" target="_blank"> steps to create a new admin context </a> and use it for installing OpenEBS.
 
 
 ## Installation through helm
@@ -158,9 +158,9 @@ For a testing your OpenEBS installation, you can use the below default storage c
 
 
 You can follow through the below user guides for each of the engines to use storage devices available on the nodes instead of the `/var/openebs` directory to save the data.  
-- [cStor](/docs/next/ugcstor-csi.html)
-- [Jiva](/docs/next/jivaguide.html)
-- [Local PV](/docs/next/uglocalpv-hostpath.html)
+- [cStor](/v2100/docs/next/ugcstor-csi.html)
+- [Jiva](/v2100/docs/next/jivaguide.html)
+- [Local PV](/v2100/docs/next/uglocalpv-hostpath.html)
 
 ## Troubleshooting
 
@@ -189,11 +189,11 @@ kubectl config use-context admin-ctx
 
 ## See Also:
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v2100/docs/next/architecture.html)
 
-### [OpenEBS Examples](/docs/next/usecases.html)
+### [OpenEBS Examples](/v2100/docs/next/usecases.html)
 
-### [Troubleshooting](/docs/next/troubleshooting.html)
+### [Troubleshooting](/v2100/docs/next/troubleshooting.html)
 
 <br>
 <br>

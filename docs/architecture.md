@@ -6,11 +6,11 @@ sidebar_label: Architecture
 
 ------
 
-OpenEBS is the leading Open Source implementation of the [Container Attached Storage(CAS)](/docs/next/cas.html) pattern. As a part of this approach, OpenEBS uses containers to dynamically provision volumes and provide data services like high availability. OpenEBS relies on and extends [Kubernetes](/docs/next/k8s-storage.html) itself to orchestrate its volume services. 
+OpenEBS is the leading Open Source implementation of the [Container Attached Storage(CAS)](/v2100/docs/next/cas.html) pattern. As a part of this approach, OpenEBS uses containers to dynamically provision volumes and provide data services like high availability. OpenEBS relies on and extends [Kubernetes](/docs/next/k8s-storage.html) itself to orchestrate its volume services. 
 
 
 <br>
-<a href="/docs/assets/openebs-hld.svg" target="_blank"><img src="/docs/assets/openebs-hld.svg" alt="drawing" width="80%"/></a>
+<a href="/v2100/docs/assets/openebs-hld.svg" target="_blank"><img src="/docs/assets/openebs-hld.svg" alt="drawing" width="80%"/></a>
 <br>
 
 OpenEBS has many components, which can be grouped into the following two broad categories.
@@ -33,7 +33,7 @@ OpenEBS follow micro-services model to implement the data engine where the funct
 The OpenEBS Data Engines comprise of the following layers:
 
 <br>
-<a href="/docs/assets/data-engine-overview.svg" target="_blank"><img src="/docs/assets/data-engine-overview.svg" alt="drawing" width="80%"/></a>
+<a href="/v2100/docs/assets/data-engine-overview.svg" target="_blank"><img src="/docs/assets/data-engine-overview.svg" alt="drawing" width="80%"/></a>
 <br>
 
 ### Volume Access Layer
@@ -100,7 +100,7 @@ The control plane in the context of OpenEBS refers to a set of tools or componen
 OpenEBS Control Plane comprises of a set of micro-services that are themselves managed by Kubernetes, making OpenEBS truly Kubernetes native. The configuration managed by the OpenEBS Control Plane is saved as Kubernetes custom resources. The functionality of the control plane can be decomposed into the various stages as follows:
 
 <br>
-<a href="/docs/assets/openebs-control-plane.svg" target="_blank"><img src="/docs/assets/openebs-control-plane.svg" alt="drawing" width="80%"/></a>
+<a href="/v2100/docs/assets/openebs-control-plane.svg" target="_blank"><img src="/docs/assets/openebs-control-plane.svg" alt="drawing" width="80%"/></a>
 <br>
 
 ### YAML or Helm chart
@@ -166,11 +166,11 @@ In addition, OpenEBS also has released as alpha version `kubectl plugin` to help
  
 ## See Also:
 
-### [Understanding Data Engines](/docs/next/casengines.html)
-### [Understanding Mayastor](/docs/next/mayastor.html)
-### [Understanding Local PV](/docs/next/localpv.html)
-### [Understanding cStor](/docs/next/cstor.html)
-### [Understanding Jiva](/docs/next/jiva.html)
+### [Understanding Data Engines](/v2100/docs/next/casengines.html)
+### [Understanding Mayastor](/v2100/docs/next/mayastor.html)
+### [Understanding Local PV](/v2100/docs/next/localpv.html)
+### [Understanding cStor](/v2100/docs/next/cstor.html)
+### [Understanding Jiva](/v2100/docs/next/jiva.html)
 
 
 <br>

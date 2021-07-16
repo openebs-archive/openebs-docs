@@ -7,7 +7,7 @@ sidebar_label: cStor
 
 <font size="5">General guidelines for troubleshooting</font>
 
-- Contact <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
+- Contact <a href="/v2100/docs/next/support.html" target="_blank">OpenEBS Community</a> for support.
 - Search for similar issues added in this troubleshooting section.
 - Search for any reported issues on <a href=" https://stackoverflow.com/questions/tagged/openebs" target="_blank">StackOverflow under OpenEBS tag</a>
 
@@ -96,7 +96,7 @@ Application mount point running on cStor volume went into read only state.
 
 **Possible Reason:**
 
- If `cStorVolume` is `Offline` or corresponding target pod is unavailable for more than 120 seconds(iSCSI timeout) then the PV will be mounted as `read-only` filesystem. For understanding different states of cStor volume, more details can be found [here](/docs/next/kb.html#verification-of-cStor-storage-volume).
+ If `cStorVolume` is `Offline` or corresponding target pod is unavailable for more than 120 seconds(iSCSI timeout) then the PV will be mounted as `read-only` filesystem. For understanding different states of cStor volume, more details can be found [here](/v2100/docs/next/kb.html#verification-of-cStor-storage-volume).
 
 **Troubleshooting**
 
@@ -105,7 +105,7 @@ Check the status of corresponding cStor volume using the following command:
 kubectl get cstorvolume -n <openebs_installed_namespace> -l openebs.io/persistent-volume=<PV_NAME>
 ```
 
-If cStor volume exists in `Healthy` or `Degraded` state then restarting of the application pod alone will bring back cStor volume to `RW` mode. If cStor volume exists in `Offline`, reach out to <a href="/docs/next/support.html" target="_blank">OpenEBS Community</a> for assistance. 
+If cStor volume exists in `Healthy` or `Degraded` state then restarting of the application pod alone will bring back cStor volume to `RW` mode. If cStor volume exists in `Offline`, reach out to <a href="/v2100/docs/next/support.html" target="_blank">OpenEBS Community</a> for assistance. 
 
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="pools-volume-offline"></a>cStor pools, volumes are offline and pool manager pods are stuck in pending state</h3>
@@ -262,7 +262,7 @@ In such cases where pool import happens without cache file and if any of the dev
 **Troubleshooting**<br>
  This might be encountered because of one of the following situations:
 
-1. The device that has gone bad is actually a part of the cStor pool on the node. In such cases, Block device replacement needs to be done, the detailed steps to it can be found <a href="/docs/next/ugcstor-csi.html#a-class-anchor-aria-hidden-true-id-performance-tunings-in-cstor-pools-a-performance-tunings-in-cstor-pools" target="_blank">here</a>.
+1. The device that has gone bad is actually a part of the cStor pool on the node. In such cases, Block device replacement needs to be done, the detailed steps to it can be found <a href="/v2100/docs/next/ugcstor-csi.html#a-class-anchor-aria-hidden-true-id-performance-tunings-in-cstor-pools-a-performance-tunings-in-cstor-pools" target="_blank">here</a>.
 
 **Note**: Block device replacement is not supported for stripe raid configuration. Please visit this link for some use cases and solutions.
 
@@ -481,11 +481,11 @@ cstor-cspc-zdvk   ip-192-168-29-217   98k        9630M  9630098k  false     1   
 ```
 ## See Also:
 
-### [FAQs](/docs/next/faq.html)
+### [FAQs](/v2100/docs/next/faq.html)
 
-### [Seek support or help](/docs/next/support.html)
+### [Seek support or help](/v2100/docs/next/support.html)
 
-### [Latest release notes](/docs/next/releases.html)
+### [Latest release notes](/v2100/docs/next/releases.html)
 
 <br>
 <hr>

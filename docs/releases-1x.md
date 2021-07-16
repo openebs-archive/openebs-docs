@@ -202,13 +202,13 @@ sidebar_label: 1.x Release Notes
 
 ## See Also:
 
-### [OpenEBS Upgrade](/docs/next/upgrade.html)
+### [OpenEBS Upgrade](/v2100/docs/next/upgrade.html)
 
-### [OpenEBS Releases](/docs/next/releases.html)
+### [OpenEBS Releases](/v2100/docs/next/releases.html)
 
-### [OpenEBS FAQ](/docs/next/faq.html)
+### [OpenEBS FAQ](/v2100/docs/next/faq.html)
 
-### [Container Attached Storage or CAS](/docs/next/cas.html)
+### [Container Attached Storage or CAS](/v2100/docs/next/cas.html)
 
 <br><hr>
 

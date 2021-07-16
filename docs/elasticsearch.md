@@ -5,7 +5,7 @@ sidebar_label: Elasticsearch
 ---
 ------
 
-<img src="/docs/assets/o-elastic.png" alt="OpenEBS and Elasticsearch" style="width:400px;">
+<img src="/v2100/docs/assets/o-elastic.png" alt="OpenEBS and Elasticsearch" style="width:400px;">
 
 <br>
 
@@ -29,7 +29,7 @@ Advantages of using OpenEBS LocalPV for Elasticsearch database:
 ## Deployment model
 
 <br>
-<a href="/docs/assets/svg/Local-PV-Devices-elastic-deployment.svg" target="_blank"><img src="/docs/assets/svg/Local-PV-Devices-elastic-deployment.svg" alt="OpenEBS and Elasticsearch" style="width:100%;"></a>
+<a href="/v2100/docs/assets/svg/Local-PV-Devices-elastic-deployment.svg" target="_blank"><img src="/docs/assets/svg/Local-PV-Devices-elastic-deployment.svg" alt="OpenEBS and Elasticsearch" style="width:100%;"></a>
 
 The Local PV volume will be provisioned on a node where Elasticsearch components are getting scheduled and uses one of the matching unclaimed block device for each of them, which will then use the entire block device for storing data. No other application can use this device. If users have limited blockdevices attached to some nodes, they can use `nodeSelector` in the application YAML to provision applications on particular nodes where the available block device is present. The recommended configuration is to have at least three nodes and two unclaimed external disk to be attached per node. 
 
@@ -44,24 +44,24 @@ The Elasticsearch deployment has the following components, which will use the Op
 
 ## Configuration workflow
 
-1. [Install OpenEBS](/docs/next/elasticsearch.html#install-openebs)
-2. [Select OpenEBS storage engine](/docs/next/elasticsearch.html#select-openebs-storage-engine)
-3. [Configure OpenEBS Local PV StorageClass](/docs/next/elasticsearch.html#configure-openebs-local-pv-storageclass)
-4. [Installing KUDO Operator](/docs/next/elasticsearch.html#installing-kudo-operator)
-5. [Installing and Accessing Elasticsearch](/docs/next/elasticsearch.html#installing-and-accessing-elasticsearch)
-6. [Installing Kibana](/docs/next/elasticsearch.html#installing-kibana)
-7. [Installing Fluentd-ES](/docs/next/elasticsearch.html#installing-fluentd-es)
+1. [Install OpenEBS](/v2100/docs/next/elasticsearch.html#install-openebs)
+2. [Select OpenEBS storage engine](/v2100/docs/next/elasticsearch.html#select-openebs-storage-engine)
+3. [Configure OpenEBS Local PV StorageClass](/v2100/docs/next/elasticsearch.html#configure-openebs-local-pv-storageclass)
+4. [Installing KUDO Operator](/v2100/docs/next/elasticsearch.html#installing-kudo-operator)
+5. [Installing and Accessing Elasticsearch](/v2100/docs/next/elasticsearch.html#installing-and-accessing-elasticsearch)
+6. [Installing Kibana](/v2100/docs/next/elasticsearch.html#installing-kibana)
+7. [Installing Fluentd-ES](/v2100/docs/next/elasticsearch.html#installing-fluentd-es)
 
 
 
 ### Install OpenEBS
 
-If OpenEBS is not installed in your K8s cluster, this can be done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
+If OpenEBS is not installed in your K8s cluster, this can be done from [here](/v2100/docs/next/installation.html). If OpenEBS is already installed, go to the next step. 
 
 
 ### Select OpenEBS storage engine
 
-A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and you should choose the right engine that suits your type of application requirements and storage available on your Kubernetes nodes. More information can be read from [here](/docs/next/overview.html#types-of-openebs-storage-engines).
+A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and you should choose the right engine that suits your type of application requirements and storage available on your Kubernetes nodes. More information can be read from [here](/v2100/docs/next/overview.html#types-of-openebs-storage-engines).
 
 After OpenEBS installation, choose the OpenEBS storage engine as per your requirement. 
 
@@ -73,7 +73,7 @@ In this document, we are deploying Elasticsearch using OpenEBS Local PV.
 
 ### Configure OpenEBS Local PV StorageClass
 
-Depending on the type of storage attached to your Kubernetes worker nodes, you can select from different flavors of Dynamic Local PV - Hostpath, Device, LVM, ZFS or Rawfile. For more information you can read [here](/docs/next/localpv.html).
+Depending on the type of storage attached to your Kubernetes worker nodes, you can select from different flavors of Dynamic Local PV - Hostpath, Device, LVM, ZFS or Rawfile. For more information you can read [here](/v2100/docs/next/localpv.html).
 
 The Storage Class `openebs-device` has been chosen to deploy Elasticsearch in the Kubernetes cluster.
 
@@ -488,13 +488,13 @@ You will see the OpenEBS NDM pod logs listed on the page.
 
 ## See Also:
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v2100/docs/next/usecases.html)
 
-### [Understanding NDM](/docs/next/ugndm.html)
+### [Understanding NDM](/v2100/docs/next/ugndm.html)
 
-### [Local PV concepts](/docs/next/localpv.html)
+### [Local PV concepts](/v2100/docs/next/localpv.html)
 
-### [Local PV User guide](/docs/next/uglocalpv-device.html)
+### [Local PV User guide](/v2100/docs/next/uglocalpv-device.html)
 
 
 <br>

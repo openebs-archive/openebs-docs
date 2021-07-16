@@ -5,7 +5,7 @@ sidebar_label: MinIO
 ---
 ------
 
-<img src="/docs/assets/o-minio.png" alt="OpenEBS and MinIO" style="width:400px;">
+<img src="/v2100/docs/assets/o-minio.png" alt="OpenEBS and MinIO" style="width:400px;">
 
 <br>
 
@@ -24,19 +24,19 @@ This document provides the instructions to setup MinIO operator using OpenEBS Lo
 
 ## Deployment model
 
-<a href="/docs/assets/svg/Local-PV-Distributed-device-minio.svg" target="_blank"><img src="/docs/assets/svg/Local-PV-Distributed-device-minio.svg" alt="OpenEBS and MinIO Distributed localpv device" style="width:100%;"></a>
+<a href="/v2100/docs/assets/svg/Local-PV-Distributed-device-minio.svg" target="_blank"><img src="/docs/assets/svg/Local-PV-Distributed-device-minio.svg" alt="OpenEBS and MinIO Distributed localpv device" style="width:100%;"></a>
 
 In this tutorial, Local PV volume will be provisioned on the node where the application has scheduled and one of the unclaimed and active blockdevice available on the same node will be used to provision the MinIO Object storage. This blockdevice cannot be used by another application. If there are limited blockdevices attached to some of the nodes, then users can use `nodeSelector` in the application YAML to provision application on a particular node where the available blockdevice is present. 
 
 ## Configuration workflow
 
-1. [Install OpenEBS](/docs/next/minio.html#install-openebs)
-2. [Select OpenEBS storage engine](/docs/next/minio.html#select-openebs-storage-engine)
-3. [Configure OpenEBS Local PV StorageClass](/docs/next/minio.html#configure-openebs-local-pv-storageclass)
-4. [Install the MinIO plugin](/docs/next/minio.html#install-the-minio-plugin)
-5. [Install the MinIO operator deployment](/docs/next/minio.html#install-the-minio-operator-deployment)
-6. [Install the MinIO cluster](/docs/next/minio.html#install-the-minio-cluster)
-7. [Access MinIO console](/docs/next/minio.html#access-minio-console)
+1. [Install OpenEBS](/v2100/docs/next/minio.html#install-openebs)
+2. [Select OpenEBS storage engine](/v2100/docs/next/minio.html#select-openebs-storage-engine)
+3. [Configure OpenEBS Local PV StorageClass](/v2100/docs/next/minio.html#configure-openebs-local-pv-storageclass)
+4. [Install the MinIO plugin](/v2100/docs/next/minio.html#install-the-minio-plugin)
+5. [Install the MinIO operator deployment](/v2100/docs/next/minio.html#install-the-minio-operator-deployment)
+6. [Install the MinIO cluster](/v2100/docs/next/minio.html#install-the-minio-cluster)
+7. [Access MinIO console](/v2100/docs/next/minio.html#access-minio-console)
 
 ### Install OpenEBS
 
@@ -314,13 +314,13 @@ $ echo 'M2ZiNGFlZGQtYTU1Yy00YjM4LWJkNTQtODEyNmViOTg5ZmZk' | base64 -d
 
 ## See Also:
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v2100/docs/next/usecases.html)
 
-### [Understanding NDM](/docs/next/ugndm.html)
+### [Understanding NDM](/v2100/docs/next/ugndm.html)
 
-### [Local PV concepts](/docs/next/localpv.html)
+### [Local PV concepts](/v2100/docs/next/localpv.html)
 
-### [Local PV User guide](/docs/next/uglocalpv-device.html)
+### [Local PV User guide](/v2100/docs/next/uglocalpv-device.html)
 
 <hr>
 

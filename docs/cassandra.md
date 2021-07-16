@@ -5,7 +5,7 @@ sidebar_label: Cassandra
 ---
 ------
 
-<img src="/docs/assets/o-cassandra.png" alt="OpenEBS and Cassandra" style="width:400px;">
+<img src="/v2100/docs/assets/o-cassandra.png" alt="OpenEBS and Cassandra" style="width:400px;">
 
 
 This tutorial provides detailed instructions to run a Kudo operator based Cassandra StatefulSets with OpenEBS storage and perform some simple database operations to verify the successful deployment and it's performance benchmark.
@@ -29,7 +29,7 @@ Whether you use OpenEBS Local PV or cStor, you can set up the Kubernetes cluster
 
 <br>
 
-<a href="/docs/assets/svg/cassandra-deployment.svg" target="_blank"><img src="/docs/assets/svg/cassandra-deployment.svg" alt="OpenEBS and Cassandra" style="width:100%;"></a>
+<a href="/v2100/docs/assets/svg/cassandra-deployment.svg" target="_blank"><img src="/docs/assets/svg/cassandra-deployment.svg" alt="OpenEBS and Cassandra" style="width:100%;"></a>
 
 <br>
 
@@ -228,11 +228,11 @@ $ kubectl kudo install cassandra --namespace=$namespace_name --instance $instanc
 
 ## See Also:
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v2100/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v2100/docs/next/usecases.html)
 
-### [Local PV concepts](/docs/next/localpv.html)
+### [Local PV concepts](/v2100/docs/next/localpv.html)
 
-### [Understanding NDM](/docs/next/ugndm.html)
+### [Understanding NDM](/v2100/docs/next/ugndm.html)
 

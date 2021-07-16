@@ -7,7 +7,7 @@ sidebar_label: Local PV Device
 
 <br>
 
-<a href="/docs/assets/svg/4-config-sequence.svg" target="_blank"><img src="/docs/assets/svg/4-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%"></a>
+<a href="/v2100/docs/assets/svg/4-config-sequence.svg" target="_blank"><img src="/docs/assets/svg/4-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%"></a>
 
 <br>
 
@@ -592,9 +592,9 @@ If you encounter issues or have a question, file an [Github issue](https://githu
 
 ## See Also:
 
-### [Understand OpenEBS Local PVs ](/docs/next/localpv.html)
+### [Understand OpenEBS Local PVs ](/v2100/docs/next/localpv.html)
 
-### [Node Disk Manager](/docs/next/ugndm.html)
+### [Node Disk Manager](/v2100/docs/next/ugndm.html)
 
 
 <br>

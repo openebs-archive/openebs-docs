@@ -5,7 +5,7 @@ sidebar_label: CockroachDB
 ---
 ------
 
-<img src="/docs/assets/o-cockroachdb.png" alt="OpenEBS and CockroachDB" style="width:400px;">
+<img src="/v2100/docs/assets/o-cockroachdb.png" alt="OpenEBS and CockroachDB" style="width:400px;">
 
 
 ## Introduction
@@ -22,7 +22,7 @@ This guide explains the basic installation for CockroachDB operators on OpenEBS 
 
 <br>
 
-<a href="/docs/assets/svg/Local-PV-Distributed-device-cockroachdb.svg" target="_blank"><img src="/docs/assets/svg/Local-PV-Distributed-device-cockroachdb.svg" alt="OpenEBS and CockroachDB" style="width:100%;"></a>
+<a href="/v2100/docs/assets/svg/Local-PV-Distributed-device-cockroachdb.svg" target="_blank"><img src="/docs/assets/svg/Local-PV-Distributed-device-cockroachdb.svg" alt="OpenEBS and CockroachDB" style="width:100%;"></a>
 
 <br>
 
@@ -31,20 +31,20 @@ The Local PV volume will be provisioned on a node where CockroachDB pods are get
 
 ## Configuration workflow 
 
-1. [Install OpenEBS](/docs/next/cockroachdb.html#install-openebs)
-2. [Select OpenEBS storage engine](/docs/next/cockroachdb.html#select-openebs-storage-engine) 
-3. [Configure OpenEBS Local PV StorageClass](/docs/next/cockroachdb.html#configure-openebs-local-pv-storageclass) 
-4. [Install CockroachDB Operator](/docs/next/cockroachdb.html#install-cockroachdb-operator)
-5. [Accessing CockroachDB](/docs/next/cockroachdb.html#accessing-cockroachdb)
+1. [Install OpenEBS](/v2100/docs/next/cockroachdb.html#install-openebs)
+2. [Select OpenEBS storage engine](/v2100/docs/next/cockroachdb.html#select-openebs-storage-engine) 
+3. [Configure OpenEBS Local PV StorageClass](/v2100/docs/next/cockroachdb.html#configure-openebs-local-pv-storageclass) 
+4. [Install CockroachDB Operator](/v2100/docs/next/cockroachdb.html#install-cockroachdb-operator)
+5. [Accessing CockroachDB](/v2100/docs/next/cockroachdb.html#accessing-cockroachdb)
 <br>
 
 ### Install OpenEBS
 
-If OpenEBS is not installed in your K8s cluster, this can be done from [here](/docs/next/installation.html). If OpenEBS is already installed, go to the next step.
+If OpenEBS is not installed in your K8s cluster, this can be done from [here](/v2100/docs/next/installation.html). If OpenEBS is already installed, go to the next step.
 
 ### Select OpenEBS storage engine
 
-A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and you should choose the right engine that suits your application requirements and storage available on your Kubernetes nodes. For more information you can read [here](/docs/next/overview.html#types-of-openebs-storage-engines).
+A storage engine is the data plane component of the IO path of a Persistent Volume. In CAS architecture, users can choose different data planes for different application workloads based on a configuration policy. OpenEBS provides different types of storage engines and you should choose the right engine that suits your application requirements and storage available on your Kubernetes nodes. For more information you can read [here](/v2100/docs/next/overview.html#types-of-openebs-storage-engines).
 
 After OpenEBS installation, choose the OpenEBS storage engine as per your requirement. 
 
@@ -56,7 +56,7 @@ In this document, we are deploying CockroachDB using OpenEBS Local PV.
 
 ### Configure OpenEBS Local PV StorageClass
 
-Depending on the type of storage attached to your Kubernetes worker nodes, you can select from different flavors of Dynamic Local PV - Hostpath, Device, LVM, ZFS, or Rawfile. For more information, you can read [here](/docs/next/localpv.html).
+Depending on the type of storage attached to your Kubernetes worker nodes, you can select from different flavors of Dynamic Local PV - Hostpath, Device, LVM, ZFS, or Rawfile. For more information, you can read [here](/v2100/docs/next/localpv.html).
 
 The Storage Class `openebs-device` will be used to deploy CockroachDB in the Kubernetes cluster.
 
@@ -290,11 +290,11 @@ In the production environment either use a load balancer or ingress services as 
 
 ## See Also:
 
-### [OpenEBS architecture](/docs/next/architecture.html)
+### [OpenEBS architecture](/v2100/docs/next/architecture.html)
 
-### [OpenEBS use cases](/docs/next/usecases.html)
+### [OpenEBS use cases](/v2100/docs/next/usecases.html)
 
-### [Local PV concepts](/docs/next/localpv.html)
+### [Local PV concepts](/v2100/docs/next/localpv.html)
 
-### [Understanding NDM](/docs/next/ugndm.html)
+### [Understanding NDM](/v2100/docs/next/ugndm.html)
 

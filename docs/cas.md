@@ -12,7 +12,7 @@ sidebar_label: Container Attached Storage
 
 Container Attached Storage(CAS) is a software that includes microservice based storage controllers that are orchestrated by Kubernetes.  These storage controllers can run anywhere that Kubernetes can run which means any cloud or even bare metal servers or on top of a traditional shared storage system. Critically, the data itself is also accessed via containers as opposed to being stored in an off platform shared scale out storage system.
 
-<a href="/docs/assets/cas.svg" target="_blank"><img src="/docs/assets/cas.svg" alt="Container Attached Storage" width="600px"></a>
+<a href="/v2100/docs/assets/cas.svg" target="_blank"><img src="/docs/assets/cas.svg" alt="Container Attached Storage" width="600px"></a>
 
 CAS is a pattern very much in line with the trend towards disaggregated data and the rise of small, autonomous teams running small, loosely coupled workloads.  In other words, my team might need Postgres for our microservice, and yours might depend on Redis and MongoDB. Some of our use cases might require performance, some might be gone in 20 minutes, others are write intensive, others read intensive, and so on. In a large organization, the technology that teams depend on will vary more and more as the size of the organization grows and as organizations increasingly trust teams to select their own tools.
 
@@ -51,7 +51,7 @@ With synchronous replication from storage controller onto the fixed storage repl
 
 ## See Also:
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v2100/docs/next/architecture.html)
 
 ### [Blog: Container Attached Storage is Cloud Native Storage (CAS)](https://www.cncf.io/blog/2020/09/22/container-attached-storage-is-cloud-native-storage-cas/)
 
@@ -59,7 +59,7 @@ With synchronous replication from storage controller onto the fixed storage repl
 
 ### [Webinar: Need for Container Attached Storage](https://www.cncf.io/webinars/kubernetes-for-storage-an-overview/)
 
-### [Connect with Community](/docs/next/support.html)
+### [Connect with Community](/v2100/docs/next/support.html)
 <br>
 
 

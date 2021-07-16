@@ -22,10 +22,10 @@ The list is provided in alphabetical order.
 
 ## See Also:
 
-### [Community Support](/docs/next/support.html)
+### [Community Support](/v2100/docs/next/support.html)
 
-### [Troubleshooting](/docs/next/troubleshooting.html)
+### [Troubleshooting](/v2100/docs/next/troubleshooting.html)
 
-### [FAQs](/docs/next/faq.html)
+### [FAQs](/v2100/docs/next/faq.html)
 
-### [Latest release notes](/docs/next/releases.html)
+### [Latest release notes](/v2100/docs/next/releases.html)

@@ -31,38 +31,38 @@ Examples:
 
 <div class="row stateful-applications_row">
   <div class="">
-	<a href="/docs/next/mysql.html" target="_blank">
-		<img src="/docs/assets/a-mysql.png" alt="MySQL" style="float:left;width:100px;">
+	<a href="/v2100/docs/next/mysql.html" target="_blank">
+		<img src="/v2100/docs/assets/a-mysql.png" alt="MySQL" style="float:left;width:100px;">
 	</a>
   </div>  
   <div class="">
-	<a href="/docs/next/postgres.html" target="_blank">
-		<img src="/docs/assets/a-postgres.png" alt="PostgreSQL" style="float:left;width:100px;">
+	<a href="/v2100/docs/next/postgres.html" target="_blank">
+		<img src="/v2100/docs/assets/a-postgres.png" alt="PostgreSQL" style="float:left;width:100px;">
 	</a>
   </div>
   <div class="">
-	<a href="/docs/next/percona.html" target="_blank">
-		<img src="/docs/assets/a-percona.png" alt="Percona" style="float:left;width:100px;">
+	<a href="/v2100/docs/next/percona.html" target="_blank">
+		<img src="/v2100/docs/assets/a-percona.png" alt="Percona" style="float:left;width:100px;">
 	</a>
   </div>
   <div class="">
-	<a href="/docs/next/redis.html" target="_blank">
-		<img src="/docs/assets/a-redis.png" alt="Redis" style="float:left;width:100px;">
+	<a href="/v2100/docs/next/redis.html" target="_blank">
+		<img src="/v2100/docs/assets/a-redis.png" alt="Redis" style="float:left;width:100px;">
 	</a>
   </div>  
   <div class="">
-	<a href="/docs/next/mongo.html" target="_blank">
-		<img src="/docs/assets/svg/a-mongo.svg" alt="MongoDB" style="float:left;width:100px;">
+	<a href="/v2100/docs/next/mongo.html" target="_blank">
+		<img src="/v2100/docs/assets/svg/a-mongo.svg" alt="MongoDB" style="float:left;width:100px;">
 	</a>
   </div>
   <div class="">
-	<a href="/docs/next/cassandra.html" target="_blank">
-		<img src="/docs/assets/a-cassandra.png" alt="Cassandra" style="float:left;width:100px;">
+	<a href="/v2100/docs/next/cassandra.html" target="_blank">
+		<img src="/v2100/docs/assets/a-cassandra.png" alt="Cassandra" style="float:left;width:100px;">
 	</a>
   </div>
   <div class="">
-	<a href="/docs/next/nuodb.html" target="_blank">
-		<img src="/docs/assets/a-nuodb.png" alt="NuoDB" style="float:left;width:100px;">
+	<a href="/v2100/docs/next/nuodb.html" target="_blank">
+		<img src="/v2100/docs/assets/a-nuodb.png" alt="NuoDB" style="float:left;width:100px;">
 	</a>
   </div>
 </div>
@@ -76,13 +76,13 @@ Examples:
 
 <div class="row stateful-applications_row">
   <div class="">
-	<a href="/docs/next/prometheus.html" target="_blank">
-		<img src="/docs/assets/a-prometheus.png" alt="Prometheus" style="float:left;width:100px;">
+	<a href="/v2100/docs/next/prometheus.html" target="_blank">
+		<img src="/v2100/docs/assets/a-prometheus.png" alt="Prometheus" style="float:left;width:100px;">
 	</a>
   </div>
   <div class="">
-	<a href="/docs/next/elasticsearch.html" target="_blank">
-		<img src="/docs/assets/a-elastic.png" alt="Elastic" style="float:left;width:100px;">
+	<a href="/v2100/docs/next/elasticsearch.html" target="_blank">
+		<img src="/v2100/docs/assets/a-elastic.png" alt="Elastic" style="float:left;width:100px;">
 	</a>
   </div>
 </div>
@@ -96,8 +96,8 @@ Examples:
 
 <div class="row stateful-applications_row">
   <div class="">
-	<a href="/docs/next/gitlab.html" target="_blank">
-		<img src="/docs/assets/a-gitlab.png" alt="GitLab" style="float:left;width:100px;">
+	<a href="/v2100/docs/next/gitlab.html" target="_blank">
+		<img src="/v2100/docs/assets/a-gitlab.png" alt="GitLab" style="float:left;width:100px;">
 	</a>
   </div>
 </div>
@@ -112,8 +112,8 @@ Examples:
 
 <div class="row stateful-applications_row">
   <div class="">
-	<a href="/docs/next/minio.html" target="_blank">
-		<img src="/docs/assets/a-minio.png" alt="Minio" style="float:left;width:100px;">
+	<a href="/v2100/docs/next/minio.html" target="_blank">
+		<img src="/v2100/docs/assets/a-minio.png" alt="Minio" style="float:left;width:100px;">
 	</a>
   </div>
 </div>
@@ -127,8 +127,8 @@ Examples:
 
 <div class="row stateful-applications_row">
   <div class="">
-	<a href="/docs/next/rwm.html" target="_blank">
-		<img src="/docs/assets/a-nfs.png" alt="Wordpress" style="float:left;width:100px;">
+	<a href="/v2100/docs/next/rwm.html" target="_blank">
+		<img src="/v2100/docs/assets/a-nfs.png" alt="Wordpress" style="float:left;width:100px;">
 	</a>
   </div>
 </div>

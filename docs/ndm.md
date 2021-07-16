@@ -21,7 +21,7 @@ In spite of doing all of the above, NDM contributes to overall ease of provision
 
 <br>
 
-<a href="/docs/assets/svg/ndm.svg" target="_blank"><img src="/docs/assets/svg/ndm.svg" alt="NDM Architecture" style="width:80%"></a>
+<a href="/v2100/docs/assets/svg/ndm.svg" target="_blank"><img src="/docs/assets/svg/ndm.svg" alt="NDM Architecture" style="width:80%"></a>
 
 <br>
 
@@ -71,7 +71,7 @@ To allow OpenEBS to run in privileged mode in `selinux=on` nodes, the cluster sh
   - If OpenEBS is installed using helm, update the filters in the configmap of values.yaml and do the helm upgrade
   - Or, directly edit NDM configmap using `kubectl edit` and update the filters
 
-More details can be found [here](/docs/next/ugndm.html).
+More details can be found [here](/v2100/docs/next/ugndm.html).
 
 ## NDM Roadmap:
 
@@ -87,13 +87,13 @@ More details can be found [here](/docs/next/ugndm.html).
 
 ## See Also:
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v2100/docs/next/architecture.html)
 
-### [Local PV User Guide](/docs/next/uglocalpv-device.html)
+### [Local PV User Guide](/v2100/docs/next/uglocalpv-device.html)
 
-### [cStor User Guide](/docs/next/ugcstor.html)
+### [cStor User Guide](/v2100/docs/next/ugcstor.html)
 
-### [Understanding Disk Mount Status on Node](/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume)
+### [Understanding Disk Mount Status on Node](/v2100/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume)
 
 
 

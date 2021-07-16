@@ -99,9 +99,9 @@ OpenEBS data engines can be classified into two categories.
 
 OpenEBS Local Engines can create persistent volumes or PVs out of local disks or hostpaths or using the volume managers like LVM or ZFS on the Kubernetes worker nodes. Local Engines are well suited for cloud native applications that have the availability, scalability features built into them. Local Engines are also well suited for stateful workloads that are short lived like Machine Learning jobs or Edge cases where there is a single node Kubernetes cluster. 
 
-Depending on the type of storage attached to the Kubernetes worker nodes and your preference of local filesystem, you can select from different flavors of Dynamic [Local PV](/docs/next/localpv.html) - Hostpath, Device, LVM, ZFS or Rawfile.
-- [Local PV hostpath](/docs/next/uglocalpv-hostpath.html)
-- [Local PV device](/docs/next/uglocalpv-device.html)
+Depending on the type of storage attached to the Kubernetes worker nodes and your preference of local filesystem, you can select from different flavors of Dynamic [Local PV](/v2100/docs/next/localpv.html) - Hostpath, Device, LVM, ZFS or Rawfile.
+- [Local PV hostpath](/v2100/docs/next/uglocalpv-hostpath.html)
+- [Local PV device](/v2100/docs/next/uglocalpv-device.html)
 - [ZFS Local PV](https://github.com/openebs/zfs-localpv)
 - [LVM Local PV](https://github.com/openebs/lvm-localpv)
 - [Rawfile Local PV](https://github.com/openebs/rawfile-localpv)
@@ -130,9 +130,9 @@ The below table identifies few differences among the different OpenEBS Local eng
 
 Replicated Volumes as the name suggests, are those that can synchronously replicate the data to multiple nodes. These engines provide protection against node failures, by allowing the volume to be accessible from one of the other nodes where the data was replicated to. The replication can also be setup across availability zones helping applications move across availability zones.  Replicated Volumes are also capable of enterprise storage features like snapshots, clone, volume expansion and so forth. 
 
-Depending on the type of storage attached to your Kubernetes worker nodes and application performance requirements, you can select from [Jiva](/docs/next/jiva.html), [cStor](/docs/next/cstor.html) or [Mayastor](/docs/next/mayastor.html). 
+Depending on the type of storage attached to your Kubernetes worker nodes and application performance requirements, you can select from [Jiva](/v2100/docs/next/jiva.html), [cStor](/docs/next/cstor.html) or [Mayastor](/docs/next/mayastor.html). 
 
-- [Mayastor](/docs/next/ugmayastor.html)
+- [Mayastor](/v2100/docs/next/ugmayastor.html)
 - [cStor](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
 - [Jiva](https://github.com/openebs/jiva-operator)
 
@@ -230,15 +230,15 @@ A short summary is provided below.
 
 ## See Also:
 
-### [Mayastor User Guide](/docs/next/ugmayastor.html)
+### [Mayastor User Guide](/v2100/docs/next/ugmayastor.html)
 
-### [cStor User Guide](/docs/next/ugcstor-csi.html)
+### [cStor User Guide](/v2100/docs/next/ugcstor-csi.html)
 
-### [Jiva User Guide](/docs/next/jivaguide.html)
+### [Jiva User Guide](/v2100/docs/next/jivaguide.html)
 
-### [Local PV Hostpath User Guide](/docs/next/uglocalpv-hostpath.html)
+### [Local PV Hostpath User Guide](/v2100/docs/next/uglocalpv-hostpath.html)
 
-### [Local PV Device User Guide](/docs/next/uglocalpv-device.html)
+### [Local PV Device User Guide](/v2100/docs/next/uglocalpv-device.html)
 
 
 <br>

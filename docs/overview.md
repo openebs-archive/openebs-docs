@@ -5,11 +5,16 @@ sidebar_label: Overview
 ---
 ------
 
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+Documentation for OpenEBS v2.10.0 is no longer actively maintained. The version you are currently viewing is a static 
+snapshot. Click here for the [latest](https://docs.openebs.io) version.
+</strong></p></center>
+
 ## What is OpenEBS?
 
-<a href="/docs/assets/svg/openebs-architecture.svg" target="_blank"><img src="/docs/assets/svg/openebs-architecture.svg" alt="OpenEBS High Level Architecture" style="width:60%" align="right"></a>
+<a href="/v2100/docs/assets/svg/openebs-architecture.svg" target="_blank"><img src="/docs/assets/svg/openebs-architecture.svg" alt="OpenEBS High Level Architecture" style="width:60%" align="right"></a>
 
-OpenEBS helps Developers and Platform SREs easily deploy Kubernetes Stateful Workloads that require fast and highly reliable [container attached storage](/docs/next/cas.html). 
+OpenEBS helps Developers and Platform SREs easily deploy Kubernetes Stateful Workloads that require fast and highly reliable [container attached storage](/v2100/docs/next/cas.html). 
 
 OpenEBS turns any storage available on the Kubernetes worker nodes into local or distributed Kubernetes Persistent Volumes. 
 
@@ -36,7 +41,7 @@ The <a href="https://github.com/openebs/openebs/blob/master/ADOPTERS.md" target=
 
 OpenEBS manages the storage available on each of the Kubernetes nodes and uses that storage to provide Local or Distributed Persistent Volumes to Stateful workloads. 
 
-<a href="/docs/assets/data-engines-comparision.svg" target="_blank"><img src="/docs/assets/data-engines-comparision.svg" alt="OpenEBS Data Engines" style="width:100%"></a>
+<a href="/v2100/docs/assets/data-engines-comparision.svg" target="_blank"><img src="/docs/assets/data-engines-comparision.svg" alt="OpenEBS Data Engines" style="width:100%"></a>
 
 In case of [Local Volumes](#local-volumes): 
   - OpenEBS can create Persistent Volumes using raw block devices or partitions, or using sub-directories on Hostpaths or by using LVM, ZFS, sparse files. 
@@ -66,8 +71,8 @@ Depending on the type of storage attached to your Kubernetes worker nodes, you c
 
 Installing OpenEBS in your cluster is as simple as running a few `kubectl` or `helm` commands. Here are the list of our Quickstart guides with detailed instructions for each storage engine.
 
-- [Local PV hostpath](/docs/next/uglocalpv-hostpath.html)
-- [Local PV device](/docs/next/uglocalpv-device.html)
+- [Local PV hostpath](/v2100/docs/next/uglocalpv-hostpath.html)
+- [Local PV device](/v2100/docs/next/uglocalpv-device.html)
 - [ZFS Local PV](https://github.com/openebs/zfs-localpv)
 - [LVM Local PV](https://github.com/openebs/lvm-localpv)
 - [Rawfile Local PV](https://github.com/openebs/rawfile-localpv)
@@ -84,7 +89,7 @@ Depending on the type of storage attached to your Kubernetes worker nodes and ap
 
 Installing OpenEBS in your cluster is as simple as running a few `kubectl` or `helm` commands. Here are the list of our Quickstart guides with detailed instructions for each storage engine.
 
-- [Mayastor](/docs/next/ugmayastor.html)
+- [Mayastor](/v2100/docs/next/ugmayastor.html)
 - [cStor](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
 - [Jiva](https://github.com/openebs/jiva-operator)
 
@@ -96,17 +101,17 @@ OpenEBS has a vibrant community that can help you get started. If you have furth
 
 ## See Also:
 
-### [Quickstart](/docs/next/quickstart.html)
+### [Quickstart](/v2100/docs/next/quickstart.html)
 
-### [Use cases and Examples](/docs/next/usecases.html)
+### [Use cases and Examples](/v2100/docs/next/usecases.html)
 
-### [Container Attached Storage (CAS)](/docs/next/cas.html)
+### [Container Attached Storage (CAS)](/v2100/docs/next/cas.html)
 
-### [OpenEBS Architecture](/docs/next/architecture.html)
+### [OpenEBS Architecture](/v2100/docs/next/architecture.html)
 
-### [OpenEBS Local PV](/docs/next/localpv.html)
+### [OpenEBS Local PV](/v2100/docs/next/localpv.html)
 
-### [OpenEBS Mayastor](/docs/next/mayastor.html)
+### [OpenEBS Mayastor](/v2100/docs/next/mayastor.html)
 
 <br>
 <br>
