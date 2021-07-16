@@ -31,7 +31,7 @@ The Storage to the above instance can be made available in the following ways:
 * Direct Attached Storage
 * Categorize based on the performance of the storage like slow (HDD via SAS), medium (SSD via SAS), fast (SSD or Persistent Flash via NVMe) 
 
-Another key aspect that needs to be consider is the nature of the Kubernetes cluster size:
+Another key aspect that needs to be considered is the nature of the Kubernetes cluster size:
 - Is it for an Edge or Home cluster with single node
 - Hyperconverged nodes - where Stateful workload and its storage can be co-located.
 - Disaggregated - where Stateful workload and its storage will be served from different nodes. 
@@ -57,11 +57,11 @@ The following table summarizes the recommendation for small to medium instances 
 
 ## Stateful Workload Capabilities
 
-Storage is an integral part of any application often times, used without realizing that it actually exists. 
+Often storage is an integral part of any application, used without realizing that it actually exists. 
 
 Storage can be further decomposed into two distinct layers:
 - Stateful Workloads or the Data Platform Layer - which comprises of SQL/NoSQL Database, Object and Key/Value stores, Message Bus and so forth.
-- Storage engine or Data Engine layer that provides block storage to to the Stateful workloads to persist the data onto the storage devices. 
+- Storage engine or Data Engine layer that provides block storage to the Stateful workloads to persist the data onto the storage devices. 
 
 The key features or capabilities provided by the Storage can be classified as: 
 - Availability
@@ -74,10 +74,10 @@ The key features or capabilities provided by the Storage can be classified as:
 
 With serverless and cloud native becoming mainstream a key shift has happened in terms of how the Stateful workloads are developed, with many of the workloads natively supporting the key storage features like Availability, Consistency and Durability. For example:
 - **Distributed:** Stateful workloads like MongoDB have availability features like protecting against node failures built into them. Such systems will expect the Data engines to provide capacity and performance required with the data consistency/durability at the block level.
-- **Distributed and Standalone:** Stateful workloads like Cassandra can benefit from the availability features from the data engines as it might help speed up the rebuild times required to rebuild a failed cassandra node. However this comes at the cost of using extra storage by the data engines. 
+- **Distributed and Standalone:** Stateful workloads like Cassandra can benefit from the availability features from the data engines as it might help speed up the rebuild times required to rebuild a failed cassandra node. However, this comes at the cost of using extra storage by the data engines. 
 - **Standalone:** Stateful workloads like MySQL (standalone) focus more on Consistency and Database features and depending on the underlying data engine for providing Availability, Performance, Durability and other features. 
 
-Each stateful applications comes with a certain capabilities and depends on the [data engines](#data- engine-capabilities) for complimentary capabilities. The following table summarizes the recommendation on data engines based on the capabilities required by Applications: 
+Each stateful application comes with a certain capabilities and depends on the [data engines](#data- engine-capabilities) for complementary capabilities. The following table summarizes the recommendation on data engines based on the capabilities required by Applications: 
 
 | Workload Type               | Distributed      |  Stand-alone            | Distributed and/or Stand-alone |
 | ----------------------------| :--------------: | :---------------------: | :---------------------------:  |
@@ -110,7 +110,7 @@ Depending on the type of storage attached to the Kubernetes worker nodes and you
 Local Volumes are only available from the the node on which the persistent volume is created. If that node fails, the application pod will not be re-scheduled to another node.
 :::
 
-Below table identifies few differences among the different OpenEBS Local engines. 
+The below table identifies few differences among the different OpenEBS Local engines. 
 
 | Feature                                      | Hostpath  |  Rawfile  |  Device    | ZFS      | LVM      | 
 | -------------------------------------------- | :---:     | :------:  | :--------: | :------: | :------: |
@@ -167,7 +167,7 @@ Below table identifies few differences among the different OpenEBS Replicated en
 
 ## When to choose which OpenEBS engine?
 
-As indicated in the above table, each storage engine has it's own advantage. Choosing an engine depends completely on your platform (resources and type of storage), the application workload as well as it's current and future growth in capacity and/or performance. Below guidelines provide some help in choosing a particular engine.
+As indicated in the above table, each storage engine has its own advantage. Choosing an engine depends completely on your platform (resources and type of storage), the application workload as well as its current and future growth in capacity and/or performance. Below guidelines provide some help in choosing a particular engine.
 
 ### Ideal conditions for choosing cStor: 
 
@@ -178,7 +178,7 @@ As indicated in the above table, each storage engine has it's own advantage. Cho
 - When you need enterprise grade storage protection features like data consistency, resiliency (RAID protection).
 - When you need to provide cross-az available volumes in Cloud or On-premise. 
 
-Do not use cStor when you your underlying storage devices are NVMe SSDs and your applications need high performance. 
+Do not use cStor when your underlying storage devices are NVMe SSDs and your applications need high performance. 
 
 
 ### Ideal conditions for choosing Jiva:

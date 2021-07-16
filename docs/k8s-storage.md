@@ -9,7 +9,7 @@ sidebar_label: Basics
 
 
 :::note
-This document provides you with a quick overview of the <a href="https://kubernetes.io/docs/concepts/storage/" target="_blank">Kubernetes concepts</a> you need to know for running Stateful Workloads. If you are already familiar with running Stateful workloads in Kubernetes, header over to next section on [Container Attached Storage](/docs/next/cas.html).
+This document provides you with a quick overview of the <a href="https://kubernetes.io/docs/concepts/storage/" target="_blank">Kubernetes concepts</a> you need to know for running Stateful Workloads. If you are already familiar with running Stateful workloads in Kubernetes, header over to the next section on [Container Attached Storage](/docs/next/cas.html).
 :::
 
 Kubernetes has made several enhancements to support running Stateful Workloads by providing the required abstractions for Platform (or Cluster Administrators) and Application developers. The abstractions ensure that different types of file and block storage (whether ephemeral or persistent, local or remote) are available wherever a container is scheduled (including provisioning/creating, attaching, mounting, unmounting, detaching, and deleting of volumes), storage capacity management (container ephemeral storage usage, volume resizing, etc.), influencing scheduling of containers based on storage (data gravity, availability, etc.), and generic operations on storage (snapshoting, etc.).
@@ -40,7 +40,7 @@ The dynamic provisioning feature eliminates the need for cluster administrators 
 
 A cluster administrator can define and expose multiple flavors of storage (from the same or different storage systems) within a cluster, each with a custom set of parameters. This design also ensures that end users don't have to worry about the complexity and nuances of how storage is provisioned, but still have the ability to select from multiple storage options.
 
-When OpenEBS is installed, it ships with a couple of default storage class that allow users to create either local (OpenEBS Local PV hostpath) or replicated (OpenEBS Jiva) volumes. The cluster administrator can enable the required storage engines and then create Storage Classes for the required Data Engines. 
+When OpenEBS is installed, it ships with a couple of default storage classes that allow users to create either local (OpenEBS Local PV hostPath) or replicated (OpenEBS Jiva) volumes. The cluster administrator can enable the required storage engines and then create Storage Classes for the required Data Engines. 
 
 ## Persistent Volume Claims 
 
@@ -56,9 +56,9 @@ OpenEBS Control Plane dynamically provisions OpenEBS Local and Replicated volume
 
 ## StatefulSets and Deployments
 
-Kubernetes provides several built-in workload resources such as StatefulSets and Deployments that let application developers define an application running on Kubernetes. You can run a stateful application by creating a Kubernetes Deployment/Statefulset and connecting it to an PersistentVolume using a PersistentVolumeClaim. 
+Kubernetes provides several built-in workload resources such as StatefulSets and Deployments that let application developers define an application running on Kubernetes. You can run a stateful application by creating a Kubernetes Deployment/Statefulset and connecting it to a PersistentVolume using a PersistentVolumeClaim. 
 
-For example, you can create a MySQL Deployment YAML that references a PersistentVolumeClaim. The MySQL PersistentVolumeClaim referenced by the Deployment should be created with requested size and StorageClass. Once the OpenEBS control plane provisions a PersistenceVolume for the required StorageClass and requested capacity, the claim is set as satisfied. Kubernetes will then mount the PersistentVolume and launch the MySQL Deployment. 
+For example, you can create a MySQL Deployment YAML that references a PersistentVolumeClaim. The MySQL PersistentVolumeClaim referenced by the Deployment should be created with the requested size and StorageClass. Once the OpenEBS control plane provisions a PersistenceVolume for the required StorageClass and requested capacity, the claim is set as satisfied. Kubernetes will then mount the PersistentVolume and launch the MySQL Deployment. 
 
 ## Kubernetes Persona
 

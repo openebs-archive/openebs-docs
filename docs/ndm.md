@@ -21,7 +21,7 @@ In spite of doing all of the above, NDM contributes to overall ease of provision
 
 <br>
 
-<img src="/docs/assets/svg/ndm.svg" alt="NDM Architecture" style="width:80%">
+<a href="/docs/assets/svg/ndm.svg" target="_blank"><img src="/docs/assets/svg/ndm.svg" alt="NDM Architecture" style="width:80%"></a>
 
 <br>
 
@@ -46,7 +46,7 @@ To allow OpenEBS to run in privileged mode in `selinux=on` nodes, the cluster sh
   - Maintain cluster-wide unique id of the disk using the following scheme:
     - md5 hash of WWN / PartitionUUID / FileSystemUUID / DeviceMapperUUID.
 - Detect block device addition/removal from a node and update the status of Block device.
-- Add `blockDevice` as Kubernetes custom resource with following properties:
+- Add `blockDevice` as Kubernetes custom resource with the following properties:
   - spec: The following will be updated if they are available.
     - Device Path
     - Device Links (by id, by name)
@@ -66,16 +66,16 @@ To allow OpenEBS to run in privileged mode in `selinux=on` nodes, the cluster sh
 ## Filters:
 
 - Configure filters for the type of block device to be created as blockdevice CR. The filters can be configured either via vendor type or via device path patterns or mount point.
-- Filters are of either `include filters` or `exclude filters` . They are configured as configmap. Admin user can configure these filters at the time of OpenEBS installation by changing the NDM configmap either in the OpenEBS operator yaml file or in the helm `values.yaml` file. If these filters need to be updated after the installation, then one of the following methods can be followed.
+- Filters are either `include filters` or `exclude filters` . They are configured as configmap. Admin user can configure these filters at the time of OpenEBS installation by changing the NDM configmap either in the OpenEBS operator yaml file or in the helm `values.yaml` file. If these filters need to be updated after the installation, then one of the following methods can be followed.
   - If OpenEBS is installed using operator.yaml file, update the filters in the configmap and apply the operator.yaml
   - If OpenEBS is installed using helm, update the filters in the configmap of values.yaml and do the helm upgrade
   - Or, directly edit NDM configmap using `kubectl edit` and update the filters
 
-More details can be found from [here](/docs/next/ugndm.html).
+More details can be found [here](/docs/next/ugndm.html).
 
 ## NDM Roadmap:
 
-- **Auto provisioning of disks using CSI drivers of external storage:** NDM provisioner will invoke the NDM agent which inturn will initiate the provisioning of an external disk through a corresponding CSI driver
+- **Auto provisioning of disks using CSI drivers of external storage:** NDM provisioner will invoke the NDM agent which in turn will initiate the provisioning of an external disk through a corresponding CSI driver
 
 
 

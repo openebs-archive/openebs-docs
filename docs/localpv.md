@@ -63,10 +63,10 @@ Velero uses [Restic](https://github.com/restic/restic) for backing up and restor
 
 While the preferred way for Backup and Restore for cloud native applications using Local Volumes is to use the application specific backup solution, you can use the Velero based Backup and Restore in the following cases:
 - Application doesn't natively provide a Backup and Restore solution
-- Schedule a Daily or weekly backups of the data during a off-peak hours
+- Schedule a daily or weekly backups of the data during off-peak hours
 - Migrating the application using Local Volumes to a new Cluster. 
 
-You can refer to the [Local PV user guides](#see-also) for detailed instructions on Backup and Restore. 
+You can refer to the [Local PV user guides](#/docs/next/uglocalpv-hostpath.html#backup-and-restore) for detailed instructions on Backup and Restore. 
 
 A quick summary of the steps to backup include:
 
@@ -99,10 +99,10 @@ A quick summary of the steps to restore include:
 
 ## Limitations (or Roadmap items ) of OpenEBS Local PVs
 
-- Size of the Local PV cannot be increased dynamically. LVM type of functionality inside Local PVs is a potential feature in roadmap.
+- Size of the Local PV cannot be increased dynamically. LVM type of functionality inside Local PVs is a potential feature in the roadmap.
 - Disk quotas are not enforced by Local PV. An underlying device or hostpath can have more data than requested by a PVC or storage class. Enforcing the capacity is a roadmap feature.
 - Enforce capacity and PVC resource quotas on the local disks or host paths.
-- SMART statistics of the managed disks is also a potential feature in roadmap.
+- SMART statistics of the managed disks is also a potential feature in the roadmap.
 
 <br>
 

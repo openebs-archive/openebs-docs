@@ -32,7 +32,8 @@ The objective of this section is to provide the user and evaluator of Mayastor w
 More detailed guides to Mayastor's components, their design and internal structure, and instructions for building Mayastor from source, are maintained within the [project's GitHub repository](https://github.com/openebs/Mayastor).
 
 ### Topology
-![Figure 1. Example cluster deployment configured with three Mayastor Storage Nodes](../assets/mayastor_basic_cluster_topology.png)
+<a href="../assets/mayastor_basic_cluster_topology.png" target="_blank"><img src="../assets/mayastor_basic_cluster_topology.png"></a>
+
 
 ### Dramatis Personae
 
@@ -86,9 +87,9 @@ The scheduling of Mayastor pods is determined declaratively by using a DaemonSet
 
 #### Mayastor-CSI
 
-The mayastor-csi pods within a cluster implement the node plugin component of Mayastor's CSI driver.  As such, their function is to orchestrate the mounting of Mayastor provisioned volumes on worker nodes on which application pods consuming those volumes are scheduled.  By default a mayastor-csi pod is scheduled on every node in the target cluster, as determined by a DaemonSet resource of the same name.  These pods each encapsulate two containers, `mayastor-csi` and `csi-driver-registrar`
+The mayastor-csi pods within a cluster implement the node plugin component of Mayastor's CSI driver.  As such, their function is to orchestrate the mounting of Mayastor provisioned volumes on worker nodes on which application pods consuming those volumes are scheduled.  By default, a mayastor-csi pod is scheduled on every node in the target cluster, as determined by a DaemonSet resource of the same name.  These pods each encapsulate two containers, `mayastor-csi` and `csi-driver-registrar`
 
- It is not necessary for the node plugin to run on every worker node within a cluster and this behaviour can be modified if so desired through the application of appropriate node labeling and the addition of a corresponding  `nodeSelector` entry within the pod spec of the mayastor-csi DaemonSet.  It should be noted that if a node does not host a plugin pod, then it will not be possible to schedule pod on it which is configured to mount Mayastor volumes.
+ It is not necessary for the node plugin to run on every worker node within a cluster and this behaviour can be modified if so desired through the application of appropriate node labelling and the addition of a corresponding  `nodeSelector` entry within the pod spec of the mayastor-csi DaemonSet.  It should be noted that if a node does not host a plugin pod, then it will not be possible to schedule pod on it which is configured to mount Mayastor volumes.
 
 Further detail regarding the implementation of CSI driver components and their function can be found within the Kubernetes CSI Developer Documentation.
 
@@ -165,6 +166,6 @@ Mayastor has no snapshot or cloning capabilities.
 
 Mayastor Volumes can be configured (or subsequently re-configured) to be composed of 2 or more "children" or "replicas"; causing synchronously mirrored copies of the volume's data to be maintained on more than one worker node and Disk Pool.  This contributes additional "durability" at the persistence layer, ensuring that viable copies of a volume's data remain even if a Disk Pool device is lost.
 
-However a Mayastor volume is currently accessible to an application only via a single target instance (NVMe-oF, or iSCSI) of a single Mayastor pod.  If that pod terminates (through the loss of the worker node on which it's scheduled, execution failure, pod eviction etc.) then there will be no viable I/O path to any remaining healthy replicas and access to data on the volume cannot be maintained.
+However, a Mayastor volume is currently accessible to an application only via a single target instance (NVMe-oF, or iSCSI) of a single Mayastor pod.  If that pod terminates (through the loss of the worker node on which it's scheduled, execution failure, pod eviction etc.) then there will be no viable I/O path to any remaining healthy replicas and access to data on the volume cannot be maintained.
 
 There has been initial discovery work completed in supporting and testing the use of multipath connectivity to Mayastor pods.  The work of developing and supporting production usage of multipath connectivity is currently scheduled to complete after general availability.
