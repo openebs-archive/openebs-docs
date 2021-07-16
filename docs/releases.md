@@ -9,13 +9,13 @@ sidebar_label: Releases
 ## 2.10.0 - Jun 15 2021
 <br><font size="4">Latest Release</font><br/> (Recommended)<br/>
 
-OpenEBS v2.10 is another maintenance release before moving towards 3.0 primarily focusing on enhancing the E2e tests, build, release workflows, and documentation. This release also includes enhancements to improve the user experience and fixes for bugs reported by users and E2e tools. There has been some significant progress made on the alpha features as well. 
+OpenEBS v2.10 is another maintenance release before moving towards 3.0 primarily focusing on enhancing the E2E tests, build, release workflows, and documentation. This release also includes enhancements to improve the user experience and fixes for bugs reported by users and E2E tools. There has been some significant progress made on the alpha features as well. 
 
 ---
 
 **Deprecation Notice**:  Jiva and cStor `out-of-tree external` provisioners will be deprecated by Dec 2021 in favor of the corresponding CSI Drivers. The out of tree provisioners for Jiva and cStor will stop working from Kubernetes 1.22 and forward as the version of the custom resources used by those provisioners will be deprecated. We strongly recommend you plan for migrating your volumes to [cStor CSI](https://github.com/openebs/upgrade/blob/master/docs/migration.md) or [Jiva CSI](https://github.com/openebs/upgrade/blob/master/docs/migration.md#migrating-jiva-external-provisioned-volumes-to-jiva-csi-volumes-experimental) as early as possible.  
 
-If you have any questions or need help with the migration please reach out to us on our [Kubernetes Community slack channel #openebs](#support).
+If you have any questions or need help with the migration please reach out to us on our Kubernetes Community slack channel [#openebs](https://kubernetes.slack.com/archives/CUAKPFU78).
 
 ---
 
