@@ -20,11 +20,22 @@ If you have any questions or need help with the migration please reach out to us
 ---
 
 ### Key Improvements
-- [kubectl plugin for openebs](https://github.com/openebs/openebsctl/blob/develop/README.md) has been enhanced to provide additional information about OpenEBS storage components like: 
+- [CLI](https://github.com/openebs/openebsctl/blob/develop/README.md) has been enhanced to provide additional information about OpenEBS storage components like: 
   - Block devices managed by OpenEBS  (`kubectl openebs get bd`)
   - Jiva Volumes 
   - LVM Local PV Volumes
   - ZFS Local PV Volumes
+- [Monitoring helm chart](https://github.com/openebs/monitoring) has been updated to include a workload dashboard for LVM Local PV. In addition new alert rules related to PVC status are supported. 
+- [LVM Local PV](https://github.com/openebs/lvm-localpv) has been enhanced to allow users to configure the size that should be reserved for LVM snapshots. By default, the size reserved for a snapshot is equal to the size of the volume. In cases, where snapshots are created for backup purposes, the snapshots may not require the entire space. This feature helps in creating snapshots on VGs that don't have enough space to reserve full capacity for snapshots. 
+- [LVM Local PV](https://github.com/openebs/lvm-localpv) now allows for specifying the custom topology keys via ENV variable, instead of caching the values on restart. The caching can result in driver storing an out-dated topology key, if the administrator misses to restart the driver pods. Specifying the topology key via ENV allows users to know the current key and if there is a change, requires for a ENV modification that will force a restart of all the drivers.
+- [NFS Provisioner](https://github.com/openebs/dynamic-nfs-provisioner) has been updated with several new features like:
+  - Ability to configure the LeaseTime and GraceTime for the NFS server to tune the restart times
+  - Added a prometheus metrics end point to report volume creation and failure events 
+  - Added a configuration option to allow users to specify the GUID to set on the NFS server to allow non-root applications to access NFS share
+  - Allow specifying a different namespace than provisioner namespace to create NFS volume related objects. 
+  - Allow specifying the node affinity for NFS server deployment
+- [Rawfile Local PV](https://github.com/openebs/rawfile-localpv) has been enhanced to support xfs filesystem.
+
 
 ### Key Bug Fixes
 
