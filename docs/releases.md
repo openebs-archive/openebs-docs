@@ -6,8 +6,60 @@ sidebar_label: Releases
 
 ------
 
-## 2.10.0 - Jun 15 2021
+## 2.11.0 - Jul 15 2021
 <br><font size="4">Latest Release</font><br/> (Recommended)<br/>
+
+OpenEBS v2.11 is another maintenance release before moving towards 3.0 primarily focusing on enhancing the E2E tests, build, release workflows, and documentation. This release also includes enhancements to improve the user experience and fixes for bugs reported by users and E2E tools. There has been some significant progress made on the alpha features as well. 
+
+---
+
+**Deprecation Notice**:  Jiva and cStor `out-of-tree external` provisioners will be deprecated by Dec 2021 in favor of the corresponding CSI Drivers. The out of tree provisioners for Jiva and cStor will stop working from Kubernetes 1.22 and forward as the version of the custom resources used by those provisioners will be deprecated. We strongly recommend you plan for migrating your volumes to [cStor CSI](https://github.com/openebs/upgrade/blob/master/docs/migration.md) or [Jiva CSI](https://github.com/openebs/upgrade/blob/master/docs/migration.md#migrating-jiva-external-provisioned-volumes-to-jiva-csi-volumes-experimental) as early as possible.  
+
+If you have any questions or need help with the migration please reach out to us on our Kubernetes Community slack channel [#openebs](https://kubernetes.slack.com/archives/CUAKPFU78).
+
+---
+
+### Key Improvements
+- [kubectl plugin for openebs](https://github.com/openebs/openebsctl/blob/develop/README.md) has been enhanced to provide additional information about OpenEBS storage components like: 
+  - Block devices managed by OpenEBS  (`kubectl openebs get bd`)
+  - Jiva Volumes 
+  - LVM Local PV Volumes
+  - ZFS Local PV Volumes
+
+### Key Bug Fixes
+
+### Backward Incompatibilities
+
+- Kubernetes 1.18 or higher release is recommended as this release uses features of Kubernetes that will not be compatible with older Kubernetes releases. 
+- OpenEBS has deprecated arch-specific container images in favor of multi-arch container images. For example, images like `cstor-pool-arm64:x.y.x` should be replaced with corresponding multi-arch image `cstor-pool:x.y.x`.
+
+### Component versions
+
+OpenEBS is a collection of data engines and operators to create different types of replicated and local persistent volumes for Kubernetes Stateful workloads. Kubernetes volumes can be provisioned via CSI Drivers or using Out-of-tree Provisioners. The status of the various components as of v2.11.0 are as follows:
+
+- CSI Drivers 
+    - [Mayastor](https://docs.openebs.io/docs/next/ugmayastor.html) 0.8.1 (beta)
+    - [cStor](https://github.com/openebs/cstor-operators) 2.11.0 (beta)
+    - [Jiva](https://github.com/openebs/jiva-operator) 2.11.0 (beta) 
+    - [Local PV ZFS](https://github.com/openebs/zfs-localpv) 1.9.0 (stable)
+    - [Local PV LVM](https://github.com/openebs/lvm-localpv) 0.7.0 (beta)
+    - [Local PV Rawfile](https://github.com/openebs/rawfile-localpv) 0.5.0 (beta)
+    - [Local PV Partitions](https://github.com/openebs/device-localpv) 0.4.0 (alpha)
+- Out-of-tree provisioners 
+  - [Jiva](https://docs.openebs.io/docs/next/jiva.html) 2.11.0 (stable)
+  - [Local PV hostpath](https://docs.openebs.io/docs/next/uglocalpv-hostpath.html) 2.11.0 (stable)
+  - [Local PV device](https://docs.openebs.io/docs/next/uglocalpv-device.html) 2.11.0 (stable)
+  - [cStor](https://docs.openebs.io/docs/next/cstor.html) 2.11.0 (beta)
+  - [Dynamic NFS Volume](https://github.com/openebs/dynamic-nfs-provisioner) 0.5.0 (alpha)
+- Other components
+  - [NDM](https://github.com/openebs/node-disk-manager) 1.6.0 (beta)
+
+**Additional details:**
+- [Release Notes](https://github.com/openebs/openebs/releases/tag/v2.11.0)
+- [Install Steps](/docs/next/quickstart.html)
+- [Upgrade Steps](/docs/next/upgrade.html)
+
+## 2.10.0 - Jun 15 2021
 
 OpenEBS v2.10 is another maintenance release before moving towards 3.0 primarily focusing on enhancing the E2E tests, build, release workflows, and documentation. This release also includes enhancements to improve the user experience and fixes for bugs reported by users and E2E tools. There has been some significant progress made on the alpha features as well. 
 

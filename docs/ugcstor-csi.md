@@ -6,15 +6,10 @@ sidebar_label: cStor
 ------
 <br>
  
-<a href="/docs/assets/svg/3-config-sequence.svg" target="_blank"><img src="/docs/assets/svg/3-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%"></a>
- 
-<br>
-<br>
- 
-This user guide section provides the operations needed to be performed by the User and the Admin for configuring cStor related tasks.
+This user guide will help you to configure cStor storage and use cStor Volumes for running your stateful workloads.
  
   :::note
-  The recommended approach to provision cStor Pools is to use CStorPoolCluster(CSPC), the detailed steps have been provided in this document. However, OpenEBS also supports provisioning of cStor Pools using StoragePoolClaim (SPC). For detailed instructions, refer to the <a href="https://docs.openebs.io/v260/docs/next/ugcstor.html" target="_blank">cStor User guide(SPC)</a>.<br>
+  If you are an existing user of cStor and have setup cStor storage using StoragePoolClaim(SPC), we strongly recommend you to migrate to using CStorPoolCluster(CSPC). CSPC based cStor uses Kubernetes CSI Driver, provides additional flexibility in how devices are used by cStor and has better resiliency against node failures. For detailed instructions, refer to the <a href="https://github.com/openebs/upgrade/blob/master/docs/migration.md" target="_blank">cStor SPC to CSPC migration guide</a>.<br>
   :::
  
  
