@@ -15,20 +15,20 @@ This user guide will help you to configure cStor storage and use cStor Volumes f
  
 <h2>Operations Overview</h2>
  
-* Install and Setup
+<h3>Install and Setup</h3>
   - [Pre-requisites](#prerequisites)
   - [Creating cStor storage pools](#creating-cstor-storage-pool)
   - [Creating cStor storage classes](#creating-cstor-storage-classes)
-* Launch Sample Application
+<h3>Launch Sample Application</h3>
   - [Deploying a sample application](#deploying-a-sample-application)
-* Advanced Topics
+<h3>Advanced Topics</h3>
   - [Expanding a cStor volume](#expanding-a-cstor-volume)
   - [Snapshot and Clone of a cStor Volume](#snapshot-and-clone-of-a-cstor-volume)
   - [Scaling up cStor pools](#scaling-cstor-pools)
   - [Block Device Tagging](#block-device-tagging)
   - [Tuning cStor Pools](#tuning-cstor-pools)
   - [Tuning cStor Volumes](#tuning-cstor-volumes)
-* Clean up
+<h3>Clean up</h3>
   - [Cleaning up a cStor setup](#cstor-cleanup)
  
 ---
@@ -112,7 +112,7 @@ This user guide will help you to configure cStor storage and use cStor Volumes f
  
 ### <a class="anchor" aria-hidden="true" id="creating-cstor-storage-pool"></a>Creating cStor storage pools
  
-- You will need to create a Kubernetes Custom Resource called <b>CStorPoolCluster</b>, that includes details of the nodes and the devices on those nodes that must be used to setup cStor. You can start by copying the following <b>Sample CSPC yaml<b> into a file named `cspc.yaml`.
+You will need to create a Kubernetes custom resource called <b>CStorPoolCluster</b>, specifying the details of the nodes and the devices on those nodes that must be used to setup cStor pools. You can start by copying the following <b>Sample CSPC yaml</b> into a file named `cspc.yaml` and modifying it with details from your cluster.
  
 ```
 apiVersion: cstor.openebs.io/v1
