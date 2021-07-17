@@ -16,23 +16,28 @@ This user guide will help you to configure cStor storage and use cStor Volumes f
 <h2>Operations Overview</h2>
  
 <h3>Install and Setup</h3>
-  - [Pre-requisites](#prerequisites)
-  - [Creating cStor storage pools](#creating-cstor-storage-pool)
-  - [Creating cStor storage classes](#creating-cstor-storage-classes)
+- [Pre-requisites](#prerequisites)
+- [Creating cStor storage pools](#creating-cstor-storage-pool)
+- [Creating cStor storage classes](#creating-cstor-storage-classes)
+
 <h3>Launch Sample Application</h3>
-  - [Deploying a sample application](#deploying-a-sample-application)
+- [Deploying a sample application](#deploying-a-sample-application)
+
 <h3>Advanced Topics</h3>
-  - [Expanding a cStor volume](#expanding-a-cstor-volume)
-  - [Snapshot and Clone of a cStor Volume](#snapshot-and-clone-of-a-cstor-volume)
-  - [Scaling up cStor pools](#scaling-cstor-pools)
-  - [Block Device Tagging](#block-device-tagging)
-  - [Tuning cStor Pools](#tuning-cstor-pools)
-  - [Tuning cStor Volumes](#tuning-cstor-volumes)
+- [Expanding a cStor volume](#expanding-a-cstor-volume)
+- [Snapshot and Clone of a cStor Volume](#snapshot-and-clone-of-a-cstor-volume)
+- [Scaling up cStor pools](#scaling-cstor-pools)
+- [Block Device Tagging](#block-device-tagging)
+- [Tuning cStor Pools](#tuning-cstor-pools)
+- [Tuning cStor Volumes](#tuning-cstor-volumes)
+
 <h3>Clean up</h3>
-  - [Cleaning up a cStor setup](#cstor-cleanup)
+- [Cleaning up a cStor setup](#cstor-cleanup)
  
----
- 
+<br/>
+<br/>
+<hr/>
+<br/>
 
 ### <a class="anchor" aria-hidden="true" id="prerequisites"></a>Prerequisites
 
@@ -46,7 +51,7 @@ This user guide will help you to configure cStor storage and use cStor Volumes f
   ```
   helm repo add openebs https://openebs.github.io/charts
   helm repo update
-  helm install openebs --namespace openebs openebs/openebs ---set cstor.enabled=true -create-namespace
+  helm install openebs --namespace openebs openebs/openebs --set cstor.enabled=true --create-namespace
   ```
   The above command will install all the default OpenEBS components along with cStor. 
 
@@ -183,28 +188,28 @@ spec:
 
 - The <code>dataRaidGroupType:</code> can either be set as <code>stripe</code> or <code>mirror</code> as per your requirement. In the following example it is configured as <code>stripe</code>.
 
-```
 We have named the configuration YAML file as <code>cspc.yaml</code>. Execute the following command for CSPC creation,
- 
 ```
 kubectl apply -f cspc.yaml
 ```
+
 To verify the status of created CSPC, execute:
 ```
 kubectl get cspc -n openebs
 ```
+
 Sample Output:
 ```
 NAME                   HEALTHYINSTANCES   PROVISIONEDINSTANCES   DESIREDINSTANCES     AGE
 cstor-disk-pool        3                  3                      3                    2m2s
 ```
+
 Check if the pool instances report their status as <b>ONLINE</b> using the below command:
- 
 ```
 kubectl get cspi -n openebs
 ```
+
 Sample Output:
- 
 ```
 NAME                  HOSTNAME             ALLOCATED   FREE    CAPACITY   STATUS   AGE
 cstor-disk-pool-vn92  worker-node-1        60k         9900M    9900M     ONLINE   2m17s
@@ -212,35 +217,37 @@ cstor-disk-pool-al65  worker-node-2        60k         9900M    9900M     ONLINE
 cstor-disk-pool-y7pn  worker-node-3        60k         9900M    9900M     ONLINE   2m17s
 ```
 Once all the pods are in running state, these pool instances can be used for creation of cStor volumes.
+
 <hr>
  
 ### <a class="anchor" aria-hidden="true" id="creating-cstor-storage-classes"></a>Creating cStor storage classes
  
 StorageClass definition is an important task in the planning and execution of OpenEBS storage. The real power of CAS architecture is to give an independent or a dedicated storage engine like cStor for each workload, so that granular policies can be applied to that storage engine to tune the behaviour or performance as per the workload's need.
-  #### Steps to create a cStor StorageClass:
-  1. Decide the CStorPoolCluster for which you want to create a Storage Class.
-  2. Decide the replicaCount based on your requirement/workloads. OpenEBS doesn't restrict the replica count to set, but a <b>maximum of 5</b> replicas are allowed. It depends how users configure it, but for the availability of volumes <b>at least (n/2 + 1) replicas</b> should be up and connected to the target, where n is the replicaCount. The Replica Count should be always less  than or equal to the number of cStor Pool Instances(CSPIs). The following are some example cases:
-   <ul>
-   <li>If a user configured replica count as 2, then always 2 replicas should be available to perform operations on volume.</li>
-   <li>If a user configured replica count as 3 it should require at least 2 replicas should be available for volume to be operational.</li>
-    <li>If a user configured replica count as 5 it should require at least 3 replicas should be available for volume to be operational.</li>
-   </ul>
-  3. Create a YAML spec file <code>cstor-csi-disk.yaml</code> using the template given below. Update the pool, replica count and other policies. By using this sample configuration YAML, a StorageClass will be created with 3 OpenEBS cStor replicas and will configure themselves on the pool instances.
+
+#### Steps to create a cStor StorageClass:
+
+1. Decide the CStorPoolCluster for which you want to create a Storage Class. Let us say you pick up `cstor-disk-pool` that you created in the above step.
+2. Decide the replicaCount based on your requirement/workloads. OpenEBS doesn't restrict the replica count to set, but a <b>maximum of 5</b> replicas are allowed. It depends how users configure it, but for the availability of volumes <b>at least (n/2 + 1) replicas</b> should be up and connected to the target, where n is the replicaCount. The Replica Count should be always less  than or equal to the number of cStor Pool Instances(CSPIs). The following are some example cases:
+  - If a user configured replica count as 2, then always 2 replicas should be available to perform operations on volume.</li>
+  - If a user configured replica count as 3 it should require at least 2 replicas should be available for volume to be operational.</li>
+  - If a user configured replica count as 5 it should require at least 3 replicas should be available for volume to be operational.</li>
+3. Create a YAML spec file <code>cstor-csi-disk.yaml</code> using the template given below. Update the pool, replica count and other policies. By using this sample configuration YAML, a StorageClass will be created with 3 OpenEBS cStor replicas and will configure themselves on the pool instances.
  
-     ```
-     kind: StorageClass
-     apiVersion: storage.k8s.io/v1
-     metadata:
-       name: cstor-csi-disk
-     provisioner: cstor.csi.openebs.io
-     allowVolumeExpansion: true
-     parameters:
-       cas-type: cstor
-       # cstorPoolCluster should have the name of the CSPC
-       cstorPoolCluster: cstor-disk-pool
-       # replicaCount should be <= no. of CSPI
-       replicaCount: "3"
-     ```
+```
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: cstor-csi-disk
+provisioner: cstor.csi.openebs.io
+allowVolumeExpansion: true
+parameters:
+  cas-type: cstor
+  # cstorPoolCluster should have the name of the CSPC 
+  cstorPoolCluster: cstor-disk-pool
+  # replicaCount should be <= no. of CSPI created in the selected CSPC
+  replicaCount: "3"
+```
+
 To deploy the YAML, execute:
 ```
 kubectl apply -f cstor-csi-disk.yaml
@@ -257,7 +264,7 @@ cstor-csi                   cstor.csi.openebs.io                                
 ```
 <hr>
 
- ### <a class="anchor" aria-hidden="true" id="deploying-a-sample-application"></a>Deploying a sample application
+### <a class="anchor" aria-hidden="true" id="deploying-a-sample-application"></a>Deploying a sample application
 
 To deploy a sample application using the above created CSPC and StorageClass, a PVC, that utilises the created StorageClass, needs to be deployed. Given below is an example YAML for a PVC which uses the SC created earlier.
 
