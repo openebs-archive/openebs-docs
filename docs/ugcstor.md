@@ -6,7 +6,7 @@ sidebar_label: SPC based cStor guide
 
 ------
 
-   :::Deprecation Notice
+   :::note Deprecation Notice
    cStor `out-of-tree external` provisioners will be deprecated by Dec 2021 in favor of the corresponding CSI Drivers. The out of tree provisioners for cStor will stop working from Kubernetes 1.22 and forward as the version of the custom resources used by those provisioners will be deprecated. We strongly recommend you plan for migrating your volumes to [cStor CSI](https://github.com/openebs/upgrade/blob/master/docs/migration.md) as early as possible.  
 
    For detailed instructions on how to get started with new cStor Operators please refer <a href="/docs/next/ugcstor-csi.html" target="_blank">here</a>.

@@ -13,71 +13,93 @@ This user guide will help you to configure cStor storage and use cStor Volumes f
   :::
  
  
+<h2>Operations Overview</h2>
  
-<h2>Operations</h2>
+* Install and Setup
+  - [Pre-requisites](#prerequisites)
+  - [Creating cStor storage pools](#creating-cstor-storage-pool)
+  - [Creating cStor storage classes](#creating-cstor-storage-classes)
+* Launch Sample Application
+  - [Deploying a sample application](#deploying-a-sample-application)
+* Advanced Topics
+  - [Expanding a cStor volume](#expanding-a-cstor-volume)
+  - [Snapshot and Clone of a cStor Volume](#snapshot-and-clone-of-a-cstor-volume)
+  - [Scaling up cStor pools](#scaling-cstor-pools)
+  - [Block Device Tagging](#block-device-tagging)
+  - [Tuning cStor Pools](#tuning-cstor-pools)
+  - [Tuning cStor Volumes](#tuning-cstor-volumes)
+* Clean up
+  - [Cleaning up a cStor setup](#cstor-cleanup)
  
-[Creating cStor storage pools](#creating-cstor-storage-pool)
- 
-[Creating cStor storage classes](#creating-cstor-storage-classes)
-
-[Deploying a sample application](#deploying-a-sample-application)
-
-[Scaling up cStor pools](#scaling-cstor-pools)
-
-[Snapshot and Clone of a cStor Volume](#snapshot-and-clone-of-a-cstor-volume)
- 
-[Expanding a cStor volume](#expanding-a-cstor-volume)
- 
-[Block Device Tagging](#block-device-tagging)
- 
-[Performance Tunings in cStor Pools](#performance-tunings-in-cstor-pools)
- 
-[Performance Tunings in cStor Volumes](#performance-tunings-in-cstor-volumes)
-
-[Cleaning up a cStor setup](#cstor-cleanup)
- 
+---
  
 
+### <a class="anchor" aria-hidden="true" id="prerequisites"></a>Prerequisites
+
+- cStor uses the raw block devices attached to the Kubernetes worker nodes to create cStor Pools. Applications will connect to cStor volumes using `iSCSI`. This requires you ensure the following:
+  * There are raw (unformatted) block devices attached to the Kubernetes worker nodes. The devices can be either direct attached devices (SSD/HDD) or cloud volumes (GPD, EBS)
+  * `iscsi` utilities are installed on all the worker nodes where Stateful applications will be launched. The steps for setting up the iSCSI utilities might vary depending on your Kubernetes distribution. Please see [prerequisites verification](/docs/next/prerequisites.html)
+
+- If you are setting up OpenEBS in a new cluster. You can use one of the following steps to install OpenEBS. If OpenEBS is already installed, skip this step.
+
+  Using helm, 
+  ```
+  helm repo add openebs https://openebs.github.io/charts
+  helm repo update
+  helm install openebs --namespace openebs openebs/openebs ---set cstor.enabled=true -create-namespace
+  ```
+  The above command will install all the default OpenEBS components along with cStor. 
+
+  Using kubectl,
+  ```
+  kubectl apply -f https://openebs.github.io/charts/cstor-operator.yaml
+  ```
+  The above command will install all the required components for running cStor. 
+
+- Enable cStor on already existing OpenEBS 
+
+  Using helm, you can enable cStor on top of your openebs installation as follows:
+  ```
+  helm ls -n openebs 
+  # Note the release name used for OpenEBS
+  # Upgrade the helm by enabling cStor
+  # helm upgrade [helm-release-name] [helm-chart-name] flags
+  helm upgrade openebs openebs/openebs  --set cstor.enabled=true --namespace openebs
+  ```
  
-## <a class="anchor" aria-hidden="true" id="user-operations"></a>Operations
- 
-### <a class="anchor" aria-hidden="true" id="creating-cstor-storage-pool"></a>Creating cStor storage pools
- 
- 
- <b>Prerequisites:</b>
- 
-- The latest release of OpenEBS cStor must be installed using cStor Operator yaml.
- 
- ```
- kubectl apply -f https://openebs.github.io/charts/cstor-operator.yaml
- ```
+  Using kubectl, 
+  ```
+  kubectl apply -f https://openebs.github.io/charts/cstor-operator.yaml
+  ```
       
- All the NDM cStor operator pods must be in a running state. To get the status of the pods execute:
+- Verify cStor and NDM pods are running in your cluster. 
+
+  To get the status of the pods execute:
  
- ```
- kubectl get pod -n openebs
- ```
+  ```
+  kubectl get pod -n openebs
+  ```
  
- Sample Output:
- ```
- NAME                                             READY   STATUS    RESTARTS    AGE
- cspc-operator-5fb7db848f-wgnq8                    1/1    Running       0      6d7h
- cvc-operator-7f7d8dc4c5-sn7gv                     1/1    Running       0      6d7h
- openebs-cstor-admission-server-7585b9659b-rbkmn   1/1    Running       0      6d7h
- openebs-cstor-csi-controller-0                    6/6    Running       0      6d7h
- openebs-cstor-csi-node-dl58c                      2/2    Running       0      6d7h
- openebs-cstor-csi-node-jmpzv                      2/2    Running       0      6d7h
- openebs-cstor-csi-node-tfv45                      2/2    Running       0      6d7h
- openebs-ndm-gctb7                                 1/1    Running       0      6d7h
- openebs-ndm-operator-7c8759dbb5-58zpl             1/1    Running       0      6d7h
- openebs-ndm-sfczv                                 1/1    Running       0      6d7h
- openebs-ndm-vgdnv                                 1/1    Running       0      6d7h
- ```
+  Sample Output:
+  ```
+  NAME                                             READY   STATUS    RESTARTS    AGE
+  cspc-operator-5fb7db848f-wgnq8                    1/1    Running       0      6d7h
+  cvc-operator-7f7d8dc4c5-sn7gv                     1/1    Running       0      6d7h
+  openebs-cstor-admission-server-7585b9659b-rbkmn   1/1    Running       0      6d7h
+  openebs-cstor-csi-controller-0                    6/6    Running       0      6d7h
+  openebs-cstor-csi-node-dl58c                      2/2    Running       0      6d7h
+  openebs-cstor-csi-node-jmpzv                      2/2    Running       0      6d7h
+  openebs-cstor-csi-node-tfv45                      2/2    Running       0      6d7h
+  openebs-ndm-gctb7                                 1/1    Running       0      6d7h
+  openebs-ndm-operator-7c8759dbb5-58zpl             1/1    Running       0      6d7h
+  openebs-ndm-sfczv                                 1/1    Running       0      6d7h
+  openebs-ndm-vgdnv                                 1/1    Running       0      6d7h
+  ```
  
 - Nodes must have disks attached to them. To get the list of attached block devices, execute:
-   ```
-   kubectl get bd -n openebs
-   ```
+  ```
+  kubectl get bd -n openebs
+  ```
   Sample Output:
  
   ```
@@ -85,33 +107,12 @@ This user guide will help you to configure cStor storage and use cStor Volumes f
   blockdevice-01afcdbe3a9c9e3b281c7133b2af1b68  worker-node-3    21474836480   Unclaimed   Active   2m10s
   blockdevice-10ad9f484c299597ed1e126d7b857967  worker-node-1    21474836480   Unclaimed   Active   2m17s
   blockdevice-3ec130dc1aa932eb4c5af1db4d73ea1b  worker-node-2    21474836480   Unclaimed   Active   2m12s
- 
   ```
  
-<b>Creating a CStorPoolCluster:</b><br>
  
-- Get all the node labels present in the cluster with the following command, these node labels will be required to modify the CSPC yaml.
-  ```
-  kubectl get node --show-labels
-  ```
- Sample Output:
-  ```
-  NAME               STATUS   ROLES    AGE    VERSION   LABELS
+### <a class="anchor" aria-hidden="true" id="creating-cstor-storage-pool"></a>Creating cStor storage pools
  
-  master             Ready    master   5d2h   v1.20.0   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=master,kubernetes.io/os=linux,node-role.kubernetes.io/master=
- 
-  worker-node-1      Ready    <none>   5d2h   v1.20.0   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=worker-node-1,kubernetes.io/os=linux
- 
-  worker-node-2      Ready    <none>   5d2h   v1.20.0   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=worker-node-2,kubernetes.io/os=linux
- 
-  worker-node-3      Ready    <none>   5d2h   v1.18.0   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=worker-node-3,kubernetes.io/os=linux
-  ```
- 
-- Modify the CSPC yaml to use the worker nodes. Use the value from labels kubernetes.io/hostname=&lt; node_name &gt;. This label value and node name could be different in some platforms. In this case, the label values and node names are:
-  <code>kubernetes.io/hostname:"worker-node-1"</code>, <code>kubernetes.io/hostname: "worker-node-2"</code> and <code>kubernetes.io/hostname: "worker-node-3"</code>.
-- Modify CSPC yaml file to add a block device attached to the same node where the pool is to be provisioned. <br><br>
-**Note:** The <code>dataRaidGroupType:</code> can either be set as <code>stripe</code> or <code>mirror</code> as per your requirement. In the following example it is configured as <code>stripe</code>.<br><br>
- Sample CSPC yaml:
+- You will need to create a Kubernetes Custom Resource called <b>CStorPoolCluster</b>, that includes details of the nodes and the devices on those nodes that must be used to setup cStor. You can start by copying the following <b>Sample CSPC yaml<b> into a file named `cspc.yaml`.
  
 ```
 apiVersion: cstor.openebs.io/v1
@@ -144,6 +145,44 @@ spec:
            - blockDeviceName: "blockdevice-01afcdbe3a9c9e3b281c7133b2af1b68"
      poolConfig:
        dataRaidGroupType: "stripe"
+```
+
+- Get all the node labels present in the cluster with the following command, these node labels will be required to modify the CSPC yaml.
+  ```
+  kubectl get node --show-labels
+  ```
+
+  Sample Output:
+  ```
+  NAME               STATUS   ROLES    AGE    VERSION   LABELS
+ 
+  master             Ready    master   5d2h   v1.20.0   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=master,kubernetes.io/os=linux,node-role.kubernetes.io/master=
+ 
+  worker-node-1      Ready    <none>   5d2h   v1.20.0   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=worker-node-1,kubernetes.io/os=linux
+ 
+  worker-node-2      Ready    <none>   5d2h   v1.20.0   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=worker-node-2,kubernetes.io/os=linux
+ 
+  worker-node-3      Ready    <none>   5d2h   v1.18.0   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=worker-node-3,kubernetes.io/os=linux
+  ```
+ 
+- Modify the CSPC yaml to use the worker nodes. Use the value from labels kubernetes.io/hostname=&lt; node_name &gt;. This label value and node name could be different in some platforms. In this case, the label values and node names are:
+  <code>kubernetes.io/hostname:"worker-node-1"</code>, <code>kubernetes.io/hostname: "worker-node-2"</code> and <code>kubernetes.io/hostname: "worker-node-3"</code>.
+
+- Modify CSPC yaml file to specify the block device attached to the above selected node where the pool is to be provisioned. You can use the following command to get the available block devices on each of the worker node: 
+  ```
+  kubectl get bd -n openebs
+  ```
+  Sample Output:
+ 
+  ```
+  NAME                                          NODENAME         SIZE         CLAIMSTATE  STATUS   AGE
+  blockdevice-01afcdbe3a9c9e3b281c7133b2af1b68  worker-node-3    21474836480   Unclaimed   Active   2m10s
+  blockdevice-10ad9f484c299597ed1e126d7b857967  worker-node-1    21474836480   Unclaimed   Active   2m17s
+  blockdevice-3ec130dc1aa932eb4c5af1db4d73ea1b  worker-node-2    21474836480   Unclaimed   Active   2m12s
+  ```
+
+- The <code>dataRaidGroupType:</code> can either be set as <code>stripe</code> or <code>mirror</code> as per your requirement. In the following example it is configured as <code>stripe</code>.
+
 ```
 We have named the configuration YAML file as <code>cspc.yaml</code>. Execute the following command for CSPC creation,
  
@@ -792,7 +831,7 @@ Note that CSPI for node <b>worker-node-3</b> is not created because:
 <hr>
 
 
-### <a class="anchor" aria-hidden="true" id="performance-tunings-in-cstor-pools"></a>Performance Tunings in cStor Pools
+### <a class="anchor" aria-hidden="true" id="tunings-cstor-pools"></a>Tuning cStor Pools
  
 Allow users to set available performance tunings in cStor Pools based on their workload. cStor pool(s) can be tuned via CSPC and is the recommended way to do it. Below are the tunings that can be applied:
 <br>
@@ -1094,7 +1133,7 @@ spec:
 ```
 <hr>
  
-### <a class="anchor" aria-hidden="true" id="performance-tunings-in-cstor-volumes"></a>Performance Tunings in cStor Volumes
+### <a class="anchor" aria-hidden="true" id="tuning-cstor-volumes"></a>Tuning cStor Volumes
  
 Similar to tuning of the cStor Pool cluster, there are possible ways for tuning cStor volumes. cStor volumes can be provisioned using different policy configurations. However, <code>cStorVolumePolicy</code> needs to be created first. It must be created prior to creation of StorageClass as  <code>CStorVolumePolicy</code> name needs to be specified to provision cStor volume based on configured policy. A sample StorageClass YAML that utilises <code>cstorVolumePolicy</code> is given below for reference:<br>
 ```
