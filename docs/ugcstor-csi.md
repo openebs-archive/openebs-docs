@@ -9,19 +9,22 @@ sidebar_label: cStor
 This user guide will help you to configure cStor storage and use cStor Volumes for running your stateful workloads.
  
   :::note
-  If you are an existing user of cStor and have setup cStor storage using StoragePoolClaim(SPC), we strongly recommend you to migrate to using CStorPoolCluster(CSPC). CSPC based cStor uses Kubernetes CSI Driver, provides additional flexibility in how devices are used by cStor and has better resiliency against node failures. For detailed instructions, refer to the <a href="https://github.com/openebs/upgrade/blob/master/docs/migration.md" target="_blank">cStor SPC to CSPC migration guide</a>.<br>
+  If you are an existing user of cStor and have [setup cStor storage using StoragePoolClaim(SPC)](docs/next/ugcstor.html), we strongly recommend you to migrate to using CStorPoolCluster(CSPC). CSPC based cStor uses Kubernetes CSI Driver, provides additional flexibility in how devices are used by cStor and has better resiliency against node failures. For detailed instructions, refer to the <a href="https://github.com/openebs/upgrade/blob/master/docs/migration.md" target="_blank">cStor SPC to CSPC migration guide</a>.<br>
   :::
  
  
-## Operations Overview
+## Content Overview
  
 <h3>Install and Setup</h3>
 - [Pre-requisites](#prerequisites)
-- [Creating cStor storage pools](#creating-cstor-storage-pool)
+- [Creating cStor storage pools](#creating-cstor-storage-pools)
 - [Creating cStor storage classes](#creating-cstor-storage-classes)
 
 <h3>Launch Sample Application</h3>
 - [Deploying a sample application](#deploying-a-sample-application)
+
+<h3>Troubleshooting</h3>
+- [Troubleshooting cStor setup](#troubleshooting)
 
 <h3>Advanced Topics</h3>
 - [Expanding a cStor volume](#expanding-a-cstor-volume)
@@ -32,7 +35,7 @@ This user guide will help you to configure cStor storage and use cStor Volumes f
 - [Tuning cStor Volumes](#tuning-cstor-volumes)
 
 <h3>Clean up</h3>
-- [Cleaning up a cStor setup](#cstor-cleanup)
+- [Cleaning up a cStor setup](#cleaning-up-a-cstor-setup)
  
 <br/>
 <br/>
@@ -266,7 +269,7 @@ cstor-csi                   cstor.csi.openebs.io                                
 
 ## Deploying a sample application
 
-To deploy a sample application using the above created CSPC and StorageClass, a PVC, that utilises the created StorageClass, needs to be deployed. Given below is an example YAML for a PVC which uses the SC created earlier.
+To deploy a sample application using the above created CSPC and StorageClass, a PVC, that utilises the created StorageClass, needs to be deployed.  Given below is an example YAML for a PVC which uses the SC created earlier.
 
 ```
 kind: PersistentVolumeClaim
