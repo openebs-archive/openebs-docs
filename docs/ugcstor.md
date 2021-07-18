@@ -1,12 +1,17 @@
 ---
 id: ugcstor
-title: cStor User Guide
-sidebar_label: cStor
+title: cStor Guide
+sidebar_label: SPC based cStor guide
 ---
+
 ------
 
-   :::note 
-   With OpenEBS 2.0, the recommended approach to provision cStor Pools is to use cStorPoolCluster(CSPC). For detailed instructions on how to get started with new cStor Operators please refer to the [Quickstart guide on Github](https://github.com/openebs/cstor-operators).
+   :::note Deprecation Notice
+   cStor `out-of-tree external` provisioners will be deprecated by Dec 2021 in favor of the corresponding CSI Drivers. The out of tree provisioners for cStor will stop working from Kubernetes 1.22 and forward as the version of the custom resources used by those provisioners will be deprecated. We strongly recommend you plan for migrating your volumes to [cStor CSI](https://github.com/openebs/upgrade/blob/master/docs/migration.md) as early as possible.  
+
+   For detailed instructions on how to get started with new cStor Operators please refer <a href="/docs/next/ugcstor-csi.html" target="_blank">here</a>.
+
+   If you have any questions or need help with the migration please reach out to us on our Kubernetes Community slack channel [#openebs](https://kubernetes.slack.com/archives/CUAKPFU78).
    :::
 
 <br>
@@ -1258,11 +1263,11 @@ Below table lists the storage policies supported by cStor. These policies should
 | cStor Storage Policy                                         | Mandatory | Default                                 | Purpose                                                      |
 | ------------------------------------------------------------ | --------- | --------------------------------------- | ------------------------------------------------------------ |
 | [ReplicaCount](#Replica-Count-Policy)                        | No        | 3                                       | Defines the number of cStor volume replicas                  |
-| [VolumeControllerImage](#Volume-Controller-Image-Policy)     |           | openebs/cstor-volume-mgmt:2.10.0 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
-| [VolumeTargetImage](#Volume-Target-Image-Policy)             |           | openebs/cstor-istgt:2.10.0 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeControllerImage](#Volume-Controller-Image-Policy)     |           | openebs/cstor-volume-mgmt:2.11.0 | Dedicated side car for command management like taking snapshots etc. Can be used to apply a specific issue or feature for the workload |
+| [VolumeTargetImage](#Volume-Target-Image-Policy)             |           | openebs/cstor-istgt:2.11.0 | iSCSI protocol stack dedicated to the workload. Can be used to apply a specific issue or feature for the workload |
 | [StoragePoolClaim](#Storage-Pool-Claim-Policy)               | Yes       | N/A (a valid pool must be provided)     | The cStorPool on which the volume replicas should be provisioned |
 | [VolumeMonitor](#Volume-Monitor-Policy)                      |           | ON                                      | When ON, a volume exporter sidecar is launched to export Prometheus metrics. |
-| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | openebs/m-exporter:2.10.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
+| [VolumeMonitorImage](#Volume-Monitoring-Image-Policy)        |           | openebs/m-exporter:2.11.0        | Used when VolumeMonitor is ON. A dedicated metrics exporter to the workload. Can be used to apply a specific issue or feature for the workload |
 | [FSType](#Volume-File-System-Type-Policy)                    |           | ext4                                    | Specifies the filesystem that the volume should be formatted with. Other values are `xfs` |
 | [TargetNodeSelector](#Target-NodeSelector-Policy)            |           | Decided by Kubernetes scheduler         | Specify the label in `key: value` format to notify Kubernetes scheduler to schedule cStor target pod on the nodes that match label |
 | [TargetResourceLimits](#Target-ResourceLimits-Policy)        |           | Decided by Kubernetes scheduler         | CPU and Memory limits to cStor target pod                    |
@@ -1326,7 +1331,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeControllerImage
-        value: openebs/cstor-volume-mgmt:2.10.0
+        value: openebs/cstor-volume-mgmt:2.11.0
       - name: StoragePoolClaim
         value: "cstor-disk-pool"
     openebs.io/cas-type: cstor
@@ -1345,7 +1350,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeTargetImage
-        value:openebs/cstor-istgt:2.10.0
+        value:openebs/cstor-istgt:2.11.0
       - name: StoragePoolClaim
         value: "cstor-disk-pool"
     openebs.io/cas-type: cstor
@@ -1383,7 +1388,7 @@ metadata:
   annotations:
     cas.openebs.io/config: |
       - name: VolumeMonitorImage
-        value: openebs/m-exporter:2.10.0
+        value: openebs/m-exporter:2.11.0
       - name: StoragePoolClaim
         value: "cstor-sparse-pool"
     openebs.io/cas-type: cstor
