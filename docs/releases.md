@@ -20,14 +20,14 @@ If you have any questions or need help with the migration please reach out to us
 ---
 
 ### Key Improvements
-- [CLI](https://github.com/openebs/openebsctl/blob/develop/README.md) has been enhanced to provide additional information about OpenEBS storage components like: 
+- Enhanced [CLI](https://github.com/openebs/openebsctl/blob/develop/README.md) to provide additional information about OpenEBS storage components like: 
   - Block devices managed by OpenEBS  (`kubectl openebs get bd`)
   - Jiva Volumes 
   - LVM Local PV Volumes
   - ZFS Local PV Volumes
-- [Monitoring helm chart](https://github.com/openebs/monitoring) has been updated to include a workload dashboard for LVM Local PV. In addition new alert rules related to PVC status are supported. 
-- [LVM Local PV](https://github.com/openebs/lvm-localpv) has been enhanced to allow users to configure the size that should be reserved for LVM snapshots. By default, the size reserved for a snapshot is equal to the size of the volume. In cases, where snapshots are created for backup purposes, the snapshots may not require the entire space. This feature helps in creating snapshots on VGs that don't have enough space to reserve full capacity for snapshots. 
-- [LVM Local PV](https://github.com/openebs/lvm-localpv) now allows for specifying the custom topology keys via ENV variable, instead of caching the values on restart. The caching can result in driver storing an out-dated topology key, if the administrator misses to restart the driver pods. Specifying the topology key via ENV allows users to know the current key and if there is a change, requires for a ENV modification that will force a restart of all the drivers.
+- Added a new Stateful workload dashboard to [Monitoring helm chart](https://github.com/openebs/monitoring) to display the CPU, RAM and Filesystem stats of a given Pod. This dashboard currently supports fetching details for LVM Local PV. In addition new alert rules related to PVC status are supported. 
+- Enhanced [LVM Local PV](https://github.com/openebs/lvm-localpv) snapshot support by allowing users to configure the size that should be reserved for LVM snapshots. By default, the size reserved for a snapshot is equal to the size of the volume. In cases, where snapshots are created for backup purposes, the snapshots may not require the entire space. This feature helps in creating snapshots on VGs that don't have enough space to reserve full capacity for snapshots. 
+- Enhanced the way custom topology keys can be specified for [LVM Local PV](https://github.com/openebs/lvm-localpv). Prior to this enhancement, LVM driver would load the topology keys from node labels and cache them and if someone modified the labels and missed to restart the driver pods, there could be an impact to volume scheduling. This enhancement requires users to specify the topology key via ENV allowing users to know the current key and if there is a change, requires for a ENV modification that will force a restart of all the drivers.
 - [NFS Provisioner](https://github.com/openebs/dynamic-nfs-provisioner) has been updated with several new features like:
   - Ability to configure the LeaseTime and GraceTime for the NFS server to tune the restart times
   - Added a prometheus metrics end point to report volume creation and failure events 
@@ -35,13 +35,20 @@ If you have any questions or need help with the migration please reach out to us
   - Allow specifying a different namespace than provisioner namespace to create NFS volume related objects. 
   - Allow specifying the node affinity for NFS server deployment
 - [Rawfile Local PV](https://github.com/openebs/rawfile-localpv) has been enhanced to support xfs filesystem.
-
+- Enhanced Jiva and cStor CSI drivers to handle split brain condition that could cause the Kubelet to attach the volume on new node while still mounted on disconnected node. The CSI drivers have been enhanced to allow iSCSI login connection only from one node at any given time. 
 
 ### Key Bug Fixes
+- Fixed an issue in Jiva Volume where issue the jiva replica STS keeps crashing due to change in the cluster domain.
+- Fixed an issue in Jiva Volume that was causing log flooding while fetching volume status using Service DNS. Switched to using controller IP. 
+- Fixed an issue in ZFS Local Volumes that was causing an intermittent crash of controller pod due erroneously accessing a variable.
+- Fixed an issue in Device Local PV causing a crash due to a race condition between creating partition and clearing a partition.
+- Several usability fixes to documentation and helm charts for various engines. 
+
 
 ### Backward Incompatibilities
 
 - Kubernetes 1.18 or higher release is recommended as this release uses features of Kubernetes that will not be compatible with older Kubernetes releases. 
+- Kubernetes 1.19.12 or higher is recommended for using Rawfile Local PV 
 - OpenEBS has deprecated arch-specific container images in favor of multi-arch container images. For example, images like `cstor-pool-arm64:x.y.x` should be replaced with corresponding multi-arch image `cstor-pool:x.y.x`.
 
 ### Component versions
