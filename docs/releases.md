@@ -32,13 +32,13 @@ If you have any questions or need help with the migration please reach out to us
   - Ability to configure the LeaseTime and GraceTime for the NFS server to tune the restart times
   - Added a prometheus metrics end point to report volume creation and failure events 
   - Added a configuration option to allow users to specify the GUID to set on the NFS server to allow non-root applications to access NFS share
-  - Allow specifying a different namespace than provisioner namespace to create NFS volume related objects. 
+  - Allow specifying a different namespace than provisioner namespace to create NFS volume related objects
   - Allow specifying the node affinity for NFS server deployment
 - [Rawfile Local PV](https://github.com/openebs/rawfile-localpv) has been enhanced to support xfs filesystem.
 - Enhanced Jiva and cStor CSI drivers to handle split brain condition that could cause the Kubelet to attach the volume on new node while still mounted on disconnected node. The CSI drivers have been enhanced to allow iSCSI login connection only from one node at any given time. 
 
 ### Key Bug Fixes
-- Fixed an issue in Jiva Volume where issue the jiva replica STS keeps crashing due to change in the cluster domain.
+- Fixed an issue in Jiva Volume Replica STS keeps crashing due to change in the cluster domain and failed attempts to access the controller.
 - Fixed an issue in Jiva Volume that was causing log flooding while fetching volume status using Service DNS. Switched to using controller IP. 
 - Fixed an issue in ZFS Local Volumes that was causing an intermittent crash of controller pod due erroneously accessing a variable.
 - Fixed an issue in Device Local PV causing a crash due to a race condition between creating partition and clearing a partition.
