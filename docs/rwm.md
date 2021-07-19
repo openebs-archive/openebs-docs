@@ -54,6 +54,12 @@ Select or <a href="/docs/next/ugcstor.html#creating-cStor-storage-pools">create 
 
 <br>
 
+**Download help repo for nfs-provisioner**
+```
+helm repo add openebs-nfs https://openebs.github.io/dynamic-nfs-provisioner
+helm repo update
+```
+
 **Create a namespace for deploying NFS server provisioner**
 
 ```
@@ -67,20 +73,19 @@ kubectl create ns <ns-nfs-wordpress1>
 Deploy NFS server provisioner into the above namespace using stable helm chart. Pass the following main parameter values. 
 
  - **namespace**:  Namespace for the NFS server provisioner which you have created in the previous section.
- - **name:** Release name for helm installation.
- - **persistence.storageClass:** StorageClass used for provisioning cStor volume.
- - **persistence.size:** cStor volume size which will be used for running nfs provisioner.
- - **storageClass.name:** Provide a name for NFS StorageClass to be created which can be used by the web application PVCs.
+ - **nfsStorageClass.backendStorageClass:** StorageClass used for provisioning cStor volume.
 
 ```
-helm install stable/nfs-server-provisioner --namespace=<ns-nfs-wordpress1> --name=<release-name> --set=persistence.enabled=true,persistence.storageClass=<openebs-cstor-sc>,persistence.size=<cStor-volume-size>,storageClass.name=<nfs-sc-name>,storageClass.provisionerName=openebs.io/nfs
+helm install <RELEASE_NAME> openebs-nfs/nfs-provisioner --namespace=<ns-nfs-wordpress1>  --set-string nfsStorageClass.backendStorageClass="openebs-cstor-sc"
 ```
 
 An example helm install command is
 
 ```
-helm install stable/nfs-server-provisioner --namespace=nfs-wp-provisioner --name=openebs-nfs-wordpress --set=persistence.enabled=true,persistence.storageClass=openebs-cstor-disk,persistence.size=5Gi,storageClass.name=wordpress-nfs-sc1,storageClass.provisionerName=openebs.io/nfs
+helm install openebs-nfs openebs-nfs/nfs-provisioner --namespace=<ns-nfs-wordpress1>  --set-string nfsStorageClass.backendStorageClass="openebs-cstor-sc"
 ```
+
+Above command will install the nfs-provisioner in `ns-nfs-wordpress1` namespace and creates nfs storage class `openebs-kernel-nfs`.
 
 **Note:**  It is recommended that the OpenEBS storage class specifies 10% more space than what is required by the RWX PVC. For example, if RWX PVC requires 100G, then provision cStor volume with 110G.
 
