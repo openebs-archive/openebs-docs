@@ -87,6 +87,9 @@ helm install openebs-nfs openebs-nfs/nfs-provisioner --namespace=<ns-nfs-wordpre
 
 Above command will install the nfs-provisioner in `ns-nfs-wordpress1` namespace and creates nfs storage class `openebs-kernel-nfs`.
 
+
+For detailed list of configurable parameters for nfs-provisioner helm chart, please refer to [OpenEBS NFS Provisioner](https://github.com/openebs/dynamic-nfs-provisioner/tree/develop/deploy/helm/charts).
+
 **Note:**  It is recommended that the OpenEBS storage class specifies 10% more space than what is required by the RWX PVC. For example, if RWX PVC requires 100G, then provision cStor volume with 110G.
 
 <br>
