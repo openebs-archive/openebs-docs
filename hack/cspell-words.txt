@@ -217,6 +217,7 @@ gcpbucket
 gettime
 gemfiles
 gimsuy
+gitbook
 githubusercontent
 gitlab
 gotgt

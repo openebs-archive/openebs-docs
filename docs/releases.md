@@ -56,7 +56,7 @@ If you have any questions or need help with the migration please reach out to us
 OpenEBS is a collection of data engines and operators to create different types of replicated and local persistent volumes for Kubernetes Stateful workloads. Kubernetes volumes can be provisioned via CSI Drivers or using Out-of-tree Provisioners. The status of the various components as of v2.11.0 are as follows:
 
 - CSI Drivers 
-    - [Mayastor](https://docs.openebs.io/docs/next/ugmayastor.html) 0.8.1 (beta)
+    - [Mayastor](https://docs.openebs.io/docs/next/mayastor.html) 0.8.1 (beta)
     - [cStor](https://github.com/openebs/cstor-operators) 2.11.0 (beta)
     - [Jiva](https://github.com/openebs/jiva-operator) 2.11.0 (beta) 
     - [Local PV ZFS](https://github.com/openebs/zfs-localpv) 1.9.0 (stable)
@@ -125,7 +125,7 @@ A very special thanks to @cncf and 2021 LFX Mentees @ParthS007, @rahul799 for co
 OpenEBS is a collection of data engines and operators to create different types of replicated and local persistent volumes for Kubernetes Stateful workloads. Kubernetes volumes can be provisioned via CSI Drivers or using Out-of-tree Provisioners. The status of the various components as of v2.10.0 are as follows:
 
 - CSI Drivers 
-    - [Mayastor](https://docs.openebs.io/docs/next/ugmayastor.html) 0.8.0 (beta)
+    - [Mayastor](https://docs.openebs.io/docs/next/mayastor.html) 0.8.0 (beta)
     - [cStor](https://github.com/openebs/cstor-operators) 2.10.0 (beta)
     - [Jiva](https://github.com/openebs/jiva-operator) 2.10.0 (beta) 
     - [Local PV ZFS](https://github.com/openebs/zfs-localpv) 1.8.0 (stable)
@@ -174,7 +174,7 @@ OpenEBS v2.9 is another maintenance release before moving towards 3.0 primarily 
 OpenEBS is a collection of data engines and operators to create different types of replicated and local persistent volumes for Kubernetes Stateful workloads. Kubernetes volumes can be provisioned via CSI Drivers or using Out-of-tree Provisioners. The status of the various components as of v2.9.0 are as follows:
 
 - CSI Drivers 
-    - [Mayastor](https://docs.openebs.io/docs/next/ugmayastor.html) 0.8.0 (beta)
+    - [Mayastor](https://docs.openebs.io/docs/next/mayastor.html) 0.8.0 (beta)
     - [cStor](https://github.com/openebs/cstor-operators) 2.9.0 (beta)
     - [Jiva](https://github.com/openebs/jiva-operator) 2.9.0 (beta) 
     - [Local PV ZFS](https://github.com/openebs/zfs-localpv) 1.7.0 (stable)

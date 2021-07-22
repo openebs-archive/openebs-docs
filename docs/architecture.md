@@ -167,7 +167,7 @@ In addition, OpenEBS also has released as alpha version `kubectl plugin` to help
 ## See Also:
 
 ### [Understanding Data Engines](/docs/next/casengines.html)
-### [Understanding Mayastor](/docs/next/mayastor.html)
+### [Understanding Mayastor](https://mayastor.gitbook.io/introduction/)
 ### [Understanding Local PV](/docs/next/localpv.html)
 ### [Understanding cStor](/docs/next/cstor.html)
 ### [Understanding Jiva](/docs/next/jiva.html)

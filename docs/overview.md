@@ -84,7 +84,7 @@ Depending on the type of storage attached to your Kubernetes worker nodes and ap
 
 Installing OpenEBS in your cluster is as simple as running a few `kubectl` or `helm` commands. Here are the list of our Quickstart guides with detailed instructions for each storage engine.
 
-- [Mayastor](/docs/next/ugmayastor.html)
+- [Mayastor](https://mayastor.gitbook.io/introduction/)
 - [cStor](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
 - [Jiva](https://github.com/openebs/jiva-operator)
 
