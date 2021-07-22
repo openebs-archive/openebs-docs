@@ -132,7 +132,7 @@ Replicated Volumes as the name suggests, are those that can synchronously replic
 
 Depending on the type of storage attached to your Kubernetes worker nodes and application performance requirements, you can select from [Jiva](/docs/next/jiva.html), [cStor](/docs/next/cstor.html) or [Mayastor](/docs/next/mayastor.html). 
 
-- [Mayastor](/docs/next/ugmayastor.html)
+- [Mayastor](https://mayastor.gitbook.io/introduction/)
 - [cStor](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
 - [Jiva](https://github.com/openebs/jiva-operator)
 
@@ -230,7 +230,7 @@ A short summary is provided below.
 
 ## See Also:
 
-### [Mayastor User Guide](/docs/next/ugmayastor.html)
+### [Mayastor User Guide](https://mayastor.gitbook.io/introduction/)
 
 ### [cStor User Guide](/docs/next/ugcstor-csi.html)
 

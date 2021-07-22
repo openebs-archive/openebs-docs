@@ -85,7 +85,7 @@ As a Platform SRE / Cluster Administrator, you can customize several things abou
 - [Local PV Rawfile](https://github.com/openebs/rawfile-localpv)
 - [Replicated PV Jiva](https://github.com/openebs/jiva-operator)
 - [Replicated PV cStor](https://github.com/openebs/cstor-operators/blob/master/docs/quick.md)
-- [Replicated PV Mayastor](/docs/next/ugmayastor.html)
+- [Replicated PV Mayastor](https://mayastor.gitbook.io/introduction/)
 
 ### 3. Deploy Stateful Workloads
 
