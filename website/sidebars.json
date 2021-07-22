@@ -28,7 +28,6 @@
 	"ugndm", 
         "ugcstor-csi",	
 	"jivaguide",
-	"ugmayastor", 
 	"uglocalpv-hostpath", 
 	"uglocalpv-device", 
 	"mayactl", 
