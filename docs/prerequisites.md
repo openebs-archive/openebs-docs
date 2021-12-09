@@ -4,7 +4,8 @@ title: OpenEBS Install Prerequisites
 sidebar_label: Prerequisites
 ---
 ------
-
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
 <br>
 This guide will help you to verify that your Kubernetes worker nodes have the required prerequisites to install OpenEBS and use OpenEBS Volumes to run your Kubernetes Stateful Workloads. In addition, you will learn about how to customize the installer according to your managed Kubernetes provider.
 

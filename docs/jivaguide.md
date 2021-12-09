@@ -4,6 +4,8 @@ title: Jiva User Guide
 sidebar_label: Jiva
 ---
 ------
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
 
    :::note 
    The recommended approach to provision Jiva volumes is via CSI Driver. For detailed instructions on how to get started with new Jiva CSI Driver please refer to the [Quickstart guide on Github](https://github.com/openebs/jiva-operator).
