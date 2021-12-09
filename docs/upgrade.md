@@ -5,7 +5,9 @@ sidebar_label: Upgrade
 ---
 ------
 
-
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
+  
 Latest stable version of OpenEBS is 2.11.0. Check the release notes [here](https://github.com/openebs/openebs/releases/tag/v2.11.0).  
 
 

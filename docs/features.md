@@ -5,8 +5,9 @@ sidebar_label: Features
 ---
 
 ------
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
 
-<br>
 - [Containerized storage for containers](#containerized-storage-for-containers)
 - [Synchronous replication](#synchronous-replication)
 - [Snapshots and clones](#snapshots-and-clones)

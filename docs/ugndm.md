@@ -5,7 +5,8 @@ sidebar_label: NDM
 ---
 ------
 
-<br>
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
 
 <a href="/docs/assets/svg/2-config-sequence.svg" target="_blank"><img src="/docs/assets/svg/2-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%"></a>
 

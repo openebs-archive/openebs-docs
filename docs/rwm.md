@@ -4,7 +4,8 @@ title: Provisioning Read-Write-Many (RWX) PVCs
 sidebar_label: Read-Write-Many (RWX)
 ---
 ------
-
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
 NFS server provisioner stable helm chart is widely used for deploying NFS servers on Kubernetes cluster. This server provides PVCs in RWX mode so that multiple web applications can access the data in a shared fashion. OpenEBS cStor volumes are used as persistent backend storage for these nfs servers to provide a scalable and manageable RWX shared storage solution. 
 
 :::note OpenEBS Dynamic NFS Provisioner

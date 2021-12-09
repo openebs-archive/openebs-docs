@@ -6,7 +6,9 @@ sidebar_label: Local PV
 ------
 
 <br>
-
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
+  
 ## Overview
 
 OpenEBS provides Dynamic PV provisioners for [Kubernetes Local Volumes](https://kubernetes.io/docs/concepts/storage/volumes/#local). A local volume implies that storage is available only from a single node.  A local volume represents a mounted local storage device such as a disk, partition or directory. 

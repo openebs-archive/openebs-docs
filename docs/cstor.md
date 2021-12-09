@@ -5,7 +5,8 @@ sidebar_label: cStor
 ---
 
 ------
-
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
 cStor is the recommended way to provide additional resilience to workloads via OpenEBS and is the second most widely deployed storage engine behind LocalPV. cStor was originally introduced in OpenEBS 0.7 release and has been tested well in the community and in production deployments. The primary function of cStor is to serve iSCSI block storage using the underlying disks or cloud volumes in a cloud native way. cStor is a very light weight and feature rich storage engine. It provides enterprise grade features such as synchronous data replication, snapshots, clones, thin provisioning of data, high resiliency of data, data consistency and on-demand increase of capacity or performance. 
 
 When the stateful application desires the storage to provide high availability of data, cStor is configured to have 3 replicas where data is written synchronously to all the three replicas. As shown below, the cStor target is replicating the data to Node1 (R1), Node3(R2) and Node4(R3). The data is written to the three replicas before the response is sent back to the application. It is important to note that the replicas R1, R2 and R3 are copies of the same data written by the target, data is not striped across replicas or across nodes.

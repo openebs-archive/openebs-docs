@@ -4,7 +4,8 @@ title: Using OpenEBS as storage for Jira on Kubernetes
 sidebar_label: Jira
 ---
 ------
-
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
 <img src="/docs/assets/o-jira.png" alt="OpenEBS and Jira" style="width:400px;">	
 
 ## Introduction

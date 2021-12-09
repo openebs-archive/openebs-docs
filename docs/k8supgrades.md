@@ -4,7 +4,8 @@ title: Best practices to follow when upgrading Kubernetes
 sidebar_label: Kubernetes upgrades
 ---
 ------
-
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
 There are few reasons why nodes in a Kubernetes cluster get  rebooted
 
 - Kubernetes upgrades do need to happen to new features that roll out and to get minimum requirements satisfied for the applications upgrade running on Kubernetes. The upgrade process of Kubernetes cluster involves upgrading the nodes one by one. This process may involve rebooting of the nodes of the cluster.
