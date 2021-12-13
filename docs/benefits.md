@@ -5,8 +5,9 @@ sidebar_label: Benefits
 ---
 
 ------
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
 
-<br>
 - [Open Source Cloud Native storage for Kubernetes](#open-source-cloud-native-storage-for-kubernetes)
 - [Granular policies per stateful workload](#granular-policies-per-stateful-workload)
 - [Avoid Cloud Lock-in](#avoid-cloud-lock-in)

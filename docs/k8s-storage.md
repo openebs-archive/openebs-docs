@@ -6,7 +6,8 @@ sidebar_label: Basics
 
 ------
 
-
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
 
 :::note
 This document provides you with a quick overview of the <a href="https://kubernetes.io/docs/concepts/storage/" target="_blank">Kubernetes concepts</a> you need to know for running Stateful Workloads. If you are already familiar with running Stateful workloads in Kubernetes, header over to the next section on [Container Attached Storage](/docs/next/cas.html).

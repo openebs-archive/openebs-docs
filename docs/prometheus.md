@@ -4,7 +4,8 @@ title: Using OpenEBS as TSDB for Prometheus
 sidebar_label: Prometheus
 ---
 ------
-
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
 <img src="/docs/assets/o-prometheus.png" alt="OpenEBS and Prometheus" style="width:400px;">
 
 ## Introduction

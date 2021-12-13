@@ -4,7 +4,8 @@ title: Performance testing of OpenEBS
 sidebar_label: Performance testing
 ---
 ------
-
+<center><p style="padding: 20px; margin: 20px 0; border-radius: 3px; background-color: #eeeeee;"><strong>
+  OpenEBS Documentation is now migrated to https://openebs.io/docs. The page you are currently viewing is a static snapshot and will be removed in the upcoming releases. </strong></p></center>
 <font size="6">Steps for performance testing</font> 
 
 **Setup cStorPool and StorageClass**
