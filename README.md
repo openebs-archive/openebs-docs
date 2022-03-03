@@ -1,4 +1,10 @@
-# OpenEBS Documentation
+# OpenEBS Documentation (Deprecated)
+
+**The content in this repository has been migrated to https://github.com/openebs/website**
+
+
+
+---
 
 [![Open Issues](https://img.shields.io/github/issues/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/issues)
 [![Open Pull Requests](https://img.shields.io/github/issues-pr/openebs/openebs-docs.svg?style=flat-square)](https://github.com/openebs/openebs-docs/pulls)
